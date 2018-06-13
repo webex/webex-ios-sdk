@@ -1,0 +1,9 @@
+xcodebuild_arguments: [-workspace, WebexSDK.xcworkspace, -scheme,WebexSDK]
+clean: true
+author: Cisco Systems, Inc.
+author_url: https://developer.webex.com
+github_url: https://github.com/webex/webex-ios-sdk
+output: Docs
+#min_acl: private
+#source_directory: ../source/
+#module: SparkBnB
