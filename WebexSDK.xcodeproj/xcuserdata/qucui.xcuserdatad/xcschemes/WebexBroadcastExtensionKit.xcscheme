@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B91E75241CE2D6FF0080EAE0"
-               BuildableName = "WebexSDK.framework"
-               BlueprintName = "WebexSDK"
+               BlueprintIdentifier = "C7625FD1205CBB9600219F95"
+               BuildableName = "WebexBroadcastExtensionKit.framework"
+               BlueprintName = "WebexBroadcastExtensionKit"
                ReferencedContainer = "container:WebexSDK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3D15B70A1D3E176C003BB682"
-               BuildableName = "WebexSDKTests.xctest"
-               BlueprintName = "WebexSDKTests"
+               BlueprintIdentifier = "C7625FD9205CBB9600219F95"
+               BuildableName = "WebexBroadcastExtensionKitTests.xctest"
+               BlueprintName = "WebexBroadcastExtensionKitTests"
                ReferencedContainer = "container:WebexSDK.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -42,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B91E75241CE2D6FF0080EAE0"
-            BuildableName = "WebexSDK.framework"
-            BlueprintName = "WebexSDK"
+            BlueprintIdentifier = "C7625FD1205CBB9600219F95"
+            BuildableName = "WebexBroadcastExtensionKit.framework"
+            BlueprintName = "WebexBroadcastExtensionKit"
             ReferencedContainer = "container:WebexSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,9 +64,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B91E75241CE2D6FF0080EAE0"
-            BuildableName = "WebexSDK.framework"
-            BlueprintName = "WebexSDK"
+            BlueprintIdentifier = "C7625FD1205CBB9600219F95"
+            BuildableName = "WebexBroadcastExtensionKit.framework"
+            BlueprintName = "WebexBroadcastExtensionKit"
             ReferencedContainer = "container:WebexSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -82,9 +82,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B91E75241CE2D6FF0080EAE0"
-            BuildableName = "WebexSDK.framework"
-            BlueprintName = "WebexSDK"
+            BlueprintIdentifier = "C7625FD1205CBB9600219F95"
+            BuildableName = "WebexBroadcastExtensionKit.framework"
+            BlueprintName = "WebexBroadcastExtensionKit"
             ReferencedContainer = "container:WebexSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

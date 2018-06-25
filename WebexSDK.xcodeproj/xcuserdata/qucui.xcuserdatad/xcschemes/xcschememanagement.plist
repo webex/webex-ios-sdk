@@ -19,11 +19,6 @@
 			<key>orderHint</key>
 			<integer>12</integer>
 		</dict>
-		<key>WebexSDK 2.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
-		</dict>
 		<key>WebexSDK.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>isShown</key>
@@ -40,6 +35,16 @@
 			<true/>
 		</dict>
 		<key>B91E75241CE2D6FF0080EAE0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C7625FD1205CBB9600219F95</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C7625FD9205CBB9600219F95</key>
 		<dict>
 			<key>primary</key>
 			<true/>
