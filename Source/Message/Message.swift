@@ -35,13 +35,13 @@ public enum MessageEvent {
 ///
 /// - since: 1.2.0
 public struct Message {
-
+    
     /// The identifier of this message.
     public var id: String? {
         return self.activity.id
     }
     
-     /// The identifier of the room where this message was posted.
+    /// The identifier of the room where this message was posted.
     public var roomId: String? {
         return self.activity.roomId
     }
@@ -88,7 +88,7 @@ public struct Message {
             case .all:
                 return true
             }
-        } != nil
+            } != nil
     }
     
     /// The content of the message.
@@ -104,7 +104,7 @@ public struct Message {
     }
     
     private let activity: ActivityModel
-
+    
     init(activity: ActivityModel) {
         self.activity = activity
     }
@@ -139,15 +139,20 @@ extension Message : CustomStringConvertible {
 ///
 /// - since: 1.4.0
 public class LocalFile {
-
+    
     /// A data type represents a local file thumbnail.
     ///
     /// - since: 1.4.0
     public class Thumbnail {
+        /// The local path of the file's thumbnail.
         public let path: String
+        /// The width of the file's thumbnail.
         public let width: Int
+        /// The height of the file's thumbnail.
         public let height: Int
+        /// The size of the file's thumbnail.
         public let size: UInt64
+        /// The path type of the file's thumbnail.
         public let mime: String
         
         /// LocalFile thumbnail constructor.
@@ -170,12 +175,17 @@ public class LocalFile {
             self.size = size
         }
     }
-    
+    /// The local path of the file.
     public let path: String
+    /// The name of the file.
     public let name: String
+    /// The mime type of the file.
     public let mime: String
+    /// The size of the file.
     public let size: UInt64
+    /// The progressHandler when uploading the file.
     public let progressHandler: ((Double) -> Void)?
+    /// The thumbnail of the file.
     public let thumbnail: Thumbnail?
     
     /// LocalFile constructor.
@@ -202,7 +212,7 @@ public class LocalFile {
 ///
 /// - since: 1.4.0
 public struct RemoteFile {
-
+    
     /// A data type represents a thumbnail file.
     ///
     /// - since: 1.4.0
@@ -275,7 +285,7 @@ extension RemoteFile.Thumbnail {
 }
 
 extension RemoteFile : Mappable {
-
+    
     /// File constructor.
     ///
     /// - note: for internal use only.
