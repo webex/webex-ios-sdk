@@ -1,6 +1,0 @@
-framework module Pods_WebexSDKTests {
-  umbrella header "Pods-WebexSDKTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
