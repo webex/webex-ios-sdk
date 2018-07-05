@@ -1,0 +1,23 @@
+language: objective-c
+osx_image: xcode9.3
+
+env:
+  global:
+  - WORKSPACE=WebexSDK.xcworkspace
+  - SCHEME=WebexSDK
+  matrix:
+    - DESTINATION="platform=iOS Simulator,name=iPhone 6,OS=10.0"      CONFIGURATION="ReleaseTest" IsIntegrationTestingTask="true"
+    - DESTINATION="platform=iOS Simulator,name=iPhone 6s plus,OS=10.1"  CONFIGURATION="ReleaseTest"
+    - DESTINATION="platform=iOS Simulator,name=iPhone 7,OS=10.2"      CONFIGURATION="ReleaseTest"
+    - DESTINATION="platform=iOS Simulator,name=iPhone 7,OS=10.3.1" CONFIGURATION="ReleaseTest"
+    - DESTINATION="platform=iOS Simulator,name=iPhone 7 Plus,OS=11.0.1"  CONFIGURATION="ReleaseTest"
+before_install:
+  - gem install cocoapods --pre
+  - pod repo update > /dev/null
+  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+  - brew install sendemail
+script:
+  - set -o pipefail
+  - travis_retry xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -destination "$DESTINATION" -configuration "$CONFIGURATION" CLIENTSECRET="$CLIENTSECRET" test | xcpretty -c
+  - travis_wait 50 bash IntegrationTesting.sh
+branches:
