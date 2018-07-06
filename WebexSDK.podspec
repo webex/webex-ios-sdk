@@ -12,7 +12,6 @@ Pod::Spec.new do |s|
   s.xcconfig = {'FRAMEWORK_SEARCH_PATHS' => '$(PODS_ROOT)/SparkSDK/Frameworks',
                 'ENABLE_BITCODE' => 'NO',
                 }
-  s.swift_version = '4.0'
   s.vendored_frameworks = "Frameworks/*.framework"
   s.dependency 'Alamofire', '~> 4.7.1'
   s.dependency 'ObjectMapper', '~> 3.1'
