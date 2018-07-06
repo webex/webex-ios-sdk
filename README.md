@@ -315,7 +315,27 @@ Here are some examples of how to use the iOS SDK in your app.
     
     ```
     11.3 Get more technical details about the [Containing App & Broadcast upload extension](https://github.com/webex/webex-ios-sdk/wiki/Implementation-Broadcast-upload-extension) and [Set up an App Group](https://github.com/webex/webex-ios-sdk/wiki/Set-up-an-App-Group)
-    
+
+## Migrating from Cisco Spark IOS SDK
+
+The purpose of this guide is to help you to migrate from Cisco Spark IOS SDK to Cisco Webex IOS SDK.
+
+### Install
+
+Assuming you already have an IOS project with Spark IOS SDK integrated. For your IOS app, here are the steps to migrate to use Webex IOS SDK:
+
+1. Update the sdk import info for your app:
+
+    ~~import SparkSDK~~ => import WebexSDK
+
+### Usage
+
+Here are API changes list from Spark IOS SDK to Webex IOS SDK.
+
+| Description | Spark IOS SDK | Webex IOS SDK |
+| :----:| :----: | :----:
+| Create a new instance | let spark = Spark(authenticator: authenticator) | let webex = Webex(authenticator: authenticator)
+
 ## License
 
 &copy; 2016-2018 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.
