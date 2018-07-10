@@ -1455,7 +1455,7 @@
 					"-framework",
 					"\"SwiftyJSON\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Cisco.SparkSDK;
+				PRODUCT_BUNDLE_IDENTIFIER = Cisco.WebexSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$PROJECT_DIR/Source/Utils/WebexSDK-Bridging-Header.h";
@@ -1637,7 +1637,7 @@
 					"-framework",
 					"\"SwiftyJSON\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Cisco.SparkSDK;
+				PRODUCT_BUNDLE_IDENTIFIER = Cisco.WebexSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$PROJECT_DIR/Source/Utils/WebexSDK-Bridging-Header.h";
@@ -1680,7 +1680,7 @@
 					"-framework",
 					"\"SwiftyJSON\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Cisco.SparkSDK;
+				PRODUCT_BUNDLE_IDENTIFIER = Cisco.WebexSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$PROJECT_DIR/Source/Utils/WebexSDK-Bridging-Header.h";

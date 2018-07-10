@@ -30,7 +30,7 @@ class UserAgent {
         let systemVersion = currentDevice.systemVersion
         let platform = UserAgent.platform()
         
-        return "spark_ios_sdk/\(buildVersion) (\(systemName) \(systemVersion); \(platform))"
+        return "webex_ios_sdk/\(buildVersion) (\(systemName) \(systemVersion); \(platform))"
     }
     
     private static func platform() -> String {
