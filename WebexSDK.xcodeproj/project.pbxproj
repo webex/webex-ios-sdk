@@ -891,8 +891,9 @@
 				TargetAttributes = {
 					3D15B70A1D3E176C003BB682 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 3K8M2E3L9T;
 						LastSwiftMigration = 0800;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					B91E75241CE2D6FF0080EAE0 = {
 						CreatedOnToolsVersion = 7.3;
@@ -1322,8 +1323,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 841D36D97E3F240C87086D10 /* Pods-WebexSDKTests.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3K8M2E3L9T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
@@ -1344,8 +1346,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 02E21C20B1E30C79694A8DB4 /* Pods-WebexSDKTests.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3K8M2E3L9T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
@@ -1465,8 +1468,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C3C7AF494935E5D18935715D /* Pods-WebexSDKTests.releasetest.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3K8M2E3L9T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",

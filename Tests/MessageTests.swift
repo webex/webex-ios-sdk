@@ -147,7 +147,6 @@ class MessageTests: XCTestCase {
     func testPostingMessageWithFileAndDwonLoadFile() {
         let file = LocalFile(path: self.generateLocalFile()!)
         let message = postMessage(personEmail: other.email, text: "", files: [file!])
-        Thread.sleep(forTimeInterval: 10)
         validate(message: message)
         let expect = expectation(description: "downLoadingFile")
         self.messages.downloadFile((message?.files?.first)!, progressHandler: { (progress) in
@@ -199,7 +198,7 @@ class MessageTests: XCTestCase {
     }
     
     func testListingMessagesReturnsMessages() {
-        let message = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
+        let message = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil) 
         validate(message: message)
         Thread.sleep(forTimeInterval: 10)
         let messageArray = listMessages(conversationId: roomId, mentionedPeople: nil, before: nil, max: nil)
@@ -210,6 +209,7 @@ class MessageTests: XCTestCase {
         _ = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
         _ = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
         _ = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
+        Thread.sleep(forTimeInterval: 10)
         let messageArray = listMessages(conversationId: roomId, mentionedPeople: nil, before: nil, max: 2)
         XCTAssertEqual(messageArray?.count, 2)
     }
@@ -282,12 +282,12 @@ class MessageTests: XCTestCase {
         XCTAssertEqual(messageArray?.count, 3)
         
         XCTAssertTrue(deleteMessage(messageId: message2!.id!))
-        Thread.sleep(forTimeInterval: 5)
+        Thread.sleep(forTimeInterval: 10)
         let messageArray1 = listMessages(conversationId: roomId, mentionedPeople: nil, before: nil, max: 3)
         XCTAssertEqual(messageArray1?.filter({$0.id == message2?.id}).count, 0)
         
         XCTAssertTrue(deleteMessage(messageId: message3!.id!))
-        Thread.sleep(forTimeInterval: 5)
+        Thread.sleep(forTimeInterval: 10)
         let messageArray2 = listMessages(conversationId: roomId, mentionedPeople: nil, before: nil, max: 3)
         XCTAssertEqual(messageArray2?.filter({$0.id == message3?.id}).count, 0)
     }
