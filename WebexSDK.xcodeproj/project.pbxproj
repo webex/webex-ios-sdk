@@ -1322,6 +1322,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 841D36D97E3F240C87086D10 /* Pods-WebexSDKTests.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1344,6 +1345,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 02E21C20B1E30C79694A8DB4 /* Pods-WebexSDKTests.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1453,7 +1455,7 @@
 					"-framework",
 					"\"SwiftyJSON\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Cisco.SparkSDK;
+				PRODUCT_BUNDLE_IDENTIFIER = Cisco.WebexSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$PROJECT_DIR/Source/Utils/WebexSDK-Bridging-Header.h";
@@ -1465,6 +1467,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C3C7AF494935E5D18935715D /* Pods-WebexSDKTests.releasetest.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1634,7 +1637,7 @@
 					"-framework",
 					"\"SwiftyJSON\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Cisco.SparkSDK;
+				PRODUCT_BUNDLE_IDENTIFIER = Cisco.WebexSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$PROJECT_DIR/Source/Utils/WebexSDK-Bridging-Header.h";
@@ -1677,7 +1680,7 @@
 					"-framework",
 					"\"SwiftyJSON\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Cisco.SparkSDK;
+				PRODUCT_BUNDLE_IDENTIFIER = Cisco.WebexSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$PROJECT_DIR/Source/Utils/WebexSDK-Bridging-Header.h";
