@@ -133,6 +133,7 @@
 		B91E75E41CE2D7B70080EAE0 /* SparkSDK-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = B91E758F1CE2D7B70080EAE0 /* SparkSDK-Bridging-Header.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B91E75E61CE2D7B70080EAE0 /* Webhook.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E75921CE2D7B70080EAE0 /* Webhook.swift */; };
 		B91E75E81CE2D7B70080EAE0 /* WebhookClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E75941CE2D7B70080EAE0 /* WebhookClient.swift */; };
+		C70FD7A020ECC8CF00F62201 /* RemoteAuxVideos.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70FD79F20ECC8CF00F62201 /* RemoteAuxVideos.swift */; };
 		C7625FDB205CBB9700219F95 /* SparkBroadcastExtensionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7625FD2205CBB9600219F95 /* SparkBroadcastExtensionKit.framework */; };
 		C7625FE0205CBB9700219F95 /* SparkBroadcastExtensionKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7625FDF205CBB9700219F95 /* SparkBroadcastExtensionKitTests.swift */; };
 		C7625FEC205CBC4100219F95 /* SparkBroadcastExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7625FEB205CBC4100219F95 /* SparkBroadcastExtension.swift */; };
@@ -319,6 +320,7 @@
 		B91E75921CE2D7B70080EAE0 /* Webhook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Webhook.swift; sourceTree = "<group>"; };
 		B91E75941CE2D7B70080EAE0 /* WebhookClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebhookClient.swift; sourceTree = "<group>"; };
 		C1494F760D625D66FFBF3F18 /* Pods-SparkSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SparkSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SparkSDK/Pods-SparkSDK.debug.xcconfig"; sourceTree = "<group>"; };
+		C70FD79F20ECC8CF00F62201 /* RemoteAuxVideos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteAuxVideos.swift; sourceTree = "<group>"; };
 		C7625FD2205CBB9600219F95 /* SparkBroadcastExtensionKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SparkBroadcastExtensionKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7625FD5205CBB9600219F95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C7625FDA205CBB9600219F95 /* SparkBroadcastExtensionKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SparkBroadcastExtensionKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -683,6 +685,7 @@
 				2099E2481EC44F1B002BDB0C /* MetricsEngine+Call.swift */,
 				204209751F8CD132002D95EB /* MediaShareModel.swift */,
 				204209771F8CD27F002D95EB /* ConversationClient.swift */,
+				C70FD79F20ECC8CF00F62201 /* RemoteAuxVideos.swift */,
 			);
 			path = Call;
 			sourceTree = "<group>";
@@ -1121,6 +1124,7 @@
 				5A8B99811DF222FB003633E1 /* OAuthUrlUtil.swift in Sources */,
 				B91E75AE1CE2D7B70080EAE0 /* MetricsEngine.swift in Sources */,
 				B91E75B41CE2D7B70080EAE0 /* CallClient.swift in Sources */,
+				C70FD7A020ECC8CF00F62201 /* RemoteAuxVideos.swift in Sources */,
 				20EEA2CA1EBDAAEB00D6BB75 /* SparkError.swift in Sources */,
 				5D93AEB91D29E0C700196F6F /* Timestamp.swift in Sources */,
 				208C13511E88C10500B8DEF0 /* CallEventSequencer.swift in Sources */,

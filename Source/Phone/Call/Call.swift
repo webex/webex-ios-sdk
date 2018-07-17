@@ -159,6 +159,12 @@ public class Call {
         /// Local screen share size has changed.
         /// - since: 1.4.0
         case localScreenShareViewSize
+        /// remote auxiliary video count has changed.
+        /// - since: 2.0.0
+        case remoteAuxVideosCount(Int)
+        /// remote auxiliary video count has changed.
+        /// - since: 2.0.0
+        case activeSpeakerChangedEvent(CallMembership)
     }
     
     /// The enumeration of call membership events.
@@ -177,6 +183,17 @@ public class Call {
         case sendingAudio(CallMembership)
         /// The person in the membership started screen sharing.
         case sendingScreenShare(CallMembership)
+    }
+    
+    /// The enumeration of remote auxiliary video change events.
+    ///
+    /// - since: 2.0.0
+    public enum RemoteAuxVideoChangeEvent {
+        
+        case remoteAuxVideoPersonChangedEvent(RemoteAuxVideo)
+        case remoteAuxVideoSizeChangedEvent(RemoteAuxVideo)
+        case remoteAuxSendingVideoEvent(RemoteAuxVideo)
+        case receivingAuxVideoEvent(RemoteAuxVideo)
     }
     
     /// The enumeration of iOS broadcasting events.
@@ -254,6 +271,11 @@ public class Call {
     ///
     /// - since: 1.4.0
     public var oniOSBroadcastingChanged: ((iOSBroadcastingEvent) -> Void)?
+    
+    ///
+    ///
+    /// - since: 2.0.0
+    public var onRemoteAuxVideoChanged: ((RemoteAuxVideoChangeEvent) -> Void)?
     
     /// The status of this *call*.
     ///
@@ -435,7 +457,16 @@ public class Call {
     /// - since: 1.2.0
     public private(set) var memberships: [CallMembership] {
         get { lock(); defer { unlock() }; return _memberships ?? [] }
-        set { lock(); defer { unlock() }; _memberships = newValue }
+        set {
+            lock()
+            defer {
+                unlock()
+                
+            }
+            _memberships = newValue
+            self.updateRemoteAuxVideoMembership(memberships: _memberships)
+            
+        }
     }
     
     /// The initiator of this *call*.
@@ -496,6 +527,18 @@ public class Call {
         }
     }
     
+    ///
+    ///
+    ///
+    /// - since: 2.0.0
+    public lazy private(set) var remoteAuxVideos: Array<RemoteAuxVideo> = Array<RemoteAuxVideo>()
+    
+    ///
+    ///
+    ///
+    /// - since: 2.0.0
+    public internal(set) var activeSpeaker: CallMembership?
+    
     var model: CallModel {
         get { lock(); defer { unlock() }; return _model }
         set { lock(); defer { unlock() }; _model = newValue }
@@ -535,10 +578,10 @@ public class Call {
     
     private var remoteSDP: String? {
         if let remoteSDP = self.model.myself?[device: self.device.deviceUrl]?.mediaConnections?.first?.remoteSdp?.sdp {
-                return remoteSDP
-            } else if let remoteSDP = self.model.mediaConnections?.first?.remoteSdp?.sdp {
-                return remoteSDP
-            }
+            return remoteSDP
+        } else if let remoteSDP = self.model.mediaConnections?.first?.remoteSdp?.sdp {
+            return remoteSDP
+        }
         return nil
     }
     
@@ -613,7 +656,7 @@ public class Call {
     public func hangup(completionHandler: @escaping (Error?) -> Void) {
         self.device.phone.hangup(call: self, completionHandler: completionHandler)
     }
-
+    
     /// Sends feedback for this call to Cisco Spark team.
     ///
     /// - parameter rating: The rating of the quality of this call between 1 and 5 where 5 means excellent quality.
@@ -685,6 +728,79 @@ public class Call {
         self.device.phone.stopSharing(call: self, completionHandler: completionHandler)
     }
     
+    
+    ///
+    ///
+    ///
+    /// - since: 2.0.0
+    public func subscribeRemoteAuxVideo(view:MediaRenderView,completionHandler: @escaping ((Result<RemoteAuxVideo>) -> Void)) {
+        let mediaOperationHandler: (RemoteAuxVideo.RenderViewOperationType) -> Any? = {
+            operation in
+                switch operation {
+                case .add(let vid,let renderView):
+                    self.mediaSession.addRenderView(view: renderView, vid: vid)
+                case .update(let vid,let renderView):
+                    self.mediaSession.updateRenderView(view: renderView, vid: vid)
+                case .remove(let vid,let renderView):
+                    self.mediaSession.removeRenderView(view: renderView, vid: vid)
+                case .getMuted(let vid):
+                    return self.mediaSession.getMediaInputMuted(vid: vid)
+                case .getRemoteMuted(let vid):
+                    return self.mediaSession.getMediaOutputMuted(vid: vid)
+                case .getSize(let vid):
+                    return self.mediaSession.getRenderViewSize(vid: vid)
+                case .mute(let vid, let muted):
+                    if muted {
+                        self.mediaSession.muteMedia(vid: vid)
+                    } else {
+                        self.mediaSession.unmuteMedia(vid: vid)
+                    }
+                }
+            return nil
+        }
+        
+        DispatchQueue.main.async {
+            if self.remoteAuxVideos.count >= MAX_REMOTE_AUX_VIDEO_NUMBER {
+                completionHandler(Result.failure(SparkError.illegalOperation(reason: "have exceeded the auxiliary videos limit")))
+                return
+            }
+            
+            var vid = RemoteAuxVideo.INVAILD_VID
+            if (self.mediaSession.status == .running) {
+                vid = self.mediaSession.subscribeAuxVideo(view: view)
+                if vid == RemoteAuxVideo.INVAILD_VID {
+                    completionHandler(Result.failure(SparkError.serviceFailed(code: -7000, reason: "subscribe video fail")))
+                    return
+                }
+            }
+            
+            let auxVideo = RemoteAuxVideo.init(vid: vid, renderViews: [view],renderViewOperation:mediaOperationHandler)
+            SDKLogger.shared.info("add subscribe call for vid:\(auxVideo.vid)")
+            self.remoteAuxVideos.append(auxVideo)
+            completionHandler(Result.success(auxVideo))
+        }
+    }
+    
+    ///
+    ///
+    ///
+    /// - since: 2.0.0
+    public func unsubscribeRemoteAuxVideo(remoteAuxVideo:RemoteAuxVideo , completionHandler: @escaping ((Error?) -> Void)) {
+        DispatchQueue.main.async {
+            var error:Error? = nil
+            if let index = self.remoteAuxVideos.index(where:{ $0.vid == remoteAuxVideo.vid }) {
+                SDKLogger.shared.info("remove subscribe call for vid:\(remoteAuxVideo.vid)")
+                
+                self.mediaSession.unsubscribeAuxVideo(vid: remoteAuxVideo.vid)
+                self.remoteAuxVideos.remove(at: index)
+                remoteAuxVideo.invalidate()
+            } else {
+                error = SparkError.illegalOperation(reason: "remote auxiliary video not found")
+            }
+            completionHandler(error)
+        }
+    }
+    
     func end(reason: DisconnectReason) {
         //To end this call stop local screen share and broadcasting first.
         if #available(iOS 11.2, *) {
@@ -738,6 +854,19 @@ public class Call {
                 self.oniOSBroadcastingChanged?(isBroadcasting ? iOSBroadcastingEvent.extensionConnected : iOSBroadcastingEvent.extensionDisconnected)
             }
         }
+        
+        for remoteAuxVideo in self.remoteAuxVideos {
+            if remoteAuxVideo.vid != RemoteAuxVideo.INVAILD_VID , let view = remoteAuxVideo.renderViews.first {
+                let vid = self.mediaSession.subscribeAuxVideo(view: view)
+                if vid != RemoteAuxVideo.INVAILD_VID {
+                    remoteAuxVideo.vid = vid
+                    for renderView in remoteAuxVideo.renderViews.filter({ return $0 != view }) {
+                        self.mediaSession.addRenderView(view: renderView, vid: vid)
+                    }
+                }
+            }
+        }
+        
         self.mediaSession.startMedia(call: self)
         if let granted = self.model.screenShareMediaFloor?.granted, self.mediaSession.hasScreenShare {
             self.mediaSession.joinScreenShare(granted, isSending: self.isScreenSharedBySelfDevice())
@@ -750,6 +879,13 @@ public class Call {
             self.mediaSession.leaveScreenShare(granted, isSending: self.isScreenSharedBySelfDevice())
         }
         self.mediaSession.onBroadcasting = nil
+        
+        for remoteAuxVideo in self.remoteAuxVideos {
+            if remoteAuxVideo.vid != RemoteAuxVideo.INVAILD_VID {
+                self.mediaSession.unsubscribeAuxVideo(vid: remoteAuxVideo.vid)
+            }
+        }
+        
         self.mediaSession.stopMedia()
     }
     
@@ -812,7 +948,7 @@ public class Call {
                                 self.mediaSession.joinScreenShare(granted, isSending: true)
                             }
                             if !self.mediaSession.screenShareMuted {
-                              self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(true))
+                                self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(true))
                             }
                         } else {
                             if self.mediaSession.hasScreenShare {
@@ -945,6 +1081,16 @@ public class Call {
             self.memberships = []
         }
         self.status.handle(model: model, for: self)
+    }
+    
+    private func updateRemoteAuxVideoMembership(memberships:[CallMembership]?) {
+        if let membershipsArray = memberships {
+            for remoteAuxVideo in remoteAuxVideos {
+                if let person = remoteAuxVideo.person, let membership = membershipsArray.filter({ $0.id == person.id }).first {
+                    remoteAuxVideo.person = membership
+                }
+            }
+        }
     }
 }
 

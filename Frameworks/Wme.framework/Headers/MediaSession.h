@@ -2,6 +2,13 @@
 #import "MediaConstraint.h"
 #import "FrameInfo.h"
 
+typedef NS_ENUM(NSInteger, MediaEngineType) {
+    MediaEngineTypeAudio,
+    MediaEngineTypeVideo,
+    MediaEngineTypeScreenShare,
+    MediaEngineTypeAuxVideo
+};
+
 @interface MediaSession : NSObject
 
 // SDP & constraint
@@ -88,4 +95,16 @@
 
 - (void)updateSdpDirectionWithLocalView:(UIView *)localView remoteView:(UIView *)remoteView;
 - (void)updateSdpDirectionWithScreenShare:(UIView *)screenShareView;
+
+- (int)subscribeVideoTrack:(UIView *)renderView;
+- (void)unsubscribeVideoTrack:(int)vid;
+- (void)addRenderView:(UIView *)renderView forVid:(int)vid;
+- (void)removeRenderView:(UIView *)renderView forVid:(int)vid;
+- (void)updateRenderView:(UIView *)renderView forVid:(int)vid;
+- (CGSize)getRenderViewSizeForVid:(int)vid;
+- (Boolean)getMediaInputMuted:(MediaEngineType)type forVid:(int)vid;
+- (Boolean)getMediaOutputMuted:(MediaEngineType)type forVid:(int)vid;
+- (void)muteMedia:(MediaEngineType)type forVid:(int)vid;
+- (void)unmuteMedia:(MediaEngineType)type forVid:(int)vid;
+- (int)subscribeVideoTrack:(UIView *)renderView forCSI:(unsigned int)CSI;
 @end

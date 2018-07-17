@@ -335,7 +335,6 @@ class MediaSessionWrapper {
     }
 }
 
-
 extension MediaSessionWrapper : BroadcastConnectionServerDelegate {
     public func shouldAcceptNewConnection() -> Bool {
         SDKLogger.shared.info("Accept new broadcast client connection?: \(isSharingScreen)")
@@ -361,5 +360,47 @@ extension MediaSessionWrapper : BroadcastConnectionServerDelegate {
 extension MediaSessionWrapper {
     internal func getMediaSession() -> MediaSession {
             return self.mediaSession
+    }
+}
+
+extension MediaSessionWrapper {
+    func subscribeAuxVideo(view: MediaRenderView) -> Int {
+        return Int(self.mediaSession.subscribeVideoTrack(view))
+    }
+    
+    func unsubscribeAuxVideo(vid:Int) {
+        self.mediaSession.unsubscribeVideoTrack(Int32(vid))
+    }
+    
+    func addRenderView(view:MediaRenderView, vid:Int) {
+        self.mediaSession.addRenderView(view, forVid: Int32(vid))
+    }
+    
+    func removeRenderView(view:MediaRenderView, vid:Int) {
+        self.mediaSession.removeRenderView(view, forVid: Int32(vid))
+    }
+    
+    func updateRenderView(view:MediaRenderView, vid:Int) {
+        self.mediaSession.updateRenderView(view, forVid: Int32(vid))
+    }
+    
+    func getRenderViewSize(vid:Int) -> CGSize {
+        return self.mediaSession.getRenderViewSize(forVid: Int32(vid))
+    }
+    
+    func getMediaInputMuted(vid:Int) -> Bool {
+        return self.mediaSession.getMediaInputMuted(MediaEngineType.auxVideo, forVid: Int32(vid))
+    }
+    
+    func getMediaOutputMuted(vid:Int) -> Bool {
+        return self.mediaSession.getMediaOutputMuted(MediaEngineType.auxVideo, forVid: Int32(vid))
+    }
+    
+    func muteMedia(vid:Int) {
+        self.mediaSession.muteMedia(MediaEngineType.auxVideo, forVid: Int32(vid))
+    }
+    
+    func unmuteMedia(vid:Int) {
+        self.mediaSession.unmuteMedia(MediaEngineType.auxVideo, forVid: Int32(vid))
     }
 }
