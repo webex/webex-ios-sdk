@@ -24,8 +24,13 @@ extern NSString *const MediaEngineDidDetectVideoMediaUnavailableNotification;
 extern NSString *const MediaEngineDidDetectVideoMediaAvailableNotification;
 extern NSString *const MediaEngineDidDetectAuxVideoMediaUnavailableNotification;
 extern NSString *const MediaEngineDidDetectAuxVideoMediaAvailableNotification;
+extern NSString *const MediaEngineDidDetectScreenShareMediaAvailableNotification;
+extern NSString *const MediaEngineDidDetectScreenShareMediaUnavailableNotification;
 extern NSString *const MediaEngineDidActiveSpeakerChangeNotification;
 extern NSString *const MediaEngineDidCSIChangeNotification;
+extern NSString *const MediaEngineDidMuteAuxVideoNotification;
+extern NSString *const MediaEngineDidUnMuteAuxVideoNotification;
+
 // Notification key and values
 extern NSString *const MediaEngineErrorKey;
 extern NSString *const MediaEngineErrorDescriptionKey;

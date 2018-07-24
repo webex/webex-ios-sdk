@@ -299,7 +299,7 @@ public class Call {
     ///
     /// - since: 1.2.0
     public var remoteSendingVideo: Bool {
-        return !model.isRemoteVideoMuted
+        return !self.mediaSession.remoteVideoMuted
     }
     
     /// True if the remote party of this *call* is sending audio. Otherwise, false.
@@ -313,7 +313,7 @@ public class Call {
     ///
     /// - since: 1.3.0
     public var remoteSendingScreenShare: Bool {
-        return model.isGrantedScreenShare && !self.isScreenSharedBySelfDevice()
+        return model.isGrantedScreenShare && !self.mediaSession.remotescreenShareMuted
     }
     
     /// True if the local party of this *call* is sending video. Otherwise, false.
@@ -428,28 +428,32 @@ public class Call {
     ///
     /// - since: 1.2.0
     public var localVideoViewSize: CMVideoDimensions {
-        return CMVideoDimensions(width: self.mediaSession.localVideoViewWidth, height: self.mediaSession.localVideoViewHeight)
+        let size = self.mediaSession.localVideoViewSize
+        return CMVideoDimensions(width: Int32(size.width), height: Int32(size.height))
     }
     
     /// The remote video render view dimensions (points) of this *call*.
     ///
     /// - since: 1.2.0
     public var remoteVideoViewSize: CMVideoDimensions {
-        return CMVideoDimensions(width: self.mediaSession.remoteVideoViewWidth, height: self.mediaSession.remoteVideoViewHeight)
+        let size = self.mediaSession.remoteVideoViewSize
+        return CMVideoDimensions(width: Int32(size.width), height: Int32(size.height))
     }
     
     /// The remote screen share render view dimensions (points) of this *call*.
     ///
     /// - since: 1.3.0
     public var remoteScreenShareViewSize: CMVideoDimensions {
-        return CMVideoDimensions(width: self.mediaSession.remoteScreenShareViewWidth, height: self.mediaSession.remoteScreenShareViewHeight)
+        let size = self.mediaSession.remoteScreenShareViewSize
+        return CMVideoDimensions(width: Int32(size.width), height: Int32(size.height))
     }
     
     /// The local screen share render view dimensions (points) of this *call*.
     ///
     /// - since: 1.4.0
     public var localScreenShareViewSize: CMVideoDimensions {
-        return CMVideoDimensions(width: self.mediaSession.localScreenShareViewWidth, height: self.mediaSession.localScreenShareViewHeight)
+        let size = self.mediaSession.localScreenShareViewSize
+        return CMVideoDimensions(width: Int32(size.width), height: Int32(size.height))
     }
     
     /// Call Memberships represent participants in this *call*.
@@ -738,22 +742,22 @@ public class Call {
             operation in
                 switch operation {
                 case .add(let vid,let renderView):
-                    self.mediaSession.addRenderView(view: renderView, vid: vid)
+                    self.mediaSession.addAuxRenderView(view: renderView, vid: vid)
                 case .update(let vid,let renderView):
-                    self.mediaSession.updateRenderView(view: renderView, vid: vid)
+                    self.mediaSession.updateAuxRenderView(view: renderView, vid: vid)
                 case .remove(let vid,let renderView):
-                    self.mediaSession.removeRenderView(view: renderView, vid: vid)
+                    self.mediaSession.removeAuxRenderView(view: renderView, vid: vid)
                 case .getMuted(let vid):
-                    return self.mediaSession.getMediaInputMuted(vid: vid)
+                    return self.mediaSession.getAuxMediaInputMuted(vid: vid)
                 case .getRemoteMuted(let vid):
-                    return self.mediaSession.getMediaOutputMuted(vid: vid)
+                    return self.mediaSession.getAuxMediaOutputMuted(vid: vid)
                 case .getSize(let vid):
-                    return self.mediaSession.getRenderViewSize(vid: vid)
+                    return self.mediaSession.getAuxRenderViewSize(vid: vid)
                 case .mute(let vid, let muted):
                     if muted {
-                        self.mediaSession.muteMedia(vid: vid)
+                        self.mediaSession.muteAuxMedia(vid: vid)
                     } else {
-                        self.mediaSession.unmuteMedia(vid: vid)
+                        self.mediaSession.unmuteAuxMedia(vid: vid)
                     }
                 }
             return nil
@@ -861,7 +865,7 @@ public class Call {
                 if vid != RemoteAuxVideo.INVAILD_VID {
                     remoteAuxVideo.vid = vid
                     for renderView in remoteAuxVideo.renderViews.filter({ return $0 != view }) {
-                        self.mediaSession.addRenderView(view: renderView, vid: vid)
+                        self.mediaSession.addAuxRenderView(view: renderView, vid: vid)
                     }
                 }
             }
@@ -912,9 +916,6 @@ public class Call {
                 
                 self.doCallModel(new)
                 DispatchQueue.main.async {
-                    if new.isRemoteVideoMuted != old.isRemoteVideoMuted {
-                        self.onMediaChanged?(MediaChangedEvent.remoteSendingVideo(!new.isRemoteVideoMuted))
-                    }
                     if new.isRemoteAudioMuted != old.isRemoteAudioMuted {
                         self.onMediaChanged?(MediaChangedEvent.remoteSendingAudio(!new.isRemoteAudioMuted))
                     }

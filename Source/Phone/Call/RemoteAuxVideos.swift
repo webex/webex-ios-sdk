@@ -72,8 +72,8 @@ public class RemoteAuxVideo {
     
     public var isSendingVideo: Bool {
         get {
-            if let isSending = renderViewOperationHandler?(RenderViewOperationType.getRemoteMuted(vid)) as? Bool {
-                return isSending
+            if let sendingMuted = renderViewOperationHandler?(RenderViewOperationType.getRemoteMuted(vid)) as? Bool {
+                return !sendingMuted
             }
             return true;
         }
@@ -90,8 +90,8 @@ public class RemoteAuxVideo {
     
     public var isReceivingVideo:Bool {
         get {
-            if let isReceiving = renderViewOperationHandler?(RenderViewOperationType.getMuted(vid)) as? Bool {
-                return isReceiving
+            if let receivingMuted = renderViewOperationHandler?(RenderViewOperationType.getMuted(vid)) as? Bool {
+                return !receivingMuted
             }
             return true;
         }

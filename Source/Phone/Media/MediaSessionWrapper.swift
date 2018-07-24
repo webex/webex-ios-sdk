@@ -64,101 +64,97 @@ class MediaSessionWrapper {
     }
     
     // MARK: - Local View & Remote View
-    var localVideoViewHeight: Int32 {
-        return Int32(mediaSession.localVideoViewHeight)
+    var localVideoViewSize: CGSize {
+        return mediaSession.getRenderViewSize(with: .localVideo)
+    }
+
+    var remoteVideoViewSize: CGSize {
+        return mediaSession.getRenderViewSize(with: .remoteVideo)
     }
     
-    var localVideoViewWidth: Int32 {
-        return Int32(mediaSession.localVideoViewWidth)
+    var remoteScreenShareViewSize: CGSize {
+        return mediaSession.getRenderViewSize(with: .remoteScreenShare)
     }
     
-    var remoteVideoViewHeight: Int32 {
-        return Int32(mediaSession.remoteVideoViewHeight)
-    }
-    
-    var remoteVideoViewWidth: Int32 {
-        return Int32(mediaSession.remoteVideoViewWidth)
-    }
-    
-    var remoteScreenShareViewHeight: Int32 {
-        return Int32(mediaSession.remoteScreenShareViewHeight)
-    }
-    
-    var remoteScreenShareViewWidth: Int32 {
-        return Int32(mediaSession.remoteScreenShareViewHeight)
-    }
-    
-    var localScreenShareViewHeight: Int32 {
-        return Int32(mediaSession.localScreenShareViewHeight)
-    }
-    
-    var localScreenShareViewWidth: Int32 {
-        return Int32(mediaSession.localScreenShareViewWidth)
+    var localScreenShareViewSize: CGSize {
+        return mediaSession.getRenderViewSize(with: .localScreenShare)
     }
     
     var videoViews: (local:MediaRenderView,remote:MediaRenderView)? {
-        if let localView = mediaSession.localVideoView as? MediaRenderView, let remoteView = mediaSession.remoteVideoView as? MediaRenderView {
+        if let localView = mediaSession.getRenderView(with: .localVideo) as? MediaRenderView, let remoteView = mediaSession.getRenderView(with: .remoteVideo) as? MediaRenderView {
             return (local:localView, remote:remoteView)
         }
         return nil
     }
     
     var screenShareView: MediaRenderView? {
-        return mediaSession.screenShareView as? MediaRenderView
+        return mediaSession.getRenderView(with: .remoteScreenShare) as? MediaRenderView
     }
     
     // MARK: - Audio & Video
     var audioMuted: Bool {
         get {
-            return mediaSession.audioMuted
+            return mediaSession.getMediaMuted(fromLocal: .localAudio)
         }
         set {
-            newValue ? mediaSession.muteAudio() : mediaSession.unmuteAudio()
+            newValue ? mediaSession.muteMedia(.localAudio) : mediaSession.unmuteMedia(.localAudio)
         }
     }
     
     var audioOutputMuted: Bool {
         get {
-            return mediaSession.audioOutputMuted
+            return mediaSession.getMediaMuted(fromLocal: .remoteAudio)
         }
         set {
-            newValue ? mediaSession.muteAudioOutput() : mediaSession.unmuteAudioOutput()
+            newValue ? mediaSession.muteMedia(.remoteAudio) : mediaSession.unmuteMedia(.remoteAudio)
         }
     }
     
     var videoMuted: Bool {
         get {
-            return mediaSession.videoMuted
+            return mediaSession.getMediaMuted(fromLocal: .localVideo)
         }
         set {
-            newValue ? mediaSession.muteVideo() : mediaSession.unmuteVideo()
+            newValue ? mediaSession.muteMedia(.localVideo) : mediaSession.unmuteMedia(.localVideo)
         }
     }
     
     var videoOutputMuted: Bool {
         get {
-            return mediaSession.videoOutputMuted
+            return mediaSession.getMediaMuted(fromLocal: .remoteVideo)
         }
         set {
-            newValue ? mediaSession.muteVideoOutput() : mediaSession.unmuteVideoOutput()
+            newValue ? mediaSession.muteMedia(.remoteVideo) : mediaSession.unmuteMedia(.remoteVideo)
+        }
+    }
+    
+    var remoteVideoMuted: Bool {
+        get {
+            return mediaSession.getMediaMuted(fromRemote: .remoteVideo)
         }
     }
     
     var screenShareMuted: Bool {
         get {
-            return mediaSession.screenShareMuted
+            return mediaSession.getMediaMuted(fromLocal: .localScreenShare)
         }
         set {
-            newValue ? mediaSession.muteScreenShare() : mediaSession.unmuteScreenShare()
+            newValue ? mediaSession.muteMedia(.localScreenShare) : mediaSession.unmuteMedia(.localScreenShare)
         }
     }
     
     var screenShareOutputMuted: Bool {
         get {
-            return mediaSession.screenShareOutputMuted
+            return mediaSession.getMediaMuted(fromLocal: .remoteScreenShare)
         }
         set {
-            newValue ? mediaSession.muteScreenShareOutput() : mediaSession.unmuteScreenShareOutput()
+            newValue ? mediaSession.muteMedia(.remoteScreenShare) : mediaSession.unmuteMedia(.remoteScreenShare)
+        }
+    }
+    
+    var remotescreenShareMuted: Bool {
+        get {
+            return mediaSession.getMediaMuted(fromRemote: .remoteScreenShare)
         }
     }
     
@@ -184,13 +180,12 @@ class MediaSessionWrapper {
         if self.status == .initial {
             self.status = .preview
             mediaSession.mediaConstraint = MediaConstraint(constraint: MediaConstraintFlag.audio.rawValue | MediaConstraintFlag.video.rawValue)
-            mediaSession.sendVideo = true
-            mediaSession.localVideoView = view
+            mediaSession.addRenderView(view, type: .preview)
             mediaSession.createMediaConnection()
             mediaSession.setDefaultCamera(phone.defaultFacingMode == Phone.FacingMode.user)
             mediaSession.setCamrea(phone.defaultFacingMode == Phone.FacingMode.user)
             mediaSession.setDefaultAudioOutput(phone.defaultLoudSpeaker)
-            mediaSession.startLocalVideoRenderView()
+            mediaSession.startVideoRenderView(with: .preview)
             return true
         }
         return false;
@@ -198,9 +193,8 @@ class MediaSessionWrapper {
     
     func stopPreview() {
         if self.status == .preview {
-            mediaSession.stopLocalVideoRenderView(true)
-            mediaSession.localVideoView = nil
-            mediaSession.sendVideo = false
+            mediaSession.stopVideoRenderView(with: .preview, removeRender: true)
+            mediaSession.removeAllRenderView(.preview)
             mediaSession.disconnectFromCloud()
             self.status = .initial
         }
@@ -221,15 +215,15 @@ class MediaSessionWrapper {
                 mediaConfig.videoMaxBandwidth = phone.videoMaxBandwidth
                 mediaConfig.screenShareMaxBandwidth = phone.screenShareMaxBandwidth
                 mediaSession.mediaConstraint = MediaConstraint(constraint: MediaConstraintFlag.audio.rawValue | MediaConstraintFlag.video.rawValue | MediaConstraintFlag.screenShare.rawValue, withCapability:mediaConfig)
-                mediaSession.localVideoView = option.localVideoView
-                mediaSession.remoteVideoView = option.remoteVideoView
-                mediaSession.screenShareView = option.screenShareView
+                mediaSession.addRenderView(option.localVideoView, type: .localVideo)
+                mediaSession.addRenderView(option.remoteVideoView, type: .remoteVideo)
+                mediaSession.addRenderView(option.screenShareView, type: .remoteScreenShare)
             }
             else if option.hasVideo {
                 mediaConfig.videoMaxBandwidth = phone.videoMaxBandwidth
                 mediaSession.mediaConstraint = MediaConstraint(constraint: MediaConstraintFlag.audio.rawValue | MediaConstraintFlag.video.rawValue, withCapability:mediaConfig)
-                mediaSession.localVideoView = option.localVideoView
-                mediaSession.remoteVideoView = option.remoteVideoView
+                mediaSession.addRenderView(option.localVideoView, type: .localVideo)
+                mediaSession.addRenderView(option.remoteVideoView, type: .remoteVideo)
             }
             else {
                 mediaSession.mediaConstraint = MediaConstraint(constraint: MediaConstraintFlag.audio.rawValue, withCapability:mediaConfig)
@@ -372,35 +366,35 @@ extension MediaSessionWrapper {
         self.mediaSession.unsubscribeVideoTrack(Int32(vid))
     }
     
-    func addRenderView(view:MediaRenderView, vid:Int) {
-        self.mediaSession.addRenderView(view, forVid: Int32(vid))
+    func addAuxRenderView(view:MediaRenderView, vid:Int) {
+        self.mediaSession.addRenderView(view, type: .auxVideo, andVid: Int32(vid))
     }
     
-    func removeRenderView(view:MediaRenderView, vid:Int) {
-        self.mediaSession.removeRenderView(view, forVid: Int32(vid))
+    func removeAuxRenderView(view:MediaRenderView, vid:Int) {
+        self.mediaSession.removeRenderView(view, type: .auxVideo, andVid: Int32(vid))
     }
     
-    func updateRenderView(view:MediaRenderView, vid:Int) {
-        self.mediaSession.updateRenderView(view, forVid: Int32(vid))
+    func updateAuxRenderView(view:MediaRenderView, vid:Int) {
+        self.mediaSession.updateRenderView(view, type: .auxVideo, andVid: Int32(vid))
     }
     
-    func getRenderViewSize(vid:Int) -> CGSize {
-        return self.mediaSession.getRenderViewSize(forVid: Int32(vid))
+    func getAuxRenderViewSize(vid:Int) -> CGSize {
+        return self.mediaSession.getRenderViewSize(with: .auxVideo, andVid: Int32(vid))
     }
     
-    func getMediaInputMuted(vid:Int) -> Bool {
-        return self.mediaSession.getMediaInputMuted(MediaEngineType.auxVideo, forVid: Int32(vid))
+    func getAuxMediaInputMuted(vid:Int) -> Bool {
+        return self.mediaSession.getMediaMuted(fromLocal: .auxVideo, andVid: Int32(vid))
     }
     
-    func getMediaOutputMuted(vid:Int) -> Bool {
-        return self.mediaSession.getMediaOutputMuted(MediaEngineType.auxVideo, forVid: Int32(vid))
+    func getAuxMediaOutputMuted(vid:Int) -> Bool {
+        return self.mediaSession.getMediaMuted(fromRemote: .auxVideo, andVid: Int32(vid))
     }
     
-    func muteMedia(vid:Int) {
-        self.mediaSession.muteMedia(MediaEngineType.auxVideo, forVid: Int32(vid))
+    func muteAuxMedia(vid:Int) {
+        self.mediaSession.muteMedia(.auxVideo, andVid: Int32(vid))
     }
     
-    func unmuteMedia(vid:Int) {
-        self.mediaSession.unmuteMedia(MediaEngineType.auxVideo, forVid: Int32(vid))
+    func unmuteAuxMedia(vid:Int) {
+        self.mediaSession.unmuteMedia(.auxVideo, andVid: Int32(vid))
     }
 }
