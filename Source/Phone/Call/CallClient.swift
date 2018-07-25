@@ -27,15 +27,15 @@ class CallClient {
     enum DialTarget {
         case peopleId(String)
         case peopleMail(String)
-        case roomId(String)
-        case roomMail(String)
+        case spaceId(String)
+        case spaceMail(String)
         case other(String)
         
         var isEndpoint: Bool {
             switch self {
-            case .peopleId(_), .peopleMail(_), .roomMail(_), .other(_):
+            case .peopleId(_), .peopleMail(_), .spaceMail(_), .other(_):
                 return true
-            case .roomId(_):
+            case .spaceId(_):
                 return false
             }
         }
@@ -44,7 +44,7 @@ class CallClient {
             switch self {
             case .peopleId(_), .peopleMail(_), .other(_):
                 return false
-            case .roomId(_), .roomMail(_):
+            case .spaceId(_), .spaceMail(_):
                 return true
             }
         }
@@ -55,9 +55,9 @@ class CallClient {
                 return id
             case .peopleMail(let mail):
                 return mail
-            case .roomId(let id):
+            case .spaceId(let id):
                 return id
-            case .roomMail(let mail):
+            case .spaceMail(let mail):
                 return mail
             case .other(let other):
                 return other
@@ -70,7 +70,7 @@ class CallClient {
             }
             else if let email = EmailAddress.fromString(address) {
                 if address.lowercased().hasSuffix("@meet.ciscospark.com") {
-                    completionHandler(DialTarget.roomMail(address))
+                    completionHandler(DialTarget.spaceMail(address))
                 }
                 else if address.contains("@") && !address.contains(".") {
                     webex.people.list(email: email, displayName: nil, max: 1) { persons in
@@ -100,7 +100,7 @@ class CallClient {
                         return DialTarget.peopleId(path[path.count - 1])
                     }
                     else if type == "ROOM" {
-                        return DialTarget.roomId(path[path.count - 1])
+                        return DialTarget.spaceId(path[path.count - 1])
                     }
                 }
             }

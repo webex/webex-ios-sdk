@@ -26,7 +26,7 @@ import SwiftyJSON
 class MessageClientImpl {
     
     class MSGError {
-        static let roomFetchFail = WebexError.serviceFailed(code: -7000, reason: "Room Fetch Fail")
+        static let spaceFetchFail = WebexError.serviceFailed(code: -7000, reason: "Space Fetch Fail")
         static let clientInfoFetchFail = WebexError.serviceFailed(code: -7000, reason: "Client Info Fetch Fail")
         static let ephemaralKeyFetchFail = WebexError.serviceFailed(code: -7000, reason: "EphemaralKey Fetch Fail")
         static let kmsInfoFetchFail = WebexError.serviceFailed(code: -7000, reason: "KMS Info Fetch Fail")
@@ -65,7 +65,7 @@ class MessageClientImpl {
     private var keyMaterialCompletionHandlers: [String: [(Result<(String, String)>) -> Void]] = [String: [(Result<(String, String)>) -> Void]]()
     private var keysCompletionHandlers: [String: [(Result<(String, String)>) -> Void]] = [String: [(Result<(String, String)>) -> Void]]()
     private var encryptionKeys: [String: EncryptionKey] = [String: EncryptionKey]()
-    private var rooms: [String: String] = [String: String]()
+    private var spaces: [String: String] = [String: String]()
     private typealias KeyHandler = (Result<(String, String)>) -> Void
     
     init(authenticator: Authenticator, deviceUrl: URL) {
@@ -73,7 +73,7 @@ class MessageClientImpl {
         self.deviceUrl = deviceUrl
     }
     
-    func list(roomId: String,
+    func list(spaceId: String,
               mentionedPeople: Mention? = nil,
               before: Before? = nil,
               max: Int,
@@ -92,7 +92,7 @@ class MessageClientImpl {
             let request = self.messageServiceBuilder.path(mentionedPeople == nil ? "activities" : "mentions")
                 .keyPath("items")
                 .method(.get)
-                .query(RequestParameter(["conversationId": roomId.locusFormat, "limit": max, dateKey: (date ?? Date()).iso8601String]))
+                .query(RequestParameter(["conversationId": spaceId.locusFormat, "limit": max, dateKey: (date ?? Date()).iso8601String]))
                 .queue(queue)
                 .build()
             request.responseArray { (response: ServiceResponse<[ActivityModel]>) in
@@ -100,7 +100,7 @@ class MessageClientImpl {
                 case .success(let value):
                     let result = result + value.filter({$0.kind == ActivityModel.Kind.post || $0.kind == ActivityModel.Kind.share})
                     if result.count >= max || value.count < max {
-                        let key = self.encryptionKey(roomId: roomId)
+                        let key = self.encryptionKey(spaceId: spaceId)
                         key.material(client: self) { material in
                             if let material = material.data {
                                 let messages = result.prefix(max).map { $0.decrypt(key: material) }.map { Message(activity: $0) }
@@ -153,8 +153,8 @@ class MessageClientImpl {
         request.responseObject { (response : ServiceResponse<ActivityModel>) in
             switch response.result {
             case .success(let activity):
-                if let roomId = activity.roomId, decrypt {
-                    let key = self.encryptionKey(roomId: roomId)
+                if let spaceId = activity.spaceId, decrypt {
+                    let key = self.encryptionKey(spaceId: spaceId)
                     key.material(client: self) { material in
                         (queue ?? DispatchQueue.main).async {
                             completionHandler(ServiceResponse(response.response, Result.success(Message(activity: activity.decrypt(key: material.data)))))
@@ -175,17 +175,17 @@ class MessageClientImpl {
               files: [LocalFile]? = nil,
               queue: DispatchQueue? = nil,
               completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.lookupRoom(person: person, queue: queue) { result in
-            if let roomId = result.data {
-                self.post(roomId: roomId, text: text, files: files, queue: queue, completionHandler: completionHandler)
+        self.lookupSpace(person: person, queue: queue) { result in
+            if let spaceId = result.data {
+                self.post(spaceId: spaceId, text: text, files: files, queue: queue, completionHandler: completionHandler)
             }
             else {
-                completionHandler(ServiceResponse(nil, Result.failure(result.error ?? MSGError.roomFetchFail)))
+                completionHandler(ServiceResponse(nil, Result.failure(result.error ?? MSGError.spaceFetchFail)))
             }
         }
     }
     
-    func post(roomId: String,
+    func post(spaceId: String,
               text: String? = nil,
               mentions: [Mention]? = nil,
               files: [LocalFile]? = nil,
@@ -209,7 +209,7 @@ class MessageClientImpl {
         object["groupMentions"] = ["items" : mentionedGroup]
         
         var verb = ActivityModel.Kind.post
-        let key = self.encryptionKey(roomId: roomId)
+        let key = self.encryptionKey(spaceId: spaceId)
         key.material(client: self) { material in
             if let material = material.data, let encrypt = text?.encrypt(key: material) {
                 object["displayName"] = encrypt
@@ -223,7 +223,7 @@ class MessageClientImpl {
                     object["files"] = ["items": files.toJSON()]
                     verb = ActivityModel.Kind.share
                 }
-                let target: [String: Any] = ["id": roomId.locusFormat, "objectType": ObjectType.conversation.rawValue]
+                let target: [String: Any] = ["id": spaceId.locusFormat, "objectType": ObjectType.conversation.rawValue]
                 key.encryptionUrl(client: self) { encryptionUrl in
                     if let url = encryptionUrl.data {
                         let body = RequestParameter(["verb": verb.rawValue, "encryptionKeyUrl": url, "object": object, "target": target, "clientTempId": "\(self.uuid):\(UUID().uuidString)", "kmsMessage": self.keySerialization ?? nil])
@@ -260,9 +260,9 @@ class MessageClientImpl {
         request.responseObject { (response : ServiceResponse<ActivityModel>) in
             switch response.result {
             case .success(let activity):
-                if let roomId = activity.roomId {
+                if let spaceId = activity.spaceId {
                     let object: [String: Any] = ["id": messageId.locusFormat, "objectType": ObjectType.activity.rawValue]
-                    let target: [String: Any] = ["id": roomId.locusFormat, "objectType": ObjectType.conversation.rawValue]
+                    let target: [String: Any] = ["id": spaceId.locusFormat, "objectType": ObjectType.conversation.rawValue]
                     let body = RequestParameter(["verb": ActivityModel.Kind.delete.rawValue, "object": object, "target": target])
                     let request = self.messageServiceBuilder.path("activities")
                         .method(.post)
@@ -273,7 +273,7 @@ class MessageClientImpl {
                 }
                 else {
                     (queue ?? DispatchQueue.main).async {
-                        completionHandler(ServiceResponse(response.response, Result.failure(response.result.error ?? MSGError.roomFetchFail)))
+                        completionHandler(ServiceResponse(response.response, Result.failure(response.result.error ?? MSGError.spaceFetchFail)))
                     }
                 }
             case .failure(let error):
@@ -323,14 +323,14 @@ class MessageClientImpl {
     
     // MARK: Encryption Feature Functions
     func handle(activity: ActivityModel) {
-        guard let roomId = activity.roomId else {
-            SDKLogger.shared.error("Not a room message \(activity.id ?? (activity.toJSONString() ?? ""))")
+        guard let spaceId = activity.spaceId else {
+            SDKLogger.shared.error("Not a space message \(activity.id ?? (activity.toJSONString() ?? ""))")
             return
         }
         if let clientTempId = activity.clientTempId, clientTempId.starts(with: self.uuid) {
             return
         }
-        let key = self.encryptionKey(roomId: roomId)
+        let key = self.encryptionKey(spaceId: spaceId)
         if let encryptionUrl = activity.encryptionKeyUrl {
             key.tryRefresh(encryptionUrl: encryptionUrl)
         }
@@ -380,34 +380,34 @@ class MessageClientImpl {
                     }
                 }
                 else if let dict = (json["keys"].object as? [[String : Any]])?.first {
-                    if let key = try? KmsKey(from: dict), let roomId = self.keysCompletionHandlers.keys.first ,let handlers = self.keysCompletionHandlers.popFirst()?.value  {
-                        self.updateConversationWithKey(key: key, roomId: roomId, handlers: handlers)
+                    if let key = try? KmsKey(from: dict), let spaceId = self.keysCompletionHandlers.keys.first ,let handlers = self.keysCompletionHandlers.popFirst()?.value  {
+                        self.updateConversationWithKey(key: key, spaceId: spaceId, handlers: handlers)
                     }
                 }
             }
         }
     }
     
-    func requestRoomEncryptionURL(roomId: String, completionHandler: @escaping (Result<String?>) -> Void) {
+    func requestSpaceEncryptionURL(spaceId: String, completionHandler: @escaping (Result<String?>) -> Void) {
         self.prepareEncryptionKey { error in
             if let error = error {
                 completionHandler(Result.failure(error))
                 return
             }
-            let request = self.messageServiceBuilder.path("conversations/" + roomId.locusFormat)
+            let request = self.messageServiceBuilder.path("conversations/" + spaceId.locusFormat)
                 .query(RequestParameter(["includeActivities": false, "includeParticipants": true]))
                 .method(.get)
                 .build()
             request.responseJSON { (response: ServiceResponse<Any>) in
                 if let dict = response.result.data as? [String: Any] {
-                    if let roomEncryptionUrl = (dict["encryptionKeyUrl"] ?? dict["defaultActivityEncryptionKeyUrl"]) as? String{
-                        completionHandler(Result.success(roomEncryptionUrl))
+                    if let spaceEncryptionUrl = (dict["encryptionKeyUrl"] ?? dict["defaultActivityEncryptionKeyUrl"]) as? String{
+                        completionHandler(Result.success(spaceEncryptionUrl))
                     }else if let _ = dict["kmsResourceObjectUrl"] {
                         if let paticipients = dict["participants"] as? [String: Any], let participantsArray = paticipients["items"] as? [[String: Any]]{
                             participantsArray.forEach{ pdict in
                                 if let userId = pdict["entryUUID"] as? String{
-                                    if !self.encryptionKey(roomId: roomId).roomUserIds.contains(userId){
-                                        self.encryptionKey(roomId: roomId).roomUserIds.append(userId)
+                                    if !self.encryptionKey(spaceId: spaceId).spaceUserIds.contains(userId){
+                                        self.encryptionKey(spaceId: spaceId).spaceUserIds.append(userId)
                                     }
                                 }
                             }
@@ -422,7 +422,7 @@ class MessageClientImpl {
         }
     }
     
-    func requestRoomKeyMaterial(roomId: String, encryptionUrl: String?, completionHandler: @escaping (Result<(String, String)>) -> Void) {
+    func requestSpaceKeyMaterial(spaceId: String, encryptionUrl: String?, completionHandler: @escaping (Result<(String, String)>) -> Void) {
         self.prepareEncryptionKey { error in
             if let error = error {
                 completionHandler(Result.failure(error))
@@ -461,14 +461,14 @@ class MessageClientImpl {
                         if let serialize = request.serialize(), let chiperText = try? CjoseWrapper.ciphertext(fromContent: serialize.data(using: .utf8), key: ephemeralKey) {
                             self.keySerialization = chiperText
                             parameters = ["kmsMessages": [chiperText], "destination": "unused" ] as [String: Any]
-                            var handlers: [(Result<(String, String)>) -> Void] = self.keysCompletionHandlers[roomId] ?? []
+                            var handlers: [(Result<(String, String)>) -> Void] = self.keysCompletionHandlers[spaceId] ?? []
                             handlers.append(completionHandler)
-                            self.keysCompletionHandlers[roomId] = handlers
+                            self.keysCompletionHandlers[spaceId] = handlers
                         }
                     }
                     failed = {
-                        self.keysCompletionHandlers[roomId]?.forEach { $0(Result.failure(MSGError.keyMaterialFetchFail)) }
-                        self.keysCompletionHandlers[roomId] = nil
+                        self.keysCompletionHandlers[spaceId]?.forEach { $0(Result.failure(MSGError.keyMaterialFetchFail)) }
+                        self.keysCompletionHandlers[spaceId] = nil
                     }
                 }
                 if let parameters = parameters, parameters.count >= 2 {
@@ -595,16 +595,16 @@ class MessageClientImpl {
         }
     }
     
-    private func updateConversationWithKey(key: KmsKey, roomId: String, handlers: [KeyHandler]) {
+    private func updateConversationWithKey(key: KmsKey, spaceId: String, handlers: [KeyHandler]) {
         self.authenticator.accessToken{ token in
-            let roomUserIds = self.encryptionKey(roomId: roomId).roomUserIds
+            let spaceUserIds = self.encryptionKey(spaceId: spaceId).spaceUserIds
             if let request = try? KmsRequest(requestId: self.uuid, clientId: self.deviceUrl.absoluteString, userId: self.userId, bearer: token, method: "create", uri: "/resources") {
-                request.additionalAttributes = ["keyUris":[key.uri],"userIds": roomUserIds]
+                request.additionalAttributes = ["keyUris":[key.uri],"userIds": spaceUserIds]
                 if let serialize = request.serialize(), let chiperText = try? CjoseWrapper.ciphertext(fromContent: serialize.data(using: .utf8), key: self.ephemeralKey) {
                     var object = [String: Any]()
                     object["objectType"] = ObjectType.conversation.rawValue
                     object["defaultActivityEncryptionKeyUrl"] = key.uri
-                    let target: [String: Any] = ["id": roomId.locusFormat, "objectType": ObjectType.conversation.rawValue]
+                    let target: [String: Any] = ["id": spaceId.locusFormat, "objectType": ObjectType.conversation.rawValue]
                     let verb = ActivityModel.Kind.updateKey
                     let body = RequestParameter(["objectType":"activity",
                                                  "verb": verb.rawValue,
@@ -633,19 +633,19 @@ class MessageClientImpl {
         return ServiceRequest.Builder(self.authenticator).baseUrl(ServiceRequest.CONVERSATION_SERVER_ADDRESS)
     }
     
-    private func encryptionKey(roomId: String) -> EncryptionKey {
-        var key = self.encryptionKeys[roomId]
+    private func encryptionKey(spaceId: String) -> EncryptionKey {
+        var key = self.encryptionKeys[spaceId]
         if key == nil {
-            key = EncryptionKey(roomId: roomId)
-            self.encryptionKeys[roomId] = key
+            key = EncryptionKey(spaceId: spaceId)
+            self.encryptionKeys[spaceId] = key
         }
         return key!
     }
     
-    private func lookupRoom(person: String, queue: DispatchQueue?, completionHandler: @escaping (Result<String>) -> Void) {
-        if let roomId = self.rooms[person] {
+    private func lookupSpace(person: String, queue: DispatchQueue?, completionHandler: @escaping (Result<String>) -> Void) {
+        if let spaceId = self.spaces[person] {
             (queue ?? DispatchQueue.main).async {
-                completionHandler(Result.success(roomId))
+                completionHandler(Result.success(spaceId))
             }
         }
         else {
@@ -654,14 +654,14 @@ class MessageClientImpl {
                 .query(RequestParameter(["activitiesLimit": 0, "compact": true]))
                 .queue(queue)
                 .build()
-            request.responseObject { (response: ServiceResponse<Room>) in
-                if let room = response.result.data?.id {
-                    let roomId = room.hydraFormat(for: .room)
-                    self.rooms[person] = roomId
-                    completionHandler(Result.success(roomId))
+            request.responseObject { (response: ServiceResponse<Space>) in
+                if let space = response.result.data?.id {
+                    let spaceId = space.hydraFormat(for: .space)
+                    self.spaces[person] = spaceId
+                    completionHandler(Result.success(spaceId))
                 }
                 else {
-                    completionHandler(Result.failure(response.result.error ?? MSGError.roomFetchFail))
+                    completionHandler(Result.failure(response.result.error ?? MSGError.spaceFetchFail))
                 }
             }
         }

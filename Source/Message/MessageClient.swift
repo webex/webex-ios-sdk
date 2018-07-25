@@ -39,7 +39,7 @@ public enum Before {
 public enum Mention {
     /// Mention one particular person by person Id.
     case person(String)
-    /// Mention all people in a room.
+    /// Mention all people in a space.
     case all
 }
 
@@ -68,41 +68,11 @@ public class MessageClient {
         self.phone = phone
     }
     
-    /// Lists all messages in a room by room Id.
+    /// Lists all messages in a space by space Id.
     /// If present, it includes the associated media content attachment for each message.
     /// The list sorts the messages in descending order by creation date.
     ///
-    /// - parameter roomId: The identifier of the room.
-    /// - parameter before: If not nil, only list messages sent only before this date and time, in ISO8601 format.
-    /// - parameter beforeMessage: If not nil, only list messages sent only before this message by id.
-    /// - parameter max: Limit the maximum number of messages in the response, default is 50.
-    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the request has finished.
-    /// - returns: Void
-    /// - since: 1.2.0
-    @available(*, deprecated: 1.4.0, renamed: "list(roomId:before:max:mentionedPeople:queue:completionHandler:)")
-    public func list(roomId: String,
-                     before: String? = nil,
-                     beforeMessage: String? = nil,
-                     max: Int? = nil,
-                     queue: DispatchQueue? = nil,
-                     completionHandler: @escaping (ServiceResponse<[Message]>) -> Void) {
-        
-        var condition: Before?
-        if let beforeMessage = beforeMessage {
-            condition = Before.message(beforeMessage)
-        }
-        else if let before = before, let date = Date.fromISO860(before) {
-            condition = Before.date(date)
-        }
-        self.list(roomId: roomId, before: condition, max: max ?? 50, queue: queue, completionHandler: completionHandler)
-    }
-    
-    /// Lists all messages in a room by room Id.
-    /// If present, it includes the associated media content attachment for each message.
-    /// The list sorts the messages in descending order by creation date.
-    ///
-    /// - parameter roomId: The identifier of the room.
+    /// - parameter spaceId: The identifier of the space.
     /// - parameter before: If not nil, only list messages sent only before this condition.
     /// - parameter max: Limit the maximum number of messages in the response, default is 50.
     /// - parameter mentionedPeople: List messages where the caller is mentioned by using Mention.person("me").
@@ -110,7 +80,7 @@ public class MessageClient {
     /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
     /// - since: 1.4.0
-    public func list(roomId: String,
+    public func list(spaceId: String,
                      before: Before? = nil,
                      max: Int = 50,
                      mentionedPeople: Mention? = nil,
@@ -118,7 +88,7 @@ public class MessageClient {
                      completionHandler: @escaping (ServiceResponse<[Message]>) -> Void) {
         self.doSomethingAfterRegistered { error in
             if let impl = self.phone.messages {
-                impl.list(roomId: roomId, mentionedPeople: mentionedPeople, before: before, max: max, queue: queue, completionHandler: completionHandler)
+                impl.list(spaceId: spaceId, mentionedPeople: mentionedPeople, before: before, max: max, queue: queue, completionHandler: completionHandler)
             }
             else {
                 (queue ?? DispatchQueue.main).async {
@@ -128,161 +98,11 @@ public class MessageClient {
         }
     }
     
-    /// Posts a plain text message, and optionally, a media content attachment, to a room by room Id.
-    ///
-    /// - parameter roomId: The identifier of the room where the message is to be posted.
-    /// - parameter text: The plain text message to be posted to the room.
-    /// - parameter files: A public URL that Cisco Webex can use to fetch attachments. Currently supports only a single URL. Cisco Webex downloads the content from the URL one time shortly after the message is created and automatically converts it to a format that all Cisco Webex clients can render.
-    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the request has finished.
-    /// - returns: Void
-    /// - since: 1.2.0
-    @available(*, deprecated: 1.4.0, renamed: "post(roomId:text:mentions:files:queue:completionHandler:)")
-    public func post(roomId: String, text: String, files: String? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        if let file = files {
-            self.download(from: file) { result in
-                if let file = result.data {
-                    self.post(roomId: roomId, text: text, mentions: nil, files: [file], queue: queue, completionHandler: completionHandler)
-                }
-                else {
-                    (queue ?? DispatchQueue.main).async {
-                        completionHandler(ServiceResponse(nil, Result.failure(result.error ?? MessageClientImpl.MSGError.downloadError)))
-                    }
-                }
-            }
-        }
-        else {
-            self.post(roomId: roomId, text: text, mentions: nil, files: nil, queue: queue, completionHandler: completionHandler)
-        }
-    }
-    
-    /// Posts a media content attachment to a room by room Id without text.
-    ///
-    /// - parameter roomId: The identifier of the room.
-    /// - parameter files: A public URL that Cisco Webex can use to fetch attachments. Currently supports only a single URL. Cisco Webex downloads the content from the URL one time shortly after the message is created and automatically converts it to a format that all Cisco Webex clients can render.
-    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the request has finished.
-    /// - returns: Void
-    /// - since: 1.2.0
-    @available(*, deprecated: 1.4.0, renamed: "post(roomId:text:mentions:files:queue:completionHandler:)")
-    public func post(roomId: String, files: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.download(from: files) { result in
-            if let file = result.data {
-                self.post(roomId: roomId, text: nil, mentions: nil, files: [file], queue: queue, completionHandler: completionHandler)
-            }
-            else {
-                (queue ?? DispatchQueue.main).async {
-                    completionHandler(ServiceResponse(nil, Result.failure(result.error ?? MessageClientImpl.MSGError.downloadError)))
-                }
-            }
-        }
-    }
-    
-    /// Posts a private 1:1 message in plain text, and optionally, a media content attachment, to a person by person Id.
-    ///
-    /// - parameter personId: The identifier of the recipient of this private 1:1 message.
-    /// - parameter text: The plain text message to post to the recipient.
-    /// - parameter files: A public URL that Cisco Webex can use to fetch attachments. Currently supports only a single URL. Cisco Webex  downloads the content from the URL one time shortly after the message is created and automatically converts it to a format that all Cisco Webex clients can render.
-    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the request has finished.
-    /// - returns: Void
-    /// - since: 1.2.0
-    @available(*, deprecated: 1.4.0, renamed: "post(personId:text:mentions:files:queue:completionHandler:)")
-    public func post(personId: String, text: String, files: String? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        if let file = files {
-            self.download(from: file) { result in
-                if let file = result.data {
-                    self.post(personId: personId, text: text, files: [file], queue: queue, completionHandler: completionHandler)
-                }
-                else {
-                    (queue ?? DispatchQueue.main).async {
-                        completionHandler(ServiceResponse(nil, Result.failure(result.error ?? MessageClientImpl.MSGError.downloadError)))
-                    }
-                }
-            }
-        }
-        else {
-            self.post(personId: personId, text: text, files: nil, queue: queue, completionHandler: completionHandler)
-        }
-    }
-    
-    /// Posts a media content attachment to a person by person Id without text.
-    ///
-    /// - parameter personId: The identifier of the recipient of this media content.
-    /// - parameter files: A public URL that Cisco Webex can use to fetch attachments. Currently supports only a single URL. Cisco Webex  downloads the content from the URL one time shortly after the message is created and automatically converts it to a format that all Cisco Webex clients can render.
-    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the request has finished.
-    /// - returns: Void
-    /// - since: 1.2.0
-    @available(*, deprecated: 1.4.0, renamed: "post(personId:text:mentions:files:queue:completionHandler:)")
-    public func post(personId: String, files: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.download(from: files) { result in
-            if let file = result.data {
-                self.post(personId: personId, text: nil, files: [file], queue: queue, completionHandler: completionHandler)
-            }
-            else {
-                (queue ?? DispatchQueue.main).async {
-                    completionHandler(ServiceResponse(nil, Result.failure(result.error ?? MessageClientImpl.MSGError.downloadError)))
-                }
-            }
-        }
-    }
-    
-    /// Posts a private 1:1 message in plain text, and optionally, a media content attachment, to a person by person Id.
-    ///
-    /// - parameter personEmail: The email address of the recipient when sending a private 1:1 message.
-    /// - parameter text: The plain text message to post to the room.
-    /// - parameter files: A public URL that Webex can use to fetch attachments. Currently supports only a single URL. The Webex Cloud downloads the content one time shortly after the message is created and automatically converts it to a format that all Webex clients can render.
-    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the request has finished.
-    /// - returns: Void
-    /// - since: 1.2.0
-    @available(*, deprecated: 1.4.0, renamed: "post(email:text:mentions:files:queue:completionHandler:)")
-    public func post(personEmail: EmailAddress, text: String, files: String? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        if let file = files {
-            self.download(from: file) { result in
-                if let file = result.data {
-                    self.post(personEmail: personEmail, text: text, files: [file], queue: queue, completionHandler: completionHandler)
-                }
-                else {
-                    (queue ?? DispatchQueue.main).async {
-                        completionHandler(ServiceResponse(nil, Result.failure(result.error ?? MessageClientImpl.MSGError.downloadError)))
-                    }
-                }
-            }
-        }
-        else {
-            self.post(personEmail: personEmail, text: text, files: nil, queue: queue, completionHandler: completionHandler)
-        }
-    }
-    
-    /// Posts a media content attachment to a person by email address without text.
-    ///
-    /// - parameter personEmail: The email address of the recipient of this media content.
-    /// - parameter files: A public URL that Webex can use to fetch attachments. Currently supports only a single URL. The Webex Cloud downloads the content one time shortly after the message is created and automatically converts it to a format that all Webex clients can render.
-    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the request has finished.
-    /// - returns: Void
-    /// - since: 1.2.0
-    @available(*, deprecated: 1.4.0, renamed: "post(email:text:mentions:files:queue:completionHandler:)")
-    public func post(personEmail: EmailAddress, files: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.download(from: files) { result in
-            if let file = result.data {
-                self.post(personEmail: personEmail, text: nil, files: [file], queue: queue, completionHandler: completionHandler)
-            }
-            else {
-                (queue ?? DispatchQueue.main).async {
-                    completionHandler(ServiceResponse(nil, Result.failure(result.error ?? MessageClientImpl.MSGError.downloadError)))
-                }
-            }
-        }
-    }
-    
-    /// Posts a plain text message, optionally a media content attachment, to a room by user email.
+    /// Posts a plain text message, optionally a media content attachment, to a space by user email.
     ///
     /// - parameter personEmail: The EmailAddress of the user to whom the message is to be posted.
-    /// - parameter content: The plain text message to be posted to the room.
-    /// - parameter files: Local file objects to be uploaded to the room.
+    /// - parameter content: The plain text message to be posted to the space.
+    /// - parameter files: Local file objects to be uploaded to the space.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
@@ -304,11 +124,11 @@ public class MessageClient {
         }
     }
     
-    /// Posts a plain text message, optionally a media content attachment, to a room by person id.
+    /// Posts a plain text message, optionally a media content attachment, to a space by person id.
     ///
     /// - parameter personId: The personId of the user to whom the message is to be posted.
-    /// - parameter text: The plain text message to be posted to the room.
-    /// - parameter files: Local file objects to be uploaded to the room.
+    /// - parameter text: The plain text message to be posted to the space.
+    /// - parameter files: Local file objects to be uploaded to the space.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
@@ -330,17 +150,17 @@ public class MessageClient {
         }
     }
     
-    /// Posts a plain text message, optionally a media content attachment, to a room by roomId.
+    /// Posts a plain text message, optionally a media content attachment, to a space by spaceId.
     ///
-    /// - parameter roomId: The identifier of the room where the message is to be posted.
-    /// - parameter text: The plain text message to be posted to the room.
-    /// - parameter mentions: The mention items to be posted to the room.
-    /// - parameter files: Local file objects to be uploaded to the room.
+    /// - parameter spaceId: The identifier of the space where the message is to be posted.
+    /// - parameter text: The plain text message to be posted to the space.
+    /// - parameter mentions: The mention items to be posted to the space.
+    /// - parameter files: Local file objects to be uploaded to the space.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
     /// - since: 1.4.0
-    public func post(roomId: String,
+    public func post(spaceId: String,
                      text: String? = nil,
                      mentions: [Mention]? = nil,
                      files: [LocalFile]? = nil,
@@ -348,7 +168,7 @@ public class MessageClient {
                      completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
         self.doSomethingAfterRegistered { error in
             if let impl = self.phone.messages {
-                impl.post(roomId: roomId, text: text, mentions: mentions, files: files, queue: queue, completionHandler: completionHandler)
+                impl.post(spaceId: spaceId, text: text, mentions: mentions, files: files, queue: queue, completionHandler: completionHandler)
             }
             else {
                 (queue ?? DispatchQueue.main).async {
@@ -378,9 +198,9 @@ public class MessageClient {
         }
     }
     
-    /// Deletes a message, to a room by messageId.
+    /// Deletes a message to a space by messageId.
     ///
-    /// - parameter messageId: The messageId to be deleted in the room.
+    /// - parameter messageId: The messageId to be deleted in the space.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void

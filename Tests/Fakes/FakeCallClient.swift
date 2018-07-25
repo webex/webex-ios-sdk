@@ -29,7 +29,7 @@ class FakeCallClient: CallClient {
 //    var callerUser: TestUser?
 //    var calleeUser: TestUser?
     var enableFetchCall: Bool = false
-    var isRoomCall: Bool = false
+    var isSpaceCall: Bool = false
     var enableServerReturnError: Bool = false
     
     
@@ -97,7 +97,7 @@ class FakeCallClient: CallClient {
             return
         }
         
-        if isRoomCall,let caller = selfUser,var callees = self.otherParticipants {
+        if isSpaceCall,let caller = selfUser,var callees = self.otherParticipants {
             callees.append(caller)
             self.callModel = FakeCallModelHelper.initCallModel(caller: caller, allParticipantUsers: callees, selfUser: caller)
             completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.success(self.callModel!)))

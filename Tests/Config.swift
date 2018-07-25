@@ -32,7 +32,7 @@ struct Config {
     static let InvalidLocalAddress = "abc/edf"
     static let InvalidId = "abc"
     static let InvalidEmail = EmailAddress.fromString("abc@a.aa")!
-    static let FakeRoomId = "Y2lzY29zcGFyazovL3VzL1JPT00vYWNmNjg3MDAtY2FhZC0xMWU3LTg1Y2EtMjUzNjhiNjY3YjQz"
+    static let FakeSpaceId = "Y2lzY29zcGFyazovL3VzL1JPT00vYWNmNjg3MDAtY2FhZC0xMWU3LTg1Y2EtMjUzNjhiNjY3YjQz"
     static let FakeSelfDeviceUrl = "https://wdmServer.com/self"
     static let FakeOtherDeviceUrl = "https://wdmServer.com/other"
     static let FakeWebSocketUrl = "https://WebSocketServer.com/"

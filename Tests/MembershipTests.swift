@@ -27,7 +27,7 @@ class MembershipTests: XCTestCase {
     private var fixture: WebexTestFixture! = WebexTestFixture.sharedInstance
     private let MembershipCountValid = 10
     private var memberships: MembershipClient!
-    private var roomId: String!
+    private var spaceId: String!
     private var other: TestUser!
     private var membership: Membership?
     
@@ -35,7 +35,7 @@ class MembershipTests: XCTestCase {
         XCTAssertNotNil(membership.id)
         XCTAssertNotNil(membership.personId)
         XCTAssertNotNil(membership.personEmail)
-        XCTAssertNotNil(membership.roomId)
+        XCTAssertNotNil(membership.spaceId)
         XCTAssertNotNil(membership.isModerator)
         XCTAssertNotNil(membership.isMonitor)
         XCTAssertNotNil(membership.created)
@@ -48,9 +48,9 @@ class MembershipTests: XCTestCase {
             other = fixture.createUser()
         }
         memberships = fixture.webex.memberships
-        let room = fixture.createRoom(testCase: self, title: "test room")
-        XCTAssertNotNil(room?.id)
-        roomId = room?.id
+        let space = fixture.createSpace(testCase: self, title: "test space")
+        XCTAssertNotNil(space?.id)
+        spaceId = space?.id
     }
     
     override func tearDown() {
@@ -59,8 +59,8 @@ class MembershipTests: XCTestCase {
                 XCTFail("Failed to delete membership")
             }
         }
-        if let roomId = roomId {
-            fixture.deleteRoom(testCase: self, roomId: roomId)
+        if let spaceId = spaceId {
+            fixture.deleteSpace(testCase: self, spaceId: spaceId)
         }
         super.tearDown()
     }
@@ -70,10 +70,10 @@ class MembershipTests: XCTestCase {
         super.tearDown()
     }
     
-    func testCreateNonModeratorMembershipWithRoomIdAndPersonId() {
-        membership = createMembership(roomId: roomId, personId: other.personId, isModerator: false)
+    func testCreateNonModeratorMembershipWithSpaceIdAndPersonId() {
+        membership = createMembership(spaceId: spaceId, personId: other.personId, isModerator: false)
         if let membership = membership {
-            XCTAssertEqual(membership.roomId, roomId)
+            XCTAssertEqual(membership.spaceId, spaceId)
             XCTAssertEqual(membership.personEmail, other.email)
             XCTAssertEqual(membership.personId, other.personId)
             XCTAssertEqual(membership.isModerator, false)
@@ -84,25 +84,25 @@ class MembershipTests: XCTestCase {
         }
     }
     
-    func testCreateMembershipWithInvalidRoomIdButValidPersonId() {
-        membership = createMembership(roomId: Config.InvalidId, personId: other.personId, isModerator: false)
+    func testCreateMembershipWithInvalidSpaceIdButValidPersonId() {
+        membership = createMembership(spaceId: Config.InvalidId, personId: other.personId, isModerator: false)
         XCTAssertNil(membership, "Unexpected successful request")
     }
     
-    func testCreateMembershipWithValidRoomIdButInvalidPersonId() {
-        membership = createMembership(roomId: roomId, personId: Config.InvalidId, isModerator: false)
+    func testCreateMembershipWithValidSpaceIdButInvalidPersonId() {
+        membership = createMembership(spaceId: spaceId, personId: Config.InvalidId, isModerator: false)
         XCTAssertNil(membership, "Unexpected successful request")
     }
     
-    func testCreateMembershipWithInvalidRoomIdAndInvalidPersonId() {
-        membership = createMembership(roomId: Config.InvalidId, personId: Config.InvalidId, isModerator: false)
+    func testCreateMembershipWithInvalidSpaceIdAndInvalidPersonId() {
+        membership = createMembership(spaceId: Config.InvalidId, personId: Config.InvalidId, isModerator: false)
         XCTAssertNil(membership, "Unexpected successful request")
     }
     
-    func testCreateModeratorMembershipWithRoomIdAndPersonId() {
-        membership = createMembership(roomId: roomId, personId: other.personId, isModerator: true)
+    func testCreateModeratorMembershipWithSpaceIdAndPersonId() {
+        membership = createMembership(spaceId: spaceId, personId: other.personId, isModerator: true)
         if let membership = membership {
-            XCTAssertEqual(membership.roomId, roomId)
+            XCTAssertEqual(membership.spaceId, spaceId)
             XCTAssertEqual(membership.personEmail, other.email)
             XCTAssertEqual(membership.isModerator, true)
             validate(membership: membership)
@@ -111,11 +111,11 @@ class MembershipTests: XCTestCase {
         }
     }
     
-    func testCreateNonModeratorMembershipWithRoomIdAndPersonEmail() {
-        membership = createMembership(roomId: roomId, personEmail: other.email, isModerator: false)
+    func testCreateNonModeratorMembershipWithSpaceIdAndPersonEmail() {
+        membership = createMembership(spaceId: spaceId, personEmail: other.email, isModerator: false)
         if let membership = membership {
             XCTAssertEqual(membership.personId, other.personId)
-            XCTAssertEqual(membership.roomId, roomId)
+            XCTAssertEqual(membership.spaceId, spaceId)
             XCTAssertEqual(membership.personEmail, other.email)
             XCTAssertEqual(membership.isModerator, false)
             XCTAssertEqual(membership.isMonitor, false)
@@ -125,21 +125,21 @@ class MembershipTests: XCTestCase {
         }
     }
     
-    func testCreateMembershipWithInvalidRoomIdButValidEmail() {
-        membership = createMembership(roomId: Config.InvalidId, personEmail: other.email, isModerator: false)
+    func testCreateMembershipWithInvalidSpaceIdButValidEmail() {
+        membership = createMembership(spaceId: Config.InvalidId, personEmail: other.email, isModerator: false)
         XCTAssertNil(membership, "Unexpected successful request")
     }
     
-    func testCreateMembershipWithValidRoomIdButInvalidEmail() {
-        membership = createMembership(roomId: roomId, personEmail: Config.InvalidEmail, isModerator: false)
+    func testCreateMembershipWithValidSpaceIdButInvalidEmail() {
+        membership = createMembership(spaceId: spaceId, personEmail: Config.InvalidEmail, isModerator: false)
         XCTAssertNil(membership, "Failed to creature membership")
     }
     
-    func testCreateModeratorMembershipWithRoomIdAndPersonEmail() {
-        membership = createMembership(roomId: roomId, personEmail: other.email, isModerator: true)
+    func testCreateModeratorMembershipWithSpaceIdAndPersonEmail() {
+        membership = createMembership(spaceId: spaceId, personEmail: other.email, isModerator: true)
         if let membership = membership {
             XCTAssertEqual(membership.personId, other.personId)
-            XCTAssertEqual(membership.roomId, roomId)
+            XCTAssertEqual(membership.spaceId, spaceId)
             XCTAssertEqual(membership.personEmail, other.email)
             XCTAssertEqual(membership.isModerator, true)
             validate(membership: membership)
@@ -157,14 +157,14 @@ class MembershipTests: XCTestCase {
         }
     }
     
-    func testListingMembershipWithRoomIdAndPersonIdFindsMembership() {
-        membership = createMembership(roomId: roomId, personId: other.personId, isModerator: false)
-        if let list = listMemberships(roomId: roomId, personId: other.personId) {
+    func testListingMembershipWithSpaceIdAndPersonIdFindsMembership() {
+        membership = createMembership(spaceId: spaceId, personId: other.personId, isModerator: false)
+        if let list = listMemberships(spaceId: spaceId, personId: other.personId) {
             XCTAssertEqual(list.count, 1)
             let foundMembership = list[0]
             XCTAssertEqual(foundMembership.personId, other.personId)
             XCTAssertEqual(foundMembership.personEmail, other.email)
-            XCTAssertEqual(foundMembership.roomId, roomId)
+            XCTAssertEqual(foundMembership.spaceId, spaceId)
             XCTAssertEqual(foundMembership.isModerator, false)
             XCTAssertEqual(foundMembership.isMonitor, false)
             validate(membership: foundMembership)
@@ -173,9 +173,9 @@ class MembershipTests: XCTestCase {
         }
     }
     
-    func testListingMembershipWithOnlyRoomIdFindsMembership() {
-        membership = createMembership(roomId: roomId, personId: other.personId, isModerator: false)
-        if let list = listMemberships(roomId: roomId, max: nil) {
+    func testListingMembershipWithOnlySpaceIdFindsMembership() {
+        membership = createMembership(spaceId: spaceId, personId: other.personId, isModerator: false)
+        if let list = listMemberships(spaceId: spaceId, max: nil) {
             var foundMembership: Membership? = nil
             for currentMembership in list {
                 if currentMembership.personId == other.personId {
@@ -189,9 +189,9 @@ class MembershipTests: XCTestCase {
         }
     }
     
-    func testListingMembershipWithOnlyRoomIdAndPersonEmailFindsMembership() {
-        membership = createMembership(roomId: roomId, personId: other.personId, isModerator: false)
-        if let list = listMemberships(roomId: roomId, personEmail: other.email) {
+    func testListingMembershipWithOnlySpaceIdAndPersonEmailFindsMembership() {
+        membership = createMembership(spaceId: spaceId, personId: other.personId, isModerator: false)
+        if let list = listMemberships(spaceId: spaceId, personEmail: other.email) {
             var foundMembership: Membership? = nil
             for currentMembership in list {
                 if currentMembership.personId == other.personId {
@@ -206,7 +206,7 @@ class MembershipTests: XCTestCase {
     }
     
     func testGettingMembershipReturnsMembership() {
-        membership = createMembership(roomId: roomId, personId: other.personId, isModerator: false)
+        membership = createMembership(spaceId: spaceId, personId: other.personId, isModerator: false)
         if let membershipId = membership?.id, let foundMembership = getMembership(membershipId: membershipId) {
             XCTAssertEqual(foundMembership.id, membership?.id)
         } else {
@@ -215,13 +215,13 @@ class MembershipTests: XCTestCase {
     }
     
     func testGettingMembershipWithInvalidIdDoesNotReturnMembership() {
-        membership = createMembership(roomId: roomId, personId: other.personId, isModerator: false)
+        membership = createMembership(spaceId: spaceId, personId: other.personId, isModerator: false)
         let foundMembership = getMembership(membershipId: Config.InvalidId)
         XCTAssertNil(foundMembership)
     }
     
     func testUpdatingMembershipToAddModeratorReturnsMembershipWithModerator() {
-        membership = createMembership(roomId: roomId, personId: other.personId, isModerator: false)
+        membership = createMembership(spaceId: spaceId, personId: other.personId, isModerator: false)
         if let membershipId = membership?.id, let updatedMembership = updateMembership(membershipId: membershipId, isModerator: true) {
             XCTAssertEqual(updatedMembership.id, membershipId)
             XCTAssertEqual(updatedMembership.isModerator, true)
@@ -231,7 +231,7 @@ class MembershipTests: XCTestCase {
     }
     
     func testDeletingMembershipRemovesMembershipAndItCanNoLongerBeRetrieved() {
-        let membership = createMembership(roomId: roomId, personId: other.personId, isModerator: false)
+        let membership = createMembership(spaceId: spaceId, personId: other.personId, isModerator: false)
         XCTAssertNotNil(membership?.id)
         let membershipId = (membership?.id)!
         XCTAssertTrue(deleteMembership(membershipId: membershipId))
@@ -243,21 +243,21 @@ class MembershipTests: XCTestCase {
     }
     
     func testUpdatingMembershipWithInvalidIdDoesNotReturnMembership() {
-        membership = createMembership(roomId: roomId, personId: other.personId, isModerator: false)
+        membership = createMembership(spaceId: spaceId, personId: other.personId, isModerator: false)
         let updatedMembership = updateMembership(membershipId: Config.InvalidId, isModerator: true)
         XCTAssertNil(updatedMembership)
     }
     
-    private func createMembership(roomId: String, personEmail: EmailAddress, isModerator: Bool) -> Membership? {
+    private func createMembership(spaceId: String, personEmail: EmailAddress, isModerator: Bool) -> Membership? {
         let request = { (completionHandler: @escaping (ServiceResponse<Membership>) -> Void) in
-            self.memberships.create(roomId: roomId, personEmail: personEmail, isModerator: isModerator, completionHandler: completionHandler)
+            self.memberships.create(spaceId: spaceId, personEmail: personEmail, isModerator: isModerator, completionHandler: completionHandler)
         }
         return fixture.getResponse(testCase: self, request: request)
     }
     
-    private func createMembership(roomId: String, personId: String, isModerator: Bool) -> Membership? {
+    private func createMembership(spaceId: String, personId: String, isModerator: Bool) -> Membership? {
         let request = { (completionHandler: @escaping (ServiceResponse<Membership>) -> Void) in
-            self.memberships.create(roomId: roomId, personId: personId, isModerator: isModerator, completionHandler: completionHandler)
+            self.memberships.create(spaceId: spaceId, personId: personId, isModerator: isModerator, completionHandler: completionHandler)
         }
         return fixture.getResponse(testCase: self, request: request)
     }
@@ -276,23 +276,23 @@ class MembershipTests: XCTestCase {
         return fixture.getResponse(testCase: self, request: request)
     }
     
-    private func listMemberships(roomId: String, max: Int?) -> [Membership]? {
+    private func listMemberships(spaceId: String, max: Int?) -> [Membership]? {
         let request = { (completionHandler: @escaping (ServiceResponse<[Membership]>) -> Void) in
-            self.memberships.list(roomId: roomId, max: max, completionHandler: completionHandler)
+            self.memberships.list(spaceId: spaceId, max: max, completionHandler: completionHandler)
         }
         return fixture.getResponse(testCase: self, request: request)
     }
         
-    private func listMemberships(roomId: String, personId: String) -> [Membership]? {
+    private func listMemberships(spaceId: String, personId: String) -> [Membership]? {
         let request = { (completionHandler: @escaping (ServiceResponse<[Membership]>) -> Void) in
-            self.memberships.list(roomId: roomId, personId: personId, completionHandler: completionHandler)
+            self.memberships.list(spaceId: spaceId, personId: personId, completionHandler: completionHandler)
         }
         return fixture.getResponse(testCase: self, request: request)
     }
     
-    private func listMemberships(roomId: String, personEmail: EmailAddress) -> [Membership]? {
+    private func listMemberships(spaceId: String, personEmail: EmailAddress) -> [Membership]? {
         let request = { (completionHandler: @escaping (ServiceResponse<[Membership]>) -> Void) in
-            self.memberships.list(roomId: roomId, personEmail: personEmail, completionHandler: completionHandler)
+            self.memberships.list(spaceId: spaceId, personEmail: personEmail, completionHandler: completionHandler)
         }
         return fixture.getResponse(testCase: self, request: request)
     }

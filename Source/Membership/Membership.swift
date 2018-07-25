@@ -41,17 +41,17 @@ public struct Membership {
     /// - since: 1.2.0
     public var personEmail: EmailAddress?
     
-    /// The id of the room.
+    /// The id of the space.
     ///
     /// - since: 1.2.0
-    public var roomId: String?
+    public var spaceId: String?
     
-    /// Whether this member is a moderator of the room in this membership.
+    /// Whether this member is a moderator of the space in this membership.
     ///
     /// - since: 1.2.0
     public var isModerator: Bool?
     
-    /// Whether this member is a monitor of the room in this membership.
+    /// Whether this member is a monitor of the space in this membership.
     ///
     /// - since: 1.2.0
     public var isMonitor: Bool?
@@ -88,7 +88,12 @@ extension Membership : Mappable {
         id <- map["id"]
         personId <- map["personId"]
         personEmail <- (map["personEmail"], EmailTransform())
-        roomId <- map["roomId"]
+        if map.JSON["spaceId"] == nil {
+            spaceId <- map["roomId"]
+        }
+        else {
+            spaceId <- map["spaceId"]
+        }
         isModerator <- map["isModerator"]
         isMonitor <- map["isMonitor"]
         created <- (map["created"], CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))

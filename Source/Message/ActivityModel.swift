@@ -33,8 +33,8 @@ struct ActivityModel {
     }
     
     private(set) var id: String?
-    private(set) var roomId: String?
-    private(set) var roomType: RoomType?
+    private(set) var spaceId: String?
+    private(set) var spaceType: SpaceType?
     var toPersonId: String?
     private(set) var toPersonEmail: String?
     private(set) var text: String?
@@ -61,8 +61,8 @@ extension ActivityModel : ImmutableMappable {
         self.kind = try? map.value("verb", using: VerbTransform())
         self.personId = try? map.value("actor.entryUUID", using: IdentityTransform(for: IdentityType.people))
         self.personEmail = try? map.value("actor.emailAddress")
-        self.roomId = try? map.value("target.id", using: IdentityTransform(for: IdentityType.room))
-        self.roomType = try? map.value("target.tags", using: RoomTypeTransform())
+        self.spaceId = try? map.value("target.id", using: IdentityTransform(for: IdentityType.space))
+        self.spaceType = try? map.value("target.tags", using: SpaceTypeTransform())
         self.clientTempId = try? map.value("clientTempId")
         if let text: String = try? map.value("object.displayName") {
             self.text = text
@@ -92,9 +92,11 @@ extension ActivityModel : ImmutableMappable {
     /// - note: for internal use only.
     public func mapping(map: Map) {
         self.id >>> map["id"]
-        self.roomId >>> map["roomId"]
+        self.spaceId >>> map["roomId"]
+        self.spaceId >>> map["spaceId"]
         self.kind >>> (map["verb"], VerbTransform())
-        self.roomType >>> (map["roomType"], RoomTypeTransform())
+        self.spaceType >>> (map["roomType"], SpaceTypeTransform())
+        self.spaceType >>> (map["spaceType"], SpaceTypeTransform())
         self.toPersonId >>> map["toPersonId"]
         self.toPersonEmail >>> map["toPersonEmail"]
         self.text >>> map["text"]
@@ -121,7 +123,7 @@ extension ActivityModel {
 }
 
 enum IdentityType : String {
-    case room
+    case space
     case people
     case message
 }
@@ -192,17 +194,17 @@ private class VerbTransform : TransformType {
     }
 }
 
-private class RoomTypeTransform : TransformType {
+private class SpaceTypeTransform : TransformType {
     
-    func transformFromJSON(_ value: Any?) -> RoomType? {
+    func transformFromJSON(_ value: Any?) -> SpaceType? {
         if let tags = value as? String, tags.contains("ONE_ON_ONE") {
-            return RoomType.direct
+            return SpaceType.direct
         }
-        return RoomType.group
+        return SpaceType.group
     }
     
-    func transformToJSON(_ value: RoomType?) -> String? {
-        if let value = value, value == RoomType.direct {
+    func transformToJSON(_ value: SpaceType?) -> String? {
+        if let value = value, value == SpaceType.direct {
             return "ONE_ON_ONE"
         }
         return nil
