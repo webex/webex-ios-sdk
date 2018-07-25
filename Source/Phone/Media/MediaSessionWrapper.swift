@@ -159,6 +159,15 @@ class MediaSessionWrapper {
         }
     }
     
+    var isPrepared: Bool {
+        get {
+            if self.status == .prepare || self.status == .running {
+                return true
+            }
+            return false
+        }
+    }
+    
     // MARK: - Camera
     func setFacingMode(mode: Phone.FacingMode) {
         mediaSession.setCamrea(mode == .user)

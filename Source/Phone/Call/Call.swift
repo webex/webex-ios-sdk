@@ -494,7 +494,7 @@ public class Call {
     public var videoRenderViews: (local:MediaRenderView, remote:MediaRenderView)? {
         didSet {
             DispatchQueue.main.async {
-                if !self.mediaSession.hasVideo {
+                if !self.mediaSession.hasVideo || !self.mediaSession.isPrepared {
                     return
                 }
                 //update media session
@@ -512,7 +512,7 @@ public class Call {
     public var screenShareRenderView: MediaRenderView? {
         didSet {
             DispatchQueue.main.async {
-                if !self.mediaSession.hasScreenShare {
+                if !self.mediaSession.hasScreenShare || !self.mediaSession.isPrepared() {
                     return
                 }
                 //update media session
