@@ -123,39 +123,39 @@ public class Webex {
         }
     }
     
-    /// Rooms are virtual meeting places in Cisco Webex where people post messages and collaborate to get work done.
-    /// Use *rooms* to manage the rooms on behalf of the authenticated user.
+    /// Spaces are virtual meeting places in Cisco Webex where people post messages and collaborate to get work done.
+    /// Use *spaces* to manage the spaces on behalf of the authenticated user.
     ///
     /// - since: 1.2.0
-    /// - see: Memberships API about how to manage people in a room.
-    /// - see: Messages API about how post or otherwise manage the content in a room.
-    public var rooms: RoomClient {
-        return RoomClient(authenticator: authenticator)
+    /// - see: Memberships API about how to manage people in a space.
+    /// - see: Messages API about how post or otherwise manage the content in a space.
+    public var spaces: SpaceClient {
+        return SpaceClient(authenticator: authenticator)
     }
     
     /// People are registered users of Cisco Webex.
     /// Use *people*  to find a person on behalf of the authenticated user.
     ///
     /// - since: 1.2.0
-    /// - see: Memberships API about how to manage people in a room.
-    /// - see: Messages API about how post or otherwise manage the content in a room.
+    /// - see: Memberships API about how to manage people in a space.
+    /// - see: Messages API about how post or otherwise manage the content in a space.
     public var people: PersonClient {
         return PersonClient(authenticator: authenticator)
     }
     
-    /// Memberships represent a person's relationships to rooms.
-    /// Use *membership* to manage the authenticated user's relationship to rooms.
+    /// Memberships represent a person's relationships to spaces.
+    /// Use *membership* to manage the authenticated user's relationship to spaces.
     ///
     /// - since: 1.2.0
-    /// - see: Rooms API about how to manage rooms.
-    /// - see: Messages API about how post or otherwise manage the content in a room.
+    /// - see: Spaces API about how to manage spaces.
+    /// - see: Messages API about how post or otherwise manage the content in a space.
     public var memberships: MembershipClient {
         return MembershipClient(authenticator: authenticator)
     }
 
     
     /// Webhooks allow the application to be notified via HTTP (or HTTPS?) when a specific event occurs in Cisco Webex,
-    /// e.g. a new message is posted into a specific room.
+    /// e.g. a new message is posted into a specific space.
     /// Use *Webhooks* to create and manage the webhooks for specific events.
     ///
     /// - since: 1.2.0
@@ -163,12 +163,12 @@ public class Webex {
         return WebhookClient(authenticator: authenticator)
     }
     
-    /// Teams are groups of people with a set of rooms that are visible to all members of that team.
+    /// Teams are groups of people with a set of spaces that are visible to all members of that team.
     /// Use *teams* to create and manage the teams on behalf of the authenticated user.
     ///
     /// - since: 1.2.0
     /// - see: Team Memberships API about how to manage people in a team.
-    /// - see: Memberships API about how to manage people in a room.
+    /// - see: Memberships API about how to manage people in a space.
     public var teams: TeamClient {
         return TeamClient(authenticator: authenticator)
     }
@@ -178,7 +178,7 @@ public class Webex {
     ///
     /// - since: 1.2.0
     /// - see: Teams API about how to manage teams.
-    /// - see: Rooms API about how to manage rooms.
+    /// - see: Spaces API about how to manage spaces.
     public var teamMemberships: TeamMembershipClient {
         return TeamMembershipClient(authenticator: authenticator)
     }

@@ -41,14 +41,14 @@ public struct Message {
         return self.activity.id
     }
     
-    /// The identifier of the room where this message was posted.
-    public var roomId: String? {
-        return self.activity.roomId
+    /// The identifier of the space where this message was posted.
+    public var spaceId: String? {
+        return self.activity.spaceId
     }
     
-    ///  The room type "group"/"direct"
-    public var roomType: RoomType {
-        return self.activity.roomType ?? RoomType.group
+    ///  The space type "group"/"direct"
+    public var spaceType: SpaceType {
+        return self.activity.spaceType ?? SpaceType.group
     }
     
     /// The identifier of the person who sent this message.

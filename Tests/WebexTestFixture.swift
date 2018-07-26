@@ -169,17 +169,17 @@ class WebexTestFixture {
     }
     
     @discardableResult
-    func createRoom(testCase: XCTestCase, title: String) -> Room? {
-        let request = { (completionHandler: @escaping (ServiceResponse<Room>) -> Void) in
-            self.webex.rooms.create(title: title, completionHandler: completionHandler)
+    func createSpace(testCase: XCTestCase, title: String) -> Space? {
+        let request = { (completionHandler: @escaping (ServiceResponse<Space>) -> Void) in
+            self.webex.spaces.create(title: title, completionHandler: completionHandler)
         }
         return getResponse(testCase: testCase, request: request)
     }
     
     @discardableResult
-    func deleteRoom(testCase: XCTestCase, roomId: String) -> Bool {
+    func deleteSpace(testCase: XCTestCase, spaceId: String) -> Bool {
         let request = { (completionHandler: @escaping (ServiceResponse<Any>) -> Void) in
-            self.webex.rooms.delete(roomId: roomId, completionHandler: completionHandler)
+            self.webex.spaces.delete(spaceId: spaceId, completionHandler: completionHandler)
         }
         return getResponse(testCase: testCase, request: request) != nil
     }

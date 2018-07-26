@@ -25,7 +25,7 @@ import XCTest
 class WebhookTests: XCTestCase {
     private var fixture: WebexTestFixture! = WebexTestFixture.sharedInstance
     private var webhooks: WebhookClient!
-    private var roomId: String!
+    private var spaceId: String!
     private var webhook: Webhook!
     private var webhookId: String!
 
@@ -33,9 +33,9 @@ class WebhookTests: XCTestCase {
         super.setUp()
         continueAfterFailure = false
         XCTAssertNotNil(fixture)
-        let room = fixture.createRoom(testCase: self, title: "room_for_test")
-        roomId = room?.id
-        XCTAssertNotNil(roomId)
+        let space = fixture.createSpace(testCase: self, title: "space_for_test")
+        spaceId = space?.id
+        XCTAssertNotNil(spaceId)
         webhooks = fixture.webex.webhooks
         webhook = createWebhook()
         XCTAssertNotNil(webhook)
@@ -44,8 +44,8 @@ class WebhookTests: XCTestCase {
     }
 
     override func tearDown() {
-        if let roomId = roomId {
-            fixture.deleteRoom(testCase: self, roomId: roomId)
+        if let spaceId = spaceId {
+            fixture.deleteSpace(testCase: self, spaceId: spaceId)
         }
         if let webhook = webhook, let id = webhook.id {
             deleteWebhook(id: id)
@@ -134,7 +134,7 @@ class WebhookTests: XCTestCase {
     
     private func createFilterWebhook() -> Webhook? {
         let request = { (completionHandler: @escaping (ServiceResponse<Webhook>) -> Void) in
-            self.webhooks.create(name: "test_webhook", targetUrl: "https://example.com/test_webhook", resource: "messages", event: "created", filter: "roomId=" + self.roomId, completionHandler: completionHandler)
+            self.webhooks.create(name: "test_webhook", targetUrl: "https://example.com/test_webhook", resource: "messages", event: "created", filter: "roomId=" + self.spaceId, completionHandler: completionHandler)
         }
         return fixture.getResponse(testCase: self, request: request)
     }

@@ -20,7 +20,7 @@
 
 import Foundation
 
-/// An iOS client wrapper of the Cisco Webex [Room Memberships REST API](https://developer.webex.com/resource-memberships.html) .
+/// An iOS client wrapper of the Cisco Webex [Space Memberships REST API](https://developer.webex.com/resource-memberships.html) .
 ///
 /// - since: 1.2.0
 public class MembershipClient {
@@ -34,7 +34,7 @@ public class MembershipClient {
         return ServiceRequest.Builder(authenticator).path("memberships")
     }
 
-    /// Lists all room memberships where the authenticated user belongs.
+    /// Lists all space memberships where the authenticated user belongs.
     ///
     /// - parameter max: The maximum number of items in the response.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
@@ -42,49 +42,50 @@ public class MembershipClient {
     /// - returns: Void
     /// - since: 1.2.0
     public func list(max: Int? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[Membership]>) -> Void) {
-        list(roomId: nil, personId: nil, personEmail: nil, max: max, queue: queue, completionHandler: completionHandler)
+        list(spaceId: nil, personId: nil, personEmail: nil, max: max, queue: queue, completionHandler: completionHandler)
     }
     
-    /// Lists all memberships in the given room by room Id.
+    /// Lists all memberships in the given space by space Id.
     ///
-    /// - parameter roomId: The identifier of the room where the membership belongs.
+    /// - parameter spaceId: The identifier of the space where the membership belongs.
     /// - parameter max: The maximum number of memberships in the response.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
     /// - since: 1.2.0
-    public func list(roomId: String, max: Int? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[Membership]>) -> Void) {
-        list(roomId: roomId, personId: nil, personEmail: nil, max: max, queue: queue, completionHandler: completionHandler)
+    public func list(spaceId: String, max: Int? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[Membership]>) -> Void) {
+        list(spaceId: spaceId, personId: nil, personEmail: nil, max: max, queue: queue, completionHandler: completionHandler)
     }
     
-    /// Lists any room memberships for the given room (by room id) and person (by person id).
+    /// Lists any space memberships for the given space (by space id) and person (by person id).
     ///
-    /// - parameter roomId: The identifier of the room where the memberships belong.
+    /// - parameter spaceId: The identifier of the space where the memberships belong.
     /// - parameter personId: The identifier of the person who has the memberships.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
     /// - since: 1.2.0
-    public func list(roomId: String, personId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[Membership]>) -> Void) {
-        list(roomId: roomId, personId: personId, personEmail: nil, max: nil, queue: queue, completionHandler: completionHandler)
+    public func list(spaceId: String, personId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[Membership]>) -> Void) {
+        list(spaceId: spaceId, personId: personId, personEmail: nil, max: nil, queue: queue, completionHandler: completionHandler)
     }
     
-    /// Lists any room memberships for the given room (by room id) and person (by email address).
+    /// Lists any space memberships for the given space (by space id) and person (by email address).
     ///
-    /// - parameter roomId: The identifier of the room where the memberships belong.
+    /// - parameter spaceId: The identifier of the space where the memberships belong.
     /// - parameter personEmail: The email address of the person who has the memberships.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
     /// - since: 1.2.0
-    public func list(roomId: String, personEmail: EmailAddress, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[Membership]>) -> Void) {
-        list(roomId: roomId, personId: nil, personEmail: personEmail, max: nil, queue: queue, completionHandler: completionHandler)
+    public func list(spaceId: String, personEmail: EmailAddress, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[Membership]>) -> Void) {
+        list(spaceId: spaceId, personId: nil, personEmail: personEmail, max: nil, queue: queue, completionHandler: completionHandler)
     }
     
-    private func list(roomId: String?, personId: String?, personEmail: EmailAddress?, max: Int?, queue: DispatchQueue?, completionHandler: @escaping (ServiceResponse<[Membership]>) -> Void) {
+    private func list(spaceId: String?, personId: String?, personEmail: EmailAddress?, max: Int?, queue: DispatchQueue?, completionHandler: @escaping (ServiceResponse<[Membership]>) -> Void) {
         
         let query = RequestParameter([
-            "roomId": roomId,
+            "spaceId": spaceId,
+            "roomId": spaceId,
             "personId": personId,
             "personEmail": personEmail?.toString(),
             "max": max])
@@ -99,18 +100,19 @@ public class MembershipClient {
         request.responseArray(completionHandler)
     }
     
-    /// Adds a person to a room by person id; optionally making the person a moderator.
+    /// Adds a person to a space by person id; optionally making the person a moderator.
     ///
-    /// - parameter roomId: The identifier of the room where the person is to be added.
+    /// - parameter spaceId: The identifier of the space where the person is to be added.
     /// - parameter personId: The identifier of the person to be added.
-    /// - parameter isModerator: If true, make the person a moderator of the room. The default is false.
+    /// - parameter isModerator: If true, make the person a moderator of the space. The default is false.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
     /// - since: 1.2.0
-    public func create(roomId: String, personId: String, isModerator: Bool = false, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Membership>) -> Void) {
+    public func create(spaceId: String, personId: String, isModerator: Bool = false, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Membership>) -> Void) {
         let body = RequestParameter([
-            "roomId": roomId,
+            "spaceId": spaceId,
+            "roomId": spaceId,
             "personId": personId,
             "isModerator": isModerator])
         
@@ -123,18 +125,19 @@ public class MembershipClient {
         request.responseObject(completionHandler)
     }
     
-    /// Adds a person to a room by email address; optionally making the person a moderator.
+    /// Adds a person to a space by email address; optionally making the person a moderator.
     ///
-    /// - parameter roomId: The identifier of the room where the person is to be added.
+    /// - parameter spaceId: The identifier of the space where the person is to be added.
     /// - parameter personEmail: The email address of the person to be added.
-    /// - parameter isModerator: If true, make the person a moderator of the room. The default is false.
+    /// - parameter isModerator: If true, make the person a moderator of the space. The default is false.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
     /// - since: 1.2.0
-    public func create(roomId: String, personEmail: EmailAddress, isModerator: Bool = false, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Membership>) -> Void) {
+    public func create(spaceId: String, personEmail: EmailAddress, isModerator: Bool = false, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Membership>) -> Void) {
         let body = RequestParameter([
-            "roomId": roomId,
+            "spaceId": spaceId,
+            "roomId": spaceId,
             "personEmail": personEmail.toString(),
             "isModerator": isModerator])
         
@@ -167,7 +170,7 @@ public class MembershipClient {
     /// Updates the properties of a membership by membership id.
     ///
     /// - parameter membershipId: The identifier of the membership.
-    /// - parameter isModerator: If true, make the person a moderator of the room in this membership. The default is false.
+    /// - parameter isModerator: If true, make the person a moderator of the space in this membership. The default is false.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
@@ -183,7 +186,7 @@ public class MembershipClient {
         request.responseObject(completionHandler)
     }
     
-    /// Deletes a membership by membership id. It removes the person from the room where the membership belongs.
+    /// Deletes a membership by membership id. It removes the person from the space where the membership belongs.
     ///
     /// - parameter membershipId: The identifier of the membership.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.

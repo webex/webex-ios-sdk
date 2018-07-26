@@ -106,21 +106,21 @@ class PhoneTests: XCTestCase {
         }
     }
     
-    func testWhenDialRoomThenReturnsSuccessAndHangsUp() {
+    func testWhenDialSpaceThenReturnsSuccessAndHangsUp() {
         if let user = fixture.createUser() {
             Thread.sleep(forTimeInterval: Config.TestcaseInterval)
-            let expect = expectation(description: "room create")
-            self.fixture.webex.rooms.create(title: "title") {
+            let expect = expectation(description: "space create")
+            self.fixture.webex.spaces.create(title: "title") {
                 response in
                 switch response.result {
-                case .success(let room):
+                case .success(let space):
                     let mediaOption = MediaOption.audioVideo(local: self.localView!, remote: self.remoteView!)
                     self.phone.disableVideoCodecActivation()
                     Thread.sleep(forTimeInterval: Config.TestcaseInterval)
                     
                     self.fakeCallClient?.otherParticipants = [user]
-                    self.fakeCallClient?.isRoomCall = true
-                    self.phone.dial(room.id!, option: mediaOption) { result in
+                    self.fakeCallClient?.isSpaceCall = true
+                    self.phone.dial(space.id!, option: mediaOption) { result in
                         let call = result.data
                         Thread.sleep(forTimeInterval: Config.TestcaseInterval)
                         XCTAssertNotNil(call)
@@ -133,7 +133,7 @@ class PhoneTests: XCTestCase {
                     
                     break
                 case .failure(_):
-                    XCTFail("Unable to create room")
+                    XCTFail("Unable to create space")
                     break
                 }
             }
@@ -148,7 +148,7 @@ class PhoneTests: XCTestCase {
     func testDialAndReturnsInIllegalStatusCall() {
         if let user = fixture.createUser() {
             Thread.sleep(forTimeInterval: Config.TestcaseInterval)
-            let expect = expectation(description: "room create")
+            let expect = expectation(description: "space create")
             
             
             let mediaOption = MediaOption.audioVideo(local: self.localView!, remote: self.remoteView!)
@@ -176,7 +176,7 @@ class PhoneTests: XCTestCase {
     func testDialReturnMissingCallUrl() {
         if let user = fixture.createUser() {
             Thread.sleep(forTimeInterval: Config.TestcaseInterval)
-            let expect = expectation(description: "room create")
+            let expect = expectation(description: "space create")
             let mediaOption = MediaOption.audioVideo(local: self.localView!, remote: self.remoteView!)
             self.fakeCallClient?.otherParticipants = [user]
             self.fakeCallClient?.illegalType = FakeCallModelHelper.CallIllegalStatusType.missingCallUrl
@@ -214,15 +214,15 @@ class PhoneTests: XCTestCase {
 //    }
     
     
-    //    func testWhenDialRoomThenReturnsConversationFailed() {
+    //    func testWhenDialSpaceThenReturnsConversationFailed() {
     //
-    //        let expect = expectation(description: "room create")
+    //        let expect = expectation(description: "space create")
     //
     //        let mediaOption = MediaOption.audioVideo(local: MediaRenderView(), remote: MediaRenderView())
     //        self.phone.disableVideoCodecActivation()
     //
     //        self.fakeConversationClient?.disabelConversation = true
-    //        self.phone.dial(Config.FakeRoomId, option: mediaOption) { result in
+    //        self.phone.dial(Config.FakeSpaceId, option: mediaOption) { result in
     //            XCTAssertNotNil(result.error)
     //            Thread.sleep(forTimeInterval: Config.TestcaseInterval)
     //            expect.fulfill()

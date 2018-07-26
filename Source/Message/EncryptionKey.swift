@@ -20,15 +20,15 @@
 
 class EncryptionKey {
     
-    let roomId: String // locus format
-    var roomUserIds: [String] = []
+    let spaceId: String // locus format
+    var spaceUserIds: [String] = []
     
     private var encryptionUrl: String?
     private var material: String?
     private var spaceUrl: String?
     
-    init(roomId: String) {
-        self.roomId = roomId
+    init(spaceId: String) {
+        self.spaceId = spaceId
     }
     
     func tryRefresh(encryptionUrl: String) {
@@ -49,7 +49,7 @@ class EncryptionKey {
                 }
                 else {
                     let encrptionUrl = response.data as? String
-                    client.requestRoomKeyMaterial(roomId: self.roomId, encryptionUrl: encrptionUrl) { result in
+                    client.requestSpaceKeyMaterial(spaceId: self.spaceId, encryptionUrl: encrptionUrl) { result in
                         switch result {
                         case .success(let data):
                             self.encryptionUrl = data.0
@@ -69,7 +69,7 @@ class EncryptionKey {
             completionHandler(Result.success(url))
         }
         else {
-            client.requestRoomEncryptionURL(roomId: self.roomId) { result in
+            client.requestSpaceEncryptionURL(spaceId: self.spaceId) { result in
                 self.encryptionUrl = result.data as? String
                 completionHandler(result)
             }
@@ -82,7 +82,7 @@ class EncryptionKey {
         }
         else {
             let request = ServiceRequest.Builder(authenticator).baseUrl(ServiceRequest.CONVERSATION_SERVER_ADDRESS)
-                .path("conversations/" + self.roomId.locusFormat + "/space")
+                .path("conversations/" + self.spaceId.locusFormat + "/space")
                 .method(.put)
                 .build()
             request.responseJSON { (response: ServiceResponse<Any>) in

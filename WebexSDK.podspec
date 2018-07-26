@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = "10.0"
   s.source_files = "Source/**/*.{h,m,swift}"
   s.preserve_paths = 'Frameworks/*.framework'
-  s.xcconfig = {'FRAMEWORK_SEARCH_PATHS' => '$(PODS_ROOT)/SparkSDK/Frameworks',
+  s.xcconfig = {'FRAMEWORK_SEARCH_PATHS' => '$(PODS_ROOT)/WebexSDK/Frameworks',
                 'ENABLE_BITCODE' => 'NO',
                 }
   s.vendored_frameworks = "Frameworks/*.framework"

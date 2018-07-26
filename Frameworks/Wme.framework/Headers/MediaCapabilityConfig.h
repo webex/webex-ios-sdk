@@ -11,11 +11,11 @@
 #define DEFAULT_AUDIO_MAX_BANDWIDTH 64000
 #define DEFAULT_VIDEO_MAX_BANDWIDTH 2000000
 #define DEFAULT_SCREEN_SHARE_MAX_BANDWIDTH 4000000
-
+#define DEFAULT_MULTISTREAM_TRACK_NUMBER 4
 @interface MediaCapabilityConfig : NSObject
 
 @property (nonatomic) UInt32 audioMaxBandwidth;
 @property (nonatomic) UInt32 videoMaxBandwidth;
 @property (nonatomic) UInt32 screenShareMaxBandwidth;
-
+@property (nonatomic) UInt8 multiStreamTrackNumber;
 @end

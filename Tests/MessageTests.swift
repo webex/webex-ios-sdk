@@ -29,7 +29,7 @@ class MessageTests: XCTestCase {
     private var fixture: WebexTestFixture! = WebexTestFixture.sharedInstance
     private var other: TestUser!
     private var messages: MessageClient!
-    private var roomId: String!
+    private var spaceId: String!
     
     private func getISO8601Date() -> String {
         
@@ -49,7 +49,7 @@ class MessageTests: XCTestCase {
         XCTAssertNotNil(message)
         XCTAssertNotNil(message?.id)
         XCTAssertNotNil(message?.personId)
-        XCTAssertNotNil(message?.roomId)
+        XCTAssertNotNil(message?.spaceId)
         XCTAssertNotNil(message?.created)
     }
     
@@ -61,14 +61,14 @@ class MessageTests: XCTestCase {
             other = fixture.createUser()
         }
         self.messages = self.fixture.webex.messages
-        let room = self.fixture.createRoom(testCase: self, title: "test room")
-        XCTAssertNotNil(room?.id)
-        self.roomId = room?.id
+        let space = self.fixture.createSpace(testCase: self, title: "test space")
+        XCTAssertNotNil(space?.id)
+        self.spaceId = space?.id
     }
     
     override func tearDown() {
-        if let roomId = roomId {
-            fixture.deleteRoom(testCase: self, roomId: roomId)
+        if let spaceId = spaceId {
+            fixture.deleteSpace(testCase: self, spaceId: spaceId)
         }
         
     }
@@ -85,20 +85,20 @@ class MessageTests: XCTestCase {
         XCTAssertEqual(message?.text, text)
     }
     
-    func testPostingMessageToRoomWithTextReturnsMessage() {
-        let message = postMessage(conversationId: roomId, text: text, mentions: nil, files:nil)
+    func testPostingMessageToSpaceWithTextReturnsMessage() {
+        let message = postMessage(conversationId: spaceId, text: text, mentions: nil, files:nil)
         validate(message: message)
         XCTAssertEqual(message?.text, text)
     }
     
     func testPostingMessageWithTextAndMentionReturnsMessage(){
         let mentionItem = Mention.person(Config.InvalidId)
-        let message = postMessage(conversationId: roomId, text: text, mentions:[mentionItem], files: nil)
+        let message = postMessage(conversationId: spaceId, text: text, mentions:[mentionItem], files: nil)
         validate(message: message)
         XCTAssertEqual(message?.text, text)
     }
     
-    func testPostingMessageToInvalidRoomDoesNotReturnMessage() {
+    func testPostingMessageToInvalidSpaceDoesNotReturnMessage() {
         let message = postMessage(conversationId: Config.InvalidId, text: text, mentions:nil, files: nil)
         XCTAssertNil(message)
     }
@@ -136,7 +136,7 @@ class MessageTests: XCTestCase {
     }
     
     func testGettingMessageReturnsMessage() {
-        let messageFromCreate = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
+        let messageFromCreate = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
         validate(message: messageFromCreate)
         if let messageFromCreateId = messageFromCreate?.id {
             let messageFromGet = getMessage(messageId: messageFromCreateId)
@@ -154,10 +154,10 @@ class MessageTests: XCTestCase {
     }
     
     func testDeletingMessageAndItCanNoLongerBeRetrieved() {
-        let message = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
+        let message = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
         validate(message: message)
         XCTAssertTrue(deleteMessage(messageId: (message?.id)!))
-        let messageArray = listMessages(conversationId: roomId, mentionedPeople: nil, before: nil, max: nil)
+        let messageArray = listMessages(conversationId: spaceId, mentionedPeople: nil, before: nil, max: nil)
         XCTAssertNil(messageArray?.filter({$0.id == message?.id}).first)
     }
     
@@ -166,63 +166,63 @@ class MessageTests: XCTestCase {
     }
     
     func testSendListMessageWithBeforeMessage() {
-        let message1 = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
-        let message2 = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
-        let message3 = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
+        let message1 = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
+        let message2 = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
+        let message3 = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
         XCTAssertEqual(message1?.text, text)
         XCTAssertEqual(message2?.text, text)
         XCTAssertEqual(message3?.text, text)
         
-        let messageArray = listMessages(conversationId: roomId, mentionedPeople: nil, before: message2?.created, max: 3)
+        let messageArray = listMessages(conversationId: spaceId, mentionedPeople: nil, before: message2?.created, max: 3)
         XCTAssertEqual(messageArray?.filter({$0.id == message3?.id}).count, 0)
     }
     
     func testSendListMessageWithBefore() {
-        let message1 = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
-        let message2 = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
-        let message3 = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
+        let message1 = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
+        let message2 = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
+        let message3 = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
         XCTAssertEqual(message1?.text, text)
         XCTAssertEqual(message2?.text, text)
         XCTAssertEqual(message3?.text, text)
         
-        let messageArray = listMessages(conversationId: roomId, mentionedPeople: nil, before: message2!.created, max: 3)
+        let messageArray = listMessages(conversationId: spaceId, mentionedPeople: nil, before: message2!.created, max: 3)
         XCTAssertEqual(messageArray?.filter({$0.id == message3?.id}).count, 0)
     }
     
     func testListMessageWithMentionpeople(){
-        let message1 = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
-        let message2 = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
+        let message1 = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
+        let message2 = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
         let mention = Mention.person(other.personId)
-        let message3 = postMessage(conversationId: roomId, text: text, mentions:[mention], files: nil)
+        let message3 = postMessage(conversationId: spaceId, text: text, mentions:[mention], files: nil)
         XCTAssertEqual(message1?.text, text)
         XCTAssertEqual(message2?.text, text)
         XCTAssertEqual(message3?.text, text)
         
-        let messageArray = listMessages(conversationId: roomId, mentionedPeople: "me" ,before: message2!.created, max: 3)
+        let messageArray = listMessages(conversationId: spaceId, mentionedPeople: "me" ,before: message2!.created, max: 3)
         XCTAssertEqual(messageArray?.count, 0)
     }
     
-//    func testPostingMessageToRoomWithFileReturnsMessage() {
+//    func testPostingMessageToSpaceWithFileReturnsMessage() {
 //        let file = LocalFile(path: self.generateLocalFile()!, name: "sample.png", progressHandler: nil)
-//        let message = postMessage(conversationId: roomId, text: nil, mentions: nil, files: [file!])
+//        let message = postMessage(conversationId: spaceId, text: nil, mentions: nil, files: [file!])
 //        Thread.sleep(forTimeInterval: 10)
 //        validate(message: message)
 //        XCTAssertNotNil(message?.files)
 //    }
 
-//    func testPostingMessageToRoomWithTextAndFileReturnsMessage() {
+//    func testPostingMessageToSpaceWithTextAndFileReturnsMessage() {
 //        let file = LocalFile(path: self.generateLocalFile()!, name: "sample.png", progressHandler: nil)
-//        let message = postMessage(conversationId: roomId, text: text, mentions:nil, files: [file!])
+//        let message = postMessage(conversationId: spaceId, text: text, mentions:nil, files: [file!])
 //        Thread.sleep(forTimeInterval: 10)
 //        validate(message: message)
 //        XCTAssertEqual(message?.text, text)
 //        XCTAssertNotNil(message?.files)
 //    }
 
-//    func testPostingMessageToRoomWithTextAndFileAndMentionReturnsMessage(){
+//    func testPostingMessageToSpaceWithTextAndFileAndMentionReturnsMessage(){
 //        let file = LocalFile(path: self.generateLocalFile()!, name: "sample.png", progressHandler: nil)
 //        let mentionItem = Mention.person(Config.InvalidId)
-//        let message = postMessage(conversationId: roomId, text: text, mentions:[mentionItem], files: [file!])
+//        let message = postMessage(conversationId: spaceId, text: text, mentions:[mentionItem], files: [file!])
 //        Thread.sleep(forTimeInterval: 10)
 //        validate(message: message)
 //        XCTAssertEqual(message?.text, text)
@@ -265,67 +265,67 @@ class MessageTests: XCTestCase {
 //    }
 
 //    func testListingMessagesReturnsMessages() {
-//        let message = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
+//        let message = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
 //        validate(message: message)
 //        Thread.sleep(forTimeInterval: 10)
-//        let messageArray = listMessages(conversationId: roomId, mentionedPeople: nil, before: nil, max: nil)
+//        let messageArray = listMessages(conversationId: spaceId, mentionedPeople: nil, before: nil, max: nil)
 //        XCTAssertEqual(messageArray?.isEmpty, false)
 //    }
 
 //    func testListingMessagesWithMaxValueOf2ReturnsOnly2Messages() {
-//        _ = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
-//        _ = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
-//        _ = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
+//        _ = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
+//        _ = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
+//        _ = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
 //        Thread.sleep(forTimeInterval: 10)
-//        let messageArray = listMessages(conversationId: roomId, mentionedPeople: nil, before: nil, max: 2)
+//        let messageArray = listMessages(conversationId: spaceId, mentionedPeople: nil, before: nil, max: 2)
 //        XCTAssertEqual(messageArray?.count, 2)
 //    }
 //
 //    func testListingMessagesBeforeADateReturnsMessagesPostedBeforeThatDate() {
-//        let message1 = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
+//        let message1 = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
 //        Thread.sleep(forTimeInterval: 10)
 //        var nowDate = Date()
 //        if let createDate = message1?.created,nowDate > createDate.addingTimeInterval(3) {
 //            nowDate = createDate.addingTimeInterval(10)
 //        }
-//        let message2 = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
-//        let messageArray = listMessages(conversationId: roomId, mentionedPeople: nil, before: nowDate, max: nil)
+//        let message2 = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
+//        let messageArray = listMessages(conversationId: spaceId, mentionedPeople: nil, before: nowDate, max: nil)
 //        XCTAssertEqual(messageArray?.contains() {$0.id == message1?.id}, true)
 //        XCTAssertEqual(messageArray?.contains() {$0.id == message2?.id}, false)
 //    }
 //
 //    func testListingMessagesBeforeADateAndAMessageIdDoesReturnMessageWithThatId() {
-//        let message = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
+//        let message = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
 //        Thread.sleep(forTimeInterval: 10)
 //        let now = Date()
-//        let messageArray = listMessages(conversationId: roomId, mentionedPeople: nil, before: now, max: nil)
+//        let messageArray = listMessages(conversationId: spaceId, mentionedPeople: nil, before: now, max: nil)
 //        XCTAssertEqual(messageArray?.contains() {$0.id == message?.id}, true)
 //    }
 
-//    func testListingMessageWithInvalidRoomIdDoesNotReturnMessage() {
+//    func testListingMessageWithInvalidSpaceIdDoesNotReturnMessage() {
 //        let messageArray = listMessages(conversationId: Config.InvalidId, mentionedPeople: nil, before: nil, max: nil)
 //        XCTAssertNil(messageArray)
 //    }
 
 //    func testSendListDeleteMessage() {
-//        let message1 = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
-//        let message2 = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
-//        let message3 = postMessage(conversationId: roomId, text: text, mentions:nil, files: nil)
+//        let message1 = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
+//        let message2 = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
+//        let message3 = postMessage(conversationId: spaceId, text: text, mentions:nil, files: nil)
 //        XCTAssertEqual(message1?.text, text)
 //        XCTAssertEqual(message2?.text, text)
 //        XCTAssertEqual(message3?.text, text)
 //        Thread.sleep(forTimeInterval: 10)
-//        let messageArray = listMessages(conversationId: roomId, mentionedPeople: nil, before: nil, max: 3)
+//        let messageArray = listMessages(conversationId: spaceId, mentionedPeople: nil, before: nil, max: 3)
 //        XCTAssertEqual(messageArray?.count, 3)
 //
 //        XCTAssertTrue(deleteMessage(messageId: message2!.id!))
 //        Thread.sleep(forTimeInterval: 10)
-//        let messageArray1 = listMessages(conversationId: roomId, mentionedPeople: nil, before: nil, max: 3)
+//        let messageArray1 = listMessages(conversationId: spaceId, mentionedPeople: nil, before: nil, max: 3)
 //        XCTAssertEqual(messageArray1?.filter({$0.id == message2?.id}).count, 0)
 //
 //        XCTAssertTrue(deleteMessage(messageId: message3!.id!))
 //        Thread.sleep(forTimeInterval: 10)
-//        let messageArray2 = listMessages(conversationId: roomId, mentionedPeople: nil, before: nil, max: 3)
+//        let messageArray2 = listMessages(conversationId: spaceId, mentionedPeople: nil, before: nil, max: 3)
 //        XCTAssertEqual(messageArray2?.filter({$0.id == message3?.id}).count, 0)
 //    }
     
@@ -338,7 +338,7 @@ class MessageTests: XCTestCase {
     
     private func postMessage(conversationId: String, text: String?, mentions:[Mention]?,files: [LocalFile]?) -> Message? {
         let request = { (completionHandler: @escaping (ServiceResponse<Message>) -> Void) in
-            self.messages.post(roomId: conversationId, text: text, mentions: mentions, files: files, queue: nil, completionHandler: completionHandler)
+            self.messages.post(spaceId: conversationId, text: text, mentions: mentions, files: files, queue: nil, completionHandler: completionHandler)
         }
         return fixture.getResponse(testCase: self, timeOut: 120.0, request: request)
     }
@@ -361,7 +361,7 @@ class MessageTests: XCTestCase {
         let request = { (completionHandler: @escaping (ServiceResponse<[Message]>) -> Void) in
             let beforeDate = before != nil ? Before.date(before!) : nil
             let mentions = mentionedPeople != nil ? Mention.person(mentionedPeople!) : nil
-            self.messages.list(roomId: conversationId, before: beforeDate, max: max ?? 50, mentionedPeople: mentions, queue: nil, completionHandler: completionHandler)
+            self.messages.list(spaceId: conversationId, before: beforeDate, max: max ?? 50, mentionedPeople: mentions, queue: nil, completionHandler: completionHandler)
         }
         return fixture.getResponse(testCase: self, timeOut: 120.0, request: request)
     }

@@ -25,6 +25,8 @@
 		10A9CA8F20D0D1490095DF19 /* WebexBroadcastExtensionKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A9CA8620D0D0510095DF19 /* WebexBroadcastExtensionKitTests.swift */; };
 		10A9CA9020D0D14D0095DF19 /* WebexBroadcastClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A9CA8320D0D0510095DF19 /* WebexBroadcastClient.swift */; };
 		10A9CA9120D0D1510095DF19 /* WebexError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A9CA8220D0D0510095DF19 /* WebexError.swift */; };
+		10F0658821081BBA001B1514 /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658621081BBA001B1514 /* Space.swift */; };
+		10F0658921081BBA001B1514 /* SpaceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658721081BBA001B1514 /* SpaceClient.swift */; };
 		20418FE01EACCFDD00626326 /* KeychainProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418FDF1EACCFDD00626326 /* KeychainProtocol.swift */; };
 		204209761F8CD132002D95EB /* MediaShareModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204209751F8CD132002D95EB /* MediaShareModel.swift */; };
 		204209781F8CD27F002D95EB /* ConversationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204209771F8CD27F002D95EB /* ConversationClient.swift */; };
@@ -55,7 +57,7 @@
 		3D31B7871D41B7F500D8DB55 /* MessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA099F41D3EF82500205DF6 /* MessageTests.swift */; };
 		3D31B7881D41B7F500D8DB55 /* PeopleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA099F51D3EF82500205DF6 /* PeopleTests.swift */; };
 		3D31B7891D41B7F500D8DB55 /* PhoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA099F61D3EF82500205DF6 /* PhoneTests.swift */; };
-		3D31B78A1D41B7F500D8DB55 /* RoomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA099F71D3EF82500205DF6 /* RoomTests.swift */; };
+		3D31B78A1D41B7F500D8DB55 /* SpaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA099F71D3EF82500205DF6 /* SpaceTests.swift */; };
 		3D31B78B1D41B7F500D8DB55 /* SequenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA099F81D3EF82500205DF6 /* SequenceTests.swift */; };
 		3D31B78C1D41B7F500D8DB55 /* TeamMembershipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA099F91D3EF82500205DF6 /* TeamMembershipTests.swift */; };
 		3D31B78D1D41B7F500D8DB55 /* TeamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA099FA1D3EF82500205DF6 /* TeamTests.swift */; };
@@ -127,8 +129,6 @@
 		B91E75C81CE2D7B70080EAE0 /* DeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E756F1CE2D7B70080EAE0 /* DeviceService.swift */; };
 		B91E75D61CE2D7B70080EAE0 /* Phone.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E757E1CE2D7B70080EAE0 /* Phone.swift */; };
 		B91E75D71CE2D7B70080EAE0 /* WebSocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E757F1CE2D7B70080EAE0 /* WebSocketService.swift */; };
-		B91E75D81CE2D7B70080EAE0 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E75811CE2D7B70080EAE0 /* Room.swift */; };
-		B91E75DA1CE2D7B70080EAE0 /* RoomClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E75831CE2D7B70080EAE0 /* RoomClient.swift */; };
 		B91E75DB1CE2D7B70080EAE0 /* Webex.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E75841CE2D7B70080EAE0 /* Webex.swift */; };
 		B91E75E01CE2D7B70080EAE0 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E758B1CE2D7B70080EAE0 /* Array+Extension.swift */; };
 		B91E75E11CE2D7B70080EAE0 /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E758C1CE2D7B70080EAE0 /* Dictionary+Extension.swift */; };
@@ -153,6 +153,7 @@
 		C79F140C1FBE7C3A00B43596 /* FakeReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F14041FBE7BE500B43596 /* FakeReachabilityService.swift */; };
 		C79F140D1FBE7C3A00B43596 /* FakeWebSocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F14051FBE7BE500B43596 /* FakeWebSocketService.swift */; };
 		C79F14101FC3B8C900B43596 /* CallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F140E1FC3B88900B43596 /* CallTests.swift */; };
+		C7CE613D2106CA5D007FB9AA /* RemoteAuxVideos.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CE613C2106CA5D007FB9AA /* RemoteAuxVideos.swift */; };
 		D4E203C8CEBFF13EE1120FF8 /* Pods_WebexBroadcastExtensionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB676BF6AEAF9B6DEEE3180A /* Pods_WebexBroadcastExtensionKit.framework */; };
 		E35305C10FED39CF42E37DD4 /* Pods_WebexBroadcastExtensionKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B853CF3F28B8FF8D3908761 /* Pods_WebexBroadcastExtensionKitTests.framework */; };
 		ED9BF35EED0E4D4D3DF6B682 /* Pods_WebexSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BE0605A020EB70555237707 /* Pods_WebexSDKTests.framework */; };
@@ -206,6 +207,8 @@
 		10A9CA8420D0D0510095DF19 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		10A9CA8620D0D0510095DF19 /* WebexBroadcastExtensionKitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebexBroadcastExtensionKitTests.swift; sourceTree = "<group>"; };
 		10A9CA8720D0D0510095DF19 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		10F0658621081BBA001B1514 /* Space.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Space.swift; sourceTree = "<group>"; };
+		10F0658721081BBA001B1514 /* SpaceClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceClient.swift; sourceTree = "<group>"; };
 		1A4EDCBCF0893EEB4982A765 /* Pods-WebexBroadcastExtensionKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebexBroadcastExtensionKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WebexBroadcastExtensionKitTests/Pods-WebexBroadcastExtensionKitTests.release.xcconfig"; sourceTree = "<group>"; };
 		1EEDFDBB5DCAF8BB879883B2 /* Pods-WebexBroadcastExtensionKit.releasetest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebexBroadcastExtensionKit.releasetest.xcconfig"; path = "Pods/Target Support Files/Pods-WebexBroadcastExtensionKit/Pods-WebexBroadcastExtensionKit.releasetest.xcconfig"; sourceTree = "<group>"; };
 		20418FDF1EACCFDD00626326 /* KeychainProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainProtocol.swift; sourceTree = "<group>"; };
@@ -247,7 +250,7 @@
 		3DA099F41D3EF82500205DF6 /* MessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = MessageTests.swift; path = Tests/MessageTests.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		3DA099F51D3EF82500205DF6 /* PeopleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PeopleTests.swift; path = Tests/PeopleTests.swift; sourceTree = SOURCE_ROOT; };
 		3DA099F61D3EF82500205DF6 /* PhoneTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhoneTests.swift; path = Tests/PhoneTests.swift; sourceTree = SOURCE_ROOT; };
-		3DA099F71D3EF82500205DF6 /* RoomTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RoomTests.swift; path = Tests/RoomTests.swift; sourceTree = SOURCE_ROOT; };
+		3DA099F71D3EF82500205DF6 /* SpaceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpaceTests.swift; path = Tests/SpaceTests.swift; sourceTree = SOURCE_ROOT; };
 		3DA099F81D3EF82500205DF6 /* SequenceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SequenceTests.swift; path = Tests/SequenceTests.swift; sourceTree = SOURCE_ROOT; };
 		3DA099F91D3EF82500205DF6 /* TeamMembershipTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TeamMembershipTests.swift; path = Tests/TeamMembershipTests.swift; sourceTree = SOURCE_ROOT; };
 		3DA099FA1D3EF82500205DF6 /* TeamTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TeamTests.swift; path = Tests/TeamTests.swift; sourceTree = SOURCE_ROOT; };
@@ -318,8 +321,6 @@
 		B91E756F1CE2D7B70080EAE0 /* DeviceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceService.swift; sourceTree = "<group>"; };
 		B91E757E1CE2D7B70080EAE0 /* Phone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Phone.swift; sourceTree = "<group>"; };
 		B91E757F1CE2D7B70080EAE0 /* WebSocketService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketService.swift; sourceTree = "<group>"; };
-		B91E75811CE2D7B70080EAE0 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
-		B91E75831CE2D7B70080EAE0 /* RoomClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomClient.swift; sourceTree = "<group>"; };
 		B91E75841CE2D7B70080EAE0 /* Webex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Webex.swift; sourceTree = "<group>"; };
 		B91E758B1CE2D7B70080EAE0 /* Array+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		B91E758C1CE2D7B70080EAE0 /* Dictionary+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extension.swift"; sourceTree = "<group>"; };
@@ -345,6 +346,7 @@
 		C79F14041FBE7BE500B43596 /* FakeReachabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeReachabilityService.swift; sourceTree = "<group>"; };
 		C79F14051FBE7BE500B43596 /* FakeWebSocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeWebSocketService.swift; sourceTree = "<group>"; };
 		C79F140E1FC3B88900B43596 /* CallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CallTests.swift; path = Tests/CallTests.swift; sourceTree = SOURCE_ROOT; };
+		C7CE613C2106CA5D007FB9AA /* RemoteAuxVideos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteAuxVideos.swift; sourceTree = "<group>"; };
 		DBF6BF7E8BF8E98D8092ECF0 /* Pods-WebexSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebexSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WebexSDK/Pods-WebexSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		EB676BF6AEAF9B6DEEE3180A /* Pods_WebexBroadcastExtensionKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WebexBroadcastExtensionKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5B9623865B31E216BB56A /* Pods-WebexBroadcastExtensionKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebexBroadcastExtensionKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-WebexBroadcastExtensionKit/Pods-WebexBroadcastExtensionKit.release.xcconfig"; sourceTree = "<group>"; };
@@ -433,9 +435,19 @@
 			path = WebexBroadcastExtensionKitTests;
 			sourceTree = "<group>";
 		};
+		10F0658521081BBA001B1514 /* Space */ = {
+			isa = PBXGroup;
+			children = (
+				10F0658621081BBA001B1514 /* Space.swift */,
+				10F0658721081BBA001B1514 /* SpaceClient.swift */,
+			);
+			path = Space;
+			sourceTree = "<group>";
+		};
 		20EEA2CB1EBDE43300D6BB75 /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				C7CE613C2106CA5D007FB9AA /* RemoteAuxVideos.swift */,
 				C7957FF7207C6FD20069D672 /* MediaRenderView.swift */,
 				20EEA2CC1EBDE43300D6BB75 /* MediaEngineObserver.swift */,
 				20EEA2CD1EBDE43300D6BB75 /* MediaEngineWrapper.swift */,
@@ -458,7 +470,7 @@
 				5AFA0BD21DEE0B2F00B6F6C9 /* OAuthKeychainStorageTests.swift */,
 				3DA099F51D3EF82500205DF6 /* PeopleTests.swift */,
 				3DA099F61D3EF82500205DF6 /* PhoneTests.swift */,
-				3DA099F71D3EF82500205DF6 /* RoomTests.swift */,
+				3DA099F71D3EF82500205DF6 /* SpaceTests.swift */,
 				3DA099F81D3EF82500205DF6 /* SequenceTests.swift */,
 				3DA099F91D3EF82500205DF6 /* TeamMembershipTests.swift */,
 				3DA099FA1D3EF82500205DF6 /* TeamTests.swift */,
@@ -584,7 +596,7 @@
 				B91E754B1CE2D7B70080EAE0 /* Metrics */,
 				B91E75521CE2D7B70080EAE0 /* Person */,
 				B91E75561CE2D7B70080EAE0 /* Phone */,
-				B91E75801CE2D7B70080EAE0 /* Room */,
+				10F0658521081BBA001B1514 /* Space */,
 				B91E75891CE2D7B70080EAE0 /* Utils */,
 				B91E75911CE2D7B70080EAE0 /* Webhook */,
 				3D66B1A71D24ACF60016A072 /* Team */,
@@ -719,15 +731,6 @@
 			path = Device;
 			sourceTree = "<group>";
 		};
-		B91E75801CE2D7B70080EAE0 /* Room */ = {
-			isa = PBXGroup;
-			children = (
-				B91E75811CE2D7B70080EAE0 /* Room.swift */,
-				B91E75831CE2D7B70080EAE0 /* RoomClient.swift */,
-			);
-			path = Room;
-			sourceTree = "<group>";
-		};
 		B91E75891CE2D7B70080EAE0 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -806,7 +809,6 @@
 				3D15B7091D3E176C003BB682 /* Resources */,
 				3D2D51061D3E2168005FC665 /* CopyFiles */,
 				0602E8657366D8607A8C5656 /* [CP] Embed Pods Frameworks */,
-				3E7D92361EE37804D0ABF722 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -827,7 +829,6 @@
 				B91E75211CE2D6FF0080EAE0 /* Frameworks */,
 				B91E75221CE2D6FF0080EAE0 /* Headers */,
 				B91E75231CE2D6FF0080EAE0 /* Resources */,
-				75064DEC60734D04B47D1A5E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -847,7 +848,6 @@
 				C7625FCE205CBB9600219F95 /* Frameworks */,
 				C7625FCF205CBB9600219F95 /* Headers */,
 				C7625FD0205CBB9600219F95 /* Resources */,
-				397C6AACD256854693320F59 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -866,8 +866,6 @@
 				C7625FD6205CBB9600219F95 /* Sources */,
 				C7625FD7205CBB9600219F95 /* Frameworks */,
 				C7625FD8205CBB9600219F95 /* Resources */,
-				C81A0F418207E52EBADD9251 /* [CP] Embed Pods Frameworks */,
-				2589C7E63C6D314D6495D7CF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -993,51 +991,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WebexSDKTests/Pods-WebexSDKTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2589C7E63C6D314D6495D7CF /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WebexBroadcastExtensionKitTests/Pods-WebexBroadcastExtensionKitTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		397C6AACD256854693320F59 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WebexBroadcastExtensionKit/Pods-WebexBroadcastExtensionKit-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3E7D92361EE37804D0ABF722 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WebexSDKTests/Pods-WebexSDKTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		4165ACFCF8306F887CA34E6B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1074,21 +1027,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		75064DEC60734D04B47D1A5E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WebexSDK/Pods-WebexSDK-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		839EED93CA81084190C85970 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1105,21 +1043,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C81A0F418207E52EBADD9251 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WebexBroadcastExtensionKitTests/Pods-WebexBroadcastExtensionKitTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E875D7D5D52F4554A49B9703 /* [CP] Check Pods Manifest.lock */ = {
@@ -1166,7 +1089,7 @@
 				5A9350DB1E00742D00374B99 /* MockClock.swift in Sources */,
 				991DA8AC1F389D6200939724 /* SSOAuthenticatorTests.swift in Sources */,
 				C78D19B71EC2C0EF00B59D18 /* JWTAuthenticatorTests.swift in Sources */,
-				3D31B78A1D41B7F500D8DB55 /* RoomTests.swift in Sources */,
+				3D31B78A1D41B7F500D8DB55 /* SpaceTests.swift in Sources */,
 				3D31B7871D41B7F500D8DB55 /* MessageTests.swift in Sources */,
 				C78D19B91EC2D36400B59D18 /* OAuthAuthenticatorTests.swift in Sources */,
 				3D81E30E1D41BBAD0085970A /* WebexTestFixture.swift in Sources */,
@@ -1214,6 +1137,7 @@
 				B91E75E81CE2D7B70080EAE0 /* WebhookClient.swift in Sources */,
 				2074343E1E98B7A200C5EBCD /* CallStatus.swift in Sources */,
 				B91E75AA1CE2D7B70080EAE0 /* Metric+Names.swift in Sources */,
+				10F0658821081BBA001B1514 /* Space.swift in Sources */,
 				20EEA2D01EBDE43300D6BB75 /* MediaEngineObserver.swift in Sources */,
 				20EEA2771EB0E6B400D6BB75 /* CallModel.swift in Sources */,
 				209360381E89DA7300D6BC4A /* Logger.swift in Sources */,
@@ -1232,7 +1156,9 @@
 				B91E75C81CE2D7B70080EAE0 /* DeviceService.swift in Sources */,
 				3DEEA4F31D11419800EB73F6 /* UIAlertController+Extension.swift in Sources */,
 				20EEA2D21EBDE43300D6BB75 /* MediaSessionObserver.swift in Sources */,
+				C7CE613D2106CA5D007FB9AA /* RemoteAuxVideos.swift in Sources */,
 				5AFB6E911DF5C5110027E989 /* JWTAuthClient.swift in Sources */,
+				10F0658921081BBA001B1514 /* SpaceClient.swift in Sources */,
 				3D3499581CF3ED30004022C3 /* ExponentialBackOffCounter.swift in Sources */,
 				204209781F8CD27F002D95EB /* ConversationClient.swift in Sources */,
 				204583F41E83C03500EEB3FC /* CallMembership.swift in Sources */,
@@ -1262,12 +1188,10 @@
 				20EEA2D11EBDE43300D6BB75 /* MediaEngineWrapper.swift in Sources */,
 				5AFB6E941DF5C5110027E989 /* JWTAuthStorage.swift in Sources */,
 				B91E75C71CE2D7B70080EAE0 /* DeviceClient.swift in Sources */,
-				B91E75D81CE2D7B70080EAE0 /* Room.swift in Sources */,
 				5D1A5D031CF6FB3A00313515 /* ReachabilityModel.swift in Sources */,
 				5AC09EB71DE63C27005F38BC /* OAuthKeychainStorage.swift in Sources */,
 				1066EF0C2022F877003745D0 /* MessageClient.swift in Sources */,
 				B91E75DB1CE2D7B70080EAE0 /* Webex.swift in Sources */,
-				B91E75DA1CE2D7B70080EAE0 /* RoomClient.swift in Sources */,
 				5D67C6661CF4525C00758F6B /* MediaCluster.swift in Sources */,
 				3D66B1B21D24AD570016A072 /* TeamMembership.swift in Sources */,
 				B91E759F1CE2D7B70080EAE0 /* ServiceResponse.swift in Sources */,
@@ -1435,7 +1359,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = $PROJECT_DIR/Source/Info.plist;
+				INFOPLIST_FILE = "$PROJECT_DIR/Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1617,7 +1541,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = $PROJECT_DIR/Source/Info.plist;
+				INFOPLIST_FILE = "$PROJECT_DIR/Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1660,7 +1584,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = $PROJECT_DIR/Source/Info.plist;
+				INFOPLIST_FILE = "$PROJECT_DIR/Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
