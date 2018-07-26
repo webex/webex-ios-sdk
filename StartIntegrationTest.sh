@@ -10,4 +10,3 @@ else
 	echo "not the integration test task return normal..."
 	exit 0
 fi
-done
