@@ -112,9 +112,9 @@ Here are some examples of how to use the iOS SDK in your app.
 4. Use Webex service:
 
     ```swift
-    webex.rooms.create(title: "Hello World") { response in
+    webex.spaces.create(title: "Hello World") { response in
         switch response.result {
-        case .success(let room):
+        case .success(let space):
             // ...
         case .failure(let error):
             // ...
@@ -123,7 +123,7 @@ Here are some examples of how to use the iOS SDK in your app.
 
     // ...
 
-    webex.memberships.create(roomId: roomId, personEmail: email) { response in
+    webex.memberships.create(spaceId: spaceId, personEmail: email) { response in
         switch response.result {
         case .success(let membership):
             // ...
@@ -166,10 +166,10 @@ Here are some examples of how to use the iOS SDK in your app.
     }
     ```
 
-7. Make an room call:
+7. Make an space call:
 
     ```swift
-    webex.phone.dial(roomId, option: MediaOption.audioVideo(local: ..., remote: ...)) { ret in
+    webex.phone.dial(spaceId, option: MediaOption.audioVideo(local: ..., remote: ...)) { ret in
         switch ret {
         case .success(let call):
             call.onConnected = {
