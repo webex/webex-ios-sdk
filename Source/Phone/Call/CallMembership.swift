@@ -102,6 +102,13 @@ public struct CallMembership {
             && self.call.model.screenShareMediaFloor?.disposition == MediaShareModel.ShareFloorDisposition.granted
     }
     
+    /// True if the *CallMembership* is sending screen share. Otherwise, false.
+    ///
+    /// - since: 2.0.0
+    public var isActiveSpeaker: Bool {
+        return (self.call.activeSpeaker?.id == self.id) 
+    }
+    
     let id: String
     
     public let isSelf: Bool
@@ -127,5 +134,9 @@ public struct CallMembership {
             self.personId = "ciscospark://us/PEOPLE/\(personId)".base64Encoded()
         }
         self._model = participant
+    }
+    
+    func containCSI(csi:UInt) -> Bool {
+        return model.status?.csis?.contains(csi) ?? false
     }
 }

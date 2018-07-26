@@ -30,6 +30,7 @@ Assuming you already have an Xcode project, e.g. _MyWebexApp_, for your iOS app,
     pod setup
     ```
 
+
 3. Create a new file, `Podfile`, with following content in your _MyWebexApp_ project directory:
 
     ```ruby
@@ -63,6 +64,7 @@ See the [iOS SDK area](https://developer.webex.com/sdk-for-ios.html) of the Webe
 ### Example
 
 Here are some examples of how to use the iOS SDK in your app.
+
 
 1. Create the Webex instance using Webex ID authentication ([OAuth](https://oauth.net/)-based):
 
@@ -335,6 +337,7 @@ Here are API changes list from Spark IOS SDK to Webex IOS SDK.
 | Description | Spark IOS SDK | Webex IOS SDK |
 | :----:| :----: | :----:
 | Create a new instance | let spark = Spark(authenticator: authenticator) | let webex = Webex(authenticator: authenticator)
+
 
 ## License
 

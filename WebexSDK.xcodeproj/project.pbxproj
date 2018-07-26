@@ -153,6 +153,7 @@
 		C79F140C1FBE7C3A00B43596 /* FakeReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F14041FBE7BE500B43596 /* FakeReachabilityService.swift */; };
 		C79F140D1FBE7C3A00B43596 /* FakeWebSocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F14051FBE7BE500B43596 /* FakeWebSocketService.swift */; };
 		C79F14101FC3B8C900B43596 /* CallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F140E1FC3B88900B43596 /* CallTests.swift */; };
+		C7CE613D2106CA5D007FB9AA /* RemoteAuxVideos.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CE613C2106CA5D007FB9AA /* RemoteAuxVideos.swift */; };
 		D4E203C8CEBFF13EE1120FF8 /* Pods_WebexBroadcastExtensionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB676BF6AEAF9B6DEEE3180A /* Pods_WebexBroadcastExtensionKit.framework */; };
 		E35305C10FED39CF42E37DD4 /* Pods_WebexBroadcastExtensionKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B853CF3F28B8FF8D3908761 /* Pods_WebexBroadcastExtensionKitTests.framework */; };
 		ED9BF35EED0E4D4D3DF6B682 /* Pods_WebexSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BE0605A020EB70555237707 /* Pods_WebexSDKTests.framework */; };
@@ -345,6 +346,7 @@
 		C79F14041FBE7BE500B43596 /* FakeReachabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeReachabilityService.swift; sourceTree = "<group>"; };
 		C79F14051FBE7BE500B43596 /* FakeWebSocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeWebSocketService.swift; sourceTree = "<group>"; };
 		C79F140E1FC3B88900B43596 /* CallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CallTests.swift; path = Tests/CallTests.swift; sourceTree = SOURCE_ROOT; };
+		C7CE613C2106CA5D007FB9AA /* RemoteAuxVideos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteAuxVideos.swift; sourceTree = "<group>"; };
 		DBF6BF7E8BF8E98D8092ECF0 /* Pods-WebexSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebexSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WebexSDK/Pods-WebexSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		EB676BF6AEAF9B6DEEE3180A /* Pods_WebexBroadcastExtensionKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WebexBroadcastExtensionKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5B9623865B31E216BB56A /* Pods-WebexBroadcastExtensionKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebexBroadcastExtensionKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-WebexBroadcastExtensionKit/Pods-WebexBroadcastExtensionKit.release.xcconfig"; sourceTree = "<group>"; };
@@ -445,6 +447,7 @@
 		20EEA2CB1EBDE43300D6BB75 /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				C7CE613C2106CA5D007FB9AA /* RemoteAuxVideos.swift */,
 				C7957FF7207C6FD20069D672 /* MediaRenderView.swift */,
 				20EEA2CC1EBDE43300D6BB75 /* MediaEngineObserver.swift */,
 				20EEA2CD1EBDE43300D6BB75 /* MediaEngineWrapper.swift */,
@@ -806,7 +809,6 @@
 				3D15B7091D3E176C003BB682 /* Resources */,
 				3D2D51061D3E2168005FC665 /* CopyFiles */,
 				0602E8657366D8607A8C5656 /* [CP] Embed Pods Frameworks */,
-				3E7D92361EE37804D0ABF722 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -827,7 +829,6 @@
 				B91E75211CE2D6FF0080EAE0 /* Frameworks */,
 				B91E75221CE2D6FF0080EAE0 /* Headers */,
 				B91E75231CE2D6FF0080EAE0 /* Resources */,
-				75064DEC60734D04B47D1A5E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -847,7 +848,6 @@
 				C7625FCE205CBB9600219F95 /* Frameworks */,
 				C7625FCF205CBB9600219F95 /* Headers */,
 				C7625FD0205CBB9600219F95 /* Resources */,
-				397C6AACD256854693320F59 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -866,8 +866,6 @@
 				C7625FD6205CBB9600219F95 /* Sources */,
 				C7625FD7205CBB9600219F95 /* Frameworks */,
 				C7625FD8205CBB9600219F95 /* Resources */,
-				C81A0F418207E52EBADD9251 /* [CP] Embed Pods Frameworks */,
-				2589C7E63C6D314D6495D7CF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -993,51 +991,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WebexSDKTests/Pods-WebexSDKTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2589C7E63C6D314D6495D7CF /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WebexBroadcastExtensionKitTests/Pods-WebexBroadcastExtensionKitTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		397C6AACD256854693320F59 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WebexBroadcastExtensionKit/Pods-WebexBroadcastExtensionKit-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3E7D92361EE37804D0ABF722 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WebexSDKTests/Pods-WebexSDKTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		4165ACFCF8306F887CA34E6B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1074,21 +1027,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		75064DEC60734D04B47D1A5E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WebexSDK/Pods-WebexSDK-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		839EED93CA81084190C85970 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1105,21 +1043,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C81A0F418207E52EBADD9251 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WebexBroadcastExtensionKitTests/Pods-WebexBroadcastExtensionKitTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E875D7D5D52F4554A49B9703 /* [CP] Check Pods Manifest.lock */ = {
@@ -1233,6 +1156,7 @@
 				B91E75C81CE2D7B70080EAE0 /* DeviceService.swift in Sources */,
 				3DEEA4F31D11419800EB73F6 /* UIAlertController+Extension.swift in Sources */,
 				20EEA2D21EBDE43300D6BB75 /* MediaSessionObserver.swift in Sources */,
+				C7CE613D2106CA5D007FB9AA /* RemoteAuxVideos.swift in Sources */,
 				5AFB6E911DF5C5110027E989 /* JWTAuthClient.swift in Sources */,
 				10F0658921081BBA001B1514 /* SpaceClient.swift in Sources */,
 				3D3499581CF3ED30004022C3 /* ExponentialBackOffCounter.swift in Sources */,
@@ -1435,7 +1359,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = $PROJECT_DIR/Source/Info.plist;
+				INFOPLIST_FILE = "$PROJECT_DIR/Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1617,7 +1541,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = $PROJECT_DIR/Source/Info.plist;
+				INFOPLIST_FILE = "$PROJECT_DIR/Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1660,7 +1584,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = $PROJECT_DIR/Source/Info.plist;
+				INFOPLIST_FILE = "$PROJECT_DIR/Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
