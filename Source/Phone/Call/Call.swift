@@ -512,7 +512,7 @@ public class Call {
     public var screenShareRenderView: MediaRenderView? {
         didSet {
             DispatchQueue.main.async {
-                if !self.mediaSession.hasScreenShare || !self.mediaSession.isPrepared() {
+                if !self.mediaSession.hasScreenShare || !self.mediaSession.isPrepared {
                     return
                 }
                 //update media session
