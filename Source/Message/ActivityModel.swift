@@ -197,7 +197,7 @@ private class VerbTransform : TransformType {
 private class SpaceTypeTransform : TransformType {
     
     func transformFromJSON(_ value: Any?) -> SpaceType? {
-        if let tags = value as? String, tags.contains("ONE_ON_ONE") {
+        if let tags = value as? [String], tags.contains("ONE_ON_ONE") {
             return SpaceType.direct
         }
         return SpaceType.group
