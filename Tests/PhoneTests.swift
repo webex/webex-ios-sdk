@@ -926,7 +926,7 @@ class PhoneTests: XCTestCase {
             let expect1 = expectation(description: "Call mute video")
             call?.onConnected = {
                 call?.sendingVideo = false
-                FakeMediaSession.stubMediaChangeNotification(eventType: .sendingVideo(false),call: call!)
+                FakeWME.stubMediaChangeNotification(eventType: .sendingVideo(false),call: call!)
             }
             
             call?.onMediaChanged = {
@@ -981,7 +981,7 @@ class PhoneTests: XCTestCase {
             call?.onConnected = {
                 call?.sendingVideo = false
                 self.fakeCallClient?.enableServerReturnError = true
-                FakeMediaSession.stubMediaChangeNotification(eventType: .sendingVideo(false),call: call!)
+                FakeWME.stubMediaChangeNotification(eventType: .sendingVideo(false),call: call!)
             }
             
             call?.onMediaChanged = {

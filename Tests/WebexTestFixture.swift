@@ -32,6 +32,8 @@ struct TestUser {
     let name: String
     let orgId: String
     let personId: String
+    let id: String
+    let csi: [UInt]
 }
 
 class WebexTestFixture {
@@ -137,7 +139,7 @@ class WebexTestFixture {
                     let name = json["user"]["name"].string,
                     let orgId = json["user"]["orgId"].string {
                     let personId = WebexTestFixture.getPersonIdFromUserId(id: userId)
-                    user = TestUser(accessToken: token, email: email, name: name, orgId: orgId, personId: personId)
+                    user = TestUser(accessToken: token, email: email, name: name, orgId: orgId, personId: personId,id:userId,csi:[UInt(arc4random()),UInt(arc4random()),UInt(arc4random())])
                 }
             case .failure(let error):
                 print(error)

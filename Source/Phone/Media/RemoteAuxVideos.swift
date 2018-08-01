@@ -22,30 +22,6 @@ import Foundation
 
 public let MAX_REMOTE_AUX_VIDEO_NUMBER = 4
 
-//public struct RemoteAuxVideos {
-//    private var remoteAuxVideoArray: Array<RemoteAuxVideo>
-//    init() {
-//        remoteAuxVideoArray = Array<RemoteAuxVideo>()
-//    }
-//}
-//
-//extension RemoteAuxVideos: Collection {
-//    public typealias Index = Array<RemoteAuxVideo>.Index
-//    public typealias Element = RemoteAuxVideo
-//    
-//    public var startIndex: Index { return remoteAuxVideoArray.startIndex }
-//    public var endIndex: Index { return remoteAuxVideoArray.endIndex }
-//    
-//    public subscript(index: Index) -> Iterator.Element {
-//        get { return remoteAuxVideoArray[index] }
-//    }
-//    
-//    public func index(after i: Array<RemoteAuxVideo>.Index) -> Array<RemoteAuxVideo>.Index {
-//        return remoteAuxVideoArray.index(after: i)
-//    }
-//    
-//}
-
 public class RemoteAuxVideo {
     static let INVAILD_VID = -1
     

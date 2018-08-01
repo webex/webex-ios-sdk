@@ -54,7 +54,7 @@ class FakeCallModelHelper {
         case .isRemoteLeft:
             var participants:[ParticipantModel] = []
             for var participant in callModel.participants! {
-                if participant.person!.id == callee.personId {
+                if participant.person!.id == callee.id {
                     participant.state = CallMembership.State.left
                 }
                 participants.append(participant)
@@ -74,16 +74,16 @@ class FakeCallModelHelper {
         var mySelf = newModel.myself
         var participants:[ParticipantModel] = []
         
-        if mySelf?.person?.id == hanupUser.personId {
-            mySelf?.status = getParticipantStatus(participantState: .left)
+        if mySelf?.person?.id == hanupUser.id {
+            mySelf?.status = getParticipantStatus(participantState: .left,csi: hanupUser.csi)
             mySelf?.state = CallMembership.State.left
             newModel.setMyself(newParticipant:mySelf)
         }
         
         for var participant in newModel.participants! {
-            if participant.person?.id == hanupUser.personId {
+            if participant.person?.id == hanupUser.id {
                 participant.state = CallMembership.State.left
-                participant.status = getParticipantStatus(participantState: .left)
+                participant.status = getParticipantStatus(participantState: .left,csi: hanupUser.csi)
             }
             participants.append(participant)
         }
@@ -97,8 +97,8 @@ class FakeCallModelHelper {
     
     static func initCallModel(caller:TestUser,allParticipantUsers:[TestUser],selfUser:TestUser) -> CallModel {
         //self part
-        let isCreator = caller.personId == selfUser.personId ? true:false
-        let selfState = caller.personId == selfUser.personId ? CallMembership.State.joined:CallMembership.State.idle
+        let isCreator = caller.id == selfUser.id ? true:false
+        let selfState = caller.id == selfUser.id ? CallMembership.State.joined:CallMembership.State.idle
         let mySelf = getParticipant(userInfo: selfUser,userState: selfState,isSelfModel: true, isCreater: isCreator)
         
         //caller part
@@ -113,7 +113,7 @@ class FakeCallModelHelper {
         for testUser in allParticipantUsers {
             var state:CallMembership.State
             var isCreator: Bool = false
-            if testUser.personId == caller.personId {
+            if testUser.id == caller.id {
                 isCreator = true
                 state = CallMembership.State.joined
             }
@@ -137,20 +137,20 @@ class FakeCallModelHelper {
         var newModel = callModel
         var mySelf = newModel.myself
         var participants:[ParticipantModel] = []
-        if mySelf?.person?.id == answerUser.personId {
+        if mySelf?.person?.id == answerUser.id {
             mySelf?.state = CallMembership.State.joined
-            mySelf?.status = getParticipantStatus(participantState: CallMembership.State.joined)
+            mySelf?.status = getParticipantStatus(participantState: CallMembership.State.joined,csi: answerUser.csi)
             mySelf?.deviceUrl = Config.FakeSelfDeviceUrl
             mySelf?.devices = getParticipantDevice(participantState: CallMembership.State.joined, isSelfModel: true, deviceUrl: Config.FakeSelfDeviceUrl)
             newModel.setMyself(newParticipant:mySelf)
         }
         
         for var participant in newModel.participants! {
-            if participant.person?.id == answerUser.personId {
+            if participant.person?.id == answerUser.id {
                 participant.state = .joined
                 participant.deviceUrl = getDeviceUrl(isSelfModel: participant.person?.id == mySelf?.person?.id, userState: .joined,deviceUrl: participant.deviceUrl)
                 participant.devices = getParticipantDevice(participantState: .joined, isSelfModel: false, deviceUrl: participant.deviceUrl)
-                participant.status = getParticipantStatus(participantState: .joined)
+                participant.status = getParticipantStatus(participantState: .joined,csi: answerUser.csi)
             }
             participants.append(participant)
         }
@@ -167,17 +167,17 @@ class FakeCallModelHelper {
         var mySelf = newModel.myself
         var participants:[ParticipantModel] = []
         
-        if mySelf?.person?.id == declineUser.personId {
+        if mySelf?.person?.id == declineUser.id {
             mySelf?.state = CallMembership.State.declined
-            mySelf?.status = getParticipantStatus(participantState: CallMembership.State.declined)
+            mySelf?.status = getParticipantStatus(participantState: CallMembership.State.declined,csi: declineUser.csi)
             mySelf?.deviceUrl = Config.FakeSelfDeviceUrl
             newModel.setMyself(newParticipant:mySelf)
         }
         
         for var participant in newModel.participants! {
-            if participant.person?.id == declineUser.personId {
+            if participant.person?.id == declineUser.id {
                 participant.state = CallMembership.State.declined
-                participant.status = getParticipantStatus(participantState: CallMembership.State.declined)
+                participant.status = getParticipantStatus(participantState: CallMembership.State.declined,csi: declineUser.csi)
             }
             participants.append(participant)
         }
@@ -192,20 +192,20 @@ class FakeCallModelHelper {
         var newModel = callModel
         var mySelf = newModel.myself
         var participants:[ParticipantModel] = []
-        if mySelf?.person?.id == alertUser.personId {
+        if mySelf?.person?.id == alertUser.id {
             mySelf?.state = CallMembership.State.notified
-            mySelf?.status = getParticipantStatus(participantState: .notified)
+            mySelf?.status = getParticipantStatus(participantState: .notified,csi: alertUser.csi)
             mySelf?.deviceUrl = Config.FakeSelfDeviceUrl
             mySelf?.devices = getParticipantDevice(participantState: CallMembership.State.notified, isSelfModel: true, deviceUrl: Config.FakeSelfDeviceUrl)
             newModel.setMyself(newParticipant:mySelf)
         }
         
         for var participant in newModel.participants! {
-            if participant.person?.id == alertUser.personId {
+            if participant.person?.id == alertUser.id {
                 participant.state = .notified
                 participant.deviceUrl = getDeviceUrl(isSelfModel: participant.person?.id == mySelf?.person?.id, userState: .joined,deviceUrl: participant.deviceUrl)
                 participant.devices = getParticipantDevice(participantState: CallMembership.State.notified, isSelfModel: false, deviceUrl: participant.deviceUrl)
-                participant.status = getParticipantStatus(participantState: .notified)
+                participant.status = getParticipantStatus(participantState: .notified,csi: alertUser.csi)
             }
             participants.append(participant)
         }
@@ -219,7 +219,7 @@ class FakeCallModelHelper {
         var newModel = callModel
         var mySelf = newModel.myself
         var participants:[ParticipantModel] = []
-        if mySelf?.person?.id == updateUser.personId {
+        if mySelf?.person?.id == updateUser.id {
             if localMedia.audioMuted == true {
                 mySelf?.status?.audioStatus = "RECVONLY"
             }
@@ -248,7 +248,7 @@ class FakeCallModelHelper {
         }
         
         for var participant in newModel.participants! {
-            if participant.person?.id == updateUser.personId {
+            if participant.person?.id == updateUser.id {
                 if localMedia.audioMuted == true {
                     participant.status?.audioStatus = "RECVONLY"
                 }
@@ -336,11 +336,11 @@ class FakeCallModelHelper {
     private static func getPersonModel(testUser:TestUser) -> PersonModel {
         return PersonModel(JSON: ["name" : testUser.name,
                                   "email" : testUser.email,
-                                  "id" : testUser.personId,
+                                  "id" : testUser.id,
                                   "orgId" : testUser.orgId])!
     }
     
-    private static func getParticipantStatus(participantState:CallMembership.State) -> ParticipantModel.StatusModel {
+    private static func getParticipantStatus(participantState:CallMembership.State,csi:[UInt]) -> ParticipantModel.StatusModel {
         var statusModel :ParticipantModel.StatusModel?
         switch participantState {
         case .idle:
@@ -350,13 +350,11 @@ class FakeCallModelHelper {
         case .joined:
             statusModel = ParticipantModel.StatusModel(JSON: ["videoStatus" : "SENDRECV",
                                                               "audioStatus" : "SENDRECV",
-                                                              "csis" : [111111,
-                                                                        222222,
-                                                                        333333]])
+                                                              "csis" : csi])
         case .declined,.left,.notified:
             statusModel = ParticipantModel.StatusModel(JSON: ["videoStatus" : "UNKNOWN",
                                                               "audioStatus" : "UNKNOWN",
-                                                              "csis" : [111111,222222,333333]])
+                                                              "csis" : csi])
         }
         
         
@@ -501,7 +499,7 @@ class FakeCallModelHelper {
     
     private static func getParticipant(userInfo:TestUser,userState:CallMembership.State,isSelfModel:Bool = false,isCreater:Bool,deviceUrl:String? = nil) -> ParticipantModel {
         let personModel = getPersonModel(testUser: userInfo)
-        let userModelStatus = getParticipantStatus(participantState: userState)
+        let userModelStatus = getParticipantStatus(participantState: userState,csi: userInfo.csi)
         
         let alertHint = getAlertHintModel(userState: userState, isCreater: isCreater, isSeflModel: isSelfModel)
         let alertType = getAlertTypeModel(userState: userState, isCreater: isCreater, isSeflModel: isSelfModel)
@@ -510,8 +508,8 @@ class FakeCallModelHelper {
         let selfDeviceUrl = getDeviceUrl(isSelfModel: isSelfModel, userState: userState,deviceUrl: deviceUrl)
         let callerDeviceModel = getParticipantDevice(participantState: userState,isSelfModel:isSelfModel,deviceUrl: selfDeviceUrl)
         let participantModel:ParticipantModel = ParticipantModel.init(isCreator: isCreater,
-                                                                      id: userInfo.personId ,
-                                                                      url: userInfo.personId,
+                                                                      id: userInfo.id ,
+                                                                      url: userInfo.id,
                                                                       state: userState,
                                                                       type: "USER",
                                                                       person: personModel,
@@ -529,7 +527,7 @@ class FakeCallModelHelper {
     
     private static func getGrantedScreenShareModel(shareUser:TestUser,isSelfDevice:Bool = false) -> MediaShareModel {
         let device:ParticipantModel.DeviceModel = ParticipantModel.DeviceModel.init(url: isSelfDevice ? Config.FakeSelfDeviceUrl:Config.FakeOtherDeviceUrl, deviceType: nil, featureToggles: nil, mediaConnections: nil, state: nil, callLegId: nil)
-        let requestParticipant:ParticipantModel = ParticipantModel.init(isCreator: false, id: shareUser.personId, url: shareUser.personId, state: nil, type: "USER", person: nil, status: nil, deviceUrl: isSelfDevice ? Config.FakeSelfDeviceUrl:Config.FakeOtherDeviceUrl, mediaBaseUrl: nil, guest: false, alertHint: nil, alertType: nil, enableDTMF: nil, devices: [device])
+        let requestParticipant:ParticipantModel = ParticipantModel.init(isCreator: false, id: shareUser.id, url: shareUser.id, state: nil, type: "USER", person: nil, status: nil, deviceUrl: isSelfDevice ? Config.FakeSelfDeviceUrl:Config.FakeOtherDeviceUrl, mediaBaseUrl: nil, guest: false, alertHint: nil, alertType: nil, enableDTMF: nil, devices: [device])
         
         let dateString = String(describing: Date())
         let mediaShareFloor : MediaShareModel.MediaShareFloor = MediaShareModel.MediaShareFloor.init(beneficiary: requestParticipant, disposition: MediaShareModel.ShareFloorDisposition.granted, granted: dateString, released: nil, requested: dateString, requester: requestParticipant)
@@ -539,7 +537,7 @@ class FakeCallModelHelper {
     
     private static func getReleaseScreenShareModel(shareUser:TestUser,isSelfDevice:Bool = false) -> MediaShareModel {
         let device:ParticipantModel.DeviceModel = ParticipantModel.DeviceModel.init(url: isSelfDevice ? Config.FakeSelfDeviceUrl:Config.FakeOtherDeviceUrl, deviceType: nil, featureToggles: nil, mediaConnections: nil, state: nil, callLegId: nil)
-        let requestParticipant:ParticipantModel = ParticipantModel.init(isCreator: false, id: shareUser.personId, url: shareUser.personId, state: nil, type: "USER", person: nil, status: nil, deviceUrl: isSelfDevice ? Config.FakeSelfDeviceUrl:Config.FakeOtherDeviceUrl, mediaBaseUrl: nil, guest: false, alertHint: nil, alertType: nil, enableDTMF: nil, devices: [device])
+        let requestParticipant:ParticipantModel = ParticipantModel.init(isCreator: false, id: shareUser.id, url: shareUser.id, state: nil, type: "USER", person: nil, status: nil, deviceUrl: isSelfDevice ? Config.FakeSelfDeviceUrl:Config.FakeOtherDeviceUrl, mediaBaseUrl: nil, guest: false, alertHint: nil, alertType: nil, enableDTMF: nil, devices: [device])
         
         let dateString = String(describing: Date())
         let mediaShareFloor : MediaShareModel.MediaShareFloor = MediaShareModel.MediaShareFloor.init(beneficiary: requestParticipant, disposition: MediaShareModel.ShareFloorDisposition.released, granted: dateString, released: dateString, requested: dateString, requester: requestParticipant)

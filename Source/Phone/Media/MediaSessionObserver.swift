@@ -58,6 +58,8 @@ class MediaSessionObserver: NotificationObserver {
             (.MediaEngineDidAvailableMediaChange,      #selector(onMediaEngineDidAvailableMediaChange(_:))),
             (.MediaEngineDidDetectAuxVideoMediaUnavailable,      #selector(onMediaEngineDidDetectAuxVideoMediaUnavailable(_:))),
             (.MediaEngineDidDetectAuxVideoMediaAvailable,      #selector(onMediaEngineDidDetectAuxVideoMediaAvailable(_:))),
+            (.MediaEngineDidMuteAuxVideo,#selector(onMediaEngineDidMuteAuxVideo(_:))),
+            (.MediaEngineDidUnMuteAuxVideo,#selector(onMediaEngineDidUnMuteAuxVideo(_:))),
             (.MediaEngineDidActiveSpeakerChange,      #selector(onMediaEngineDidActiveSpeakerChange(_:))),
             (.MediaEngineDidCSIChange,      #selector(onMediaEngineDidDidCSIChange(_:))),
             (.MediaEngineDidAuxVideoSizeChange,      #selector(onMediaEngineDidAuxVideoSizeChange(_:)))]
@@ -255,25 +257,33 @@ class MediaSessionObserver: NotificationObserver {
     }
     
     @objc private func onMediaEngineDidDetectScreenShareMediaUnavailable(_ notification: Notification) {
-//        DispatchQueue.main.async {
-//            if let retainCall = self.call {
-//                retainCall.onMediaChanged?(Call.MediaChangedEvent.remoteSendingScreenShare(false))
-//            }
-//        }
+
     }
     
     @objc private func onMediaEngineDidDetectScreenShareMediaAvailable(_ notification: Notification) {
-//        DispatchQueue.main.async {
-//            if let retainCall = self.call {
-//                retainCall.onMediaChanged?(Call.MediaChangedEvent.remoteSendingScreenShare(true))
-//            }
-//        }
+        
     }
     
     @objc private func onMediaEngineDidDetectAuxVideoMediaAvailable(_ notification: Notification) {
         DispatchQueue.main.async {
             if let retainCall = self.call, let vid = notification.userInfo?[MediaEngineVideoID] as? Int, let auxVideo = retainCall.remoteAuxVideos.filter({$0.vid == vid}).first{
                 retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxSendingVideoEvent(auxVideo))
+            }
+        }
+    }
+    
+    @objc private func onMediaEngineDidMuteAuxVideo(_ notification: Notification) {
+        DispatchQueue.main.async {
+            if let retainCall = self.call, let vid = notification.userInfo?[MediaEngineVideoID] as? Int, let auxVideo = retainCall.remoteAuxVideos.filter({$0.vid == vid}).first{
+                retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.receivingAuxVideoEvent(auxVideo))
+            }
+        }
+    }
+    
+    @objc private func onMediaEngineDidUnMuteAuxVideo(_ notification: Notification) {
+        DispatchQueue.main.async {
+            if let retainCall = self.call, let vid = notification.userInfo?[MediaEngineVideoID] as? Int, let auxVideo = retainCall.remoteAuxVideos.filter({$0.vid == vid}).first{
+                retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.receivingAuxVideoEvent(auxVideo))
             }
         }
     }
@@ -285,6 +295,7 @@ class MediaSessionObserver: NotificationObserver {
                     if let membership = retainCall.memberships.filter({$0.containCSI(csi: number.uintValue)}).first {
                         retainCall.activeSpeaker = membership
                         retainCall.onMediaChanged?(Call.MediaChangedEvent.activeSpeakerChangedEvent(membership))
+                        break
                     }
                 }
             }
@@ -299,6 +310,7 @@ class MediaSessionObserver: NotificationObserver {
                         if let membership = retainCall.memberships.filter({$0.containCSI(csi: number.uintValue)}).first {
                             auxVideo.person = membership
                             retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxVideoPersonChangedEvent(auxVideo))
+                            break
                         }
                     }
                 }
