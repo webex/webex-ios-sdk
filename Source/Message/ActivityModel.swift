@@ -61,7 +61,7 @@ extension ActivityModel : ImmutableMappable {
         self.kind = try? map.value("verb", using: VerbTransform())
         self.personId = try? map.value("actor.entryUUID", using: IdentityTransform(for: IdentityType.people))
         self.personEmail = try? map.value("actor.emailAddress")
-        self.spaceId = try? map.value("target.id", using: IdentityTransform(for: IdentityType.space))
+        self.spaceId = try? map.value("target.id", using: IdentityTransform(for: IdentityType.room))
         self.spaceType = try? map.value("target.tags", using: SpaceTypeTransform())
         self.clientTempId = try? map.value("clientTempId")
         if let text: String = try? map.value("object.displayName") {
@@ -123,7 +123,9 @@ extension ActivityModel {
 }
 
 enum IdentityType : String {
-    case space
+    // TODO: For change Id Need change to space later
+    // case space
+    case room
     case people
     case message
 }

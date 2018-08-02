@@ -656,7 +656,7 @@ class MessageClientImpl {
                 .build()
             request.responseObject { (response: ServiceResponse<Space>) in
                 if let space = response.result.data?.id {
-                    let spaceId = space.hydraFormat(for: .space)
+                    let spaceId = space.hydraFormat(for: .room)
                     self.spaces[person] = spaceId
                     completionHandler(Result.success(spaceId))
                 }
