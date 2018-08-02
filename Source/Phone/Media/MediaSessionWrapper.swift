@@ -37,7 +37,7 @@ class MediaSessionWrapper {
     var onBroadcastError: ((ScreenShareError) -> Void)?
     var onBroadcasting: ((Bool) -> Void)?
     
-    fileprivate let mediaSession = MediaSession()
+    fileprivate var mediaSession = MediaSession()
     private var mediaSessionObserver: MediaSessionObserver?
     private var broadcastServer: BroadcastConnectionServer?
     
@@ -361,9 +361,13 @@ extension MediaSessionWrapper : BroadcastConnectionServerDelegate {
     }
 }
 
-extension MediaSessionWrapper {
+internal extension MediaSessionWrapper {
     internal func getMediaSession() -> MediaSession {
             return self.mediaSession
+    }
+    
+    internal func setMediaSession(mediaSession:MediaSession) {
+        self.mediaSession = mediaSession
     }
 }
 

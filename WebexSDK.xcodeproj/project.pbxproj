@@ -136,6 +136,7 @@
 		B91E75E41CE2D7B70080EAE0 /* WebexSDK-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = B91E758F1CE2D7B70080EAE0 /* WebexSDK-Bridging-Header.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B91E75E61CE2D7B70080EAE0 /* Webhook.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E75921CE2D7B70080EAE0 /* Webhook.swift */; };
 		B91E75E81CE2D7B70080EAE0 /* WebhookClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E75941CE2D7B70080EAE0 /* WebhookClient.swift */; };
+		C737129B210AC06F00FCBF82 /* AuxiliaryVideoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C737129A210AC06F00FCBF82 /* AuxiliaryVideoTest.swift */; };
 		C7625FDB205CBB9700219F95 /* WebexBroadcastExtensionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7625FD2205CBB9600219F95 /* WebexBroadcastExtensionKit.framework */; };
 		C7672E1B20A5647C008C1F97 /* ScreenShareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7672E1A20A5647B008C1F97 /* ScreenShareTests.swift */; };
 		C78D19B71EC2C0EF00B59D18 /* JWTAuthenticatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78D19B61EC2C0EF00B59D18 /* JWTAuthenticatorTests.swift */; };
@@ -148,7 +149,7 @@
 		C79F14071FBE7C3A00B43596 /* FakeCallModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F13FF1FBE7BE500B43596 /* FakeCallModelHelper.swift */; };
 		C79F14081FBE7C3A00B43596 /* FakeConversationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F14001FBE7BE500B43596 /* FakeConversationClient.swift */; };
 		C79F14091FBE7C3A00B43596 /* FakeDeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F14011FBE7BE500B43596 /* FakeDeviceService.swift */; };
-		C79F140A1FBE7C3A00B43596 /* FakeMediaSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F14021FBE7BE500B43596 /* FakeMediaSession.swift */; };
+		C79F140A1FBE7C3A00B43596 /* FakeWME.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F14021FBE7BE500B43596 /* FakeWME.swift */; };
 		C79F140B1FBE7C3A00B43596 /* FakeMetricsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F14031FBE7BE500B43596 /* FakeMetricsEngine.swift */; };
 		C79F140C1FBE7C3A00B43596 /* FakeReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F14041FBE7BE500B43596 /* FakeReachabilityService.swift */; };
 		C79F140D1FBE7C3A00B43596 /* FakeWebSocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F14051FBE7BE500B43596 /* FakeWebSocketService.swift */; };
@@ -329,6 +330,7 @@
 		B91E75921CE2D7B70080EAE0 /* Webhook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Webhook.swift; sourceTree = "<group>"; };
 		B91E75941CE2D7B70080EAE0 /* WebhookClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebhookClient.swift; sourceTree = "<group>"; };
 		C3C7AF494935E5D18935715D /* Pods-WebexSDKTests.releasetest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebexSDKTests.releasetest.xcconfig"; path = "Pods/Target Support Files/Pods-WebexSDKTests/Pods-WebexSDKTests.releasetest.xcconfig"; sourceTree = "<group>"; };
+		C737129A210AC06F00FCBF82 /* AuxiliaryVideoTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuxiliaryVideoTest.swift; sourceTree = "<group>"; };
 		C7625FD2205CBB9600219F95 /* WebexBroadcastExtensionKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WebexBroadcastExtensionKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7625FDA205CBB9600219F95 /* WebexBroadcastExtensionKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebexBroadcastExtensionKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7672E1A20A5647B008C1F97 /* ScreenShareTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenShareTests.swift; sourceTree = "<group>"; };
@@ -341,7 +343,7 @@
 		C79F13FF1FBE7BE500B43596 /* FakeCallModelHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeCallModelHelper.swift; sourceTree = "<group>"; };
 		C79F14001FBE7BE500B43596 /* FakeConversationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeConversationClient.swift; sourceTree = "<group>"; };
 		C79F14011FBE7BE500B43596 /* FakeDeviceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeDeviceService.swift; sourceTree = "<group>"; };
-		C79F14021FBE7BE500B43596 /* FakeMediaSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeMediaSession.swift; sourceTree = "<group>"; };
+		C79F14021FBE7BE500B43596 /* FakeWME.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeWME.swift; sourceTree = "<group>"; };
 		C79F14031FBE7BE500B43596 /* FakeMetricsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeMetricsEngine.swift; sourceTree = "<group>"; };
 		C79F14041FBE7BE500B43596 /* FakeReachabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeReachabilityService.swift; sourceTree = "<group>"; };
 		C79F14051FBE7BE500B43596 /* FakeWebSocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeWebSocketService.swift; sourceTree = "<group>"; };
@@ -482,6 +484,7 @@
 				991DA8AB1F389D6200939724 /* SSOAuthenticatorTests.swift */,
 				C79F140E1FC3B88900B43596 /* CallTests.swift */,
 				C7672E1A20A5647B008C1F97 /* ScreenShareTests.swift */,
+				C737129A210AC06F00FCBF82 /* AuxiliaryVideoTest.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -770,7 +773,7 @@
 				C79F13FF1FBE7BE500B43596 /* FakeCallModelHelper.swift */,
 				C79F14001FBE7BE500B43596 /* FakeConversationClient.swift */,
 				C79F14011FBE7BE500B43596 /* FakeDeviceService.swift */,
-				C79F14021FBE7BE500B43596 /* FakeMediaSession.swift */,
+				C79F14021FBE7BE500B43596 /* FakeWME.swift */,
 				C79F14031FBE7BE500B43596 /* FakeMetricsEngine.swift */,
 				C79F14041FBE7BE500B43596 /* FakeReachabilityService.swift */,
 				C79F14051FBE7BE500B43596 /* FakeWebSocketService.swift */,
@@ -1072,10 +1075,11 @@
 			files = (
 				C79F14101FC3B8C900B43596 /* CallTests.swift in Sources */,
 				C79F14061FBE7C3A00B43596 /* FakeCallClient.swift in Sources */,
+				C737129B210AC06F00FCBF82 /* AuxiliaryVideoTest.swift in Sources */,
 				C79F14071FBE7C3A00B43596 /* FakeCallModelHelper.swift in Sources */,
 				C79F14081FBE7C3A00B43596 /* FakeConversationClient.swift in Sources */,
 				C79F14091FBE7C3A00B43596 /* FakeDeviceService.swift in Sources */,
-				C79F140A1FBE7C3A00B43596 /* FakeMediaSession.swift in Sources */,
+				C79F140A1FBE7C3A00B43596 /* FakeWME.swift in Sources */,
 				C79F140B1FBE7C3A00B43596 /* FakeMetricsEngine.swift in Sources */,
 				C79F140C1FBE7C3A00B43596 /* FakeReachabilityService.swift in Sources */,
 				C79F140D1FBE7C3A00B43596 /* FakeWebSocketService.swift in Sources */,
@@ -1359,7 +1363,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "$PROJECT_DIR/Source/Info.plist";
+				INFOPLIST_FILE = $PROJECT_DIR/Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1541,7 +1545,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "$PROJECT_DIR/Source/Info.plist";
+				INFOPLIST_FILE = $PROJECT_DIR/Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1584,7 +1588,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "$PROJECT_DIR/Source/Info.plist";
+				INFOPLIST_FILE = $PROJECT_DIR/Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
