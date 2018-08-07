@@ -190,11 +190,12 @@ public class Call {
     ///
     /// - since: 2.0.0
     public enum RemoteAuxVideoChangeEvent {
-        
+        case remoteAuxVideoStartEvent(RemoteAuxVideo)
         case remoteAuxVideoPersonChangedEvent(RemoteAuxVideo)
         case remoteAuxVideoSizeChangedEvent(RemoteAuxVideo)
         case remoteAuxSendingVideoEvent(RemoteAuxVideo)
         case receivingAuxVideoEvent(RemoteAuxVideo)
+        case remoteAuxVideoEndEvent(RemoteAuxVideo)
     }
     
     /// The enumeration of iOS broadcasting events.

@@ -306,9 +306,19 @@ class MediaSessionObserver: NotificationObserver {
         DispatchQueue.main.async {
             if let retainCall = self.call, let csiArray = notification.userInfo?[MediaEngineVideoCSI] as? Array<NSNumber>, let vid = notification.userInfo?[MediaEngineVideoID] as? Int {
                 if let auxVideo = retainCall.remoteAuxVideos.filter({ $0.vid == vid}).first {
+                    if csiArray.count < 1 {
+                        auxVideo.person = nil
+                        retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxVideoEndEvent(auxVideo))
+                        return
+                    }
                     for number in csiArray {
                         if let membership = retainCall.memberships.filter({$0.containCSI(csi: number.uintValue)}).first {
-                            auxVideo.person = membership
+                            if auxVideo.person == nil {
+                                auxVideo.person = membership
+                                retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxVideoStartEvent(auxVideo))
+                            } else {
+                                auxVideo.person = membership
+                            }
                             retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxVideoPersonChangedEvent(auxVideo))
                             break
                         }
