@@ -292,7 +292,8 @@ class MediaSessionObserver: NotificationObserver {
         DispatchQueue.main.async {
             if let retainCall = self.call, let csiArray = notification.userInfo?[MediaEngineVideoCSI] as? Array<NSNumber> {
                 for number in csiArray {
-                    if let membership = retainCall.memberships.filter({$0.containCSI(csi: number.uintValue)}).first {
+                    if let membership = retainCall.memberships.filter({$0.containCSI(csi: number.uintValue)}).first,
+                        membership.id != retainCall.activeSpeaker?.id{
                         retainCall.activeSpeaker = membership
                         retainCall.onMediaChanged?(Call.MediaChangedEvent.activeSpeakerChangedEvent(membership))
                         break
