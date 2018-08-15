@@ -341,10 +341,11 @@ class AuxiliaryVideoTest: XCTestCase {
             self.call?.onMediaChanged = {
                 event in
                 switch event {
-                case .activeSpeakerChangedEvent(let callmembership):
-                    XCTAssertNotNil(callmembership)
-                    XCTAssertTrue(callmembership.personId == user.personId)
-                    XCTAssertTrue(self.call?.activeSpeaker?.id == callmembership.id)
+                case .activeSpeakerChangedEvent(let from,let to):
+                    XCTAssertNil(from)
+                    XCTAssertNotNil(to)
+                    XCTAssertTrue(to?.personId == user.personId)
+                    XCTAssertTrue(self.call?.activeSpeaker?.id == to?.id)
                     expect.fulfill()
                     break
                 default:
@@ -373,7 +374,7 @@ class AuxiliaryVideoTest: XCTestCase {
                 case .success(let remoteAuxVideo):
                     XCTAssertNotNil(remoteAuxVideo)
                     auxVideo = remoteAuxVideo
-                    FakeWME.stubRemoteAuxVideoEvent(eventType: Call.RemoteAuxVideoChangeEvent.remoteAuxVideoPersonChangedEvent(remoteAuxVideo), call: self.call!,csi: user.csi)
+                    FakeWME.stubRemoteAuxVideoEvent(eventType: Call.RemoteAuxVideoChangeEvent.remoteAuxVideoPersonChangedEvent(remoteAuxVideo,From: nil,To: nil), call: self.call!,csi: user.csi)
                 case .failure(_):
                     XCTAssertTrue(false)
                 }
@@ -382,8 +383,8 @@ class AuxiliaryVideoTest: XCTestCase {
             self.call?.onRemoteAuxVideoChanged = {
                 event in
                 switch event {
-                case .remoteAuxVideoPersonChangedEvent(let remoteAuxVideo):
-                    XCTAssertTrue(auxVideo?.person?.id == remoteAuxVideo.person?.id)
+                case .remoteAuxVideoPersonChangedEvent(let remoteAuxVideo,let from,let to):
+                    XCTAssertTrue(auxVideo?.person?.id == to?.id)
                     expect.fulfill()
                     break
                 default:

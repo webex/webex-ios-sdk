@@ -130,8 +130,8 @@ class MembershipTests: XCTestCase {
         XCTAssertNil(membership, "Unexpected successful request")
     }
     
-    func testCreateMembershipWithValidRoomIdButInvalidEmail() {
-        membership = createMembership(roomId: roomId, personEmail: Config.InvalidEmail, isModerator: false)
+    func testCreateMembershipWithValidSpaceIdButInvalidEmail() {
+        membership = createMembership(spaceId: spaceId, personEmail: Config.InvalidEmail, isModerator: false)
         if membership == nil {
             XCTAssertTrue(true)
         } else {

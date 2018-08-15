@@ -63,7 +63,7 @@ class FakeWME: MediaSession  {
                 }
             }
             switch eventType {
-            case .remoteAuxVideoPersonChangedEvent(let remoteAuxVideo):
+            case .remoteAuxVideoPersonChangedEvent(let remoteAuxVideo,_,_):
                 NotificationCenter.default.post(name: NSNotification.Name.MediaEngineDidCSIChange, object: call.mediaSession.getMediaSession(), userInfo: [MediaEngineVideoCSI:csiNumber,MediaEngineVideoID:remoteAuxVideo.vid])
                 break
             case .remoteAuxSendingVideoEvent(let remoteAuxVideo):

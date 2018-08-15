@@ -165,7 +165,7 @@ public class Call {
         case remoteAuxVideosCount(Int)
         /// remote auxiliary video count has changed.
         /// - since: 2.0.0
-        case activeSpeakerChangedEvent(CallMembership)
+        case activeSpeakerChangedEvent(From:CallMembership?,To:CallMembership?)
     }
     
     /// The enumeration of call membership events.
@@ -190,12 +190,10 @@ public class Call {
     ///
     /// - since: 2.0.0
     public enum RemoteAuxVideoChangeEvent {
-        case remoteAuxVideoStartEvent(RemoteAuxVideo)
-        case remoteAuxVideoPersonChangedEvent(RemoteAuxVideo)
+        case remoteAuxVideoPersonChangedEvent(RemoteAuxVideo,From:CallMembership?,To:CallMembership?)
         case remoteAuxVideoSizeChangedEvent(RemoteAuxVideo)
         case remoteAuxSendingVideoEvent(RemoteAuxVideo)
         case receivingAuxVideoEvent(RemoteAuxVideo)
-        case remoteAuxVideoEndEvent(RemoteAuxVideo)
     }
     
     /// The enumeration of iOS broadcasting events.
@@ -1053,6 +1051,11 @@ public class Call {
                         }
                         else if membership.state == CallMembership.State.left {
                             onCallMembershipChanges.append(CallMembershipChangedEvent.left(membership))
+                            //send person change by locus status,because CSI change doesn't trigger when participant left.
+                            if let auxVideo = self.remoteAuxVideos.filter({$0.person?.id == membership.id}).first {
+                                auxVideo.person = nil
+                                self.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxVideoPersonChangedEvent(auxVideo, From: membership, To: nil))
+                            }
                         }
                         else if membership.state == CallMembership.State.declined {
                             onCallMembershipChanges.append(CallMembershipChangedEvent.declined(membership))

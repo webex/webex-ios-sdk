@@ -290,11 +290,21 @@ class MediaSessionObserver: NotificationObserver {
     
     @objc private func onMediaEngineDidActiveSpeakerChange(_ notification: Notification) {
         DispatchQueue.main.async {
+            func sendActiveSpeakerChangedEvent(newMembership:CallMembership?,call:Call) {
+                let oldMembership: CallMembership? = call.activeSpeaker
+                call.activeSpeaker = newMembership
+                call.onMediaChanged?(Call.MediaChangedEvent.activeSpeakerChangedEvent(From: oldMembership, To: newMembership))
+            }
+            
             if let retainCall = self.call, let csiArray = notification.userInfo?[MediaEngineVideoCSI] as? Array<NSNumber> {
+                if csiArray.count < 1 {
+                    sendActiveSpeakerChangedEvent(newMembership: nil, call: retainCall)
+                    return
+                }
+                
                 for number in csiArray {
                     if let membership = retainCall.memberships.filter({$0.containCSI(csi: number.uintValue)}).first {
-                        retainCall.activeSpeaker = membership
-                        retainCall.onMediaChanged?(Call.MediaChangedEvent.activeSpeakerChangedEvent(membership))
+                        sendActiveSpeakerChangedEvent(newMembership: membership, call: retainCall)
                         break
                     }
                 }
@@ -304,22 +314,22 @@ class MediaSessionObserver: NotificationObserver {
     
     @objc private func onMediaEngineDidDidCSIChange(_ notification: Notification) {
         DispatchQueue.main.async {
+            func sendRemoteAuxVideoChangeEvent(newMembership:CallMembership?,auxVideo:RemoteAuxVideo,call:Call) {
+                let oldMembership: CallMembership? = auxVideo.person
+                auxVideo.person = newMembership
+                call.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxVideoPersonChangedEvent(auxVideo, From: oldMembership, To: newMembership))
+            }
+            
             if let retainCall = self.call, let csiArray = notification.userInfo?[MediaEngineVideoCSI] as? Array<NSNumber>, let vid = notification.userInfo?[MediaEngineVideoID] as? Int {
                 if let auxVideo = retainCall.remoteAuxVideos.filter({ $0.vid == vid}).first {
                     if csiArray.count < 1 {
-                        auxVideo.person = nil
-                        retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxVideoEndEvent(auxVideo))
+                        sendRemoteAuxVideoChangeEvent(newMembership: nil, auxVideo: auxVideo, call: retainCall)
                         return
                     }
+                    
                     for number in csiArray {
                         if let membership = retainCall.memberships.filter({$0.containCSI(csi: number.uintValue)}).first {
-                            if auxVideo.person == nil {
-                                auxVideo.person = membership
-                                retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxVideoStartEvent(auxVideo))
-                            } else {
-                                auxVideo.person = membership
-                            }
-                            retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxVideoPersonChangedEvent(auxVideo))
+                            sendRemoteAuxVideoChangeEvent(newMembership: membership, auxVideo: auxVideo, call: retainCall)
                             break
                         }
                     }
