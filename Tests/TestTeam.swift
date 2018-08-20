@@ -23,15 +23,15 @@ import XCTest
 import WebexSDK
 
 class TestTeam {
-    
+
     private var fixture: WebexTestFixture! = WebexTestFixture.sharedInstance
     var id: String? {
         return team.id
     }
     var testCase: XCTestCase
-    
+
     private var team: Team
-    
+
     init?(testCase: XCTestCase) {
         self.testCase = testCase
         if let result = fixture.createTeam(testCase: testCase, teamName: "team_for_test") {
@@ -40,7 +40,7 @@ class TestTeam {
             return nil
         }
     }
-    
+
     deinit {
         guard let id = id else {
             return
