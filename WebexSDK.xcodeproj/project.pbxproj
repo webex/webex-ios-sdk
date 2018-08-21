@@ -10,7 +10,6 @@
 		101255982022C3D80072F5DC /* Wme.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 105E8EF81FF2976200EB33F1 /* Wme.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1012559A2022C3E80072F5DC /* Wme.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 105E8EF81FF2976200EB33F1 /* Wme.framework */; };
 		105B8660212A74A500D316F4 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864A212A74A400D316F4 /* Config.swift */; };
-		105B8661212A74A500D316F4 /* SpaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864B212A74A400D316F4 /* SpaceTests.swift */; };
 		105B8669212A74A500D316F4 /* MockClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8653212A74A400D316F4 /* MockClock.swift */; };
 		105B866A212A74A500D316F4 /* MockKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8654212A74A500D316F4 /* MockKeychain.swift */; };
 		105B866F212A74A500D316F4 /* WebexTestFixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8659212A74A500D316F4 /* WebexTestFixture.swift */; };
@@ -30,6 +29,8 @@
 		10A9CA8F20D0D1490095DF19 /* WebexBroadcastExtensionKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A9CA8620D0D0510095DF19 /* WebexBroadcastExtensionKitTests.swift */; };
 		10A9CA9020D0D14D0095DF19 /* WebexBroadcastClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A9CA8320D0D0510095DF19 /* WebexBroadcastClient.swift */; };
 		10A9CA9120D0D1510095DF19 /* WebexError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A9CA8220D0D0510095DF19 /* WebexError.swift */; };
+		10D4D7C9212BF24300B37D98 /* TestTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864E212A74A400D316F4 /* TestTeam.swift */; };
+		10D4D7CA212BF26C00B37D98 /* WebhookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8658212A74A500D316F4 /* WebhookTests.swift */; };
 		10F0658821081BBA001B1514 /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658621081BBA001B1514 /* Space.swift */; };
 		10F0658921081BBA001B1514 /* SpaceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658721081BBA001B1514 /* SpaceClient.swift */; };
 		20418FE01EACCFDD00626326 /* KeychainProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418FDF1EACCFDD00626326 /* KeychainProtocol.swift */; };
@@ -1139,7 +1140,9 @@
 				C79F14061FBE7C3A00B43596 /* FakeCallClient.swift in Sources */,
 				C79F14071FBE7C3A00B43596 /* FakeCallModelHelper.swift in Sources */,
 				105B8660212A74A500D316F4 /* Config.swift in Sources */,
+				10D4D7CA212BF26C00B37D98 /* WebhookTests.swift in Sources */,
 				105B8669212A74A500D316F4 /* MockClock.swift in Sources */,
+				10D4D7C9212BF24300B37D98 /* TestTeam.swift in Sources */,
 				C79F14081FBE7C3A00B43596 /* FakeConversationClient.swift in Sources */,
 				105B866A212A74A500D316F4 /* MockKeychain.swift in Sources */,
 				C79F14091FBE7C3A00B43596 /* FakeDeviceService.swift in Sources */,
@@ -1147,7 +1150,6 @@
 				C79F140B1FBE7C3A00B43596 /* FakeMetricsEngine.swift in Sources */,
 				105B866F212A74A500D316F4 /* WebexTestFixture.swift in Sources */,
 				C79F140C1FBE7C3A00B43596 /* FakeReachabilityService.swift in Sources */,
-				105B8661212A74A500D316F4 /* SpaceTests.swift in Sources */,
 				C79F140D1FBE7C3A00B43596 /* FakeWebSocketService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
