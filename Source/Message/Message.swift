@@ -110,17 +110,17 @@ public struct Message {
     }
     
     private var mentions: [Mention]? {
-        var mentions = [Mention]()
+        var mentionList = [Mention]()
         if let peoples = self.activity.mentionedPeople {
-            mentions.append(contentsOf: (peoples.map { Mention.person($0) }))
+            mentionList.append(contentsOf: (peoples.map { Mention.person($0) }))
         }
         if let groups = self.activity.mentionedGroup {
             for group in groups where group == "all" {
-                mentions.append(Mention.all)
+                mentionList.append(Mention.all)
                 break
             }
         }
-        return mentions.count > 0 ? mentions : nil
+        return mentionList.count > 0 ? mentionList : nil
     }
 }
 
@@ -192,10 +192,10 @@ public class LocalFile {
     ///
     /// - since: 1.4.0
     public init?(path: String, name: String? = nil, mime: String? = nil, thumbnail: Thumbnail? = nil, progressHandler: ((Double) -> Void)? = nil) {
-        let name = name ?? URL(fileURLWithPath: path).lastPathComponent
+        let tempName = name ?? URL(fileURLWithPath: path).lastPathComponent
         self.path = path
-        self.name = name
-        self.mime = mime ?? name.mimeType
+        self.name = tempName
+        self.mime = mime ?? tempName.mimeType
         self.thumbnail = thumbnail
         self.progressHandler = progressHandler
         if !FileManager.default.fileExists(atPath: path) || !FileManager.default.isReadableFile(atPath: path) {

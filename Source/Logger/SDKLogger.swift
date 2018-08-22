@@ -113,22 +113,22 @@ class SDKLogger {
 class MemoryLoggerStorage {
     
     // configs
-    private let BlockSize = 10*1024
-    private let BlockCount = 1
+    private let blockSize = 10*1024
+    private let blockCount = 1
     
     // storage
     private var blocks: [String]
     private var blockIndex = 0
     
     init() {
-        blocks = [String](repeating: "", count: BlockCount)
+        blocks = [String](repeating: "", count: blockCount)
     }
     
     func write(_ message: String) {
         synchronized(lock: self) {
             blocks[blockIndex] += message + "\n"
-            if blocks[blockIndex].count > BlockSize {
-                blockIndex = (blockIndex + 1) % BlockCount
+            if blocks[blockIndex].count > blockSize {
+                blockIndex = (blockIndex + 1) % blockCount
                 blocks[blockIndex] = ""
             }
         }
@@ -137,8 +137,8 @@ class MemoryLoggerStorage {
     func read() -> String {
         var output = ""
         synchronized(lock: self) {
-            for offset in 1...BlockCount {
-                output += blocks[(blockIndex + offset) % BlockCount]
+            for offset in 1...blockCount {
+                output += blocks[(blockIndex + offset) % blockCount]
             }
         }
         return output

@@ -9,28 +9,6 @@
 /* Begin PBXBuildFile section */
 		101255982022C3D80072F5DC /* Wme.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 105E8EF81FF2976200EB33F1 /* Wme.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1012559A2022C3E80072F5DC /* Wme.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 105E8EF81FF2976200EB33F1 /* Wme.framework */; };
-		105B865E212A74A500D316F4 /* MembershipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8648212A74A400D316F4 /* MembershipTests.swift */; };
-		105B865F212A74A500D316F4 /* AuxiliaryVideoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8649212A74A400D316F4 /* AuxiliaryVideoTest.swift */; };
-		105B8660212A74A500D316F4 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864A212A74A400D316F4 /* Config.swift */; };
-		105B8661212A74A500D316F4 /* SpaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864B212A74A400D316F4 /* SpaceTests.swift */; };
-		105B8662212A74A500D316F4 /* SequenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864C212A74A400D316F4 /* SequenceTests.swift */; };
-		105B8663212A74A500D316F4 /* SSOAuthenticatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864D212A74A400D316F4 /* SSOAuthenticatorTests.swift */; };
-		105B8664212A74A500D316F4 /* TestTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864E212A74A400D316F4 /* TestTeam.swift */; };
-		105B8665212A74A500D316F4 /* JWTAuthKeychainStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864F212A74A400D316F4 /* JWTAuthKeychainStorageTests.swift */; };
-		105B8666212A74A500D316F4 /* ScreenShareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8650212A74A400D316F4 /* ScreenShareTests.swift */; };
-		105B8667212A74A500D316F4 /* CallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8651212A74A400D316F4 /* CallTests.swift */; };
-		105B8668212A74A500D316F4 /* MessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8652212A74A400D316F4 /* MessageTests.swift */; };
-		105B8669212A74A500D316F4 /* MockClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8653212A74A400D316F4 /* MockClock.swift */; };
-		105B866A212A74A500D316F4 /* MockKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8654212A74A500D316F4 /* MockKeychain.swift */; };
-		105B866B212A74A500D316F4 /* PeopleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8655212A74A500D316F4 /* PeopleTests.swift */; };
-		105B866C212A74A500D316F4 /* PhoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8656212A74A500D316F4 /* PhoneTests.swift */; };
-		105B866D212A74A500D316F4 /* TeamMembershipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8657212A74A500D316F4 /* TeamMembershipTests.swift */; };
-		105B866E212A74A500D316F4 /* WebhookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8658212A74A500D316F4 /* WebhookTests.swift */; };
-		105B866F212A74A500D316F4 /* WebexTestFixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8659212A74A500D316F4 /* WebexTestFixture.swift */; };
-		105B8670212A74A500D316F4 /* OAuthAuthenticatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B865A212A74A500D316F4 /* OAuthAuthenticatorTests.swift */; };
-		105B8671212A74A500D316F4 /* TeamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B865B212A74A500D316F4 /* TeamTests.swift */; };
-		105B8672212A74A500D316F4 /* OAuthKeychainStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B865C212A74A500D316F4 /* OAuthKeychainStorageTests.swift */; };
-		105B8673212A74A500D316F4 /* JWTAuthenticatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B865D212A74A500D316F4 /* JWTAuthenticatorTests.swift */; };
 		105E8EFA1FF2976200EB33F1 /* Wme.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 105E8EF81FF2976200EB33F1 /* Wme.framework */; };
 		1066EF0B2022F877003745D0 /* KmsMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1066EF002022F876003745D0 /* KmsMessageModel.swift */; };
 		1066EF0C2022F877003745D0 /* MessageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1066EF012022F876003745D0 /* MessageClient.swift */; };
@@ -47,6 +25,28 @@
 		10A9CA8F20D0D1490095DF19 /* WebexBroadcastExtensionKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A9CA8620D0D0510095DF19 /* WebexBroadcastExtensionKitTests.swift */; };
 		10A9CA9020D0D14D0095DF19 /* WebexBroadcastClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A9CA8320D0D0510095DF19 /* WebexBroadcastClient.swift */; };
 		10A9CA9120D0D1510095DF19 /* WebexError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A9CA8220D0D0510095DF19 /* WebexError.swift */; };
+		10D4D7DD212C0D9D00B37D98 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864A212A74A400D316F4 /* Config.swift */; };
+		10D4D7E2212C0D9D00B37D98 /* MockClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8653212A74A400D316F4 /* MockClock.swift */; };
+		10D4D7E3212C0D9D00B37D98 /* MockKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8654212A74A500D316F4 /* MockKeychain.swift */; };
+		10D4D7EE212C0D9D00B37D98 /* TestTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864E212A74A400D316F4 /* TestTeam.swift */; };
+		10D4D7F1212D10ED00B37D98 /* WebhookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8658212A74A500D316F4 /* WebhookTests.swift */; };
+		10D4D7F2212D10F100B37D98 /* WebexTestFixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8659212A74A500D316F4 /* WebexTestFixture.swift */; };
+		10D4D7F3212D1D4E00B37D98 /* AuxiliaryVideoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8649212A74A400D316F4 /* AuxiliaryVideoTest.swift */; };
+		10D4D7F4212D1D4E00B37D98 /* CallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8651212A74A400D316F4 /* CallTests.swift */; };
+		10D4D7F5212D1D4E00B37D98 /* JWTAuthenticatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B865D212A74A500D316F4 /* JWTAuthenticatorTests.swift */; };
+		10D4D7F6212D1D4E00B37D98 /* JWTAuthKeychainStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864F212A74A400D316F4 /* JWTAuthKeychainStorageTests.swift */; };
+		10D4D7F7212D1D4E00B37D98 /* MembershipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8648212A74A400D316F4 /* MembershipTests.swift */; };
+		10D4D7F8212D1D4E00B37D98 /* MessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8652212A74A400D316F4 /* MessageTests.swift */; };
+		10D4D7F9212D1D4E00B37D98 /* OAuthAuthenticatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B865A212A74A500D316F4 /* OAuthAuthenticatorTests.swift */; };
+		10D4D7FA212D1D4E00B37D98 /* OAuthKeychainStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B865C212A74A500D316F4 /* OAuthKeychainStorageTests.swift */; };
+		10D4D7FB212D1D4E00B37D98 /* PeopleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8655212A74A500D316F4 /* PeopleTests.swift */; };
+		10D4D7FC212D1D4E00B37D98 /* PhoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8656212A74A500D316F4 /* PhoneTests.swift */; };
+		10D4D7FD212D1D4E00B37D98 /* ScreenShareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8650212A74A400D316F4 /* ScreenShareTests.swift */; };
+		10D4D7FE212D1D4E00B37D98 /* SequenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864C212A74A400D316F4 /* SequenceTests.swift */; };
+		10D4D7FF212D1D4E00B37D98 /* SpaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864B212A74A400D316F4 /* SpaceTests.swift */; };
+		10D4D800212D1D4E00B37D98 /* SSOAuthenticatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864D212A74A400D316F4 /* SSOAuthenticatorTests.swift */; };
+		10D4D801212D1D4E00B37D98 /* TeamMembershipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8657212A74A500D316F4 /* TeamMembershipTests.swift */; };
+		10D4D802212D1D4E00B37D98 /* TeamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B865B212A74A500D316F4 /* TeamTests.swift */; };
 		10F0658821081BBA001B1514 /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658621081BBA001B1514 /* Space.swift */; };
 		10F0658921081BBA001B1514 /* SpaceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658721081BBA001B1514 /* SpaceClient.swift */; };
 		20418FE01EACCFDD00626326 /* KeychainProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418FDF1EACCFDD00626326 /* KeychainProtocol.swift */; };
@@ -1153,36 +1153,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				105B865F212A74A500D316F4 /* AuxiliaryVideoTest.swift in Sources */,
-				105B8673212A74A500D316F4 /* JWTAuthenticatorTests.swift in Sources */,
-				105B8663212A74A500D316F4 /* SSOAuthenticatorTests.swift in Sources */,
+				10D4D7E2212C0D9D00B37D98 /* MockClock.swift in Sources */,
+				10D4D800212D1D4E00B37D98 /* SSOAuthenticatorTests.swift in Sources */,
+				10D4D7FF212D1D4E00B37D98 /* SpaceTests.swift in Sources */,
+				10D4D7F7212D1D4E00B37D98 /* MembershipTests.swift in Sources */,
+				10D4D7F2212D10F100B37D98 /* WebexTestFixture.swift in Sources */,
 				C79F14061FBE7C3A00B43596 /* FakeCallClient.swift in Sources */,
-				105B865E212A74A500D316F4 /* MembershipTests.swift in Sources */,
+				10D4D7EE212C0D9D00B37D98 /* TestTeam.swift in Sources */,
+				10D4D7FA212D1D4E00B37D98 /* OAuthKeychainStorageTests.swift in Sources */,
+				10D4D7FD212D1D4E00B37D98 /* ScreenShareTests.swift in Sources */,
 				C79F14071FBE7C3A00B43596 /* FakeCallModelHelper.swift in Sources */,
-				105B8665212A74A500D316F4 /* JWTAuthKeychainStorageTests.swift in Sources */,
-				105B8660212A74A500D316F4 /* Config.swift in Sources */,
-				105B8662212A74A500D316F4 /* SequenceTests.swift in Sources */,
-				105B8669212A74A500D316F4 /* MockClock.swift in Sources */,
-				105B8672212A74A500D316F4 /* OAuthKeychainStorageTests.swift in Sources */,
-				105B8664212A74A500D316F4 /* TestTeam.swift in Sources */,
-				105B8666212A74A500D316F4 /* ScreenShareTests.swift in Sources */,
+				10D4D802212D1D4E00B37D98 /* TeamTests.swift in Sources */,
+				10D4D7F3212D1D4E00B37D98 /* AuxiliaryVideoTest.swift in Sources */,
+				10D4D7DD212C0D9D00B37D98 /* Config.swift in Sources */,
 				C79F14081FBE7C3A00B43596 /* FakeConversationClient.swift in Sources */,
-				105B866C212A74A500D316F4 /* PhoneTests.swift in Sources */,
-				105B8667212A74A500D316F4 /* CallTests.swift in Sources */,
-				105B866A212A74A500D316F4 /* MockKeychain.swift in Sources */,
-				105B8670212A74A500D316F4 /* OAuthAuthenticatorTests.swift in Sources */,
+				10D4D7F8212D1D4E00B37D98 /* MessageTests.swift in Sources */,
+				10D4D801212D1D4E00B37D98 /* TeamMembershipTests.swift in Sources */,
 				C79F14091FBE7C3A00B43596 /* FakeDeviceService.swift in Sources */,
+				10D4D7F4212D1D4E00B37D98 /* CallTests.swift in Sources */,
+				10D4D7E3212C0D9D00B37D98 /* MockKeychain.swift in Sources */,
+				10D4D7F5212D1D4E00B37D98 /* JWTAuthenticatorTests.swift in Sources */,
+				10D4D7F1212D10ED00B37D98 /* WebhookTests.swift in Sources */,
+				10D4D7FC212D1D4E00B37D98 /* PhoneTests.swift in Sources */,
+				10D4D7FE212D1D4E00B37D98 /* SequenceTests.swift in Sources */,
 				C79F140A1FBE7C3A00B43596 /* FakeWME.swift in Sources */,
-				105B866B212A74A500D316F4 /* PeopleTests.swift in Sources */,
-				105B866D212A74A500D316F4 /* TeamMembershipTests.swift in Sources */,
-				105B8671212A74A500D316F4 /* TeamTests.swift in Sources */,
-				105B866E212A74A500D316F4 /* WebhookTests.swift in Sources */,
 				C79F140B1FBE7C3A00B43596 /* FakeMetricsEngine.swift in Sources */,
-				105B866F212A74A500D316F4 /* WebexTestFixture.swift in Sources */,
 				C79F140C1FBE7C3A00B43596 /* FakeReachabilityService.swift in Sources */,
-				105B8661212A74A500D316F4 /* SpaceTests.swift in Sources */,
-				105B8668212A74A500D316F4 /* MessageTests.swift in Sources */,
+				10D4D7F9212D1D4E00B37D98 /* OAuthAuthenticatorTests.swift in Sources */,
 				C79F140D1FBE7C3A00B43596 /* FakeWebSocketService.swift in Sources */,
+				10D4D7FB212D1D4E00B37D98 /* PeopleTests.swift in Sources */,
+				10D4D7F6212D1D4E00B37D98 /* JWTAuthKeychainStorageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

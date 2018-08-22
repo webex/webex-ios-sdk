@@ -83,11 +83,11 @@ class DownloadFileOperation : NSObject, URLSessionDataDelegate {
         if let resp = response as? HTTPURLResponse, let length = (resp.allHeaderFields["Content-Length"] as? String)?.components(separatedBy: "/").last, let size = UInt64(length) {
             self.totalSize = size
             do {
-                var outputStream = OutputStream(toFileAtPath: self.target.path, append: true)
+                var tempOutputStream = OutputStream(toFileAtPath: self.target.path, append: true)
                 if let ref = self.secureContentRef {
-                    outputStream = try SecureOutputStream(stream: outputStream, scr: try SecureContentReference(json: ref))
+                    tempOutputStream = try SecureOutputStream(stream: outputStream, scr: try SecureContentReference(json: ref))
                 }
-                self.outputStream = outputStream
+                self.outputStream = tempOutputStream
                 self.outputStream?.open()
                 completionHandler(URLSession.ResponseDisposition.allow);
             }
@@ -103,9 +103,6 @@ class DownloadFileOperation : NSObject, URLSessionDataDelegate {
     }
     
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-//        var buffer = [UInt8](repeating: 0, count: data.count)
-//        data.copyBytes(to: &buffer, count: data.count)
-//        self.outputStream?.write(buffer, maxLength: data.count)
         _ = self.outputStream?.write(data: data)
         self.queue.async {
             self.countSize = self.countSize + UInt64(data.count)
