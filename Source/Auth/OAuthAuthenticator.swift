@@ -144,7 +144,7 @@ public class OAuthAuthenticator : Authenticator {
         if let encodedClientId = clientId.encodeQueryParamString,
             let encodedRedirectUri = redirectUri.encodeQueryParamString,
             let encodedScope = scope.encodeQueryParamString {
-            return URL(string: "\(ServiceRequest.HYDRA_SERVER_ADDRESS)/authorize?response_type=code"
+            return URL(string: "\(ServiceRequest.hydraServerAddress)/authorize?response_type=code"
                 + "&client_id=" + encodedClientId
                 + "&redirect_uri=" + encodedRedirectUri
                 + "&scope=" + encodedScope

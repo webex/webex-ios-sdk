@@ -27,14 +27,15 @@ import SwiftyJSON
 class ServiceRequest : RequestRetrier, RequestAdapter {
     
     #if INTEGRATIONTEST
-    static let HYDRA_SERVER_ADDRESS:String = ProcessInfo().environment["HYDRA_SERVER_ADDRESS"] == nil ? "https://api.ciscospark.com/v1":ProcessInfo().environment["HYDRA_SERVER_ADDRESS"]!
+    static let hydraServerAddress:String = ProcessInfo().environment["hydraServerAddress"] == nil ? "https://api.ciscospark.com/v1":ProcessInfo().environment["hydraServerAddress"]!
     #else
-    static let HYDRA_SERVER_ADDRESS:String = "https://api.ciscospark.com/v1"
+    static let hydraServerAddress:String = "https://api.ciscospark.com/v1"
     #endif
-    static let CONVERSATION_SERVER_ADDRESS: String = "https://conv-a.wbx2.com/conversation/api/v1"
-    static let KMS_SERVER_ADDRESS: String = "https://encryption-a.wbx2.com/encryption/api/v1"
-    static let LOCUS_RESPONSE_ONLY_SDP: Bool = true
+    static let conversationServerAddress: String = "https://conv-a.wbx2.com/conversation/api/v1"
+    static let kmsServerAddress: String = "https://encryption-a.wbx2.com/encryption/api/v1"
+    static let locusResponseOnlySdp: Bool = true
     
+    private let tokenPrefix: String = "Bearer "
     private var pendingTimeCount : Int = 0
     private let url: URL
     private let headers: [String: String]
@@ -66,7 +67,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     
     class Builder {
         
-        private static let apiBaseUrl: URL = URL(string: ServiceRequest.HYDRA_SERVER_ADDRESS)!
+        private static let apiBaseUrl: URL = URL(string: ServiceRequest.hydraServerAddress)!
         private let authenticator: Authenticator
         private var headers: [String: String]
         private var method: Alamofire.HTTPMethod
@@ -138,10 +139,10 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     }
     
     func responseObject<T: BaseMappable>(_ completionHandler: @escaping (ServiceResponse<T>) -> Void) {
-        let queue = self.queue
-        let keyPath = self.keyPath
+        let tempQueue = self.queue
+        let tempKeyPath = self.keyPath
         createAlamofireRequest() { request in
-            request.responseObject(queue: queue, keyPath: keyPath) { (response: DataResponse<T>) in
+            request.responseObject(queue: tempQueue, keyPath: tempKeyPath) { (response: DataResponse<T>) in
                 var result: Result<T>
                 switch response.result {
                 case .success(let value):
@@ -160,10 +161,10 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     }
     
     func responseArray<T: BaseMappable>(_ completionHandler: @escaping (ServiceResponse<[T]>) -> Void) {
-        let queue = self.queue
-        let keyPath = self.keyPath
+        let tempQueue = self.queue
+        let tempKeyPath = self.keyPath
         createAlamofireRequest() { request in
-            request.responseArray(queue: queue, keyPath: keyPath) { (response: DataResponse<[T]>) in
+            request.responseArray(queue: tempQueue, keyPath: tempKeyPath) { (response: DataResponse<[T]>) in
                 var result: Result<[T]>
                 switch response.result {
                 case .success(let value):
@@ -182,9 +183,9 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     }
     
     func responseJSON(_ completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
-        let queue = self.queue
+        let tempQueue = self.queue
         createAlamofireRequest() { request in
-            request.responseJSON(queue: queue) { (response: DataResponse<Any>) in
+            request.responseJSON(queue: tempQueue) { (response: DataResponse<Any>) in
                 var result: Result<Any>
                 switch response.result {
                 case .success(let value):
@@ -204,14 +205,15 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     
     private func createAlamofireRequest(completionHandler: @escaping (Alamofire.DataRequest) -> Void) {
         let accessTokenCallback: (String?) -> Void = { accessToken in
-            var headers = self.headers
+            var headerDict = self.headers
+            let tempTokenPrefix = self.tokenPrefix
             if let accessToken = accessToken {
-                headers["Authorization"] = "Bearer " + accessToken
+                headerDict["Authorization"] = tempTokenPrefix + accessToken
             }
             
             let urlRequestConvertible: URLRequestConvertible
             do {
-                var urlRequest = try URLRequest(url: self.url, method: self.method, headers: headers)
+                var urlRequest = try URLRequest(url: self.url, method: self.method, headers: headerDict)
                 //disable http local cache data.
                 urlRequest.cachePolicy = .reloadIgnoringLocalCacheData
                 if let body = self.body {
@@ -240,7 +242,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
             self.sessionManager.delegate.taskWillPerformHTTPRedirection = { session, task, response, request in
                 var finalRequest = request
                 if let accessToken = accessToken {
-                    finalRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
+                    finalRequest.setValue(tempTokenPrefix + accessToken, forHTTPHeaderField: "Authorization")
                 }
                 return finalRequest
             }
@@ -254,8 +256,9 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     
     func adapt(_ urlRequest: URLRequest) throws -> URLRequest {
         var urlRequest = urlRequest
+        let tempTokenPrefix = self.tokenPrefix
         if let newToken = self.newAccessToken, let _ =  urlRequest.value(forHTTPHeaderField: "Authorization") {
-            urlRequest.setValue("Bearer " + newToken, forHTTPHeaderField: "Authorization")
+            urlRequest.setValue(tempTokenPrefix + newToken, forHTTPHeaderField: "Authorization")
             self.refreshTokenCount += 1
         }
         return urlRequest

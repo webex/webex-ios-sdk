@@ -45,7 +45,7 @@ class MessageClientImpl {
         case conversation
     }
     
-    private static let KMS_MSG_SERVER_URL = URL(string: ServiceRequest.KMS_SERVER_ADDRESS + "/kms/messages")!
+    private static let KMS_MSG_SERVER_URL = URL(string: ServiceRequest.kmsServerAddress + "/kms/messages")!
     
     var onEvent: ((MessageEvent) -> Void)?
     
@@ -541,7 +541,7 @@ class MessageClientImpl {
             completionHandler(nil)
             return
         }
-        let request =  ServiceRequest.Builder(self.authenticator).baseUrl(ServiceRequest.KMS_SERVER_ADDRESS).path("kms")
+        let request =  ServiceRequest.Builder(self.authenticator).baseUrl(ServiceRequest.kmsServerAddress).path("kms")
             .method(.get)
             .build()
         request.responseJSON { (response: ServiceResponse<Any>) in
@@ -630,7 +630,7 @@ class MessageClientImpl {
     }
     
     private var messageServiceBuilder: ServiceRequest.Builder {
-        return ServiceRequest.Builder(self.authenticator).baseUrl(ServiceRequest.CONVERSATION_SERVER_ADDRESS)
+        return ServiceRequest.Builder(self.authenticator).baseUrl(ServiceRequest.conversationServerAddress)
     }
     
     private func encryptionKey(spaceId: String) -> EncryptionKey {
