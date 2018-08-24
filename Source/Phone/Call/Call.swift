@@ -469,7 +469,6 @@ public class Call {
             }
             _memberships = newValue
         self.updateRemoteAuxVideoMembership(memberships: _memberships)
-            
         }
     }
     
@@ -542,6 +541,14 @@ public class Call {
     /// - since: 2.0.0
     public internal(set) var activeSpeaker: CallMembership?
     
+    ///
+    ///
+    /// - since: 2.0.0
+    public private(set) var remoteAvailableAuxVideoCount: Int {
+        get { lock(); defer { unlock() }; return _remoteAvailableAuxVideoCount }
+        set { lock(); defer { unlock() }; _remoteAvailableAuxVideoCount = newValue }
+    }
+    
     var model: CallModel {
         get { lock(); defer { unlock() }; return _model }
         set { lock(); defer { unlock() }; _model = newValue }
@@ -558,11 +565,13 @@ public class Call {
     var _uuid: UUID
     
     let metrics: CallMetrics
+    static private let activeSpeakerCount = 1
     private let dtmfQueue: DtmfQueue
     
     private var _dail: String?
     private var _model: CallModel
     private var _memberships: [CallMembership]?
+    private var _remoteAvailableAuxVideoCount:Int = 0
     var _mutex = pthread_mutex_t()
     
     var onConnectedOnceToken :String = "" {
@@ -764,6 +773,11 @@ public class Call {
         DispatchQueue.main.async {
             if self.remoteAuxVideos.count >= MAX_REMOTE_AUX_VIDEO_NUMBER {
                 completionHandler(Result.failure(WebexError.illegalOperation(reason: "have exceeded the auxiliary videos limit")))
+                return
+            }
+            
+            if !self.isGroup {
+                completionHandler(Result.failure(WebexError.illegalOperation(reason: "only available for group call")))
                 return
             }
             
@@ -1032,13 +1046,20 @@ public class Call {
         }
     }
     
+    func updateRemoteAuxVideoCount() {
+        let newActiveRemoteAuxMediaCount = min(self.memberships.filter({ $0.isMediaActive() && !$0.isSelf }).count - Call.activeSpeakerCount, self.mediaSession.remoteAuxVideoCount())
+        if remoteAvailableAuxVideoCount != newActiveRemoteAuxMediaCount && newActiveRemoteAuxMediaCount >= 0 {
+            remoteAvailableAuxVideoCount = newActiveRemoteAuxMediaCount
+            self.onMediaChanged?(Call.MediaChangedEvent.remoteAuxVideosCount(remoteAvailableAuxVideoCount))
+        }
+    }
+    
     private func doCallModel(_ model: CallModel) {
         self.model = model
         if let participants = model.participants?.filter({ $0.isCIUser() }) {
             let oldMemberships = self.memberships
             var newMemberships = [CallMembership]()
             var onCallMembershipChanges = [CallMembershipChangedEvent]()
-            
             for participant in participants {
                 if var membership = oldMemberships.find(predicate: { $0.id == participant.id }) {
                     let oldState = membership.state
@@ -1055,6 +1076,9 @@ public class Call {
                             if let auxVideo = self.remoteAuxVideos.filter({$0.person?.id == membership.id}).first {
                                 auxVideo.person = nil
                                 self.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxVideoPersonChangedEvent(auxVideo, From: membership, To: nil))
+                            } else if let currentSpeaker = self.activeSpeaker, currentSpeaker.id == membership.id {
+                                self.activeSpeaker = nil
+                                self.onMediaChanged?(Call.MediaChangedEvent.activeSpeakerChangedEvent(From: membership, To: nil))
                             }
                         }
                         else if membership.state == CallMembership.State.declined {
@@ -1083,6 +1107,8 @@ public class Call {
         else {
             self.memberships = []
         }
+        
+        self.updateRemoteAuxVideoCount()
         self.status.handle(model: model, for: self)
     }
     

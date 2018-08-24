@@ -218,8 +218,8 @@ class MediaSessionObserver: NotificationObserver {
     
     @objc private func onMediaEngineDidAvailableMediaChange(_ notification: Notification) {
         DispatchQueue.main.async {
-            if let retainCall = self.call ,let count = notification.userInfo?[MediaEngineVideoCount] as? Int {
-                retainCall.onMediaChanged?(Call.MediaChangedEvent.remoteAuxVideosCount(count))
+            if let retainCall = self.call ,let _ = notification.userInfo?[MediaEngineVideoCount] as? Int {
+                retainCall.updateRemoteAuxVideoCount()
             }
         }
     }
@@ -291,6 +291,10 @@ class MediaSessionObserver: NotificationObserver {
     @objc private func onMediaEngineDidActiveSpeakerChange(_ notification: Notification) {
         DispatchQueue.main.async {
             func sendActiveSpeakerChangedEvent(newMembership:CallMembership?,call:Call) {
+                if newMembership?.id == call.activeSpeaker?.id {
+                    return
+                }
+                
                 let oldMembership: CallMembership? = call.activeSpeaker
                 call.activeSpeaker = newMembership
                 call.onMediaChanged?(Call.MediaChangedEvent.activeSpeakerChangedEvent(From: oldMembership, To: newMembership))
@@ -315,6 +319,10 @@ class MediaSessionObserver: NotificationObserver {
     @objc private func onMediaEngineDidDidCSIChange(_ notification: Notification) {
         DispatchQueue.main.async {
             func sendRemoteAuxVideoChangeEvent(newMembership:CallMembership?,auxVideo:RemoteAuxVideo,call:Call) {
+                if newMembership?.id == auxVideo.person?.id {
+                    return
+                }
+                
                 let oldMembership: CallMembership? = auxVideo.person
                 auxVideo.person = newMembership
                 call.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxVideoPersonChangedEvent(auxVideo, From: oldMembership, To: newMembership))

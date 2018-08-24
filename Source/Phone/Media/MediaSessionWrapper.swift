@@ -411,4 +411,8 @@ extension MediaSessionWrapper {
     func unmuteAuxMedia(vid:Int) {
         self.mediaSession.unmuteMedia(.auxVideo, andVid: Int32(vid))
     }
+    
+    func remoteAuxVideoCount() -> Int {
+        return self.mediaSession.remoteAuxVideoCount
+    }
 }

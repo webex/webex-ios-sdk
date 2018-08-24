@@ -139,4 +139,8 @@ public struct CallMembership {
     func containCSI(csi:UInt) -> Bool {
         return model.status?.csis?.contains(csi) ?? false
     }
+    
+    func isMediaActive() -> Bool {
+        return model.state == State.joined
+    }
 }

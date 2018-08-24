@@ -34,6 +34,7 @@ class FakeWME: MediaSession  {
                 }
                 break
             case .remoteAuxVideosCount(let count):
+                call.mediaSession.getMediaSession().remoteAuxVideoCount = count
                 NotificationCenter.default.post(name: NSNotification.Name.MediaEngineDidAvailableMediaChange, object: call.mediaSession.getMediaSession(), userInfo: [MediaEngineVideoCount:count])
                 break
             default:
@@ -153,4 +154,6 @@ class FakeWME: MediaSession  {
             return super.getRenderViewSize(with: type, andVid: vid)
         }
     }
+    
+    
 }
