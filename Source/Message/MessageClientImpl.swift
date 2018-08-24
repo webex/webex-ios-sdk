@@ -35,7 +35,7 @@ class MessageClientImpl {
         static let spaceUrlFetchFail = WebexError.serviceFailed(code: -7000, reason: "Space Info Fetch Fail")
         static let emptyTextError = WebexError.serviceFailed(code: -7000, reason: "Expected Text Not Found")
         static let downloadError = WebexError.serviceFailed(code: -7000, reason: "Expected File Not Found")
-        static let Timeout = WebexError.serviceFailed(code: -7000, reason: "Timeout")
+        static let timeOut = WebexError.serviceFailed(code: -7000, reason: "Timeout")
     }
     
     private enum ObjectType : String {
@@ -45,7 +45,7 @@ class MessageClientImpl {
         case conversation
     }
     
-    private static let KMS_MSG_SERVER_URL = URL(string: ServiceRequest.kmsServerAddress + "/kms/messages")!
+    private static let kmsMsgServerUrl = URL(string: ServiceRequest.kmsServerAddress + "/kms/messages")!
     
     var onEvent: ((MessageEvent) -> Void)?
     
@@ -87,6 +87,30 @@ class MessageClientImpl {
             return
         }
         
+        func listSuccessHandler(response: ServiceResponse<[ActivityModel]>, result: [ActivityModel]){
+            guard let responseValue = response.result.data else { return }
+            let result = result + responseValue.filter({$0.kind == ActivityModel.Kind.post || $0.kind == ActivityModel.Kind.share})
+            if result.count >= max || responseValue.count < max {
+                let key = self.encryptionKey(spaceId: spaceId)
+                key.material(client: self) { material in
+                    if let material = material.data {
+                        let messages = result.prefix(max).map { $0.decrypt(key: material) }.map { Message(activity: $0) }
+                        (queue ?? DispatchQueue.main).async {
+                            completionHandler(ServiceResponse(response.response, Result.success(messages)))
+                        }
+                    }
+                    else {
+                        (queue ?? DispatchQueue.main).async {
+                            completionHandler(ServiceResponse(response.response, Result.failure(material.error ?? MSGError.keyMaterialFetchFail)))
+                        }
+                    }
+                }
+            }
+            else {
+                listBefore(date: responseValue.last?.created, result: result, completionHandler: completionHandler)
+            }
+        }
+        
         func listBefore(date: Date?, result: [ActivityModel], completionHandler: @escaping (ServiceResponse<[Message]>) -> Void) {
             let dateKey = mentionedPeople == nil ? "maxDate" : "sinceDate"
             let request = self.messageServiceBuilder.path(mentionedPeople == nil ? "activities" : "mentions")
@@ -97,27 +121,8 @@ class MessageClientImpl {
                 .build()
             request.responseArray { (response: ServiceResponse<[ActivityModel]>) in
                 switch response.result {
-                case .success(let value):
-                    let result = result + value.filter({$0.kind == ActivityModel.Kind.post || $0.kind == ActivityModel.Kind.share})
-                    if result.count >= max || value.count < max {
-                        let key = self.encryptionKey(spaceId: spaceId)
-                        key.material(client: self) { material in
-                            if let material = material.data {
-                                let messages = result.prefix(max).map { $0.decrypt(key: material) }.map { Message(activity: $0) }
-                                (queue ?? DispatchQueue.main).async {
-                                    completionHandler(ServiceResponse(response.response, Result.success(messages)))
-                                }
-                            }
-                            else {
-                                (queue ?? DispatchQueue.main).async {
-                                    completionHandler(ServiceResponse(response.response, Result.failure(material.error ?? MSGError.keyMaterialFetchFail)))
-                                }
-                            }
-                        }
-                    }
-                    else {
-                        listBefore(date: value.last?.created, result: result, completionHandler: completionHandler)
-                    }
+                case .success:
+                   listSuccessHandler(response: response, result: result)
                 case .failure(let error):
                     completionHandler(ServiceResponse(response.response, Result.failure(error)))
                 }
@@ -225,27 +230,31 @@ class MessageClientImpl {
                 }
                 let target: [String: Any] = ["id": spaceId.locusFormat, "objectType": ObjectType.conversation.rawValue]
                 key.encryptionUrl(client: self) { encryptionUrl in
-                    if let url = encryptionUrl.data {
-                        let body = RequestParameter(["verb": verb.rawValue, "encryptionKeyUrl": url, "object": object, "target": target, "clientTempId": "\(self.uuid):\(UUID().uuidString)", "kmsMessage": self.keySerialization ?? nil])
-                        let request = self.messageServiceBuilder.path("activities")
-                            .method(.post)
-                            .body(body)
-                            .queue(queue)
-                            .build()
-                        request.responseObject { (response: ServiceResponse<ActivityModel>) in
-                            switch response.result{
-                            case .success(let activity):
-                                completionHandler(ServiceResponse(response.response, Result.success(Message(activity: activity.decrypt(key: material.data)))))
-                            case .failure(let error):
-                                completionHandler(ServiceResponse(response.response, Result.failure(error)))
-                            }
-                        }
+                    postMessageRequest(encryptionUrl: encryptionUrl, material: material,target: target)
+                }
+            }
+        }
+        
+        func postMessageRequest(encryptionUrl: Result<String?>, material: Result<String>, target: [String: Any]){
+            if let url = encryptionUrl.data {
+                let body = RequestParameter(["verb": verb.rawValue, "encryptionKeyUrl": url, "object": object, "target": target, "clientTempId": "\(self.uuid):\(UUID().uuidString)", "kmsMessage": self.keySerialization ?? nil])
+                let request = self.messageServiceBuilder.path("activities")
+                    .method(.post)
+                    .body(body)
+                    .queue(queue)
+                    .build()
+                request.responseObject { (response: ServiceResponse<ActivityModel>) in
+                    switch response.result{
+                    case .success(let activity):
+                        completionHandler(ServiceResponse(response.response, Result.success(Message(activity: activity.decrypt(key: material.data)))))
+                    case .failure(let error):
+                        completionHandler(ServiceResponse(response.response, Result.failure(error)))
                     }
-                    else {
-                        (queue ?? DispatchQueue.main).async {
-                            completionHandler(ServiceResponse(nil, Result.failure(encryptionUrl.error ?? MSGError.encryptionUrlFetchFail)))
-                        }
-                    }
+                }
+            }
+            else {
+                (queue ?? DispatchQueue.main).async {
+                    completionHandler(ServiceResponse(nil, Result.failure(encryptionUrl.error ?? MSGError.encryptionUrlFetchFail)))
                 }
             }
         }
@@ -355,18 +364,20 @@ class MessageClientImpl {
     }
     
     func handle(kms: KmsMessageModel) {
-        if let response = kms.kmsMessages?.first {
-            if let request = self.ephemeralKeyRequest {
-                if let key = try? KmsEphemeralKeyResponse(responseMessage: response, request: request.0).jwkEphemeralKey {
-                    self.ephemeralKey = key
-                    request.1(nil)
-                }
-                else {
-                    request.1(MSGError.ephemaralKeyFetchFail)
-                }
-                self.ephemeralKeyRequest = nil
+        
+        func handleEphemeralKeyRequest(request: (KmsEphemeralKeyRequest, (Error?) -> Void), response: String) {
+            if let key = try? KmsEphemeralKeyResponse(responseMessage: response, request: request.0).jwkEphemeralKey {
+                self.ephemeralKey = key
+                request.1(nil)
             }
-            else if let key = self.ephemeralKey, let data = try? CjoseWrapper.content(fromCiphertext: response, key: key), let json = try? JSON(data: data) {
+            else {
+                request.1(MSGError.ephemaralKeyFetchFail)
+            }
+            self.ephemeralKeyRequest = nil
+        }
+        
+        func handleSpaceKeyMaterialRequest(response: String) {
+            if let key = self.ephemeralKey, let data = try? CjoseWrapper.content(fromCiphertext: response, key: key), let json = try? JSON(data: data) {
                 if let key = json["key"].object as? [String:Any] {
                     if let jwk = key["jwk"], let uri = key["uri"], let keyMaterial = JSON(jwk).rawString(), let keyUri = JSON(uri).rawString() {
                         if var handlers = self.keyMaterialCompletionHandlers[keyUri], handlers.count > 0 {
@@ -386,6 +397,15 @@ class MessageClientImpl {
                 }
             }
         }
+        
+        if let response = kms.kmsMessages?.first {
+            if let request = self.ephemeralKeyRequest {
+                handleEphemeralKeyRequest(request: request, response: response)
+            }
+            else {
+                handleSpaceKeyMaterialRequest(response: response)
+            }
+        }
     }
     
     func requestSpaceEncryptionURL(spaceId: String, completionHandler: @escaping (Result<String?>) -> Void) {
@@ -394,6 +414,20 @@ class MessageClientImpl {
                 completionHandler(Result.failure(error))
                 return
             }
+            
+            func handleResourceObjectUrl(dict: [String: Any]) {
+                if let paticipients = dict["participants"] as? [String: Any], let participantsArray = paticipients["items"] as? [[String: Any]]{
+                    participantsArray.forEach{ pdict in
+                        if let userId = pdict["entryUUID"] as? String{
+                            if !self.encryptionKey(spaceId: spaceId).spaceUserIds.contains(userId){
+                                self.encryptionKey(spaceId: spaceId).spaceUserIds.append(userId)
+                            }
+                        }
+                    }
+                }
+                completionHandler(Result.success(nil))
+            }
+            
             let request = self.messageServiceBuilder.path("conversations/" + spaceId.locusFormat)
                 .query(RequestParameter(["includeActivities": false, "includeParticipants": true]))
                 .method(.get)
@@ -403,16 +437,7 @@ class MessageClientImpl {
                     if let spaceEncryptionUrl = (dict["encryptionKeyUrl"] ?? dict["defaultActivityEncryptionKeyUrl"]) as? String{
                         completionHandler(Result.success(spaceEncryptionUrl))
                     }else if let _ = dict["kmsResourceObjectUrl"] {
-                        if let paticipients = dict["participants"] as? [String: Any], let participantsArray = paticipients["items"] as? [[String: Any]]{
-                            participantsArray.forEach{ pdict in
-                                if let userId = pdict["entryUUID"] as? String{
-                                    if !self.encryptionKey(spaceId: spaceId).spaceUserIds.contains(userId){
-                                        self.encryptionKey(spaceId: spaceId).spaceUserIds.append(userId)
-                                    }
-                                }
-                            }
-                        }
-                        completionHandler(Result.success(nil))
+                        handleResourceObjectUrl(dict: dict)
                     }
                 }
                 else {
@@ -428,15 +453,8 @@ class MessageClientImpl {
                 completionHandler(Result.failure(error))
                 return
             }
-            self.authenticator.accessToken { token in
-                guard let token = token else {
-                    completionHandler(Result.failure(WebexError.noAuth))
-                    return
-                }
-                guard let userId = self.userId, let ephemeralKey = self.ephemeralKey else {
-                    completionHandler(Result.failure(MSGError.ephemaralKeyFetchFail))
-                    return
-                }
+            
+            func spaceKeyRequest(token: String, userId: String, ephemeralKey: String?){
                 let header: [String: String]  = ["Cisco-Request-ID": self.uuid, "Authorization": "Bearer " + token]
                 var parameters: [String: Any]?
                 var failed: () -> Void
@@ -472,7 +490,7 @@ class MessageClientImpl {
                     }
                 }
                 if let parameters = parameters, parameters.count >= 2 {
-                    Alamofire.request(MessageClientImpl.KMS_MSG_SERVER_URL, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header).responseString { (response) in
+                    Alamofire.request(MessageClientImpl.kmsMsgServerUrl, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header).responseString { (response) in
                         SDKLogger.shared.debug("RequestKMS Material Response ============  \(response)")
                         if response.result.isFailure {
                             failed()
@@ -482,6 +500,18 @@ class MessageClientImpl {
                 else {
                     failed()
                 }
+            }
+            
+            self.authenticator.accessToken { token in
+                guard let token = token else {
+                    completionHandler(Result.failure(WebexError.noAuth))
+                    return
+                }
+                guard let userId = self.userId, let ephemeralKey = self.ephemeralKey else {
+                    completionHandler(Result.failure(MSGError.ephemaralKeyFetchFail))
+                    return
+                }
+                spaceKeyRequest(token: token, userId: userId, ephemeralKey: ephemeralKey)
             }
         }
     }
@@ -497,20 +527,28 @@ class MessageClientImpl {
             }
             return true
         }
+        
+        func processResult() {
+            DispatchQueue.main.async {
+                completionHandler(nil)
+            }
+        }
+        
+        func validateKeyRequest(error: Error?) {
+            if validateResult(error) {
+                self.requestEphemeralKey { error in
+                    if validateResult(error) {
+                        self.queue.yield()
+                        processResult()
+                    }
+                }
+            }
+        }
         self.queue.sync {
             self.requestUserId { error in
                 if validateResult(error) {
                     self.requestClusterAndRSAPubKey { error in
-                        if validateResult(error) {
-                            self.requestEphemeralKey { error in
-                                if validateResult(error) {
-                                    self.queue.yield()
-                                    DispatchQueue.main.async {
-                                        completionHandler(nil)
-                                    }
-                                }
-                            }
-                        }
+                        validateKeyRequest(error: error)
                     }
                 }
             }
@@ -585,7 +623,7 @@ class MessageClientImpl {
             self.ephemeralKeyRequest = (request, completionHandler)
             let parameters: [String: String] = ["kmsMessages": message, "destination": cluster]
             let header: [String: String]  = ["Cisco-Request-ID": self.uuid, "Authorization" : "Bearer " + token]
-            Alamofire.request(MessageClientImpl.KMS_MSG_SERVER_URL, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header).responseString { response in
+            Alamofire.request(MessageClientImpl.kmsMsgServerUrl, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header).responseString { response in
                 SDKLogger.shared.debug("Request EphemeralKey Response ============ \(response)")
                 if response.result.isFailure {
                     self.ephemeralKeyRequest = nil
@@ -671,10 +709,10 @@ class MessageClientImpl {
 extension Date {
     
     var iso8601String: String {
-        return Timestamp.ISO8601FullFormatterInUTC.string(from: self.addingTimeInterval(-0.1))
+        return Timestamp.iSO8601FullFormatterInUTC.string(from: self.addingTimeInterval(-0.1))
     }
     
     static func fromISO860(_ string: String) -> Date? {
-        return  Timestamp.ISO8601FullFormatterInUTC.date(from:string)
+        return  Timestamp.iSO8601FullFormatterInUTC.date(from:string)
     }
 }

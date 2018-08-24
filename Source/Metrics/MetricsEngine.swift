@@ -39,7 +39,7 @@ class MetricsEngine {
         self.timer.invalidate()
     }
 
-    func track(name: String, type: MetricsType = MetricsType.Generic, _ data: [String: String]) {
+    func track(name: String, _ data: [String: String]) {
         self.track(metric: Metric(name: name, data: data))
     }
     

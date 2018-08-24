@@ -43,9 +43,9 @@ class H264LicensePrompter {
                 completionHandler(true)
             }
             else {
-                let AlertTitle = "Activate License"
-                let AlertMessage = "To enable video calls, activate a free video license (H.264 AVC) from Cisco. By selecting 'Activate', you accept the Cisco End User License Agreement and Notices."
-                let alertController = UIAlertController(title: AlertTitle, message: AlertMessage, preferredStyle: UIAlertControllerStyle.alert)
+                let alertTitle = "Activate License"
+                let alertMessage = "To enable video calls, activate a free video license (H.264 AVC) from Cisco. By selecting 'Activate', you accept the Cisco End User License Agreement and Notices."
+                let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
                 
                 alertController.addAction(UIAlertAction(title: "Activate", style: UIAlertActionStyle.default) { _ in
                     SDKLogger.shared.info("Video license has been activated")
