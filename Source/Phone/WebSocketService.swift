@@ -112,7 +112,7 @@ class WebSocketService: WebSocketAdvancedDelegate {
             }
             else {
                 let backoffTime = connectionRetryCounter.next()
-                despatch_after(backoffTime) {
+                despatchAfter(backoffTime) {
                     if code > Int(CloseCode.normal.rawValue) {
                         // Abnormal disconnection, re-register device.
                         SDKLogger.shared.error("Abnormal disconnection, re-register device in \(backoffTime) seconds")
@@ -200,7 +200,7 @@ class WebSocketService: WebSocketAdvancedDelegate {
         
     }
     
-    private func despatch_after(_ delay: Double, closure: @escaping () -> Void) {
+    private func despatchAfter(_ delay: Double, closure: @escaping () -> Void) {
         self.queue.asyncAfter(
             deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC),
             execute: closure
