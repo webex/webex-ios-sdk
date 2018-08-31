@@ -77,7 +77,7 @@ struct CallModel {
     }
     
     var isOneOnOne: Bool {
-        return !(fullState?.type == "MEETING")
+        return fullState?.type != "MEETING"
     }
     
     var isIncomingCall: Bool {

@@ -147,16 +147,16 @@ public class Phone {
     
     convenience init(authenticator: Authenticator) {
         let device = DeviceService(authenticator: authenticator)
-        let metrics = MetricsEngine(authenticator: authenticator, service: device)
+        let tempMetrics = MetricsEngine(authenticator: authenticator, service: device)
         self.init(authenticator: authenticator,
                   devices: device,
                   reachability: ReachabilityService(authenticator: authenticator, deviceService: device),
                   client: CallClient(authenticator: authenticator),
-                  conversations: ConversationClient(authenticator: authenticator), metrics: metrics, prompter: H264LicensePrompter(metrics: metrics), webSocket: WebSocketService(authenticator: authenticator))
+                  conversations: ConversationClient(authenticator: authenticator), metrics: tempMetrics, prompter: H264LicensePrompter(metrics: tempMetrics), webSocket: WebSocketService(authenticator: authenticator))
     }
     
     init(authenticator: Authenticator, devices:DeviceService, reachability:ReachabilityService, client:CallClient, conversations:ConversationClient, metrics:MetricsEngine, prompter:H264LicensePrompter, webSocket:WebSocketService) {
-        let _ = MediaEngineWrapper.sharedInstance.WMEVersion
+        let _ = MediaEngineWrapper.sharedInstance.wmeVersion
         self.authenticator = authenticator
         self.devices = devices
         self.reachability = reachability
@@ -288,9 +288,9 @@ public class Phone {
                     return
                 }
                 self.requestMediaAccess(option: option) {
-                    let mediaContext = self.mediaContext ?? MediaSessionWrapper()
-                    mediaContext.prepare(option: option, phone: self)
-                    let localSDP = mediaContext.getLocalSdp()
+                    let tempMediaContext = self.mediaContext ?? MediaSessionWrapper()
+                    tempMediaContext.prepare(option: option, phone: self)
+                    let localSDP = tempMediaContext.getLocalSdp()
                     let reachabilities = self.reachability.feedback?.reachabilities
                     
                     CallClient.DialTarget.lookup(address, by: Webex(authenticator: self.authenticator)) { target in
@@ -299,7 +299,7 @@ public class Phone {
                                 let media = MediaModel(sdp: localSDP, audioMuted: false, videoMuted: false, reachabilities: reachabilities)
                                 if target.isEndpoint {
                                     self.client.create(target.address, by: device, localMedia: media, queue: self.queue.underlying) { res in
-                                        self.doLocusResponse(LocusResult.call(target.isGroup, device, option.uuid, mediaContext, res, completionHandler))
+                                        self.doLocusResponse(LocusResult.call(target.isGroup, device, option.uuid, tempMediaContext, res, completionHandler))
                                         self.queue.yield()
                                     }
                                 }
@@ -307,7 +307,7 @@ public class Phone {
                                     self.conversations.getLocusUrl(conversation: target.address, by: device, queue: self.queue.underlying) { res in
                                         if let url = res.result.data?.locusUrl {
                                             self.client.join(url, by: device, localMedia: media, queue: self.queue.underlying) { resNew in
-                                                self.doLocusResponse(LocusResult.call(target.isGroup, device, option.uuid, mediaContext, resNew, completionHandler))
+                                                self.doLocusResponse(LocusResult.call(target.isGroup, device, option.uuid, tempMediaContext, resNew, completionHandler))
                                                 self.queue.yield()
                                             }
                                         }
@@ -455,13 +455,13 @@ public class Phone {
                 }
             }
             if let uuid = option.uuid {
-                call._uuid = uuid
+                call.uuid = uuid
             }
             
             self.requestMediaAccess(option: option) {
-                let mediaContext = call.mediaSession
-                mediaContext.prepare(option: option, phone: self)
-                let media = MediaModel(sdp: mediaContext.getLocalSdp(), audioMuted: false, videoMuted: false, reachabilities: self.reachability.feedback?.reachabilities)
+                let tempMediaContext = call.mediaSession
+                tempMediaContext.prepare(option: option, phone: self)
+                let media = MediaModel(sdp: tempMediaContext.getLocalSdp(), audioMuted: false, videoMuted: false, reachabilities: self.reachability.feedback?.reachabilities)
                 self.queue.sync {
                     self.client.join(call.url, by: call.device, localMedia: media, queue: self.queue.underlying) { res in
                         self.doLocusResponse(LocusResult.join(call, res, completionHandler))
@@ -763,7 +763,7 @@ public class Phone {
             if model.isValid {
                 let call = Call(model: model, device: device, media: self.mediaContext ?? MediaSessionWrapper(), direction: Call.Direction.incoming, group: !model.isOneOnOne, uuid: nil)
                 self.add(call: call)
-                SDKLogger.shared.info("Receive incoming call: \(call.model.callUrl ?? call._uuid.uuidString)")
+                SDKLogger.shared.info("Receive incoming call: \(call.model.callUrl ?? call.uuid.uuidString)")
                 DispatchQueue.main.async {
                     self.onIncoming?(call)
                 }

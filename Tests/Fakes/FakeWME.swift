@@ -110,7 +110,7 @@ class FakeWME: MediaSession  {
     
     override func subscribeVideoTrack(_ renderView: UIView!) -> Int32 {
         if stubSubscribeFailed {
-            return Int32(RemoteAuxVideo.INVAILD_VID)
+            return Int32(RemoteAuxVideo.invalidVid)
         }
         else {
             return super.subscribeVideoTrack(renderView)

@@ -145,7 +145,7 @@ class AuxiliaryVideoTest: XCTestCase {
         if let callmodel = self.call?.model,let user = self.remoteUser {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
             let expect = expectation(description: "on onMediaChanged")
-            expect.expectedFulfillmentCount = MAX_REMOTE_AUX_VIDEO_NUMBER
+            expect.expectedFulfillmentCount = maxRemoteAuxVideoNumber
             self.call?.onMediaChanged = {
                 event in
                 switch event {
@@ -168,7 +168,7 @@ class AuxiliaryVideoTest: XCTestCase {
                 }
             }
             
-            FakeWME.stubMediaChangeNotification(eventType: Call.MediaChangedEvent.remoteAuxVideosCount(MAX_REMOTE_AUX_VIDEO_NUMBER), call: self.call!)
+            FakeWME.stubMediaChangeNotification(eventType: Call.MediaChangedEvent.remoteAuxVideosCount(maxRemoteAuxVideoNumber), call: self.call!)
             
             waitForExpectations(timeout: 5) { error in
                 XCTAssertNil(error, "subscribeRemoteAuxVideo time out")
@@ -180,7 +180,7 @@ class AuxiliaryVideoTest: XCTestCase {
         if let callmodel = self.call?.model,let user = self.remoteUser {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
             let expect = expectation(description: "on onMediaChanged")
-            expect.expectedFulfillmentCount = MAX_REMOTE_AUX_VIDEO_NUMBER
+            expect.expectedFulfillmentCount = maxRemoteAuxVideoNumber
             let expectFail = expectation(description: "subscribe RemoteAuxVideo fail")
             expectFail.expectedFulfillmentCount = 1
             self.call?.onMediaChanged = {
@@ -206,7 +206,7 @@ class AuxiliaryVideoTest: XCTestCase {
                 }
             }
             
-            FakeWME.stubMediaChangeNotification(eventType: Call.MediaChangedEvent.remoteAuxVideosCount(MAX_REMOTE_AUX_VIDEO_NUMBER + 1), call: self.call!)
+            FakeWME.stubMediaChangeNotification(eventType: Call.MediaChangedEvent.remoteAuxVideosCount(maxRemoteAuxVideoNumber + 1), call: self.call!)
             
             waitForExpectations(timeout: 5) { error in
                 XCTAssertNil(error, "subscribeRemoteAuxVideo time out")

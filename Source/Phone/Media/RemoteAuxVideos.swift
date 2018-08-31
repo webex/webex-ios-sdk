@@ -20,10 +20,10 @@
 
 import Foundation
 
-public let MAX_REMOTE_AUX_VIDEO_NUMBER = 4
+public let maxRemoteAuxVideoNumber = 4
 
 public class RemoteAuxVideo {
-    static let INVAILD_VID = -1
+    static let invalidVid = -1
     
     enum RenderViewOperationType {
         case add(Int,MediaRenderView)
@@ -72,7 +72,7 @@ public class RemoteAuxVideo {
             return true;
         }
         set {
-            if vid != RemoteAuxVideo.INVAILD_VID, let handler = self.renderViewOperationHandler {
+            if vid != RemoteAuxVideo.invalidVid, let handler = self.renderViewOperationHandler {
                 _ = handler(RenderViewOperationType.mute(vid,!newValue))
             }
         }
@@ -85,14 +85,14 @@ public class RemoteAuxVideo {
     }
     
     public func addRenderView(view:MediaRenderView) {
-        if vid != RemoteAuxVideo.INVAILD_VID, let handler = self.renderViewOperationHandler {
+        if vid != RemoteAuxVideo.invalidVid, let handler = self.renderViewOperationHandler {
             _ = handler(RenderViewOperationType.add(vid,view))
         }
         self.renderViews.append(view)
     }
     
     public func removeRenderView(view:MediaRenderView) {
-        if vid != RemoteAuxVideo.INVAILD_VID, let handler = self.renderViewOperationHandler {
+        if vid != RemoteAuxVideo.invalidVid, let handler = self.renderViewOperationHandler {
             _ = handler(RenderViewOperationType.remove(vid,view))
         }
         
@@ -102,7 +102,7 @@ public class RemoteAuxVideo {
     }
     
     public func updateRenderView(view:MediaRenderView) {
-        if vid != RemoteAuxVideo.INVAILD_VID, let handler = self.renderViewOperationHandler {
+        if vid != RemoteAuxVideo.invalidVid, let handler = self.renderViewOperationHandler {
             _ = handler(RenderViewOperationType.update(vid,view))
         }
     }
@@ -112,7 +112,7 @@ public class RemoteAuxVideo {
     }
     
     func invalidate() {
-        self.vid = RemoteAuxVideo.INVAILD_VID
+        self.vid = RemoteAuxVideo.invalidVid
         self.renderViewOperationHandler = nil
         self.person = nil
         self.renderViews.removeAll()
