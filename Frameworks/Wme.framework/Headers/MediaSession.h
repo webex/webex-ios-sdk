@@ -82,7 +82,7 @@ typedef NS_ENUM(NSInteger, MediaSessionType) {
 - (void)onReceiveScreenBroadcastData:(FrameInfo)frameInfo frameData:(NSData *)frameData;
 
 //multi stream
-@property (atomic) NSInteger remoteAuxVideoCount;
+@property (atomic) NSInteger auxStreamCount;
 - (int)subscribeVideoTrack:(UIView *)renderView;
 - (void)unsubscribeVideoTrack:(int)vid;
 @end

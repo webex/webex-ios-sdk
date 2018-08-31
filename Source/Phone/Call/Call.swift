@@ -159,10 +159,7 @@ public class Call {
         /// Local screen share size has changed.
         /// - since: 1.4.0
         case localScreenShareViewSize
-
-        /// remote auxiliary video count has changed.
-        /// - since: 2.0.0
-        case remoteAuxVideosCount(Int)
+        
         /// remote auxiliary video count has changed.
         /// - since: 2.0.0
         case activeSpeakerChangedEvent(From:CallMembership?,To:CallMembership?)
@@ -184,16 +181,6 @@ public class Call {
         case sendingAudio(CallMembership)
         /// The person in the membership started screen sharing.
         case sendingScreenShare(CallMembership)
-    }
-    
-    /// The enumeration of remote auxiliary video change events.
-    ///
-    /// - since: 2.0.0
-    public enum RemoteAuxVideoChangeEvent {
-        case remoteAuxVideoPersonChangedEvent(RemoteAuxVideo,From:CallMembership?,To:CallMembership?)
-        case remoteAuxVideoSizeChangedEvent(RemoteAuxVideo)
-        case remoteAuxSendingVideoEvent(RemoteAuxVideo)
-        case receivingAuxVideoEvent(RemoteAuxVideo)
     }
     
     /// The enumeration of iOS broadcasting events.
@@ -275,7 +262,7 @@ public class Call {
     ///
     ///
     /// - since: 2.0.0
-    public var onRemoteAuxVideoChanged: ((RemoteAuxVideoChangeEvent) -> Void)?
+    public var multiStreamObserver: MultiStreamObserver?
     
     /// The status of this *call*.
     ///
@@ -314,7 +301,7 @@ public class Call {
     /// - since: 1.3.0
     public var remoteSendingScreenShare: Bool {
         return model.isGrantedScreenShare && !self.isScreenSharedBySelfDevice()
-//        return model.isGrantedScreenShare && !self.mediaSession.remotescreenShareMuted
+        //        return model.isGrantedScreenShare && !self.mediaSession.remotescreenShareMuted
     }
     
     /// True if the local party of this *call* is sending video. Otherwise, false.
@@ -468,7 +455,7 @@ public class Call {
                 unlock()
             }
             _memberships = newValue
-        self.updateRemoteAuxVideoMembership(memberships: _memberships)
+            self.updateAuxStreamMembership(memberships: _memberships)
         }
     }
     
@@ -529,11 +516,12 @@ public class Call {
             }
         }
     }
+    
     ///
     ///
     ///
     /// - since: 2.0.0
-    public lazy private(set) var remoteAuxVideos: Array<RemoteAuxVideo> = Array<RemoteAuxVideo>()
+    public lazy private(set) var auxStreams: Array<AuxStream> = Array<AuxStream>()
     
     ///
     ///
@@ -544,9 +532,9 @@ public class Call {
     ///
     ///
     /// - since: 2.0.0
-    public private(set) var remoteAvailableAuxVideoCount: Int {
-        get { lock(); defer { unlock() }; return _remoteAvailableAuxVideoCount }
-        set { lock(); defer { unlock() }; _remoteAvailableAuxVideoCount = newValue }
+    public private(set) var availableAuxStreamCount: Int {
+        get { lock(); defer { unlock() }; return _availableAuxStreamCount }
+        set { lock(); defer { unlock() }; _availableAuxStreamCount = newValue }
     }
     
     var model: CallModel {
@@ -571,12 +559,38 @@ public class Call {
     private var _dail: String?
     private var _model: CallModel
     private var _memberships: [CallMembership]?
-    private var _remoteAvailableAuxVideoCount:Int = 0
+    private var _availableAuxStreamCount:Int = 0
     var _mutex = pthread_mutex_t()
     
     var onConnectedOnceToken :String = "" {
         didSet {
             DispatchQueue.main.removeOnceToken(token: oldValue)
+        }
+    }
+    
+    var onAuxStreamChanged: ((AuxStreamChangeEvent) -> Void)? {
+        get {
+            return self.multiStreamObserver?.onAuxStreamChanged
+        }
+    }
+    
+    var auxStreamAvailable: (()-> MediaRenderView?)?  {
+        get {
+            return self.multiStreamObserver?.auxStreamAvailable
+        }
+    }
+    
+    var willBeReleasedAuxStream: (Int) -> MediaRenderView? {
+        get {
+            return { newCount in
+                if let releaseClosure = self.multiStreamObserver?.onAuxStreamUnavailable {
+                    return releaseClosure()
+                } else if newCount < self.auxStreams.count, let lastRenderView = self.auxStreams.last?.renderView {
+                    return lastRenderView
+                }
+                
+                return nil
+            }
         }
     }
     
@@ -590,10 +604,10 @@ public class Call {
     
     private var remoteSDP: String? {
         if let remoteSDP = self.model.myself?[device: self.device.deviceUrl]?.mediaConnections?.first?.remoteSdp?.sdp {
-                return remoteSDP
-            } else if let remoteSDP = self.model.mediaConnections?.first?.remoteSdp?.sdp {
-                return remoteSDP
-            }
+            return remoteSDP
+        } else if let remoteSDP = self.model.mediaConnections?.first?.remoteSdp?.sdp {
+            return remoteSDP
+        }
         return nil
     }
     
@@ -668,7 +682,7 @@ public class Call {
     public func hangup(completionHandler: @escaping (Error?) -> Void) {
         self.device.phone.hangup(call: self, completionHandler: completionHandler)
     }
-
+    
     /// Sends feedback for this call to Cisco Webex team.
     ///
     /// - parameter rating: The rating of the quality of this call between 1 and 5 where 5 means excellent quality.
@@ -744,56 +758,66 @@ public class Call {
     ///
     ///
     /// - since: 2.0.0
-    public func subscribeRemoteAuxVideo(view:MediaRenderView,completionHandler: @escaping ((Result<RemoteAuxVideo>) -> Void)) {
-        let mediaOperationHandler: (RemoteAuxVideo.RenderViewOperationType) -> Any? = {
+    public func openAuxStream(view:MediaRenderView) {
+        let mediaOperationHandler: (AuxStream.RenderViewOperationType) -> Any? = {
             operation in
-                switch operation {
-                case .add(let vid,let renderView):
-                    self.mediaSession.addAuxRenderView(view: renderView, vid: vid)
-                case .update(let vid,let renderView):
-                    self.mediaSession.updateAuxRenderView(view: renderView, vid: vid)
-                case .remove(let vid,let renderView):
-                    self.mediaSession.removeAuxRenderView(view: renderView, vid: vid)
-                case .getMuted(let vid):
-                    return self.mediaSession.getAuxMediaInputMuted(vid: vid)
-                case .getRemoteMuted(let vid):
-                    return self.mediaSession.getAuxMediaOutputMuted(vid: vid)
-                case .getSize(let vid):
-                    return self.mediaSession.getAuxRenderViewSize(vid: vid)
-                case .mute(let vid, let muted):
-                    if muted {
-                        self.mediaSession.muteAuxMedia(vid: vid)
-                    } else {
-                        self.mediaSession.unmuteAuxMedia(vid: vid)
-                    }
+            switch operation {
+            case .add(let vid,let renderView):
+                self.mediaSession.addAuxStreamRenderView(view: renderView, vid: vid)
+            case .update(let vid,let renderView):
+                self.mediaSession.updateAuxStreamRenderView(view: renderView, vid: vid)
+            case .remove(let vid,let renderView):
+                self.mediaSession.removeAuxStreamRenderView(view: renderView, vid: vid)
+            case .getMuted(let vid):
+                return self.mediaSession.getAuxStreamInputMuted(vid: vid)
+            case .getRemoteMuted(let vid):
+                return self.mediaSession.getAuxStreamOutputMuted(vid: vid)
+            case .getSize(let vid):
+                return self.mediaSession.getAuxStreamRenderViewSize(vid: vid)
+            case .mute(let vid, let muted):
+                if muted {
+                    self.mediaSession.muteAuxStream(vid: vid)
+                } else {
+                    self.mediaSession.unmuteAuxStream(vid: vid)
                 }
+            }
             return nil
         }
         
         DispatchQueue.main.async {
-            if self.remoteAuxVideos.count >= MAX_REMOTE_AUX_VIDEO_NUMBER {
-                completionHandler(Result.failure(WebexError.illegalOperation(reason: "have exceeded the auxiliary videos limit")))
+            if self.auxStreams.count >= MAX_AUX_STREAM_NUMBER {
+                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "have exceeded the auxiliary videos limit"))))
                 return
             }
             
             if !self.isGroup {
-                completionHandler(Result.failure(WebexError.illegalOperation(reason: "only available for group call")))
+                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "only available for group call"))))
                 return
             }
             
-            var vid = RemoteAuxVideo.INVAILD_VID
+            if let _ = self.auxStreams.index(where:{ $0.renderView == view }) {
+                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "open multi aux stream with same view"))))
+                return
+            }
+            
+            if self.auxStreams.count >= self.availableAuxStreamCount {
+                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "Cannot exceed available video count."))))
+                return
+            }
+            
+            var vid = AuxStream.INVAILD_VID
             if (self.mediaSession.status == .running) {
-                vid = self.mediaSession.subscribeAuxVideo(view: view)
-                if vid == RemoteAuxVideo.INVAILD_VID {
-                    completionHandler(Result.failure(WebexError.serviceFailed(code: -7000, reason: "subscribe video fail")))
+                vid = self.mediaSession.subscribeAuxStream(view: view)
+                if vid == AuxStream.INVAILD_VID {
+                    self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.serviceFailed(code: -7000, reason: "subscribe video fail"))))
                     return
                 }
             }
             
-            let auxVideo = RemoteAuxVideo.init(vid: vid, renderViews: [view],renderViewOperation:mediaOperationHandler)
+            let auxVideo = AuxStream.init(vid: vid, renderView: view,renderViewOperation:mediaOperationHandler,call: self)
             SDKLogger.shared.info("add subscribe call for vid:\(auxVideo.vid)")
-            self.remoteAuxVideos.append(auxVideo)
-            completionHandler(Result.success(auxVideo))
+            self.auxStreams.append(auxVideo)
+            self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.success(auxVideo)))
         }
     }
     
@@ -801,19 +825,19 @@ public class Call {
     ///
     ///
     /// - since: 2.0.0
-    public func unsubscribeRemoteAuxVideo(remoteAuxVideo:RemoteAuxVideo , completionHandler: @escaping ((Error?) -> Void)) {
+    public func closeAuxStream(view:MediaRenderView) {
         DispatchQueue.main.async {
-            var error:Error? = nil
-            if let index = self.remoteAuxVideos.index(where:{ $0.vid == remoteAuxVideo.vid }) {
-                SDKLogger.shared.info("remove subscribe call for vid:\(remoteAuxVideo.vid)")
+            if let index = self.auxStreams.index(where:{ $0.renderView == view }) {
+                let auxStream = self.auxStreams[index]
+                SDKLogger.shared.info("close auxiliary stream for vid:\(auxStream.vid)")
                 
-                self.mediaSession.unsubscribeAuxVideo(vid: remoteAuxVideo.vid)
-                self.remoteAuxVideos.remove(at: index)
-                remoteAuxVideo.invalidate()
+                self.mediaSession.unsubscribeAuxStream(vid: auxStream.vid)
+                self.auxStreams.remove(at: index)
+                auxStream.invalidate()
+                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamClosedEvent(view, nil))
             } else {
-                error = WebexError.illegalOperation(reason: "remote auxiliary video not found")
+                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamClosedEvent(view,WebexError.illegalOperation(reason: "remote auxiliary stream not found")))
             }
-            completionHandler(error)
         }
     }
     
@@ -871,13 +895,13 @@ public class Call {
             }
         }
         
-        for remoteAuxVideo in self.remoteAuxVideos {
-            if remoteAuxVideo.vid != RemoteAuxVideo.INVAILD_VID , let view = remoteAuxVideo.renderViews.first {
-                let vid = self.mediaSession.subscribeAuxVideo(view: view)
-                if vid != RemoteAuxVideo.INVAILD_VID {
-                    remoteAuxVideo.vid = vid
-                    for renderView in remoteAuxVideo.renderViews.filter({ return $0 != view }) {
-                        self.mediaSession.addAuxRenderView(view: renderView, vid: vid)
+        for auxStream in self.auxStreams {
+            if auxStream.vid != AuxStream.INVAILD_VID , let view = auxStream.renderView {
+                let vid = self.mediaSession.subscribeAuxStream(view: view)
+                if vid != AuxStream.INVAILD_VID {
+                    auxStream.vid = vid
+                    if let renderView = auxStream.renderView {
+                        self.mediaSession.addAuxStreamRenderView(view: renderView, vid: vid)
                     }
                 }
             }
@@ -896,9 +920,9 @@ public class Call {
         }
         self.mediaSession.onBroadcasting = nil
         
-        for remoteAuxVideo in self.remoteAuxVideos {
-            if remoteAuxVideo.vid != RemoteAuxVideo.INVAILD_VID {
-                self.mediaSession.unsubscribeAuxVideo(vid: remoteAuxVideo.vid)
+        for auxStream in self.auxStreams {
+            if auxStream.vid != AuxStream.INVAILD_VID {
+                self.mediaSession.unsubscribeAuxStream(vid: auxStream.vid)
             }
         }
         self.mediaSession.stopMedia()
@@ -1046,11 +1070,34 @@ public class Call {
         }
     }
     
-    func updateRemoteAuxVideoCount() {
-        let newActiveRemoteAuxMediaCount = min(self.memberships.filter({ $0.isMediaActive() && !$0.isSelf }).count - Call.activeSpeakerCount, self.mediaSession.remoteAuxVideoCount())
-        if remoteAvailableAuxVideoCount != newActiveRemoteAuxMediaCount && newActiveRemoteAuxMediaCount >= 0 {
-            remoteAvailableAuxVideoCount = newActiveRemoteAuxMediaCount
-            self.onMediaChanged?(Call.MediaChangedEvent.remoteAuxVideosCount(remoteAvailableAuxVideoCount))
+    func updateAuxStreamCount() {
+        DispatchQueue.main.async {
+            var newAvailableAuxStreamCount = min(self.memberships.filter({ $0.isMediaActive() && !$0.isSelf }).count - Call.activeSpeakerCount, self.mediaSession.auxStreamCount() - Call.activeSpeakerCount)
+            if newAvailableAuxStreamCount < 0 {
+                newAvailableAuxStreamCount = 0
+            } else if self.availableAuxStreamCount > 4 && newAvailableAuxStreamCount > 4 {
+                self.availableAuxStreamCount = newAvailableAuxStreamCount
+                return
+            }
+            
+            let diffCount = newAvailableAuxStreamCount - self.availableAuxStreamCount
+            
+            if diffCount > 0 {
+                for _ in 0..<diffCount {
+                    if let renderView = self.auxStreamAvailable?() {
+                        self.openAuxStream(view: renderView)
+                    }
+                    
+                }
+            } else if diffCount < 0 {
+                for _ in 0..<(-diffCount) {
+                    if let renderView = self.willBeReleasedAuxStream(newAvailableAuxStreamCount) {
+                        self.closeAuxStream(view: renderView)
+                    }
+                }
+            }
+            
+            self.availableAuxStreamCount = newAvailableAuxStreamCount
         }
     }
     
@@ -1073,9 +1120,9 @@ public class Call {
                         else if membership.state == CallMembership.State.left {
                             onCallMembershipChanges.append(CallMembershipChangedEvent.left(membership))
                             //send person change by locus status,because CSI change doesn't trigger when participant left.
-                            if let auxVideo = self.remoteAuxVideos.filter({$0.person?.id == membership.id}).first {
-                                auxVideo.person = nil
-                                self.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxVideoPersonChangedEvent(auxVideo, From: membership, To: nil))
+                            if let auxStream = self.auxStreams.filter({$0.person?.id == membership.id}).first {
+                                auxStream.person = nil
+                                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamPersonChangedEvent(auxStream, From: membership, To: nil))
                             } else if let currentSpeaker = self.activeSpeaker, currentSpeaker.id == membership.id {
                                 self.activeSpeaker = nil
                                 self.onMediaChanged?(Call.MediaChangedEvent.activeSpeakerChangedEvent(From: membership, To: nil))
@@ -1108,15 +1155,15 @@ public class Call {
             self.memberships = []
         }
         
-        self.updateRemoteAuxVideoCount()
+        self.updateAuxStreamCount()
         self.status.handle(model: model, for: self)
     }
     
-    private func updateRemoteAuxVideoMembership(memberships:[CallMembership]?) {
+    private func updateAuxStreamMembership(memberships:[CallMembership]?) {
         if let membershipsArray = memberships {
-            for remoteAuxVideo in remoteAuxVideos {
-                if let person = remoteAuxVideo.person, let membership = membershipsArray.filter({ $0.id == person.id }).first {
-                    remoteAuxVideo.person = membership
+            for auxStream in auxStreams {
+                if let person = auxStream.person, let membership = membershipsArray.filter({ $0.id == person.id }).first {
+                    auxStream.person = membership
                 }
             }
         }
