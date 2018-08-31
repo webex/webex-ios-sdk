@@ -81,7 +81,7 @@ class EncryptionKey {
             completionHandler(Result.success(url))
         }
         else {
-            let request = ServiceRequest.Builder(authenticator).baseUrl(ServiceRequest.CONVERSATION_SERVER_ADDRESS)
+            let request = ServiceRequest.Builder(authenticator).baseUrl(ServiceRequest.conversationServerAddress)
                 .path("conversations/" + self.spaceId.locusFormat + "/space")
                 .method(.put)
                 .build()

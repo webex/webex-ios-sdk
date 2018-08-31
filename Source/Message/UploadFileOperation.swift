@@ -101,32 +101,24 @@ class UploadFileOperation {
                 completionHandler(nil, nil, WebexError.noAuth)
                 return
             }
-            self.key.spaceUrl(authenticator: client.authenticator) { result in
-                if let url = result.data {
-                    let headers: HTTPHeaders  = ["Authorization": "Bearer " + token]
-                    let parameters: Parameters = ["fileSize": size]
-                    Alamofire.request(url + "/upload_sessions", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response: DataResponse<Any>) in
-                        if let dict = response.result.value as? [String : Any],
-                            let uploadUrl = dict["uploadUrl"] as? String,
-                            let finishUrl = dict["finishUploadUrl"] as? String,
-                            let scr = try? SecureContentReference(error: ()),
-                            let inputStream = try? SecureInputStream(stream: InputStream(fileAtPath: path), scr: scr) {
-                            let uploadHeaders: HTTPHeaders = ["Content-Length": String(size)]
-                            Alamofire.upload(inputStream, to: uploadUrl, method: .put, headers: uploadHeaders).uploadProgress(closure: { (progress) in
-                                progressHandler?(progressStart + progress.fractionCompleted/2)
-                            }).responseString { response in
-                                if let _ = response.result.value {
-                                    let finishHeaders: HTTPHeaders = ["Authorization": "Bearer " + token, "Content-Type": "application/json;charset=UTF-8"]
-                                    let finishParameters: Parameters = ["size": size]
-                                    Alamofire.request(finishUrl, method: .post, parameters: finishParameters, encoding: JSONEncoding.default, headers: finishHeaders).responseJSON { response in
-                                        if let dict = response.result.value as? [String : Any], let downLoadUrl = dict["downloadUrl"] as? String, let url = URL(string: downLoadUrl) {
-                                            scr.loc = url
-                                            completionHandler(downLoadUrl, scr, nil)
-                                        }
-                                        else {
-                                            completionHandler(nil, nil, response.error)
-                                        }
-                                    }
+            
+            func handleUploadSuccess(response: DataResponse<Any>) {
+                if let dict = response.result.value as? [String : Any],
+                    let uploadUrl = dict["uploadUrl"] as? String,
+                    let finishUrl = dict["finishUploadUrl"] as? String,
+                    let scr = try? SecureContentReference(error: ()),
+                    let inputStream = try? SecureInputStream(stream: InputStream(fileAtPath: path), scr: scr) {
+                    let uploadHeaders: HTTPHeaders = ["Content-Length": String(size)]
+                    Alamofire.upload(inputStream, to: uploadUrl, method: .put, headers: uploadHeaders).uploadProgress(closure: { (progress) in
+                        progressHandler?(progressStart + progress.fractionCompleted/2)
+                    }).responseString { response in
+                        if let _ = response.result.value {
+                            let finishHeaders: HTTPHeaders = ["Authorization": "Bearer " + token, "Content-Type": "application/json;charset=UTF-8"]
+                            let finishParameters: Parameters = ["size": size]
+                            Alamofire.request(finishUrl, method: .post, parameters: finishParameters, encoding: JSONEncoding.default, headers: finishHeaders).responseJSON { response in
+                                if let dict = response.result.value as? [String : Any], let downLoadUrl = dict["downloadUrl"] as? String, let url = URL(string: downLoadUrl) {
+                                    scr.loc = url
+                                    completionHandler(downLoadUrl, scr, nil)
                                 }
                                 else {
                                     completionHandler(nil, nil, response.error)
@@ -136,6 +128,19 @@ class UploadFileOperation {
                         else {
                             completionHandler(nil, nil, response.error)
                         }
+                    }
+                }
+                else {
+                    completionHandler(nil, nil, response.error)
+                }
+            }
+            
+            self.key.spaceUrl(authenticator: client.authenticator) { result in
+                if let url = result.data {
+                    let headers: HTTPHeaders  = ["Authorization": "Bearer " + token]
+                    let parameters: Parameters = ["fileSize": size]
+                    Alamofire.request(url + "/upload_sessions", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response: DataResponse<Any>) in
+                       handleUploadSuccess(response: response)
                     }
                 }
                 else {

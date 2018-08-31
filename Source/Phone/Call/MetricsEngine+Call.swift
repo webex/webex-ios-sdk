@@ -38,7 +38,7 @@ extension MetricsEngine {
     }
     
     func trackVideoLicenseActivation() {
-        self.track(name: Metric.Call.ActivatingVideo, type: MetricsType.Increment, ["value":""])
+        self.track(name: Metric.Call.ActivatingVideo, ["value":""])
         self.flush()
     }
     

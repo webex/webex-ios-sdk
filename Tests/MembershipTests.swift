@@ -84,21 +84,6 @@ class MembershipTests: XCTestCase {
         }
     }
     
-    func testCreateMembershipWithInvalidSpaceIdButValidPersonId() {
-        membership = createMembership(spaceId: Config.InvalidId, personId: other.personId, isModerator: false)
-        XCTAssertNil(membership, "Unexpected successful request")
-    }
-    
-    func testCreateMembershipWithValidSpaceIdButInvalidPersonId() {
-        membership = createMembership(spaceId: spaceId, personId: Config.InvalidId, isModerator: false)
-        XCTAssertNil(membership, "Unexpected successful request")
-    }
-    
-    func testCreateMembershipWithInvalidSpaceIdAndInvalidPersonId() {
-        membership = createMembership(spaceId: Config.InvalidId, personId: Config.InvalidId, isModerator: false)
-        XCTAssertNil(membership, "Unexpected successful request")
-    }
-    
     func testCreateModeratorMembershipWithSpaceIdAndPersonId() {
         membership = createMembership(spaceId: spaceId, personId: other.personId, isModerator: true)
         if let membership = membership {
@@ -124,20 +109,34 @@ class MembershipTests: XCTestCase {
             XCTFail("Failed to create membership")
         }
     }
+//    func testCreateMembershipWithInvalidSpaceIdButValidPersonId() {
+//        membership = createMembership(spaceId: Config.InvalidId, personId: other.personId, isModerator: false)
+//        XCTAssertNil(membership, "Unexpected successful request")
+//    }
+
+//    func testCreateMembershipWithValidSpaceIdButInvalidPersonId() {
+//        membership = createMembership(spaceId: spaceId, personId: Config.InvalidId, isModerator: false)
+//        XCTAssertNil(membership, "Unexpected successful request")
+//    }
+
+//    func testCreateMembershipWithInvalidSpaceIdAndInvalidPersonId() {
+//        membership = createMembership(spaceId: Config.InvalidId, personId: Config.InvalidId, isModerator: false)
+//        XCTAssertNil(membership, "Unexpected successful request")
+//    }
     
-    func testCreateMembershipWithInvalidSpaceIdButValidEmail() {
-        membership = createMembership(spaceId: Config.InvalidId, personEmail: other.email, isModerator: false)
-        XCTAssertNil(membership, "Unexpected successful request")
-    }
+//    func testCreateMembershipWithInvalidSpaceIdButValidEmail() {
+//        membership = createMembership(spaceId: Config.InvalidId, personEmail: other.email, isModerator: false)
+//        XCTAssertNil(membership, "Unexpected successful request")
+//    }
     
-    func testCreateMembershipWithValidSpaceIdButInvalidEmail() {
-        membership = createMembership(spaceId: spaceId, personEmail: Config.InvalidEmail, isModerator: false)
-        if membership == nil {
-            XCTAssertTrue(true)
-        } else {
-            XCTAssertNotNil(membership?.id, "Failed to creature membership")
-        }
-    }
+//    func testCreateMembershipWithValidRoomIdButInvalidEmail() {
+//        membership = createMembership(spaceId: spaceId, personEmail: Config.InvalidEmail, isModerator: false)
+//        if membership == nil {
+//            XCTAssertTrue(true)
+//        } else {
+//            XCTAssertNotNil(membership?.id, "Failed to creature membership")
+//        }
+//    }
     
     func testCreateModeratorMembershipWithSpaceIdAndPersonEmail() {
         membership = createMembership(spaceId: spaceId, personEmail: other.email, isModerator: true)

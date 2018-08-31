@@ -25,44 +25,44 @@ class UserDefaults {
     
     private let storage = Foundation.UserDefaults.standard
     
-    private let DeviceUrl = "deviceUrlKey"
-    private let IsVideoLicenseActivationDisabled = "isVideoLicenseActivationDisabledKey"
-    private let IsVideoLicenseActivated = "isVideoLicenseActivatedKey"
+    private let deviceUrlKey = "deviceUrlKey"
+    private let isVideoLicenseActivationDisabledKey = "isVideoLicenseActivationDisabledKey"
+    private let isVideoLicenseActivatedKey = "isVideoLicenseActivatedKey"
     
     var deviceUrl: String? {
         get {
-            return storage.string(forKey: DeviceUrl)
+            return storage.string(forKey: deviceUrlKey)
         }
         set {
             if newValue == nil {
-                storage.removeObject(forKey: DeviceUrl)
+                storage.removeObject(forKey: deviceUrlKey)
             } else {
-                storage.set(newValue, forKey: DeviceUrl)
+                storage.set(newValue, forKey: deviceUrlKey)
             }
         }
     }
     
     var isVideoLicenseActivationDisabled: Bool {
         get {
-            return storage.bool(forKey: IsVideoLicenseActivationDisabled)
+            return storage.bool(forKey: isVideoLicenseActivationDisabledKey)
         }
         set {
-            storage.set(newValue, forKey: IsVideoLicenseActivationDisabled)
+            storage.set(newValue, forKey: isVideoLicenseActivationDisabledKey)
         }
     }
     
     var isVideoLicenseActivated: Bool {
         get {
-            return storage.bool(forKey: IsVideoLicenseActivated)
+            return storage.bool(forKey: isVideoLicenseActivatedKey)
         }
         set {
-            storage.set(newValue, forKey: IsVideoLicenseActivated)
+            storage.set(newValue, forKey: isVideoLicenseActivatedKey)
         }
     }
     
     // Used for development only, to reset video license settings.
     func resetVideoLicenseActivation() {
-        storage.removeObject(forKey: IsVideoLicenseActivationDisabled)
-        storage.removeObject(forKey: IsVideoLicenseActivated)
+        storage.removeObject(forKey: isVideoLicenseActivationDisabledKey)
+        storage.removeObject(forKey: isVideoLicenseActivatedKey)
     }
 }

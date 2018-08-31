@@ -154,7 +154,7 @@ public class MembershipClient {
     ///
     /// - parameter membershipId: The identifier of the membership.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the request has finished.
+    /// - parameter completionHandler: A closure to be executed once the get request has finished.
     /// - returns: Void
     /// - since: 1.2.0
     public func get(membershipId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Membership>) -> Void) {
@@ -190,7 +190,7 @@ public class MembershipClient {
     ///
     /// - parameter membershipId: The identifier of the membership.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the request has finished.
+    /// - parameter completionHandler: A closure to be executed once the delete request has finished.
     /// - returns: Void
     /// - since: 1.2.0
     public func delete(membershipId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
