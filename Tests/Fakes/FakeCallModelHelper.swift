@@ -27,7 +27,7 @@ class FakeCallModelHelper {
         case missingCallUrl
     }
     
-    static func dialCallModel(caller:TestUser,callee:TestUser) -> CallModel {
+    static func dialCallModel(caller:TestUser,callee:TestUser,otherParticipantUsers:[TestUser]? = nil) -> CallModel {
         let locusUrl = FakeCallModelHelper.getLocusUrl()
         
         let myselfModel = getParticipant(userInfo: caller, userState: CallMembership.State.joined, isSelfModel: true, isCreater: true)
@@ -37,8 +37,17 @@ class FakeCallModelHelper {
         let callerParticipantModel = getParticipant(userInfo: caller, userState: CallMembership.State.joined, isCreater: true,deviceUrl: myselfModel.deviceUrl)
         let calleeParticipantModel = getParticipant(userInfo: callee, userState: CallMembership.State.idle, isCreater: false)
         
-        
-        let participants :[ParticipantModel] = [callerParticipantModel,calleeParticipantModel]
+        var participants :[ParticipantModel] = [callerParticipantModel,calleeParticipantModel]
+        if let otherUser = otherParticipantUsers {
+            for testUser in otherUser {
+                var state:CallMembership.State
+                var isCreator: Bool = false
+                state = CallMembership.State.idle
+                isCreator = false
+                let participant = getParticipant(userInfo: testUser, userState: state, isCreater: isCreator)
+                participants.append(participant)
+            }
+        }
         
         let fullStateModel = getFullState(participants: participants)
         

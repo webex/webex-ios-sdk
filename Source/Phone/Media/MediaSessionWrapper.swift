@@ -373,43 +373,47 @@ internal extension MediaSessionWrapper {
 }
 
 extension MediaSessionWrapper {
-    func subscribeAuxVideo(view: MediaRenderView) -> Int {
+    func subscribeAuxStream(view: MediaRenderView) -> Int {
         return Int(self.mediaSession.subscribeVideoTrack(view))
     }
     
-    func unsubscribeAuxVideo(vid:Int) {
+    func unsubscribeAuxStream(vid:Int) {
         self.mediaSession.unsubscribeVideoTrack(Int32(vid))
     }
     
-    func addAuxRenderView(view:MediaRenderView, vid:Int) {
+    func addAuxStreamRenderView(view:MediaRenderView, vid:Int) {
         self.mediaSession.addRenderView(view, type: .auxVideo, andVid: Int32(vid))
     }
     
-    func removeAuxRenderView(view:MediaRenderView, vid:Int) {
+    func removeAuxStreamRenderView(view:MediaRenderView, vid:Int) {
         self.mediaSession.removeRenderView(view, type: .auxVideo, andVid: Int32(vid))
     }
     
-    func updateAuxRenderView(view:MediaRenderView, vid:Int) {
+    func updateAuxStreamRenderView(view:MediaRenderView, vid:Int) {
         self.mediaSession.updateRenderView(view, type: .auxVideo, andVid: Int32(vid))
     }
     
-    func getAuxRenderViewSize(vid:Int) -> CGSize {
+    func getAuxStreamRenderViewSize(vid:Int) -> CGSize {
         return self.mediaSession.getRenderViewSize(with: .auxVideo, andVid: Int32(vid))
     }
     
-    func getAuxMediaInputMuted(vid:Int) -> Bool {
+    func getAuxStreamInputMuted(vid:Int) -> Bool {
         return self.mediaSession.getMediaMuted(fromLocal: .auxVideo, andVid: Int32(vid))
     }
     
-    func getAuxMediaOutputMuted(vid:Int) -> Bool {
+    func getAuxStreamOutputMuted(vid:Int) -> Bool {
         return self.mediaSession.getMediaMuted(fromRemote: .auxVideo, andVid: Int32(vid))
     }
     
-    func muteAuxMedia(vid:Int) {
+    func muteAuxStream(vid:Int) {
         self.mediaSession.muteMedia(.auxVideo, andVid: Int32(vid))
     }
     
-    func unmuteAuxMedia(vid:Int) {
+    func unmuteAuxStream(vid:Int) {
         self.mediaSession.unmuteMedia(.auxVideo, andVid: Int32(vid))
+    }
+    
+    func auxStreamCount() -> Int {
+        return self.mediaSession.auxStreamCount
     }
 }
