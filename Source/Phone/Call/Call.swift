@@ -580,7 +580,7 @@ public class Call {
     static private let activeSpeakerCount = 1
     private let dtmfQueue: DtmfQueue
     
-    private var _dail: String?
+    private var dail: String?
     private var callModel: CallModel
     private var callMemberships: [CallMembership]?
     private var availableStreamCount:Int = 0
@@ -627,9 +627,7 @@ public class Call {
     }
     
     private var remoteSDP: String? {
-        if let remoteSDP = self.model.myself?[device: self.device.deviceUrl]?.mediaConnections?.first?.remoteSdp?.sdp {
-            return remoteSDP
-        } else if let remoteSDP = self.model.mediaConnections?.first?.remoteSdp?.sdp {
+        if let remoteSDP = self.model.myself?[device: self.device.deviceUrl]?.mediaConnections?.first?.remoteSdp?.sdp ?? self.model.mediaConnections?.first?.remoteSdp?.sdp {
             return remoteSDP
         }
         return nil
@@ -1210,7 +1208,8 @@ extension DispatchQueue {
     
     func removeOnceToken(token: String) {
         self.async {
-            objc_sync_enter(self); defer { objc_sync_exit(self) }
+            objc_sync_enter(self)
+            defer { objc_sync_exit(self) }
             if token.isEmpty {
                 return
             }

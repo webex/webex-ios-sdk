@@ -144,7 +144,7 @@ public class Phone {
         case update(Call, ServiceResponse<CallModel>)
         case updateMediaShare(Call, ServiceResponse<Any>, (Error?) -> Void)
     }
-    
+
     convenience init(authenticator: Authenticator) {
         let device = DeviceService(authenticator: authenticator)
         let tempMetrics = MetricsEngine(authenticator: authenticator, service: device)
@@ -213,7 +213,7 @@ public class Phone {
                     }
                     self.webSocket.connect(device.webSocketUrl) { [weak self] error in
                         if let error = error {
-                            SDKLogger.shared.error("Failed to Register device", error: error)
+                            SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.registerFailure), error: error)
                         }
                         if let strong = self {
                             strong.queue.underlying.async {
@@ -228,7 +228,7 @@ public class Phone {
                         }
                     }
                 case .failure(let error):
-                    SDKLogger.shared.error("Failed to Register device", error: error)
+                    SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.registerFailure), error: error)
                     DispatchQueue.main.async {
                         completionHandler(error)
                     }
@@ -283,8 +283,8 @@ public class Phone {
             }
             else {
                 if self.calls.filter({!$0.value.isGroup || ($0.value.isGroup && $0.value.status == CallStatus.connected)}).count > 0 {
-                    SDKLogger.shared.error("Failure: There are other active calls")
-                    completionHandler(Result.failure(WebexError.illegalOperation(reason: "There are other active calls")))
+                    SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.otherActiveCall))
+                    completionHandler(Result.failure(WebexError.illegalOperation(reason: PhoneErrorDescription.errorDesc(.registerFailure))))
                     return
                 }
                 self.requestMediaAccess(option: option) {
@@ -312,7 +312,7 @@ public class Phone {
                                             }
                                         }
                                         else if let error = res.result.error {
-                                            SDKLogger.shared.error("Failure call ", error: error)
+                                            SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.failureCall), error: error)
                                             DispatchQueue.main.async {
                                                 completionHandler(Result.failure(error))
                                             }
@@ -391,17 +391,17 @@ public class Phone {
     func acknowledge(call: Call, completionHandler: @escaping (Error?) -> Void) {
         self.queue.sync {
             if self.calls.filter({ $0.key != call.url }).count > 0 {
-                SDKLogger.shared.error("Failure: There are other active calls")
+                SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.otherActiveCall))
                 DispatchQueue.main.async {
-                    completionHandler(WebexError.illegalOperation(reason: "There are other active calls"))
+                    completionHandler(WebexError.illegalOperation(reason: PhoneErrorDescription.errorDesc(.otherActiveCall)))
                 }
                 self.queue.yield()
                 return
             }
             if call.direction == Call.Direction.outgoing {
-                SDKLogger.shared.error("Failure: Unsupport function for outgoing call")
+                SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.unSupportFunction))
                 DispatchQueue.main.async {
-                    completionHandler(WebexError.illegalOperation(reason: "Unsupport function for outgoing call"))
+                    completionHandler(WebexError.illegalOperation(reason: PhoneErrorDescription.errorDesc(.unSupportFunction)))
                 }
                 self.queue.yield()
                 return
@@ -433,24 +433,24 @@ public class Phone {
     func answer(call: Call, option: MediaOption, completionHandler: @escaping (Error?) -> Void) {
         DispatchQueue.main.async {
             if self.calls.filter({ $0.key != call.url && $0.value.status == CallStatus.connected}).count > 0 {
-                SDKLogger.shared.error("Failure: There are other active calls")
-                completionHandler(WebexError.illegalOperation(reason: "There are other active calls"))
+                SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.otherActiveCall))
+                completionHandler(WebexError.illegalOperation(reason: PhoneErrorDescription.errorDesc(.otherActiveCall)))
                 return
             }
             if call.direction == Call.Direction.outgoing {
-                SDKLogger.shared.error("Failure: Unsupport function for outgoing call")
-                completionHandler(WebexError.illegalOperation(reason: "Unsupport function for outgoing call"))
+                SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.unSupportFunction))
+                completionHandler(WebexError.illegalOperation(reason: PhoneErrorDescription.errorDesc(.unSupportFunction)))
                 return
             }
             if call.direction == Call.Direction.incoming {
                 if call.status == CallStatus.connected {
-                    SDKLogger.shared.error("Failure: Already connected")
-                    completionHandler(WebexError.illegalStatus(reason: "Already connected"))
+                    SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.alreadyConnected))
+                    completionHandler(WebexError.illegalStatus(reason: PhoneErrorDescription.errorDesc(.alreadyConnected)))
                     return
                 }
                 else if call.status == CallStatus.disconnected {
-                    SDKLogger.shared.error("Failure: Already disconnected")
-                    completionHandler(WebexError.illegalStatus(reason: "Already disconnected"))
+                    SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.alreadyDisconnected))
+                    completionHandler(WebexError.illegalStatus(reason: PhoneErrorDescription.errorDesc(.alreadyDisconnected)))
                     return
                 }
             }
@@ -475,26 +475,26 @@ public class Phone {
     func reject(call: Call, completionHandler: @escaping (Error?) -> Void) {
         self.queue.sync {
             if call.direction == Call.Direction.outgoing {
-                SDKLogger.shared.error("Failure: Unsupport function for outgoing call")
+                SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.unSupportFunction))
                 DispatchQueue.main.async {
-                    completionHandler(WebexError.illegalOperation(reason: "Unsupport function for outgoing call"))
+                    completionHandler(WebexError.illegalOperation(reason: PhoneErrorDescription.errorDesc(.unSupportFunction)))
                 }
                 self.queue.yield()
                 return
             }
             if call.direction == Call.Direction.incoming {
                 if call.status == CallStatus.connected {
-                    SDKLogger.shared.error("Failure: Already connected")
+                    SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.alreadyConnected))
                     DispatchQueue.main.async {
-                        completionHandler(WebexError.illegalStatus(reason: "Already connected"))
+                        completionHandler(WebexError.illegalStatus(reason: PhoneErrorDescription.errorDesc(.alreadyConnected)))
                     }
                     self.queue.yield()
                     return
                 }
                 else if call.status == CallStatus.disconnected {
-                    SDKLogger.shared.error("Failure: Already disconnected")
+                    SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.alreadyDisconnected))
                     DispatchQueue.main.async {
-                        completionHandler(WebexError.illegalStatus(reason: "Already disconnected"))
+                        completionHandler(WebexError.illegalStatus(reason: PhoneErrorDescription.errorDesc(.alreadyDisconnected)))
                     }
                     self.queue.yield()
                     return
@@ -519,9 +519,9 @@ public class Phone {
     func hangup(call: Call, completionHandler: @escaping (Error?) -> Void) {
         self.queue.sync {
             if call.status == CallStatus.disconnected {
-                SDKLogger.shared.warn("Warning: Already disconnected")
+                SDKLogger.shared.warn("Warning: " + PhoneErrorDescription.errorDesc(.alreadyDisconnected))
                 DispatchQueue.main.async {
-                    completionHandler(WebexError.illegalStatus(reason: "Already disconnected"))
+                    completionHandler(WebexError.illegalStatus(reason: PhoneErrorDescription.errorDesc(.alreadyDisconnected)))
                 }
                 self.queue.yield()
                 return
@@ -640,7 +640,7 @@ public class Phone {
                     if call.isInIllegalStatus {
                         DispatchQueue.main.async {
                             let error = WebexError.illegalStatus(reason: "The previous session did not end")
-                            SDKLogger.shared.error("Failure call ", error: error)
+                            SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.failureCall), error: error)
                             completionHandler(Result.failure(error))
                             call.end(reason: Call.DisconnectReason.error(error))
                         }
@@ -656,7 +656,7 @@ public class Phone {
                     completionHandler(Result.failure(WebexError.serviceFailed(code: -7000, reason: "Failure: Missing required information when dial")))
                 }
             case .failure(let error):
-                SDKLogger.shared.error("Failure call ", error: error)
+                SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.failureCall), error: error)
                 DispatchQueue.main.async {
                     completionHandler(Result.failure(error))
                 }
@@ -852,7 +852,7 @@ public class Phone {
         if let device = self.devices.device {
             self.webSocket.connect(device.webSocketUrl) { [weak self] error in
                 if let error = error {
-                    SDKLogger.shared.error("Failed to Register device", error: error)
+                    SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.registerFailure), error: error)
                 }
                 self?.queue.underlying.async {
                     self?.fetchActiveCalls()
@@ -896,5 +896,62 @@ public class Phone {
         }
         
     }
+
+}
+
+class PhoneErrorDescription {
     
+    enum ErrorType {
+        case registerFailure
+        case unSupportFunction
+        case alreadyDisconnected
+        case alreadyConnected
+        case failureCall
+        case otherActiveCall
+    }
+    
+    static private let registerFailure = "Failed to Register device"
+    static private let unSupportFunction = "Unsupport function for outgoing call"
+    static private let alreadyDisconnected = "Already disconnected"
+    static private let alreadyConnected = "Already connected"
+    static private let failureCall = "Failure call "
+    static private let otherActiveCall = "There are other active calls"
+    
+    static func failureDesc(_ errorType: ErrorType ) -> String {
+        var result: String
+        switch errorType {
+        case .registerFailure:
+            result = registerFailure
+        case .unSupportFunction:
+            result = unSupportFunction
+        case .alreadyDisconnected:
+            result = alreadyDisconnected
+        case .alreadyConnected:
+            result = alreadyConnected
+        case .failureCall:
+            result = failureCall
+        case .otherActiveCall:
+            result = otherActiveCall
+        }
+        return "Failure: " + result
+    }
+    
+    static func errorDesc( _ errorType: ErrorType ) -> String {
+        var result: String
+        switch errorType {
+        case .registerFailure:
+            result = registerFailure
+        case .unSupportFunction:
+            result = unSupportFunction
+        case .alreadyDisconnected:
+            result = alreadyDisconnected
+        case .alreadyConnected:
+            result = alreadyConnected
+        case .failureCall:
+            result = failureCall
+        case .otherActiveCall:
+            result = otherActiveCall
+        }
+        return result
+    }
 }

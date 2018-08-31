@@ -66,5 +66,4 @@ extension WebexError: LocalizedError {
             return "noAuth"
         }
     }
-    
 }
