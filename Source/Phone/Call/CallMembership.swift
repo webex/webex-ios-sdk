@@ -114,13 +114,21 @@ public struct CallMembership {
     public let isSelf: Bool
     
     var model: ParticipantModel {
-        get { self.call.lock(); defer { self.call.unlock() }; return _model }
-        set { self.call.lock(); defer { self.call.unlock() }; _model = newValue }
+        get {
+            self.call.lock()
+            defer { self.call.unlock() }
+            return participantModel
+        }
+        set {
+            self.call.lock()
+            defer { self.call.unlock() }
+            participantModel = newValue
+        }
     }
     
     private let call: Call
     
-    private var _model: ParticipantModel
+    private var participantModel: ParticipantModel
 
     /// Constructs a new *CallMembership*.
     ///
@@ -133,7 +141,7 @@ public struct CallMembership {
         if let personId = participant.person?.id {
             self.personId = "ciscospark://us/PEOPLE/\(personId)".base64Encoded()
         }
-        self._model = participant
+        self.participantModel = participant
     }
     
     func containCSI(csi:UInt) -> Bool {

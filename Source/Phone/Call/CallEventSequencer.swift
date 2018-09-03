@@ -53,8 +53,8 @@ class CallEventSequencer {
     
     private static func compare(_ a: SequenceModel, _ b: SequenceModel) -> CompareResult {
         
-        var aOnly = [UInt64]()
-        var bOnly = [UInt64]()
+        var aOnly: [UInt64]
+        var bOnly: [UInt64]
         
         // If all of a's values are less than b's, b is newer
         if a.end < b.start {
@@ -120,8 +120,8 @@ class CallEventSequencer {
         
         var aOnly = [UInt64]()
         var bOnly = [UInt64]()
-        var aArray = a.entries
-        var bArray = b.entries
+        let aArray = a.entries
+        let bArray = b.entries
         
         var atEndOfA = false
         var atEndOfB = false
@@ -177,18 +177,18 @@ class CallEventSequencer {
         }
         
         while (indexOfA < aArray.count) {
-            let aVal = aArray[indexOfA]
+            let aValue = aArray[indexOfA]
             indexOfA += 1
-            if (!b.inRange(aVal)) {
-                aOnly.append(aVal)
+            if (!b.inRange(aValue)) {
+                aOnly.append(aValue)
             }
         }
         
         while (indexOfB < bArray.count) {
-            let bVal = bArray[indexOfB]
+            let bValue = bArray[indexOfB]
             indexOfB += 1
-            if (!a.inRange(bVal)) {
-                bOnly.append(bVal)
+            if (!a.inRange(bValue)) {
+                bOnly.append(bValue)
             }
         }
         

@@ -58,15 +58,15 @@ class WebSocketService: WebSocketAdvancedDelegate {
             self.authenticator.accessToken { token in
                 self.queue.async {
                     SDKLogger.shared.info("Web socket is being connected")
-                    let socket = WebSocket(url: webSocketUrl)
+                    let tempSocket = WebSocket(url: webSocketUrl)
                     if let token = token {
-                        socket.request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+                        tempSocket.request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
                     }
-                    socket.callbackQueue = self.queue
-                    socket.advancedDelegate = self
+                    tempSocket.callbackQueue = self.queue
+                    tempSocket.advancedDelegate = self
                     self.onConnected = block
-                    self.socket = socket
-                    socket.connect()
+                    self.socket = tempSocket
+                    tempSocket.connect()
                 }
             }
         }

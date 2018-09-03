@@ -31,7 +31,6 @@
 		10D4D7EE212C0D9D00B37D98 /* TestTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864E212A74A400D316F4 /* TestTeam.swift */; };
 		10D4D7F1212D10ED00B37D98 /* WebhookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8658212A74A500D316F4 /* WebhookTests.swift */; };
 		10D4D7F2212D10F100B37D98 /* WebexTestFixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8659212A74A500D316F4 /* WebexTestFixture.swift */; };
-		10D4D7F3212D1D4E00B37D98 /* AuxiliaryVideoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8649212A74A400D316F4 /* AuxiliaryVideoTest.swift */; };
 		10D4D7F4212D1D4E00B37D98 /* CallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8651212A74A400D316F4 /* CallTests.swift */; };
 		10D4D7F5212D1D4E00B37D98 /* JWTAuthenticatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B865D212A74A500D316F4 /* JWTAuthenticatorTests.swift */; };
 		10D4D7F6212D1D4E00B37D98 /* JWTAuthKeychainStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864F212A74A400D316F4 /* JWTAuthKeychainStorageTests.swift */; };
@@ -1169,7 +1168,6 @@
 				10D4D7FD212D1D4E00B37D98 /* ScreenShareTests.swift in Sources */,
 				C79F14071FBE7C3A00B43596 /* FakeCallModelHelper.swift in Sources */,
 				10D4D802212D1D4E00B37D98 /* TeamTests.swift in Sources */,
-				10D4D7F3212D1D4E00B37D98 /* AuxiliaryVideoTest.swift in Sources */,
 				10D4D7DD212C0D9D00B37D98 /* Config.swift in Sources */,
 				C79F14081FBE7C3A00B43596 /* FakeConversationClient.swift in Sources */,
 				10D4D7F8212D1D4E00B37D98 /* MessageTests.swift in Sources */,

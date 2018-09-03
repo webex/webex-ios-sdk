@@ -202,7 +202,8 @@ class MediaSessionWrapper {
     }
     
     func stopPreview() {
-        if self.status == .preview {            mediaSession.stopVideoRenderView(with: .preview, removeRender: true)
+        if self.status == .preview {
+            mediaSession.stopVideoRenderView(with: .preview, removeRender: true)
             mediaSession.removeAllRenderView(.preview)
             mediaSession.disconnectFromCloud()
             self.status = .initial

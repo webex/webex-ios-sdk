@@ -20,11 +20,10 @@
 
 import Foundation
 
-public let MAX_AUX_STREAM_NUMBER = 4
+public let maxAuxStreamNumber = 4
 
 public class AuxStream {
-    static let INVAILD_VID = -1
-    
+    static let invalidVid = -1
     enum RenderViewOperationType {
         case add(Int,MediaRenderView)
         case remove(Int,MediaRenderView)
@@ -62,6 +61,7 @@ public class AuxStream {
     
     var vid: Int
     var renderViewOperationHandler:((RenderViewOperationType) -> Any?)?
+
     private weak var call:Call?
     
     init(vid: Int, renderView:MediaRenderView, renderViewOperation: @escaping ((RenderViewOperationType) -> Any?), call:Call) {
@@ -70,7 +70,6 @@ public class AuxStream {
         self.renderViewOperationHandler = renderViewOperation
         self.call = call
     }
-    
     public func close() {
         if let retainCall = self.call, let view = self.renderView {
             retainCall.closeAuxStream(view: view)
@@ -78,7 +77,7 @@ public class AuxStream {
     }
     
     func invalidate() {
-        self.vid = AuxStream.INVAILD_VID
+        self.vid = AuxStream.invalidVid
         self.renderViewOperationHandler = nil
         self.person = nil
         self.renderView = nil

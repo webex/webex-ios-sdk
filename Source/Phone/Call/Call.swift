@@ -448,14 +448,18 @@ public class Call {
     ///
     /// - since: 1.2.0
     public private(set) var memberships: [CallMembership] {
-        get { lock(); defer { unlock() }; return _memberships ?? [] }
+        get {
+            lock()
+            defer { unlock() }
+            return callMemberships ?? []
+        }
         set {
             lock()
             defer {
                 unlock()
             }
-            _memberships = newValue
-            self.updateAuxStreamMembership(memberships: _memberships)
+            callMemberships = newValue
+            self.updateAuxStreamMembership(memberships: callMemberships)
         }
     }
     
@@ -472,6 +476,11 @@ public class Call {
     public var to: CallMembership? {
         return self.memberships.filter({ !$0.isInitiator }).first
     }
+    
+    /// A local unique identifier of a *Call* for [Apple CallKit](https://developer.apple.com/reference/callkit).
+    ///
+    /// - since: 1.2.0
+    public var uuid: UUID
     
     /// The render views for local and remote video of this call.
     /// If is nil, it will update the video state as inactive to the server side.
@@ -533,13 +542,29 @@ public class Call {
     ///
     /// - since: 2.0.0
     public private(set) var availableAuxStreamCount: Int {
-        get { lock(); defer { unlock() }; return _availableAuxStreamCount }
-        set { lock(); defer { unlock() }; _availableAuxStreamCount = newValue }
+        get {
+            lock()
+            defer { unlock() }
+            return availableStreamCount
+        }
+        set {
+            lock()
+            defer { unlock() }
+            availableStreamCount = newValue
+        }
     }
     
     var model: CallModel {
-        get { lock(); defer { unlock() }; return _model }
-        set { lock(); defer { unlock() }; _model = newValue }
+        get {
+            lock()
+            defer { unlock() }
+            return callModel
+        }
+        set {
+            lock()
+            defer { unlock() }
+            callModel = newValue
+        }
     }
     
     var url: String {
@@ -550,17 +575,16 @@ public class Call {
     
     let device: Device
     let mediaSession: MediaSessionWrapper
-    var _uuid: UUID
     
     let metrics: CallMetrics
     static  let activeSpeakerCount = 1
     private let dtmfQueue: DtmfQueue
     
-    private var _dail: String?
-    private var _model: CallModel
-    private var _memberships: [CallMembership]?
-    private var _availableAuxStreamCount:Int = 0
-    var _mutex = pthread_mutex_t()
+    private var dail: String?
+    private var callModel: CallModel
+    private var callMemberships: [CallMembership]?
+    private var availableStreamCount:Int = 0
+    var mutex = pthread_mutex_t()
     
     var onConnectedOnceToken :String = "" {
         didSet {
@@ -611,9 +635,7 @@ public class Call {
     }
     
     private var remoteSDP: String? {
-        if let remoteSDP = self.model.myself?[device: self.device.deviceUrl]?.mediaConnections?.first?.remoteSdp?.sdp {
-            return remoteSDP
-        } else if let remoteSDP = self.model.mediaConnections?.first?.remoteSdp?.sdp {
+        if let remoteSDP = self.model.myself?[device: self.device.deviceUrl]?.mediaConnections?.first?.remoteSdp?.sdp ?? self.model.mediaConnections?.first?.remoteSdp?.sdp {
             return remoteSDP
         }
         return nil
@@ -624,8 +646,8 @@ public class Call {
         self.isGroup = group
         self.device = device
         self.mediaSession = media
-        self._model = model
-        self._uuid = uuid ?? UUID()
+        self.callModel = model
+        self.uuid = uuid ?? UUID()
         self.dtmfQueue = DtmfQueue(client: device.phone.client)
         self.metrics = CallMetrics()
         self.metrics.trackCallStarted()
@@ -635,15 +657,15 @@ public class Call {
     }
     
     deinit{
-        pthread_mutex_init(&_mutex, nil)
+        pthread_mutex_init(&mutex, nil)
         DispatchQueue.main.removeOnceToken(token: self.onConnectedOnceToken)
     }
     
     @inline(__always) func lock(){
-        pthread_mutex_lock(&_mutex)
+        pthread_mutex_lock(&mutex)
     }
     @inline(__always) func unlock(){
-        pthread_mutex_unlock(&_mutex)
+        pthread_mutex_unlock(&mutex)
     }
     
     /// Acknowledge (without answering) an incoming call.
@@ -793,7 +815,7 @@ public class Call {
         }
         
         DispatchQueue.main.async {
-            if self.auxStreams.count >= MAX_AUX_STREAM_NUMBER {
+            if self.auxStreams.count >= maxAuxStreamNumber {
                 self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "have exceeded the auxiliary videos limit"))))
                 return
             }
@@ -813,10 +835,10 @@ public class Call {
                 return
             }
             
-            var vid = AuxStream.INVAILD_VID
+            var vid = AuxStream.invalidVid
             if (self.mediaSession.status == .running) {
                 vid = self.mediaSession.subscribeAuxStream(view: view)
-                if vid == AuxStream.INVAILD_VID {
+                if vid == AuxStream.invalidVid {
                     self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.serviceFailed(code: -7000, reason: "subscribe video fail"))))
                     return
                 }
@@ -904,9 +926,9 @@ public class Call {
         }
         
         for auxStream in self.auxStreams {
-            if auxStream.vid != AuxStream.INVAILD_VID , let view = auxStream.renderView {
+            if auxStream.vid != AuxStream.invalidVid , let view = auxStream.renderView {
                 let vid = self.mediaSession.subscribeAuxStream(view: view)
-                if vid != AuxStream.INVAILD_VID {
+                if vid != AuxStream.invalidVid {
                     auxStream.vid = vid
                     if let renderView = auxStream.renderView {
                         self.mediaSession.addAuxStreamRenderView(view: renderView, vid: vid)
@@ -927,9 +949,9 @@ public class Call {
             self.mediaSession.leaveScreenShare(granted, isSending: self.isScreenSharedBySelfDevice())
         }
         self.mediaSession.onBroadcasting = nil
-        
+
         for auxStream in self.auxStreams {
-            if auxStream.vid != AuxStream.INVAILD_VID {
+            if auxStream.vid != AuxStream.invalidVid {
                 self.mediaSession.unsubscribeAuxStream(vid: auxStream.vid)
             }
         }
@@ -954,7 +976,7 @@ public class Call {
             if var new = CallEventSequencer.sequence(old: old, new: model, invalid: { self.device.phone.fetch(call: self) }) {
                 //some response's mediaConnection is nil, sync all model hold the latest media connection
                 if new.mediaConnections == nil, let oldMediaConnextions = old.mediaConnections {
-                    new.setMediaConnections(newMediaConnections: old.mediaConnections)
+                    new.setMediaConnections(newMediaConnections: oldMediaConnextions)
                 }
                 
                 self.doCallModel(new)
@@ -965,103 +987,30 @@ public class Call {
                     if new.isLocalSupportDTMF != old.isLocalSupportDTMF {
                         self.onCapabilitiesChanged?(Capabilities.dtmf)
                     }
-                    
-                    func leaveScreenShare(participant: ParticipantModel, granted: String, oldFloor:MediaShareModel.MediaShareFloor? = nil) {
-                        if self.isScreenSharedBySelfDevice(shareFloor: oldFloor) {
-                            if self.mediaSession.hasScreenShare {
-                                self.mediaSession.stopLocalScreenShare()
-                                self.mediaSession.leaveScreenShare(granted, isSending: true)
-                            }
-                            self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(false))
-                        } else {
-                            if self.mediaSession.hasScreenShare {
-                                self.mediaSession.leaveScreenShare(granted, isSending: false)
-                            }
-                            self.onMediaChanged?(MediaChangedEvent.remoteSendingScreenShare(false))
-                        }
-                        
-                        if let membership = self.memberships.filter({$0.id == participant.id}).first {
-                            self.onCallMembershipChanged?(CallMembershipChangedEvent.sendingScreenShare(membership))
-                        }
-                    }
-                    
-                    func joinScreenShare(participant: ParticipantModel, granted: String) {
-                        if self.isScreenSharedBySelfDevice() {
-                            if self.mediaSession.hasScreenShare {
-                                self.mediaSession.startLocalScreenShare()
-                                self.mediaSession.joinScreenShare(granted, isSending: true)
-                            }
-                            if !self.mediaSession.screenShareMuted {
-                                self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(true))
-                            }
-                        } else {
-                            if self.mediaSession.hasScreenShare {
-                                self.mediaSession.joinScreenShare(granted, isSending: false)
-                            }
-                            self.onMediaChanged?(MediaChangedEvent.remoteSendingScreenShare(true))
-                        }
-                        if let membership = self.memberships.filter({$0.id == participant.id}).first {
-                            if self.isScreenSharedBySelfDevice() && self.mediaSession.screenShareMuted {
-                                
-                            } else {
-                                self.onCallMembershipChanged?(CallMembershipChangedEvent.sendingScreenShare(membership))
-                            }
-                        }
-                    }
-                    
-                    func replaceScreenShare(newFloor:MediaShareModel.MediaShareFloor, oldFloor:MediaShareModel.MediaShareFloor) {
-                        //someone replace my screen sharing
-                        if self.isScreenSharedBySelfDevice(shareFloor: oldFloor) == true && self.isScreenSharedBySelfDevice(shareFloor: newFloor) == false {
-                            if self.mediaSession.hasScreenShare {
-                                self.mediaSession.stopLocalScreenShare()
-                                self.mediaSession.leaveScreenShare(oldFloor.granted!, isSending: true)
-                                self.mediaSession.joinScreenShare(newFloor.granted!, isSending: false)
-                            }
-                            self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(false))
-                            self.onMediaChanged?(MediaChangedEvent.remoteSendingScreenShare(true))
-                            
-                        } else if self.isScreenSharedBySelfDevice(shareFloor: oldFloor) == false && self.isScreenSharedBySelfDevice(shareFloor: newFloor) == true {
-                            if self.mediaSession.hasScreenShare {
-                                self.mediaSession.leaveScreenShare(oldFloor.granted ?? newFloor.granted!, isSending: false)
-                                self.mediaSession.joinScreenShare(newFloor.granted!, isSending: true)
-                                self.mediaSession.startLocalScreenShare()
-                            }
-                            self.onMediaChanged?(MediaChangedEvent.remoteSendingScreenShare(false))
-                            if !self.mediaSession.screenShareMuted {
-                                self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(true))
-                            }
-                        } else {
-                            
-                        }
-                        if let sharingParticipantId = newFloor.beneficiary?.id ,let membership = self.memberships.filter({$0.id == sharingParticipantId}).first{
-                            self.onCallMembershipChanged?(CallMembershipChangedEvent.sendingScreenShare(membership))
-                        }
-                    }
-                    
                     //screen share
                     if let newFloor = new.screenShareMediaFloor, let _ = newFloor.beneficiary?.id, let newGranted = newFloor.granted, let newDisposition = newFloor.disposition {
                         if let oldFloor = old.screenShareMediaFloor, let _ = oldFloor.beneficiary?.id, let oldDisposition = oldFloor.disposition {
                             if newDisposition != oldDisposition {
                                 if newDisposition == MediaShareModel.ShareFloorDisposition.granted {
-                                    joinScreenShare(participant: newFloor.beneficiary!, granted: newGranted)
+                                    self.joinScreenShare(participant: newFloor.beneficiary!, granted: newGranted)
                                 }
                                 else if newDisposition == MediaShareModel.ShareFloorDisposition.released {
-                                    leaveScreenShare(participant: oldFloor.granted != nil ? oldFloor.beneficiary! : newFloor.beneficiary!, granted: oldFloor.granted ?? newGranted,oldFloor: oldFloor)
+                                    self.leaveScreenShare(participant: oldFloor.granted != nil ? oldFloor.beneficiary! : newFloor.beneficiary!, granted: oldFloor.granted ?? newGranted,oldFloor: oldFloor)
                                 }
                                 else {
                                     SDKLogger.shared.error("Failure: floor dispostion is unknown.")
                                 }
                             }
                             else if let oldGranted = oldFloor.granted, newGranted != oldGranted, newDisposition == MediaShareModel.ShareFloorDisposition.granted {
-                                replaceScreenShare(newFloor: newFloor, oldFloor: oldFloor)
+                                self.replaceScreenShare(newFloor: newFloor, oldFloor: oldFloor)
                             }
                         }
                         else {
                             if newDisposition == MediaShareModel.ShareFloorDisposition.granted {
-                                joinScreenShare(participant: newFloor.beneficiary!, granted: newGranted)
+                                self.joinScreenShare(participant: newFloor.beneficiary!, granted: newGranted)
                             }
                             else if newDisposition == MediaShareModel.ShareFloorDisposition.released {
-                                leaveScreenShare(participant: newFloor.beneficiary!, granted: newGranted)
+                                self.leaveScreenShare(participant: newFloor.beneficiary!, granted: newGranted)
                             }
                             else {
                                 SDKLogger.shared.error("Failure: floor dispostion is unknown.")
@@ -1075,6 +1024,76 @@ public class Call {
                     self.model.setMediaConnections(newMediaConnections: mediaConnection)
                 }
             }
+        }
+    }
+    
+    private func joinScreenShare(participant: ParticipantModel, granted: String) {
+        if self.isScreenSharedBySelfDevice() {
+            if self.mediaSession.hasScreenShare {
+                self.mediaSession.startLocalScreenShare()
+                self.mediaSession.joinScreenShare(granted, isSending: true)
+            }
+            if !self.mediaSession.screenShareMuted {
+                self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(true))
+            }
+        } else {
+            if self.mediaSession.hasScreenShare {
+                self.mediaSession.joinScreenShare(granted, isSending: false)
+            }
+            self.onMediaChanged?(MediaChangedEvent.remoteSendingScreenShare(true))
+        }
+        if let membership = self.memberships.filter({$0.id == participant.id}).first {
+            if self.isScreenSharedBySelfDevice() && self.mediaSession.screenShareMuted {
+                return
+            } else {
+                self.onCallMembershipChanged?(CallMembershipChangedEvent.sendingScreenShare(membership))
+            }
+        }
+    }
+    
+    private func leaveScreenShare(participant: ParticipantModel, granted: String, oldFloor:MediaShareModel.MediaShareFloor? = nil) {
+        if self.isScreenSharedBySelfDevice(shareFloor: oldFloor) {
+            if self.mediaSession.hasScreenShare {
+                self.mediaSession.stopLocalScreenShare()
+                self.mediaSession.leaveScreenShare(granted, isSending: true)
+            }
+            self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(false))
+        } else {
+            if self.mediaSession.hasScreenShare {
+                self.mediaSession.leaveScreenShare(granted, isSending: false)
+            }
+            self.onMediaChanged?(MediaChangedEvent.remoteSendingScreenShare(false))
+        }
+        
+        if let membership = self.memberships.filter({$0.id == participant.id}).first {
+            self.onCallMembershipChanged?(CallMembershipChangedEvent.sendingScreenShare(membership))
+        }
+    }
+    
+    private func replaceScreenShare(newFloor:MediaShareModel.MediaShareFloor, oldFloor:MediaShareModel.MediaShareFloor) {
+        //someone replace my screen sharing
+        if self.isScreenSharedBySelfDevice(shareFloor: oldFloor) && !self.isScreenSharedBySelfDevice(shareFloor: newFloor) {
+            if self.mediaSession.hasScreenShare {
+                self.mediaSession.stopLocalScreenShare()
+                self.mediaSession.leaveScreenShare(oldFloor.granted!, isSending: true)
+                self.mediaSession.joinScreenShare(newFloor.granted!, isSending: false)
+            }
+            self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(false))
+            self.onMediaChanged?(MediaChangedEvent.remoteSendingScreenShare(true))
+            
+        } else if !self.isScreenSharedBySelfDevice(shareFloor: oldFloor) && self.isScreenSharedBySelfDevice(shareFloor: newFloor) {
+            if self.mediaSession.hasScreenShare {
+                self.mediaSession.leaveScreenShare(oldFloor.granted ?? newFloor.granted!, isSending: false)
+                self.mediaSession.joinScreenShare(newFloor.granted!, isSending: true)
+                self.mediaSession.startLocalScreenShare()
+            }
+            self.onMediaChanged?(MediaChangedEvent.remoteSendingScreenShare(false))
+            if !self.mediaSession.screenShareMuted {
+                self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(true))
+            }
+        }
+        if let sharingParticipantId = newFloor.beneficiary?.id ,let membership = self.memberships.filter({$0.id == sharingParticipantId}).first{
+            self.onCallMembershipChanged?(CallMembershipChangedEvent.sendingScreenShare(membership))
         }
     }
     
@@ -1121,32 +1140,16 @@ public class Call {
             for participant in participants {
                 if var membership = oldMemberships.find(predicate: { $0.id == participant.id }) {
                     let oldState = membership.state
-                    let sendingAudio = membership.sendingAudio
-                    let sendingVideo = membership.sendingVideo
+                    let tempSendingAudio = membership.sendingAudio
+                    let tempSendingVideo = membership.sendingVideo
                     membership.model = participant
                     if membership.state != oldState {
-                        if membership.state == CallMembership.State.joined {
-                            onCallMembershipChanges.append(CallMembershipChangedEvent.joined(membership))
-                        }
-                        else if membership.state == CallMembership.State.left {
-                            onCallMembershipChanges.append(CallMembershipChangedEvent.left(membership))
-                            //send person change by locus status,because CSI change doesn't trigger when participant left.
-                            if let auxStream = self.auxStreams.filter({$0.person?.id == membership.id}).first {
-                                auxStream.person = nil
-                                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamPersonChangedEvent(auxStream, From: membership, To: nil))
-                            } else if let currentSpeaker = self.activeSpeaker, currentSpeaker.id == membership.id {
-                                self.activeSpeaker = nil
-                                self.onMediaChanged?(Call.MediaChangedEvent.activeSpeakerChangedEvent(From: membership, To: nil))
-                            }
-                        }
-                        else if membership.state == CallMembership.State.declined {
-                            onCallMembershipChanges.append(CallMembershipChangedEvent.declined(membership))
-                        }
+                        onCallMembershipChanges.append(contentsOf: checkMembershipChangeEventFor(membership))
                     }
-                    if membership.sendingAudio != sendingAudio {
+                    if membership.sendingAudio != tempSendingAudio {
                         onCallMembershipChanges.append(CallMembershipChangedEvent.sendingAudio(membership))
                     }
-                    if membership.sendingVideo != sendingVideo {
+                    if membership.sendingVideo != tempSendingVideo {
                         onCallMembershipChanges.append(CallMembershipChangedEvent.sendingVideo(membership))
                     }
                     newMemberships.append(membership)
@@ -1170,6 +1173,28 @@ public class Call {
         self.status.handle(model: model, for: self)
     }
     
+    private func checkMembershipChangeEventFor(_ membership: CallMembership) -> [CallMembershipChangedEvent] {
+        var onCallMembershipChanges = [CallMembershipChangedEvent]()
+        if membership.state == CallMembership.State.joined {
+            onCallMembershipChanges.append(CallMembershipChangedEvent.joined(membership))
+        }
+        else if membership.state == CallMembership.State.left {
+            onCallMembershipChanges.append(CallMembershipChangedEvent.left(membership))
+            //send person change by locus status,because CSI change doesn't trigger when participant left.
+            if let auxStream = self.auxStreams.filter({$0.person?.id == membership.id}).first {
+                auxStream.person = nil
+                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamPersonChangedEvent(auxStream, From: membership, To: nil))
+            } else if let currentSpeaker = self.activeSpeaker, currentSpeaker.id == membership.id {
+                self.activeSpeaker = nil
+                self.onMediaChanged?(Call.MediaChangedEvent.activeSpeakerChangedEvent(From: membership, To: nil))
+            }
+        }
+        else if membership.state == CallMembership.State.declined {
+            onCallMembershipChanges.append(CallMembershipChangedEvent.declined(membership))
+        }
+        return onCallMembershipChanges
+    }
+    
     private func updateAuxStreamMembership(memberships:[CallMembership]?) {
         if let membershipsArray = memberships {
             for auxStream in auxStreams {
@@ -1187,7 +1212,8 @@ extension DispatchQueue {
     
     func asyncOnce(token: String, block:@escaping ()->Void) {
         self.async {
-            objc_sync_enter(self); defer { objc_sync_exit(self) }
+            objc_sync_enter(self)
+            defer { objc_sync_exit(self) }
             if token.isEmpty || DispatchQueue._onceTracker.contains(token) {
                 return
             }
@@ -1198,7 +1224,8 @@ extension DispatchQueue {
     
     func removeOnceToken(token: String) {
         self.async {
-            objc_sync_enter(self); defer { objc_sync_exit(self) }
+            objc_sync_enter(self)
+            defer { objc_sync_exit(self) }
             if token.isEmpty {
                 return
             }
