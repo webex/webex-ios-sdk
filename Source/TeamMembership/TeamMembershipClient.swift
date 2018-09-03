@@ -98,8 +98,8 @@ public class TeamMembershipClient {
         
         let request = requestBuilder()
             .method(.post)
-            .body(body)
             .queue(queue)
+            .body(body)
             .build()
         
         request.responseObject(completionHandler)
