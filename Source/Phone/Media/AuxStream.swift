@@ -62,20 +62,6 @@ public class AuxStream {
     
     var vid: Int
     var renderViewOperationHandler:((RenderViewOperationType) -> Any?)?
-    var isReceivingVideo:Bool {
-        get {
-            if let receivingMuted = renderViewOperationHandler?(RenderViewOperationType.getMuted(vid)) as? Bool {
-                return !receivingMuted
-            }
-            return true;
-        }
-        set {
-            if vid != AuxStream.INVAILD_VID, let handler = self.renderViewOperationHandler {
-                _ = handler(RenderViewOperationType.mute(vid,!newValue))
-            }
-        }
-    }
-    
     private weak var call:Call?
     
     init(vid: Int, renderView:MediaRenderView, renderViewOperation: @escaping ((RenderViewOperationType) -> Any?), call:Call) {

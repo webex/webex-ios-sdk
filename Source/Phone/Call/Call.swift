@@ -553,7 +553,7 @@ public class Call {
     var _uuid: UUID
     
     let metrics: CallMetrics
-    static private let activeSpeakerCount = 1
+    static  let activeSpeakerCount = 1
     private let dtmfQueue: DtmfQueue
     
     private var _dail: String?
@@ -582,11 +582,19 @@ public class Call {
     
     var willBeReleasedAuxStream: (Int) -> MediaRenderView? {
         get {
+            func renderViewByUser() -> MediaRenderView? {
+                if let releaseClosure = self.multiStreamObserver?.onAuxStreamUnavailable, let releaseRenderView = releaseClosure() {
+                    return releaseRenderView
+                }
+                return nil
+            }
             return { newCount in
-                if let releaseClosure = self.multiStreamObserver?.onAuxStreamUnavailable {
-                    return releaseClosure()
-                } else if newCount < self.auxStreams.count, let lastRenderView = self.auxStreams.last?.renderView {
-                    return lastRenderView
+                if let renderView = renderViewByUser() {
+                    return renderView
+                } else {
+                    if newCount < self.auxStreams.count, let lastRenderView = self.auxStreams.last?.renderView {
+                        return lastRenderView
+                    }
                 }
                 
                 return nil
@@ -1075,12 +1083,15 @@ public class Call {
             var newAvailableAuxStreamCount = min(self.memberships.filter({ $0.isMediaActive() && !$0.isSelf }).count - Call.activeSpeakerCount, self.mediaSession.auxStreamCount() - Call.activeSpeakerCount)
             if newAvailableAuxStreamCount < 0 {
                 newAvailableAuxStreamCount = 0
-            } else if self.availableAuxStreamCount > 4 && newAvailableAuxStreamCount > 4 {
+            } else if self.availableAuxStreamCount >= MAX_AUX_STREAM_NUMBER && newAvailableAuxStreamCount > MAX_AUX_STREAM_NUMBER {
                 self.availableAuxStreamCount = newAvailableAuxStreamCount
                 return
             }
             
-            let diffCount = newAvailableAuxStreamCount - self.availableAuxStreamCount
+            var diffCount = newAvailableAuxStreamCount - self.availableAuxStreamCount
+            if diffCount > MAX_AUX_STREAM_NUMBER {
+                diffCount = MAX_AUX_STREAM_NUMBER
+            }
             
             if diffCount > 0 {
                 for _ in 0..<diffCount {
