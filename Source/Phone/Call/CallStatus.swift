@@ -49,62 +49,7 @@ public enum CallStatus {
         }
         switch self {
         case .initiated, .ringing:
-            if call.direction == Call.Direction.incoming {
-                if call.isRemoteJoined {
-                    if local.isJoined(by: call.device.deviceUrl) {
-                        call.status = .connected
-                        DispatchQueue.main.async {
-                            call.onConnected?()
-                        }
-                    }
-                    else if local.isDeclined(by: call.device.deviceUrl) {
-                        call.end(reason: Call.DisconnectReason.localDecline)
-                    }
-                    else if local.isJoined {
-                        call.end(reason: Call.DisconnectReason.otherConnected)
-                    }
-                    else if local.isDeclined {
-                        call.end(reason: Call.DisconnectReason.otherDeclined)
-                    }
-                }
-                else if call.isRemoteDeclined || call.isRemoteLeft {
-                    call.end(reason: Call.DisconnectReason.remoteCancel)
-                }
-            }
-            else {
-                if local.isLefted(device: call.device.deviceUrl) {
-                    call.end(reason: Call.DisconnectReason.localCancel)
-                }
-                else if local.isJoined(by: call.device.deviceUrl) {
-                    if call.isGroup {
-                        call.status = .ringing
-                        DispatchQueue.main.async {
-                            call.onRinging?()
-                            call.status = .connected
-                            DispatchQueue.main.async {
-                                call.onConnected?()
-                            }
-                        }
-                    }
-                    else {
-                        if call.isRemoteNotified {
-                            call.status = .ringing
-                            DispatchQueue.main.async {
-                                call.onRinging?()
-                            }
-                        }
-                        else if call.isRemoteJoined {
-                            call.status = .connected
-                            DispatchQueue.main.asyncOnce(token: call.onConnectedOnceToken) {
-                                call.onConnected?()
-                            }
-                        }
-                        else if call.isRemoteDeclined {
-                            call.end(reason: Call.DisconnectReason.remoteDecline)
-                        }
-                    }
-                }
-            }
+            handelInitiateAndRingingFor(call, local)
         case .connected:
             if call.isGroup {
                 if local.isLefted(device: call.device.deviceUrl)  {
@@ -121,6 +66,65 @@ public enum CallStatus {
             }
         case .disconnected:
             break;
+        }
+    }
+}
+
+private func handelInitiateAndRingingFor(_ call: Call, _ participant: ParticipantModel) {
+    if call.direction == Call.Direction.incoming {
+        if call.isRemoteJoined {
+            if participant.isJoined(by: call.device.deviceUrl) {
+                call.status = .connected
+                DispatchQueue.main.async {
+                    call.onConnected?()
+                }
+            }
+            else if participant.isDeclined(by: call.device.deviceUrl) {
+                call.end(reason: Call.DisconnectReason.localDecline)
+            }
+            else if participant.isJoined {
+                call.end(reason: Call.DisconnectReason.otherConnected)
+            }
+            else if participant.isDeclined {
+                call.end(reason: Call.DisconnectReason.otherDeclined)
+            }
+        }
+        else if call.isRemoteDeclined || call.isRemoteLeft {
+            call.end(reason: Call.DisconnectReason.remoteCancel)
+        }
+    }
+    else {
+        if participant.isLefted(device: call.device.deviceUrl) {
+            call.end(reason: Call.DisconnectReason.localCancel)
+        }
+        else if participant.isJoined(by: call.device.deviceUrl) {
+            if call.isGroup {
+                call.status = .ringing
+                DispatchQueue.main.async {
+                    call.onRinging?()
+                    call.status = .connected
+                    DispatchQueue.main.async {
+                        call.onConnected?()
+                    }
+                }
+            }
+            else {
+                if call.isRemoteNotified {
+                    call.status = .ringing
+                    DispatchQueue.main.async {
+                        call.onRinging?()
+                    }
+                }
+                else if call.isRemoteJoined {
+                    call.status = .connected
+                    DispatchQueue.main.asyncOnce(token: call.onConnectedOnceToken) {
+                        call.onConnected?()
+                    }
+                }
+                else if call.isRemoteDeclined {
+                    call.end(reason: Call.DisconnectReason.remoteDecline)
+                }
+            }
         }
     }
 }

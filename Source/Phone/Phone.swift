@@ -132,7 +132,7 @@ public class Phone {
     private let webSocket: WebSocketService
     private var calls = [String: Call]()
     private var mediaContext: MediaSessionWrapper?
-    
+    private let nilJsonStr = "Nil JSON"
     var debug = true;
     
     enum LocusResult {
@@ -634,9 +634,9 @@ public class Phone {
         case .call(let group, let device, let uuid, let media, let res, let completionHandler):
             switch res.result {
             case .success(let model):
-                SDKLogger.shared.debug("Receive call locus response: \(model.toJSONString(prettyPrint: self.debug) ?? "Nil JSON")")
+                SDKLogger.shared.debug("Receive call locus response: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
                 if model.isValid {
-                    let call = Call(model: model, device: device, media: media, direction: Call.Direction.outgoing, group: (group ? true : !model.isOneOnOne), uuid: uuid)
+                    let call = Call(model: model, device: device, media: media, direction: Call.Direction.outgoing, group: (group ? group : !model.isOneOnOne), uuid: uuid)
                     if call.isInIllegalStatus {
                         DispatchQueue.main.async {
                             let error = WebexError.illegalStatus(reason: "The previous session did not end")
@@ -664,7 +664,7 @@ public class Phone {
         case .join(let call, let res, let completionHandler):
             switch res.result {
             case .success(let model):
-                SDKLogger.shared.debug("Receive join locus response: \(model.toJSONString(prettyPrint: self.debug) ?? "Nil JSON")")
+                SDKLogger.shared.debug("Receive join locus response: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
                 call.update(model: model)
                 DispatchQueue.main.async {
                     call.startMedia()
@@ -679,7 +679,7 @@ public class Phone {
         case .leave(let call, let res, let completionHandler):
             switch res.result {
             case .success(let model):
-                SDKLogger.shared.debug("Receive leave locus response: \(model.toJSONString(prettyPrint: self.debug) ?? "Nil JSON")")
+                SDKLogger.shared.debug("Receive leave locus response: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
                 call.update(model: model)
                 DispatchQueue.main.async {
                     completionHandler(nil)
@@ -722,7 +722,7 @@ public class Phone {
         case .update(let call, let res):
             switch res.result {
             case .success(let model):
-                SDKLogger.shared.debug("Receive update media locus response: \(model.toJSONString(prettyPrint: self.debug) ?? "Nil JSON")")
+                SDKLogger.shared.debug("Receive update media locus response: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
                 call.update(model: model)
             case .failure(let error):
                 SDKLogger.shared.error("Failure update media ", error: error)
@@ -745,7 +745,7 @@ public class Phone {
     }
     
     private func doLocusEvent(_ model: CallModel) {
-        SDKLogger.shared.debug("Receive locus event: \(model.toJSONString(prettyPrint: self.debug) ?? "Nil JSON")")
+        SDKLogger.shared.debug("Receive locus event: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
         guard let url = model.callUrl else {
             SDKLogger.shared.error("CallModel is missing call url")
             return
@@ -780,14 +780,14 @@ public class Phone {
     
     private func doConversationEvent(_ model: ActivityModel){
         if let messages = self.messages {
-            SDKLogger.shared.debug("Receive Conversation Acitivity: \(model.toJSONString(prettyPrint: self.debug) ?? "Nil JSON")")
+            SDKLogger.shared.debug("Receive Conversation Acitivity: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
             messages.handle(activity: model)
         }
     }
     
     private func doKmsEvent( _ model: KmsMessageModel){
         if let messages = self.messages{
-            SDKLogger.shared.debug("Receive Kms Message: \(model.toJSONString(prettyPrint: self.debug) ?? "Nil JSON")")
+            SDKLogger.shared.debug("Receive Kms Message: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
             messages.handle(kms: model)
         }
     }
