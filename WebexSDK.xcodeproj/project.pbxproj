@@ -140,6 +140,7 @@
 		B91E75E41CE2D7B70080EAE0 /* WebexSDK-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = B91E758F1CE2D7B70080EAE0 /* WebexSDK-Bridging-Header.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B91E75E61CE2D7B70080EAE0 /* Webhook.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E75921CE2D7B70080EAE0 /* Webhook.swift */; };
 		B91E75E81CE2D7B70080EAE0 /* WebhookClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E75941CE2D7B70080EAE0 /* WebhookClient.swift */; };
+		C7138A0B213D031900E2ED8D /* AuxiliaryVideoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8649212A74A400D316F4 /* AuxiliaryVideoTest.swift */; };
 		C7625FDB205CBB9700219F95 /* WebexBroadcastExtensionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7625FD2205CBB9600219F95 /* WebexBroadcastExtensionKit.framework */; };
 		C78D1AA020887888002C6F2C /* Sbu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C78D1A9F20887888002C6F2C /* Sbu.framework */; };
 		C78D1AA12088789B002C6F2C /* Sbu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C78D1A9F20887888002C6F2C /* Sbu.framework */; };
@@ -153,7 +154,6 @@
 		C79F140B1FBE7C3A00B43596 /* FakeMetricsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F14031FBE7BE500B43596 /* FakeMetricsEngine.swift */; };
 		C79F140C1FBE7C3A00B43596 /* FakeReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F14041FBE7BE500B43596 /* FakeReachabilityService.swift */; };
 		C79F140D1FBE7C3A00B43596 /* FakeWebSocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F14051FBE7BE500B43596 /* FakeWebSocketService.swift */; };
-		C79F14101FC3B8C900B43596 /* CallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F140E1FC3B88900B43596 /* CallTests.swift */; };
 		C7CE613D2106CA5D007FB9AA /* AuxStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CE613C2106CA5D007FB9AA /* AuxStream.swift */; };
 		C7DAC2F22136538000782338 /* MultiStreamObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DAC2F12136538000782338 /* MultiStreamObserver.swift */; };
 		D4E203C8CEBFF13EE1120FF8 /* Pods_WebexBroadcastExtensionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB676BF6AEAF9B6DEEE3180A /* Pods_WebexBroadcastExtensionKit.framework */; };
@@ -349,7 +349,6 @@
 		C79F14031FBE7BE500B43596 /* FakeMetricsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeMetricsEngine.swift; sourceTree = "<group>"; };
 		C79F14041FBE7BE500B43596 /* FakeReachabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeReachabilityService.swift; sourceTree = "<group>"; };
 		C79F14051FBE7BE500B43596 /* FakeWebSocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeWebSocketService.swift; sourceTree = "<group>"; };
-		C79F140E1FC3B88900B43596 /* CallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CallTests.swift; path = Tests/CallTests.swift; sourceTree = SOURCE_ROOT; };
 		C7CE613C2106CA5D007FB9AA /* AuxStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuxStream.swift; sourceTree = "<group>"; };
 		C7DAC2F12136538000782338 /* MultiStreamObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiStreamObserver.swift; sourceTree = "<group>"; };
 		DBF6BF7E8BF8E98D8092ECF0 /* Pods-WebexSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebexSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WebexSDK/Pods-WebexSDK.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1157,6 +1156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7138A0B213D031900E2ED8D /* AuxiliaryVideoTest.swift in Sources */,
 				10D4D7E2212C0D9D00B37D98 /* MockClock.swift in Sources */,
 				10D4D800212D1D4E00B37D98 /* SSOAuthenticatorTests.swift in Sources */,
 				10D4D7FF212D1D4E00B37D98 /* SpaceTests.swift in Sources */,

@@ -91,7 +91,7 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "CLIENTSECRET"
-            value = "e3dea2be124397f2ae4daf148e39063793bf20f02861a4faa09bb96b0ceb4256"
+            value = "$(CLIENTSECRET)"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

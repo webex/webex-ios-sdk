@@ -1102,14 +1102,14 @@ public class Call {
             var newAvailableAuxStreamCount = min(self.memberships.filter({ $0.isMediaActive() && !$0.isSelf }).count - Call.activeSpeakerCount, self.mediaSession.auxStreamCount() - Call.activeSpeakerCount)
             if newAvailableAuxStreamCount < 0 {
                 newAvailableAuxStreamCount = 0
-            } else if self.availableAuxStreamCount >= MAX_AUX_STREAM_NUMBER && newAvailableAuxStreamCount > MAX_AUX_STREAM_NUMBER {
+            } else if self.availableAuxStreamCount >= maxAuxStreamNumber && newAvailableAuxStreamCount > maxAuxStreamNumber {
                 self.availableAuxStreamCount = newAvailableAuxStreamCount
                 return
             }
             
             var diffCount = newAvailableAuxStreamCount - self.availableAuxStreamCount
-            if diffCount > MAX_AUX_STREAM_NUMBER {
-                diffCount = MAX_AUX_STREAM_NUMBER
+            if diffCount > maxAuxStreamNumber {
+                diffCount = maxAuxStreamNumber
             }
             
             if diffCount > 0 {

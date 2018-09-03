@@ -74,14 +74,14 @@ class AuxiliaryVideoTest: XCTestCase {
     // MARK: - mock metod
     private func mockCall(isGroup:Bool) -> Call? {
         var tryCount = 0
-        while AuxiliaryVideoTest.remoteUsers.count < MAX_AUX_STREAM_NUMBER+3 && tryCount < 30 {
+        while AuxiliaryVideoTest.remoteUsers.count < maxAuxStreamNumber+3 && tryCount < 30 {
             if let user = self.fixture.createUser() {
                 AuxiliaryVideoTest.remoteUsers.append(user)
             }
             tryCount = tryCount + 1
         }
         
-        if let callee = self.remoteUser, self.otherUsers?.count ?? 0 >= MAX_AUX_STREAM_NUMBER {
+        if let callee = self.remoteUser, self.otherUsers?.count ?? 0 >= maxAuxStreamNumber {
             let callModel = FakeCallModelHelper.dialCallModel(caller: self.fixture.selfUser, callee: callee, otherParticipantUsers: (self.otherUsers ?? []))
             let mediaSession = MediaSessionWrapper()
             mediaSession.setMediaSession(mediaSession: fakeWME!)
@@ -179,7 +179,7 @@ class AuxiliaryVideoTest: XCTestCase {
         if let callmodel = self.call?.model,let user = self.remoteUser {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
             let expect = expectation(description: "on onMediaChanged")
-            expect.expectedFulfillmentCount = MAX_AUX_STREAM_NUMBER*2
+            expect.expectedFulfillmentCount = maxAuxStreamNumber*2
             
             self.auxStreamObserver?.onAuxStreamChanged = {
                 event in
@@ -206,7 +206,7 @@ class AuxiliaryVideoTest: XCTestCase {
                 return MediaRenderView()
             }
             
-            FakeWME.stubStreamsCountNotification(count: MAX_AUX_STREAM_NUMBER+Call.activeSpeakerCount, call: self.call!)
+            FakeWME.stubStreamsCountNotification(count: maxAuxStreamNumber+Call.activeSpeakerCount, call: self.call!)
             for user in self.otherUsers ?? [] {
                 self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user))
             }
@@ -221,7 +221,7 @@ class AuxiliaryVideoTest: XCTestCase {
         if let callmodel = self.call?.model,let user = self.remoteUser {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
             let expect = expectation(description: "on onMediaChanged")
-            expect.expectedFulfillmentCount = MAX_AUX_STREAM_NUMBER
+            expect.expectedFulfillmentCount = maxAuxStreamNumber
             
             self.auxStreamObserver?.auxStreamAvailable = {
                 expect.fulfill()
@@ -231,7 +231,7 @@ class AuxiliaryVideoTest: XCTestCase {
             for user in self.otherUsers ?? [] {
                 self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user))
             }
-            FakeWME.stubStreamsCountNotification(count: MAX_AUX_STREAM_NUMBER+Call.activeSpeakerCount+2, call: self.call!)
+            FakeWME.stubStreamsCountNotification(count: maxAuxStreamNumber+Call.activeSpeakerCount+2, call: self.call!)
             
             
             waitForExpectations(timeout: 5) { error in
@@ -244,7 +244,7 @@ class AuxiliaryVideoTest: XCTestCase {
         if let callmodel = self.call?.model,let user = self.remoteUser {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
             let expect = expectation(description: "on onMediaChanged")
-            expect.expectedFulfillmentCount = MAX_AUX_STREAM_NUMBER
+            expect.expectedFulfillmentCount = maxAuxStreamNumber
             var count = 1 + Call.activeSpeakerCount
             self.auxStreamObserver?.auxStreamAvailable = {
                 expect.fulfill()
@@ -269,12 +269,12 @@ class AuxiliaryVideoTest: XCTestCase {
         if let callmodel = self.call?.model,let user = self.remoteUser {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
             let availableExpect = expectation(description: "on available")
-            availableExpect.expectedFulfillmentCount = MAX_AUX_STREAM_NUMBER
+            availableExpect.expectedFulfillmentCount = maxAuxStreamNumber
             let unavailableExpect = expectation(description: "on unavailable")
-            unavailableExpect.expectedFulfillmentCount = MAX_AUX_STREAM_NUMBER
+            unavailableExpect.expectedFulfillmentCount = maxAuxStreamNumber
             let closedExpect = expectation(description: "on closed")
-            closedExpect.expectedFulfillmentCount = MAX_AUX_STREAM_NUMBER
-            var count = MAX_AUX_STREAM_NUMBER + Call.activeSpeakerCount
+            closedExpect.expectedFulfillmentCount = maxAuxStreamNumber
+            var count = maxAuxStreamNumber + Call.activeSpeakerCount
             self.auxStreamObserver?.auxStreamAvailable = {
                 availableExpect.fulfill()
                 return MediaRenderView()
@@ -288,7 +288,7 @@ class AuxiliaryVideoTest: XCTestCase {
                     switch result {
                     case .success(let auxStream):
                         XCTAssertNotNil(auxStream)
-                        if MAX_AUX_STREAM_NUMBER == self.call?.auxStreams.count ?? 0 {
+                        if maxAuxStreamNumber == self.call?.auxStreams.count ?? 0 {
                             count = count - 1
                             FakeWME.stubStreamsCountNotification(count: count, call: self.call!)
                         }
@@ -327,12 +327,12 @@ class AuxiliaryVideoTest: XCTestCase {
         if let callmodel = self.call?.model,let user = self.remoteUser {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
             let availableExpect = expectation(description: "on available")
-            availableExpect.expectedFulfillmentCount = MAX_AUX_STREAM_NUMBER
+            availableExpect.expectedFulfillmentCount = maxAuxStreamNumber
             let unavailableExpect = expectation(description: "on unavailable")
-            unavailableExpect.expectedFulfillmentCount = MAX_AUX_STREAM_NUMBER
+            unavailableExpect.expectedFulfillmentCount = maxAuxStreamNumber
             let closedExpect = expectation(description: "on closed")
             closedExpect.expectedFulfillmentCount = 2
-            var count = MAX_AUX_STREAM_NUMBER + Call.activeSpeakerCount
+            var count = maxAuxStreamNumber + Call.activeSpeakerCount
             var renderViewArray = Array<MediaRenderView>()
             self.auxStreamObserver?.auxStreamAvailable = {
                 availableExpect.fulfill()
@@ -401,7 +401,7 @@ class AuxiliaryVideoTest: XCTestCase {
         if let callmodel = self.call?.model,let user = self.remoteUser {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
             let expect = expectation(description: "on onMediaChanged")
-            expect.expectedFulfillmentCount = MAX_AUX_STREAM_NUMBER * 2
+            expect.expectedFulfillmentCount = maxAuxStreamNumber * 2
             let expectFail = expectation(description: "open AuxStream fail")
             expectFail.expectedFulfillmentCount = 1
             
@@ -438,7 +438,7 @@ class AuxiliaryVideoTest: XCTestCase {
                 return MediaRenderView()
             }
             
-            FakeWME.stubStreamsCountNotification(count: MAX_AUX_STREAM_NUMBER + Call.activeSpeakerCount, call: self.call!)
+            FakeWME.stubStreamsCountNotification(count: maxAuxStreamNumber + Call.activeSpeakerCount, call: self.call!)
             for user in self.otherUsers ?? [] {
                 self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user))
             }
