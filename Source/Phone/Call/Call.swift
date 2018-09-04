@@ -600,7 +600,7 @@ public class Call {
     
     var auxStreamAvailable: (()-> MediaRenderView?)?  {
         get {
-            return self.multiStreamObserver?.auxStreamAvailable
+            return self.multiStreamObserver?.onAuxStreamAvailable
         }
     }
     

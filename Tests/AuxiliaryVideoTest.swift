@@ -130,7 +130,7 @@ class AuxiliaryVideoTest: XCTestCase {
     
     class TestObserver: MultiStreamObserver {
         var onAuxStreamChanged: ((AuxStreamChangeEvent) -> Void)?
-        var auxStreamAvailable: (() -> MediaRenderView?)?
+        var onAuxStreamAvailable: (() -> MediaRenderView?)?
         var onAuxStreamUnavailable: (() -> MediaRenderView?)?
     }
     
@@ -161,7 +161,7 @@ class AuxiliaryVideoTest: XCTestCase {
                 
             }
             
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 expect.fulfill()
                 return renderView
             }
@@ -201,7 +201,7 @@ class AuxiliaryVideoTest: XCTestCase {
                 
             }
             
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 expect.fulfill()
                 return MediaRenderView()
             }
@@ -223,7 +223,7 @@ class AuxiliaryVideoTest: XCTestCase {
             let expect = expectation(description: "on onMediaChanged")
             expect.expectedFulfillmentCount = maxAuxStreamNumber
             
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 expect.fulfill()
                 return nil
             }
@@ -246,7 +246,7 @@ class AuxiliaryVideoTest: XCTestCase {
             let expect = expectation(description: "on onMediaChanged")
             expect.expectedFulfillmentCount = maxAuxStreamNumber
             var count = 1 + Call.activeSpeakerCount
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 expect.fulfill()
                 if count <= self.otherUsers?.count ?? 0 {
                     count = count + 1
@@ -275,7 +275,7 @@ class AuxiliaryVideoTest: XCTestCase {
             let closedExpect = expectation(description: "on closed")
             closedExpect.expectedFulfillmentCount = maxAuxStreamNumber
             var count = maxAuxStreamNumber + Call.activeSpeakerCount
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 availableExpect.fulfill()
                 return MediaRenderView()
             }
@@ -334,7 +334,7 @@ class AuxiliaryVideoTest: XCTestCase {
             closedExpect.expectedFulfillmentCount = 2
             var count = maxAuxStreamNumber + Call.activeSpeakerCount
             var renderViewArray = Array<MediaRenderView>()
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 availableExpect.fulfill()
                 
                 if renderViewArray.count >= 2 {
@@ -432,7 +432,7 @@ class AuxiliaryVideoTest: XCTestCase {
                 
             }
             
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 expect.fulfill()
                 
                 return MediaRenderView()
@@ -476,7 +476,7 @@ class AuxiliaryVideoTest: XCTestCase {
                 
             }
             
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 self.fakeWME?.stubOpenFailed = true
                 return MediaRenderView()
             }
@@ -525,7 +525,7 @@ class AuxiliaryVideoTest: XCTestCase {
                 
             }
             
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 return renderView
             }
             
@@ -587,7 +587,7 @@ class AuxiliaryVideoTest: XCTestCase {
                 
             }
             
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 return renderView
             }
             
@@ -750,7 +750,7 @@ class AuxiliaryVideoTest: XCTestCase {
             
             let renderView = MediaRenderView()
             var auxStream: AuxStream?
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 return renderView
             }
             self.auxStreamObserver?.onAuxStreamChanged = {
@@ -800,7 +800,7 @@ class AuxiliaryVideoTest: XCTestCase {
             
             let renderView = MediaRenderView()
             var auxStream: AuxStream?
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 return renderView
             }
             self.auxStreamObserver?.onAuxStreamChanged = {
@@ -857,7 +857,7 @@ class AuxiliaryVideoTest: XCTestCase {
             
             let renderView = MediaRenderView()
             var auxStream: AuxStream?
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 return renderView
             }
             self.auxStreamObserver?.onAuxStreamChanged = {
@@ -914,7 +914,7 @@ class AuxiliaryVideoTest: XCTestCase {
             
             let renderView = MediaRenderView()
             var auxStream: AuxStream?
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 return renderView
             }
             self.auxStreamObserver?.onAuxStreamChanged = {
@@ -971,7 +971,7 @@ class AuxiliaryVideoTest: XCTestCase {
             
             let renderView = MediaRenderView()
             var auxStream: AuxStream?
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 return renderView
             }
             self.auxStreamObserver?.onAuxStreamChanged = {
@@ -1017,7 +1017,7 @@ class AuxiliaryVideoTest: XCTestCase {
             
             let renderView = MediaRenderView()
             var auxStream: AuxStream?
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 return renderView
             }
             self.auxStreamObserver?.onAuxStreamChanged = {
@@ -1070,7 +1070,7 @@ class AuxiliaryVideoTest: XCTestCase {
             
             let renderView = MediaRenderView()
             var auxStream: AuxStream?
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 return renderView
             }
             self.auxStreamObserver?.onAuxStreamChanged = {
@@ -1117,7 +1117,7 @@ class AuxiliaryVideoTest: XCTestCase {
             let expect = expectation(description: "on AuxStreamChangeEvent")
             expect.expectedFulfillmentCount = 1
             let renderView = MediaRenderView()
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 XCTAssertTrue(false)
                 return nil
             }
@@ -1156,7 +1156,7 @@ class AuxiliaryVideoTest: XCTestCase {
             let expect = expectation(description: "on onMediaChanged")
             expect.expectedFulfillmentCount = 1
             
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 expect.fulfill()
                 return nil
             }
@@ -1176,7 +1176,7 @@ class AuxiliaryVideoTest: XCTestCase {
             let expect = expectation(description: "on onMediaChanged")
             expect.expectedFulfillmentCount = 2
             
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 expect.fulfill()
                 self.call?.update(model: FakeCallModelHelper.hangUpCallModel(callModel: self.call?.model ?? callmodel, hanupUser: user2))
                 return nil
@@ -1202,7 +1202,7 @@ class AuxiliaryVideoTest: XCTestCase {
             let expect = expectation(description: "on onMediaChanged")
             expect.expectedFulfillmentCount = 2
             
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 expect.fulfill()
                 FakeWME.stubStreamsCountNotification(count: 2 + Call.activeSpeakerCount, call: self.call!)
                 return nil

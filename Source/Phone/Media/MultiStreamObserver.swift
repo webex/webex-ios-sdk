@@ -37,7 +37,7 @@ public protocol MultiStreamObserver : class {
     /// - since: 2.0.0
     var onAuxStreamChanged: ((AuxStreamChangeEvent) -> Void)? { get set }
     
-    var auxStreamAvailable: (()-> MediaRenderView?)? { get set }
+    var onAuxStreamAvailable: (()-> MediaRenderView?)? { get set }
     
     var onAuxStreamUnavailable: (() -> MediaRenderView?)? { get set }
 }
