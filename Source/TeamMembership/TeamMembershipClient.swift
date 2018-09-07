@@ -91,18 +91,18 @@ public class TeamMembershipClient {
     /// - returns: Void
     /// - since: 1.2.0
     public func create(teamId: String, personEmail: EmailAddress, isModerator: Bool = false, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<TeamMembership>) -> Void) {
-        let createBody = RequestParameter([
+        let body = RequestParameter([
             "teamId": teamId,
             "personEmail": personEmail.toString(),
             "isModerator": isModerator])
         
-        let createRequest = requestBuilder()
+        let request = requestBuilder()
             .method(.post)
             .queue(queue)
-            .body(createBody)
+            .body(body)
             .build()
         
-        createRequest.responseObject(completionHandler)
+        request.responseObject(completionHandler)
     }
     
     /// Retrieves the details for a membership by id.
