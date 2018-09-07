@@ -135,19 +135,19 @@ public class MembershipClient {
     /// - returns: Void
     /// - since: 1.2.0
     public func create(spaceId: String, personEmail: EmailAddress, isModerator: Bool = false, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Membership>) -> Void) {
-        let body = RequestParameter([
+        let createBody = RequestParameter([
             "spaceId": spaceId,
             "roomId": spaceId,
             "personEmail": personEmail.toString(),
             "isModerator": isModerator])
         
-        let request = requestBuilder()
+        let createRequest = requestBuilder()
             .method(.post)
             .queue(queue)
-            .body(body)
+            .body(createBody)
             .build()
         
-        request.responseObject(completionHandler)
+        createRequest.responseObject(completionHandler)
     }
     
     /// Retrieves the details for a membership by membership id.
