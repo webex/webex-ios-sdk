@@ -318,6 +318,51 @@ Here are some examples of how to use the iOS SDK in your app.
     ```
     11.3 Get more technical details about the [Containing App & Broadcast upload extension](https://github.com/webex/webex-ios-sdk/wiki/Implementation-Broadcast-upload-extension) and [Set up an App Group](https://github.com/webex/webex-ios-sdk/wiki/Set-up-an-App-Group)
 
+12. Receive more video stream in a meeting:
+    ```
+    class VideoCallViewController: MultiStreamObserver {
+        ...
+        ///onAuxStreamChanged represent a call back when a existing auxiliary stream status changed.
+        var onAuxStreamChanged: ((AuxStreamChangeEvent) -> Void)? = {
+            ...
+            switch event {
+            case .auxStreamOpenedEvent(let view, let result):
+                switch result {
+                    case .success(let auxStream):
+                        ...
+                    case .failure(let error):
+                        ...
+                }
+            case .auxStreamPersonChangedEvent(let auxStream,_,_):
+                    ...
+            case .auxStreamSendingVideoEvent(let auxStream):
+                ...
+            case .auxStreamSizeChangedEvent(let auxStream):
+                ...
+            case .auxStreamClosedEvent(let view, let error):
+                ...
+            }
+        }
+        
+        var onAuxStreamAvailable: (() -> MediaRenderView?)? = {
+            ...
+            return self.mediaRenderViews.filter({!$0.inUse}).first?
+        }
+    
+        var onAuxStreamUnavailable: (() -> MediaRenderView?)? = {
+            ...
+            return self.mediaRenderViews.filter({$0.inUse}).last?
+        }
+        
+        
+        override func viewWillAppear(_ animated: Bool) {
+            ...
+            // set the observer of this call to get multi stream event.
+            self.call.multiStreamObserver = self
+            ...
+        }
+    }
+    ```
 ## Migrating from Cisco Spark IOS SDK
 
 The purpose of this guide is to help you to migrate from Cisco Spark IOS SDK to Cisco Webex IOS SDK.
