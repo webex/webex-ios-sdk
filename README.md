@@ -322,7 +322,6 @@ Here are some examples of how to use the iOS SDK in your app.
     ```
     class VideoCallViewController: MultiStreamObserver {
         ...
-        ///onAuxStreamChanged represent a call back when a existing auxiliary stream status changed.
         var onAuxStreamChanged: ((AuxStreamChangeEvent) -> Void)? = {
             ...
             switch event {
