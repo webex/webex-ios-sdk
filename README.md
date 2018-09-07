@@ -318,7 +318,7 @@ Here are some examples of how to use the iOS SDK in your app.
     ```
     11.3 Get more technical details about the [Containing App & Broadcast upload extension](https://github.com/webex/webex-ios-sdk/wiki/Implementation-Broadcast-upload-extension) and [Set up an App Group](https://github.com/webex/webex-ios-sdk/wiki/Set-up-an-App-Group)
 
-12. Receive more video stream in a meeting:
+12. Receive more video streams in a meeting:
     ```
     class VideoCallViewController: MultiStreamObserver {
         ...
