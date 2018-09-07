@@ -20,10 +20,9 @@
 
 import Foundation
 
-public let maxAuxStreamNumber = 4
+let maxAuxStreamNumber = 4
 
 public class AuxStream {
-    static let invalidVid = -1
     enum RenderViewOperationType {
         case add(Int,MediaRenderView)
         case remove(Int,MediaRenderView)
@@ -34,13 +33,21 @@ public class AuxStream {
         case mute(Int,Bool)
     }
     
-    /// The direction of this *call*.
+    static let invalidVid = -1
+    
+    /// The render view of this *AuxStream*.
     ///
-    /// - since: 2.0
+    /// - since: 2.0.0
     public private(set) var renderView:MediaRenderView?
     
+    /// The person shows up in this auxiliary stream.
+    ///
+    /// - since: 2.0.0
     public internal(set) var person: CallMembership?
     
+    /// True if the auxiliary stream is sending video. Otherwise, false.
+    ///
+    /// - since: 2.0.0
     public var isSendingVideo: Bool {
         get {
             if let sendingMuted = renderViewOperationHandler?(RenderViewOperationType.getRemoteMuted(vid)) as? Bool {
@@ -50,6 +57,9 @@ public class AuxStream {
         }
     }
     
+    /// The render view dimensions (points) of this *AuxStream*.
+    ///
+    /// - since: 2.0.0
     public var auxStreamSize: CMVideoDimensions {
         get {
             if let size = renderViewOperationHandler?(RenderViewOperationType.getSize(vid)) as? CGSize {
@@ -61,19 +71,24 @@ public class AuxStream {
     
     var vid: Int
     var renderViewOperationHandler:((RenderViewOperationType) -> Any?)?
-
     private weak var call:Call?
+    
+    /// Close this auxiliary stream.
+    /// The auxStreamClosedEvent would be triggered indicating whether the stream is successfully closed.
+    /// - returns: Void
+    /// - see: see AuxStreamChangeEvent.auxStreamClosedEvent
+    /// - since: 2.0.0
+    public func close() {
+        if let retainCall = self.call, let view = self.renderView {
+            retainCall.closeAuxStream(view: view)
+        }
+    }
     
     init(vid: Int, renderView:MediaRenderView, renderViewOperation: @escaping ((RenderViewOperationType) -> Any?), call:Call) {
         self.vid = vid
         self.renderView = renderView
         self.renderViewOperationHandler = renderViewOperation
         self.call = call
-    }
-    public func close() {
-        if let retainCall = self.call, let view = self.renderView {
-            retainCall.closeAuxStream(view: view)
-        }
     }
     
     func invalidate() {

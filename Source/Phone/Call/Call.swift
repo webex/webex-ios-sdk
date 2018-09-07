@@ -159,8 +159,7 @@ public class Call {
         /// Local screen share size has changed.
         /// - since: 1.4.0
         case localScreenShareViewSize
-        
-        /// remote auxiliary video count has changed.
+        /// The remote video's speaker has changed.
         /// - since: 2.0.0
         case activeSpeakerChangedEvent(From:CallMembership?,To:CallMembership?)
     }
@@ -259,15 +258,16 @@ public class Call {
     /// - since: 1.4.0
     public var oniOSBroadcastingChanged: ((iOSBroadcastingEvent) -> Void)?
     
-    ///
-    ///
+    /// The observer protocol of multi stream feature.
+    /// Client should set the protocol implemention into this call.
+    /// - see: see MultiStreamObserver
     /// - since: 2.0.0
     public var multiStreamObserver: MultiStreamObserver?
     
     /// The status of this *call*.
     ///
-    /// - since: 1.2.0
     /// - see: CallStatus
+    /// - since: 1.2.0
     public internal(set) var status: CallStatus = CallStatus.initiated
     
     /// The direction of this *call*.
@@ -301,7 +301,6 @@ public class Call {
     /// - since: 1.3.0
     public var remoteSendingScreenShare: Bool {
         return model.isGrantedScreenShare && !self.isScreenSharedBySelfDevice()
-        //        return model.isGrantedScreenShare && !self.mediaSession.remotescreenShareMuted
     }
     
     /// True if the local party of this *call* is sending video. Otherwise, false.
@@ -526,19 +525,18 @@ public class Call {
         }
     }
     
-    ///
-    ///
-    ///
+    /// Gets all the opened auxiliary streams.
+    /// - see: see AuxStream
     /// - since: 2.0.0
     public lazy private(set) var auxStreams: Array<AuxStream> = Array<AuxStream>()
     
-    ///
-    ///
-    ///
+    /// The *CallMembership* is speaking in this meeting and the video
+    /// shows up in the remote media render view.
+    /// - see: see CallMembership.isActiveSpeaker
     /// - since: 2.0.0
     public internal(set) var activeSpeaker: CallMembership?
     
-    ///
+    /// Gets the count of available auxiliary streams.
     ///
     /// - since: 2.0.0
     public private(set) var availableAuxStreamCount: Int {
@@ -784,9 +782,12 @@ public class Call {
         self.device.phone.stopSharing(call: self, completionHandler: completionHandler)
     }
     
-    ///
-    ///
-    ///
+    /// Open an auxiliary stream with a media render view. The Maximum of auxiliary videos you can open is 4.
+    /// When the client manually closed an auxiliary stream, the client can call this API to reopen the auxiliary stream again.
+    /// The auxStreamOpenedEvent would be triggered when an auxiliary stream is opened successfully or not.
+    /// - parameter view: the auxiliary display view.
+    /// - returns: Void
+    /// - see: see AuxStreamChangeEvent.auxStreamOpenedEvent
     /// - since: 2.0.0
     public func openAuxStream(view:MediaRenderView) {
         let mediaOperationHandler: (AuxStream.RenderViewOperationType) -> Any? = {
@@ -816,7 +817,7 @@ public class Call {
         
         DispatchQueue.main.async {
             if self.auxStreams.count >= maxAuxStreamNumber {
-                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "have exceeded the auxiliary videos limit"))))
+                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "have exceeded the auxiliary streams limit"))))
                 return
             }
             
@@ -831,7 +832,7 @@ public class Call {
             }
             
             if self.auxStreams.count >= self.availableAuxStreamCount {
-                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "Cannot exceed available video count."))))
+                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "Cannot exceed available stream count."))))
                 return
             }
             
@@ -839,21 +840,23 @@ public class Call {
             if (self.mediaSession.status == .running) {
                 vid = self.mediaSession.subscribeAuxStream(view: view)
                 if vid == AuxStream.invalidVid {
-                    self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.serviceFailed(code: -7000, reason: "subscribe video fail"))))
+                    self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.serviceFailed(code: -7000, reason: "open stream fail"))))
                     return
                 }
             }
             
             let auxVideo = AuxStream.init(vid: vid, renderView: view,renderViewOperation:mediaOperationHandler,call: self)
-            SDKLogger.shared.info("add subscribe call for vid:\(auxVideo.vid)")
+            SDKLogger.shared.info("open stream for vid:\(auxVideo.vid)")
             self.auxStreams.append(auxVideo)
             self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.success(auxVideo)))
         }
     }
     
-    ///
-    ///
-    ///
+    /// Close an auxiliary stream with the indicated media render view.
+    /// The auxStreamClosedEvent would be triggered indicating whether the stream is successfully closed.
+    /// - parameter view: the auxiliary stream's render view that will be closed.
+    /// - returns: Void
+    /// - see: see AuxStreamChangeEvent.auxStreamClosedEvent
     /// - since: 2.0.0
     public func closeAuxStream(view:MediaRenderView) {
         DispatchQueue.main.async {
@@ -1103,7 +1106,7 @@ public class Call {
             if newAvailableAuxStreamCount < 0 {
                 newAvailableAuxStreamCount = 0
             } else if self.availableAuxStreamCount >= maxAuxStreamNumber && newAvailableAuxStreamCount > maxAuxStreamNumber {
-                self.availableAuxStreamCount = newAvailableAuxStreamCount
+                self.availableAuxStreamCount = maxAuxStreamNumber
                 return
             }
             
