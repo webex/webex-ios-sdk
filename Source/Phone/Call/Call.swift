@@ -159,7 +159,7 @@ public class Call {
         /// Local screen share size has changed.
         /// - since: 1.4.0
         case localScreenShareViewSize
-        /// The remote video's speaker has changed.
+        /// Remote video active speaker has changed.
         /// - since: 2.0.0
         case activeSpeakerChangedEvent(From:CallMembership?,To:CallMembership?)
     }
@@ -258,8 +258,8 @@ public class Call {
     /// - since: 1.4.0
     public var oniOSBroadcastingChanged: ((iOSBroadcastingEvent) -> Void)?
     
-    /// The observer protocol of multi stream feature.
-    /// Client should set the protocol implemention into this call.
+    /// Multi stream feature observer protocol.
+    /// Client need to set the protocol implemention into certain call.
     /// - see: see MultiStreamObserver
     /// - since: 2.0.0
     public var multiStreamObserver: MultiStreamObserver?
@@ -525,18 +525,18 @@ public class Call {
         }
     }
     
-    /// Gets all the opened auxiliary streams.
+    /// Get all opened auxiliary streams.
     /// - see: see AuxStream
     /// - since: 2.0.0
     public lazy private(set) var auxStreams: Array<AuxStream> = Array<AuxStream>()
     
-    /// The *CallMembership* is speaking in this meeting and the video
-    /// shows up in the remote media render view.
+    /// Speaking *CallMembership* in meeting.
+    /// Video presented on remote media render view.
     /// - see: see CallMembership.isActiveSpeaker
     /// - since: 2.0.0
     public internal(set) var activeSpeaker: CallMembership?
     
-    /// Gets the count of available auxiliary streams.
+    /// Available auxiliary stream count.
     ///
     /// - since: 2.0.0
     public private(set) var availableAuxStreamCount: Int {
@@ -782,9 +782,9 @@ public class Call {
         self.device.phone.stopSharing(call: self, completionHandler: completionHandler)
     }
     
-    /// Open an auxiliary stream with a media render view. The Maximum of auxiliary videos you can open is 4.
-    /// When the client manually closed an auxiliary stream, the client can call this API to reopen the auxiliary stream again.
-    /// The auxStreamOpenedEvent would be triggered when an auxiliary stream is opened successfully or not.
+    /// Open one auxiliary stream with a media render view. The Maximum number of auxiliary videos could be opened is 4.
+    /// When one auxiliary streams manually closed, could call this API to reopen.
+    /// Result will call back through auxStreamOpenedEvent
     /// - parameter view: the auxiliary display view.
     /// - returns: Void
     /// - see: see AuxStreamChangeEvent.auxStreamOpenedEvent
@@ -852,8 +852,8 @@ public class Call {
         }
     }
     
-    /// Close an auxiliary stream with the indicated media render view.
-    /// The auxStreamClosedEvent would be triggered indicating whether the stream is successfully closed.
+    /// Close one auxiliary stream with the indicated media render view.
+    /// Result will call back throuhd auxStreamClosedEvent.
     /// - parameter view: the auxiliary stream's render view that will be closed.
     /// - returns: Void
     /// - see: see AuxStreamChangeEvent.auxStreamClosedEvent

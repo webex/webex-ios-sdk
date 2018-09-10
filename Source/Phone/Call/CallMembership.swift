@@ -102,7 +102,7 @@ public struct CallMembership {
             && self.call.model.screenShareMediaFloor?.disposition == MediaShareModel.ShareFloorDisposition.granted
     }
     
-    /// True if this *CallMembership* is speaking in this meeting and the video shows up in the remote media render view. Otherwise, false.
+    /// True if this *CallMembership* is speaking in this meeting and video is prsenting on remote media render view. Otherwise, false.
     ///
     /// - since: 2.0.0
     public var isActiveSpeaker: Bool {
