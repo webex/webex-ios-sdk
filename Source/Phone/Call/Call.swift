@@ -605,7 +605,7 @@ public class Call {
     var willBeReleasedAuxStream: (Int) -> MediaRenderView? {
         get {
             func renderViewByUser() -> MediaRenderView? {
-                if let releaseClosure = self.multiStreamObserver?.onAuxStreamUnavailable, let releaseRenderView = releaseClosure() {
+                if let releaseClosure = self.multiStreamObserver?.onAuxStreamUnavailable, let releaseRenderView = releaseClosure() ,let _ = self.auxStreams.filter({$0.renderView == releaseRenderView}).first {
                     return releaseRenderView
                 }
                 return nil
