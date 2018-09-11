@@ -35,17 +35,17 @@ public class AuxStream {
     
     static let invalidVid = -1
     
-    /// The render view of this *AuxStream*.
+    /// *AuxStream* render view.
     ///
     /// - since: 2.0.0
     public private(set) var renderView:MediaRenderView?
     
-    /// The person shows up in this auxiliary stream.
+    /// Person presented in auxiliary stream.
     ///
     /// - since: 2.0.0
     public internal(set) var person: CallMembership?
     
-    /// True if the auxiliary stream is sending video. Otherwise, false.
+    /// True if auxiliary stream is sending video. Otherwise, false.
     ///
     /// - since: 2.0.0
     public var isSendingVideo: Bool {
@@ -73,8 +73,8 @@ public class AuxStream {
     var renderViewOperationHandler:((RenderViewOperationType) -> Any?)?
     private weak var call:Call?
     
-    /// Close this auxiliary stream.
-    /// The auxStreamClosedEvent would be triggered indicating whether the stream is successfully closed.
+    /// Close auxiliary stream.
+    /// Result will call back through auxStreamClosedEvent.
     /// - returns: Void
     /// - see: see AuxStreamChangeEvent.auxStreamClosedEvent
     /// - since: 2.0.0
