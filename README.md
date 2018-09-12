@@ -328,14 +328,15 @@ Assuming you already have an project integrated with SparkSDK.
 
 1. In your pod file:
 
-    remove previous SparkSDK: ~~pod 'SparkSDK'~~ 
+    remove previous SparkSDK: ~~pod 'SparkSDK'~~
+    
     add WebexSDK: pod 'WebexSDK'
     
-2. Run: 
+2. Go to project directory, and run: 
     ```c
     pod install
     ```
-3. Update the sdk import info for your app:
+3. Update the sdk import info for your code:
 
     ~~import SparkSDK~~ => import WebexSDK
 
