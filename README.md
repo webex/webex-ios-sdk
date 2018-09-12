@@ -13,7 +13,7 @@ This SDK is written in [Swift 4](https://developer.apple.com/swift) and requires
 - [Install](#install)
 - [Usage](#usage)
 - [License](#license)
-- [Migration From SparkSDK](#migration-from-cisco-sparkSdk)
+- [Migration From SparkSDK](#migration-from-cisco-sparksdk)
 
 ## Install
 
