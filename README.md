@@ -336,9 +336,10 @@ Assuming you already have an project integrated with SparkSDK.
     ```c
     pod install
     ```
-3. Update the sdk import info for your code:
+3. Replace sdk import info for your code:
 
-    ~~import SparkSDK~~ => import WebexSDK
+    Replace in project scope: 
+    "import SparkSDK" => "import WebexSDK"
 
 ### Usage
 
