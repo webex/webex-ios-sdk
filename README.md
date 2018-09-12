@@ -15,6 +15,8 @@ This SDK is written in [Swift 4](https://developer.apple.com/swift) and requires
 - [License](#license)
 - [Migration From SparkSDK](#migration-from-cisco-sparkSdk)
 
+## Install
+
 Assuming you already have an Xcode project, e.g. _MyWebexApp_, for your iOS app, here are the steps to integrate the Webex iOS SDK into your Xcode project using [CocoaPods](http://cocoapods.org):
 
 1. Install CocoaPods:
@@ -321,8 +323,6 @@ Here are some examples of how to use the iOS SDK in your app.
 ## Migration from Cisco SparkSDK
 
 The purpose of this guide is to help you to migrate from Cisco Spark IOS SDK to Cisco Webex IOS SDK.
-
-### Install
 
 Assuming you already have an IOS project with Spark IOS SDK integrated. For your IOS app, here are the steps to migrate to use Webex IOS SDK:
 
