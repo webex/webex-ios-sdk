@@ -322,9 +322,9 @@ Here are some examples of how to use the iOS SDK in your app.
 
 ## Migration from Cisco SparkSDK
 
-The purpose of this guide is to help you to migrate from Cisco Spark IOS SDK to Cisco Webex IOS SDK.
+The purpose of this guide is to help you to migrate from Cisco SparkSDK to Cisco WebexSDK.
 
-Assuming you already have an IOS project with Spark IOS SDK integrated. For your IOS app, here are the steps to migrate to use Webex IOS SDK:
+Assuming you already have an project integrated with SparkSDK. 
 
 1. In your pod file:
 
@@ -341,9 +341,9 @@ Assuming you already have an IOS project with Spark IOS SDK integrated. For your
 
 ### Usage
 
-API changes list from Spark IOS SDK to Webex IOS SDK.
+API changes list from SparkSDK to WebexSDK.
 
-| Description | Spark IOS SDK | Webex IOS SDK |
+| Description | SparkSDK | WebexSDK |
 | :----:| :----: | :----:
 | Create a new instance | let spark = Spark(authenticator: authenticator) | let webex = Webex(authenticator: authenticator)
 
