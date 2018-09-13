@@ -159,8 +159,7 @@ public class Call {
         /// Local screen share size has changed.
         /// - since: 1.4.0
         case localScreenShareViewSize
-        
-        /// remote auxiliary video count has changed.
+        /// Remote video active speaker has changed.
         /// - since: 2.0.0
         case activeSpeakerChangedEvent(From:CallMembership?,To:CallMembership?)
     }
@@ -259,15 +258,16 @@ public class Call {
     /// - since: 1.4.0
     public var oniOSBroadcastingChanged: ((iOSBroadcastingEvent) -> Void)?
     
-    ///
-    ///
+    /// Multi stream feature observer protocol.
+    /// Client need to set the protocol implemention into certain call.
+    /// - see: see MultiStreamObserver
     /// - since: 2.0.0
     public var multiStreamObserver: MultiStreamObserver?
     
     /// The status of this *call*.
     ///
-    /// - since: 1.2.0
     /// - see: CallStatus
+    /// - since: 1.2.0
     public internal(set) var status: CallStatus = CallStatus.initiated
     
     /// The direction of this *call*.
@@ -301,7 +301,6 @@ public class Call {
     /// - since: 1.3.0
     public var remoteSendingScreenShare: Bool {
         return model.isGrantedScreenShare && !self.isScreenSharedBySelfDevice()
-        //        return model.isGrantedScreenShare && !self.mediaSession.remotescreenShareMuted
     }
     
     /// True if the local party of this *call* is sending video. Otherwise, false.
@@ -526,19 +525,18 @@ public class Call {
         }
     }
     
-    ///
-    ///
-    ///
+    /// Get all opened auxiliary streams.
+    /// - see: see AuxStream
     /// - since: 2.0.0
     public lazy private(set) var auxStreams: Array<AuxStream> = Array<AuxStream>()
     
-    ///
-    ///
-    ///
+    /// Speaking *CallMembership* in meeting.
+    /// Video presented on remote media render view.
+    /// - see: see CallMembership.isActiveSpeaker
     /// - since: 2.0.0
     public internal(set) var activeSpeaker: CallMembership?
     
-    ///
+    /// Available auxiliary stream count.
     ///
     /// - since: 2.0.0
     public private(set) var availableAuxStreamCount: Int {
@@ -577,7 +575,7 @@ public class Call {
     let mediaSession: MediaSessionWrapper
     
     let metrics: CallMetrics
-    static private let activeSpeakerCount = 1
+    static  let activeSpeakerCount = 1
     private let dtmfQueue: DtmfQueue
     
     private var dail: String?
@@ -600,17 +598,25 @@ public class Call {
     
     var auxStreamAvailable: (()-> MediaRenderView?)?  {
         get {
-            return self.multiStreamObserver?.auxStreamAvailable
+            return self.multiStreamObserver?.onAuxStreamAvailable
         }
     }
     
     var willBeReleasedAuxStream: (Int) -> MediaRenderView? {
         get {
+            func renderViewByUser() -> MediaRenderView? {
+                if let releaseClosure = self.multiStreamObserver?.onAuxStreamUnavailable, let releaseRenderView = releaseClosure() ,let _ = self.auxStreams.filter({$0.renderView == releaseRenderView}).first {
+                    return releaseRenderView
+                }
+                return nil
+            }
             return { newCount in
-                if let releaseClosure = self.multiStreamObserver?.onAuxStreamUnavailable {
-                    return releaseClosure()
-                } else if newCount < self.auxStreams.count, let lastRenderView = self.auxStreams.last?.renderView {
-                    return lastRenderView
+                if let renderView = renderViewByUser() {
+                    return renderView
+                } else {
+                    if newCount < self.auxStreams.count, let lastRenderView = self.auxStreams.last?.renderView {
+                        return lastRenderView
+                    }
                 }
                 
                 return nil
@@ -776,9 +782,12 @@ public class Call {
         self.device.phone.stopSharing(call: self, completionHandler: completionHandler)
     }
     
-    ///
-    ///
-    ///
+    /// Open one auxiliary stream with a media render view. The Maximum number of auxiliary videos could be opened is 4.
+    /// When one auxiliary streams manually closed, could call this API to reopen.
+    /// Result will call back through auxStreamOpenedEvent
+    /// - parameter view: the auxiliary display view.
+    /// - returns: Void
+    /// - see: see AuxStreamChangeEvent.auxStreamOpenedEvent
     /// - since: 2.0.0
     public func openAuxStream(view:MediaRenderView) {
         let mediaOperationHandler: (AuxStream.RenderViewOperationType) -> Any? = {
@@ -808,7 +817,7 @@ public class Call {
         
         DispatchQueue.main.async {
             if self.auxStreams.count >= maxAuxStreamNumber {
-                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "have exceeded the auxiliary videos limit"))))
+                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "have exceeded the auxiliary streams limit"))))
                 return
             }
             
@@ -823,7 +832,7 @@ public class Call {
             }
             
             if self.auxStreams.count >= self.availableAuxStreamCount {
-                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "Cannot exceed available video count."))))
+                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "Cannot exceed available stream count."))))
                 return
             }
             
@@ -831,21 +840,23 @@ public class Call {
             if (self.mediaSession.status == .running) {
                 vid = self.mediaSession.subscribeAuxStream(view: view)
                 if vid == AuxStream.invalidVid {
-                    self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.serviceFailed(code: -7000, reason: "subscribe video fail"))))
+                    self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.serviceFailed(code: -7000, reason: "open stream fail"))))
                     return
                 }
             }
             
             let auxVideo = AuxStream.init(vid: vid, renderView: view,renderViewOperation:mediaOperationHandler,call: self)
-            SDKLogger.shared.info("add subscribe call for vid:\(auxVideo.vid)")
+            SDKLogger.shared.info("open stream for vid:\(auxVideo.vid)")
             self.auxStreams.append(auxVideo)
             self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.success(auxVideo)))
         }
     }
     
-    ///
-    ///
-    ///
+    /// Close one auxiliary stream with the indicated media render view.
+    /// Result will call back throuhd auxStreamClosedEvent.
+    /// - parameter view: the auxiliary stream's render view that will be closed.
+    /// - returns: Void
+    /// - see: see AuxStreamChangeEvent.auxStreamClosedEvent
     /// - since: 2.0.0
     public func closeAuxStream(view:MediaRenderView) {
         DispatchQueue.main.async {
@@ -1094,12 +1105,15 @@ public class Call {
             var newAvailableAuxStreamCount = min(self.memberships.filter({ $0.isMediaActive() && !$0.isSelf }).count - Call.activeSpeakerCount, self.mediaSession.auxStreamCount() - Call.activeSpeakerCount)
             if newAvailableAuxStreamCount < 0 {
                 newAvailableAuxStreamCount = 0
-            } else if self.availableAuxStreamCount > 4 && newAvailableAuxStreamCount > 4 {
-                self.availableAuxStreamCount = newAvailableAuxStreamCount
+            } else if self.availableAuxStreamCount >= maxAuxStreamNumber && newAvailableAuxStreamCount > maxAuxStreamNumber {
+                self.availableAuxStreamCount = maxAuxStreamNumber
                 return
             }
             
-            let diffCount = newAvailableAuxStreamCount - self.availableAuxStreamCount
+            var diffCount = newAvailableAuxStreamCount - self.availableAuxStreamCount
+            if diffCount > maxAuxStreamNumber {
+                diffCount = maxAuxStreamNumber
+            }
             
             if diffCount > 0 {
                 for _ in 0..<diffCount {

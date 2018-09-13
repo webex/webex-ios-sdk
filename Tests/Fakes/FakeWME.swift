@@ -89,7 +89,7 @@ class FakeWME: MediaSession  {
     }
     
     
-    var stubSubscribeFailed :Bool = false
+    var stubOpenFailed :Bool = false
     var stubRemoteAuxMuted :Bool?
     var stubLocalAuxMuted :Bool?
     var stubAuxSize :CGSize?
@@ -107,7 +107,8 @@ class FakeWME: MediaSession  {
     }
     
     override func subscribeVideoTrack(_ renderView: UIView!) -> Int32 {
-        if stubSubscribeFailed {
+
+        if stubOpenFailed {
             return Int32(AuxStream.invalidVid)
         }
         else {

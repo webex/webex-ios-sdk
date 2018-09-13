@@ -61,6 +61,7 @@ class AuxiliaryVideoTest: XCTestCase {
         screenShareView = MediaRenderView()
         auxStreamObserver = TestObserver()
         self.call = mockCall(isGroup: true)
+        self.call?.multiStreamObserver = self.auxStreamObserver
     }
     
     override func tearDown() {
@@ -73,14 +74,14 @@ class AuxiliaryVideoTest: XCTestCase {
     // MARK: - mock metod
     private func mockCall(isGroup:Bool) -> Call? {
         var tryCount = 0
-        while AuxiliaryVideoTest.remoteUsers.count < MAX_AUX_STREAM_NUMBER+2 && tryCount < 30 {
+        while AuxiliaryVideoTest.remoteUsers.count < maxAuxStreamNumber+3 && tryCount < 30 {
             if let user = self.fixture.createUser() {
                 AuxiliaryVideoTest.remoteUsers.append(user)
             }
             tryCount = tryCount + 1
         }
         
-        if let callee = self.remoteUser, self.otherUsers?.count ?? 0 >= MAX_AUX_STREAM_NUMBER {
+        if let callee = self.remoteUser, self.otherUsers?.count ?? 0 >= maxAuxStreamNumber {
             let callModel = FakeCallModelHelper.dialCallModel(caller: self.fixture.selfUser, callee: callee, otherParticipantUsers: (self.otherUsers ?? []))
             let mediaSession = MediaSessionWrapper()
             mediaSession.setMediaSession(mediaSession: fakeWME!)
@@ -129,17 +130,17 @@ class AuxiliaryVideoTest: XCTestCase {
     
     class TestObserver: MultiStreamObserver {
         var onAuxStreamChanged: ((AuxStreamChangeEvent) -> Void)?
-        var auxStreamAvailable: (() -> MediaRenderView?)?
+        var onAuxStreamAvailable: (() -> MediaRenderView?)?
         var onAuxStreamUnavailable: (() -> MediaRenderView?)?
     }
     
     // MARK: - Test cases
-    func testSubscribeAuxStreamSuccess() {
+    func testOpenAuxStreamSuccess() {
         if let callmodel = self.call?.model,let answerUser = self.remoteUser,let user2 = self.otherUsers?.first {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: answerUser))
             let expect = expectation(description: "on onMediaChanged")
             expect.expectedFulfillmentCount = 2
-            self.call?.multiStreamObserver = self.auxStreamObserver
+            
             let renderView = MediaRenderView()
             self.auxStreamObserver?.onAuxStreamChanged = {
                 event in
@@ -160,220 +161,445 @@ class AuxiliaryVideoTest: XCTestCase {
                 
             }
             
-            self.auxStreamObserver?.auxStreamAvailable = {
+            self.auxStreamObserver?.onAuxStreamAvailable = {
                 expect.fulfill()
                 return renderView
             }
             
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user2))
-            FakeWME.stubStreamsCountNotification(count:2, call: self.call!)
+            FakeWME.stubStreamsCountNotification(count:1+Call.activeSpeakerCount, call: self.call!)
             
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
-    /*
-    func testSubscribeMaximumAuxStream() {
+    
+    func testOpenMaximumAuxStream() {
         if let callmodel = self.call?.model,let user = self.remoteUser {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
             let expect = expectation(description: "on onMediaChanged")
-            expect.expectedFulfillmentCount = MAX_AUX_STREAM_NUMBER
-            self.call?.onMediaChanged = {
+            expect.expectedFulfillmentCount = maxAuxStreamNumber*2
+            
+            self.auxStreamObserver?.onAuxStreamChanged = {
                 event in
                 switch event {
-                case .auxStreamsCount(let count):
-                    for _ in 0..<count {
-                        self.call?.subscribeAuxStream(view: MediaRenderView()) {
-                            result in
-                            switch result {
-                            case .success(let auxStream):
-                                XCTAssertNotNil(auxStream)
-                            case .failure(_):
-                                XCTAssertTrue(false)
-                            }
-                            expect.fulfill()
+                case .auxStreamOpenedEvent(let view,let result):
+                    switch result {
+                    case .success(let auxStream):
+                        XCTAssertNotNil(auxStream)
+                        XCTAssertEqual(view, auxStream.renderView)
+                        expect.fulfill()
+                    case .failure(_):
+                        XCTAssertTrue(false)
+                    }
+                    
+                    break
+                default:
+                    break
+                }
+                
+            }
+            
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                expect.fulfill()
+                return MediaRenderView()
+            }
+            
+            FakeWME.stubStreamsCountNotification(count: maxAuxStreamNumber+Call.activeSpeakerCount, call: self.call!)
+            for user in self.otherUsers ?? [] {
+                self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user))
+            }
+            
+            waitForExpectations(timeout: 5) { error in
+                XCTAssertNil(error, "openAuxStream time out")
+            }
+        }
+    }
+    
+    func testAvailableCountMoreThanMaximumAuxStream() {
+        if let callmodel = self.call?.model,let user = self.remoteUser {
+            self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
+            let expect = expectation(description: "on onMediaChanged")
+            expect.expectedFulfillmentCount = maxAuxStreamNumber
+            
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                expect.fulfill()
+                return nil
+            }
+            
+            for user in self.otherUsers ?? [] {
+                self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user))
+            }
+            FakeWME.stubStreamsCountNotification(count: maxAuxStreamNumber+Call.activeSpeakerCount+2, call: self.call!)
+            
+            
+            waitForExpectations(timeout: 5) { error in
+                XCTAssertNil(error, "openAuxStream time out")
+            }
+        }
+    }
+    
+    func testAvailableCountIncrease() {
+        if let callmodel = self.call?.model,let user = self.remoteUser {
+            self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
+            let expect = expectation(description: "on onMediaChanged")
+            expect.expectedFulfillmentCount = maxAuxStreamNumber
+            var count = 1 + Call.activeSpeakerCount
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                expect.fulfill()
+                if count <= self.otherUsers?.count ?? 0 {
+                    count = count + 1
+                    FakeWME.stubStreamsCountNotification(count: count, call: self.call!)
+                }
+                return nil
+            }
+            
+            for user in self.otherUsers ?? [] {
+                self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user))
+            }
+            FakeWME.stubStreamsCountNotification(count: count, call: self.call!)
+            waitForExpectations(timeout: 5) { error in
+                XCTAssertNil(error, "openAuxStream time out")
+            }
+        }
+    }
+    
+    func testAvailableCountDecrease() {
+        if let callmodel = self.call?.model,let user = self.remoteUser {
+            self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
+            let availableExpect = expectation(description: "on available")
+            availableExpect.expectedFulfillmentCount = maxAuxStreamNumber
+            let unavailableExpect = expectation(description: "on unavailable")
+            unavailableExpect.expectedFulfillmentCount = maxAuxStreamNumber
+            let closedExpect = expectation(description: "on closed")
+            closedExpect.expectedFulfillmentCount = maxAuxStreamNumber
+            var count = maxAuxStreamNumber + Call.activeSpeakerCount
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                availableExpect.fulfill()
+                return MediaRenderView()
+            }
+            
+            self.auxStreamObserver?.onAuxStreamChanged = {
+                event in
+                switch event {
+                case .auxStreamOpenedEvent(_, let result):
+                    XCTAssertNotNil(result)
+                    switch result {
+                    case .success(let auxStream):
+                        XCTAssertNotNil(auxStream)
+                        if maxAuxStreamNumber == self.call?.auxStreams.count ?? 0 {
+                            count = count - 1
+                            FakeWME.stubStreamsCountNotification(count: count, call: self.call!)
                         }
+                    case .failure(_):
+                        XCTAssertTrue(false)
                     }
                     break
+                case .auxStreamClosedEvent(_, let error):
+                    XCTAssertNil(error)
+                    if count > Call.activeSpeakerCount {
+                        count = count - 1
+                        FakeWME.stubStreamsCountNotification(count: count, call: self.call!)
+                    }
+                    closedExpect.fulfill()
                 default:
                     break
                 }
             }
             
-            FakeWME.stubMediaChangeNotification(eventType: Call.MediaChangedEvent.auxStreamsCount(MAX_AUX_STREAM_NUMBER), call: self.call!)
+            self.auxStreamObserver?.onAuxStreamUnavailable = {
+                unavailableExpect.fulfill()
+                return nil
+            }
+            
             for user in self.otherUsers ?? [] {
                 self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user))
             }
+            FakeWME.stubStreamsCountNotification(count: count, call: self.call!)
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
+    
+    func testAvailableCountDecreaseAndUserRelease() {
+        if let callmodel = self.call?.model,let user = self.remoteUser {
+            self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
+            let availableExpect = expectation(description: "on available")
+            availableExpect.expectedFulfillmentCount = maxAuxStreamNumber
+            let unavailableExpect = expectation(description: "on unavailable")
+            unavailableExpect.expectedFulfillmentCount = maxAuxStreamNumber
+            let closedExpect = expectation(description: "on closed")
+            closedExpect.expectedFulfillmentCount = 2
+            var count = maxAuxStreamNumber + Call.activeSpeakerCount
+            var renderViewArray = Array<MediaRenderView>()
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                availableExpect.fulfill()
+                
+                if renderViewArray.count >= 2 {
+                    return nil
+                } else {
+                    renderViewArray.append(MediaRenderView())
+                    return renderViewArray.last
+                }
+            }
+            
+            self.auxStreamObserver?.onAuxStreamChanged = {
+                event in
+                switch event {
+                case .auxStreamOpenedEvent(_, let result):
+                    XCTAssertNotNil(result)
+                    switch result {
+                    case .success(let auxStream):
+                        XCTAssertNotNil(auxStream)
+                        if 2 == self.call?.auxStreams.count ?? 0 {
+                            count = count - 1
+                            FakeWME.stubStreamsCountNotification(count: count, call: self.call!)
+                        }
+                    case .failure(_):
+                        XCTAssertTrue(false)
+                    }
+                    break
+                case .auxStreamClosedEvent(_, let error):
+                    XCTAssertNil(error)
+                    if count > Call.activeSpeakerCount {
+                        count = count - 1
+                        FakeWME.stubStreamsCountNotification(count: count, call: self.call!)
+                    }
+                    closedExpect.fulfill()
+                default:
+                    break
+                }
+            }
+            
+            self.auxStreamObserver?.onAuxStreamUnavailable = {
+                unavailableExpect.fulfill()
+                if let renderView = renderViewArray.last {
+                    renderViewArray.removeLast()
+                    return renderView
+                }
+                if count > Call.activeSpeakerCount {
+                    count = count - 1
+                    FakeWME.stubStreamsCountNotification(count: count, call: self.call!)
+                }
+                return nil
+            }
+            
+            for user in self.otherUsers ?? [] {
+                self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user))
+            }
+            FakeWME.stubStreamsCountNotification(count: count, call: self.call!)
+            waitForExpectations(timeout: 5) { error in
+                XCTAssertNil(error, "openAuxStream time out")
+            }
+        }
+    }
+    
     
     func testExceededAuxStream() {
         if let callmodel = self.call?.model,let user = self.remoteUser {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
             let expect = expectation(description: "on onMediaChanged")
-            expect.expectedFulfillmentCount = MAX_AUX_STREAM_NUMBER
-            let expectFail = expectation(description: "subscribe AuxStream fail")
+            expect.expectedFulfillmentCount = maxAuxStreamNumber * 2
+            let expectFail = expectation(description: "open AuxStream fail")
             expectFail.expectedFulfillmentCount = 1
-            self.call?.onMediaChanged = {
+            
+            var first = true
+            self.auxStreamObserver?.onAuxStreamChanged = {
                 event in
                 switch event {
-                case .auxStreamsCount(let count):
-                    for _ in 0..<count {
-                        self.call?.subscribeAuxStream(view: MediaRenderView()) {
-                            result in
-                            switch result {
-                            case .success(let auxStream):
-                                XCTAssertNotNil(auxStream)
-                                expect.fulfill()
-                            case .failure(let error):
-                                XCTAssertNotNil(error)
-                                expectFail.fulfill()
-                            }
+                case .auxStreamOpenedEvent(let view,let result):
+                    switch result {
+                    case .success(let auxStream):
+                        XCTAssertNotNil(auxStream)
+                        XCTAssertEqual(view, auxStream.renderView)
+                        expect.fulfill()
+                        if first && self.call?.availableAuxStreamCount ?? 0 >= 4 {
+                            first = false
+                            self.call?.openAuxStream(view: MediaRenderView())
                         }
+                    case .failure(let error):
+                        XCTAssertNotNil(view)
+                        XCTAssertNotNil(error)
+                        expectFail.fulfill()
                     }
+                    
                     break
                 default:
                     break
                 }
+                
             }
             
-            FakeWME.stubMediaChangeNotification(eventType: Call.MediaChangedEvent.auxStreamsCount(MAX_AUX_STREAM_NUMBER + 1), call: self.call!)
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                expect.fulfill()
+                
+                return MediaRenderView()
+            }
+            
+            FakeWME.stubStreamsCountNotification(count: maxAuxStreamNumber + Call.activeSpeakerCount, call: self.call!)
             for user in self.otherUsers ?? [] {
                 self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user))
             }
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
     
-    func testSubscribeAuxStreamFailed() {
+    
+    func testOpenAuxStreamFailed() {
         if let callmodel = self.call?.model,let user = self.remoteUser,let user2 = self.otherUsers?.first {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
+            
             let expect = expectation(description: "on onMediaChanged")
             expect.expectedFulfillmentCount = 1
-            self.call?.onMediaChanged = {
+            
+            self.auxStreamObserver?.onAuxStreamChanged = {
                 event in
                 switch event {
-                case .auxStreamsCount(let count):
-                    for _ in 0..<count {
-                        self.fakeWME?.stubSubscribeFailed = true
-                        self.call?.subscribeAuxStream(view: MediaRenderView()) {
-                            result in
-                            switch result {
-                            case .success(let auxStream):
-                                XCTAssertNotNil(auxStream)
-                            case .failure(let error):
-                                XCTAssertNotNil(error)
-                                expect.fulfill()
-                            }
-                        }
+                case .auxStreamOpenedEvent(let view,let result):
+                    switch result {
+                    case .success(_):
+                        XCTAssertTrue(false)
+                    case .failure(let error):
+                        XCTAssertNotNil(view)
+                        XCTAssertNotNil(error)
+                        expect.fulfill()
                     }
+                    
                     break
                 default:
                     break
                 }
+                
             }
+            
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                self.fakeWME?.stubOpenFailed = true
+                return MediaRenderView()
+            }
+            
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user2))
-            FakeWME.stubMediaChangeNotification(eventType: Call.MediaChangedEvent.auxStreamsCount(1), call: self.call!)
+            FakeWME.stubStreamsCountNotification(count: 1 + Call.activeSpeakerCount, call: self.call!)
             
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
     
-    func testUnSubscribeAuxStreamSuccess() {
+    
+    func testCloseAuxStreamSuccess() {
         if let callmodel = self.call?.model,let user = self.remoteUser {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
+            
             let expect = expectation(description: "on onMediaChanged")
             expect.expectedFulfillmentCount = 2
-            self.call?.onMediaChanged = {
+            
+            let renderView = MediaRenderView()
+            self.auxStreamObserver?.onAuxStreamChanged = {
                 event in
                 switch event {
-                case .auxStreamsCount(let count):
-                    for _ in 0..<count {
-                        self.call?.subscribeAuxStream(view: MediaRenderView()) {
-                            result in
-                            switch result {
-                            case .success(let auxStream):
-                                XCTAssertNotNil(auxStream)
-                                self.call?.unsubscribeAuxStream(auxStream: auxStream) {
-                                    error in
-                                    XCTAssertNil(error)
-                                    expect.fulfill()
-                                }
-                            case .failure(_):
-                                XCTAssertTrue(false)
-                            }
-                        }
+                case .auxStreamOpenedEvent(let view,let result):
+                    switch result {
+                    case .success(let auxStream):
+                        XCTAssertNotNil(auxStream)
+                        XCTAssertEqual(renderView, view)
+                        XCTAssertEqual(view, auxStream.renderView)
+                        expect.fulfill()
+                        self.call?.closeAuxStream(view: renderView)
+                    case .failure(_):
+                        XCTAssertTrue(false)
                     }
+                    break
+                case .auxStreamClosedEvent(let view, let error):
+                    XCTAssertEqual(view, renderView)
+                    XCTAssertNil(error)
+                    expect.fulfill()
                     break
                 default:
                     break
                 }
+                
             }
             
-            FakeWME.stubMediaChangeNotification(eventType: Call.MediaChangedEvent.auxStreamsCount(2), call: self.call!)
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                return renderView
+            }
+            
+            
+            FakeWME.stubStreamsCountNotification(count: 1 + Call.activeSpeakerCount, call: self.call!)
             
             for user in self.otherUsers ?? [] {
                 self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user))
             }
             
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
     
-    func testUnSubscribeAuxStreamFailed() {
+    
+    func testCloseAuxStreamFailed() {
         if let callmodel = self.call?.model,let user = self.remoteUser ,let user2 = self.otherUsers?.first {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
+            
             let expect = expectation(description: "on onMediaChanged")
-            expect.expectedFulfillmentCount = 2
-            self.call?.onMediaChanged = {
+            expect.expectedFulfillmentCount = 3
+            
+            let renderView = MediaRenderView()
+            var first = true
+            self.auxStreamObserver?.onAuxStreamChanged = {
                 event in
                 switch event {
-                case .auxStreamsCount(let count):
-                    for _ in 0..<count {
-                        self.call?.subscribeAuxStream(view: MediaRenderView()) {
-                            result in
-                            switch result {
-                            case .success(let auxStream):
-                                XCTAssertNotNil(auxStream)
-                                self.call?.unsubscribeAuxStream(auxStream: auxStream) {
-                                    error in
-                                    XCTAssertNil(error)
-                                    self.call?.unsubscribeAuxStream(auxStream: auxStream) {
-                                        error in
-                                        XCTAssertNotNil(error)
-                                        expect.fulfill()
-                                    }
-                                    expect.fulfill()
-                                }
-                            case .failure(_):
-                                XCTAssertTrue(false)
-                            }
-                        }
+                case .auxStreamOpenedEvent(let view,let result):
+                    switch result {
+                    case .success(let auxStream):
+                        XCTAssertNotNil(auxStream)
+                        XCTAssertEqual(renderView, view)
+                        XCTAssertEqual(view, auxStream.renderView)
+                        expect.fulfill()
+                        self.call?.closeAuxStream(view: renderView)
+                    case .failure(_):
+                        XCTAssertTrue(false)
                     }
+                    break
+                case .auxStreamClosedEvent(let view, let error):
+                    if first {
+                        XCTAssertEqual(view, renderView)
+                        XCTAssertNil(error)
+                        expect.fulfill()
+                        first = false
+                        self.call?.closeAuxStream(view: renderView)
+                    } else {
+                        XCTAssertEqual(view, renderView)
+                        XCTAssertNotNil(error)
+                        expect.fulfill()
+                    }
+                    
                     break
                 default:
                     break
                 }
+                
+            }
+            
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                return renderView
             }
             
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user2))
-            FakeWME.stubMediaChangeNotification(eventType: Call.MediaChangedEvent.auxStreamsCount(1), call: self.call!)
+            FakeWME.stubStreamsCountNotification(count: 1 + Call.activeSpeakerCount, call: self.call!)
             
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
+    
     
     func testActiveSpeakerChangedEvent() {
         if let callmodel = self.call?.model,let user = self.remoteUser {
@@ -398,10 +624,11 @@ class AuxiliaryVideoTest: XCTestCase {
             FakeWME.stubActiveSpeakerChangeNotification(csi: user.csi,call: self.call!)
             
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
+    
     
     func testActiveSpeakerChangedToNobody() {
         if let callmodel = self.call?.model,let user = self.remoteUser {
@@ -434,10 +661,11 @@ class AuxiliaryVideoTest: XCTestCase {
             FakeWME.stubActiveSpeakerChangeNotification(csi: user.csi,call: self.call!)
             
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
+    
     
     func testActiveSpeakerChangedToNobodyByLocus() {
         if let callmodel = self.call?.model,let user = self.remoteUser {
@@ -470,7 +698,7 @@ class AuxiliaryVideoTest: XCTestCase {
             FakeWME.stubActiveSpeakerChangeNotification(csi: user.csi,call: self.call!)
             
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
@@ -507,7 +735,7 @@ class AuxiliaryVideoTest: XCTestCase {
             FakeWME.stubActiveSpeakerChangeNotification(csi: user.csi,call: self.call!)
             
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
@@ -516,29 +744,37 @@ class AuxiliaryVideoTest: XCTestCase {
     func testAuxStreamPersonChangedEvent() {
         if let callmodel = self.call?.model,let user = self.remoteUser ,let user2 = self.otherUsers?.first {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
-            let expect = expectation(description: "on AuxStreamChangeEvent")
-            expect.expectedFulfillmentCount = 1
-            var auxVideo: AuxStream?
-            self.call?.subscribeAuxStream(view: MediaRenderView()) {
-                result in
-                switch result {
-                case .success(let auxStream):
-                    XCTAssertNotNil(auxStream)
-                    auxVideo = auxStream
-                    FakeWME.stubAuxStreamEvent(eventType: Call.AuxStreamChangeEvent.auxStreamPersonChangedEvent(auxStream,From: nil,To: nil), call: self.call!,csi: user.csi)
-                case .failure(_):
-                    XCTAssertTrue(false)
-                }
-            }
             
-            self.call?.onAuxStreamChanged = {
+            let expect = expectation(description: "on onMediaChanged")
+            expect.expectedFulfillmentCount = 2
+            
+            let renderView = MediaRenderView()
+            var auxStream: AuxStream?
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                return renderView
+            }
+            self.auxStreamObserver?.onAuxStreamChanged = {
                 event in
                 switch event {
-                case .auxStreamPersonChangedEvent(let auxStream,let from,let to):
+                case .auxStreamOpenedEvent(let view, let result):
+                    XCTAssertEqual(view, renderView)
+                    XCTAssertNotNil(result)
+                    switch result {
+                    case .success(let aux):
+                        auxStream = aux
+                        XCTAssertEqual(renderView, aux.renderView)
+                        expect.fulfill()
+                        FakeWME.stubAuxStreamEvent(eventType: AuxStreamChangeEvent.auxStreamPersonChangedEvent(auxStream!,From: nil,To: nil), call: self.call!,csi: user.csi)
+                    case .failure(_):
+                        XCTAssertTrue(false)
+                    }
+                    break
+                case .auxStreamPersonChangedEvent(let aux, let from, let to):
                     XCTAssertNil(from)
                     XCTAssertNotNil(to)
-                    XCTAssertTrue(auxVideo?.person?.id == to?.id)
-                    XCTAssertTrue(auxVideo?.person?.id == auxStream.person?.id)
+                    XCTAssertEqual(aux.renderView, auxStream?.renderView)
+                    XCTAssertTrue(auxStream?.person?.id == to?.id)
+                    XCTAssertTrue(auxStream?.person?.id == aux.person?.id)
                     expect.fulfill()
                     break
                 default:
@@ -547,44 +783,54 @@ class AuxiliaryVideoTest: XCTestCase {
             }
             
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user2))
-            
+            FakeWME.stubStreamsCountNotification(count: 1 + Call.activeSpeakerCount, call: self.call!)
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
+    
     
     func testAuxStreamPersonChangedToNobody() {
         if let callmodel = self.call?.model,let user = self.remoteUser ,let user2 = self.otherUsers?.first {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
-            let expect = expectation(description: "on AuxStreamChangeEvent")
-            expect.expectedFulfillmentCount = 2
-            var auxVideo: AuxStream?
-            self.call?.subscribeAuxStream(view: MediaRenderView()) {
-                result in
-                switch result {
-                case .success(let auxStream):
-                    XCTAssertNotNil(auxStream)
-                    auxVideo = auxStream
-                    FakeWME.stubAuxStreamEvent(eventType: Call.AuxStreamChangeEvent.auxStreamPersonChangedEvent(auxStream,From: nil,To: nil), call: self.call!,csi: user.csi)
-                case .failure(_):
-                    XCTAssertTrue(false)
-                }
-            }
             
-            self.call?.onAuxStreamChanged = {
+            let expect = expectation(description: "on onMediaChanged")
+            expect.expectedFulfillmentCount = 3
+            
+            let renderView = MediaRenderView()
+            var auxStream: AuxStream?
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                return renderView
+            }
+            self.auxStreamObserver?.onAuxStreamChanged = {
                 event in
                 switch event {
-                case .auxStreamPersonChangedEvent(let auxStream,let from,let to):
-                    if auxStream.person == nil {
+                case .auxStreamOpenedEvent(let view, let result):
+                    XCTAssertEqual(view, renderView)
+                    XCTAssertNotNil(result)
+                    switch result {
+                    case .success(let aux):
+                        auxStream = aux
+                        XCTAssertEqual(renderView, aux.renderView)
+                        expect.fulfill()
+                        FakeWME.stubAuxStreamEvent(eventType: AuxStreamChangeEvent.auxStreamPersonChangedEvent(auxStream!,From: nil,To: nil), call: self.call!,csi: user.csi)
+                    case .failure(_):
+                        XCTAssertTrue(false)
+                    }
+                    break
+                case .auxStreamPersonChangedEvent(let aux, let from, let to):
+                    if aux.person == nil {
                         XCTAssertNil(to)
                         XCTAssertNotNil(from)
+                        XCTAssertEqual(aux.renderView, auxStream?.renderView)
                     } else {
                         XCTAssertNil(from)
                         XCTAssertNotNil(to)
-                        XCTAssertTrue(auxVideo?.person?.id == to?.id)
-                        XCTAssertTrue(auxVideo?.person?.id == auxStream.person?.id)
-                        FakeWME.stubAuxStreamEvent(eventType: Call.AuxStreamChangeEvent.auxStreamPersonChangedEvent(auxStream,From: nil,To: nil), call: self.call!,csi: [])
+                        XCTAssertEqual(aux.renderView, auxStream?.renderView)
+                        XCTAssertTrue(auxStream?.person?.id == to?.id)
+                        XCTAssertTrue(auxStream?.person?.id == aux.person?.id)
+                        FakeWME.stubAuxStreamEvent(eventType: AuxStreamChangeEvent.auxStreamPersonChangedEvent(auxStream!,From: nil,To: nil), call: self.call!,csi: [])
                     }
                     expect.fulfill()
                     break
@@ -594,43 +840,53 @@ class AuxiliaryVideoTest: XCTestCase {
             }
             
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user2))
-            
+            FakeWME.stubStreamsCountNotification(count: 1 + Call.activeSpeakerCount, call: self.call!)
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
+    
     
     func testAuxStreamPersonChangedToNobodyByLocus() {
         if let callmodel = self.call?.model,let user = self.remoteUser ,let user2 = self.otherUsers?.first {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
-            let expect = expectation(description: "on AuxStreamChangeEvent")
-            expect.expectedFulfillmentCount = 2
-            var auxVideo: AuxStream?
-            self.call?.subscribeAuxStream(view: MediaRenderView()) {
-                result in
-                switch result {
-                case .success(let auxStream):
-                    XCTAssertNotNil(auxStream)
-                    auxVideo = auxStream
-                    FakeWME.stubAuxStreamEvent(eventType: Call.AuxStreamChangeEvent.auxStreamPersonChangedEvent(auxStream,From: nil,To: nil), call: self.call!,csi: user.csi)
-                case .failure(_):
-                    XCTAssertTrue(false)
-                }
-            }
             
-            self.call?.onAuxStreamChanged = {
+            let expect = expectation(description: "on onMediaChanged")
+            expect.expectedFulfillmentCount = 3
+            
+            let renderView = MediaRenderView()
+            var auxStream: AuxStream?
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                return renderView
+            }
+            self.auxStreamObserver?.onAuxStreamChanged = {
                 event in
                 switch event {
-                case .auxStreamPersonChangedEvent(let auxStream,let from,let to):
-                    if auxStream.person == nil {
+                case .auxStreamOpenedEvent(let view, let result):
+                    XCTAssertEqual(view, renderView)
+                    XCTAssertNotNil(result)
+                    switch result {
+                    case .success(let aux):
+                        auxStream = aux
+                        XCTAssertEqual(renderView, aux.renderView)
+                        expect.fulfill()
+                        FakeWME.stubAuxStreamEvent(eventType: AuxStreamChangeEvent.auxStreamPersonChangedEvent(auxStream!,From: nil,To: nil), call: self.call!,csi: user.csi)
+                    case .failure(_):
+                        XCTAssertTrue(false)
+                    }
+                    break
+                case .auxStreamPersonChangedEvent(let aux, let from, let to):
+                    if aux.person == nil {
                         XCTAssertNil(to)
                         XCTAssertNotNil(from)
+                        XCTAssertEqual(aux.renderView, auxStream?.renderView)
                     } else {
                         XCTAssertNil(from)
                         XCTAssertNotNil(to)
-                        XCTAssertTrue(auxVideo?.person?.id == to?.id)
-                        XCTAssertTrue(auxVideo?.person?.id == auxStream.person?.id)
+                        XCTAssertEqual(aux.renderView, auxStream?.renderView)
+                        XCTAssertTrue(auxStream?.person?.id == to?.id)
+                        XCTAssertTrue(auxStream?.person?.id == aux.person?.id)
                         self.call?.update(model: FakeCallModelHelper.hangUpCallModel(callModel: self.call?.model ?? callmodel, hanupUser: user))
                     }
                     expect.fulfill()
@@ -641,44 +897,54 @@ class AuxiliaryVideoTest: XCTestCase {
             }
             
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user2))
-            
+            FakeWME.stubStreamsCountNotification(count: 1 + Call.activeSpeakerCount, call: self.call!)
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
+    
     
     func testAuxStreamPersonChangedToNobodyByLocusAndMedia() {
         if let callmodel = self.call?.model,let user = self.remoteUser ,let user2 = self.otherUsers?.first {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
-            let expect = expectation(description: "on AuxStreamChangeEvent")
-            expect.expectedFulfillmentCount = 2
-            var auxVideo: AuxStream?
-            self.call?.subscribeAuxStream(view: MediaRenderView()) {
-                result in
-                switch result {
-                case .success(let auxStream):
-                    XCTAssertNotNil(auxStream)
-                    auxVideo = auxStream
-                    FakeWME.stubAuxStreamEvent(eventType: Call.AuxStreamChangeEvent.auxStreamPersonChangedEvent(auxStream,From: nil,To: nil), call: self.call!,csi: user.csi)
-                case .failure(_):
-                    XCTAssertTrue(false)
-                }
-            }
             
-            self.call?.onAuxStreamChanged = {
+            let expect = expectation(description: "on onMediaChanged")
+            expect.expectedFulfillmentCount = 3
+            
+            let renderView = MediaRenderView()
+            var auxStream: AuxStream?
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                return renderView
+            }
+            self.auxStreamObserver?.onAuxStreamChanged = {
                 event in
                 switch event {
-                case .auxStreamPersonChangedEvent(let auxStream,let from,let to):
-                    if auxStream.person == nil {
+                case .auxStreamOpenedEvent(let view, let result):
+                    XCTAssertEqual(view, renderView)
+                    XCTAssertNotNil(result)
+                    switch result {
+                    case .success(let aux):
+                        auxStream = aux
+                        XCTAssertEqual(renderView, aux.renderView)
+                        expect.fulfill()
+                        FakeWME.stubAuxStreamEvent(eventType: AuxStreamChangeEvent.auxStreamPersonChangedEvent(auxStream!,From: nil,To: nil), call: self.call!,csi: user.csi)
+                    case .failure(_):
+                        XCTAssertTrue(false)
+                    }
+                    break
+                case .auxStreamPersonChangedEvent(let aux, let from, let to):
+                    if aux.person == nil {
                         XCTAssertNil(to)
                         XCTAssertNotNil(from)
+                        XCTAssertEqual(aux.renderView, auxStream?.renderView)
                     } else {
                         XCTAssertNil(from)
                         XCTAssertNotNil(to)
-                        XCTAssertTrue(auxVideo?.person?.id == to?.id)
-                        XCTAssertTrue(auxVideo?.person?.id == auxStream.person?.id)
-                        FakeWME.stubAuxStreamEvent(eventType: Call.AuxStreamChangeEvent.auxStreamPersonChangedEvent(auxStream,From: nil,To: nil), call: self.call!,csi: [])
+                        XCTAssertEqual(aux.renderView, auxStream?.renderView)
+                        XCTAssertTrue(auxStream?.person?.id == to?.id)
+                        XCTAssertTrue(auxStream?.person?.id == aux.person?.id)
+                        FakeWME.stubAuxStreamEvent(eventType: AuxStreamChangeEvent.auxStreamPersonChangedEvent(auxStream!,From: nil,To: nil), call: self.call!,csi: [])
                         self.call?.update(model: FakeCallModelHelper.hangUpCallModel(callModel: self.call?.model ?? callmodel, hanupUser: user))
                     }
                     expect.fulfill()
@@ -689,417 +955,243 @@ class AuxiliaryVideoTest: XCTestCase {
             }
             
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user2))
-            
+            FakeWME.stubStreamsCountNotification(count: 1 + Call.activeSpeakerCount, call: self.call!)
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
     
-    func testRemoteAuxSendingVideo() {
-        if let callmodel = self.call?.model,let user = self.remoteUser {
+    func testAuxStreamSendingVideo() {
+        if let callmodel = self.call?.model,let user = self.remoteUser ,let user2 = self.otherUsers?.first {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
-            let expect = expectation(description: "on AuxStreamChangeEvent")
-            expect.expectedFulfillmentCount = 1
-            var auxVideo: AuxStream?
-            self.call?.subscribeAuxStream(view: MediaRenderView()) {
-                result in
-                switch result {
-                case .success(let auxStream):
-                    XCTAssertNotNil(auxStream)
-                    auxVideo = auxStream
-                    self.fakeWME?.stubRemoteAuxMuted = false
-                    FakeWME.stubAuxStreamEvent(eventType: Call.AuxStreamChangeEvent.remoteAuxSendingVideoEvent(auxStream), call: self.call!)
-                case .failure(_):
-                    XCTAssertTrue(false)
-                }
-            }
             
-            self.call?.onAuxStreamChanged = {
+            let expect = expectation(description: "on onMediaChanged")
+            expect.expectedFulfillmentCount = 2
+            
+            let renderView = MediaRenderView()
+            var auxStream: AuxStream?
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                return renderView
+            }
+            self.auxStreamObserver?.onAuxStreamChanged = {
                 event in
                 switch event {
-                case .remoteAuxSendingVideoEvent(let auxStream):
-                    XCTAssertTrue(auxVideo?.vid == auxStream.vid)
-                    XCTAssertTrue(auxStream.isSendingVideo)
+                case .auxStreamOpenedEvent(let view, let result):
+                    XCTAssertEqual(view, renderView)
+                    XCTAssertNotNil(result)
+                    switch result {
+                    case .success(let aux):
+                        auxStream = aux
+                        XCTAssertEqual(renderView, aux.renderView)
+                        expect.fulfill()
+                        self.fakeWME?.stubRemoteAuxMuted = false
+                        FakeWME.stubAuxStreamEvent(eventType: AuxStreamChangeEvent.auxStreamSendingVideoEvent(aux), call: self.call!)
+                    case .failure(_):
+                        XCTAssertTrue(false)
+                    }
+                case .auxStreamSendingVideoEvent(let aux):
+                    XCTAssertEqual(aux.renderView, auxStream?.renderView)
+                    XCTAssertTrue(aux.isSendingVideo)
                     expect.fulfill()
                     break
                 default:
                     break
                 }
             }
+            
+            self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user2))
+            FakeWME.stubStreamsCountNotification(count: 1 + Call.activeSpeakerCount, call: self.call!)
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
     
     func testRemoteMuteAuxVideo() {
-        if let callmodel = self.call?.model,let user = self.remoteUser {
+        if let callmodel = self.call?.model,let user = self.remoteUser ,let user2 = self.otherUsers?.first {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
-            let expect = expectation(description: "on AuxStreamChangeEvent")
-            expect.expectedFulfillmentCount = 1
-            var auxVideo: AuxStream?
-            self.call?.subscribeAuxStream(view: MediaRenderView()) {
-                result in
-                switch result {
-                case .success(let auxStream):
-                    XCTAssertNotNil(auxStream)
-                    auxVideo = auxStream
-                    self.fakeWME?.stubRemoteAuxMuted = true
-                    FakeWME.stubAuxStreamEvent(eventType: Call.AuxStreamChangeEvent.remoteAuxSendingVideoEvent(auxStream), call: self.call!)
-                case .failure(_):
-                    XCTAssertTrue(false)
-                }
-            }
             
-            self.call?.onAuxStreamChanged = {
+            let expect = expectation(description: "on onMediaChanged")
+            expect.expectedFulfillmentCount = 3
+            
+            let renderView = MediaRenderView()
+            var auxStream: AuxStream?
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                return renderView
+            }
+            self.auxStreamObserver?.onAuxStreamChanged = {
                 event in
                 switch event {
-                case .remoteAuxSendingVideoEvent(let auxStream):
-                    XCTAssertTrue(auxVideo?.vid == auxStream.vid)
-                    XCTAssertTrue(!auxStream.isSendingVideo)
+                case .auxStreamOpenedEvent(let view, let result):
+                    XCTAssertEqual(view, renderView)
+                    XCTAssertNotNil(result)
+                    switch result {
+                    case .success(let aux):
+                        auxStream = aux
+                        XCTAssertEqual(renderView, aux.renderView)
+                        expect.fulfill()
+                        self.fakeWME?.stubRemoteAuxMuted = false
+                        FakeWME.stubAuxStreamEvent(eventType: AuxStreamChangeEvent.auxStreamSendingVideoEvent(aux), call: self.call!)
+                    case .failure(_):
+                        XCTAssertTrue(false)
+                    }
+                case .auxStreamSendingVideoEvent(let aux):
+                    if aux.isSendingVideo {
+                        XCTAssertEqual(aux.renderView, auxStream?.renderView)
+                        self.fakeWME?.stubRemoteAuxMuted = true
+                        FakeWME.stubAuxStreamEvent(eventType: AuxStreamChangeEvent.auxStreamSendingVideoEvent(aux), call: self.call!)
+                    } else {
+                        XCTAssertEqual(aux.renderView, auxStream?.renderView)
+                        XCTAssertTrue(aux.isSendingVideo == false)
+                    }
                     expect.fulfill()
                     break
                 default:
                     break
                 }
             }
-            waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
-            }
-        }
-    }
-    
-    func testMuteAuxVideo() {
-        if let callmodel = self.call?.model,let user = self.remoteUser {
-            self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
-            let expect = expectation(description: "on AuxStreamChangeEvent")
-            expect.expectedFulfillmentCount = 1
-            var auxVideo: AuxStream?
-            self.call?.subscribeAuxStream(view: MediaRenderView()) {
-                result in
-                switch result {
-                case .success(let auxStream):
-                    XCTAssertNotNil(auxStream)
-                    auxVideo = auxStream
-                    self.fakeWME?.stubLocalAuxMuted = true
-                    auxStream.isReceivingVideo = false
-                    FakeWME.stubAuxStreamEvent(eventType: Call.AuxStreamChangeEvent.receivingAuxVideoEvent(auxStream), call: self.call!)
-                case .failure(_):
-                    XCTAssertTrue(false)
-                }
-            }
             
-            self.call?.onAuxStreamChanged = {
-                event in
-                switch event {
-                case .receivingAuxVideoEvent(let auxStream):
-                    XCTAssertTrue(auxVideo?.vid == auxStream.vid)
-                    XCTAssertTrue(auxStream.isReceivingVideo == false)
-                    expect.fulfill()
-                    break
-                default:
-                    break
-                }
-            }
+            self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user2))
+            FakeWME.stubStreamsCountNotification(count: 1 + Call.activeSpeakerCount, call: self.call!)
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
-            }
-        }
-    }
-    
-    func testUnMuteAuxVideo() {
-        if let callmodel = self.call?.model,let user = self.remoteUser {
-            self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
-            let expect = expectation(description: "on AuxStreamChangeEvent")
-            expect.expectedFulfillmentCount = 1
-            var auxVideo: AuxStream?
-            self.call?.subscribeAuxStream(view: MediaRenderView()) {
-                result in
-                switch result {
-                case .success(let auxStream):
-                    XCTAssertNotNil(auxStream)
-                    auxVideo = auxStream
-                    self.fakeWME?.stubLocalAuxMuted = false
-                    auxStream.isReceivingVideo = true
-                    FakeWME.stubAuxStreamEvent(eventType: Call.AuxStreamChangeEvent.receivingAuxVideoEvent(auxStream), call: self.call!)
-                case .failure(_):
-                    XCTAssertTrue(false)
-                }
-            }
-            
-            self.call?.onAuxStreamChanged = {
-                event in
-                switch event {
-                case .receivingAuxVideoEvent(let auxStream):
-                    XCTAssertTrue(auxVideo?.vid == auxStream.vid)
-                    XCTAssertTrue(auxStream.isReceivingVideo == true)
-                    expect.fulfill()
-                    break
-                default:
-                    break
-                }
-            }
-            waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
     
     func testAuxStreamSizeChanged() {
-        if let callmodel = self.call?.model,let user = self.remoteUser {
+        if let callmodel = self.call?.model,let user = self.remoteUser ,let user2 = self.otherUsers?.first {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
-            let expect = expectation(description: "on AuxStreamChangeEvent")
-            let size: CGSize = CGSize(width: 300, height: 200)
-            expect.expectedFulfillmentCount = 1
-            var auxVideo: AuxStream?
-            self.call?.subscribeAuxStream(view: MediaRenderView()) {
-                result in
-                switch result {
-                case .success(let auxStream):
-                    XCTAssertNotNil(auxStream)
-                    auxVideo = auxStream
-                    self.fakeWME?.stubAuxSize = size
-                    FakeWME.stubAuxStreamEvent(eventType: Call.AuxStreamChangeEvent.auxStreamSizeChangedEvent(auxStream), call: self.call!)
-                case .failure(_):
-                    XCTAssertTrue(false)
-                }
-            }
+            let size = CGSize(width: 200, height: 300)
             
-            self.call?.onAuxStreamChanged = {
-                event in
-                switch event {
-                case .auxStreamSizeChangedEvent(let auxStream):
-                    XCTAssertTrue(auxVideo?.vid == auxStream.vid)
-                    XCTAssertTrue(Int(auxStream.auxStreamSize.width) == Int(size.width))
-                    XCTAssertTrue(Int(auxStream.auxStreamSize.height) == Int(size.height))
-                    expect.fulfill()
-                    break
-                default:
-                    break
-                }
-            }
-            waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
-            }
-        }
-    }
-    
-    func testAddAuxStreamView() {
-        if let callmodel = self.call?.model,let user = self.remoteUser {
-            self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
-            let expect = expectation(description: "on AuxStreamChangeEvent")
-            expect.expectedFulfillmentCount = 1
-            var auxVideo: AuxStream?
-            let newRenderView: MediaRenderView = MediaRenderView()
-            self.call?.subscribeAuxStream(view: MediaRenderView()) {
-                result in
-                switch result {
-                case .success(let auxStream):
-                    XCTAssertNotNil(auxStream)
-                    auxVideo = auxStream
-                    auxStream.addRenderView(view: newRenderView)
-                    FakeWME.stubAuxStreamEvent(eventType: Call.AuxStreamChangeEvent.remoteAuxSendingVideoEvent(auxStream), call: self.call!)
-                case .failure(_):
-                    XCTAssertTrue(false)
-                }
-            }
-            
-            self.call?.onAuxStreamChanged = {
-                event in
-                switch event {
-                case .remoteAuxSendingVideoEvent(let auxStream):
-                    XCTAssertTrue(auxVideo?.vid == auxStream.vid)
-                    XCTAssertTrue(auxStream.containRenderView(view: newRenderView))
-                    XCTAssertTrue(auxStream.renderViews.count == 2)
-                    expect.fulfill()
-                    break
-                default:
-                    break
-                }
-            }
-            waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
-            }
-        }
-    }
-    
-    func testRemoveAuxStreamView() {
-        if let callmodel = self.call?.model,let user = self.remoteUser {
-            self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
-            let expect = expectation(description: "on AuxStreamChangeEvent")
+            let expect = expectation(description: "on onMediaChanged")
             expect.expectedFulfillmentCount = 2
-            var auxVideo: AuxStream?
-            let newRenderView: MediaRenderView = MediaRenderView()
-            let newRenderView1: MediaRenderView = MediaRenderView()
-            var readyToAdd: Bool = false
-            self.call?.subscribeAuxStream(view: newRenderView) {
-                result in
-                switch result {
-                case .success(let auxStream):
-                    XCTAssertNotNil(auxStream)
-                    auxVideo = auxStream
-                    auxStream.removeRenderView(view: newRenderView)
-                    FakeWME.stubAuxStreamEvent(eventType: Call.AuxStreamChangeEvent.remoteAuxSendingVideoEvent(auxStream), call: self.call!)
-                    
-                case .failure(_):
-                    XCTAssertTrue(false)
+            
+            let renderView = MediaRenderView()
+            var auxStream: AuxStream?
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                return renderView
+            }
+            self.auxStreamObserver?.onAuxStreamChanged = {
+                event in
+                switch event {
+                case .auxStreamOpenedEvent(let view, let result):
+                    XCTAssertEqual(view, renderView)
+                    XCTAssertNotNil(result)
+                    switch result {
+                    case .success(let aux):
+                        auxStream = aux
+                        XCTAssertEqual(renderView, aux.renderView)
+                        expect.fulfill()
+                        self.fakeWME?.stubAuxSize = size
+                        FakeWME.stubAuxStreamEvent(eventType: AuxStreamChangeEvent.auxStreamSizeChangedEvent(aux), call: self.call!)
+                    case .failure(_):
+                        XCTAssertTrue(false)
+                    }
+                case .auxStreamSizeChangedEvent(let aux):
+                    XCTAssertNotNil(aux)
+                    XCTAssertEqual(aux.auxStreamSize.height, Int32(size.height))
+                    XCTAssertEqual(aux.auxStreamSize.width, Int32(size.width))
+                    expect.fulfill()
+                    break
+                default:
+                    break
                 }
             }
             
-            self.call?.onAuxStreamChanged = {
+            self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user2))
+            FakeWME.stubStreamsCountNotification(count: 1 + Call.activeSpeakerCount, call: self.call!)
+            waitForExpectations(timeout: 5) { error in
+                XCTAssertNil(error, "openAuxStream time out")
+            }
+        }
+    }
+    
+    
+    func testopenForOneOnOneCall() {
+        self.call = mockCall(isGroup: false)
+        self.call?.multiStreamObserver = self.auxStreamObserver
+        if let callmodel = self.call?.model,let user = self.remoteUser {
+            self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
+            let expect = expectation(description: "on AuxStreamChangeEvent")
+            expect.expectedFulfillmentCount = 1
+            let renderView = MediaRenderView()
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                XCTAssertTrue(false)
+                return nil
+            }
+            self.auxStreamObserver?.onAuxStreamChanged = {
                 event in
                 switch event {
-                case .remoteAuxSendingVideoEvent(let auxStream):
-                    if readyToAdd == false {
-                        XCTAssertTrue(auxVideo?.vid == auxStream.vid)
-                        XCTAssertFalse(auxStream.containRenderView(view: newRenderView))
-                        XCTAssertTrue(auxStream.renderViews.count == 0)
+                case .auxStreamOpenedEvent(let view, let result):
+                    XCTAssertEqual(view, renderView)
+                    XCTAssertNotNil(result)
+                    switch result {
+                    case .success(_):
+                        XCTAssertTrue(false)
+                        break
+                    case .failure(let error):
+                        XCTAssertNotNil(error)
                         expect.fulfill()
-                        readyToAdd = true
-                        auxStream.addRenderView(view: newRenderView1)
-                        FakeWME.stubAuxStreamEvent(eventType: Call.AuxStreamChangeEvent.remoteAuxSendingVideoEvent(auxStream), call: self.call!)
-                    } else {
-                        XCTAssertTrue(auxVideo?.vid == auxStream.vid)
-                        XCTAssertTrue(auxStream.containRenderView(view: newRenderView1))
-                        XCTAssertTrue(auxStream.renderViews.count == 1)
-                        expect.fulfill()
+                        break
                     }
                     break
                 default:
                     break
                 }
             }
+            self.call?.openAuxStream(view: renderView)
+            
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
     
-    func testUpdateAuxStreamView() {
-        if let callmodel = self.call?.model,let user = self.remoteUser {
-            self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
-            let expect = expectation(description: "on AuxStreamChangeEvent")
-            expect.expectedFulfillmentCount = 1
-            var auxVideo: AuxStream?
-            let newRenderView: MediaRenderView = MediaRenderView()
-            let newRenderView1: MediaRenderView = MediaRenderView()
-            self.call?.subscribeAuxStream(view: newRenderView) {
-                result in
-                switch result {
-                case .success(let auxStream):
-                    XCTAssertNotNil(auxStream)
-                    auxVideo = auxStream
-                    auxStream.updateRenderView(view: newRenderView)
-                    auxStream.updateRenderView(view: newRenderView1)
-                    auxStream.addRenderView(view: newRenderView1)
-                    FakeWME.stubAuxStreamEvent(eventType: Call.AuxStreamChangeEvent.remoteAuxSendingVideoEvent(auxStream), call: self.call!)
-                    
-                case .failure(_):
-                    XCTAssertTrue(false)
-                }
-            }
-            
-            self.call?.onAuxStreamChanged = {
-                event in
-                switch event {
-                case .remoteAuxSendingVideoEvent(let auxStream):
-                    XCTAssertTrue(auxVideo?.vid == auxStream.vid)
-                    XCTAssertTrue(auxStream.containRenderView(view: newRenderView))
-                    XCTAssertTrue(auxStream.containRenderView(view: newRenderView1))
-                    XCTAssertTrue(auxStream.renderViews.count == 2)
-                    auxStream.updateRenderView(view: newRenderView)
-                    auxStream.updateRenderView(view: newRenderView1)
-                    expect.fulfill()
-                    break
-                default:
-                    break
-                }
-            }
-            waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
-            }
-        }
-    }
-    
-    func testSubscribeForOneOnOneCall() {
-        self.call = mockCall(isGroup: false)
-        if let callmodel = self.call?.model,let user = self.remoteUser {
-            self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: user))
-            let expect = expectation(description: "on AuxStreamChangeEvent")
-            expect.expectedFulfillmentCount = 1
-            self.call?.subscribeAuxStream(view: MediaRenderView()) {
-                result in
-                switch result {
-                case .success( _):
-                    XCTAssertTrue(false)
-                case .failure(let error):
-                    XCTAssertNotNil(error)
-                    expect.fulfill()
-                }
-            }
-            
-            waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
-            }
-        }
-    }
     
     func testAuxStreamCountChangeByLocus() {
         if let callmodel = self.call?.model,let answerUser = self.remoteUser,let user2 = self.otherUsers?.first {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: answerUser))
             let expect = expectation(description: "on onMediaChanged")
             expect.expectedFulfillmentCount = 1
-            self.call?.onMediaChanged = {
-                event in
-                switch event {
-                case .auxStreamsCount(let count):
-                    XCTAssertTrue(count == 1)
-                    expect.fulfill()
-                    break
-                default:
-                    break
-                }
-            }
             
-            FakeWME.stubMediaChangeNotification(eventType: Call.MediaChangedEvent.auxStreamsCount(3), call: self.call!)
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                expect.fulfill()
+                return nil
+            }
+            FakeWME.stubStreamsCountNotification(count: 3 + Call.activeSpeakerCount, call: self.call!)
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user2))
             
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
+    
     
     func testAuxStreamCountChangeByLocus2() {
         if let callmodel = self.call?.model,let answerUser = self.remoteUser,let user2 = self.otherUsers?.first {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: answerUser))
             let expect = expectation(description: "on onMediaChanged")
             expect.expectedFulfillmentCount = 2
-            var isFirst = true
-            self.call?.onMediaChanged = {
-                event in
-                switch event {
-                case .auxStreamsCount(let count):
-                    if isFirst {
-                        isFirst = false
-                        XCTAssertTrue(count == 1)
-                        self.call?.update(model: FakeCallModelHelper.hangUpCallModel(callModel: self.call?.model ?? callmodel, hanupUser: user2))
-                    } else {
-                        XCTAssertTrue(count == 0)
-                    }
-                    expect.fulfill()
-                    break
-                default:
-                    break
-                }
+            
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                expect.fulfill()
+                self.call?.update(model: FakeCallModelHelper.hangUpCallModel(callModel: self.call?.model ?? callmodel, hanupUser: user2))
+                return nil
             }
             
-            FakeWME.stubMediaChangeNotification(eventType: Call.MediaChangedEvent.auxStreamsCount(3), call: self.call!)
+            self.auxStreamObserver?.onAuxStreamUnavailable = {
+                expect.fulfill()
+                return nil
+            }
+            
+            FakeWME.stubStreamsCountNotification(count: 3 + Call.activeSpeakerCount, call: self.call!)
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user2))
             
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
@@ -1109,35 +1201,26 @@ class AuxiliaryVideoTest: XCTestCase {
             self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: callmodel, answerUser: answerUser))
             let expect = expectation(description: "on onMediaChanged")
             expect.expectedFulfillmentCount = 2
-            var isFirst = true
-            self.call?.onMediaChanged = {
-                event in
-                switch event {
-                case .auxStreamsCount(let count):
-                    if isFirst {
-                        isFirst = false
-                        XCTAssertTrue(count == 1)
-                        FakeWME.stubMediaChangeNotification(eventType: Call.MediaChangedEvent.auxStreamsCount(2), call: self.call!)
-                    } else {
-                       XCTAssertTrue(count == 2)
-                    }
-                    
-                    expect.fulfill()
-                    break
-                default:
-                    break
-                }
+            
+            self.auxStreamObserver?.onAuxStreamAvailable = {
+                expect.fulfill()
+                FakeWME.stubStreamsCountNotification(count: 2 + Call.activeSpeakerCount, call: self.call!)
+                return nil
             }
             
-            FakeWME.stubMediaChangeNotification(eventType: Call.MediaChangedEvent.auxStreamsCount(1), call: self.call!)
+            self.auxStreamObserver?.onAuxStreamUnavailable = {
+                expect.fulfill()
+                return nil
+            }
+            
+            FakeWME.stubStreamsCountNotification(count: 1 + Call.activeSpeakerCount, call: self.call!)
             for user in self.otherUsers ?? [] {
                 self.call?.update(model: FakeCallModelHelper.answerCallModel(callModel: self.call?.model ?? callmodel, answerUser: user))
             }
             
             waitForExpectations(timeout: 5) { error in
-                XCTAssertNil(error, "subscribeAuxStream time out")
+                XCTAssertNil(error, "openAuxStream time out")
             }
         }
     }
- */
 }

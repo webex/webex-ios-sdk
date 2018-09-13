@@ -20,24 +20,43 @@
 
 import Foundation
 
-/// The enumeration of remote auxiliary video change events.
+/// Multi stream change event enumeration.
 ///
 /// - since: 2.0.0
 public enum AuxStreamChangeEvent {
+    /// Triggered when an auxiliary stream is opened.
     case auxStreamOpenedEvent(MediaRenderView,Result<AuxStream>)
+    /// Triggered when this auxiliary stream's speaker has changed.
     case auxStreamPersonChangedEvent(AuxStream,From:CallMembership?,To:CallMembership?)
+    /// Triggered Auxiliary stream's render view size changed.
     case auxStreamSizeChangedEvent(AuxStream)
+    /// True if the auxiliary stream is sending video. Otherwise false.
+    /// Might be triggered when the auxiliary stream video is muted or unmuted.
     case auxStreamSendingVideoEvent(AuxStream)
+    /// Triggered when an auxiliary stream is closed.
     case auxStreamClosedEvent(MediaRenderView,Error?)
 }
 
+/// Multi stream protocol. Required to implement for using multi stream feature.
+/// - see: see Call.multiStreamObserver to set the multi stream's events observer in this call.
+/// - since: 2.0.0
 public protocol MultiStreamObserver : class {
-    ///
-    ///
+    
+    /// Callback when current call have a new auxiliary stream.
+    /// Return a MediaRenderView. SDK will open it automatically.
+    /// Return nil if not need to open at once. Call API:call.openAuxStream(view: MediaRenderView) to open stream later.
+    /// The auxStreamOpenedEvent would be triggered for indicating whether the stream is successfully opened.
+    /// - since: 2.0.0
+    var onAuxStreamAvailable: (()-> MediaRenderView?)? { get set }
+    
+    /// Callback of auxiliary stream related change events.
+    /// - see: see AuxStreamChangeEvent
     /// - since: 2.0.0
     var onAuxStreamChanged: ((AuxStreamChangeEvent) -> Void)? { get set }
     
-    var auxStreamAvailable: (()-> MediaRenderView?)? { get set }
-    
+    /// Callback when an existing auxiliary stream is unavailable.
+    /// Should give SDK a MediaRenderView which need be closed, if give nil SDK will automatically close the last opened stream.
+    /// The auxStreamClosedEvent would be triggered for indicating whether the stream is successfully closed.
+    /// - since: 2.0.0
     var onAuxStreamUnavailable: (() -> MediaRenderView?)? { get set }
 }
