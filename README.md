@@ -384,11 +384,13 @@ Assuming you already have an project integrated with SparkSDK.
 3. Replace sdk import info for your code:
 
     Replace in project scope: 
+    
     "import SparkSDK" => "import WebexSDK"
     
 4. If you using story board for UI: 
 
-    Change meida render view's module in "Indentity inspector":
+    Change meida render view's module in "Indentity inspector": 
+    
     "SparkSDK" => "WebexSDK"
 
 ### Usage
