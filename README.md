@@ -385,6 +385,11 @@ Assuming you already have an project integrated with SparkSDK.
 
     Replace in project scope: 
     "import SparkSDK" => "import WebexSDK"
+    
+4. If you using story board for UI: 
+
+    Change meida render view's module in "Indentity inspector":
+    "SparkSDK" => "WebexSDK"
 
 ### Usage
 
@@ -393,6 +398,8 @@ API changes list from SparkSDK to WebexSDK.
 | Description | SparkSDK | WebexSDK |
 | :----:| :----: | :----:
 | Create a new instance | let spark = Spark(authenticator: authenticator) | let webex = Webex(authenticator: authenticator)
+| "Room" Client renamed to "Space" Client | spark.rooms.list(roomId:{rooomId}) | webex.spaces.list(spaceId:{roomId}) 
+
 
 Recomand to replace variables containing "spark" with "webex" in project code.  
 
