@@ -570,7 +570,15 @@ public class Phone {
     
     func fetch(call: Call) {
         self.queue.sync {
-            self.client.fetch(call.url, queue: self.queue.underlying) { res in
+            var syncUrl = call.url
+            if call.model.sequence?.empty ?? true {
+                syncUrl = call.model.syncUrl ?? call.url
+                SDKLogger.shared.debug("Requesting sync Delta for locus: \(syncUrl)")
+            } else {
+                //full sync
+                syncUrl = call.url
+            }
+            self.client.fetch(syncUrl, queue: self.queue.underlying) { res in
                 self.doLocusResponse(LocusResult.update(call, res))
                 self.queue.yield()
             }

@@ -53,6 +53,8 @@ struct CallModel {
     fileprivate(set) var host: PersonModel?
     fileprivate(set) var fullState: FullStateModel?
     fileprivate(set) var sequence: SequenceModel? // Mandatory
+    fileprivate(set) var baseSequence: SequenceModel? = nil
+    fileprivate(set) var syncUrl: String? = nil
     fileprivate(set) var replaces: [ReplaceModel]?
     fileprivate(set) var mediaShares: [MediaShareModel]?
     fileprivate(set) var mediaConnections: [MediaConnectionModel]?
@@ -134,6 +136,10 @@ struct CallModel {
         }
         return nil
     }
+    
+    var isFullDTO : Bool {
+        return self.baseSequence == nil
+    }
 }
 
 extension CallEventModel: Mappable {
@@ -158,6 +164,8 @@ extension CallModel: Mappable {
 		host <- map["host"]
 		fullState <- map["fullState"]
 		sequence <- map["sequence"]
+        baseSequence <- map["baseSequence"]
+        syncUrl <- map["syncUrl"]
         replaces <- map["replaces"]
         mediaShares <- map["mediaShares"]
 	}
@@ -229,6 +237,49 @@ internal extension CallModel {
     
     internal mutating func setMediaConnections(newMediaConnections:[MediaConnectionModel]?) {
         self.mediaConnections = newMediaConnections
+    }
+    
+    mutating func applyDelta(from: CallModel) {
+        updateValueIfNotNil(from: from.sequence, to: &sequence)
+        updateValueIfNotNil(from: from.syncUrl, to: &syncUrl)
+        updateValueIfNotNil(from: from.locusUrl, to: &locusUrl)
+        updateValueIfNotNil(from: from.myself, to: &myself)
+        updateValueIfNotNil(from: from.host, to: &host)
+        updateValueIfNotNil(from: from.fullState, to: &fullState)
+        updateValueIfNotNil(from: from.replaces, to: &replaces)
+        updateValueIfNotNil(from: from.mediaShares, to: &mediaShares)
+        updateValueIfNotNil(from: from.mediaConnections, to: &mediaConnections)
+        processParticipants(from: from.participants)
+    }
+    
+    private func updateValueIfNotNil <T> (from: T?, to: inout T) {
+        if let fromValue = from {
+            to = fromValue
+        }
+    }
+    
+    private mutating func processParticipants(from:[ParticipantModel]?) {
+        if let newParticipants = from {
+            guard var oldParticipants = self.participants else {
+                self.participants = from
+                return
+            }
+            
+            for participant in newParticipants {
+                if let index = oldParticipants.index(where:{$0.id == participant.id}) {
+                    //replace
+                    if (participant.removed ?? false) == false {
+                        oldParticipants[index] = participant
+                    } else { //remove
+                        oldParticipants.remove(at: index)
+                    }
+                    
+                } else if participant.removed ?? false == false {
+                    // add
+                    oldParticipants.append(participant)
+                }
+            }
+        }
     }
 }
 
