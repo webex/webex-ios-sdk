@@ -842,7 +842,7 @@ public class Phone {
         NotificationCenter.default.addObserver(self, selector: #selector(self.onApplicationDidEnterBackground) , name: UIApplication.didEnterBackgroundNotification, object: nil)
         #else
         NotificationCenter.default.addObserver(self, selector: #selector(self.onApplicationDidBecomeActive) , name: .UIApplicationDidBecomeActive, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.onApplicationDidBecomeActive) , name: .UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.onApplicationDidEnterBackground) , name: .UIApplicationDidEnterBackground, object: nil)
         #endif
     }
     
