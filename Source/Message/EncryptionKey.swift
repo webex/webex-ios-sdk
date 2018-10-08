@@ -38,14 +38,14 @@ class EncryptionKey {
         }
     }
     
-    func material(client: MessageClientImpl, completionHandler: @escaping (Result<String>) -> Void) {
+    func material(client: MessageClientImpl, completionHandler: @escaping (WSResult<String>) -> Void) {
         if let marterial = self.material {
-            completionHandler(Result.success(marterial))
+            completionHandler(WSResult.success(marterial))
         }
         else {
             self.encryptionUrl(client: client) { response in
                 if let error = response.error {
-                    completionHandler(Result<String>.failure(error))
+                    completionHandler(WSResult<String>.failure(error))
                 }
                 else {
                     let encrptionUrl = response.data as? String
@@ -54,9 +54,9 @@ class EncryptionKey {
                         case .success(let data):
                             self.encryptionUrl = data.0
                             self.material = data.1
-                            completionHandler(Result<String>.success(data.1))
+                            completionHandler(WSResult<String>.success(data.1))
                         case .failure(let error):
-                            completionHandler(Result<String>.failure(error))
+                            completionHandler(WSResult<String>.failure(error))
                         }
                     }
                 }
@@ -64,9 +64,9 @@ class EncryptionKey {
         }
     }
     
-    func encryptionUrl(client: MessageClientImpl, completionHandler: @escaping (Result<String?>) -> Void) {
+    func encryptionUrl(client: MessageClientImpl, completionHandler: @escaping (WSResult<String?>) -> Void) {
         if let url = self.encryptionUrl {
-            completionHandler(Result.success(url))
+            completionHandler(WSResult.success(url))
         }
         else {
             client.requestSpaceEncryptionURL(spaceId: self.spaceId) { result in
@@ -76,9 +76,9 @@ class EncryptionKey {
         }
     }
     
-    func spaceUrl(authenticator: Authenticator, completionHandler: @escaping (Result<String>) -> Void) {
+    func spaceUrl(authenticator: Authenticator, completionHandler: @escaping (WSResult<String>) -> Void) {
         if let url = self.spaceUrl {
-            completionHandler(Result.success(url))
+            completionHandler(WSResult.success(url))
         }
         else {
             let request = ServiceRequest.Builder(authenticator).baseUrl(ServiceRequest.conversationServerAddress)
@@ -88,10 +88,10 @@ class EncryptionKey {
             request.responseJSON { (response: ServiceResponse<Any>) in
                 if let dict = response.result.data as? [String: Any], let url = dict["spaceUrl"] as? String {
                     self.spaceUrl = url
-                    completionHandler(Result.success(url))
+                    completionHandler(WSResult.success(url))
                 }
                 else {
-                    completionHandler(Result.failure(response.result.error ?? MessageClientImpl.MSGError.spaceUrlFetchFail))
+                    completionHandler(WSResult.failure(response.result.error ?? MessageClientImpl.MSGError.spaceUrlFetchFail))
                 }
             }
         }

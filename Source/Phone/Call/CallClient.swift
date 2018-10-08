@@ -147,10 +147,10 @@ class CallClient {
             case .success(let callResponse):
                 if var callModel = callResponse.callModel {
                     callModel.setMediaConnections(newMediaConnections: callResponse.mediaConnections)
-                    completionHandler(ServiceResponse.init(result.response, Result.success(callModel)))
+                    completionHandler(ServiceResponse.init(result.response, WSResult.success(callModel)))
                 }
             case .failure(let error):
-                completionHandler(ServiceResponse.init(result.response, Result.failure(error)))
+                completionHandler(ServiceResponse.init(result.response, WSResult.failure(error)))
             }
         }
         

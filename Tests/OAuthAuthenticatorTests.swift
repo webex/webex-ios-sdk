@@ -223,7 +223,7 @@ class OAuthAuthenticatorTests: XCTestCase {
         }
         XCTAssertEqual(delegate.callCount, 0)
         
-        oauthClient.refreshOAuthAccessTokenFromRefreshToken_completionHandler?(ServiceResponse<OAuthTokenModel>(nil, Result.failure(WebexError.illegalStatus(reason: "Fetch fails test"))))
+        oauthClient.refreshOAuthAccessTokenFromRefreshToken_completionHandler?(ServiceResponse<OAuthTokenModel>(nil, WSResult.failure(WebexError.illegalStatus(reason: "Fetch fails test"))))
         
         XCTAssertEqual(count, 1)
         XCTAssertEqual(retrievedAccessToken, nil)
@@ -326,7 +326,7 @@ class OAuthAuthenticatorTests: XCTestCase {
         
         oauthLauncher.completionHandler?("oauthCode1")
         
-        let response = ServiceResponse<OAuthTokenModel>(nil, Result.failure(WebexError.illegalStatus(reason: "Getting fails test")))
+        let response = ServiceResponse<OAuthTokenModel>(nil, WSResult.failure(WebexError.illegalStatus(reason: "Getting fails test")))
         oauthClient.fetchAccessTokenFromOAuthCode_completionHandler?(response)
         
         XCTAssertFalse(testObject.authorized)
@@ -401,7 +401,7 @@ class OAuthAuthenticatorTests: XCTestCase {
         
         let error = WebexError.illegalStatus(reason: "Multiple request failed test")
         XCTAssertEqual(oauthClient.refreshOAuthAccessTokenFromRefreshToken_callCount, 1)
-        oauthClient.refreshOAuthAccessTokenFromRefreshToken_completionHandler?(ServiceResponse<OAuthTokenModel>(nil, Result.failure(error)))
+        oauthClient.refreshOAuthAccessTokenFromRefreshToken_completionHandler?(ServiceResponse<OAuthTokenModel>(nil, WSResult.failure(error)))
         
         XCTAssertNil(storage.tokens)
         XCTAssertEqual(firstCount, 1)
@@ -438,7 +438,7 @@ class OAuthAuthenticatorTests: XCTestCase {
         accessTokenObject.accessTokenExpiration = accessExpiration ?? oneDay
         accessTokenObject.refreshTokenString = refreshToken
         accessTokenObject.refreshTokenExpiration = refreshExpiration ?? oneDay
-        return ServiceResponse<OAuthTokenModel>(nil, Result.success(accessTokenObject))
+        return ServiceResponse<OAuthTokenModel>(nil, WSResult.success(accessTokenObject))
     }
     
     private func createTestObject(clientId: String = "clientId1", scope: String = "scope1", redirectUri: String = "https://example.com/oauth") -> OAuthAuthenticator {

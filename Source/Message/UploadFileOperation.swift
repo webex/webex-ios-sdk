@@ -33,7 +33,7 @@ class UploadFileOperations {
         }
     }
     
-    func run(client: MessageClientImpl, completionHandler: @escaping (Result<[RemoteFile]>) -> Void) {
+    func run(client: MessageClientImpl, completionHandler: @escaping (WSResult<[RemoteFile]>) -> Void) {
         var sucess = [RemoteFile]()
         self.operations.forEach { operation in
             if !operation.done {
@@ -48,7 +48,7 @@ class UploadFileOperations {
             }
         }
         self.queue.sync {
-            completionHandler(Result.success(sucess))
+            completionHandler(WSResult.success(sucess))
         }
     }
 }
@@ -64,7 +64,7 @@ class UploadFileOperation {
         self.key = key
     }
     
-    func run(client: MessageClientImpl, completionHandler: @escaping (Result<RemoteFile>) -> Void) {
+    func run(client: MessageClientImpl, completionHandler: @escaping (WSResult<RemoteFile>) -> Void) {
         self.doUpload(client: client, path: self.local.path, size: self.local.size, progressStart: 0, progressHandler: self.local.progressHandler) { url, scr, error in
             if let url = url, let scr = scr {
                 self.key.material(client: client) { material in
@@ -78,19 +78,19 @@ class UploadFileOperation {
                                 file.thumbnail = thumb
                             }
                             self.done = true
-                            completionHandler(Result.success(file))
+                            completionHandler(WSResult.success(file))
                         }
                     }
                     else {
                         self.done = true
-                        completionHandler(Result.success(file))
+                        completionHandler(WSResult.success(file))
                     }
                 }
             }
             else {
                 SDKLogger.shared.info("File Uoload Fail...")
                 self.done = true
-                completionHandler(Result.failure(error ?? WebexError.serviceFailed(code: -7000, reason: "upload error")))
+                completionHandler(WSResult.failure(error ?? WebexError.serviceFailed(code: -7000, reason: "upload error")))
             }
         }
     }

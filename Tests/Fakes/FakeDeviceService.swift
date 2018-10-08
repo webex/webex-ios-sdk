@@ -24,7 +24,7 @@ import Foundation
 class FakeDeviceService: DeviceService {
     var disableRegister: Bool = false
     var disableDeregister: Bool = false
-    override func registerDevice(phone: Phone, queue: DispatchQueue, completionHandler: @escaping (Result<Device>) -> Void) {
+    override func registerDevice(phone: Phone, queue: DispatchQueue, completionHandler: @escaping (WSResult<Device>) -> Void) {
         if disableRegister == false {
         let deviceUrl = URL(string: Config.FakeSelfDeviceUrl)
         
@@ -46,12 +46,12 @@ class FakeDeviceService: DeviceService {
         
         self.device = device
         UserDefaults.sharedInstance.deviceUrl = Config.FakeSelfDeviceUrl
-            completionHandler(Result.success(device))
+            completionHandler(WSResult.success(device))
             
         }
         else {
             let error = WebexError.serviceFailed(code: -7000, reason: "registering device error")
-            completionHandler(Result.failure(error))
+            completionHandler(WSResult.failure(error))
             self.disableRegister = false
         }
         

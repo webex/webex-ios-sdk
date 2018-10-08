@@ -147,7 +147,7 @@ class JWTAuthenticatorTests: XCTestCase {
             count = count + 1
         }
         
-        client.fetchTokenFromJWT_completionHandler?(ServiceResponse<JWTTokenModel>(nil, Result.failure(WebexError.illegalStatus(reason: "Fetch fails test"))))
+        client.fetchTokenFromJWT_completionHandler?(ServiceResponse<JWTTokenModel>(nil, WSResult.failure(WebexError.illegalStatus(reason: "Fetch fails test"))))
         
         XCTAssertEqual(retrievedAccessToken, nil)
         XCTAssertNil(storage.authenticationInfo)
@@ -252,6 +252,6 @@ class JWTAuthenticatorTests: XCTestCase {
         var accessTokenObject = JWTTokenModel(token: accessToken)
         accessTokenObject.tokenCreationDate = now
         accessTokenObject.tokenExpiration = JWTAuthenticatorTests.oneDay
-        return ServiceResponse<JWTTokenModel>(nil, Result.success(accessTokenObject))
+        return ServiceResponse<JWTTokenModel>(nil, WSResult.success(accessTokenObject))
     }
 }

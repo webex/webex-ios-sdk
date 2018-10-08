@@ -817,22 +817,22 @@ public class Call {
         
         DispatchQueue.main.async {
             if self.auxStreams.count >= maxAuxStreamNumber {
-                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "have exceeded the auxiliary streams limit"))))
+                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,WSResult.failure(WebexError.illegalOperation(reason: "have exceeded the auxiliary streams limit"))))
                 return
             }
             
             if !self.isGroup {
-                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "only available for group call"))))
+                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,WSResult.failure(WebexError.illegalOperation(reason: "only available for group call"))))
                 return
             }
             
             if let _ = self.auxStreams.index(where:{ $0.renderView == view }) {
-                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "open multi aux stream with same view"))))
+                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,WSResult.failure(WebexError.illegalOperation(reason: "open multi aux stream with same view"))))
                 return
             }
             
             if self.auxStreams.count >= self.availableAuxStreamCount {
-                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "Cannot exceed available stream count."))))
+                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,WSResult.failure(WebexError.illegalOperation(reason: "Cannot exceed available stream count."))))
                 return
             }
             
@@ -840,7 +840,7 @@ public class Call {
             if (self.mediaSession.status == .running) {
                 vid = self.mediaSession.subscribeAuxStream(view: view)
                 if vid == AuxStream.invalidVid {
-                    self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.serviceFailed(code: -7000, reason: "open stream fail"))))
+                    self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,WSResult.failure(WebexError.serviceFailed(code: -7000, reason: "open stream fail"))))
                     return
                 }
             }
@@ -848,7 +848,7 @@ public class Call {
             let auxVideo = AuxStream.init(vid: vid, renderView: view,renderViewOperation:mediaOperationHandler,call: self)
             SDKLogger.shared.info("open stream for vid:\(auxVideo.vid)")
             self.auxStreams.append(auxVideo)
-            self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.success(auxVideo)))
+            self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,WSResult.success(auxVideo)))
         }
     }
     

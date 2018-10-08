@@ -42,7 +42,7 @@ class FakeCallClient: CallClient {
     override func create(_ toAddress: String, by device: Device, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
         if enableServerReturnError {
             let error = WebexError.serviceFailed(code: -7000, reason: "create call error")
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.failure(error)))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.failure(error)))
             return
         }
     
@@ -54,7 +54,7 @@ class FakeCallClient: CallClient {
             else {
                 self.callModel = FakeCallModelHelper.dialCallModel(caller: caller, callee: callee)
             }
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.success(self.callModel!)))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.success(self.callModel!)))
         }
         
     }
@@ -62,12 +62,12 @@ class FakeCallClient: CallClient {
     override func leave(_ participantUrl: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
         if enableServerReturnError {
             let error = WebexError.serviceFailed(code: -7000, reason: "create call error")
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.failure(error)))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.failure(error)))
             return
         }
         if let oldModel = self.callModel,let hanupUser = selfUser {
             self.callModel = FakeCallModelHelper.hangUpCallModel(callModel: oldModel,hanupUser: hanupUser)
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.success(self.callModel!)))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.success(self.callModel!)))
         }
         
         
@@ -76,35 +76,35 @@ class FakeCallClient: CallClient {
     override func fetch(by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<[CallModel]>) -> Void) {
         if enableServerReturnError {
             let error = WebexError.serviceFailed(code: -7000, reason: "create call error")
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.failure(error)))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.failure(error)))
             return
         }
         
         if enableFetchCall ,let caller = self.otherParticipants?.first,let callee = selfUser {
             self.otherParticipants?.append(callee)
             self.callModel = FakeCallModelHelper.initCallModel(caller: caller, allParticipantUsers: self.otherParticipants!, selfUser: callee)
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.success([self.callModel!])))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.success([self.callModel!])))
         }
         else {
-        completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.success([])))
+        completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.success([])))
         }
     }
     
     override func join(_ callUrl: String, by device: Device, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
         if enableServerReturnError {
             let error = WebexError.serviceFailed(code: -7000, reason: "create call error")
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.failure(error)))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.failure(error)))
             return
         }
         
         if isSpaceCall,let caller = selfUser,var callees = self.otherParticipants {
             callees.append(caller)
             self.callModel = FakeCallModelHelper.initCallModel(caller: caller, allParticipantUsers: callees, selfUser: caller)
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.success(self.callModel!)))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.success(self.callModel!)))
         }
         else if let oldModel = self.callModel,let answerUser = selfUser {
             self.callModel = FakeCallModelHelper.answerCallModel(callModel: oldModel, answerUser: answerUser)
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.success(self.callModel!)))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.success(self.callModel!)))
         
         }
     }
@@ -112,62 +112,62 @@ class FakeCallClient: CallClient {
     override func decline(_ callUrl: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
         if enableServerReturnError {
             let error = WebexError.serviceFailed(code: -7000, reason: "create call error")
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.failure(error)))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.failure(error)))
             return
         }
         
         if let oldModel = self.callModel,let declineUser = selfUser {
             self.callModel = FakeCallModelHelper.declineCallModel(callModel: oldModel, declineUser: declineUser)
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.success(self.callModel!)))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.success(self.callModel!)))
         }
     }
     
     override func alert(_ callUrl: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
         if enableServerReturnError {
             let error = WebexError.serviceFailed(code: -7000, reason: "create call error")
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.failure(error)))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.failure(error)))
             return
         }
         
         if let oldModel = self.callModel,let alertUser = selfUser {
             self.callModel = FakeCallModelHelper.alertCallModel(callModel: oldModel, alertUser: alertUser)
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.success(self.callModel!)))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.success(self.callModel!)))
         }
     }
     
     override func update(_ mediaUrl: String, by mediaID: String, by device: Device, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
         if enableServerReturnError {
             let error = WebexError.serviceFailed(code: -7000, reason: "create call error")
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.failure(error)))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.failure(error)))
             return
         }
         
         if let oldModel = self.callModel,let updateUser = selfUser {
             self.callModel = FakeCallModelHelper.updateMediaCallModel(callModel: oldModel, updateUser: updateUser,localMedia:localMedia)
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.success(self.callModel!)))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.success(self.callModel!)))
         }
     }
     
     override func sendDtmf(_ participantUrl: String, by device: Device, correlationId: Int, events: String, volume: Int? = nil, durationMillis: Int? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
         if enableServerReturnError {
             let error = WebexError.serviceFailed(code: -7000, reason: "sendDtmf error")
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.failure(error)))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.failure(error)))
             return
         }
         
-        completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.success("success")))
+        completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.success("success")))
     }
     
     override func updateMediaShare(_ mediaShare: MediaShareModel, by device: Device, mediaShareUrl: String, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
         if enableServerReturnError {
             let error = WebexError.serviceFailed(code: -7000, reason: "updateMediaShare error")
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 404, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.failure(error)))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 404, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.failure(error)))
             return
         }
         
         if let oldModel = self.callModel {
 //            self.callModel = FakeCallModelHelper.updateMediaCallModel(callModel: oldModel, updateUser: updateUser,localMedia:localMedia)
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.success(oldModel.toJSONString())))
+            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), WSResult.success(oldModel.toJSONString())))
         }
     }
     

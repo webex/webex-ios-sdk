@@ -143,7 +143,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         let tempKeyPath = self.keyPath
         createAlamofireRequest() { request in
             request.responseObject(queue: tempQueue, keyPath: tempKeyPath) { (response: DataResponse<T>) in
-                var result: Result<T>
+                var result: WSResult<T>
                 switch response.result {
                 case .success(let value):
                     result = .success(value)
@@ -165,7 +165,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         let tempKeyPath = self.keyPath
         createAlamofireRequest() { request in
             request.responseArray(queue: tempQueue, keyPath: tempKeyPath) { (response: DataResponse<[T]>) in
-                var result: Result<[T]>
+                var result: WSResult<[T]>
                 switch response.result {
                 case .success(let value):
                     result = .success(value)
@@ -186,7 +186,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         let tempQueue = self.queue
         createAlamofireRequest() { request in
             request.responseJSON(queue: tempQueue) { (response: DataResponse<Any>) in
-                var result: Result<Any>
+                var result: WSResult<Any>
                 switch response.result {
                 case .success(let value):
                     result = .success(value)

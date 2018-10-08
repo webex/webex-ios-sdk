@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage = "https://developer.webex.com"
   s.license = "MIT"
   s.author = { "Webex SDK team" => "spark-sdk-crdc@cisco.com" }
-  s.source = { :git => "https://github.com/webex/webex-ios-sdk.git", :tag => s.version }
+  s.source = { :git => "~/Desktop/Webex_sdk", :tag => s.version, :submodules => true }
   s.ios.deployment_target = "10.0"
   s.source_files = "Source/**/*.{h,m,swift}"
   s.preserve_paths = 'Frameworks/*.framework'
@@ -13,10 +13,23 @@ Pod::Spec.new do |s|
                 'ENABLE_BITCODE' => 'NO',
                 }
   s.vendored_frameworks = "Frameworks/*.framework"
-  s.dependency 'Alamofire', '~> 4.7.1'
-  s.dependency 'ObjectMapper', '~> 3.1'
-  s.dependency 'AlamofireObjectMapper', '~> 5.0'
-  s.dependency 'SwiftyJSON', '~> 4.0'
-  s.dependency 'Starscream', '~> 3.0.5'
-  s.dependency 'KeychainAccess', '~> 3.1'
+
+  s.subspec 'Alamofire' do |af|
+    af.source_files = 'Frameworks/External/Alamofire/*'
+  end
+  s.subspec 'ObjectMapper' do |ob|
+    ob.source_files = 'Frameworks/External/ObjectMapper/*'
+  end
+  s.subspec 'AlamofireObjectMapper' do |ao|
+    ao.source_files = 'Frameworks/External/AlamofireObjectMapper/*'
+  end
+  s.subspec 'SwiftyJSON' do |sj|
+    sj.source_files = 'Frameworks/External/SwiftyJSON/*'
+  end
+  s.subspec 'Starscream' do |st|
+    st.source_files = 'Frameworks/External/Starscream/*'
+  end
+  s.subspec 'KeychainAccess' do |ka|
+    ka.source_files = 'Frameworks/External/KeychainAccess/*'
+  end
 end
