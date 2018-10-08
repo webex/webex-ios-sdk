@@ -21,6 +21,14 @@
 import Foundation
 
 public extension Call {
+    
+    /// A local unique identifier of a *Call* for [Apple CallKit](https://developer.apple.com/reference/callkit).
+    ///
+    /// - since: 1.2.0
+    public var uuid: UUID {
+        return self._uuid
+    }
+    
     /// Update audio session for CallKit.
     /// This must be called on [provider:didActivateAudioSession:](https://developer.apple.com/documentation/callkit/cxproviderdelegate/1833280-provider) to reactivate the audio session.
     ///
@@ -28,4 +36,5 @@ public extension Call {
     public func updateAudioSession() {
         self.mediaSession.restartAudio()
     }
+    
 }

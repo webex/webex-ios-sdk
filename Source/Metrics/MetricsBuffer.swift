@@ -24,11 +24,11 @@ class MetricsBuffer: NSObject {
     private var metrics = [Metric]()
     
     var count: Int {
-        var tempCount: Int = 0
+        var count: Int = 0
         synchronized(lock: self) {
-            tempCount = metrics.count
+            count = metrics.count
         }
-        return tempCount
+        return count
     }
     
     func add(metric: Metric) {

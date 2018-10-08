@@ -102,7 +102,7 @@ public struct CallMembership {
             && self.call.model.screenShareMediaFloor?.disposition == MediaShareModel.ShareFloorDisposition.granted
     }
     
-    /// True if this *CallMembership* is speaking in this meeting and video is prsenting on remote media render view. Otherwise, false.
+    /// True if the *CallMembership* is sending screen share. Otherwise, false.
     ///
     /// - since: 2.0.0
     public var isActiveSpeaker: Bool {
@@ -114,21 +114,13 @@ public struct CallMembership {
     public let isSelf: Bool
     
     var model: ParticipantModel {
-        get {
-            self.call.lock()
-            defer { self.call.unlock() }
-            return participantModel
-        }
-        set {
-            self.call.lock()
-            defer { self.call.unlock() }
-            participantModel = newValue
-        }
+        get { self.call.lock(); defer { self.call.unlock() }; return _model }
+        set { self.call.lock(); defer { self.call.unlock() }; _model = newValue }
     }
     
     private let call: Call
     
-    private var participantModel: ParticipantModel
+    private var _model: ParticipantModel
 
     /// Constructs a new *CallMembership*.
     ///
@@ -141,14 +133,10 @@ public struct CallMembership {
         if let personId = participant.person?.id {
             self.personId = "ciscospark://us/PEOPLE/\(personId)".base64Encoded()
         }
-        self.participantModel = participant
+        self._model = participant
     }
     
     func containCSI(csi:UInt) -> Bool {
         return model.status?.csis?.contains(csi) ?? false
-    }
-    
-    func isMediaActive() -> Bool {
-        return model.state == State.joined
     }
 }

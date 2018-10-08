@@ -132,7 +132,7 @@ public class Phone {
     private let webSocket: WebSocketService
     private var calls = [String: Call]()
     private var mediaContext: MediaSessionWrapper?
-    private let nilJsonStr = "Nil JSON"
+    
     var debug = true;
     
     enum LocusResult {
@@ -144,19 +144,19 @@ public class Phone {
         case update(Call, ServiceResponse<CallModel>)
         case updateMediaShare(Call, ServiceResponse<Any>, (Error?) -> Void)
     }
-
+    
     convenience init(authenticator: Authenticator) {
         let device = DeviceService(authenticator: authenticator)
-        let tempMetrics = MetricsEngine(authenticator: authenticator, service: device)
+        let metrics = MetricsEngine(authenticator: authenticator, service: device)
         self.init(authenticator: authenticator,
                   devices: device,
                   reachability: ReachabilityService(authenticator: authenticator, deviceService: device),
                   client: CallClient(authenticator: authenticator),
-                  conversations: ConversationClient(authenticator: authenticator), metrics: tempMetrics, prompter: H264LicensePrompter(metrics: tempMetrics), webSocket: WebSocketService(authenticator: authenticator))
+                  conversations: ConversationClient(authenticator: authenticator), metrics: metrics, prompter: H264LicensePrompter(metrics: metrics), webSocket: WebSocketService(authenticator: authenticator))
     }
     
     init(authenticator: Authenticator, devices:DeviceService, reachability:ReachabilityService, client:CallClient, conversations:ConversationClient, metrics:MetricsEngine, prompter:H264LicensePrompter, webSocket:WebSocketService) {
-        let _ = MediaEngineWrapper.sharedInstance.wmeVersion
+        let _ = MediaEngineWrapper.sharedInstance.WMEVersion
         self.authenticator = authenticator
         self.devices = devices
         self.reachability = reachability
@@ -213,7 +213,7 @@ public class Phone {
                     }
                     self.webSocket.connect(device.webSocketUrl) { [weak self] error in
                         if let error = error {
-                            SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.registerFailure), error: error)
+                            SDKLogger.shared.error("Failed to Register device", error: error)
                         }
                         if let strong = self {
                             strong.queue.underlying.async {
@@ -228,7 +228,7 @@ public class Phone {
                         }
                     }
                 case .failure(let error):
-                    SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.registerFailure), error: error)
+                    SDKLogger.shared.error("Failed to Register device", error: error)
                     DispatchQueue.main.async {
                         completionHandler(error)
                     }
@@ -283,14 +283,14 @@ public class Phone {
             }
             else {
                 if self.calls.filter({!$0.value.isGroup || ($0.value.isGroup && $0.value.status == CallStatus.connected)}).count > 0 {
-                    SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.otherActiveCall))
-                    completionHandler(Result.failure(WebexError.illegalOperation(reason: PhoneErrorDescription.errorDesc(.registerFailure))))
+                    SDKLogger.shared.error("Failure: There are other active calls")
+                    completionHandler(Result.failure(WebexError.illegalOperation(reason: "There are other active calls")))
                     return
                 }
                 self.requestMediaAccess(option: option) {
-                    let tempMediaContext = self.mediaContext ?? MediaSessionWrapper()
-                    tempMediaContext.prepare(option: option, phone: self)
-                    let localSDP = tempMediaContext.getLocalSdp()
+                    let mediaContext = self.mediaContext ?? MediaSessionWrapper()
+                    mediaContext.prepare(option: option, phone: self)
+                    let localSDP = mediaContext.getLocalSdp()
                     let reachabilities = self.reachability.feedback?.reachabilities
                     
                     CallClient.DialTarget.lookup(address, by: Webex(authenticator: self.authenticator)) { target in
@@ -299,7 +299,7 @@ public class Phone {
                                 let media = MediaModel(sdp: localSDP, audioMuted: false, videoMuted: false, reachabilities: reachabilities)
                                 if target.isEndpoint {
                                     self.client.create(target.address, by: device, localMedia: media, queue: self.queue.underlying) { res in
-                                        self.doLocusResponse(LocusResult.call(target.isGroup, device, option.uuid, tempMediaContext, res, completionHandler))
+                                        self.doLocusResponse(LocusResult.call(target.isGroup, device, option.uuid, mediaContext, res, completionHandler))
                                         self.queue.yield()
                                     }
                                 }
@@ -307,12 +307,12 @@ public class Phone {
                                     self.conversations.getLocusUrl(conversation: target.address, by: device, queue: self.queue.underlying) { res in
                                         if let url = res.result.data?.locusUrl {
                                             self.client.join(url, by: device, localMedia: media, queue: self.queue.underlying) { resNew in
-                                                self.doLocusResponse(LocusResult.call(target.isGroup, device, option.uuid, tempMediaContext, resNew, completionHandler))
+                                                self.doLocusResponse(LocusResult.call(target.isGroup, device, option.uuid, mediaContext, resNew, completionHandler))
                                                 self.queue.yield()
                                             }
                                         }
                                         else if let error = res.result.error {
-                                            SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.failureCall), error: error)
+                                            SDKLogger.shared.error("Failure call ", error: error)
                                             DispatchQueue.main.async {
                                                 completionHandler(Result.failure(error))
                                             }
@@ -391,17 +391,17 @@ public class Phone {
     func acknowledge(call: Call, completionHandler: @escaping (Error?) -> Void) {
         self.queue.sync {
             if self.calls.filter({ $0.key != call.url }).count > 0 {
-                SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.otherActiveCall))
+                SDKLogger.shared.error("Failure: There are other active calls")
                 DispatchQueue.main.async {
-                    completionHandler(WebexError.illegalOperation(reason: PhoneErrorDescription.errorDesc(.otherActiveCall)))
+                    completionHandler(WebexError.illegalOperation(reason: "There are other active calls"))
                 }
                 self.queue.yield()
                 return
             }
             if call.direction == Call.Direction.outgoing {
-                SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.unSupportFunction))
+                SDKLogger.shared.error("Failure: Unsupport function for outgoing call")
                 DispatchQueue.main.async {
-                    completionHandler(WebexError.illegalOperation(reason: PhoneErrorDescription.errorDesc(.unSupportFunction)))
+                    completionHandler(WebexError.illegalOperation(reason: "Unsupport function for outgoing call"))
                 }
                 self.queue.yield()
                 return
@@ -433,35 +433,35 @@ public class Phone {
     func answer(call: Call, option: MediaOption, completionHandler: @escaping (Error?) -> Void) {
         DispatchQueue.main.async {
             if self.calls.filter({ $0.key != call.url && $0.value.status == CallStatus.connected}).count > 0 {
-                SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.otherActiveCall))
-                completionHandler(WebexError.illegalOperation(reason: PhoneErrorDescription.errorDesc(.otherActiveCall)))
+                SDKLogger.shared.error("Failure: There are other active calls")
+                completionHandler(WebexError.illegalOperation(reason: "There are other active calls"))
                 return
             }
             if call.direction == Call.Direction.outgoing {
-                SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.unSupportFunction))
-                completionHandler(WebexError.illegalOperation(reason: PhoneErrorDescription.errorDesc(.unSupportFunction)))
+                SDKLogger.shared.error("Failure: Unsupport function for outgoing call")
+                completionHandler(WebexError.illegalOperation(reason: "Unsupport function for outgoing call"))
                 return
             }
             if call.direction == Call.Direction.incoming {
                 if call.status == CallStatus.connected {
-                    SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.alreadyConnected))
-                    completionHandler(WebexError.illegalStatus(reason: PhoneErrorDescription.errorDesc(.alreadyConnected)))
+                    SDKLogger.shared.error("Failure: Already connected")
+                    completionHandler(WebexError.illegalStatus(reason: "Already connected"))
                     return
                 }
                 else if call.status == CallStatus.disconnected {
-                    SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.alreadyDisconnected))
-                    completionHandler(WebexError.illegalStatus(reason: PhoneErrorDescription.errorDesc(.alreadyDisconnected)))
+                    SDKLogger.shared.error("Failure: Already disconnected")
+                    completionHandler(WebexError.illegalStatus(reason: "Already disconnected"))
                     return
                 }
             }
             if let uuid = option.uuid {
-                call.uuid = uuid
+                call._uuid = uuid
             }
             
             self.requestMediaAccess(option: option) {
-                let tempMediaContext = call.mediaSession
-                tempMediaContext.prepare(option: option, phone: self)
-                let media = MediaModel(sdp: tempMediaContext.getLocalSdp(), audioMuted: false, videoMuted: false, reachabilities: self.reachability.feedback?.reachabilities)
+                let mediaContext = call.mediaSession
+                mediaContext.prepare(option: option, phone: self)
+                let media = MediaModel(sdp: mediaContext.getLocalSdp(), audioMuted: false, videoMuted: false, reachabilities: self.reachability.feedback?.reachabilities)
                 self.queue.sync {
                     self.client.join(call.url, by: call.device, localMedia: media, queue: self.queue.underlying) { res in
                         self.doLocusResponse(LocusResult.join(call, res, completionHandler))
@@ -475,26 +475,26 @@ public class Phone {
     func reject(call: Call, completionHandler: @escaping (Error?) -> Void) {
         self.queue.sync {
             if call.direction == Call.Direction.outgoing {
-                SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.unSupportFunction))
+                SDKLogger.shared.error("Failure: Unsupport function for outgoing call")
                 DispatchQueue.main.async {
-                    completionHandler(WebexError.illegalOperation(reason: PhoneErrorDescription.errorDesc(.unSupportFunction)))
+                    completionHandler(WebexError.illegalOperation(reason: "Unsupport function for outgoing call"))
                 }
                 self.queue.yield()
                 return
             }
             if call.direction == Call.Direction.incoming {
                 if call.status == CallStatus.connected {
-                    SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.alreadyConnected))
+                    SDKLogger.shared.error("Failure: Already connected")
                     DispatchQueue.main.async {
-                        completionHandler(WebexError.illegalStatus(reason: PhoneErrorDescription.errorDesc(.alreadyConnected)))
+                        completionHandler(WebexError.illegalStatus(reason: "Already connected"))
                     }
                     self.queue.yield()
                     return
                 }
                 else if call.status == CallStatus.disconnected {
-                    SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.alreadyDisconnected))
+                    SDKLogger.shared.error("Failure: Already disconnected")
                     DispatchQueue.main.async {
-                        completionHandler(WebexError.illegalStatus(reason: PhoneErrorDescription.errorDesc(.alreadyDisconnected)))
+                        completionHandler(WebexError.illegalStatus(reason: "Already disconnected"))
                     }
                     self.queue.yield()
                     return
@@ -519,9 +519,9 @@ public class Phone {
     func hangup(call: Call, completionHandler: @escaping (Error?) -> Void) {
         self.queue.sync {
             if call.status == CallStatus.disconnected {
-                SDKLogger.shared.warn("Warning: " + PhoneErrorDescription.errorDesc(.alreadyDisconnected))
+                SDKLogger.shared.warn("Warning: Already disconnected")
                 DispatchQueue.main.async {
-                    completionHandler(WebexError.illegalStatus(reason: PhoneErrorDescription.errorDesc(.alreadyDisconnected)))
+                    completionHandler(WebexError.illegalStatus(reason: "Already disconnected"))
                 }
                 self.queue.yield()
                 return
@@ -570,16 +570,7 @@ public class Phone {
     
     func fetch(call: Call) {
         self.queue.sync {
-            var syncUrl = call.url
-            if call.model.sequence?.empty ?? true {
-                syncUrl = call.model.syncUrl ?? call.url
-                SDKLogger.shared.debug("Requesting sync Delta for locus: \(syncUrl)")
-            } else {
-                //full sync
-                syncUrl = call.url
-                SDKLogger.shared.debug("Requesting full sync Delta for locus: \(syncUrl)")
-            }
-            self.client.fetch(syncUrl, queue: self.queue.underlying) { res in
+            self.client.fetch(call.url, queue: self.queue.underlying) { res in
                 self.doLocusResponse(LocusResult.update(call, res))
                 self.queue.yield()
             }
@@ -643,13 +634,13 @@ public class Phone {
         case .call(let group, let device, let uuid, let media, let res, let completionHandler):
             switch res.result {
             case .success(let model):
-                SDKLogger.shared.debug("Receive call locus response: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
+                SDKLogger.shared.debug("Receive call locus response: \(model.toJSONString(prettyPrint: self.debug) ?? "Nil JSON")")
                 if model.isValid {
-                    let call = Call(model: model, device: device, media: media, direction: Call.Direction.outgoing, group: (group ? group : !model.isOneOnOne), uuid: uuid)
+                    let call = Call(model: model, device: device, media: media, direction: Call.Direction.outgoing, group: (group ? true : !model.isOneOnOne), uuid: uuid)
                     if call.isInIllegalStatus {
                         DispatchQueue.main.async {
                             let error = WebexError.illegalStatus(reason: "The previous session did not end")
-                            SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.failureCall), error: error)
+                            SDKLogger.shared.error("Failure call ", error: error)
                             completionHandler(Result.failure(error))
                             call.end(reason: Call.DisconnectReason.error(error))
                         }
@@ -665,7 +656,7 @@ public class Phone {
                     completionHandler(Result.failure(WebexError.serviceFailed(code: -7000, reason: "Failure: Missing required information when dial")))
                 }
             case .failure(let error):
-                SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.failureCall), error: error)
+                SDKLogger.shared.error("Failure call ", error: error)
                 DispatchQueue.main.async {
                     completionHandler(Result.failure(error))
                 }
@@ -673,7 +664,7 @@ public class Phone {
         case .join(let call, let res, let completionHandler):
             switch res.result {
             case .success(let model):
-                SDKLogger.shared.debug("Receive join locus response: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
+                SDKLogger.shared.debug("Receive join locus response: \(model.toJSONString(prettyPrint: self.debug) ?? "Nil JSON")")
                 call.update(model: model)
                 DispatchQueue.main.async {
                     call.startMedia()
@@ -688,7 +679,7 @@ public class Phone {
         case .leave(let call, let res, let completionHandler):
             switch res.result {
             case .success(let model):
-                SDKLogger.shared.debug("Receive leave locus response: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
+                SDKLogger.shared.debug("Receive leave locus response: \(model.toJSONString(prettyPrint: self.debug) ?? "Nil JSON")")
                 call.update(model: model)
                 DispatchQueue.main.async {
                     completionHandler(nil)
@@ -731,7 +722,7 @@ public class Phone {
         case .update(let call, let res):
             switch res.result {
             case .success(let model):
-                SDKLogger.shared.debug("Receive update media locus response: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
+                SDKLogger.shared.debug("Receive update media locus response: \(model.toJSONString(prettyPrint: self.debug) ?? "Nil JSON")")
                 call.update(model: model)
             case .failure(let error):
                 SDKLogger.shared.error("Failure update media ", error: error)
@@ -754,7 +745,7 @@ public class Phone {
     }
     
     private func doLocusEvent(_ model: CallModel) {
-        SDKLogger.shared.debug("Receive locus event: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
+        SDKLogger.shared.debug("Receive locus event: \(model.toJSONString(prettyPrint: self.debug) ?? "Nil JSON")")
         guard let url = model.callUrl else {
             SDKLogger.shared.error("CallModel is missing call url")
             return
@@ -772,7 +763,7 @@ public class Phone {
             if model.isValid {
                 let call = Call(model: model, device: device, media: self.mediaContext ?? MediaSessionWrapper(), direction: Call.Direction.incoming, group: !model.isOneOnOne, uuid: nil)
                 self.add(call: call)
-                SDKLogger.shared.info("Receive incoming call: \(call.model.callUrl ?? call.uuid.uuidString)")
+                SDKLogger.shared.info("Receive incoming call: \(call.model.callUrl ?? call._uuid.uuidString)")
                 DispatchQueue.main.async {
                     self.onIncoming?(call)
                 }
@@ -789,14 +780,14 @@ public class Phone {
     
     private func doConversationEvent(_ model: ActivityModel){
         if let messages = self.messages {
-            SDKLogger.shared.debug("Receive Conversation Acitivity: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
+            SDKLogger.shared.debug("Receive Conversation Acitivity: \(model.toJSONString(prettyPrint: self.debug) ?? "Nil JSON")")
             messages.handle(activity: model)
         }
     }
     
     private func doKmsEvent( _ model: KmsMessageModel){
         if let messages = self.messages{
-            SDKLogger.shared.debug("Receive Kms Message: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
+            SDKLogger.shared.debug("Receive Kms Message: \(model.toJSONString(prettyPrint: self.debug) ?? "Nil JSON")")
             messages.handle(kms: model)
         }
     }
@@ -838,23 +829,13 @@ public class Phone {
     
     private func startObserving() {
         self.stopObserving();
-        #if swift(>=4.2)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.onApplicationDidBecomeActive) , name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.onApplicationDidEnterBackground) , name: UIApplication.didEnterBackgroundNotification, object: nil)
-        #else
         NotificationCenter.default.addObserver(self, selector: #selector(self.onApplicationDidBecomeActive) , name: .UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.onApplicationDidEnterBackground) , name: .UIApplicationDidEnterBackground, object: nil)
-        #endif
     }
     
     private func stopObserving() {
-        #if swift(>=4.2)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
-        #else
         NotificationCenter.default.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIApplicationDidEnterBackground, object: nil)
-        #endif
     }
     
     @objc func onApplicationDidBecomeActive() {
@@ -871,7 +852,7 @@ public class Phone {
         if let device = self.devices.device {
             self.webSocket.connect(device.webSocketUrl) { [weak self] error in
                 if let error = error {
-                    SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.registerFailure), error: error)
+                    SDKLogger.shared.error("Failed to Register device", error: error)
                 }
                 self?.queue.underlying.async {
                     self?.fetchActiveCalls()
@@ -915,62 +896,5 @@ public class Phone {
         }
         
     }
-
-}
-
-class PhoneErrorDescription {
     
-    enum ErrorType {
-        case registerFailure
-        case unSupportFunction
-        case alreadyDisconnected
-        case alreadyConnected
-        case failureCall
-        case otherActiveCall
-    }
-    
-    static private let registerFailure = "Failed to Register device"
-    static private let unSupportFunction = "Unsupport function for outgoing call"
-    static private let alreadyDisconnected = "Already disconnected"
-    static private let alreadyConnected = "Already connected"
-    static private let failureCall = "Failure call "
-    static private let otherActiveCall = "There are other active calls"
-    
-    static func failureDesc(_ errorType: ErrorType ) -> String {
-        var result: String
-        switch errorType {
-        case .registerFailure:
-            result = registerFailure
-        case .unSupportFunction:
-            result = unSupportFunction
-        case .alreadyDisconnected:
-            result = alreadyDisconnected
-        case .alreadyConnected:
-            result = alreadyConnected
-        case .failureCall:
-            result = failureCall
-        case .otherActiveCall:
-            result = otherActiveCall
-        }
-        return "Failure: " + result
-    }
-    
-    static func errorDesc( _ errorType: ErrorType ) -> String {
-        var result: String
-        switch errorType {
-        case .registerFailure:
-            result = registerFailure
-        case .unSupportFunction:
-            result = unSupportFunction
-        case .alreadyDisconnected:
-            result = alreadyDisconnected
-        case .alreadyConnected:
-            result = alreadyConnected
-        case .failureCall:
-            result = failureCall
-        case .otherActiveCall:
-            result = otherActiveCall
-        }
-        return result
-    }
 }
