@@ -167,7 +167,10 @@ class FakeCallClient: CallClient {
         
         if let oldModel = self.callModel {
 //            self.callModel = FakeCallModelHelper.updateMediaCallModel(callModel: oldModel, updateUser: updateUser,localMedia:localMedia)
-            completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.success(oldModel.toJSONString())))
+            if let jsonString = oldModel.toJSONString() {
+                completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.success(jsonString)))
+            }
+            
         }
     }
     

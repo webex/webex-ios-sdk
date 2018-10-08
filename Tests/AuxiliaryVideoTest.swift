@@ -1069,7 +1069,6 @@ class AuxiliaryVideoTest: XCTestCase {
             expect.expectedFulfillmentCount = 2
             
             let renderView = MediaRenderView()
-            var auxStream: AuxStream?
             self.auxStreamObserver?.onAuxStreamAvailable = {
                 return renderView
             }
@@ -1081,7 +1080,6 @@ class AuxiliaryVideoTest: XCTestCase {
                     XCTAssertNotNil(result)
                     switch result {
                     case .success(let aux):
-                        auxStream = aux
                         XCTAssertEqual(renderView, aux.renderView)
                         expect.fulfill()
                         self.fakeWME?.stubAuxSize = size
