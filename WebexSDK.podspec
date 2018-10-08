@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.vendored_frameworks = "Frameworks/*.framework"
 
   s.subspec 'Alamofire' do |af|
-    af.source_files = '$(PODS_ROOT)/WebexSDK/Frameworks/External/Alamofire/Source/*.{h.m.swift}'
+    af.source_files = '$(PODS_ROOT)/WebexSDK/Frameworks/Alamofire/Source/*.{h.m.swift}'
   end
 
   s.subspec 'ObjectMapper' do |ob|
