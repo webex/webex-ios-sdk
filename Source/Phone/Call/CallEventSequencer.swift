@@ -39,34 +39,22 @@ class CallEventSequencer {
         }
         let compare = CallEventSequencer.compare(oldSeq, newSeq)
         switch compare {
-        case .equal,.greaterThan:
+        case .equal:
+            return nil
+        case .greaterThan:
             return nil
         case .lessThan:
-            return sequenceBase(oldSequence: oldSeq, new: new, invalid: invalid)
+            return new
         case .deSync:
             invalid()
             return nil
         }
     }
     
-    private static func sequenceBase(oldSequence: SequenceModel,new: CallModel, invalid: () -> Void) -> CallModel? {
-        if let baseSeq = new.baseSequence {
-            let compare = CallEventSequencer.compare(oldSequence, baseSeq)
-            switch compare {
-            case .equal,.greaterThan:
-                return new
-            case .lessThan,.deSync:
-                invalid()
-                return nil
-            }
-        }
-        return new
-    }
-    
     private static func compare(_ a: SequenceModel, _ b: SequenceModel) -> CompareResult {
         
-        var aOnly: [UInt64]
-        var bOnly: [UInt64]
+        var aOnly = [UInt64]()
+        var bOnly = [UInt64]()
         
         // If all of a's values are less than b's, b is newer
         if a.end < b.start {
@@ -132,8 +120,8 @@ class CallEventSequencer {
         
         var aOnly = [UInt64]()
         var bOnly = [UInt64]()
-        let aArray = a.entries
-        let bArray = b.entries
+        var aArray = a.entries
+        var bArray = b.entries
         
         var atEndOfA = false
         var atEndOfB = false
@@ -189,18 +177,18 @@ class CallEventSequencer {
         }
         
         while (indexOfA < aArray.count) {
-            let aValue = aArray[indexOfA]
+            let aVal = aArray[indexOfA]
             indexOfA += 1
-            if (!b.inRange(aValue)) {
-                aOnly.append(aValue)
+            if (!b.inRange(aVal)) {
+                aOnly.append(aVal)
             }
         }
         
         while (indexOfB < bArray.count) {
-            let bValue = bArray[indexOfB]
+            let bVal = bArray[indexOfB]
             indexOfB += 1
-            if (!a.inRange(bValue)) {
-                bOnly.append(bValue)
+            if (!a.inRange(bVal)) {
+                bOnly.append(bVal)
             }
         }
         

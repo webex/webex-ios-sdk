@@ -191,10 +191,10 @@ class OAuthAuthenticatorTests: XCTestCase {
         
         let authInfo = storage.tokens
         XCTAssertEqual(authInfo?.accessToken, "accessToken2")
-        XCTAssertEqual(authInfo?.accessTokenExpirationDate.timeIntervalSinceReferenceDate ?? 0, tomorrow.timeIntervalSinceReferenceDate, accuracy: 1.0)
+        XCTAssertEqualWithAccuracy(authInfo?.accessTokenExpirationDate.timeIntervalSinceReferenceDate ?? 0, tomorrow.timeIntervalSinceReferenceDate, accuracy: 1.0)
         XCTAssertEqual(authInfo?.refreshToken, "refreshToken1")
         let dayAfterTomorrow = Date(timeInterval: oneDay, since: tomorrow)
-        XCTAssertEqual(authInfo?.refreshTokenExpirationDate.timeIntervalSinceReferenceDate ?? 0, dayAfterTomorrow.timeIntervalSinceReferenceDate, accuracy: 1.0)
+        XCTAssertEqualWithAccuracy(authInfo?.refreshTokenExpirationDate.timeIntervalSinceReferenceDate ?? 0, dayAfterTomorrow.timeIntervalSinceReferenceDate, accuracy: 1.0)
         XCTAssertEqual(delegate.callCount, 0)
     }
     

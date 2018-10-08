@@ -27,7 +27,7 @@ class FakeCallModelHelper {
         case missingCallUrl
     }
     
-    static func dialCallModel(caller:TestUser,callee:TestUser,otherParticipantUsers:[TestUser]? = nil) -> CallModel {
+    static func dialCallModel(caller:TestUser,callee:TestUser) -> CallModel {
         let locusUrl = FakeCallModelHelper.getLocusUrl()
         
         let myselfModel = getParticipant(userInfo: caller, userState: CallMembership.State.joined, isSelfModel: true, isCreater: true)
@@ -37,23 +37,14 @@ class FakeCallModelHelper {
         let callerParticipantModel = getParticipant(userInfo: caller, userState: CallMembership.State.joined, isCreater: true,deviceUrl: myselfModel.deviceUrl)
         let calleeParticipantModel = getParticipant(userInfo: callee, userState: CallMembership.State.idle, isCreater: false)
         
-        var participants :[ParticipantModel] = [callerParticipantModel,calleeParticipantModel]
-        if let otherUser = otherParticipantUsers {
-            for testUser in otherUser {
-                var state:CallMembership.State
-                var isCreator: Bool = false
-                state = CallMembership.State.idle
-                isCreator = false
-                let participant = getParticipant(userInfo: testUser, userState: state, isCreater: isCreator)
-                participants.append(participant)
-            }
-        }
+        
+        let participants :[ParticipantModel] = [callerParticipantModel,calleeParticipantModel]
         
         let fullStateModel = getFullState(participants: participants)
         
         let sequenceModel = getSequenceModel()
         let mediaShares = getMediaShareModels()
-        return CallModel.init(locusUrl: locusUrl, participants: participants, myself: myselfModel, host: host, fullState: fullStateModel, sequence: sequenceModel, baseSequence: nil, syncUrl: nil, replaces: nil, mediaShares: mediaShares, mediaConnections: nil)
+        return CallModel.init(locusUrl: locusUrl, participants: participants, myself: myselfModel, host: host, fullState: fullStateModel, sequence: sequenceModel, replaces: nil, mediaShares: mediaShares,mediaConnections:nil)
     }
     
     static func dialIllegalCallModel(caller:TestUser,callee:TestUser,type:CallIllegalStatusType) -> CallModel {
@@ -139,7 +130,7 @@ class FakeCallModelHelper {
         let fullStateModel = getFullState(participants: participants)
         let sequenceModel = getSequenceModel()
         let mediaShareModels = getMediaShareModels()
-        return CallModel.init(locusUrl: locusUrl, participants: participants, myself: mySelf, host: host, fullState: fullStateModel, sequence: sequenceModel, baseSequence: nil, syncUrl: nil, replaces: nil, mediaShares: mediaShareModels, mediaConnections: nil)
+        return CallModel.init(locusUrl: locusUrl, participants: participants, myself: mySelf, host: host, fullState: fullStateModel, sequence: sequenceModel, replaces: nil, mediaShares: mediaShareModels,mediaConnections:nil)
     }
     
     static func answerCallModel(callModel:CallModel,answerUser:TestUser) -> CallModel {
@@ -529,15 +520,14 @@ class FakeCallModelHelper {
                                                                       alertHint: alertHint,
                                                                       alertType: alertType,
                                                                       enableDTMF: false,
-                                                                      devices: callerDeviceModel,
-                                                                      removed: false)
+                                                                      devices: callerDeviceModel)
         
         return participantModel
     }
     
     private static func getGrantedScreenShareModel(shareUser:TestUser,isSelfDevice:Bool = false) -> MediaShareModel {
         let device:ParticipantModel.DeviceModel = ParticipantModel.DeviceModel.init(url: isSelfDevice ? Config.FakeSelfDeviceUrl:Config.FakeOtherDeviceUrl, deviceType: nil, featureToggles: nil, mediaConnections: nil, state: nil, callLegId: nil)
-        let requestParticipant:ParticipantModel = ParticipantModel.init(isCreator: false, id: shareUser.id, url: shareUser.id, state: nil, type: "USER", person: nil, status: nil, deviceUrl: isSelfDevice ? Config.FakeSelfDeviceUrl:Config.FakeOtherDeviceUrl, mediaBaseUrl: nil, guest: false, alertHint: nil, alertType: nil, enableDTMF: nil, devices: [device],removed: false)
+        let requestParticipant:ParticipantModel = ParticipantModel.init(isCreator: false, id: shareUser.id, url: shareUser.id, state: nil, type: "USER", person: nil, status: nil, deviceUrl: isSelfDevice ? Config.FakeSelfDeviceUrl:Config.FakeOtherDeviceUrl, mediaBaseUrl: nil, guest: false, alertHint: nil, alertType: nil, enableDTMF: nil, devices: [device])
         
         let dateString = String(describing: Date())
         let mediaShareFloor : MediaShareModel.MediaShareFloor = MediaShareModel.MediaShareFloor.init(beneficiary: requestParticipant, disposition: MediaShareModel.ShareFloorDisposition.granted, granted: dateString, released: nil, requested: dateString, requester: requestParticipant)
@@ -547,7 +537,7 @@ class FakeCallModelHelper {
     
     private static func getReleaseScreenShareModel(shareUser:TestUser,isSelfDevice:Bool = false) -> MediaShareModel {
         let device:ParticipantModel.DeviceModel = ParticipantModel.DeviceModel.init(url: isSelfDevice ? Config.FakeSelfDeviceUrl:Config.FakeOtherDeviceUrl, deviceType: nil, featureToggles: nil, mediaConnections: nil, state: nil, callLegId: nil)
-        let requestParticipant:ParticipantModel = ParticipantModel.init(isCreator: false, id: shareUser.id, url: shareUser.id, state: nil, type: "USER", person: nil, status: nil, deviceUrl: isSelfDevice ? Config.FakeSelfDeviceUrl:Config.FakeOtherDeviceUrl, mediaBaseUrl: nil, guest: false, alertHint: nil, alertType: nil, enableDTMF: nil, devices: [device],removed: false)
+        let requestParticipant:ParticipantModel = ParticipantModel.init(isCreator: false, id: shareUser.id, url: shareUser.id, state: nil, type: "USER", person: nil, status: nil, deviceUrl: isSelfDevice ? Config.FakeSelfDeviceUrl:Config.FakeOtherDeviceUrl, mediaBaseUrl: nil, guest: false, alertHint: nil, alertType: nil, enableDTMF: nil, devices: [device])
         
         let dateString = String(describing: Date())
         let mediaShareFloor : MediaShareModel.MediaShareFloor = MediaShareModel.MediaShareFloor.init(beneficiary: requestParticipant, disposition: MediaShareModel.ShareFloorDisposition.released, granted: dateString, released: dateString, requested: dateString, requester: requestParticipant)

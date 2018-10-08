@@ -58,15 +58,15 @@ class WebSocketService: WebSocketAdvancedDelegate {
             self.authenticator.accessToken { token in
                 self.queue.async {
                     SDKLogger.shared.info("Web socket is being connected")
-                    let tempSocket = WebSocket(url: webSocketUrl)
+                    let socket = WebSocket(url: webSocketUrl)
                     if let token = token {
-                        tempSocket.request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+                        socket.request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
                     }
-                    tempSocket.callbackQueue = self.queue
-                    tempSocket.advancedDelegate = self
+                    socket.callbackQueue = self.queue
+                    socket.advancedDelegate = self
                     self.onConnected = block
-                    self.socket = tempSocket
-                    tempSocket.connect()
+                    self.socket = socket
+                    socket.connect()
                 }
             }
         }
@@ -112,7 +112,7 @@ class WebSocketService: WebSocketAdvancedDelegate {
             }
             else {
                 let backoffTime = connectionRetryCounter.next()
-                despatchAfter(backoffTime) {
+                despatch_after(backoffTime) {
                     if code > Int(CloseCode.normal.rawValue) {
                         // Abnormal disconnection, re-register device.
                         SDKLogger.shared.error("Abnormal disconnection, re-register device in \(backoffTime) seconds")
@@ -200,7 +200,7 @@ class WebSocketService: WebSocketAdvancedDelegate {
         
     }
     
-    private func despatchAfter(_ delay: Double, closure: @escaping () -> Void) {
+    private func despatch_after(_ delay: Double, closure: @escaping () -> Void) {
         self.queue.asyncAfter(
             deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC),
             execute: closure
