@@ -66,6 +66,8 @@ struct CallModel {
     var isValid: Bool {
         if let _ = self.callUrl, let _ = self.myself, let _ = self.host {
             return true
+        } else if !self.isFullDTO, let _ = self.callUrl {
+            return true
         }
         return false
     }
@@ -87,7 +89,7 @@ struct CallModel {
     }
     
     var isRemoteVideoMuted: Bool {
-        for participant in self.participants ?? [] where participant.id != myself?.id && participant.state == CallMembership.State.joined {
+        for participant in self.participants ?? [] where participant.id != myself?.id && participant.state == CallMembership.State.joined && participant.isCIUser() {
             if participant.status?.videoStatus != "RECVONLY" && participant.status?.videoStatus != "INACTIVE" {
                 return false
             }
@@ -96,7 +98,7 @@ struct CallModel {
     }
     
     var isRemoteAudioMuted: Bool {
-        for participant in self.participants ?? [] where participant.id != myself?.id && participant.state == CallMembership.State.joined {
+        for participant in self.participants ?? [] where participant.id != myself?.id && participant.state == CallMembership.State.joined && participant.isCIUser() {
             if participant.status?.audioStatus != "RECVONLY" && participant.status?.audioStatus != "INACTIVE" {
                 return false
             }
@@ -240,22 +242,16 @@ internal extension CallModel {
     }
     
     mutating func applyDelta(from: CallModel) {
-        updateValueIfNotNil(from: from.sequence, to: &sequence)
-        updateValueIfNotNil(from: from.syncUrl, to: &syncUrl)
-        updateValueIfNotNil(from: from.locusUrl, to: &locusUrl)
-        updateValueIfNotNil(from: from.myself, to: &myself)
-        updateValueIfNotNil(from: from.host, to: &host)
-        updateValueIfNotNil(from: from.fullState, to: &fullState)
-        updateValueIfNotNil(from: from.replaces, to: &replaces)
-        updateValueIfNotNil(from: from.mediaShares, to: &mediaShares)
-        updateValueIfNotNil(from: from.mediaConnections, to: &mediaConnections)
+        self.sequence = from.sequence ?? self.sequence
+        self.syncUrl = from.syncUrl ?? self.syncUrl
+        self.locusUrl = from.locusUrl ?? self.locusUrl
+        self.myself = from.myself ?? self.myself
+        self.host = from.host ?? self.host
+        self.fullState = from.fullState ?? self.fullState
+        self.replaces = from.replaces ?? self.replaces
+        self.mediaShares = from.mediaShares ?? self.mediaShares
+        self.mediaConnections = from.mediaConnections ?? self.mediaConnections
         processParticipants(from: from.participants)
-    }
-    
-    private func updateValueIfNotNil <T> (from: T?, to: inout T) {
-        if let fromValue = from {
-            to = fromValue
-        }
     }
     
     private mutating func processParticipants(from:[ParticipantModel]?) {
@@ -279,6 +275,7 @@ internal extension CallModel {
                     oldParticipants.append(participant)
                 }
             }
+            self.participants = oldParticipants
         }
     }
 }

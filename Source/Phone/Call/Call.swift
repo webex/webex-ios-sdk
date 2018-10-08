@@ -1135,11 +1135,13 @@ public class Call {
     }
     
     private func doCallModel(_ model: CallModel) {
-        if model.isFullDTO {
-            self.model = model
+        var newModel = self.model
+        if !model.isFullDTO {
+            newModel.applyDelta(from: model)
         } else {
-            self.model.applyDelta(from: model)
+            newModel = model
         }
+        self.model = newModel
         
         if let participants = self.model.participants?.filter({ $0.isCIUser() }) {
             let oldMemberships = self.memberships

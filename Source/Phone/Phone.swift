@@ -577,6 +577,7 @@ public class Phone {
             } else {
                 //full sync
                 syncUrl = call.url
+                SDKLogger.shared.debug("Requesting full sync Delta for locus: \(syncUrl)")
             }
             self.client.fetch(syncUrl, queue: self.queue.underlying) { res in
                 self.doLocusResponse(LocusResult.update(call, res))
