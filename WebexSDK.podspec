@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage = "https://developer.webex.com"
   s.license = "MIT"
   s.author = { "Webex SDK team" => "spark-sdk-crdc@cisco.com" }
-  s.source = { :git => "~/Desktop/Webex_sdk", :tag => s.version, :submodules => true }
+  s.source = { :git => "https://github.com/webex/webex-ios-sdk.git", :tag => s.version, :submodules => true }
   s.ios.deployment_target = "10.0"
   s.source_files = "Source/**/*.{h,m,swift}"
   s.preserve_paths = 'Frameworks/*.framework'
