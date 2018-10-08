@@ -19,8 +19,6 @@
 		107C538520889DA000717C42 /* Seu.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C78D1AA22088789B002C6F2C /* Seu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		107C538620889DA000717C42 /* Sbu.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C78D1A9F20887888002C6F2C /* Sbu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		107C538720889DF500717C42 /* Seu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C78D1AA22088789B002C6F2C /* Seu.framework */; };
-		10A9CA8B20D0D0510095DF19 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10A9CA8420D0D0510095DF19 /* Info.plist */; };
-		10A9CA8D20D0D0510095DF19 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10A9CA8720D0D0510095DF19 /* Info.plist */; };
 		10A9CA8E20D0D1340095DF19 /* WebexBroadcastExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A9CA8120D0D0510095DF19 /* WebexBroadcastExtension.swift */; };
 		10A9CA8F20D0D1490095DF19 /* WebexBroadcastExtensionKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A9CA8620D0D0510095DF19 /* WebexBroadcastExtensionKitTests.swift */; };
 		10A9CA9020D0D14D0095DF19 /* WebexBroadcastClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A9CA8320D0D0510095DF19 /* WebexBroadcastClient.swift */; };
@@ -31,7 +29,6 @@
 		10D4D7EE212C0D9D00B37D98 /* TestTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864E212A74A400D316F4 /* TestTeam.swift */; };
 		10D4D7F1212D10ED00B37D98 /* WebhookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8658212A74A500D316F4 /* WebhookTests.swift */; };
 		10D4D7F2212D10F100B37D98 /* WebexTestFixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8659212A74A500D316F4 /* WebexTestFixture.swift */; };
-		10D4D7F3212D1D4E00B37D98 /* AuxiliaryVideoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8649212A74A400D316F4 /* AuxiliaryVideoTest.swift */; };
 		10D4D7F4212D1D4E00B37D98 /* CallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8651212A74A400D316F4 /* CallTests.swift */; };
 		10D4D7F5212D1D4E00B37D98 /* JWTAuthenticatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B865D212A74A500D316F4 /* JWTAuthenticatorTests.swift */; };
 		10D4D7F6212D1D4E00B37D98 /* JWTAuthKeychainStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864F212A74A400D316F4 /* JWTAuthKeychainStorageTests.swift */; };
@@ -141,6 +138,7 @@
 		B91E75E41CE2D7B70080EAE0 /* WebexSDK-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = B91E758F1CE2D7B70080EAE0 /* WebexSDK-Bridging-Header.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B91E75E61CE2D7B70080EAE0 /* Webhook.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E75921CE2D7B70080EAE0 /* Webhook.swift */; };
 		B91E75E81CE2D7B70080EAE0 /* WebhookClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E75941CE2D7B70080EAE0 /* WebhookClient.swift */; };
+		C7138A0B213D031900E2ED8D /* AuxiliaryVideoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8649212A74A400D316F4 /* AuxiliaryVideoTest.swift */; };
 		C7625FDB205CBB9700219F95 /* WebexBroadcastExtensionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7625FD2205CBB9600219F95 /* WebexBroadcastExtensionKit.framework */; };
 		C78D1AA020887888002C6F2C /* Sbu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C78D1A9F20887888002C6F2C /* Sbu.framework */; };
 		C78D1AA12088789B002C6F2C /* Sbu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C78D1A9F20887888002C6F2C /* Sbu.framework */; };
@@ -154,7 +152,8 @@
 		C79F140B1FBE7C3A00B43596 /* FakeMetricsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F14031FBE7BE500B43596 /* FakeMetricsEngine.swift */; };
 		C79F140C1FBE7C3A00B43596 /* FakeReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F14041FBE7BE500B43596 /* FakeReachabilityService.swift */; };
 		C79F140D1FBE7C3A00B43596 /* FakeWebSocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F14051FBE7BE500B43596 /* FakeWebSocketService.swift */; };
-		C7CE613D2106CA5D007FB9AA /* RemoteAuxVideos.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CE613C2106CA5D007FB9AA /* RemoteAuxVideos.swift */; };
+		C7CE613D2106CA5D007FB9AA /* AuxStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CE613C2106CA5D007FB9AA /* AuxStream.swift */; };
+		C7DAC2F22136538000782338 /* MultiStreamObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DAC2F12136538000782338 /* MultiStreamObserver.swift */; };
 		D4E203C8CEBFF13EE1120FF8 /* Pods_WebexBroadcastExtensionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB676BF6AEAF9B6DEEE3180A /* Pods_WebexBroadcastExtensionKit.framework */; };
 		E35305C10FED39CF42E37DD4 /* Pods_WebexBroadcastExtensionKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B853CF3F28B8FF8D3908761 /* Pods_WebexBroadcastExtensionKitTests.framework */; };
 		ED9BF35EED0E4D4D3DF6B682 /* Pods_WebexSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BE0605A020EB70555237707 /* Pods_WebexSDKTests.framework */; };
@@ -348,7 +347,8 @@
 		C79F14031FBE7BE500B43596 /* FakeMetricsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeMetricsEngine.swift; sourceTree = "<group>"; };
 		C79F14041FBE7BE500B43596 /* FakeReachabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeReachabilityService.swift; sourceTree = "<group>"; };
 		C79F14051FBE7BE500B43596 /* FakeWebSocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeWebSocketService.swift; sourceTree = "<group>"; };
-		C7CE613C2106CA5D007FB9AA /* RemoteAuxVideos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteAuxVideos.swift; sourceTree = "<group>"; };
+		C7CE613C2106CA5D007FB9AA /* AuxStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuxStream.swift; sourceTree = "<group>"; };
+		C7DAC2F12136538000782338 /* MultiStreamObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiStreamObserver.swift; sourceTree = "<group>"; };
 		DBF6BF7E8BF8E98D8092ECF0 /* Pods-WebexSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebexSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WebexSDK/Pods-WebexSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		EB676BF6AEAF9B6DEEE3180A /* Pods_WebexBroadcastExtensionKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WebexBroadcastExtensionKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5B9623865B31E216BB56A /* Pods-WebexBroadcastExtensionKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebexBroadcastExtensionKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-WebexBroadcastExtensionKit/Pods-WebexBroadcastExtensionKit.release.xcconfig"; sourceTree = "<group>"; };
@@ -449,12 +449,13 @@
 		20EEA2CB1EBDE43300D6BB75 /* Media */ = {
 			isa = PBXGroup;
 			children = (
-				C7CE613C2106CA5D007FB9AA /* RemoteAuxVideos.swift */,
+				C7CE613C2106CA5D007FB9AA /* AuxStream.swift */,
 				C7957FF7207C6FD20069D672 /* MediaRenderView.swift */,
 				20EEA2CC1EBDE43300D6BB75 /* MediaEngineObserver.swift */,
 				20EEA2CD1EBDE43300D6BB75 /* MediaEngineWrapper.swift */,
 				20EEA2CE1EBDE43300D6BB75 /* MediaSessionObserver.swift */,
 				20EEA2CF1EBDE43300D6BB75 /* MediaSessionWrapper.swift */,
+				C7DAC2F12136538000782338 /* MultiStreamObserver.swift */,
 			);
 			path = Media;
 			sourceTree = "<group>";
@@ -949,8 +950,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10A9CA8D20D0D0510095DF19 /* Info.plist in Resources */,
-				10A9CA8B20D0D0510095DF19 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1153,6 +1152,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7138A0B213D031900E2ED8D /* AuxiliaryVideoTest.swift in Sources */,
 				10D4D7E2212C0D9D00B37D98 /* MockClock.swift in Sources */,
 				10D4D800212D1D4E00B37D98 /* SSOAuthenticatorTests.swift in Sources */,
 				10D4D7FF212D1D4E00B37D98 /* SpaceTests.swift in Sources */,
@@ -1164,7 +1164,6 @@
 				10D4D7FD212D1D4E00B37D98 /* ScreenShareTests.swift in Sources */,
 				C79F14071FBE7C3A00B43596 /* FakeCallModelHelper.swift in Sources */,
 				10D4D802212D1D4E00B37D98 /* TeamTests.swift in Sources */,
-				10D4D7F3212D1D4E00B37D98 /* AuxiliaryVideoTest.swift in Sources */,
 				10D4D7DD212C0D9D00B37D98 /* Config.swift in Sources */,
 				C79F14081FBE7C3A00B43596 /* FakeConversationClient.swift in Sources */,
 				10D4D7F8212D1D4E00B37D98 /* MessageTests.swift in Sources */,
@@ -1240,7 +1239,7 @@
 				B91E75C81CE2D7B70080EAE0 /* DeviceService.swift in Sources */,
 				3DEEA4F31D11419800EB73F6 /* UIAlertController+Extension.swift in Sources */,
 				20EEA2D21EBDE43300D6BB75 /* MediaSessionObserver.swift in Sources */,
-				C7CE613D2106CA5D007FB9AA /* RemoteAuxVideos.swift in Sources */,
+				C7CE613D2106CA5D007FB9AA /* AuxStream.swift in Sources */,
 				5AFB6E911DF5C5110027E989 /* JWTAuthClient.swift in Sources */,
 				10F0658921081BBA001B1514 /* SpaceClient.swift in Sources */,
 				3D3499581CF3ED30004022C3 /* ExponentialBackOffCounter.swift in Sources */,
@@ -1285,6 +1284,7 @@
 				5D1A5D0B1CF821D000313515 /* MediaEngineReachabilityFeedback.swift in Sources */,
 				5A9350D91E00737900374B99 /* Clock.swift in Sources */,
 				1066EF102022F877003745D0 /* Message.swift in Sources */,
+				C7DAC2F22136538000782338 /* MultiStreamObserver.swift in Sources */,
 				B91E75E61CE2D7B70080EAE0 /* Webhook.swift in Sources */,
 				20418FE01EACCFDD00626326 /* KeychainProtocol.swift in Sources */,
 				B91E75C61CE2D7B70080EAE0 /* DeviceModel.swift in Sources */,
