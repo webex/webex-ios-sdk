@@ -17,18 +17,23 @@ Pod::Spec.new do |s|
   s.subspec 'Alamofire' do |af|
     af.source_files = 'Frameworks/External/Alamofire/*'
   end
+
   s.subspec 'ObjectMapper' do |ob|
     ob.source_files = 'Frameworks/External/ObjectMapper/*'
   end
+
   s.subspec 'AlamofireObjectMapper' do |ao|
     ao.source_files = 'Frameworks/External/AlamofireObjectMapper/*'
   end
+
   s.subspec 'SwiftyJSON' do |sj|
     sj.source_files = 'Frameworks/External/SwiftyJSON/*'
   end
+  
   s.subspec 'Starscream' do |st|
     st.source_files = 'Frameworks/External/Starscream/*'
   end
+
   s.subspec 'KeychainAccess' do |ka|
     ka.source_files = 'Frameworks/External/KeychainAccess/*'
   end
