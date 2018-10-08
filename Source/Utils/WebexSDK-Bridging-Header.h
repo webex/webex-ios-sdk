@@ -23,4 +23,6 @@
 #include "Wme/Wme.h"
 #include "Seu/Seu.h"
 #include "Sbu/Sbu.h"
+#include <zlib.h>
+#include <CommonCrypto/CommonCrypto.h>
 

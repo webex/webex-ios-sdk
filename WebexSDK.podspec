@@ -15,15 +15,15 @@ Pod::Spec.new do |s|
   s.vendored_frameworks = "Frameworks/*.framework"
 
   s.subspec 'Alamofire' do |af|
-    af.source_files = 'Frameworks/External/Alamofire/**/*.{h,m,swift}'
+    af.source_files = 'Frameworks/External/Alamofire/Source/**/*.{h,m,swift}'
   end
 
   s.subspec 'ObjectMapper' do |ob|
-    ob.source_files = 'Frameworks/External/ObjectMapper/**/*.{h,m,swift}'
+    ob.source_files = 'Frameworks/External/ObjectMapper/Sources/**/*.{h,m,swift}'
   end
 
   s.subspec 'AlamofireObjectMapper' do |ao|
-    ao.source_files = 'Frameworks/External/AlamofireObjectMapper/**/*.{h,m,swift}'
+    ao.source_files = 'Frameworks/External/AlamofireObjectMapper/AlamofireObjectMapper/**/*.{h,m,swift}'
   end
 
   s.subspec 'SwiftyJSON' do |sj|
@@ -35,6 +35,6 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'KeychainAccess' do |ka|
-    ka.source_files = 'Frameworks/External/KeychainAccess/**/*.{h,m,swift}'
+    ka.source_files = 'Frameworks/External/KeychainAccess/Lib/KeychainAccess/**/*.{h,m,swift}'
   end
 end
