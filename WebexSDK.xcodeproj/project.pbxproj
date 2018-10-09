@@ -64,8 +64,6 @@
 		10EE8729216C22360078729B /* Alamofire.h in Headers */ = {isa = PBXBuildFile; fileRef = 10EE8715216C22350078729B /* Alamofire.h */; };
 		10EE872A216C22360078729B /* ServerTrustPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE8716216C22350078729B /* ServerTrustPolicy.swift */; };
 		10EE872C216C22360078729B /* SessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE8718216C22350078729B /* SessionDelegate.swift */; };
-		10EE872F216C224A0078729B /* AlamofireObjectMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 10EE872D216C22490078729B /* AlamofireObjectMapper.h */; };
-		10EE8730216C224A0078729B /* AlamofireObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE872E216C224A0078729B /* AlamofireObjectMapper.swift */; };
 		10EE8733216C22590078729B /* KeychainAccess.h in Headers */ = {isa = PBXBuildFile; fileRef = 10EE8731216C22580078729B /* KeychainAccess.h */; };
 		10EE8734216C22590078729B /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE8732216C22590078729B /* Keychain.swift */; };
 		10EE874F216C22640078729B /* Mappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE8736216C22640078729B /* Mappable.swift */; };
@@ -98,6 +96,7 @@
 		10EE876F216C22850078729B /* Starscream.h in Headers */ = {isa = PBXBuildFile; fileRef = 10EE876B216C22840078729B /* Starscream.h */; };
 		10EE877E216C40DE0078729B /* SwiftyJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 10EE877C216C40DE0078729B /* SwiftyJSON.h */; };
 		10EE877F216C40DE0078729B /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE877D216C40DE0078729B /* SwiftyJSON.swift */; };
+		10EE878B216C93A40078729B /* WSObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE878A216C93A40078729B /* WSObjectMapper.swift */; };
 		10F0658821081BBA001B1514 /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658621081BBA001B1514 /* Space.swift */; };
 		10F0658921081BBA001B1514 /* SpaceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658721081BBA001B1514 /* SpaceClient.swift */; };
 		20418FE01EACCFDD00626326 /* KeychainProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418FDF1EACCFDD00626326 /* KeychainProtocol.swift */; };
@@ -295,8 +294,6 @@
 		10EE8715216C22350078729B /* Alamofire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alamofire.h; sourceTree = "<group>"; };
 		10EE8716216C22350078729B /* ServerTrustPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerTrustPolicy.swift; sourceTree = "<group>"; };
 		10EE8718216C22350078729B /* SessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDelegate.swift; sourceTree = "<group>"; };
-		10EE872D216C22490078729B /* AlamofireObjectMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlamofireObjectMapper.h; path = Frameworks/External/AlamofireObjectMapper/AlamofireObjectMapper/AlamofireObjectMapper.h; sourceTree = "<group>"; };
-		10EE872E216C224A0078729B /* AlamofireObjectMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlamofireObjectMapper.swift; path = Frameworks/External/AlamofireObjectMapper/AlamofireObjectMapper/AlamofireObjectMapper.swift; sourceTree = "<group>"; };
 		10EE8731216C22580078729B /* KeychainAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeychainAccess.h; path = Frameworks/External/KeyChainAccess/Lib/KeychainAccess/KeychainAccess.h; sourceTree = "<group>"; };
 		10EE8732216C22590078729B /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Keychain.swift; path = Frameworks/External/KeyChainAccess/Lib/KeychainAccess/Keychain.swift; sourceTree = "<group>"; };
 		10EE8736216C22640078729B /* Mappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mappable.swift; sourceTree = "<group>"; };
@@ -329,6 +326,7 @@
 		10EE876B216C22840078729B /* Starscream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Starscream.h; path = Frameworks/External/StarScream/Sources/Starscream.h; sourceTree = "<group>"; };
 		10EE877C216C40DE0078729B /* SwiftyJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwiftyJSON.h; path = Frameworks/External/SwiftyJson/Source/SwiftyJSON.h; sourceTree = "<group>"; };
 		10EE877D216C40DE0078729B /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Frameworks/External/SwiftyJson/Source/SwiftyJSON.swift; sourceTree = "<group>"; };
+		10EE878A216C93A40078729B /* WSObjectMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSObjectMapper.swift; sourceTree = "<group>"; };
 		10F0658621081BBA001B1514 /* Space.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Space.swift; sourceTree = "<group>"; };
 		10F0658721081BBA001B1514 /* SpaceClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceClient.swift; sourceTree = "<group>"; };
 		20418FDF1EACCFDD00626326 /* KeychainProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainProtocol.swift; sourceTree = "<group>"; };
@@ -683,8 +681,6 @@
 				10EE8735216C22640078729B /* Sources */,
 				10EE8732216C22590078729B /* Keychain.swift */,
 				10EE8731216C22580078729B /* KeychainAccess.h */,
-				10EE872D216C22490078729B /* AlamofireObjectMapper.h */,
-				10EE872E216C224A0078729B /* AlamofireObjectMapper.swift */,
 				10EE8704216C22350078729B /* Source */,
 				C78D1AA22088789B002C6F2C /* Seu.framework */,
 				C78D1A9F20887888002C6F2C /* Sbu.framework */,
@@ -762,6 +758,7 @@
 		B91E75371CE2D7B70080EAE0 /* Http */ = {
 			isa = PBXGroup;
 			children = (
+				10EE878A216C93A40078729B /* WSObjectMapper.swift */,
 				3DA3D58A1CF4347A008E8372 /* RequestParameter.swift */,
 				B91E753B1CE2D7B70080EAE0 /* WSResult.swift */,
 				B91E753C1CE2D7B70080EAE0 /* ServiceRequest.swift */,
@@ -920,7 +917,6 @@
 				10EE8733216C22590078729B /* KeychainAccess.h in Headers */,
 				B91E75E41CE2D7B70080EAE0 /* WebexSDK-Bridging-Header.h in Headers */,
 				10EE877E216C40DE0078729B /* SwiftyJSON.h in Headers */,
-				10EE872F216C224A0078729B /* AlamofireObjectMapper.h in Headers */,
 				10EE876F216C22850078729B /* Starscream.h in Headers */,
 				10EE8752216C22640078729B /* ObjectMapper.h in Headers */,
 				10EE8729216C22360078729B /* Alamofire.h in Headers */,
@@ -1191,6 +1187,7 @@
 				3D2DF7591CFEAB0A00002F36 /* UserDefaults.swift in Sources */,
 				B91E75B71CE2D7B70080EAE0 /* CallMetrics.swift in Sources */,
 				10EE8763216C22640078729B /* DateTransform.swift in Sources */,
+				10EE878B216C93A40078729B /* WSObjectMapper.swift in Sources */,
 				68A7D453208487B900AB7F8A /* ActivityModel.swift in Sources */,
 				20EEA2D31EBDE43300D6BB75 /* MediaSessionWrapper.swift in Sources */,
 				5AC09EB91DE63C66005F38BC /* OAuthStorage.swift in Sources */,
@@ -1229,7 +1226,6 @@
 				10EE8726216C22360078729B /* Request.swift in Sources */,
 				5AFB6E951DF5C5110027E989 /* JWTAuthenticator.swift in Sources */,
 				99E3FA891F3472AA00657180 /* SSOAuthenticator.swift in Sources */,
-				10EE8730216C224A0078729B /* AlamofireObjectMapper.swift in Sources */,
 				3D1E57931CEDA348006124B0 /* OAuthClient.swift in Sources */,
 				B91E75A41CE2D7B70080EAE0 /* Membership.swift in Sources */,
 				10EE875A216C22640078729B /* Mapper.swift in Sources */,

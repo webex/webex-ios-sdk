@@ -20,10 +20,6 @@ Pod::Spec.new do |s|
     ob.source_files = 'Frameworks/External/ObjectMapper/Sources/**/*.{h,m,swift}'
   end
 
-  s.subspec 'AlamofireObjectMapper' do |ao|
-    ao.source_files = 'Frameworks/External/AlamofireObjectMapper/AlamofireObjectMapper/**/*.{h,m,swift}'
-  end
-
   s.subspec 'SwiftyJSON' do |sj|
     sj.source_files = 'Frameworks/External/SwiftyJSON/Source/**/*.{h,m,swift}'
   end
