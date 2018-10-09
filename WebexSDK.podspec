@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.vendored_frameworks = "Frameworks/*.framework"
 
   s.subspec 'Alamofire' do |af|
-    af.source_files = 'Frameworks/External/Alamofire/Source/**/*'
+    af.source_files = 'Frameworks/External/Alamofire/Source/**/*.{h,m,swift}'
   end
 
   s.subspec 'ObjectMapper' do |ob|
@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Starscream' do |st|
-    st.source_files = 'Frameworks/External/Starscream/**/*'
+    st.source_files = 'Frameworks/External/Starscream/Sources/**/*.{h,m,swift}','Frameworks/External/Starscream/zlib/**/*'
   end
 
   s.subspec 'KeychainAccess' do |ka|
