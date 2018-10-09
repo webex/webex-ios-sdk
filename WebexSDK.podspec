@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'SwiftyJSON' do |sj|
-    sj.source_files = 'Frameworks/External/SwiftyJSON/Source/**/*.{h,m,swift}'
+    sj.source_files = 'Frameworks/External/SwiftJSON/Source/**/*.{h,m,swift}'
   end
 
   s.subspec 'Starscream' do |st|
