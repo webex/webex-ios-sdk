@@ -9,10 +9,6 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = "10.0"
   s.source_files = "Source/**/*.{h,m,swift}"
   s.preserve_paths = 'Frameworks/*.framework'
-  s.xcconfig = {'FRAMEWORK_SEARCH_PATHS' => '$(PODS_ROOT)/WebexSDK/Frameworks',
-                'ENABLE_BITCODE' => 'NO',
-                'IMPORT_PATHS' => '$(PODS_ROOT)/WebexSDK/Frameworks/External/Starscream/zlib/'
-                }
   s.vendored_frameworks = "Frameworks/*.framework"
 
 
@@ -40,4 +36,9 @@ Pod::Spec.new do |s|
   s.subspec 'KeychainAccess' do |ka|
     ka.source_files = 'Frameworks/External/KeychainAccess/Lib/KeychainAccess/**/*.{h,m,swift}'
   end
+
+  s.xcconfig = {'FRAMEWORK_SEARCH_PATHS' => '$(PODS_ROOT)/WebexSDK/Frameworks',
+              'ENABLE_BITCODE' => 'NO',
+              'SWIFT_INCLUDE_PATHS' => '$(PODS_ROOT)/WebexSDK/Frameworks/External/Starscream/zlib/'
+              }
 end
