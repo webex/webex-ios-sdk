@@ -20,7 +20,7 @@
 
 
 import Foundation
-import KeychainAccess
+
 import XCTest
 @testable import WebexSDK
 

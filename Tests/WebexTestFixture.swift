@@ -20,8 +20,8 @@
 
 
 import Foundation
-import Alamofire
-import SwiftyJSON
+
+
 //import WebexSDK
 import XCTest
 @testable import WebexSDK
@@ -93,7 +93,7 @@ class WebexTestFixture {
         var adminAccessTokenResult: String?
         let semaphore = DispatchSemaphore(value: 0)
         let queue = DispatchQueue(label: "create-token-queue")
-        Alamofire.request(accessTokenUrl, method: .post, parameters: body, headers: headers).responseJSON(queue: queue) { response in
+        request(accessTokenUrl, method: .post, parameters: body, headers: headers).responseJSON(queue: queue) { response in
             switch response.result {
             case .success:
                 if let value = response.result.value {
@@ -129,7 +129,7 @@ class WebexTestFixture {
         var user: TestUser?
         let semaphore = DispatchSemaphore(value: 0)
         let queue = DispatchQueue(label: "create-user-queue")
-        Alamofire.request(testUserUrl, method: .post, parameters: body, encoding: JSONEncoding.default, headers: headers).responseJSON(queue: queue) { response in
+        request(testUserUrl, method: .post, parameters: body, encoding: JSONEncoding.default, headers: headers).responseJSON(queue: queue) { response in
             switch response.result {
             case .success(let value):
                 let json = JSON(value)

@@ -21,7 +21,7 @@
 
 import Foundation
 import UIKit
-import Alamofire
+
 
 /// *Webex* object is the entry point to use this Cisco Webex iOS SDK. A *Webex* object must be created with one of the following *Authenticator*.
 ///
@@ -111,7 +111,7 @@ public class Webex {
     public init(authenticator: Authenticator) {
         self.authenticator = authenticator
         verbose()
-        let sessionManager = Alamofire.SessionManager.default
+        let sessionManager = SessionManager.default
         sessionManager.delegate.taskWillPerformHTTPRedirection = { session, task, response, request in
             var redirectedRequest = request
             if let originalRequest = task.originalRequest, let headers = originalRequest.allHTTPHeaderFields, let authorizationHeaderValue = headers["Authorization"] {

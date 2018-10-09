@@ -20,7 +20,7 @@
 
 
 import Foundation
-import ObjectMapper
+
 
 struct OAuthTokenModel {
     var accessTokenString: String?

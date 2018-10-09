@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 import UIKit
-import ObjectMapper
+
 
 struct KmsMessageModel {
     

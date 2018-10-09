@@ -19,9 +19,9 @@
 // THE SOFTWARE.
 
 import Foundation
-import ObjectMapper
-import Alamofire
-import SwiftyJSON
+
+
+
 
 class MessageClientImpl {
     
@@ -498,7 +498,7 @@ class MessageClientImpl {
             }
         }
         if let parameters = parameters, parameters.count >= 2 {
-            Alamofire.request(MessageClientImpl.kmsMsgServerUrl, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header).responseString { (response) in
+            request(MessageClientImpl.kmsMsgServerUrl, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header).responseString { (response) in
                 SDKLogger.shared.debug("RequestKMS Material Response ============  \(response)")
                 if response.result.isFailure {
                     failed()
@@ -609,15 +609,15 @@ class MessageClientImpl {
                 return
             }
             let ecdhe = clusterURI.appendingPathComponent("ecdhe").absoluteString
-            guard let request = try? KmsEphemeralKeyRequest(requestId: self.uuid, clientId: self.deviceUrl.absoluteString , userId: userId, bearer: token , method: "create", uri: ecdhe, kmsStaticKey: rsaPubKey), let message = request.message else {
+            guard let requests = try? KmsEphemeralKeyRequest(requestId: self.uuid, clientId: self.deviceUrl.absoluteString , userId: userId, bearer: token , method: "create", uri: ecdhe, kmsStaticKey: rsaPubKey), let message = requests.message else {
                 SDKLogger.shared.debug("Request EphemeralKey failed, illegal ephemeral key request")
                 completionHandler(MSGError.ephemaralKeyFetchFail)
                 return
             }
-            self.ephemeralKeyRequest = (request, completionHandler)
+            self.ephemeralKeyRequest = (requests, completionHandler)
             let parameters: [String: String] = ["kmsMessages": message, "destination": cluster]
             let header: [String: String]  = ["Cisco-Request-ID": self.uuid, "Authorization" : "Bearer " + token]
-            Alamofire.request(MessageClientImpl.kmsMsgServerUrl, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header).responseString { response in
+            request(MessageClientImpl.kmsMsgServerUrl, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header).responseString { response in
                 SDKLogger.shared.debug("Request EphemeralKey Response ============ \(response)")
                 if response.result.isFailure {
                     self.ephemeralKeyRequest = nil

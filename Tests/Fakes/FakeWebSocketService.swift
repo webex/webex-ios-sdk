@@ -20,9 +20,9 @@
 
 import Foundation
 @testable import WebexSDK
-import Starscream
-import SwiftyJSON
-import ObjectMapper
+
+
+
 
 class FakeWebSocketService:WebSocketService {
     private var callModel:CallModel?

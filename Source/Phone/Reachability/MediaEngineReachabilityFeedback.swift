@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 import Foundation
-import ObjectMapper
+
 
 struct MediaEngineReachabilityFeedback {
     var reachabilities: [String /* media cluster tag */ : ReachabilityModel]?

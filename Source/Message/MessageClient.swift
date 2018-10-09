@@ -19,9 +19,9 @@
 // THE SOFTWARE.
 
 import UIKit
-import ObjectMapper
-import Alamofire
-import SwiftyJSON
+
+
+
 
 /// The enumeration of Before types in Webex Message Client.
 ///
@@ -260,8 +260,8 @@ public class MessageClient {
         }
     }
     
-    private func download(from: String, completionHandler: @escaping (WSResult<LocalFile>) -> Void) {
-        Alamofire.download(from, to: DownloadRequest.suggestedDownloadDestination()).response { response in
+    private func downloads(from: String, completionHandler: @escaping (WSResult<LocalFile>) -> Void) {
+        download(from, to: DownloadRequest.suggestedDownloadDestination()).response { response in
             if response.error == nil, let url = response.destinationURL, let file = LocalFile(path: url.path) {
                 completionHandler(WSResult.success(file))
             }

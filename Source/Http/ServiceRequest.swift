@@ -19,10 +19,6 @@
 // THE SOFTWARE.
 
 import Foundation
-import Alamofire
-import AlamofireObjectMapper
-import ObjectMapper
-import SwiftyJSON
 
 class ServiceRequest : RequestRetrier, RequestAdapter {
     
@@ -39,7 +35,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     private var pendingTimeCount : Int = 0
     private let url: URL
     private let headers: [String: String]
-    private let method: Alamofire.HTTPMethod
+    private let method: HTTPMethod
     private let body: RequestParameter?
     private let query: RequestParameter?
     private let keyPath: String?
@@ -54,7 +50,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     }()
     
     
-    private init(authenticator: Authenticator, url: URL, headers: [String: String], method: Alamofire.HTTPMethod, body: RequestParameter?, query: RequestParameter?, keyPath: String?, queue: DispatchQueue?) {
+    private init(authenticator: Authenticator, url: URL, headers: [String: String], method: HTTPMethod, body: RequestParameter?, query: RequestParameter?, keyPath: String?, queue: DispatchQueue?) {
         self.authenticator = authenticator
         self.url = url
         self.headers = headers
@@ -70,7 +66,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         private static let apiBaseUrl: URL = URL(string: ServiceRequest.hydraServerAddress)!
         private let authenticator: Authenticator
         private var headers: [String: String]
-        private var method: Alamofire.HTTPMethod
+        private var method: HTTPMethod
         private var baseUrl: URL
         private var path: String
         private var body: RequestParameter?
@@ -92,7 +88,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
             return ServiceRequest(authenticator: authenticator, url: baseUrl.appendingPathComponent(path), headers: headers, method: method, body: body, query: query, keyPath: keyPath, queue: queue)
         }
         
-        func method(_ method: Alamofire.HTTPMethod) -> Builder {
+        func method(_ method: HTTPMethod) -> Builder {
             self.method = method
             return self
         }
@@ -203,7 +199,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         }
     }
     
-    private func createAlamofireRequest(completionHandler: @escaping (Alamofire.DataRequest) -> Void) {
+    private func createAlamofireRequest(completionHandler: @escaping (DataRequest) -> Void) {
         let accessTokenCallback: (String?) -> Void = { accessToken in
             var headerDict = self.headers
             let tempTokenPrefix = self.tokenPrefix

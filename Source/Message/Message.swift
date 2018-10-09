@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 import UIKit
-import ObjectMapper
+
 
 /// The struct of a message event
 ///

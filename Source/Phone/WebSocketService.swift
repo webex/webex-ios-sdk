@@ -19,9 +19,9 @@
 // THE SOFTWARE.
 
 import Foundation
-import Starscream
-import SwiftyJSON
-import ObjectMapper
+
+
+
 
 class WebSocketService: WebSocketAdvancedDelegate {
     

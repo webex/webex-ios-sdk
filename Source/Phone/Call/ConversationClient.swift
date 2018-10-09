@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import ObjectMapper
+
 
 struct ConversationLocusModel {
     fileprivate(set) var locusUrl: String?

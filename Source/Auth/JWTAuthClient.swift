@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 import Foundation
-import ObjectMapper
+
 
 struct JWTTokenModel {
     

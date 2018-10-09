@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 import Foundation
-import ObjectMapper
+
 
 /// The enumeration of the types of a space.
 public enum SpaceType: String {

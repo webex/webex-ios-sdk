@@ -20,7 +20,7 @@
 
 
 import Foundation
-import KeychainAccess
+
 
 /// An OAuthStorage implementation based on the iOS device keychain.
 ///

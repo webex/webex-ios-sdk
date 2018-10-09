@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 import Foundation
-import ObjectMapper
+
 
 struct CallEventModel {
     fileprivate(set) var id: String?

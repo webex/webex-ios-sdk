@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 import UIKit
-import Alamofire
+
 
 class DownloadFileOperation : NSObject, URLSessionDataDelegate {
     

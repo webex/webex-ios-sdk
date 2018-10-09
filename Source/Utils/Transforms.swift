@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import ObjectMapper
+
 
 class UInt64Transform: TransformType {
     

@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 import Foundation
-import ObjectMapper
+
 
 /// A data type represents a relationship between *Team* and *Person* at Cisco Webex cloud.
 ///
