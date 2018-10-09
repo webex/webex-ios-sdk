@@ -41,7 +41,7 @@ class MetricsClient {
             request.responseJSON(completionHandler)
         }
         else {
-            completionHandler(ServiceResponse(nil, WSResult.failure(WebexError.unregistered)))
+            completionHandler(ServiceResponse(nil, SResult.failure(WebexError.unregistered)))
         }
     }
 }

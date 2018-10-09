@@ -136,7 +136,7 @@ public class Phone {
     var debug = true;
     
     enum LocusResult {
-        case call(Bool, Device, UUID?, MediaSessionWrapper, ServiceResponse<CallModel>, (WSResult<Call>) -> Void)
+        case call(Bool, Device, UUID?, MediaSessionWrapper, ServiceResponse<CallModel>, (SResult<Call>) -> Void)
         case join(Call, ServiceResponse<CallModel>, (Error?) -> Void)
         case leave(Call, ServiceResponse<CallModel>, (Error?) -> Void)
         case reject(Call, ServiceResponse<Any>, (Error?) -> Void)
@@ -276,15 +276,15 @@ public class Phone {
     /// - throw:
     /// - since: 1.2.0
     /// - attention: Currently the SDK only supports one active call at a time. Invoking this function while there is an active call will generate an exception.
-    public func dial(_ address: String, option: MediaOption, completionHandler: @escaping ((WSResult<Call>) -> Void)) {
+    public func dial(_ address: String, option: MediaOption, completionHandler: @escaping ((SResult<Call>) -> Void)) {
         prepare(option: option) { error in
             if let error = error {
-                completionHandler(WSResult.failure(error))
+                completionHandler(SResult.failure(error))
             }
             else {
                 if self.calls.filter({!$0.value.isGroup || ($0.value.isGroup && $0.value.status == CallStatus.connected)}).count > 0 {
                     SDKLogger.shared.error(PhoneErrorDescription.failureDesc(.otherActiveCall))
-                    completionHandler(WSResult.failure(WebexError.illegalOperation(reason: PhoneErrorDescription.errorDesc(.registerFailure))))
+                    completionHandler(SResult.failure(WebexError.illegalOperation(reason: PhoneErrorDescription.errorDesc(.registerFailure))))
                     return
                 }
                 self.requestMediaAccess(option: option) {
@@ -314,7 +314,7 @@ public class Phone {
                                         else if let error = res.result.error {
                                             SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.failureCall), error: error)
                                             DispatchQueue.main.async {
-                                                completionHandler(WSResult.failure(error))
+                                                completionHandler(SResult.failure(error))
                                             }
                                             self.queue.yield()
                                         }
@@ -324,7 +324,7 @@ public class Phone {
                             else {
                                 SDKLogger.shared.error("Failure: unregistered device")
                                 DispatchQueue.main.async {
-                                    completionHandler(WSResult.failure(WebexError.unregistered))
+                                    completionHandler(SResult.failure(WebexError.unregistered))
                                 }
                                 self.queue.yield()
                             }
@@ -641,7 +641,7 @@ public class Phone {
                         DispatchQueue.main.async {
                             let error = WebexError.illegalStatus(reason: "The previous session did not end")
                             SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.failureCall), error: error)
-                            completionHandler(WSResult.failure(error))
+                            completionHandler(SResult.failure(error))
                             call.end(reason: Call.DisconnectReason.error(error))
                         }
                         return
@@ -649,16 +649,16 @@ public class Phone {
                     self.add(call: call)
                     DispatchQueue.main.async {
                         call.startMedia()
-                        completionHandler(WSResult.success(call))
+                        completionHandler(SResult.success(call))
                     }
                 }
                 else {
-                    completionHandler(WSResult.failure(WebexError.serviceFailed(code: -7000, reason: "Failure: Missing required information when dial")))
+                    completionHandler(SResult.failure(WebexError.serviceFailed(code: -7000, reason: "Failure: Missing required information when dial")))
                 }
             case .failure(let error):
                 SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.failureCall), error: error)
                 DispatchQueue.main.async {
-                    completionHandler(WSResult.failure(error))
+                    completionHandler(SResult.failure(error))
                 }
             }
         case .join(let call, let res, let completionHandler):

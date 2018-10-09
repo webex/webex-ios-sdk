@@ -23,7 +23,7 @@ import Foundation
 /// Service request results.
 ///
 /// - since: 1.2.0
-public enum WSResult<T> {
+public enum SResult<T> {
     
     /// Result for Success, with the expected object.
     case success(T)
