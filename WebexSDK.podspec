@@ -32,6 +32,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Starscream' do |st|
     st.source_files = 'Frameworks/External/Starscream/**/*'
+    st.exclude_files = 'Frameworks/External/Starscream/examples/**/*'
   end
 
   s.subspec 'KeychainAccess' do |ka|
