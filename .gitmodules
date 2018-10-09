@@ -7,8 +7,8 @@
 [submodule "Frameworks/External/AlamofireObjectMapper"]
 	path = Frameworks/External/AlamofireObjectMapper
 	url = git@github.com:tristanhimmelman/AlamofireObjectMapper.git
-[submodule "Frameworks/External/SwiftJson"]
-	path = Frameworks/External/SwiftJson
+[submodule "Frameworks/External/SwiftyJson"]
+	path = Frameworks/External/SwiftyJson
 	url = git@github.com:SwiftyJSON/SwiftyJSON.git
 [submodule "Frameworks/External/StarScream"]
 	path = Frameworks/External/StarScream
