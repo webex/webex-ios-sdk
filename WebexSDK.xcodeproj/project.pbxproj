@@ -90,16 +90,15 @@
 		10EE8762216C22640078729B /* MapError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE8749216C22640078729B /* MapError.swift */; };
 		10EE8763216C22640078729B /* DateTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE874A216C22640078729B /* DateTransform.swift */; };
 		10EE8764216C22640078729B /* DateFormatterTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE874B216C22640078729B /* DateFormatterTransform.swift */; };
-		10EE8765216C22640078729B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10EE874C216C22640078729B /* Info.plist */; };
 		10EE8766216C22640078729B /* ToJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE874D216C22640078729B /* ToJSON.swift */; };
 		10EE8767216C22640078729B /* TransformOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE874E216C22640078729B /* TransformOf.swift */; };
 		10EE876C216C22850078729B /* SSLSecurity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE8768216C22830078729B /* SSLSecurity.swift */; };
 		10EE876D216C22850078729B /* Compression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE8769216C22830078729B /* Compression.swift */; };
 		10EE876E216C22850078729B /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE876A216C22840078729B /* WebSocket.swift */; };
 		10EE876F216C22850078729B /* Starscream.h in Headers */ = {isa = PBXBuildFile; fileRef = 10EE876B216C22840078729B /* Starscream.h */; };
-		10EE8772216C22900078729B /* SwiftyJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 10EE8770216C228F0078729B /* SwiftyJSON.h */; };
-		10EE8773216C22900078729B /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE8771216C228F0078729B /* SwiftyJSON.swift */; };
 		10EE877B216C24250078729B /* include.h in Headers */ = {isa = PBXBuildFile; fileRef = 10EE8779216C24250078729B /* include.h */; };
+		10EE877E216C40DE0078729B /* SwiftyJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 10EE877C216C40DE0078729B /* SwiftyJSON.h */; };
+		10EE877F216C40DE0078729B /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE877D216C40DE0078729B /* SwiftyJSON.swift */; };
 		10F0658821081BBA001B1514 /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658621081BBA001B1514 /* Space.swift */; };
 		10F0658921081BBA001B1514 /* SpaceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658721081BBA001B1514 /* SpaceClient.swift */; };
 		20418FE01EACCFDD00626326 /* KeychainProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418FDF1EACCFDD00626326 /* KeychainProtocol.swift */; };
@@ -323,17 +322,16 @@
 		10EE8749216C22640078729B /* MapError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapError.swift; sourceTree = "<group>"; };
 		10EE874A216C22640078729B /* DateTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTransform.swift; sourceTree = "<group>"; };
 		10EE874B216C22640078729B /* DateFormatterTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatterTransform.swift; sourceTree = "<group>"; };
-		10EE874C216C22640078729B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		10EE874D216C22640078729B /* ToJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToJSON.swift; sourceTree = "<group>"; };
 		10EE874E216C22640078729B /* TransformOf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformOf.swift; sourceTree = "<group>"; };
 		10EE8768216C22830078729B /* SSLSecurity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SSLSecurity.swift; path = Frameworks/External/StarScream/Sources/SSLSecurity.swift; sourceTree = "<group>"; };
 		10EE8769216C22830078729B /* Compression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Compression.swift; path = Frameworks/External/StarScream/Sources/Compression.swift; sourceTree = "<group>"; };
 		10EE876A216C22840078729B /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebSocket.swift; path = Frameworks/External/StarScream/Sources/WebSocket.swift; sourceTree = "<group>"; };
 		10EE876B216C22840078729B /* Starscream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Starscream.h; path = Frameworks/External/StarScream/Sources/Starscream.h; sourceTree = "<group>"; };
-		10EE8770216C228F0078729B /* SwiftyJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwiftyJSON.h; path = Frameworks/External/SwiftJson/Source/SwiftyJSON.h; sourceTree = "<group>"; };
-		10EE8771216C228F0078729B /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Frameworks/External/SwiftJson/Source/SwiftyJSON.swift; sourceTree = "<group>"; };
 		10EE8779216C24250078729B /* include.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = include.h; sourceTree = "<group>"; };
 		10EE877A216C24250078729B /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		10EE877C216C40DE0078729B /* SwiftyJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwiftyJSON.h; path = Frameworks/External/SwiftyJson/Source/SwiftyJSON.h; sourceTree = "<group>"; };
+		10EE877D216C40DE0078729B /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Frameworks/External/SwiftyJson/Source/SwiftyJSON.swift; sourceTree = "<group>"; };
 		10F0658621081BBA001B1514 /* Space.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Space.swift; sourceTree = "<group>"; };
 		10F0658721081BBA001B1514 /* SpaceClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceClient.swift; sourceTree = "<group>"; };
 		20418FDF1EACCFDD00626326 /* KeychainProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainProtocol.swift; sourceTree = "<group>"; };
@@ -556,7 +554,6 @@
 				10EE8749216C22640078729B /* MapError.swift */,
 				10EE874A216C22640078729B /* DateTransform.swift */,
 				10EE874B216C22640078729B /* DateFormatterTransform.swift */,
-				10EE874C216C22640078729B /* Info.plist */,
 				10EE874D216C22640078729B /* ToJSON.swift */,
 				10EE874E216C22640078729B /* TransformOf.swift */,
 			);
@@ -690,9 +687,9 @@
 		8838B91D70254D46671B19F1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				10EE877C216C40DE0078729B /* SwiftyJSON.h */,
+				10EE877D216C40DE0078729B /* SwiftyJSON.swift */,
 				10EE8778216C24250078729B /* zlib */,
-				10EE8770216C228F0078729B /* SwiftyJSON.h */,
-				10EE8771216C228F0078729B /* SwiftyJSON.swift */,
 				10EE8769216C22830078729B /* Compression.swift */,
 				10EE8768216C22830078729B /* SSLSecurity.swift */,
 				10EE876B216C22840078729B /* Starscream.h */,
@@ -936,11 +933,11 @@
 			files = (
 				10EE8733216C22590078729B /* KeychainAccess.h in Headers */,
 				B91E75E41CE2D7B70080EAE0 /* WebexSDK-Bridging-Header.h in Headers */,
+				10EE877E216C40DE0078729B /* SwiftyJSON.h in Headers */,
 				10EE872F216C224A0078729B /* AlamofireObjectMapper.h in Headers */,
 				10EE877B216C24250078729B /* include.h in Headers */,
 				10EE876F216C22850078729B /* Starscream.h in Headers */,
 				10EE8752216C22640078729B /* ObjectMapper.h in Headers */,
-				10EE8772216C22900078729B /* SwiftyJSON.h in Headers */,
 				10EE8729216C22360078729B /* Alamofire.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1093,7 +1090,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				10A9CA8D20D0D0510095DF19 /* Info.plist in Resources */,
-				10EE8765216C22640078729B /* Info.plist in Resources */,
 				10A9CA8B20D0D0510095DF19 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1255,7 +1251,7 @@
 				10EE872A216C22360078729B /* ServerTrustPolicy.swift in Sources */,
 				20EEA2791EB0E6B400D6BB75 /* ParticipantModel.swift in Sources */,
 				B91E75D71CE2D7B70080EAE0 /* WebSocketService.swift in Sources */,
-				10EE8773216C22900078729B /* SwiftyJSON.swift in Sources */,
+				10EE877F216C40DE0078729B /* SwiftyJSON.swift in Sources */,
 				10EE871E216C22350078729B /* Result.swift in Sources */,
 				1066EF152022F877003745D0 /* UploadFileOperation.swift in Sources */,
 				B91E75B21CE2D7B70080EAE0 /* PersonClient.swift in Sources */,
