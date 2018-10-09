@@ -98,7 +98,6 @@
 		10EE876F216C22850078729B /* Starscream.h in Headers */ = {isa = PBXBuildFile; fileRef = 10EE876B216C22840078729B /* Starscream.h */; };
 		10EE877E216C40DE0078729B /* SwiftyJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 10EE877C216C40DE0078729B /* SwiftyJSON.h */; };
 		10EE877F216C40DE0078729B /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE877D216C40DE0078729B /* SwiftyJSON.swift */; };
-		10EE8784216C55A90078729B /* include.h in Headers */ = {isa = PBXBuildFile; fileRef = 10EE8782216C55A90078729B /* include.h */; };
 		10F0658821081BBA001B1514 /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658621081BBA001B1514 /* Space.swift */; };
 		10F0658921081BBA001B1514 /* SpaceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658721081BBA001B1514 /* SpaceClient.swift */; };
 		20418FE01EACCFDD00626326 /* KeychainProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418FDF1EACCFDD00626326 /* KeychainProtocol.swift */; };
@@ -330,7 +329,6 @@
 		10EE876B216C22840078729B /* Starscream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Starscream.h; path = Frameworks/External/StarScream/Sources/Starscream.h; sourceTree = "<group>"; };
 		10EE877C216C40DE0078729B /* SwiftyJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwiftyJSON.h; path = Frameworks/External/SwiftyJson/Source/SwiftyJSON.h; sourceTree = "<group>"; };
 		10EE877D216C40DE0078729B /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Frameworks/External/SwiftyJson/Source/SwiftyJSON.swift; sourceTree = "<group>"; };
-		10EE8782216C55A90078729B /* include.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = include.h; sourceTree = "<group>"; };
 		10F0658621081BBA001B1514 /* Space.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Space.swift; sourceTree = "<group>"; };
 		10F0658721081BBA001B1514 /* SpaceClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceClient.swift; sourceTree = "<group>"; };
 		20418FDF1EACCFDD00626326 /* KeychainProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainProtocol.swift; sourceTree = "<group>"; };
@@ -560,14 +558,6 @@
 			path = Frameworks/External/ObjectMapper/Sources;
 			sourceTree = "<group>";
 		};
-		10EE8781216C55A90078729B /* Libs */ = {
-			isa = PBXGroup;
-			children = (
-				10EE8782216C55A90078729B /* include.h */,
-			);
-			path = Libs;
-			sourceTree = "<group>";
-		};
 		10F0658521081BBA001B1514 /* Space */ = {
 			isa = PBXGroup;
 			children = (
@@ -772,7 +762,6 @@
 		B91E75371CE2D7B70080EAE0 /* Http */ = {
 			isa = PBXGroup;
 			children = (
-				10EE8781216C55A90078729B /* Libs */,
 				3DA3D58A1CF4347A008E8372 /* RequestParameter.swift */,
 				B91E753B1CE2D7B70080EAE0 /* WSResult.swift */,
 				B91E753C1CE2D7B70080EAE0 /* ServiceRequest.swift */,
@@ -935,7 +924,6 @@
 				10EE876F216C22850078729B /* Starscream.h in Headers */,
 				10EE8752216C22640078729B /* ObjectMapper.h in Headers */,
 				10EE8729216C22360078729B /* Alamofire.h in Headers */,
-				10EE8784216C55A90078729B /* include.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1455,7 +1443,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Cisco.WebexSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = $SRCROOT/Source/Http/Libs/;
+				SWIFT_INCLUDE_PATHS = $SRCROOT/Frameworks/External/Starscream/zlib/;
 				SWIFT_OBJC_BRIDGING_HEADER = "$PROJECT_DIR/Source/Utils/WebexSDK-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 			};
@@ -1622,7 +1610,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Cisco.WebexSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = $SRCROOT/Source/Http/Libs/;
+				SWIFT_INCLUDE_PATHS = $SRCROOT/Frameworks/External/Starscream/zlib/;
 				SWIFT_OBJC_BRIDGING_HEADER = "$PROJECT_DIR/Source/Utils/WebexSDK-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 			};
@@ -1651,7 +1639,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Cisco.WebexSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = $SRCROOT/Source/Http/Libs/;
+				SWIFT_INCLUDE_PATHS = $SRCROOT/Frameworks/External/Starscream/zlib/;
 				SWIFT_OBJC_BRIDGING_HEADER = "$PROJECT_DIR/Source/Utils/WebexSDK-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 			};
