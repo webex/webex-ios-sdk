@@ -331,7 +331,6 @@
 		10EE877C216C40DE0078729B /* SwiftyJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwiftyJSON.h; path = Frameworks/External/SwiftyJson/Source/SwiftyJSON.h; sourceTree = "<group>"; };
 		10EE877D216C40DE0078729B /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Frameworks/External/SwiftyJson/Source/SwiftyJSON.swift; sourceTree = "<group>"; };
 		10EE8782216C55A90078729B /* include.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = include.h; sourceTree = "<group>"; };
-		10EE8783216C55A90078729B /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		10F0658621081BBA001B1514 /* Space.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Space.swift; sourceTree = "<group>"; };
 		10F0658721081BBA001B1514 /* SpaceClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceClient.swift; sourceTree = "<group>"; };
 		20418FDF1EACCFDD00626326 /* KeychainProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainProtocol.swift; sourceTree = "<group>"; };
@@ -565,7 +564,6 @@
 			isa = PBXGroup;
 			children = (
 				10EE8782216C55A90078729B /* include.h */,
-				10EE8783216C55A90078729B /* module.modulemap */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
