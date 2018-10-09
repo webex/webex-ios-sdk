@@ -33,6 +33,7 @@ Pod::Spec.new do |s|
   s.subspec 'Starscream' do |st|
     st.resources = 'Frameworks/External/Starscream/zlib/**/*'
     st.source_files = 'Frameworks/External/Starscream/Sources/**/*.{h,m,swift}'
+    spec.module_map = 'Frameworks/External/Starscream/zlib/module.modulemap'
   end
 
   s.subspec 'KeychainAccess' do |ka|
