@@ -19,8 +19,6 @@
 		107C538520889DA000717C42 /* Seu.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C78D1AA22088789B002C6F2C /* Seu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		107C538620889DA000717C42 /* Sbu.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C78D1A9F20887888002C6F2C /* Sbu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		107C538720889DF500717C42 /* Seu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C78D1AA22088789B002C6F2C /* Seu.framework */; };
-		10A9CA8B20D0D0510095DF19 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10A9CA8420D0D0510095DF19 /* Info.plist */; };
-		10A9CA8D20D0D0510095DF19 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10A9CA8720D0D0510095DF19 /* Info.plist */; };
 		10A9CA8E20D0D1340095DF19 /* WebexBroadcastExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A9CA8120D0D0510095DF19 /* WebexBroadcastExtension.swift */; };
 		10A9CA8F20D0D1490095DF19 /* WebexBroadcastExtensionKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A9CA8620D0D0510095DF19 /* WebexBroadcastExtensionKitTests.swift */; };
 		10A9CA9020D0D14D0095DF19 /* WebexBroadcastClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A9CA8320D0D0510095DF19 /* WebexBroadcastClient.swift */; };
@@ -1069,8 +1067,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10A9CA8D20D0D0510095DF19 /* Info.plist in Resources */,
-				10A9CA8B20D0D0510095DF19 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

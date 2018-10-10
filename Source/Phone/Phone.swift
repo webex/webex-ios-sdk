@@ -570,7 +570,16 @@ public class Phone {
     
     func fetch(call: Call) {
         self.queue.sync {
-            self.client.fetch(call.url, queue: self.queue.underlying) { res in
+            var syncUrl = call.url
+            if call.model.sequence?.empty ?? true {
+                syncUrl = call.model.syncUrl ?? call.url
+                SDKLogger.shared.debug("Requesting sync Delta for locus: \(syncUrl)")
+            } else {
+                //full sync
+                syncUrl = call.url
+                SDKLogger.shared.debug("Requesting full sync Delta for locus: \(syncUrl)")
+            }
+            self.client.fetch(syncUrl, queue: self.queue.underlying) { res in
                 self.doLocusResponse(LocusResult.update(call, res))
                 self.queue.yield()
             }
@@ -829,13 +838,23 @@ public class Phone {
     
     private func startObserving() {
         self.stopObserving();
+        #if swift(>=4.2)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.onApplicationDidBecomeActive) , name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.onApplicationDidEnterBackground) , name: UIApplication.didEnterBackgroundNotification, object: nil)
+        #else
         NotificationCenter.default.addObserver(self, selector: #selector(self.onApplicationDidBecomeActive) , name: .UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.onApplicationDidEnterBackground) , name: .UIApplicationDidEnterBackground, object: nil)
+        #endif
     }
     
     private func stopObserving() {
+        #if swift(>=4.2)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
+        #else
         NotificationCenter.default.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIApplicationDidEnterBackground, object: nil)
+        #endif
     }
     
     @objc func onApplicationDidBecomeActive() {

@@ -24,9 +24,9 @@ class DeviceClient {
     
     private let authenticator: Authenticator
 #if INTEGRATIONTEST
-    static let WDM_SERVER_ADDRESS:String = ProcessInfo().environment["WDM_SERVER_ADDRESS"] == nil ? "https://wdm-a.wbx2.com/wdm/api/v1/devices/ios":ProcessInfo().environment["WDM_SERVER_ADDRESS"]!
+    static let WDM_SERVER_ADDRESS:String = ProcessInfo().environment["WDM_SERVER_ADDRESS"] == nil ? "https://wdm-a.wbx2.com/wdm/api/v1/devices":ProcessInfo().environment["WDM_SERVER_ADDRESS"]!
 #else
-    static let WDM_SERVER_ADDRESS:String = "https://wdm-a.wbx2.com/wdm/api/v1/devices/ios"
+    static let WDM_SERVER_ADDRESS:String = "https://wdm-a.wbx2.com/wdm/api/v1/devices"
 #endif
     init(authenticator: Authenticator) {
         self.authenticator = authenticator
@@ -82,15 +82,6 @@ class DeviceClient {
     private func createBody(_ device: UIDevice) -> RequestParameter {
         let deviceName = device.name.isEmpty ? "notset" : device.name
         
-        let deviceType: String
-        if device.userInterfaceIdiom == .pad {
-            deviceType = "IPAD"
-        } else if device.userInterfaceIdiom == .phone {
-            deviceType = "IPHONE"
-        } else {
-            deviceType = "UNKNOWN"
-        }
-        
         let deviceParameters:[String: Any] = [
             "deviceName": deviceName,
             "name": device.name,
@@ -98,7 +89,7 @@ class DeviceClient {
             "localizedModel": device.localizedModel,
             "systemName": device.systemName,
             "systemVersion": device.systemVersion,
-            "deviceType": deviceType,
+            "deviceType": UIDevice.current.kind,
             "capabilities": ["sdpSupported":true, "groupCallSupported":true]]
         
         return RequestParameter(deviceParameters)
