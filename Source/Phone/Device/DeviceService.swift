@@ -43,7 +43,7 @@ class DeviceService {
 
     var device: Device?
     
-    func registerDevice(phone: Phone, queue: DispatchQueue, completionHandler: @escaping (SResult<Device>) -> Void) {
+    func registerDevice(phone: Phone, queue: DispatchQueue, completionHandler: @escaping (WSResult<Device>) -> Void) {
         
         let registrationHandler: (ServiceResponse<DeviceModel>) -> Void = { response in
             switch response.result {
@@ -72,17 +72,17 @@ class DeviceService {
                         let tempDevice = Device(phone: phone, deviceUrl: deviceUrl, webSocketUrl: webSocketUrl, locusServiceUrl: locusServiceUrl, calliopeDiscoveryServiceUrl: calliopeDiscoveryServiceUrl, metricsServiceUrl: metricsServiceUrl, conversationServiceUrl: conversationServiceUrl, deviceType: UIDevice.current.kind, regionCode: regionCode, countryCode: countryCode)
                         self.device = tempDevice
                         UserDefaults.sharedInstance.deviceUrl = deviceUrlString
-                        completionHandler(SResult.success(tempDevice))
+                        completionHandler(WSResult.success(tempDevice))
                     }
                     
                 } else {
                     let error = WebexError.serviceFailed(code: -7000, reason: "Missing required URLs when registering device")
                     SDKLogger.shared.error("Failed to register device", error: error)
-                    completionHandler(SResult.failure(error))
+                    completionHandler(WSResult.failure(error))
                 }
             case .failure(let error):
                 SDKLogger.shared.error("Failed to register device", error: error)
-                completionHandler(SResult.failure(error))
+                completionHandler(WSResult.failure(error))
             }
         }
         

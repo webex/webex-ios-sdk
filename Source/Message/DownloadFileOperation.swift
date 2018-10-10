@@ -30,13 +30,13 @@ class DownloadFileOperation : NSObject, URLSessionDataDelegate {
     private var target: URL
     private let queue: DispatchQueue
     private let progressHandler: ((Double) -> Void)?
-    private let completionHandler : ((SResult<URL>) -> Void)
+    private let completionHandler : ((WSResult<URL>) -> Void)
     private var outputStream : OutputStream?
     private var downloadSeesion: URLSession?
     private var totalSize: UInt64?
     private var countSize: UInt64 = 0
 
-    init(authenticator: Authenticator, uuid: String, source: String, displayName: String?, secureContentRef: String?, thnumnail: Bool, target: URL?, queue: DispatchQueue?, progressHandler: ((Double) -> Void)?, completionHandler: @escaping ((SResult<URL>) -> Void)) {
+    init(authenticator: Authenticator, uuid: String, source: String, displayName: String?, secureContentRef: String?, thnumnail: Bool, target: URL?, queue: DispatchQueue?, progressHandler: ((Double) -> Void)?, completionHandler: @escaping ((WSResult<URL>) -> Void)) {
         self.authenticator = authenticator
         self.source = source
         self.secureContentRef = secureContentRef
@@ -117,7 +117,7 @@ class DownloadFileOperation : NSObject, URLSessionDataDelegate {
         }
         else {
             self.queue.async {
-                self.completionHandler(SResult.success(self.target))
+                self.completionHandler(WSResult.success(self.target))
             }
         }
     }
@@ -125,7 +125,7 @@ class DownloadFileOperation : NSObject, URLSessionDataDelegate {
     private func downloadError(_ error: Error? = nil) {
         SDKLogger.shared.info("File download fail...")
         self.queue.async {
-            self.completionHandler(SResult.failure(error ?? WebexError.serviceFailed(code: -7000, reason: "download error")))
+            self.completionHandler(WSResult.failure(error ?? WebexError.serviceFailed(code: -7000, reason: "download error")))
         }
     }
 }

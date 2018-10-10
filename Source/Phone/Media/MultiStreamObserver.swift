@@ -25,7 +25,7 @@ import Foundation
 /// - since: 2.0.0
 public enum AuxStreamChangeEvent {
     /// Triggered when an auxiliary stream is opened.
-    case auxStreamOpenedEvent(MediaRenderView,SResult<AuxStream>)
+    case auxStreamOpenedEvent(MediaRenderView,WSResult<AuxStream>)
     /// Triggered when this auxiliary stream's speaker has changed.
     case auxStreamPersonChangedEvent(AuxStream,From:CallMembership?,To:CallMembership?)
     /// Triggered Auxiliary stream's render view size changed.

@@ -92,7 +92,7 @@ public class MessageClient {
             }
             else {
                 (queue ?? DispatchQueue.main).async {
-                    completionHandler(ServiceResponse(nil, SResult.failure(error ?? WebexError.unregistered)))
+                    completionHandler(ServiceResponse(nil, WSResult.failure(error ?? WebexError.unregistered)))
                 }
             }
         }
@@ -118,7 +118,7 @@ public class MessageClient {
             }
             else {
                 (queue ?? DispatchQueue.main).async {
-                    completionHandler(ServiceResponse(nil, SResult.failure(error ?? WebexError.unregistered)))
+                    completionHandler(ServiceResponse(nil, WSResult.failure(error ?? WebexError.unregistered)))
                 }
             }
         }
@@ -144,7 +144,7 @@ public class MessageClient {
             }
             else {
                 (queue ?? DispatchQueue.main).async {
-                    completionHandler(ServiceResponse(nil, SResult.failure(error ?? WebexError.unregistered)))
+                    completionHandler(ServiceResponse(nil, WSResult.failure(error ?? WebexError.unregistered)))
                 }
             }
         }
@@ -172,7 +172,7 @@ public class MessageClient {
             }
             else {
                 (queue ?? DispatchQueue.main).async {
-                    completionHandler(ServiceResponse(nil, SResult.failure(error ?? WebexError.unregistered)))
+                    completionHandler(ServiceResponse(nil, WSResult.failure(error ?? WebexError.unregistered)))
                 }
             }
         }
@@ -192,7 +192,7 @@ public class MessageClient {
             }
             else {
                 (queue ?? DispatchQueue.main).async {
-                    completionHandler(ServiceResponse(nil, SResult.failure(error ?? WebexError.unregistered)))
+                    completionHandler(ServiceResponse(nil, WSResult.failure(error ?? WebexError.unregistered)))
                 }
             }
         }
@@ -212,7 +212,7 @@ public class MessageClient {
             }
             else {
                 (queue ?? DispatchQueue.main).async {
-                    completionHandler(ServiceResponse(nil, SResult.failure(error ?? WebexError.unregistered)))
+                    completionHandler(ServiceResponse(nil, WSResult.failure(error ?? WebexError.unregistered)))
                 }
             }
         }
@@ -226,14 +226,14 @@ public class MessageClient {
     /// - parameter completionHandler: Downloaded file local address wiil be stored in "file.localFileUrl"
     /// - returns: Void
     /// - since: 1.4.0
-    public func downloadFile(_ file: RemoteFile, to: URL? = nil, progressHandler: ((Double)->Void)? = nil, completionHandler: @escaping (SResult<URL>) -> Void) {
+    public func downloadFile(_ file: RemoteFile, to: URL? = nil, progressHandler: ((Double)->Void)? = nil, completionHandler: @escaping (WSResult<URL>) -> Void) {
         self.doSomethingAfterRegistered { error in
             if let impl = self.phone.messages {
                 impl.downloadFile(file, to: to, progressHandler: progressHandler, completionHandler: completionHandler)
             }
             else {
                 (DispatchQueue.main).async {
-                    completionHandler(SResult.failure(error ?? WebexError.unregistered))
+                    completionHandler(WSResult.failure(error ?? WebexError.unregistered))
                 }
             }
         }
@@ -247,26 +247,26 @@ public class MessageClient {
     /// - parameter completionHandler: Downloaded file local address wiil be stored in "file.localFileUrl"
     /// - returns: Void
     /// - since: 1.4.0
-    public func downloadThumbnail(for file: RemoteFile, to: URL? = nil, progressHandler: ((Double)->Void)? = nil, completionHandler: @escaping (SResult<URL>) -> Void) {
+    public func downloadThumbnail(for file: RemoteFile, to: URL? = nil, progressHandler: ((Double)->Void)? = nil, completionHandler: @escaping (WSResult<URL>) -> Void) {
         self.doSomethingAfterRegistered { error in
             if let impl = self.phone.messages {
                 impl.downloadThumbnail(for: file, to: to, progressHandler: progressHandler, completionHandler: completionHandler)
             }
             else {
                 (DispatchQueue.main).async {
-                    completionHandler(SResult.failure(error ?? WebexError.unregistered))
+                    completionHandler(WSResult.failure(error ?? WebexError.unregistered))
                 }
             }
         }
     }
     
-    private func downloads(from: String, completionHandler: @escaping (SResult<LocalFile>) -> Void) {
+    private func downloads(from: String, completionHandler: @escaping (WSResult<LocalFile>) -> Void) {
         download(from, to: DownloadRequest.suggestedDownloadDestination()).response { response in
             if response.error == nil, let url = response.destinationURL, let file = LocalFile(path: url.path) {
-                completionHandler(SResult.success(file))
+                completionHandler(WSResult.success(file))
             }
             else {
-                completionHandler(SResult.failure(response.error ?? MessageClientImpl.MSGError.downloadError))
+                completionHandler(WSResult.failure(response.error ?? MessageClientImpl.MSGError.downloadError))
             }
         }
     }

@@ -11,7 +11,6 @@ Pod::Spec.new do |s|
   s.preserve_paths = 'Frameworks/*.framework'
   s.vendored_frameworks = "Frameworks/*.framework"
 
-
   s.subspec 'Alamofire' do |af|
     af.source_files = 'Frameworks/External/Alamofire/Source/**/*.{h,m,swift}'
   end

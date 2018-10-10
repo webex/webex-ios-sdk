@@ -62,11 +62,11 @@ class MessageClientImpl {
     private var keySerialization: String?
     
     private var ephemeralKeyRequest: (KmsEphemeralKeyRequest, (Error?) -> Void)?
-    private var keyMaterialCompletionHandlers: [String: [(SResult<(String, String)>) -> Void]] = [String: [(SResult<(String, String)>) -> Void]]()
-    private var keysCompletionHandlers: [String: [(SResult<(String, String)>) -> Void]] = [String: [(SResult<(String, String)>) -> Void]]()
+    private var keyMaterialCompletionHandlers: [String: [(WSResult<(String, String)>) -> Void]] = [String: [(WSResult<(String, String)>) -> Void]]()
+    private var keysCompletionHandlers: [String: [(WSResult<(String, String)>) -> Void]] = [String: [(WSResult<(String, String)>) -> Void]]()
     private var encryptionKeys: [String: EncryptionKey] = [String: EncryptionKey]()
     private var spaces: [String: String] = [String: String]()
-    private typealias KeyHandler = (SResult<(String, String)>) -> Void
+    private typealias KeyHandler = (WSResult<(String, String)>) -> Void
     
     init(authenticator: Authenticator, deviceUrl: URL) {
         self.authenticator = authenticator
@@ -82,7 +82,7 @@ class MessageClientImpl {
         
         if max == 0 {
             (queue ?? DispatchQueue.main).async {
-                completionHandler(ServiceResponse(nil, SResult.success([])))
+                completionHandler(ServiceResponse(nil, WSResult.success([])))
             }
             return
         }
@@ -92,7 +92,7 @@ class MessageClientImpl {
             case .message(let messageId):
                 self.get(messageId: messageId, decrypt: false, queue: queue) { response in
                     if let error = response.result.error {
-                        completionHandler(ServiceResponse(response.response, SResult.failure(error)))
+                        completionHandler(ServiceResponse(response.response, WSResult.failure(error)))
                     }
                     else {
                         self.listBefore(spaceId:spaceId, mentionedPeople: mentionedPeople, date: response.result.data?.created, max:max, result: [], completionHandler: completionHandler)
@@ -126,12 +126,12 @@ class MessageClientImpl {
                         if let material = material.data {
                             let messages = result.prefix(max).map { $0.decrypt(key: material) }.map { Message(activity: $0) }
                             (queue ?? DispatchQueue.main).async {
-                                completionHandler(ServiceResponse(response.response, SResult.success(messages)))
+                                completionHandler(ServiceResponse(response.response, WSResult.success(messages)))
                             }
                         }
                         else {
                             (queue ?? DispatchQueue.main).async {
-                                completionHandler(ServiceResponse(response.response, SResult.failure(material.error ?? MSGError.keyMaterialFetchFail)))
+                                completionHandler(ServiceResponse(response.response, WSResult.failure(material.error ?? MSGError.keyMaterialFetchFail)))
                             }
                         }
                     }
@@ -140,7 +140,7 @@ class MessageClientImpl {
                     self.listBefore(spaceId:spaceId, mentionedPeople: mentionedPeople, date: responseValue.last?.created, max:max, result: result, completionHandler: completionHandler)
                 }
             case .failure(let error):
-                completionHandler(ServiceResponse(response.response, SResult.failure(error)))
+                completionHandler(ServiceResponse(response.response, WSResult.failure(error)))
             }
         }
     }
@@ -158,15 +158,15 @@ class MessageClientImpl {
                     let key = self.encryptionKey(spaceId: spaceId)
                     key.material(client: self) { material in
                         (queue ?? DispatchQueue.main).async {
-                            completionHandler(ServiceResponse(response.response, SResult.success(Message(activity: activity.decrypt(key: material.data)))))
+                            completionHandler(ServiceResponse(response.response, WSResult.success(Message(activity: activity.decrypt(key: material.data)))))
                         }
                     }
                 }
                 else {
-                    completionHandler(ServiceResponse(response.response, SResult.success(Message(activity: activity))))
+                    completionHandler(ServiceResponse(response.response, WSResult.success(Message(activity: activity))))
                 }
             case .failure(let error):
-                completionHandler(ServiceResponse(response.response, SResult.failure(error)))
+                completionHandler(ServiceResponse(response.response, WSResult.failure(error)))
             }
         }
     }
@@ -181,7 +181,7 @@ class MessageClientImpl {
                 self.post(spaceId: spaceId, text: text, files: files, queue: queue, completionHandler: completionHandler)
             }
             else {
-                completionHandler(ServiceResponse(nil, SResult.failure(result.error ?? MSGError.spaceFetchFail)))
+                completionHandler(ServiceResponse(nil, WSResult.failure(result.error ?? MSGError.spaceFetchFail)))
             }
         }
     }
@@ -231,7 +231,7 @@ class MessageClientImpl {
             }
         }
         
-        func postMessageRequest(encryptionUrl: SResult<String?>, material: SResult<String>, target: [String: Any]){
+        func postMessageRequest(encryptionUrl: WSResult<String?>, material: WSResult<String>, target: [String: Any]){
             if let url = encryptionUrl.data {
                 let body = RequestParameter(["verb": verb.rawValue, "encryptionKeyUrl": url, "object": object, "target": target, "clientTempId": "\(self.uuid):\(UUID().uuidString)", "kmsMessage": self.keySerialization ?? nil])
                 let request = self.messageServiceBuilder.path("activities")
@@ -242,15 +242,15 @@ class MessageClientImpl {
                 request.responseObject { (response: ServiceResponse<ActivityModel>) in
                     switch response.result{
                     case .success(let activity):
-                        completionHandler(ServiceResponse(response.response, SResult.success(Message(activity: activity.decrypt(key: material.data)))))
+                        completionHandler(ServiceResponse(response.response, WSResult.success(Message(activity: activity.decrypt(key: material.data)))))
                     case .failure(let error):
-                        completionHandler(ServiceResponse(response.response, SResult.failure(error)))
+                        completionHandler(ServiceResponse(response.response, WSResult.failure(error)))
                     }
                 }
             }
             else {
                 (queue ?? DispatchQueue.main).async {
-                    completionHandler(ServiceResponse(nil, SResult.failure(encryptionUrl.error ?? MSGError.encryptionUrlFetchFail)))
+                    completionHandler(ServiceResponse(nil, WSResult.failure(encryptionUrl.error ?? MSGError.encryptionUrlFetchFail)))
                 }
             }
         }
@@ -278,17 +278,17 @@ class MessageClientImpl {
                 }
                 else {
                     (queue ?? DispatchQueue.main).async {
-                        completionHandler(ServiceResponse(response.response, SResult.failure(response.result.error ?? MSGError.spaceFetchFail)))
+                        completionHandler(ServiceResponse(response.response, WSResult.failure(response.result.error ?? MSGError.spaceFetchFail)))
                     }
                 }
             case .failure(let error):
-                completionHandler(ServiceResponse(response.response, SResult.failure(error)))
+                completionHandler(ServiceResponse(response.response, WSResult.failure(error)))
                 break
             }
         }
     }
     
-    func downloadFile(_ file: RemoteFile, to: URL? = nil, queue: DispatchQueue? = nil, progressHandler: ((Double)->Void)? = nil, completionHandler: @escaping (SResult<URL>) -> Void) {
+    func downloadFile(_ file: RemoteFile, to: URL? = nil, queue: DispatchQueue? = nil, progressHandler: ((Double)->Void)? = nil, completionHandler: @escaping (WSResult<URL>) -> Void) {
         if let source = file.url {
             let operation = DownloadFileOperation(authenticator: self.authenticator,
                                                   uuid: self.uuid,
@@ -303,11 +303,11 @@ class MessageClientImpl {
             operation.run()
         }
         else {
-            completionHandler(SResult.failure(MSGError.downloadError))
+            completionHandler(WSResult.failure(MSGError.downloadError))
         }
     }
     
-    func downloadThumbnail(for file: RemoteFile, to: URL? = nil,  queue: DispatchQueue? = nil, progressHandler: ((Double)->Void)? = nil, completionHandler: @escaping (SResult<URL>) -> Void) {
+    func downloadThumbnail(for file: RemoteFile, to: URL? = nil,  queue: DispatchQueue? = nil, progressHandler: ((Double)->Void)? = nil, completionHandler: @escaping (WSResult<URL>) -> Void) {
         if let source = file.thumbnail?.url {
             let operation = DownloadFileOperation(authenticator: self.authenticator,
                                                   uuid: self.uuid,
@@ -322,7 +322,7 @@ class MessageClientImpl {
             operation.run()
         }
         else {
-            completionHandler(SResult.failure(MSGError.downloadError))
+            completionHandler(WSResult.failure(MSGError.downloadError))
         }
     }
     
@@ -388,7 +388,7 @@ class MessageClientImpl {
                     if var handlers = self.keyMaterialCompletionHandlers[keyUri], handlers.count > 0 {
                         let handler = handlers.removeFirst()
                         self.keyMaterialCompletionHandlers[keyUri] = handlers
-                        handler(SResult.success((keyUri, keyMaterial)))
+                        handler(WSResult.success((keyUri, keyMaterial)))
                     }
                     if let handlers = self.keyMaterialCompletionHandlers[keyUri], handlers.count == 0 {
                         self.keyMaterialCompletionHandlers[keyUri] = nil
@@ -403,10 +403,10 @@ class MessageClientImpl {
         }
     }
     
-    func requestSpaceEncryptionURL(spaceId: String, completionHandler: @escaping (SResult<String?>) -> Void) {
+    func requestSpaceEncryptionURL(spaceId: String, completionHandler: @escaping (WSResult<String?>) -> Void) {
         self.prepareEncryptionKey { error in
             if let error = error {
-                completionHandler(SResult.failure(error))
+                completionHandler(WSResult.failure(error))
                 return
             }
             
@@ -420,7 +420,7 @@ class MessageClientImpl {
                         }
                     }
                 }
-                completionHandler(SResult.success(nil))
+                completionHandler(WSResult.success(nil))
             }
             
             let request = self.messageServiceBuilder.path("conversations/" + spaceId.locusFormat)
@@ -430,31 +430,31 @@ class MessageClientImpl {
             request.responseJSON { (response: ServiceResponse<Any>) in
                 if let dict = response.result.data as? [String: Any] {
                     if let spaceEncryptionUrl = (dict["encryptionKeyUrl"] ?? dict["defaultActivityEncryptionKeyUrl"]) as? String{
-                        completionHandler(SResult.success(spaceEncryptionUrl))
+                        completionHandler(WSResult.success(spaceEncryptionUrl))
                     }else if let _ = dict["kmsResourceObjectUrl"] {
                         handleResourceObjectUrl(dict: dict)
                     }
                 }
                 else {
-                    completionHandler(SResult.failure(response.result.error ?? MSGError.encryptionUrlFetchFail))
+                    completionHandler(WSResult.failure(response.result.error ?? MSGError.encryptionUrlFetchFail))
                 }
             }
         }
     }
     
-    func requestSpaceKeyMaterial(spaceId: String, encryptionUrl: String?, completionHandler: @escaping (SResult<(String, String)>) -> Void) {
+    func requestSpaceKeyMaterial(spaceId: String, encryptionUrl: String?, completionHandler: @escaping (WSResult<(String, String)>) -> Void) {
         self.prepareEncryptionKey { error in
             if let error = error {
-                completionHandler(SResult.failure(error))
+                completionHandler(WSResult.failure(error))
                 return
             }
             self.authenticator.accessToken { token in
                 guard let token = token else {
-                    completionHandler(SResult.failure(WebexError.noAuth))
+                    completionHandler(WSResult.failure(WebexError.noAuth))
                     return
                 }
                 guard let userId = self.userId, let ephemeralKey = self.ephemeralKey else {
-                    completionHandler(SResult.failure(MSGError.ephemaralKeyFetchFail))
+                    completionHandler(WSResult.failure(MSGError.ephemaralKeyFetchFail))
                     return
                 }
                 self.processSpaceKeyMaterialRequest(spaceId: spaceId, encryptionUrl: encryptionUrl, token: token, userId: userId, ephemeralKey: ephemeralKey, completionHandler: completionHandler)
@@ -462,7 +462,7 @@ class MessageClientImpl {
         }
     }
     
-    private func processSpaceKeyMaterialRequest(spaceId: String, encryptionUrl: String?, token: String, userId: String, ephemeralKey: String?, completionHandler: @escaping (SResult<(String, String)>) -> Void){
+    private func processSpaceKeyMaterialRequest(spaceId: String, encryptionUrl: String?, token: String, userId: String, ephemeralKey: String?, completionHandler: @escaping (WSResult<(String, String)>) -> Void){
         let header: [String: String]  = ["Cisco-Request-ID": self.uuid, "Authorization": "Bearer " + token]
         var parameters: [String: Any]?
         var failed: () -> Void
@@ -472,12 +472,12 @@ class MessageClientImpl {
                 let chiperText = try? CjoseWrapper.ciphertext(fromContent: serialize.data(using: .utf8), key: ephemeralKey) {
                 self.keySerialization = chiperText
                 parameters = ["kmsMessages": [chiperText], "destination": "unused" ] as [String : Any]
-                var handlers: [(SResult<(String, String)>) -> Void] = self.keyMaterialCompletionHandlers[encryptionUrl] ?? []
+                var handlers: [(WSResult<(String, String)>) -> Void] = self.keyMaterialCompletionHandlers[encryptionUrl] ?? []
                 handlers.append(completionHandler)
                 self.keyMaterialCompletionHandlers[encryptionUrl] = handlers
             }
             failed = {
-                self.keyMaterialCompletionHandlers[encryptionUrl]?.forEach { $0(SResult.failure(MSGError.keyMaterialFetchFail)) }
+                self.keyMaterialCompletionHandlers[encryptionUrl]?.forEach { $0(WSResult.failure(MSGError.keyMaterialFetchFail)) }
                 self.keyMaterialCompletionHandlers[encryptionUrl] = nil
             }
         }
@@ -487,13 +487,13 @@ class MessageClientImpl {
                 if let serialize = request.serialize(), let chiperText = try? CjoseWrapper.ciphertext(fromContent: serialize.data(using: .utf8), key: ephemeralKey) {
                     self.keySerialization = chiperText
                     parameters = ["kmsMessages": [chiperText], "destination": "unused" ] as [String: Any]
-                    var handlers: [(SResult<(String, String)>) -> Void] = self.keysCompletionHandlers[spaceId] ?? []
+                    var handlers: [(WSResult<(String, String)>) -> Void] = self.keysCompletionHandlers[spaceId] ?? []
                     handlers.append(completionHandler)
                     self.keysCompletionHandlers[spaceId] = handlers
                 }
             }
             failed = {
-                self.keysCompletionHandlers[spaceId]?.forEach { $0(SResult.failure(MSGError.keyMaterialFetchFail)) }
+                self.keysCompletionHandlers[spaceId]?.forEach { $0(WSResult.failure(MSGError.keyMaterialFetchFail)) }
                 self.keysCompletionHandlers[spaceId] = nil
             }
         }
@@ -650,9 +650,9 @@ class MessageClientImpl {
                     request.responseJSON { (response: ServiceResponse<Any>) in
                         switch response.result {
                         case .success(_):
-                            handlers.forEach { $0(SResult.success((key.uri, key.jwk))) }
+                            handlers.forEach { $0(WSResult.success((key.uri, key.jwk))) }
                         case .failure(let error):
-                            handlers.forEach { $0(SResult.failure(error)) }
+                            handlers.forEach { $0(WSResult.failure(error)) }
                             break
                         }
                     }
@@ -674,10 +674,10 @@ class MessageClientImpl {
         return key!
     }
     
-    private func lookupSpace(person: String, queue: DispatchQueue?, completionHandler: @escaping (SResult<String>) -> Void) {
+    private func lookupSpace(person: String, queue: DispatchQueue?, completionHandler: @escaping (WSResult<String>) -> Void) {
         if let spaceId = self.spaces[person] {
             (queue ?? DispatchQueue.main).async {
-                completionHandler(SResult.success(spaceId))
+                completionHandler(WSResult.success(spaceId))
             }
         }
         else {
@@ -690,10 +690,10 @@ class MessageClientImpl {
                 if let space = response.result.data?.id {
                     let spaceId = space.hydraFormat(for: .room)
                     self.spaces[person] = spaceId
-                    completionHandler(SResult.success(spaceId))
+                    completionHandler(WSResult.success(spaceId))
                 }
                 else {
-                    completionHandler(SResult.failure(response.result.error ?? MSGError.spaceFetchFail))
+                    completionHandler(WSResult.failure(response.result.error ?? MSGError.spaceFetchFail))
                 }
             }
         }

@@ -29,9 +29,9 @@ public struct ServiceResponse<T> {
     public let response: HTTPURLResponse?
     
     /// Result for a service request.
-    public let result: SResult<T>
+    public let result: WSResult<T>
     
-    init(_ response: HTTPURLResponse?, _ result: SResult<T>) {
+    init(_ response: HTTPURLResponse?, _ result: WSResult<T>) {
         self.response = response
         self.result = result
     }
