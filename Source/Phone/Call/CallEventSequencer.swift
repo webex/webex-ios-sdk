@@ -39,16 +39,28 @@ class CallEventSequencer {
         }
         let compare = CallEventSequencer.compare(oldSeq, newSeq)
         switch compare {
-        case .equal:
-            return nil
-        case .greaterThan:
+        case .equal,.greaterThan:
             return nil
         case .lessThan:
-            return new
+            return sequenceBase(oldSequence: oldSeq, new: new, invalid: invalid)
         case .deSync:
             invalid()
             return nil
         }
+    }
+    
+    private static func sequenceBase(oldSequence: SequenceModel,new: CallModel, invalid: () -> Void) -> CallModel? {
+        if let baseSeq = new.baseSequence {
+            let compare = CallEventSequencer.compare(oldSequence, baseSeq)
+            switch compare {
+            case .equal,.greaterThan:
+                return new
+            case .lessThan,.deSync:
+                invalid()
+                return nil
+            }
+        }
+        return new
     }
     
     private static func compare(_ a: SequenceModel, _ b: SequenceModel) -> CompareResult {

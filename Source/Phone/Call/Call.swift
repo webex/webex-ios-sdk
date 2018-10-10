@@ -974,14 +974,19 @@ public class Call {
     }
     
     func update(model: CallModel) {
-        if model.isValid {
+        //some response's mediaConnection is nil, sync all model hold the latest media connection
+        func syncMediaConnections(from:CallModel) -> CallModel {
+            var newModel = from
+            let mediaConnections = newModel.mediaConnections == nil ? self.model.mediaConnections:model.mediaConnections
+            self.model.setMediaConnections(newMediaConnections: mediaConnections)
+            newModel.setMediaConnections(newMediaConnections: mediaConnections)
+            return newModel
+        }
+        
+        let newModel = syncMediaConnections(from: model)
+        if newModel.isValid {
             let old = self.model
-            if var new = CallEventSequencer.sequence(old: old, new: model, invalid: { self.device.phone.fetch(call: self) }) {
-                //some response's mediaConnection is nil, sync all model hold the latest media connection
-                if new.mediaConnections == nil, let oldMediaConnextions = old.mediaConnections {
-                    new.setMediaConnections(newMediaConnections: oldMediaConnextions)
-                }
-                
+            if let new = CallEventSequencer.sequence(old: old, new: newModel, invalid: { self.device.phone.fetch(call: self) }) {
                 self.doCallModel(new)
                 DispatchQueue.main.async {
                     if new.isRemoteAudioMuted != old.isRemoteAudioMuted {
@@ -1020,11 +1025,6 @@ public class Call {
                             }
                         }
                     }                    
-                }
-            } else {
-                //some response's mediaConnection is nil, sync all model hold the latest media connection
-                if self.model.mediaConnections == nil, let mediaConnection = model.mediaConnections {
-                    self.model.setMediaConnections(newMediaConnections: mediaConnection)
                 }
             }
         }
@@ -1135,8 +1135,15 @@ public class Call {
     }
     
     private func doCallModel(_ model: CallModel) {
-        self.model = model
-        if let participants = model.participants?.filter({ $0.isCIUser() }) {
+        var newModel = self.model
+        if !model.isFullDTO {
+            newModel.applyDelta(from: model)
+        } else {
+            newModel = model
+        }
+        self.model = newModel
+        
+        if let participants = self.model.participants?.filter({ $0.isCIUser() }) {
             let oldMemberships = self.memberships
             var newMemberships = [CallMembership]()
             var onCallMembershipChanges = [CallMembershipChangedEvent]()
@@ -1159,8 +1166,10 @@ public class Call {
                 }
                 else {
                     newMemberships.append(CallMembership(participant: participant, call: self))
+                    //TODO participant add event?
                 }
             }
+            //TODO participant remove event?
             self.memberships = newMemberships
             for callMembershipChange in onCallMembershipChanges {
                 DispatchQueue.main.async {
@@ -1173,7 +1182,7 @@ public class Call {
         }
         
         self.updateAuxStreamCount()
-        self.status.handle(model: model, for: self)
+        self.status.handle(model: self.model, for: self)
     }
     
     private func checkMembershipChangeEventFor(_ membership: CallMembership) -> [CallMembershipChangedEvent] {
