@@ -401,6 +401,7 @@ API changes list from SparkSDK to WebexSDK.
 | :----:| :----: | :----:
 | Create a new instance | let spark = Spark(authenticator: authenticator) | let webex = Webex(authenticator: authenticator)
 | "Room" Client renamed to "Space" Client | spark.rooms.list(roomId:{rooomId}) | webex.spaces.list(spaceId:{roomId}) 
+| "SparkError" renamed to "WebexError" | let error = SparkError.Auth | let error = WebexError.Auth |
 
 
 Recomand to replace variables containing "spark" with "webex" in project code.  
