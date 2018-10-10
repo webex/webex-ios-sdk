@@ -397,7 +397,7 @@ Assuming you already have an project integrated with SparkSDK.
 
 API changes list from SparkSDK to WebexSDK.
 
-| Description | SparkSDK | WebexSDK |
+| Description | SparkSDK Use | WebexSDK Use |
 | :----:| :----: | :----:
 | Create a new instance | let spark = Spark(authenticator: authenticator) | let webex = Webex(authenticator: authenticator)
 | "Room" Client renamed to "Space" Client | spark.rooms.list(roomId:{rooomId}) | webex.spaces.list(spaceId:{roomId}) 
