@@ -12,12 +12,16 @@ Pod::Spec.new do |s|
 
   s.vendored_frameworks = "Frameworks/*.framework"
 
-   s.subspec 'Alamofire' do |af|
+  s.subspec 'Alamofire' do |af|
     af.resources = 'Frameworks/External/Alamofire/**/*'
   end
 
   s.subspec 'ObjectMapper' do |ob|
     ob.resources = 'Frameworks/External/ObjectMapper/**/*'
+  end
+
+  s.subspec 'AlamofireObjectMapper' do |am|
+    am.resources = 'Frameworks/External/AlamofireObjectMapper/**/*'
   end
 
   s.subspec 'SwiftyJSON' do |sj|
@@ -49,7 +53,7 @@ Pod::Spec.new do |s|
                                  from=${PODS_ROOT}/WebexSDK/Build/Build/Products/Debug
                                  cp -r "$from/Starscream.framework" "$dst"
                                  cp -r "$from/KeychainAccess.framework" "$dst"', 
-    :execution_position => :before_compile }
+                      :execution_position => :before_compile }
 
   s.xcconfig = {'FRAMEWORK_SEARCH_PATHS' => '$(PODS_ROOT)/WebexSDK/Frameworks',
               'ENABLE_BITCODE' => 'NO',
