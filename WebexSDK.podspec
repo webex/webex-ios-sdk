@@ -13,23 +13,23 @@ Pod::Spec.new do |s|
   s.vendored_frameworks = "Frameworks/*.framework"
 
    s.subspec 'Alamofire' do |af|
-    af.resources = 'Frameworks/External/Alamofire/Source/**/*'
+    af.resources = 'Frameworks/External/Alamofire/**/*'
   end
 
   s.subspec 'ObjectMapper' do |ob|
-    ob.resources = 'Frameworks/External/ObjectMapper/Sources/**/*'
+    ob.resources = 'Frameworks/External/ObjectMapper/**/*'
   end
 
   s.subspec 'SwiftyJSON' do |sj|
-    sj.resources = 'Frameworks/External/SwiftyJSON/Source/**/*'
+    sj.resources = 'Frameworks/External/SwiftyJSON/**/*'
   end
 
   s.subspec 'Starscream' do |st|
-    st.resources = 'Frameworks/External/Starscream/Sources/**/*'
+    st.resources = 'Frameworks/External/Starscream/**/*'
   end
 
   s.subspec 'KeychainAccess' do |ka|
-    ka.resources = 'Frameworks/External/KeychainAccess/Lib/KeychainAccess/**/*'
+    ka.resources = 'Frameworks/External/KeychainAccess/**/*'
   end
 
   s.script_phase = { :name => 'Hello World', 
