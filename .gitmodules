@@ -4,3 +4,15 @@
 [submodule "Frameworks/External/AlamofireObjectMapper"]
 	path = Frameworks/External/AlamofireObjectMapper
 	url = git@github.com:tristanhimmelman/AlamofireObjectMapper.git
+[submodule "Frameworks/External/ObjectMapper"]
+	path = Frameworks/External/ObjectMapper
+	url = git@github.com:Hearst-DD/ObjectMapper.git
+[submodule "Frameworks/External/SwiftyJson"]
+	path = Frameworks/External/SwiftyJson
+	url = git@github.com:SwiftyJSON/SwiftyJSON.git
+[submodule "Frameworks/External/StarScream"]
+	path = Frameworks/External/StarScream
+	url = git@github.com:daltoniam/Starscream.git
+[submodule "Frameworks/External/KeyChainAccess"]
+	path = Frameworks/External/KeyChainAccess
+	url = git@github.com:kishikawakatsumi/KeychainAccess.git
