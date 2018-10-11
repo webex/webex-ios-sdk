@@ -1,0 +1,6 @@
+[submodule "Frameworks/External/Alamofire"]
+	path = Frameworks/External/Alamofire
+	url = git@github.com:Alamofire/Alamofire.git
+[submodule "Frameworks/External/AlamofireObjectMapper"]
+	path = Frameworks/External/AlamofireObjectMapper
+	url = git@github.com:tristanhimmelman/AlamofireObjectMapper.git
