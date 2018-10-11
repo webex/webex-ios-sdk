@@ -44,6 +44,12 @@
 		10D4D800212D1D4E00B37D98 /* SSOAuthenticatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B864D212A74A400D316F4 /* SSOAuthenticatorTests.swift */; };
 		10D4D801212D1D4E00B37D98 /* TeamMembershipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B8657212A74A500D316F4 /* TeamMembershipTests.swift */; };
 		10D4D802212D1D4E00B37D98 /* TeamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B865B212A74A500D316F4 /* TeamTests.swift */; };
+		10DCAB78216EFD56006AFD99 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DCAB0B216EFCEC006AFD99 /* Alamofire.framework */; };
+		10DCAB79216EFD56006AFD99 /* AlamofireObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DCAB6B216EFD1E006AFD99 /* AlamofireObjectMapper.framework */; };
+		10DCAB7A216EFD56006AFD99 /* KeychainAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DCAB1F216EFCF4006AFD99 /* KeychainAccess.framework */; };
+		10DCAB7B216EFD56006AFD99 /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DCAB2F216EFCFA006AFD99 /* ObjectMapper.framework */; };
+		10DCAB7C216EFD56006AFD99 /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DCAB42216EFCFD006AFD99 /* Starscream.framework */; };
+		10DCAB7D216EFD56006AFD99 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DCAB51216EFD00006AFD99 /* SwiftyJSON.framework */; };
 		10F0658821081BBA001B1514 /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658621081BBA001B1514 /* Space.swift */; };
 		10F0658921081BBA001B1514 /* SpaceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658721081BBA001B1514 /* SpaceClient.swift */; };
 		20418FE01EACCFDD00626326 /* KeychainProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418FDF1EACCFDD00626326 /* KeychainProtocol.swift */; };
@@ -586,6 +592,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10DCAB78216EFD56006AFD99 /* Alamofire.framework in Frameworks */,
+				10DCAB79216EFD56006AFD99 /* AlamofireObjectMapper.framework in Frameworks */,
+				10DCAB7A216EFD56006AFD99 /* KeychainAccess.framework in Frameworks */,
+				10DCAB7B216EFD56006AFD99 /* ObjectMapper.framework in Frameworks */,
+				10DCAB7C216EFD56006AFD99 /* Starscream.framework in Frameworks */,
+				10DCAB7D216EFD56006AFD99 /* SwiftyJSON.framework in Frameworks */,
 				C78D1AA32088789B002C6F2C /* Seu.framework in Frameworks */,
 				C78D1AA12088789B002C6F2C /* Sbu.framework in Frameworks */,
 				105E8EFA1FF2976200EB33F1 /* Wme.framework in Frameworks */,
