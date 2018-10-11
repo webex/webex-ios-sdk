@@ -54,13 +54,13 @@ All notable changes to this project will be documented in this file.
 Released on 2018-10-10.
 #### Added
 - SDK rebranding.
-- Support multi stream in space call.
+- Support multi streams in space call.
 
 #### Updated
 - Rename room to space.
-- Upgrade media engine to fix crashing on CallKit.
-- Fixed crashing on media cluster discovery.
-- Fixed call event confusions in the large meeting.
+- Upgrade media engine to fix crash issue on CallKit.
+- Fixed crash issue on media cluster discovery.
+- Fixed call event confusion in the large meeting.
 - Refactor code to improve code quality.
 
 ## [1.4.1](https://github.com/ciscospark/spark-ios-sdk/releases/tag/1.4.1)
