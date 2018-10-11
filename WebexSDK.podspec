@@ -33,20 +33,20 @@ Pod::Spec.new do |s|
   end
 
   s.script_phase = { :name => 'Hello World', 
-                     :script => 'xcodebuild -project ${PODS_ROOT}/Frameworks/External/KeyChainAccess/Lib/KeyChainAccess.xcodeproj -scheme "KeychainAccess" build -derivedDataPath Build/
-                                 xcodebuild -project ${PODS_ROOT}/Frameworks/External/StarScream/Starscream.xcodeproj -scheme "Starscream" build -derivedDataPath Build/
-                                 xcodebuild -project ${PODS_ROOT}/Frameworks/External/Alamofire/Alamofire.xcodeproj -scheme "Alamofire iOS" build -derivedDataPath Build/  
-                                 xcodebuild -project ${PODS_ROOT}/Frameworks/External/ObjectMapper/ObjectMapper.xcodeproj -scheme "ObjectMapper-iOS" build -derivedDataPath Build/
-                                 xcodebuild -project ${PODS_ROOT}/Frameworks/External/SwiftyJSON/SwiftyJSON.xcodeproj -scheme "SwiftyJSON iOS" build -derivedDataPath Build/
-                                 xcodebuild -project ${PODS_ROOT}/Frameworks/External/AlamofireObjectMapper/AlamofireObjectMapper.xcodeproj -scheme "AlamofireObjectMapper iOS" build -derivedDataPath Build/
-                                 dst=${PROJECT_DIR}/Frameworks
-                                 from=${PODS_ROOT}/Build/Build/Products/Debug-iphoneos
+                     :script => 'xcodebuild -project ${PODS_ROOT}/WebexSDK/Frameworks/External/KeyChainAccess/Lib/KeyChainAccess.xcodeproj -scheme "KeychainAccess" build -derivedDataPath Build/
+                                 xcodebuild -project ${PODS_ROOT}/WebexSDK/Frameworks/External/StarScream/Starscream.xcodeproj -scheme "Starscream" build -derivedDataPath Build/
+                                 xcodebuild -project ${PODS_ROOT}/WebexSDK/Frameworks/External/Alamofire/Alamofire.xcodeproj -scheme "Alamofire iOS" build -derivedDataPath Build/  
+                                 xcodebuild -project ${PODS_ROOT}/WebexSDK/Frameworks/External/ObjectMapper/ObjectMapper.xcodeproj -scheme "ObjectMapper-iOS" build -derivedDataPath Build/
+                                 xcodebuild -project ${PODS_ROOT}/WebexSDK/Frameworks/External/SwiftyJSON/SwiftyJSON.xcodeproj -scheme "SwiftyJSON iOS" build -derivedDataPath Build/
+                                 xcodebuild -project ${PODS_ROOT}/WebexSDK/Frameworks/External/AlamofireObjectMapper/AlamofireObjectMapper.xcodeproj -scheme "AlamofireObjectMapper iOS" build -derivedDataPath Build/
+                                 dst=${PODS_ROOT}/WebexSDK/Frameworks
+                                 from=${PODS_ROOT}/WebexSDK/Build/Build/Products/Debug-iphoneos
                                  mkdir -p "${dst}"
                                  cp -r "$from/Alamofire.framework" "$dst"
                                  cp -r "$from/ObjectMapper.framework" "$dst"
                                  cp -r "$from/SwiftyJSON.framework" "$dst"
                                  cp -r "$from/AlamofireObjectMapper.framework" "$dst"
-                                 from=${PODS_ROOT}/Build/Build/Products/Debug
+                                 from=${PODS_ROOT}/WebexSDK/Build/Build/Products/Debug
                                  cp -r "$from/Starscream.framework" "$dst"
                                  cp -r "$from/KeychainAccess.framework" "$dst"', 
     :execution_position => :before_compile }
