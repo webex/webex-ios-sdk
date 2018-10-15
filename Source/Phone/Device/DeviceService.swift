@@ -116,17 +116,17 @@ class DeviceService {
 extension UIDevice {
     
     var kind: String {
-//
-//        if self.userInterfaceIdiom == .pad {
-//            return "IPAD"
-//        } else if self.userInterfaceIdiom == .phone {
-//            return "IPHONE"
-//        } else {
-//            return "UNKNOWN"
-//        }
+
+        if self.userInterfaceIdiom == .pad {
+            return "IPAD"
+        } else if self.userInterfaceIdiom == .phone {
+            return "IPHONE"
+        } else {
+            return "UNKNOWN"
+        }
         
         //fake current device as desktop client
-        return "MAC"
+//        return "MAC"
     }
     
 }
