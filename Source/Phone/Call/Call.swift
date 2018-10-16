@@ -986,8 +986,17 @@ public class Call {
         let newModel = syncMediaConnections(from: model)
         if newModel.isValid {
             let old = self.model
-            if let new = CallEventSequencer.sequence(old: old, new: newModel, invalid: { self.device.phone.fetch(call: self) }) {
-                self.doCallModel(new)
+            if var new = CallEventSequencer.sequence(old: old, new: newModel, invalid: { self.device.phone.fetch(call: self) }) {
+                
+                var newModel = self.model
+                if !new.isFullDTO {
+                    newModel.applyDelta(from: new)
+                } else {
+                    newModel = new
+                }
+                self.doCallModel(newModel)
+                new = newModel
+                
                 DispatchQueue.main.async {
                     if new.isRemoteAudioMuted != old.isRemoteAudioMuted {
                         self.onMediaChanged?(MediaChangedEvent.remoteSendingAudio(!new.isRemoteAudioMuted))
@@ -1135,14 +1144,7 @@ public class Call {
     }
     
     private func doCallModel(_ model: CallModel) {
-        var newModel = self.model
-        if !model.isFullDTO {
-            newModel.applyDelta(from: model)
-        } else {
-            newModel = model
-        }
-        self.model = newModel
-        
+        self.model = model
         if let participants = self.model.participants?.filter({ $0.isCIUser() }) {
             let oldMemberships = self.memberships
             var newMemberships = [CallMembership]()
