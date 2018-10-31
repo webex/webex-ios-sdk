@@ -51,7 +51,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 ## [2.0.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.0.0)
-Released on 2018-11-1.
+Released on 2018-10-31.
 #### Added
 - SDK rebranding.
 - Support multi streams in space call.
