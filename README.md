@@ -1,6 +1,6 @@
 # Cisco Webex iOS SDK
 
-[![CocoaPods](https://img.shields.io/cocoapods/v/Webex.svg)](https://cocoapods.org/pods/Webex)
+[![CocoaPods](https://img.shields.io/cocoapods/v/Webex.svg)](https://cocoapods.org/pods/WebexSDK)
 [![Travis CI](https://travis-ci.org/webex/webex-ios-sdk.svg?branch=master)](https://travis-ci.org/webex/webex-ios-sdk)
 [![license](https://img.shields.io/github/license/webex/webex-ios-sdk.svg)](https://github.com/webex/webex-ios-sdk/blob/master/LICENSE)
 
