@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>RemoteAuxVideo Class Reference</title>
+    <title>AuxStreamChangeEvent Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,11 +10,11 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/RemoteAuxVideo" class="dashAnchor"></a>
-    <a title="RemoteAuxVideo Class Reference"></a>
+    <a name="//apple_ref/swift/Enum/AuxStreamChangeEvent" class="dashAnchor"></a>
+    <a title="AuxStreamChangeEvent Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK Docs</a> (94% documented)</p>
+        <p><a href="../index.html">WebexSDK Docs</a> (96% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">WebexSDK Reference</a>
         <img id="carat" src="../img/carat.png" />
-        RemoteAuxVideo Class Reference
+        AuxStreamChangeEvent Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -31,6 +31,9 @@
           <li class="nav-group-name">
             <a href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/AuxStream.html">AuxStream</a>
+              </li>
               <li class="nav-group-task">
                 <a href="../Classes/Call.html">Call</a>
               </li>
@@ -95,9 +98,6 @@
                 <a href="../Classes/Phone/DefaultBandwidth.html">– DefaultBandwidth</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/RemoteAuxVideo.html">RemoteAuxVideo</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Classes/SSOAuthenticator.html">SSOAuthenticator</a>
               </li>
               <li class="nav-group-task">
@@ -118,16 +118,11 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Global Variables.html">Global Variables</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Global Variables.html#/s:8WebexSDK27MAX_REMOTE_AUX_VIDEO_NUMBERSivp">MAX_REMOTE_AUX_VIDEO_NUMBER</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
             <a href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/AuxStreamChangeEvent.html">AuxStreamChangeEvent</a>
+              </li>
               <li class="nav-group-task">
                 <a href="../Enums/Before.html">Before</a>
               </li>
@@ -179,6 +174,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/Logger.html">Logger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/MultiStreamObserver.html">MultiStreamObserver</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/OAuthAuthenticatorDelegate.html">OAuthAuthenticatorDelegate</a>
@@ -246,14 +244,19 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>RemoteAuxVideo</h1>
+            <h1>AuxStreamChangeEvent</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">RemoteAuxVideo</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">AuxStreamChangeEvent</span></code></pre>
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Multi stream change event enumeration.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.0.0
+
+</div>
 
           </section>
           <section class="section task-group-section">
@@ -262,9 +265,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK14RemoteAuxVideoC11renderViewsSayAA15MediaRenderViewCGvp"></a>
-                    <a name="//apple_ref/swift/Property/renderViews" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC11renderViewsSayAA15MediaRenderViewCGvp">renderViews</a>
+                    <a name="/s:8WebexSDK20AuxStreamChangeEventO03auxd6OpenedF0AcA15MediaRenderViewC_AA6ResultOyAA0cD0CGtcACmF"></a>
+                    <a name="//apple_ref/swift/Element/auxStreamOpenedEvent" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK20AuxStreamChangeEventO03auxd6OpenedF0AcA15MediaRenderViewC_AA6ResultOyAA0cD0CGtcACmF">auxStreamOpenedEvent</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -272,14 +275,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Triggered when an auxiliary stream is opened.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">renderViews</span><span class="p">:</span> <span class="kt">Array</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">auxStreamOpenedEvent</span><span class="p">(</span><span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="p">,</span> <span class="kt"><a href="../Enums/Result.html">Result</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/AuxStream.html">AuxStream</a></span><span class="o">&gt;</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -289,9 +292,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK14RemoteAuxVideoC6personAA14CallMembershipVSgvp"></a>
-                    <a name="//apple_ref/swift/Property/person" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC6personAA14CallMembershipVSgvp">person</a>
+                    <a name="/s:8WebexSDK20AuxStreamChangeEventO03auxd13PersonChangedF0AcA0cD0C_AA14CallMembershipVSg4FromAI2TotcACmF"></a>
+                    <a name="//apple_ref/swift/Element/auxStreamPersonChangedEvent" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK20AuxStreamChangeEventO03auxd13PersonChangedF0AcA0cD0C_AA14CallMembershipVSg4FromAI2TotcACmF">auxStreamPersonChangedEvent</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -299,14 +302,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Triggered when this auxiliary stream&rsquo;s speaker has changed.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">person</span><span class="p">:</span> <span class="kt"><a href="../Structs/CallMembership.html">CallMembership</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">auxStreamPersonChangedEvent</span><span class="p">(</span><span class="kt"><a href="../Classes/AuxStream.html">AuxStream</a></span><span class="p">,</span> <span class="kt">From</span><span class="p">:</span> <span class="kt"><a href="../Structs/CallMembership.html">CallMembership</a></span><span class="p">?,</span> <span class="kt">To</span><span class="p">:</span> <span class="kt"><a href="../Structs/CallMembership.html">CallMembership</a></span><span class="p">?)</span></code></pre>
 
                         </div>
                       </div>
@@ -316,9 +319,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK14RemoteAuxVideoC09isSendingE0Sbvp"></a>
-                    <a name="//apple_ref/swift/Property/isSendingVideo" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC09isSendingE0Sbvp">isSendingVideo</a>
+                    <a name="/s:8WebexSDK20AuxStreamChangeEventO03auxd11SizeChangedF0AcA0cD0CcACmF"></a>
+                    <a name="//apple_ref/swift/Element/auxStreamSizeChangedEvent" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK20AuxStreamChangeEventO03auxd11SizeChangedF0AcA0cD0CcACmF">auxStreamSizeChangedEvent</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -326,14 +329,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Triggered Auxiliary stream&rsquo;s render view size changed.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isSendingVideo</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">auxStreamSizeChangedEvent</span><span class="p">(</span><span class="kt"><a href="../Classes/AuxStream.html">AuxStream</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -343,9 +346,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK14RemoteAuxVideoC06remotedE4SizeSC17CMVideoDimensionsVvp"></a>
-                    <a name="//apple_ref/swift/Property/remoteAuxVideoSize" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC06remotedE4SizeSC17CMVideoDimensionsVvp">remoteAuxVideoSize</a>
+                    <a name="/s:8WebexSDK20AuxStreamChangeEventO03auxd12SendingVideoF0AcA0cD0CcACmF"></a>
+                    <a name="//apple_ref/swift/Element/auxStreamSendingVideoEvent" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK20AuxStreamChangeEventO03auxd12SendingVideoF0AcA0cD0CcACmF">auxStreamSendingVideoEvent</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -353,14 +356,15 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>True if the auxiliary stream is sending video. Otherwise false.
+Might be triggered when the auxiliary stream video is muted or unmuted.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">remoteAuxVideoSize</span><span class="p">:</span> <span class="kt">CMVideoDimensions</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">auxStreamSendingVideoEvent</span><span class="p">(</span><span class="kt"><a href="../Classes/AuxStream.html">AuxStream</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -370,9 +374,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK14RemoteAuxVideoC011isReceivingE0Sbvp"></a>
-                    <a name="//apple_ref/swift/Property/isReceivingVideo" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC011isReceivingE0Sbvp">isReceivingVideo</a>
+                    <a name="/s:8WebexSDK20AuxStreamChangeEventO03auxd6ClosedF0AcA15MediaRenderViewC_s5Error_pSgtcACmF"></a>
+                    <a name="//apple_ref/swift/Element/auxStreamClosedEvent" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK20AuxStreamChangeEventO03auxd6ClosedF0AcA15MediaRenderViewC_s5Error_pSgtcACmF">auxStreamClosedEvent</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -380,122 +384,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Triggered when an auxiliary stream is closed.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isReceivingVideo</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK14RemoteAuxVideoC13addRenderViewyAA05MediagH0C4view_tF"></a>
-                    <a name="//apple_ref/swift/Method/addRenderView(view:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC13addRenderViewyAA05MediagH0C4view_tF">addRenderView(view:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addRenderView</span><span class="p">(</span><span class="nv">view</span><span class="p">:</span> <span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK14RemoteAuxVideoC16removeRenderViewyAA05MediagH0C4view_tF"></a>
-                    <a name="//apple_ref/swift/Method/removeRenderView(view:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC16removeRenderViewyAA05MediagH0C4view_tF">removeRenderView(view:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeRenderView</span><span class="p">(</span><span class="nv">view</span><span class="p">:</span> <span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK14RemoteAuxVideoC16updateRenderViewyAA05MediagH0C4view_tF"></a>
-                    <a name="//apple_ref/swift/Method/updateRenderView(view:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC16updateRenderViewyAA05MediagH0C4view_tF">updateRenderView(view:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updateRenderView</span><span class="p">(</span><span class="nv">view</span><span class="p">:</span> <span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK14RemoteAuxVideoC17containRenderViewSbAA05MediagH0C4view_tF"></a>
-                    <a name="//apple_ref/swift/Method/containRenderView(view:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC17containRenderViewSbAA05MediagH0C4view_tF">containRenderView(view:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">containRenderView</span><span class="p">(</span><span class="nv">view</span><span class="p">:</span> <span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">auxStreamClosedEvent</span><span class="p">(</span><span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="p">,</span> <span class="kt">Error</span><span class="p">?)</span></code></pre>
 
                         </div>
                       </div>

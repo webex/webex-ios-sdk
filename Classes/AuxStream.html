@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>ActivityModel Extension Reference</title>
+    <title>AuxStream Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Extension/ActivityModel" class="dashAnchor"></a>
-    <a title="ActivityModel Extension Reference"></a>
+    <a name="//apple_ref/swift/Class/AuxStream" class="dashAnchor"></a>
+    <a title="AuxStream Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">WebexSDK Docs</a> (96% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">WebexSDK Reference</a>
         <img id="carat" src="../img/carat.png" />
-        ActivityModel Extension Reference
+        AuxStream Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -244,10 +244,10 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>ActivityModel</h1>
+            <h1>AuxStream</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">ActivityModel</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">AuxStream</span></code></pre>
 
                 </div>
               </div>
@@ -260,9 +260,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13ActivityModelVAC12ObjectMapper3MapC3map_tKcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(map:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13ActivityModelVAC12ObjectMapper3MapC3map_tKcfc">init(map:)</a>
+                    <a name="/s:8WebexSDK9AuxStreamC10renderViewAA011MediaRenderF0CSgvp"></a>
+                    <a name="//apple_ref/swift/Property/renderView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK9AuxStreamC10renderViewAA011MediaRenderF0CSgvp">renderView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -270,10 +270,10 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>ActivityModel constructor.</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    for internal use only.
+                        <p><em>AuxStream</em> render view.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.0.0
 
 </div>
 
@@ -282,7 +282,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">map</span><span class="p">:</span> <span class="kt">Map</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">renderView</span><span class="p">:</span> <span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -292,9 +292,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13ActivityModelV7mappingy12ObjectMapper3MapC3map_tF"></a>
-                    <a name="//apple_ref/swift/Method/mapping(map:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13ActivityModelV7mappingy12ObjectMapper3MapC3map_tF">mapping(map:)</a>
+                    <a name="/s:8WebexSDK9AuxStreamC6personAA14CallMembershipVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/person" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK9AuxStreamC6personAA14CallMembershipVSgvp">person</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -302,10 +302,10 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Mapping activity model to json format.</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    for internal use only.
+                        <p>Person presented in auxiliary stream.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.0.0
 
 </div>
 
@@ -314,9 +314,115 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">mapping</span><span class="p">(</span><span class="nv">map</span><span class="p">:</span> <span class="kt">Map</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">person</span><span class="p">:</span> <span class="kt"><a href="../Structs/CallMembership.html">CallMembership</a></span><span class="p">?</span></code></pre>
 
                         </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK9AuxStreamC14isSendingVideoSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isSendingVideo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK9AuxStreamC14isSendingVideoSbvp">isSendingVideo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>True if auxiliary stream is sending video. Otherwise, false.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isSendingVideo</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK9AuxStreamC03auxD4SizeSC17CMVideoDimensionsVvp"></a>
+                    <a name="//apple_ref/swift/Property/auxStreamSize" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK9AuxStreamC03auxD4SizeSC17CMVideoDimensionsVvp">auxStreamSize</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The render view dimensions (points) of this <em>AuxStream</em>.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">auxStreamSize</span><span class="p">:</span> <span class="kt">CMVideoDimensions</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK9AuxStreamC5closeyyF"></a>
+                    <a name="//apple_ref/swift/Method/close()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK9AuxStreamC5closeyyF">close()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Close auxiliary stream.
+Result will call back through auxStreamClosedEvent.</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    see AuxStreamChangeEvent.auxStreamClosedEvent
+
+</div>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">close</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Void</p>
                       </div>
                     </section>
                   </div>

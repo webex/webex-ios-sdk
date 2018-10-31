@@ -1,187 +1,117 @@
 {
   "warnings": [
     {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Message/ActivityModel.swift",
+      "file": "/Users/qucui/Desktop/webex/Source/Message/ActivityModel.swift",
       "line": null,
       "symbol": "ActivityModel",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Call/CallMembership.swift",
+      "file": "/Users/qucui/Desktop/webex/Source/Phone/Call/CallMembership.swift",
       "line": 114,
       "symbol": "CallMembership.isSelf",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Media/MediaRenderView.swift",
+      "file": "/Users/qucui/Desktop/webex/Source/Phone/Media/AuxStream.swift",
+      "line": 25,
+      "symbol": "AuxStream",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/qucui/Desktop/webex/Source/Phone/Media/MediaRenderView.swift",
       "line": 23,
       "symbol": "MediaRenderView",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Media/MediaRenderView.swift",
+      "file": "/Users/qucui/Desktop/webex/Source/Phone/Media/MediaRenderView.swift",
       "line": 25,
       "symbol": "MediaRenderView.layerClass",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Media/MediaSessionWrapper.swift",
+      "file": "/Users/qucui/Desktop/webex/Source/Phone/Media/MediaSessionWrapper.swift",
       "line": null,
       "symbol": "MediaSessionWrapper",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Media/MediaSessionWrapper.swift",
-      "line": 343,
+      "file": "/Users/qucui/Desktop/webex/Source/Phone/Media/MediaSessionWrapper.swift",
+      "line": 344,
       "symbol": "MediaSessionWrapper.shouldAcceptNewConnection()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Media/MediaSessionWrapper.swift",
-      "line": 352,
+      "file": "/Users/qucui/Desktop/webex/Source/Phone/Media/MediaSessionWrapper.swift",
+      "line": 353,
       "symbol": "MediaSessionWrapper.didReceivedFrame(_:frameData:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Media/MediaSessionWrapper.swift",
-      "line": 358,
+      "file": "/Users/qucui/Desktop/webex/Source/Phone/Media/MediaSessionWrapper.swift",
+      "line": 359,
       "symbol": "MediaSessionWrapper.didReceivedError(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Media/RemoteAuxVideos.swift",
-      "line": 23,
-      "symbol": "MAX_REMOTE_AUX_VIDEO_NUMBER",
-      "symbol_kind": "source.lang.swift.decl.var.global",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Media/RemoteAuxVideos.swift",
-      "line": 25,
-      "symbol": "RemoteAuxVideo",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Media/RemoteAuxVideos.swift",
-      "line": 43,
-      "symbol": "RemoteAuxVideo.renderViews",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Media/RemoteAuxVideos.swift",
-      "line": 45,
-      "symbol": "RemoteAuxVideo.person",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Media/RemoteAuxVideos.swift",
-      "line": 49,
-      "symbol": "RemoteAuxVideo.isSendingVideo",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Media/RemoteAuxVideos.swift",
-      "line": 58,
-      "symbol": "RemoteAuxVideo.remoteAuxVideoSize",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Media/RemoteAuxVideos.swift",
-      "line": 67,
-      "symbol": "RemoteAuxVideo.isReceivingVideo",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Media/RemoteAuxVideos.swift",
-      "line": 87,
-      "symbol": "RemoteAuxVideo.addRenderView(view:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Media/RemoteAuxVideos.swift",
-      "line": 94,
-      "symbol": "RemoteAuxVideo.removeRenderView(view:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Media/RemoteAuxVideos.swift",
-      "line": 104,
-      "symbol": "RemoteAuxVideo.updateRenderView(view:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Media/RemoteAuxVideos.swift",
-      "line": 110,
-      "symbol": "RemoteAuxVideo.containRenderView(view:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Phone.swift",
+      "file": "/Users/qucui/Desktop/webex/Source/Phone/Phone.swift",
       "line": 55,
       "symbol": "Phone.DefaultBandwidth.maxBandwidth90p",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Phone.swift",
+      "file": "/Users/qucui/Desktop/webex/Source/Phone/Phone.swift",
       "line": 57,
       "symbol": "Phone.DefaultBandwidth.maxBandwidth180p",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Phone.swift",
+      "file": "/Users/qucui/Desktop/webex/Source/Phone/Phone.swift",
       "line": 59,
       "symbol": "Phone.DefaultBandwidth.maxBandwidth360p",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Phone.swift",
+      "file": "/Users/qucui/Desktop/webex/Source/Phone/Phone.swift",
       "line": 61,
       "symbol": "Phone.DefaultBandwidth.maxBandwidth720p",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Phone.swift",
+      "file": "/Users/qucui/Desktop/webex/Source/Phone/Phone.swift",
       "line": 63,
       "symbol": "Phone.DefaultBandwidth.maxBandwidth1080p",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Phone.swift",
+      "file": "/Users/qucui/Desktop/webex/Source/Phone/Phone.swift",
       "line": 65,
       "symbol": "Phone.DefaultBandwidth.maxBandwidthSession",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/qucui/Desktop/webex_sdk/Source/Phone/Phone.swift",
+      "file": "/Users/qucui/Desktop/webex/Source/Phone/Phone.swift",
       "line": 67,
       "symbol": "Phone.DefaultBandwidth.maxBandwidthAudio",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/qucui/Desktop/webex_sdk"
+  "source_directory": "/Users/qucui/Desktop/webex"
 }

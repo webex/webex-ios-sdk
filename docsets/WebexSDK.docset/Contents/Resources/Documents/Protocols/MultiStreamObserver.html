@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>ActivityModel Extension Reference</title>
+    <title>MultiStreamObserver Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Extension/ActivityModel" class="dashAnchor"></a>
-    <a title="ActivityModel Extension Reference"></a>
+    <a name="//apple_ref/swift/Protocol/MultiStreamObserver" class="dashAnchor"></a>
+    <a title="MultiStreamObserver Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">WebexSDK Docs</a> (96% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">WebexSDK Reference</a>
         <img id="carat" src="../img/carat.png" />
-        ActivityModel Extension Reference
+        MultiStreamObserver Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -244,14 +244,24 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>ActivityModel</h1>
+            <h1>MultiStreamObserver</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">ActivityModel</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MultiStreamObserver</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Multi stream protocol. Required to implement for using multi stream feature.</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    see Call.multiStreamObserver to set the multi stream&rsquo;s events observer in this call.
+
+</div>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.0.0
+
+</div>
 
           </section>
           <section class="section task-group-section">
@@ -260,9 +270,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13ActivityModelVAC12ObjectMapper3MapC3map_tKcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(map:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13ActivityModelVAC12ObjectMapper3MapC3map_tKcfc">init(map:)</a>
+                    <a name="/s:8WebexSDK19MultiStreamObserverP05onAuxD9AvailableAA15MediaRenderViewCSgycSgvp"></a>
+                    <a name="//apple_ref/swift/Property/onAuxStreamAvailable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK19MultiStreamObserverP05onAuxD9AvailableAA15MediaRenderViewCSgycSgvp">onAuxStreamAvailable</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -270,10 +280,13 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>ActivityModel constructor.</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    for internal use only.
+                        <p>Callback when current call have a new auxiliary stream.
+Return a MediaRenderView. SDK will open it automatically.
+Return nil if not need to open at once. Call API:call.openAuxStream(view: MediaRenderView) to open stream later.
+The auxStreamOpenedEvent would be triggered for indicating whether the stream is successfully opened.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.0.0
 
 </div>
 
@@ -282,7 +295,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">map</span><span class="p">:</span> <span class="kt">Map</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">onAuxStreamAvailable</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="p">?)?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -292,9 +305,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13ActivityModelV7mappingy12ObjectMapper3MapC3map_tF"></a>
-                    <a name="//apple_ref/swift/Method/mapping(map:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13ActivityModelV7mappingy12ObjectMapper3MapC3map_tF">mapping(map:)</a>
+                    <a name="/s:8WebexSDK19MultiStreamObserverP05onAuxD7ChangedyAA0gD11ChangeEventOcSgvp"></a>
+                    <a name="//apple_ref/swift/Property/onAuxStreamChanged" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK19MultiStreamObserverP05onAuxD7ChangedyAA0gD11ChangeEventOcSgvp">onAuxStreamChanged</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -302,10 +315,15 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Mapping activity model to json format.</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    for internal use only.
+                        <p>Callback of auxiliary stream related change events.</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    see AuxStreamChangeEvent
+
+</div>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.0.0
 
 </div>
 
@@ -314,7 +332,41 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">mapping</span><span class="p">(</span><span class="nv">map</span><span class="p">:</span> <span class="kt">Map</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">onAuxStreamChanged</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Enums/AuxStreamChangeEvent.html">AuxStreamChangeEvent</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK19MultiStreamObserverP05onAuxD11UnavailableAA15MediaRenderViewCSgycSgvp"></a>
+                    <a name="//apple_ref/swift/Property/onAuxStreamUnavailable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK19MultiStreamObserverP05onAuxD11UnavailableAA15MediaRenderViewCSgycSgvp">onAuxStreamUnavailable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Callback when an existing auxiliary stream is unavailable.
+Should give SDK a MediaRenderView which need be closed, if give nil SDK will automatically close the last opened stream.
+The auxStreamClosedEvent would be triggered for indicating whether the stream is successfully closed.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">onAuxStreamUnavailable</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="p">?)?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
