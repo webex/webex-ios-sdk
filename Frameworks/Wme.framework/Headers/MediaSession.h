@@ -21,6 +21,7 @@ typedef NS_ENUM(NSInteger, MediaSessionType) {
 // proximity
 @property (nonatomic) BOOL proximityPreferred;
 
+
 //camera & speaker
 - (void)setDefaultCamera:(BOOL)useFront;
 - (void)toggleCamera;
@@ -81,6 +82,7 @@ typedef NS_ENUM(NSInteger, MediaSessionType) {
 - (void)onReceiveScreenBroadcastData:(FrameInfo)frameInfo frameData:(NSData *)frameData;
 
 //multi stream
+@property (atomic) NSInteger auxStreamCount;
 - (int)subscribeVideoTrack:(UIView *)renderView;
 - (void)unsubscribeVideoTrack:(int)vid;
 @end

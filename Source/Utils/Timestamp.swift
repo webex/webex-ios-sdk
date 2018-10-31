@@ -22,10 +22,10 @@ import Foundation
 
 class Timestamp {
     static var nowInUTC: String {
-        return Timestamp.ISO8601FullFormatterInUTC.string(from: Date())
+        return Timestamp.iSO8601FullFormatterInUTC.string(from: Date())
     }
 
-    static var ISO8601FullFormatterInUTC: DateFormatter {
+    static var iSO8601FullFormatterInUTC: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         formatter.timeZone = TimeZone(abbreviation: "UTC")

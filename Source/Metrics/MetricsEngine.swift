@@ -31,7 +31,11 @@ class MetricsEngine {
     init(authenticator: Authenticator, service: DeviceService) {
         self.authenticator = authenticator
         self.client = MetricsClient(authenticator: authenticator, service: service)
-        RunLoop.current.add(self.timer, forMode: RunLoopMode.commonModes)
+        #if swift(>=4.2)
+            RunLoop.current.add(self.timer, forMode: RunLoop.Mode.common)
+        #else
+            RunLoop.current.add(self.timer, forMode: RunLoopMode.commonModes)
+        #endif
     }
 
     func release() {
@@ -39,7 +43,7 @@ class MetricsEngine {
         self.timer.invalidate()
     }
 
-    func track(name: String, type: MetricsType = MetricsType.Generic, _ data: [String: String]) {
+    func track(name: String, _ data: [String: String]) {
         self.track(metric: Metric(name: name, data: data))
     }
     
