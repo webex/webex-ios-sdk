@@ -328,15 +328,38 @@ Assuming you already have an IOS project with Spark IOS SDK integrated. For your
 
 1. Update the sdk import info for your app:
 
-    ~~import SparkSDK~~ => import WebexSDK
+1. In your pod file:
+
+    remove previous SparkSDK: ~~pod 'SparkSDK'~~
+    
+    add WebexSDK: pod 'WebexSDK'
+    
+2. Go to project directory, and run: 
+    ```c
+    pod install
+    ```
+3. Replace sdk import info for your code:
+
+    Replace in project scope: 
+    
+    "import SparkSDK" => "import WebexSDK"
+    
+4. If you using story board for UI: 
+
+    Change meida render view's module in "Indentity inspector": 
+    
+    "SparkSDK" => "WebexSDK"
 
 ### Usage
 
 Here are API changes list from Spark IOS SDK to Webex IOS SDK.
 
-| Description | Spark IOS SDK | Webex IOS SDK |
+| Description | SparkSDK Use | WebexSDK Use |
 | :----:| :----: | :----:
 | Create a new instance | let spark = Spark(authenticator: authenticator) | let webex = Webex(authenticator: authenticator)
+| "Room" Client renamed to "Space" Client | spark.rooms.list(roomId:{rooomId}) | webex.spaces.list(spaceId:{roomId}) 
+| "SparkError" renamed to "WebexError" | let error = SparkError.Auth | let error = WebexError.Auth |
+
 
 
 ## License

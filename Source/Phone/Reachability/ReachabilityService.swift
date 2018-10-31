@@ -93,6 +93,10 @@ class ReachabilityService {
     }
     
     private func performReachabilityCheck(_ completionHandler: @escaping ReachabilityCheckHandler) {
+        guard deviceService.device != nil else {
+            SDKLogger.shared.error("Failure: Not register!")
+            return
+        }
         var clusterInfo: MediaCluster? = nil
         MediaClusterClient(authenticator: authenticator, deviceService: deviceService).get() {
             (response: ServiceResponse<MediaCluster>) in

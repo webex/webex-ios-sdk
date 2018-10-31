@@ -14,9 +14,9 @@ Pod::Spec.new do |s|
                 }
   s.vendored_frameworks = "Frameworks/*.framework"
   s.dependency 'Alamofire', '= 4.7.1'
-  s.dependency 'ObjectMapper', '~> 3.1'
-  s.dependency 'AlamofireObjectMapper', '~> 5.0'
-  s.dependency 'SwiftyJSON', '~> 4.0'
+  s.dependency 'ObjectMapper', '~> 3.3'
+  s.dependency 'AlamofireObjectMapper', '~> 5.1'
+  s.dependency 'SwiftyJSON', '~> 4.1'
   s.dependency 'Starscream', '= 3.0.5'
   s.dependency 'KeychainAccess', '~> 3.1'
 end

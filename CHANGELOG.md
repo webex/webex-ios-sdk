@@ -1,5 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 2.0.0 Releases
+
+- `2.0.0` Releases - [2.0.0](#200)
+#### 1.4.1 Releases
+
+- `1.4.1` Releases - [1.4.1](#141)
 #### 1.4.0 Releases
 
 - `1.4.0` Releases - [1.4.0](#140)
@@ -44,6 +50,30 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ---
+## [2.0.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.0.0)
+Released on 2018-10-10.
+#### Added
+- SDK rebranding.
+- Support multi streams in space call.
+
+#### Updated
+- Rename room to space.
+- Upgrade media engine to fix crash issue on CallKit.
+- Fixed crash issue on media cluster discovery.
+- Fixed call event confusion in the large meeting.
+- Refactor code to improve code quality.
+
+## [1.4.1](https://github.com/ciscospark/spark-ios-sdk/releases/tag/1.4.1)
+Released on 2018-09-29.
+#### Added
+- Support Swift4.2 and Xcode10.
+
+#### Updated
+- Fixed Activity roomtype always be 'group'.
+- Remove Seu umbrella warning.
+- Fixed Spark call crashing on iOS when using CallKit.
+- Speed up reachability check.
+
 ## [1.4.0](https://github.com/ciscospark/spark-ios-sdk/releases/tag/1.4.0)
 Released on 2018-07-02.
 

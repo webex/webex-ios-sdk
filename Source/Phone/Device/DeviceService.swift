@@ -113,9 +113,10 @@ class DeviceService {
     }
 }
 
-fileprivate extension UIDevice {
+extension UIDevice {
     
     var kind: String {
+
         if self.userInterfaceIdiom == .pad {
             return "IPAD"
         } else if self.userInterfaceIdiom == .phone {
@@ -123,6 +124,9 @@ fileprivate extension UIDevice {
         } else {
             return "UNKNOWN"
         }
+        
+        //fake current device as desktop client
+//        return "MAC"
     }
     
 }
