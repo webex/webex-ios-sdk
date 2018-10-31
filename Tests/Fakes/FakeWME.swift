@@ -33,6 +33,9 @@ class FakeWME: MediaSession  {
                     NotificationCenter.default.post(name: NSNotification.Name.MediaEngineDidMuteVideo, object: call.mediaSession.getMediaSession())
                 }
                 break
+            case .remoteAuxVideosCount(let count):
+                NotificationCenter.default.post(name: NSNotification.Name.MediaEngineDidAvailableMediaChange, object: call.mediaSession.getMediaSession(), userInfo: [MediaEngineVideoCount:count])
+                break
             default:
                 break
             }
@@ -46,17 +49,12 @@ class FakeWME: MediaSession  {
             for onecsi in csi {
                 csiNumber.append(NSNumber.init(value: onecsi))
             }
+            
             NotificationCenter.default.post(name: NSNotification.Name.MediaEngineDidActiveSpeakerChange, object: call.mediaSession.getMediaSession(), userInfo: [MediaEngineVideoCSI:csiNumber])
         }
     }
-    static func stubStreamsCountNotification(count:Int,call:Call) {
-        DispatchQueue.main.async {
-            call.mediaSession.getMediaSession().auxStreamCount = count
-            NotificationCenter.default.post(name: NSNotification.Name.MediaEngineDidAvailableMediaChange, object: call.mediaSession.getMediaSession(), userInfo: [MediaEngineVideoCount:count])
-        }
-    }
     
-    static func stubAuxStreamEvent(eventType:AuxStreamChangeEvent,call:Call,csi:[UInt]? = nil) {
+    static func stubRemoteAuxVideoEvent(eventType:Call.RemoteAuxVideoChangeEvent,call:Call,csi:[UInt]? = nil) {
         DispatchQueue.main.async {
             var csiNumber:[NSNumber] = Array<NSNumber>()
             if let csiArray = csi {
@@ -65,23 +63,27 @@ class FakeWME: MediaSession  {
                 }
             }
             switch eventType {
-            case .auxStreamPersonChangedEvent(let auxStream,_,_):
-                NotificationCenter.default.post(name: NSNotification.Name.MediaEngineDidCSIChange, object: call.mediaSession.getMediaSession(), userInfo: [MediaEngineVideoCSI:csiNumber,MediaEngineVideoID:auxStream.vid])
+            case .remoteAuxVideoPersonChangedEvent(let remoteAuxVideo):
+                NotificationCenter.default.post(name: NSNotification.Name.MediaEngineDidCSIChange, object: call.mediaSession.getMediaSession(), userInfo: [MediaEngineVideoCSI:csiNumber,MediaEngineVideoID:remoteAuxVideo.vid])
                 break
-            case .auxStreamSendingVideoEvent(let auxStream):
-                if auxStream.isSendingVideo {
-                    NotificationCenter.default.post(name: NSNotification.Name.MediaEngineDidDetectAuxVideoMediaAvailable, object: call.mediaSession.getMediaSession(), userInfo: [MediaEngineVideoID:auxStream.vid])
+            case .remoteAuxSendingVideoEvent(let remoteAuxVideo):
+                if remoteAuxVideo.isSendingVideo {
+                    NotificationCenter.default.post(name: NSNotification.Name.MediaEngineDidDetectAuxVideoMediaAvailable, object: call.mediaSession.getMediaSession(), userInfo: [MediaEngineVideoID:remoteAuxVideo.vid])
                 } else {
-                    NotificationCenter.default.post(name: NSNotification.Name.MediaEngineDidDetectAuxVideoMediaUnavailable, object: call.mediaSession.getMediaSession(), userInfo: [MediaEngineVideoID:auxStream.vid])
+                    NotificationCenter.default.post(name: NSNotification.Name.MediaEngineDidDetectAuxVideoMediaUnavailable, object: call.mediaSession.getMediaSession(), userInfo: [MediaEngineVideoID:remoteAuxVideo.vid])
                 }
                 
                 break
-            case .auxStreamSizeChangedEvent(let auxStream):
-                NotificationCenter.default.post(name: NSNotification.Name.MediaEngineDidAuxVideoSizeChange, object: call.mediaSession.getMediaSession(), userInfo: [MediaEngineVideoID:auxStream.vid])
+            case .receivingAuxVideoEvent(let remoteAuxVideo):
+                if remoteAuxVideo.isReceivingVideo {
+                    NotificationCenter.default.post(name: NSNotification.Name.MediaEngineDidMuteAuxVideo, object: call.mediaSession.getMediaSession(), userInfo: [MediaEngineVideoID:remoteAuxVideo.vid])
+                } else {
+                    NotificationCenter.default.post(name: NSNotification.Name.MediaEngineDidUnMuteAuxVideo, object: call.mediaSession.getMediaSession(), userInfo: [MediaEngineVideoID:remoteAuxVideo.vid])
+                }
+            case .remoteAuxVideoSizeChangedEvent(let remoteAuxVideo):
+                NotificationCenter.default.post(name: NSNotification.Name.MediaEngineDidAuxVideoSizeChange, object: call.mediaSession.getMediaSession(), userInfo: [MediaEngineVideoID:remoteAuxVideo.vid])
                 break
-            case .auxStreamOpenedEvent(_, _):
-                break
-            case .auxStreamClosedEvent(_, _):
+            default:
                 break
             }
             
@@ -89,7 +91,7 @@ class FakeWME: MediaSession  {
     }
     
     
-    var stubOpenFailed :Bool = false
+    var stubSubscribeFailed :Bool = false
     var stubRemoteAuxMuted :Bool?
     var stubLocalAuxMuted :Bool?
     var stubAuxSize :CGSize?
@@ -107,9 +109,8 @@ class FakeWME: MediaSession  {
     }
     
     override func subscribeVideoTrack(_ renderView: UIView!) -> Int32 {
-
-        if stubOpenFailed {
-            return Int32(AuxStream.invalidVid)
+        if stubSubscribeFailed {
+            return Int32(RemoteAuxVideo.INVAILD_VID)
         }
         else {
             return super.subscribeVideoTrack(renderView)
@@ -152,6 +153,4 @@ class FakeWME: MediaSession  {
             return super.getRenderViewSize(with: type, andVid: vid)
         }
     }
-    
-    
 }

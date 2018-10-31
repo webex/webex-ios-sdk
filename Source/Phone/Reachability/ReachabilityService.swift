@@ -28,7 +28,7 @@ class ReachabilityService {
     
     private var hostAddresses: [InterfaceAddress.Item]?
     private var lastFetchDate: Date?
-    private let maxAge = TimeInterval(7200) // 7200 sec = 2 hours
+    private let MaxAge = TimeInterval(7200) // 7200 sec = 2 hours
     private let authenticator: Authenticator
     private let deviceService: DeviceService
     
@@ -78,7 +78,7 @@ class ReachabilityService {
     
     private func isDataOutOfDate() -> Bool {
         if let lastFetchDate = lastFetchDate {
-            return lastFetchDate.timeIntervalSinceNow > maxAge
+            return lastFetchDate.timeIntervalSinceNow > MaxAge
         } else {
             return true
         }

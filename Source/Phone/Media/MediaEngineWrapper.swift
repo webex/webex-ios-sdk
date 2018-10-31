@@ -26,7 +26,7 @@ class MediaEngineWrapper {
     private let mediaEngine = MediaEngine.sharedInstance()
     private var mediaEngineObserver = MediaEngineObserver()
     
-    var wmeVersion: String {
+    var WMEVersion: String {
         return MediaEngine.wmeVersion()
     }
 

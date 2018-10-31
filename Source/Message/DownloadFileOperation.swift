@@ -85,7 +85,7 @@ class DownloadFileOperation : NSObject, URLSessionDataDelegate {
             do {
                 var tempOutputStream = OutputStream(toFileAtPath: self.target.path, append: true)
                 if let ref = self.secureContentRef {
-                    tempOutputStream = try SecureOutputStream(stream: tempOutputStream, scr: try SecureContentReference(json: ref))
+                    tempOutputStream = try SecureOutputStream(stream: outputStream, scr: try SecureContentReference(json: ref))
                 }
                 self.outputStream = tempOutputStream
                 self.outputStream?.open()

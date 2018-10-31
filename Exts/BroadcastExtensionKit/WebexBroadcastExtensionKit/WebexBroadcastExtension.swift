@@ -73,9 +73,8 @@ public class WebexBroadcastExtension {
     ///
     /// - since: 1.4.0
     public func start(applicationGroupIdentifier appID:String,completionHandler: @escaping ((WebexError?) -> Void)) {
-        guard FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appID) != nil else {
+        if appID.count < 1, let _ = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appID){
             completionHandler(WebexError.illegalOperation(reason: "Illegal Application Group Identifier."))
-            return
         }
         
         self.broadcastClient = self.broadcastClient == nil ? WebexBroadcastClient.init(applicationGroupIdentifier: appID):self.broadcastClient

@@ -3,7 +3,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
 def shared_pods
-    platform :ios, '10.0'
+	platform :ios, '10.0'
     pod 'Alamofire', '= 4.7.1'
     pod 'ObjectMapper', '~> 3.1'
     pod 'AlamofireObjectMapper', '~> 5.0'
