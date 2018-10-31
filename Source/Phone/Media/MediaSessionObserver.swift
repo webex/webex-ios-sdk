@@ -218,16 +218,16 @@ class MediaSessionObserver: NotificationObserver {
     
     @objc private func onMediaEngineDidAvailableMediaChange(_ notification: Notification) {
         DispatchQueue.main.async {
-            if let retainCall = self.call ,let count = notification.userInfo?[MediaEngineVideoCount] as? Int {
-                retainCall.onMediaChanged?(Call.MediaChangedEvent.remoteAuxVideosCount(count))
+            if let retainCall = self.call ,let _ = notification.userInfo?[MediaEngineVideoCount] as? Int {
+                retainCall.updateAuxStreamCount()
             }
         }
     }
     
     @objc private func onMediaEngineDidAuxVideoSizeChange(_ notification: Notification) {
         DispatchQueue.main.async {
-            if let retainCall = self.call ,let vid = notification.userInfo?[MediaEngineVideoID] as? Int, let auxVideo = retainCall.remoteAuxVideos.filter({$0.vid == vid}).first {
-                retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxVideoSizeChangedEvent(auxVideo))
+            if let retainCall = self.call ,let vid = notification.userInfo?[MediaEngineVideoID] as? Int, let auxStream = retainCall.auxStreams.filter({$0.vid == vid}).first {
+                retainCall.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamSizeChangedEvent(auxStream))
             }
         }
     }
@@ -242,8 +242,8 @@ class MediaSessionObserver: NotificationObserver {
     
     @objc private func onMediaEngineDidDetectAuxVideoMediaUnavailable(_ notification: Notification) {
         DispatchQueue.main.async {
-            if let retainCall = self.call, let vid = notification.userInfo?[MediaEngineVideoID] as? Int, let auxVideo = retainCall.remoteAuxVideos.filter({$0.vid == vid}).first{
-                retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxSendingVideoEvent(auxVideo))
+            if let retainCall = self.call, let vid = notification.userInfo?[MediaEngineVideoID] as? Int, let auxStream = retainCall.auxStreams.filter({$0.vid == vid}).first{
+                retainCall.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamSendingVideoEvent(auxStream))
             }
         }
     }
@@ -266,35 +266,39 @@ class MediaSessionObserver: NotificationObserver {
     
     @objc private func onMediaEngineDidDetectAuxVideoMediaAvailable(_ notification: Notification) {
         DispatchQueue.main.async {
-            if let retainCall = self.call, let vid = notification.userInfo?[MediaEngineVideoID] as? Int, let auxVideo = retainCall.remoteAuxVideos.filter({$0.vid == vid}).first{
-                retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxSendingVideoEvent(auxVideo))
+            if let retainCall = self.call, let vid = notification.userInfo?[MediaEngineVideoID] as? Int, let auxStream = retainCall.auxStreams.filter({$0.vid == vid}).first{
+                retainCall.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamSendingVideoEvent(auxStream))
             }
         }
     }
     
     @objc private func onMediaEngineDidMuteAuxVideo(_ notification: Notification) {
-        DispatchQueue.main.async {
-            if let retainCall = self.call, let vid = notification.userInfo?[MediaEngineVideoID] as? Int, let auxVideo = retainCall.remoteAuxVideos.filter({$0.vid == vid}).first{
-                retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.receivingAuxVideoEvent(auxVideo))
-            }
-        }
     }
     
     @objc private func onMediaEngineDidUnMuteAuxVideo(_ notification: Notification) {
-        DispatchQueue.main.async {
-            if let retainCall = self.call, let vid = notification.userInfo?[MediaEngineVideoID] as? Int, let auxVideo = retainCall.remoteAuxVideos.filter({$0.vid == vid}).first{
-                retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.receivingAuxVideoEvent(auxVideo))
-            }
-        }
     }
     
     @objc private func onMediaEngineDidActiveSpeakerChange(_ notification: Notification) {
         DispatchQueue.main.async {
+            func sendActiveSpeakerChangedEvent(newMembership:CallMembership?,call:Call) {
+                if newMembership?.id == call.activeSpeaker?.id {
+                    return
+                }
+                
+                let oldMembership: CallMembership? = call.activeSpeaker
+                call.activeSpeaker = newMembership
+                call.onMediaChanged?(Call.MediaChangedEvent.activeSpeakerChangedEvent(From: oldMembership, To: newMembership))
+            }
+            
             if let retainCall = self.call, let csiArray = notification.userInfo?[MediaEngineVideoCSI] as? Array<NSNumber> {
+                if csiArray.count < 1 {
+                    sendActiveSpeakerChangedEvent(newMembership: nil, call: retainCall)
+                    return
+                }
+                
                 for number in csiArray {
                     if let membership = retainCall.memberships.filter({$0.containCSI(csi: number.uintValue)}).first {
-                        retainCall.activeSpeaker = membership
-                        retainCall.onMediaChanged?(Call.MediaChangedEvent.activeSpeakerChangedEvent(membership))
+                        sendActiveSpeakerChangedEvent(newMembership: membership, call: retainCall)
                         break
                     }
                 }
@@ -304,22 +308,26 @@ class MediaSessionObserver: NotificationObserver {
     
     @objc private func onMediaEngineDidDidCSIChange(_ notification: Notification) {
         DispatchQueue.main.async {
+            func sendAuxStreamChangeEvent(newMembership:CallMembership?,auxStream:AuxStream,call:Call) {
+                if newMembership?.id == auxStream.person?.id {
+                    return
+                }
+                
+                let oldMembership: CallMembership? = auxStream.person
+                auxStream.person = newMembership
+                call.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamPersonChangedEvent(auxStream, From: oldMembership, To: newMembership))
+            }
+            
             if let retainCall = self.call, let csiArray = notification.userInfo?[MediaEngineVideoCSI] as? Array<NSNumber>, let vid = notification.userInfo?[MediaEngineVideoID] as? Int {
-                if let auxVideo = retainCall.remoteAuxVideos.filter({ $0.vid == vid}).first {
+                if let auxStream = retainCall.auxStreams.filter({ $0.vid == vid}).first {
                     if csiArray.count < 1 {
-                        auxVideo.person = nil
-                        retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxVideoEndEvent(auxVideo))
+                        sendAuxStreamChangeEvent(newMembership: nil, auxStream: auxStream, call: retainCall)
                         return
                     }
+                    
                     for number in csiArray {
                         if let membership = retainCall.memberships.filter({$0.containCSI(csi: number.uintValue)}).first {
-                            if auxVideo.person == nil {
-                                auxVideo.person = membership
-                                retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxVideoStartEvent(auxVideo))
-                            } else {
-                                auxVideo.person = membership
-                            }
-                            retainCall.onRemoteAuxVideoChanged?(Call.RemoteAuxVideoChangeEvent.remoteAuxVideoPersonChangedEvent(auxVideo))
+                            sendAuxStreamChangeEvent(newMembership: membership, auxStream: auxStream, call: retainCall)
                             break
                         }
                     }

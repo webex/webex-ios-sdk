@@ -69,10 +69,10 @@ class DeviceService {
                             regionCode = rc
                             countryCode = cc
                         }
-                        let device = Device(phone: phone, deviceUrl: deviceUrl, webSocketUrl: webSocketUrl, locusServiceUrl: locusServiceUrl, calliopeDiscoveryServiceUrl: calliopeDiscoveryServiceUrl, metricsServiceUrl: metricsServiceUrl, conversationServiceUrl: conversationServiceUrl, deviceType: UIDevice.current.kind, regionCode: regionCode, countryCode: countryCode)
-                        self.device = device
+                        let tempDevice = Device(phone: phone, deviceUrl: deviceUrl, webSocketUrl: webSocketUrl, locusServiceUrl: locusServiceUrl, calliopeDiscoveryServiceUrl: calliopeDiscoveryServiceUrl, metricsServiceUrl: metricsServiceUrl, conversationServiceUrl: conversationServiceUrl, deviceType: UIDevice.current.kind, regionCode: regionCode, countryCode: countryCode)
+                        self.device = tempDevice
                         UserDefaults.sharedInstance.deviceUrl = deviceUrlString
-                        completionHandler(Result.success(device))
+                        completionHandler(Result.success(tempDevice))
                     }
                     
                 } else {

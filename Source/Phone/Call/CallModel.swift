@@ -53,6 +53,8 @@ struct CallModel {
     fileprivate(set) var host: PersonModel?
     fileprivate(set) var fullState: FullStateModel?
     fileprivate(set) var sequence: SequenceModel? // Mandatory
+    fileprivate(set) var baseSequence: SequenceModel? = nil
+    fileprivate(set) var syncUrl: String? = nil
     fileprivate(set) var replaces: [ReplaceModel]?
     fileprivate(set) var mediaShares: [MediaShareModel]?
     fileprivate(set) var mediaConnections: [MediaConnectionModel]?
@@ -63,6 +65,8 @@ struct CallModel {
     
     var isValid: Bool {
         if let _ = self.callUrl, let _ = self.myself, let _ = self.host {
+            return true
+        } else if !self.isFullDTO, let _ = self.callUrl {
             return true
         }
         return false
@@ -77,7 +81,7 @@ struct CallModel {
     }
     
     var isOneOnOne: Bool {
-        return !(fullState?.type == "MEETING")
+        return fullState?.type != "MEETING"
     }
     
     var isIncomingCall: Bool {
@@ -85,7 +89,7 @@ struct CallModel {
     }
     
     var isRemoteVideoMuted: Bool {
-        for participant in self.participants ?? [] where participant.id != myself?.id && participant.state == CallMembership.State.joined {
+        for participant in self.participants ?? [] where participant.id != myself?.id && participant.state == CallMembership.State.joined && participant.isCIUser() {
             if participant.status?.videoStatus != "RECVONLY" && participant.status?.videoStatus != "INACTIVE" {
                 return false
             }
@@ -94,7 +98,7 @@ struct CallModel {
     }
     
     var isRemoteAudioMuted: Bool {
-        for participant in self.participants ?? [] where participant.id != myself?.id && participant.state == CallMembership.State.joined {
+        for participant in self.participants ?? [] where participant.id != myself?.id && participant.state == CallMembership.State.joined && participant.isCIUser() {
             if participant.status?.audioStatus != "RECVONLY" && participant.status?.audioStatus != "INACTIVE" {
                 return false
             }
@@ -134,6 +138,10 @@ struct CallModel {
         }
         return nil
     }
+    
+    var isFullDTO : Bool {
+        return self.baseSequence == nil
+    }
 }
 
 extension CallEventModel: Mappable {
@@ -158,6 +166,8 @@ extension CallModel: Mappable {
 		host <- map["host"]
 		fullState <- map["fullState"]
 		sequence <- map["sequence"]
+        baseSequence <- map["baseSequence"]
+        syncUrl <- map["syncUrl"]
         replaces <- map["replaces"]
         mediaShares <- map["mediaShares"]
 	}
@@ -229,6 +239,44 @@ internal extension CallModel {
     
     internal mutating func setMediaConnections(newMediaConnections:[MediaConnectionModel]?) {
         self.mediaConnections = newMediaConnections
+    }
+    
+    mutating func applyDelta(from: CallModel) {
+        self.sequence = from.sequence ?? self.sequence
+        self.syncUrl = from.syncUrl ?? self.syncUrl
+        self.locusUrl = from.locusUrl ?? self.locusUrl
+        self.myself = from.myself ?? self.myself
+        self.host = from.host ?? self.host
+        self.fullState = from.fullState ?? self.fullState
+        self.replaces = from.replaces ?? self.replaces
+        self.mediaShares = from.mediaShares ?? self.mediaShares
+        self.mediaConnections = from.mediaConnections ?? self.mediaConnections
+        processParticipants(from: from.participants)
+    }
+    
+    private mutating func processParticipants(from:[ParticipantModel]?) {
+        if let newParticipants = from {
+            guard var oldParticipants = self.participants else {
+                self.participants = from
+                return
+            }
+            
+            for participant in newParticipants {
+                if let index = oldParticipants.index(where:{$0.id == participant.id}) {
+                    //replace
+                    if (participant.removed ?? false) == false {
+                        oldParticipants[index] = participant
+                    } else { //remove
+                        oldParticipants.remove(at: index)
+                    }
+                    
+                } else if participant.removed ?? false == false {
+                    // add
+                    oldParticipants.append(participant)
+                }
+            }
+            self.participants = oldParticipants
+        }
     }
 }
 

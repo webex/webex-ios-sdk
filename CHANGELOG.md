@@ -75,7 +75,7 @@ Released on 2018-09-29.
 - Speed up reachability check.
 
 ## [1.4.0](https://github.com/ciscospark/spark-ios-sdk/releases/tag/1.4.0)
-Released on 2018-07-02.
+Released on 2018-05-15.
 
 #### Added
 - Support screen sharing for both sending and receiving.

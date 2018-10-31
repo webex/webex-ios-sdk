@@ -109,7 +109,6 @@ class MembershipTests: XCTestCase {
             XCTFail("Failed to create membership")
         }
     }
-    
 //    func testCreateMembershipWithInvalidSpaceIdButValidPersonId() {
 //        membership = createMembership(spaceId: Config.InvalidId, personId: other.personId, isModerator: false)
 //        XCTAssertNil(membership, "Unexpected successful request")
