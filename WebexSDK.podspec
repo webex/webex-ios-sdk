@@ -19,5 +19,4 @@ Pod::Spec.new do |s|
   s.dependency 'SwiftyJSON', '~> 4.1'
   s.dependency 'Starscream', '= 3.0.5'
   s.dependency 'KeychainAccess', '~> 3.1'
-
 end

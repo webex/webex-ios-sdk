@@ -159,9 +159,13 @@ public class Call {
         /// Local screen share size has changed.
         /// - since: 1.4.0
         case localScreenShareViewSize
-        /// Remote video active speaker has changed.
+
+        /// remote auxiliary video count has changed.
         /// - since: 2.0.0
-        case activeSpeakerChangedEvent(From:CallMembership?,To:CallMembership?)
+        case remoteAuxVideosCount(Int)
+        /// remote auxiliary video count has changed.
+        /// - since: 2.0.0
+        case activeSpeakerChangedEvent(CallMembership)
     }
     
     /// The enumeration of call membership events.
@@ -180,6 +184,18 @@ public class Call {
         case sendingAudio(CallMembership)
         /// The person in the membership started screen sharing.
         case sendingScreenShare(CallMembership)
+    }
+    
+    /// The enumeration of remote auxiliary video change events.
+    ///
+    /// - since: 2.0.0
+    public enum RemoteAuxVideoChangeEvent {
+        case remoteAuxVideoStartEvent(RemoteAuxVideo)
+        case remoteAuxVideoPersonChangedEvent(RemoteAuxVideo)
+        case remoteAuxVideoSizeChangedEvent(RemoteAuxVideo)
+        case remoteAuxSendingVideoEvent(RemoteAuxVideo)
+        case receivingAuxVideoEvent(RemoteAuxVideo)
+        case remoteAuxVideoEndEvent(RemoteAuxVideo)
     }
     
     /// The enumeration of iOS broadcasting events.
@@ -258,16 +274,15 @@ public class Call {
     /// - since: 1.4.0
     public var oniOSBroadcastingChanged: ((iOSBroadcastingEvent) -> Void)?
     
-    /// Multi stream feature observer protocol.
-    /// Client need to set the protocol implemention into certain call.
-    /// - see: see MultiStreamObserver
+    ///
+    ///
     /// - since: 2.0.0
-    public var multiStreamObserver: MultiStreamObserver?
+    public var onRemoteAuxVideoChanged: ((RemoteAuxVideoChangeEvent) -> Void)?
     
     /// The status of this *call*.
     ///
-    /// - see: CallStatus
     /// - since: 1.2.0
+    /// - see: CallStatus
     public internal(set) var status: CallStatus = CallStatus.initiated
     
     /// The direction of this *call*.
@@ -301,6 +316,7 @@ public class Call {
     /// - since: 1.3.0
     public var remoteSendingScreenShare: Bool {
         return model.isGrantedScreenShare && !self.isScreenSharedBySelfDevice()
+//        return model.isGrantedScreenShare && !self.mediaSession.remotescreenShareMuted
     }
     
     /// True if the local party of this *call* is sending video. Otherwise, false.
@@ -447,18 +463,15 @@ public class Call {
     ///
     /// - since: 1.2.0
     public private(set) var memberships: [CallMembership] {
-        get {
-            lock()
-            defer { unlock() }
-            return callMemberships ?? []
-        }
+        get { lock(); defer { unlock() }; return _memberships ?? [] }
         set {
             lock()
             defer {
                 unlock()
             }
-            callMemberships = newValue
-            self.updateAuxStreamMembership(memberships: callMemberships)
+            _memberships = newValue
+        self.updateRemoteAuxVideoMembership(memberships: _memberships)
+            
         }
     }
     
@@ -475,11 +488,6 @@ public class Call {
     public var to: CallMembership? {
         return self.memberships.filter({ !$0.isInitiator }).first
     }
-    
-    /// A local unique identifier of a *Call* for [Apple CallKit](https://developer.apple.com/reference/callkit).
-    ///
-    /// - since: 1.2.0
-    public var uuid: UUID
     
     /// The render views for local and remote video of this call.
     /// If is nil, it will update the video state as inactive to the server side.
@@ -524,45 +532,21 @@ public class Call {
             }
         }
     }
-    
-    /// Get all opened auxiliary streams.
-    /// - see: see AuxStream
+    ///
+    ///
+    ///
     /// - since: 2.0.0
-    public lazy private(set) var auxStreams: Array<AuxStream> = Array<AuxStream>()
+    public lazy private(set) var remoteAuxVideos: Array<RemoteAuxVideo> = Array<RemoteAuxVideo>()
     
-    /// Speaking *CallMembership* in meeting.
-    /// Video presented on remote media render view.
-    /// - see: see CallMembership.isActiveSpeaker
+    ///
+    ///
+    ///
     /// - since: 2.0.0
     public internal(set) var activeSpeaker: CallMembership?
     
-    /// Available auxiliary stream count.
-    ///
-    /// - since: 2.0.0
-    public private(set) var availableAuxStreamCount: Int {
-        get {
-            lock()
-            defer { unlock() }
-            return availableStreamCount
-        }
-        set {
-            lock()
-            defer { unlock() }
-            availableStreamCount = newValue
-        }
-    }
-    
     var model: CallModel {
-        get {
-            lock()
-            defer { unlock() }
-            return callModel
-        }
-        set {
-            lock()
-            defer { unlock() }
-            callModel = newValue
-        }
+        get { lock(); defer { unlock() }; return _model }
+        set { lock(); defer { unlock() }; _model = newValue }
     }
     
     var url: String {
@@ -573,54 +557,19 @@ public class Call {
     
     let device: Device
     let mediaSession: MediaSessionWrapper
+    var _uuid: UUID
     
     let metrics: CallMetrics
-    static  let activeSpeakerCount = 1
     private let dtmfQueue: DtmfQueue
     
-    private var dail: String?
-    private var callModel: CallModel
-    private var callMemberships: [CallMembership]?
-    private var availableStreamCount:Int = 0
-    var mutex = pthread_mutex_t()
+    private var _dail: String?
+    private var _model: CallModel
+    private var _memberships: [CallMembership]?
+    var _mutex = pthread_mutex_t()
     
     var onConnectedOnceToken :String = "" {
         didSet {
             DispatchQueue.main.removeOnceToken(token: oldValue)
-        }
-    }
-    
-    var onAuxStreamChanged: ((AuxStreamChangeEvent) -> Void)? {
-        get {
-            return self.multiStreamObserver?.onAuxStreamChanged
-        }
-    }
-    
-    var auxStreamAvailable: (()-> MediaRenderView?)?  {
-        get {
-            return self.multiStreamObserver?.onAuxStreamAvailable
-        }
-    }
-    
-    var willBeReleasedAuxStream: (Int) -> MediaRenderView? {
-        get {
-            func renderViewByUser() -> MediaRenderView? {
-                if let releaseClosure = self.multiStreamObserver?.onAuxStreamUnavailable, let releaseRenderView = releaseClosure() ,let _ = self.auxStreams.filter({$0.renderView == releaseRenderView}).first {
-                    return releaseRenderView
-                }
-                return nil
-            }
-            return { newCount in
-                if let renderView = renderViewByUser() {
-                    return renderView
-                } else {
-                    if newCount < self.auxStreams.count, let lastRenderView = self.auxStreams.last?.renderView {
-                        return lastRenderView
-                    }
-                }
-                
-                return nil
-            }
         }
     }
     
@@ -633,9 +582,11 @@ public class Call {
     }
     
     private var remoteSDP: String? {
-        if let remoteSDP = self.model.myself?[device: self.device.deviceUrl]?.mediaConnections?.first?.remoteSdp?.sdp ?? self.model.mediaConnections?.first?.remoteSdp?.sdp {
-            return remoteSDP
-        }
+        if let remoteSDP = self.model.myself?[device: self.device.deviceUrl]?.mediaConnections?.first?.remoteSdp?.sdp {
+                return remoteSDP
+            } else if let remoteSDP = self.model.mediaConnections?.first?.remoteSdp?.sdp {
+                return remoteSDP
+            }
         return nil
     }
     
@@ -644,8 +595,8 @@ public class Call {
         self.isGroup = group
         self.device = device
         self.mediaSession = media
-        self.callModel = model
-        self.uuid = uuid ?? UUID()
+        self._model = model
+        self._uuid = uuid ?? UUID()
         self.dtmfQueue = DtmfQueue(client: device.phone.client)
         self.metrics = CallMetrics()
         self.metrics.trackCallStarted()
@@ -655,15 +606,15 @@ public class Call {
     }
     
     deinit{
-        pthread_mutex_init(&mutex, nil)
+        pthread_mutex_init(&_mutex, nil)
         DispatchQueue.main.removeOnceToken(token: self.onConnectedOnceToken)
     }
     
     @inline(__always) func lock(){
-        pthread_mutex_lock(&mutex)
+        pthread_mutex_lock(&_mutex)
     }
     @inline(__always) func unlock(){
-        pthread_mutex_unlock(&mutex)
+        pthread_mutex_unlock(&_mutex)
     }
     
     /// Acknowledge (without answering) an incoming call.
@@ -710,7 +661,7 @@ public class Call {
     public func hangup(completionHandler: @escaping (Error?) -> Void) {
         self.device.phone.hangup(call: self, completionHandler: completionHandler)
     }
-    
+
     /// Sends feedback for this call to Cisco Webex team.
     ///
     /// - parameter rating: The rating of the quality of this call between 1 and 5 where 5 means excellent quality.
@@ -782,95 +733,75 @@ public class Call {
         self.device.phone.stopSharing(call: self, completionHandler: completionHandler)
     }
     
-    /// Open one auxiliary stream with a media render view. The Maximum number of auxiliary videos could be opened is 4.
-    /// When one auxiliary streams manually closed, could call this API to reopen.
-    /// Result will call back through auxStreamOpenedEvent
-    /// - parameter view: the auxiliary display view.
-    /// - returns: Void
-    /// - see: see AuxStreamChangeEvent.auxStreamOpenedEvent
+    ///
+    ///
+    ///
     /// - since: 2.0.0
-    public func openAuxStream(view:MediaRenderView) {
-        let mediaOperationHandler: (AuxStream.RenderViewOperationType) -> Any? = {
+    public func subscribeRemoteAuxVideo(view:MediaRenderView,completionHandler: @escaping ((Result<RemoteAuxVideo>) -> Void)) {
+        let mediaOperationHandler: (RemoteAuxVideo.RenderViewOperationType) -> Any? = {
             operation in
-            switch operation {
-            case .add(let vid,let renderView):
-                self.mediaSession.addAuxStreamRenderView(view: renderView, vid: vid)
-            case .update(let vid,let renderView):
-                self.mediaSession.updateAuxStreamRenderView(view: renderView, vid: vid)
-            case .remove(let vid,let renderView):
-                self.mediaSession.removeAuxStreamRenderView(view: renderView, vid: vid)
-            case .getMuted(let vid):
-                return self.mediaSession.getAuxStreamInputMuted(vid: vid)
-            case .getRemoteMuted(let vid):
-                return self.mediaSession.getAuxStreamOutputMuted(vid: vid)
-            case .getSize(let vid):
-                return self.mediaSession.getAuxStreamRenderViewSize(vid: vid)
-            case .mute(let vid, let muted):
-                if muted {
-                    self.mediaSession.muteAuxStream(vid: vid)
-                } else {
-                    self.mediaSession.unmuteAuxStream(vid: vid)
+                switch operation {
+                case .add(let vid,let renderView):
+                    self.mediaSession.addAuxRenderView(view: renderView, vid: vid)
+                case .update(let vid,let renderView):
+                    self.mediaSession.updateAuxRenderView(view: renderView, vid: vid)
+                case .remove(let vid,let renderView):
+                    self.mediaSession.removeAuxRenderView(view: renderView, vid: vid)
+                case .getMuted(let vid):
+                    return self.mediaSession.getAuxMediaInputMuted(vid: vid)
+                case .getRemoteMuted(let vid):
+                    return self.mediaSession.getAuxMediaOutputMuted(vid: vid)
+                case .getSize(let vid):
+                    return self.mediaSession.getAuxRenderViewSize(vid: vid)
+                case .mute(let vid, let muted):
+                    if muted {
+                        self.mediaSession.muteAuxMedia(vid: vid)
+                    } else {
+                        self.mediaSession.unmuteAuxMedia(vid: vid)
+                    }
                 }
-            }
             return nil
         }
         
         DispatchQueue.main.async {
-            if self.auxStreams.count >= maxAuxStreamNumber {
-                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "have exceeded the auxiliary streams limit"))))
+            if self.remoteAuxVideos.count >= MAX_REMOTE_AUX_VIDEO_NUMBER {
+                completionHandler(Result.failure(WebexError.illegalOperation(reason: "have exceeded the auxiliary videos limit")))
                 return
             }
             
-            if !self.isGroup {
-                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "only available for group call"))))
-                return
-            }
-            
-            if let _ = self.auxStreams.index(where:{ $0.renderView == view }) {
-                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "open multi aux stream with same view"))))
-                return
-            }
-            
-            if self.auxStreams.count >= self.availableAuxStreamCount {
-                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "Cannot exceed available stream count."))))
-                return
-            }
-            
-            var vid = AuxStream.invalidVid
+            var vid = RemoteAuxVideo.INVAILD_VID
             if (self.mediaSession.status == .running) {
-                vid = self.mediaSession.subscribeAuxStream(view: view)
-                if vid == AuxStream.invalidVid {
-                    self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.serviceFailed(code: -7000, reason: "open stream fail"))))
+                vid = self.mediaSession.subscribeAuxVideo(view: view)
+                if vid == RemoteAuxVideo.INVAILD_VID {
+                    completionHandler(Result.failure(WebexError.serviceFailed(code: -7000, reason: "subscribe video fail")))
                     return
                 }
             }
             
-            let auxVideo = AuxStream.init(vid: vid, renderView: view,renderViewOperation:mediaOperationHandler,call: self)
-            SDKLogger.shared.info("open stream for vid:\(auxVideo.vid)")
-            self.auxStreams.append(auxVideo)
-            self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.success(auxVideo)))
+            let auxVideo = RemoteAuxVideo.init(vid: vid, renderViews: [view],renderViewOperation:mediaOperationHandler)
+            SDKLogger.shared.info("add subscribe call for vid:\(auxVideo.vid)")
+            self.remoteAuxVideos.append(auxVideo)
+            completionHandler(Result.success(auxVideo))
         }
     }
     
-    /// Close one auxiliary stream with the indicated media render view.
-    /// Result will call back throuhd auxStreamClosedEvent.
-    /// - parameter view: the auxiliary stream's render view that will be closed.
-    /// - returns: Void
-    /// - see: see AuxStreamChangeEvent.auxStreamClosedEvent
+    ///
+    ///
+    ///
     /// - since: 2.0.0
-    public func closeAuxStream(view:MediaRenderView) {
+    public func unsubscribeRemoteAuxVideo(remoteAuxVideo:RemoteAuxVideo , completionHandler: @escaping ((Error?) -> Void)) {
         DispatchQueue.main.async {
-            if let index = self.auxStreams.index(where:{ $0.renderView == view }) {
-                let auxStream = self.auxStreams[index]
-                SDKLogger.shared.info("close auxiliary stream for vid:\(auxStream.vid)")
+            var error:Error? = nil
+            if let index = self.remoteAuxVideos.index(where:{ $0.vid == remoteAuxVideo.vid }) {
+                SDKLogger.shared.info("remove subscribe call for vid:\(remoteAuxVideo.vid)")
                 
-                self.mediaSession.unsubscribeAuxStream(vid: auxStream.vid)
-                self.auxStreams.remove(at: index)
-                auxStream.invalidate()
-                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamClosedEvent(view, nil))
+                self.mediaSession.unsubscribeAuxVideo(vid: remoteAuxVideo.vid)
+                self.remoteAuxVideos.remove(at: index)
+                remoteAuxVideo.invalidate()
             } else {
-                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamClosedEvent(view,WebexError.illegalOperation(reason: "remote auxiliary stream not found")))
+                error = WebexError.illegalOperation(reason: "remote auxiliary video not found")
             }
+            completionHandler(error)
         }
     }
     
@@ -928,13 +859,13 @@ public class Call {
             }
         }
         
-        for auxStream in self.auxStreams {
-            if auxStream.vid != AuxStream.invalidVid , let view = auxStream.renderView {
-                let vid = self.mediaSession.subscribeAuxStream(view: view)
-                if vid != AuxStream.invalidVid {
-                    auxStream.vid = vid
-                    if let renderView = auxStream.renderView {
-                        self.mediaSession.addAuxStreamRenderView(view: renderView, vid: vid)
+        for remoteAuxVideo in self.remoteAuxVideos {
+            if remoteAuxVideo.vid != RemoteAuxVideo.INVAILD_VID , let view = remoteAuxVideo.renderViews.first {
+                let vid = self.mediaSession.subscribeAuxVideo(view: view)
+                if vid != RemoteAuxVideo.INVAILD_VID {
+                    remoteAuxVideo.vid = vid
+                    for renderView in remoteAuxVideo.renderViews.filter({ return $0 != view }) {
+                        self.mediaSession.addAuxRenderView(view: renderView, vid: vid)
                     }
                 }
             }
@@ -952,10 +883,10 @@ public class Call {
             self.mediaSession.leaveScreenShare(granted, isSending: self.isScreenSharedBySelfDevice())
         }
         self.mediaSession.onBroadcasting = nil
-
-        for auxStream in self.auxStreams {
-            if auxStream.vid != AuxStream.invalidVid {
-                self.mediaSession.unsubscribeAuxStream(vid: auxStream.vid)
+        
+        for remoteAuxVideo in self.remoteAuxVideos {
+            if remoteAuxVideo.vid != RemoteAuxVideo.INVAILD_VID {
+                self.mediaSession.unsubscribeAuxVideo(vid: remoteAuxVideo.vid)
             }
         }
         self.mediaSession.stopMedia()
@@ -974,17 +905,7 @@ public class Call {
     }
     
     func update(model: CallModel) {
-        //some response's mediaConnection is nil, sync all model hold the latest media connection
-        func syncMediaConnections(from:CallModel) -> CallModel {
-            var newModel = from
-            let mediaConnections = newModel.mediaConnections == nil ? self.model.mediaConnections:model.mediaConnections
-            self.model.setMediaConnections(newMediaConnections: mediaConnections)
-            newModel.setMediaConnections(newMediaConnections: mediaConnections)
-            return newModel
-        }
-        
-        let newModel = syncMediaConnections(from: model)
-        if newModel.isValid {
+        if model.isValid {
             let old = self.model
             if var new = CallEventSequencer.sequence(old: old, new: newModel, invalid: { self.device.phone.fetch(call: self) }) {
                 
@@ -1004,30 +925,103 @@ public class Call {
                     if new.isLocalSupportDTMF != old.isLocalSupportDTMF {
                         self.onCapabilitiesChanged?(Capabilities.dtmf)
                     }
+                    
+                    func leaveScreenShare(participant: ParticipantModel, granted: String, oldFloor:MediaShareModel.MediaShareFloor? = nil) {
+                        if self.isScreenSharedBySelfDevice(shareFloor: oldFloor) {
+                            if self.mediaSession.hasScreenShare {
+                                self.mediaSession.stopLocalScreenShare()
+                                self.mediaSession.leaveScreenShare(granted, isSending: true)
+                            }
+                            self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(false))
+                        } else {
+                            if self.mediaSession.hasScreenShare {
+                                self.mediaSession.leaveScreenShare(granted, isSending: false)
+                            }
+                            self.onMediaChanged?(MediaChangedEvent.remoteSendingScreenShare(false))
+                        }
+                        
+                        if let membership = self.memberships.filter({$0.id == participant.id}).first {
+                            self.onCallMembershipChanged?(CallMembershipChangedEvent.sendingScreenShare(membership))
+                        }
+                    }
+                    
+                    func joinScreenShare(participant: ParticipantModel, granted: String) {
+                        if self.isScreenSharedBySelfDevice() {
+                            if self.mediaSession.hasScreenShare {
+                                self.mediaSession.startLocalScreenShare()
+                                self.mediaSession.joinScreenShare(granted, isSending: true)
+                            }
+                            if !self.mediaSession.screenShareMuted {
+                                self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(true))
+                            }
+                        } else {
+                            if self.mediaSession.hasScreenShare {
+                                self.mediaSession.joinScreenShare(granted, isSending: false)
+                            }
+                            self.onMediaChanged?(MediaChangedEvent.remoteSendingScreenShare(true))
+                        }
+                        if let membership = self.memberships.filter({$0.id == participant.id}).first {
+                            if self.isScreenSharedBySelfDevice() && self.mediaSession.screenShareMuted {
+                                
+                            } else {
+                                self.onCallMembershipChanged?(CallMembershipChangedEvent.sendingScreenShare(membership))
+                            }
+                        }
+                    }
+                    
+                    func replaceScreenShare(newFloor:MediaShareModel.MediaShareFloor, oldFloor:MediaShareModel.MediaShareFloor) {
+                        //someone replace my screen sharing
+                        if self.isScreenSharedBySelfDevice(shareFloor: oldFloor) == true && self.isScreenSharedBySelfDevice(shareFloor: newFloor) == false {
+                            if self.mediaSession.hasScreenShare {
+                                self.mediaSession.stopLocalScreenShare()
+                                self.mediaSession.leaveScreenShare(oldFloor.granted!, isSending: true)
+                                self.mediaSession.joinScreenShare(newFloor.granted!, isSending: false)
+                            }
+                            self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(false))
+                            self.onMediaChanged?(MediaChangedEvent.remoteSendingScreenShare(true))
+                            
+                        } else if self.isScreenSharedBySelfDevice(shareFloor: oldFloor) == false && self.isScreenSharedBySelfDevice(shareFloor: newFloor) == true {
+                            if self.mediaSession.hasScreenShare {
+                                self.mediaSession.leaveScreenShare(oldFloor.granted ?? newFloor.granted!, isSending: false)
+                                self.mediaSession.joinScreenShare(newFloor.granted!, isSending: true)
+                                self.mediaSession.startLocalScreenShare()
+                            }
+                            self.onMediaChanged?(MediaChangedEvent.remoteSendingScreenShare(false))
+                            if !self.mediaSession.screenShareMuted {
+                                self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(true))
+                            }
+                        } else {
+                            
+                        }
+                        if let sharingParticipantId = newFloor.beneficiary?.id ,let membership = self.memberships.filter({$0.id == sharingParticipantId}).first{
+                            self.onCallMembershipChanged?(CallMembershipChangedEvent.sendingScreenShare(membership))
+                        }
+                    }
+                    
                     //screen share
                     if let newFloor = new.screenShareMediaFloor, let _ = newFloor.beneficiary?.id, let newGranted = newFloor.granted, let newDisposition = newFloor.disposition {
                         if let oldFloor = old.screenShareMediaFloor, let _ = oldFloor.beneficiary?.id, let oldDisposition = oldFloor.disposition {
                             if newDisposition != oldDisposition {
                                 if newDisposition == MediaShareModel.ShareFloorDisposition.granted {
-                                    self.joinScreenShare(participant: newFloor.beneficiary!, granted: newGranted)
+                                    joinScreenShare(participant: newFloor.beneficiary!, granted: newGranted)
                                 }
                                 else if newDisposition == MediaShareModel.ShareFloorDisposition.released {
-                                    self.leaveScreenShare(participant: oldFloor.granted != nil ? oldFloor.beneficiary! : newFloor.beneficiary!, granted: oldFloor.granted ?? newGranted,oldFloor: oldFloor)
+                                    leaveScreenShare(participant: oldFloor.granted != nil ? oldFloor.beneficiary! : newFloor.beneficiary!, granted: oldFloor.granted ?? newGranted,oldFloor: oldFloor)
                                 }
                                 else {
                                     SDKLogger.shared.error("Failure: floor dispostion is unknown.")
                                 }
                             }
                             else if let oldGranted = oldFloor.granted, newGranted != oldGranted, newDisposition == MediaShareModel.ShareFloorDisposition.granted {
-                                self.replaceScreenShare(newFloor: newFloor, oldFloor: oldFloor)
+                                replaceScreenShare(newFloor: newFloor, oldFloor: oldFloor)
                             }
                         }
                         else {
                             if newDisposition == MediaShareModel.ShareFloorDisposition.granted {
-                                self.joinScreenShare(participant: newFloor.beneficiary!, granted: newGranted)
+                                joinScreenShare(participant: newFloor.beneficiary!, granted: newGranted)
                             }
                             else if newDisposition == MediaShareModel.ShareFloorDisposition.released {
-                                self.leaveScreenShare(participant: newFloor.beneficiary!, granted: newGranted)
+                                leaveScreenShare(participant: newFloor.beneficiary!, granted: newGranted)
                             }
                             else {
                                 SDKLogger.shared.error("Failure: floor dispostion is unknown.")
@@ -1035,111 +1029,12 @@ public class Call {
                         }
                     }                    
                 }
-            }
-        }
-    }
-    
-    private func joinScreenShare(participant: ParticipantModel, granted: String) {
-        if self.isScreenSharedBySelfDevice() {
-            if self.mediaSession.hasScreenShare {
-                self.mediaSession.startLocalScreenShare()
-                self.mediaSession.joinScreenShare(granted, isSending: true)
-            }
-            if !self.mediaSession.screenShareMuted {
-                self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(true))
-            }
-        } else {
-            if self.mediaSession.hasScreenShare {
-                self.mediaSession.joinScreenShare(granted, isSending: false)
-            }
-            self.onMediaChanged?(MediaChangedEvent.remoteSendingScreenShare(true))
-        }
-        if let membership = self.memberships.filter({$0.id == participant.id}).first {
-            if self.isScreenSharedBySelfDevice() && self.mediaSession.screenShareMuted {
-                return
             } else {
-                self.onCallMembershipChanged?(CallMembershipChangedEvent.sendingScreenShare(membership))
-            }
-        }
-    }
-    
-    private func leaveScreenShare(participant: ParticipantModel, granted: String, oldFloor:MediaShareModel.MediaShareFloor? = nil) {
-        if self.isScreenSharedBySelfDevice(shareFloor: oldFloor) {
-            if self.mediaSession.hasScreenShare {
-                self.mediaSession.stopLocalScreenShare()
-                self.mediaSession.leaveScreenShare(granted, isSending: true)
-            }
-            self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(false))
-        } else {
-            if self.mediaSession.hasScreenShare {
-                self.mediaSession.leaveScreenShare(granted, isSending: false)
-            }
-            self.onMediaChanged?(MediaChangedEvent.remoteSendingScreenShare(false))
-        }
-        
-        if let membership = self.memberships.filter({$0.id == participant.id}).first {
-            self.onCallMembershipChanged?(CallMembershipChangedEvent.sendingScreenShare(membership))
-        }
-    }
-    
-    private func replaceScreenShare(newFloor:MediaShareModel.MediaShareFloor, oldFloor:MediaShareModel.MediaShareFloor) {
-        //someone replace my screen sharing
-        if self.isScreenSharedBySelfDevice(shareFloor: oldFloor) && !self.isScreenSharedBySelfDevice(shareFloor: newFloor) {
-            if self.mediaSession.hasScreenShare {
-                self.mediaSession.stopLocalScreenShare()
-                self.mediaSession.leaveScreenShare(oldFloor.granted!, isSending: true)
-                self.mediaSession.joinScreenShare(newFloor.granted!, isSending: false)
-            }
-            self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(false))
-            self.onMediaChanged?(MediaChangedEvent.remoteSendingScreenShare(true))
-            
-        } else if !self.isScreenSharedBySelfDevice(shareFloor: oldFloor) && self.isScreenSharedBySelfDevice(shareFloor: newFloor) {
-            if self.mediaSession.hasScreenShare {
-                self.mediaSession.leaveScreenShare(oldFloor.granted ?? newFloor.granted!, isSending: false)
-                self.mediaSession.joinScreenShare(newFloor.granted!, isSending: true)
-                self.mediaSession.startLocalScreenShare()
-            }
-            self.onMediaChanged?(MediaChangedEvent.remoteSendingScreenShare(false))
-            if !self.mediaSession.screenShareMuted {
-                self.onMediaChanged?(MediaChangedEvent.sendingScreenShare(true))
-            }
-        }
-        if let sharingParticipantId = newFloor.beneficiary?.id ,let membership = self.memberships.filter({$0.id == sharingParticipantId}).first{
-            self.onCallMembershipChanged?(CallMembershipChangedEvent.sendingScreenShare(membership))
-        }
-    }
-    
-    func updateAuxStreamCount() {
-        DispatchQueue.main.async {
-            var newAvailableAuxStreamCount = min(self.memberships.filter({ $0.isMediaActive() && !$0.isSelf }).count - Call.activeSpeakerCount, self.mediaSession.auxStreamCount() - Call.activeSpeakerCount)
-            if newAvailableAuxStreamCount < 0 {
-                newAvailableAuxStreamCount = 0
-            } else if self.availableAuxStreamCount >= maxAuxStreamNumber && newAvailableAuxStreamCount > maxAuxStreamNumber {
-                self.availableAuxStreamCount = maxAuxStreamNumber
-                return
-            }
-            
-            var diffCount = newAvailableAuxStreamCount - self.availableAuxStreamCount
-            if diffCount > maxAuxStreamNumber {
-                diffCount = maxAuxStreamNumber
-            }
-            
-            if diffCount > 0 {
-                for _ in 0..<diffCount {
-                    if let renderView = self.auxStreamAvailable?() {
-                        self.openAuxStream(view: renderView)
-                    }
-                    
-                }
-            } else if diffCount < 0 {
-                for _ in 0..<(-diffCount) {
-                    if let renderView = self.willBeReleasedAuxStream(newAvailableAuxStreamCount) {
-                        self.closeAuxStream(view: renderView)
-                    }
+                //some response's mediaConnection is nil, sync all model hold the latest media connection
+                if self.model.mediaConnections == nil, let mediaConnection = model.mediaConnections {
+                    self.model.setMediaConnections(newMediaConnections: mediaConnection)
                 }
             }
-            
-            self.availableAuxStreamCount = newAvailableAuxStreamCount
         }
     }
     
@@ -1149,29 +1044,36 @@ public class Call {
             let oldMemberships = self.memberships
             var newMemberships = [CallMembership]()
             var onCallMembershipChanges = [CallMembershipChangedEvent]()
+            
             for participant in participants {
                 if var membership = oldMemberships.find(predicate: { $0.id == participant.id }) {
                     let oldState = membership.state
-                    let tempSendingAudio = membership.sendingAudio
-                    let tempSendingVideo = membership.sendingVideo
+                    let sendingAudio = membership.sendingAudio
+                    let sendingVideo = membership.sendingVideo
                     membership.model = participant
                     if membership.state != oldState {
-                        onCallMembershipChanges.append(contentsOf: checkMembershipChangeEventFor(membership))
+                        if membership.state == CallMembership.State.joined {
+                            onCallMembershipChanges.append(CallMembershipChangedEvent.joined(membership))
+                        }
+                        else if membership.state == CallMembership.State.left {
+                            onCallMembershipChanges.append(CallMembershipChangedEvent.left(membership))
+                        }
+                        else if membership.state == CallMembership.State.declined {
+                            onCallMembershipChanges.append(CallMembershipChangedEvent.declined(membership))
+                        }
                     }
-                    if membership.sendingAudio != tempSendingAudio {
+                    if membership.sendingAudio != sendingAudio {
                         onCallMembershipChanges.append(CallMembershipChangedEvent.sendingAudio(membership))
                     }
-                    if membership.sendingVideo != tempSendingVideo {
+                    if membership.sendingVideo != sendingVideo {
                         onCallMembershipChanges.append(CallMembershipChangedEvent.sendingVideo(membership))
                     }
                     newMemberships.append(membership)
                 }
                 else {
                     newMemberships.append(CallMembership(participant: participant, call: self))
-                    //TODO participant add event?
                 }
             }
-            //TODO participant remove event?
             self.memberships = newMemberships
             for callMembershipChange in onCallMembershipChanges {
                 DispatchQueue.main.async {
@@ -1182,38 +1084,14 @@ public class Call {
         else {
             self.memberships = []
         }
-        
-        self.updateAuxStreamCount()
-        self.status.handle(model: self.model, for: self)
+        self.status.handle(model: model, for: self)
     }
     
-    private func checkMembershipChangeEventFor(_ membership: CallMembership) -> [CallMembershipChangedEvent] {
-        var onCallMembershipChanges = [CallMembershipChangedEvent]()
-        if membership.state == CallMembership.State.joined {
-            onCallMembershipChanges.append(CallMembershipChangedEvent.joined(membership))
-        }
-        else if membership.state == CallMembership.State.left {
-            onCallMembershipChanges.append(CallMembershipChangedEvent.left(membership))
-            //send person change by locus status,because CSI change doesn't trigger when participant left.
-            if let auxStream = self.auxStreams.filter({$0.person?.id == membership.id}).first {
-                auxStream.person = nil
-                self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamPersonChangedEvent(auxStream, From: membership, To: nil))
-            } else if let currentSpeaker = self.activeSpeaker, currentSpeaker.id == membership.id {
-                self.activeSpeaker = nil
-                self.onMediaChanged?(Call.MediaChangedEvent.activeSpeakerChangedEvent(From: membership, To: nil))
-            }
-        }
-        else if membership.state == CallMembership.State.declined {
-            onCallMembershipChanges.append(CallMembershipChangedEvent.declined(membership))
-        }
-        return onCallMembershipChanges
-    }
-    
-    private func updateAuxStreamMembership(memberships:[CallMembership]?) {
+    private func updateRemoteAuxVideoMembership(memberships:[CallMembership]?) {
         if let membershipsArray = memberships {
-            for auxStream in auxStreams {
-                if let person = auxStream.person, let membership = membershipsArray.filter({ $0.id == person.id }).first {
-                    auxStream.person = membership
+            for remoteAuxVideo in remoteAuxVideos {
+                if let person = remoteAuxVideo.person, let membership = membershipsArray.filter({ $0.id == person.id }).first {
+                    remoteAuxVideo.person = membership
                 }
             }
         }
@@ -1226,8 +1104,7 @@ extension DispatchQueue {
     
     func asyncOnce(token: String, block:@escaping ()->Void) {
         self.async {
-            objc_sync_enter(self)
-            defer { objc_sync_exit(self) }
+            objc_sync_enter(self); defer { objc_sync_exit(self) }
             if token.isEmpty || DispatchQueue._onceTracker.contains(token) {
                 return
             }
@@ -1238,8 +1115,7 @@ extension DispatchQueue {
     
     func removeOnceToken(token: String) {
         self.async {
-            objc_sync_enter(self)
-            defer { objc_sync_exit(self) }
+            objc_sync_enter(self); defer { objc_sync_exit(self) }
             if token.isEmpty {
                 return
             }

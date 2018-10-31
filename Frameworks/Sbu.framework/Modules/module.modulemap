@@ -4,3 +4,8 @@ framework module Sbu {
   export *
   module * { export * }
 }
+
+module Sbu.Swift {
+    header "Sbu-Swift.h"
+    requires objc
+}

@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include "Wme/Wme.h"
-#include "Seu/Seu.h"
-#include "Sbu/Sbu.h"
+#import "Wme/Wme.h"
+#import "Seu/Seu.h"
+#import "Sbu/Sbu.h"
 

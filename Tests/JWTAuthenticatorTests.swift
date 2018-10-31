@@ -113,7 +113,7 @@ class JWTAuthenticatorTests: XCTestCase {
         
         let authInfo = storage.authenticationInfo
         XCTAssertEqual(authInfo?.accessToken, "accessToken2")
-        XCTAssertEqual(authInfo?.accessTokenExpirationDate.timeIntervalSinceReferenceDate ?? 0, tomorrow.timeIntervalSinceReferenceDate, accuracy: 1.0)
+        XCTAssertEqualWithAccuracy(authInfo?.accessTokenExpirationDate.timeIntervalSinceReferenceDate ?? 0, tomorrow.timeIntervalSinceReferenceDate, accuracy: 1.0)
     }
     
     func testWhenAccessTokenHasNoExpirationDateThenItIsAlwaysAuthorized() {

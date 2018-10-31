@@ -38,7 +38,7 @@ extension MetricsEngine {
     }
     
     func trackVideoLicenseActivation() {
-        self.track(name: Metric.Call.ActivatingVideo, ["value":""])
+        self.track(name: Metric.Call.ActivatingVideo, type: MetricsType.Increment, ["value":""])
         self.flush()
     }
     
@@ -51,10 +51,10 @@ extension MetricsEngine {
             "locusTimestamp": call.model.fullState?.lastActive ?? "",
             "deviceUrl": call.device.deviceUrl.absoluteString,
             "participantId": call.model.myself?.id ?? "",
-            "correlationId": call.uuid.uuidString,
-            "isGroup": String(!call.model.isOneOnOne),
+            "correlationId": call._uuid.uuidString,
+            "isGroup": String((!call.model.isOneOnOne)),
             "initialMediaType": call.mediaSession.hasVideo ? "VIDEO" : "AUDIO",
-            "wmeVersion": MediaEngineWrapper.sharedInstance.wmeVersion,
+            "wmeVersion": MediaEngineWrapper.sharedInstance.WMEVersion,
             "actor.id": call.model.host?.id ?? "",
             "actor.orgId": call.model.host?.orgId ?? "",
             "actor.personType": call.model.myself?.type ?? "",

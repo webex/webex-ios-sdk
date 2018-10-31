@@ -98,8 +98,8 @@ public class TeamMembershipClient {
         
         let request = requestBuilder()
             .method(.post)
-            .queue(queue)
             .body(body)
+            .queue(queue)
             .build()
         
         request.responseObject(completionHandler)
@@ -109,7 +109,7 @@ public class TeamMembershipClient {
     ///
     /// - parameter membershipId: The identifier of the membership.
     /// - parameter queue: The queue on which the completion handler is dispatched.
-    /// - parameter completionHandler: A closure to be executed once the get request has finished.
+    /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
     /// - since: 1.2.0
    public func get(membershipId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<TeamMembership>) -> Void) {
@@ -145,7 +145,7 @@ public class TeamMembershipClient {
     ///
     /// - parameter membershipId: The identifier of the membership.
     /// - parameter queue: The queue on which the completion handler is dispatched.
-    /// - parameter completionHandler: A closure to be executed once the delete request has finished.
+    /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
     /// - since: 1.2.0
     public func delete(membershipId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {

@@ -202,8 +202,7 @@ class MediaSessionWrapper {
     }
     
     func stopPreview() {
-        if self.status == .preview {
-            mediaSession.stopVideoRenderView(with: .preview, removeRender: true)
+        if self.status == .preview {            mediaSession.stopVideoRenderView(with: .preview, removeRender: true)
             mediaSession.removeAllRenderView(.preview)
             mediaSession.disconnectFromCloud()
             self.status = .initial
@@ -373,47 +372,43 @@ internal extension MediaSessionWrapper {
 }
 
 extension MediaSessionWrapper {
-    func subscribeAuxStream(view: MediaRenderView) -> Int {
+    func subscribeAuxVideo(view: MediaRenderView) -> Int {
         return Int(self.mediaSession.subscribeVideoTrack(view))
     }
     
-    func unsubscribeAuxStream(vid:Int) {
+    func unsubscribeAuxVideo(vid:Int) {
         self.mediaSession.unsubscribeVideoTrack(Int32(vid))
     }
     
-    func addAuxStreamRenderView(view:MediaRenderView, vid:Int) {
+    func addAuxRenderView(view:MediaRenderView, vid:Int) {
         self.mediaSession.addRenderView(view, type: .auxVideo, andVid: Int32(vid))
     }
     
-    func removeAuxStreamRenderView(view:MediaRenderView, vid:Int) {
+    func removeAuxRenderView(view:MediaRenderView, vid:Int) {
         self.mediaSession.removeRenderView(view, type: .auxVideo, andVid: Int32(vid))
     }
     
-    func updateAuxStreamRenderView(view:MediaRenderView, vid:Int) {
+    func updateAuxRenderView(view:MediaRenderView, vid:Int) {
         self.mediaSession.updateRenderView(view, type: .auxVideo, andVid: Int32(vid))
     }
     
-    func getAuxStreamRenderViewSize(vid:Int) -> CGSize {
+    func getAuxRenderViewSize(vid:Int) -> CGSize {
         return self.mediaSession.getRenderViewSize(with: .auxVideo, andVid: Int32(vid))
     }
     
-    func getAuxStreamInputMuted(vid:Int) -> Bool {
+    func getAuxMediaInputMuted(vid:Int) -> Bool {
         return self.mediaSession.getMediaMuted(fromLocal: .auxVideo, andVid: Int32(vid))
     }
     
-    func getAuxStreamOutputMuted(vid:Int) -> Bool {
+    func getAuxMediaOutputMuted(vid:Int) -> Bool {
         return self.mediaSession.getMediaMuted(fromRemote: .auxVideo, andVid: Int32(vid))
     }
     
-    func muteAuxStream(vid:Int) {
+    func muteAuxMedia(vid:Int) {
         self.mediaSession.muteMedia(.auxVideo, andVid: Int32(vid))
     }
     
-    func unmuteAuxStream(vid:Int) {
+    func unmuteAuxMedia(vid:Int) {
         self.mediaSession.unmuteMedia(.auxVideo, andVid: Int32(vid))
-    }
-    
-    func auxStreamCount() -> Int {
-        return self.mediaSession.auxStreamCount
     }
 }

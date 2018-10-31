@@ -192,7 +192,7 @@ public class Webex {
             return identifier + String(UnicodeScalar(UInt8(value)))
         }
         
-        let output = "Cisco_Webex_iOS_SDK/\(Webex.version)/WME-\(MediaEngineWrapper.sharedInstance.wmeVersion)/\(identifier)-\(UIDevice.current.systemVersion)"
+        let output = "Cisco_Webex_iOS_SDK/\(Webex.version)/WME-\(MediaEngineWrapper.sharedInstance.WMEVersion)/\(identifier)-\(UIDevice.current.systemVersion)"
         if let _ = SDKLogger.shared.logger {
             SDKLogger.shared.info(output)
         }

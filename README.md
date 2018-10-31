@@ -13,7 +13,6 @@ This SDK is written in [Swift 4](https://developer.apple.com/swift) and requires
 - [Install](#install)
 - [Usage](#usage)
 - [License](#license)
-- [Migration From SparkSDK](#migration-from-cisco-sparksdk)
 
 ## Install
 
@@ -319,57 +318,15 @@ Here are some examples of how to use the iOS SDK in your app.
     ```
     11.3 Get more technical details about the [Containing App & Broadcast upload extension](https://github.com/webex/webex-ios-sdk/wiki/Implementation-Broadcast-upload-extension) and [Set up an App Group](https://github.com/webex/webex-ios-sdk/wiki/Set-up-an-App-Group)
 
+## Migrating from Cisco Spark IOS SDK
 
-12. Receive more video streams in a meeting:
-    ```
-    class VideoCallViewController: MultiStreamObserver {
-        ...
-        var onAuxStreamChanged: ((AuxStreamChangeEvent) -> Void)? = {
-            ...
-            switch event {
-            case .auxStreamOpenedEvent(let view, let result):
-                switch result {
-                    case .success(let auxStream):
-                        ...
-                    case .failure(let error):
-                        ...
-                }
-            case .auxStreamPersonChangedEvent(let auxStream,_,_):
-                    ...
-            case .auxStreamSendingVideoEvent(let auxStream):
-                ...
-            case .auxStreamSizeChangedEvent(let auxStream):
-                ...
-            case .auxStreamClosedEvent(let view, let error):
-                ...
-            }
-        }
-        
-        var onAuxStreamAvailable: (() -> MediaRenderView?)? = {
-            ...
-            return self.mediaRenderViews.filter({!$0.inUse}).first?
-        }
-    
-        var onAuxStreamUnavailable: (() -> MediaRenderView?)? = {
-            ...
-            return self.mediaRenderViews.filter({$0.inUse}).last?
-        }
-        
-        
-        override func viewWillAppear(_ animated: Bool) {
-            ...
-            // set the observer of this call to get multi stream event.
-            self.call.multiStreamObserver = self
-            ...
-        }
-    }
-    ```
+The purpose of this guide is to help you to migrate from Cisco Spark IOS SDK to Cisco Webex IOS SDK.
 
-## Migration from Cisco SparkSDK
+### Install
 
-The purpose of this guide is to help you to migrate from Cisco SparkSDK to Cisco WebexSDK.
+Assuming you already have an IOS project with Spark IOS SDK integrated. For your IOS app, here are the steps to migrate to use Webex IOS SDK:
 
-Assuming you already have an project integrated with SparkSDK. 
+1. Update the sdk import info for your app:
 
 1. In your pod file:
 
@@ -395,7 +352,7 @@ Assuming you already have an project integrated with SparkSDK.
 
 ### Usage
 
-API changes list from SparkSDK to WebexSDK.
+Here are API changes list from Spark IOS SDK to Webex IOS SDK.
 
 | Description | SparkSDK Use | WebexSDK Use |
 | :----:| :----: | :----:
@@ -403,8 +360,6 @@ API changes list from SparkSDK to WebexSDK.
 | "Room" Client renamed to "Space" Client | spark.rooms.list(roomId:{rooomId}) | webex.spaces.list(spaceId:{roomId}) 
 | "SparkError" renamed to "WebexError" | let error = SparkError.Auth | let error = WebexError.Auth |
 
-
-Recomand to replace variables containing "spark" with "webex" in project code.  
 
 
 ## License

@@ -52,8 +52,7 @@ struct ParticipantModel {
     var alertType: AlertTypeModel?
     var enableDTMF: Bool?
     var devices: [ParticipantModel.DeviceModel]?
-    var removed: Bool?
-    
+
     var isJoined: Bool {
         return self.state == CallMembership.State.joined
     }
@@ -131,7 +130,6 @@ extension ParticipantModel: Mappable {
         alertHint <- map["alertHint"]
         alertType <- map["alertType"]
         enableDTMF <- map["enableDTMF"]
-        removed <- map["removed"]
     }
     
     class ParticipantStateTransform: TransformType {
