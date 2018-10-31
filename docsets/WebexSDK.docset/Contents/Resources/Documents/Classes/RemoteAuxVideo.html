@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Authenticator Protocol Reference</title>
+    <title>RemoteAuxVideo Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Protocol/Authenticator" class="dashAnchor"></a>
-    <a title="Authenticator Protocol Reference"></a>
+    <a name="//apple_ref/swift/Class/RemoteAuxVideo" class="dashAnchor"></a>
+    <a title="RemoteAuxVideo Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">WebexSDK Docs</a> (94% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">WebexSDK Reference</a>
         <img id="carat" src="../img/carat.png" />
-        Authenticator Protocol Reference
+        RemoteAuxVideo Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -246,20 +246,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>Authenticator</h1>
+            <h1>RemoteAuxVideo</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Authenticator</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">RemoteAuxVideo</span></code></pre>
 
                 </div>
               </div>
-            <p>A protocol for generic authentication strategies in Cisco Webex. Each authentication strategy
-is responsible for providing an accessToken used throughout this SDK.</p>
-<div class="aside aside-since">
-    <p class="aside-title">Since</p>
-    1.2.0
-
-</div>
+            <p>Undocumented</p>
 
           </section>
           <section class="section task-group-section">
@@ -268,9 +262,9 @@ is responsible for providing an accessToken used throughout this SDK.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13AuthenticatorP10authorizedSbvp"></a>
-                    <a name="//apple_ref/swift/Property/authorized" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13AuthenticatorP10authorizedSbvp">authorized</a>
+                    <a name="/s:8WebexSDK14RemoteAuxVideoC11renderViewsSayAA15MediaRenderViewCGvp"></a>
+                    <a name="//apple_ref/swift/Property/renderViews" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC11renderViewsSayAA15MediaRenderViewCGvp">renderViews</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -278,23 +272,14 @@ is responsible for providing an accessToken used throughout this SDK.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns True if the user is logically authorized.</p>
-
-<p>This may not mean the user has a valid
-access token yet, but the authentication strategy should be able to obtain one without
-further user interaction.</p>
-<div class="aside aside-since">
-    <p class="aside-title">Since</p>
-    1.2.0
-
-</div>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">authorized</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">renderViews</span><span class="p">:</span> <span class="kt">Array</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -304,9 +289,9 @@ further user interaction.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13AuthenticatorP11deauthorizeyyF"></a>
-                    <a name="//apple_ref/swift/Method/deauthorize()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13AuthenticatorP11deauthorizeyyF">deauthorize()</a>
+                    <a name="/s:8WebexSDK14RemoteAuxVideoC6personAA14CallMembershipVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/person" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC6personAA14CallMembershipVSgvp">person</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -314,20 +299,14 @@ further user interaction.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Deauthorizes the current user and clears any persistent state with regards to the current user.
-If the <em>phone</em> is registered, it should be deregistered before calling this method.</p>
-<div class="aside aside-since">
-    <p class="aside-title">Since</p>
-    1.2.0
-
-</div>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">deauthorize</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">person</span><span class="p">:</span> <span class="kt"><a href="../Structs/CallMembership.html">CallMembership</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -337,9 +316,9 @@ If the <em>phone</em> is registered, it should be deregistered before calling th
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13AuthenticatorP11accessTokenyySSSgc17completionHandler_tF"></a>
-                    <a name="//apple_ref/swift/Method/accessToken(completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13AuthenticatorP11accessTokenyySSSgc17completionHandler_tF">accessToken(completionHandler:)</a>
+                    <a name="/s:8WebexSDK14RemoteAuxVideoC09isSendingE0Sbvp"></a>
+                    <a name="//apple_ref/swift/Property/isSendingVideo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC09isSendingE0Sbvp">isSendingVideo</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -347,45 +326,16 @@ If the <em>phone</em> is registered, it should be deregistered before calling th
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns an access token of this <em>authenticator</em>. </p>
-
-<p>This may involve long-running operations such as service calls,
-but may also return immediately. The application should not make assumptions about how quickly this
-completes.
-If the access token could not be retrieved then the completion handler will be called with nil.</p>
-<div class="aside aside-since">
-    <p class="aside-title">Since</p>
-    1.2.0
-
-</div>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">accessToken</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">accessToken</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isSendingVideo</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>completionHandler</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>a closure to be executed when completed, with the access token if successfuly retrieved, otherwise nil.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
                       </div>
                     </section>
                   </div>
@@ -393,9 +343,9 @@ If the access token could not be retrieved then the completion handler will be c
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13AuthenticatorP12refreshTokenyySSSgc17completionHandler_tF"></a>
-                    <a name="//apple_ref/swift/Method/refreshToken(completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13AuthenticatorP12refreshTokenyySSSgc17completionHandler_tF">refreshToken(completionHandler:)</a>
+                    <a name="/s:8WebexSDK14RemoteAuxVideoC06remotedE4SizeSC17CMVideoDimensionsVvp"></a>
+                    <a name="//apple_ref/swift/Property/remoteAuxVideoSize" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC06remotedE4SizeSC17CMVideoDimensionsVvp">remoteAuxVideoSize</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -403,40 +353,151 @@ If the access token could not be retrieved then the completion handler will be c
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Refresh the access token of this <em>authenticator</em>.</p>
-<div class="aside aside-since">
-    <p class="aside-title">Since</p>
-    1.4.0
-
-</div>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">refreshToken</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">accessToken</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">remoteAuxVideoSize</span><span class="p">:</span> <span class="kt">CMVideoDimensions</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>completionHandler</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>a closure to be executed when completed, with the new access token if successfuly retrieved, otherwise nil.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK14RemoteAuxVideoC011isReceivingE0Sbvp"></a>
+                    <a name="//apple_ref/swift/Property/isReceivingVideo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC011isReceivingE0Sbvp">isReceivingVideo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isReceivingVideo</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK14RemoteAuxVideoC13addRenderViewyAA05MediagH0C4view_tF"></a>
+                    <a name="//apple_ref/swift/Method/addRenderView(view:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC13addRenderViewyAA05MediagH0C4view_tF">addRenderView(view:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addRenderView</span><span class="p">(</span><span class="nv">view</span><span class="p">:</span> <span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK14RemoteAuxVideoC16removeRenderViewyAA05MediagH0C4view_tF"></a>
+                    <a name="//apple_ref/swift/Method/removeRenderView(view:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC16removeRenderViewyAA05MediagH0C4view_tF">removeRenderView(view:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeRenderView</span><span class="p">(</span><span class="nv">view</span><span class="p">:</span> <span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK14RemoteAuxVideoC16updateRenderViewyAA05MediagH0C4view_tF"></a>
+                    <a name="//apple_ref/swift/Method/updateRenderView(view:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC16updateRenderViewyAA05MediagH0C4view_tF">updateRenderView(view:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updateRenderView</span><span class="p">(</span><span class="nv">view</span><span class="p">:</span> <span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK14RemoteAuxVideoC17containRenderViewSbAA05MediagH0C4view_tF"></a>
+                    <a name="//apple_ref/swift/Method/containRenderView(view:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC17containRenderViewSbAA05MediagH0C4view_tF">containRenderView(view:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">containRenderView</span><span class="p">(</span><span class="nv">view</span><span class="p">:</span> <span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>

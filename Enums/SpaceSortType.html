@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>RoomType Enumeration Reference</title>
+    <title>SpaceSortType Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,11 +10,11 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/RoomType" class="dashAnchor"></a>
-    <a title="RoomType Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Enum/SpaceSortType" class="dashAnchor"></a>
+    <a title="SpaceSortType Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK Docs</a> (96% documented)</p>
+        <p><a href="../index.html">WebexSDK Docs</a> (94% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">WebexSDK Reference</a>
         <img id="carat" src="../img/carat.png" />
-        RoomType Enumeration Reference
+        SpaceSortType Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -95,10 +95,13 @@
                 <a href="../Classes/Phone/DefaultBandwidth.html">– DefaultBandwidth</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/RoomClient.html">RoomClient</a>
+                <a href="../Classes/RemoteAuxVideo.html">RemoteAuxVideo</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/SSOAuthenticator.html">SSOAuthenticator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SpaceClient.html">SpaceClient</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/TeamClient.html">TeamClient</a>
@@ -111,6 +114,14 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/WebhookClient.html">WebhookClient</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Global Variables.html">Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:8WebexSDK27MAX_REMOTE_AUX_VIDEO_NUMBERSivp">MAX_REMOTE_AUX_VIDEO_NUMBER</a>
               </li>
             </ul>
           </li>
@@ -136,10 +147,10 @@
                 <a href="../Enums/Result.html">Result</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/RoomSortType.html">RoomSortType</a>
+                <a href="../Enums/SpaceSortType.html">SpaceSortType</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/RoomType.html">RoomType</a>
+                <a href="../Enums/SpaceType.html">SpaceType</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/WebexError.html">WebexError</a>
@@ -214,10 +225,10 @@
                 <a href="../Structs/RemoteFile/Thumbnail.html">– Thumbnail</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/Room.html">Room</a>
+                <a href="../Structs/ServiceResponse.html">ServiceResponse</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/ServiceResponse.html">ServiceResponse</a>
+                <a href="../Structs/Space.html">Space</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Team.html">Team</a>
@@ -235,14 +246,19 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>RoomType</h1>
+            <h1>SpaceSortType</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">RoomType</span> <span class="p">:</span> <span class="kt">String</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">SpaceSortType</span> <span class="p">:</span> <span class="kt">String</span></code></pre>
 
                 </div>
               </div>
-            <p>The enumeration of the types of a room.</p>
+            <p>The enumeration of sorting result</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    1.4.0
+
+</div>
 
           </section>
           <section class="section task-group-section">
@@ -251,9 +267,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK8RoomTypeO6directA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/direct" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK8RoomTypeO6directA2CmF">direct</a>
+                    <a name="/s:8WebexSDK13SpaceSortTypeO4byIdA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/byId" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK13SpaceSortTypeO4byIdA2CmF">byId</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -261,14 +277,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>1-to-1 room between two people</p>
+                        <p>sort result by id</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">direct</span> <span class="o">=</span> <span class="s">"direct"</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">byId</span> <span class="o">=</span> <span class="s">"id"</span></code></pre>
 
                         </div>
                       </div>
@@ -278,9 +294,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK8RoomTypeO5groupA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/group" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK8RoomTypeO5groupA2CmF">group</a>
+                    <a name="/s:8WebexSDK13SpaceSortTypeO14byLastActivityA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/byLastActivity" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK13SpaceSortTypeO14byLastActivityA2CmF">byLastActivity</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -288,14 +304,41 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Group room among multiple people</p>
+                        <p>last active space comes first</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">group</span> <span class="o">=</span> <span class="s">"group"</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">byLastActivity</span> <span class="o">=</span> <span class="s">"lastactivity"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK13SpaceSortTypeO9byCreatedA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/byCreated" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK13SpaceSortTypeO9byCreatedA2CmF">byCreated</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>last created space comes first</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">byCreated</span> <span class="o">=</span> <span class="s">"created"</span></code></pre>
 
                         </div>
                       </div>
@@ -307,7 +350,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2018-07-05)</p>
+          <p>&copy; 2018 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2018-10-31)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

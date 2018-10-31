@@ -14,7 +14,7 @@
     <a title="MembershipClient Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK Docs</a> (96% documented)</p>
+        <p><a href="../index.html">WebexSDK Docs</a> (94% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -95,10 +95,13 @@
                 <a href="../Classes/Phone/DefaultBandwidth.html">– DefaultBandwidth</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/RoomClient.html">RoomClient</a>
+                <a href="../Classes/RemoteAuxVideo.html">RemoteAuxVideo</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/SSOAuthenticator.html">SSOAuthenticator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SpaceClient.html">SpaceClient</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/TeamClient.html">TeamClient</a>
@@ -111,6 +114,14 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/WebhookClient.html">WebhookClient</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Global Variables.html">Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:8WebexSDK27MAX_REMOTE_AUX_VIDEO_NUMBERSivp">MAX_REMOTE_AUX_VIDEO_NUMBER</a>
               </li>
             </ul>
           </li>
@@ -136,10 +147,10 @@
                 <a href="../Enums/Result.html">Result</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/RoomSortType.html">RoomSortType</a>
+                <a href="../Enums/SpaceSortType.html">SpaceSortType</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/RoomType.html">RoomType</a>
+                <a href="../Enums/SpaceType.html">SpaceType</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/WebexError.html">WebexError</a>
@@ -214,10 +225,10 @@
                 <a href="../Structs/RemoteFile/Thumbnail.html">– Thumbnail</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/Room.html">Room</a>
+                <a href="../Structs/ServiceResponse.html">ServiceResponse</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/ServiceResponse.html">ServiceResponse</a>
+                <a href="../Structs/Space.html">Space</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Team.html">Team</a>
@@ -242,7 +253,7 @@
 
                 </div>
               </div>
-            <p>An iOS client wrapper of the Cisco Webex <a href="https://developer.webex.com/resource-memberships.html">Room Memberships REST API</a> .</p>
+            <p>An iOS client wrapper of the Cisco Webex <a href="https://developer.webex.com/resource-memberships.html">Space Memberships REST API</a> .</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -266,7 +277,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Lists all room memberships where the authenticated user belongs.</p>
+                        <p>Lists all space memberships where the authenticated user belongs.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -335,9 +346,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK16MembershipClientC4listySS6roomId_SiSg3maxSo13DispatchQueueCSg5queueyAA15ServiceResponseVySayAA0C0VGGc17completionHandlertF"></a>
-                    <a name="//apple_ref/swift/Method/list(roomId:max:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK16MembershipClientC4listySS6roomId_SiSg3maxSo13DispatchQueueCSg5queueyAA15ServiceResponseVySayAA0C0VGGc17completionHandlertF">list(roomId:max:queue:completionHandler:)</a>
+                    <a name="/s:8WebexSDK16MembershipClientC4listySS7spaceId_SiSg3maxSo13DispatchQueueCSg5queueyAA15ServiceResponseVySayAA0C0VGGc17completionHandlertF"></a>
+                    <a name="//apple_ref/swift/Method/list(spaceId:max:queue:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC4listySS7spaceId_SiSg3maxSo13DispatchQueueCSg5queueyAA15ServiceResponseVySayAA0C0VGGc17completionHandlertF">list(spaceId:max:queue:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -345,7 +356,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Lists all memberships in the given room by room Id.</p>
+                        <p>Lists all memberships in the given space by space Id.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -357,7 +368,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">list</span><span class="p">(</span><span class="nv">roomId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">max</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/Membership.html">Membership</a></span><span class="p">]</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">list</span><span class="p">(</span><span class="nv">spaceId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">max</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/Membership.html">Membership</a></span><span class="p">]</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -368,12 +379,12 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>roomId</em>
+                                <em>spaceId</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The identifier of the room where the membership belongs.</p>
+                                  <p>The identifier of the space where the membership belongs.</p>
                                 </div>
                               </td>
                             </tr>
@@ -426,9 +437,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK16MembershipClientC4listySS6roomId_SS06personG0So13DispatchQueueCSg5queueyAA15ServiceResponseVySayAA0C0VGGc17completionHandlertF"></a>
-                    <a name="//apple_ref/swift/Method/list(roomId:personId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK16MembershipClientC4listySS6roomId_SS06personG0So13DispatchQueueCSg5queueyAA15ServiceResponseVySayAA0C0VGGc17completionHandlertF">list(roomId:personId:queue:completionHandler:)</a>
+                    <a name="/s:8WebexSDK16MembershipClientC4listySS7spaceId_SS06personG0So13DispatchQueueCSg5queueyAA15ServiceResponseVySayAA0C0VGGc17completionHandlertF"></a>
+                    <a name="//apple_ref/swift/Method/list(spaceId:personId:queue:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC4listySS7spaceId_SS06personG0So13DispatchQueueCSg5queueyAA15ServiceResponseVySayAA0C0VGGc17completionHandlertF">list(spaceId:personId:queue:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -436,7 +447,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Lists any room memberships for the given room (by room id) and person (by person id).</p>
+                        <p>Lists any space memberships for the given space (by space id) and person (by person id).</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -448,7 +459,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">list</span><span class="p">(</span><span class="nv">roomId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">personId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/Membership.html">Membership</a></span><span class="p">]</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">list</span><span class="p">(</span><span class="nv">spaceId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">personId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/Membership.html">Membership</a></span><span class="p">]</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -459,12 +470,12 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>roomId</em>
+                                <em>spaceId</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The identifier of the room where the memberships belong.</p>
+                                  <p>The identifier of the space where the memberships belong.</p>
                                 </div>
                               </td>
                             </tr>
@@ -517,9 +528,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK16MembershipClientC4listySS6roomId_AA12EmailAddressC06personH0So13DispatchQueueCSg5queueyAA15ServiceResponseVySayAA0C0VGGc17completionHandlertF"></a>
-                    <a name="//apple_ref/swift/Method/list(roomId:personEmail:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK16MembershipClientC4listySS6roomId_AA12EmailAddressC06personH0So13DispatchQueueCSg5queueyAA15ServiceResponseVySayAA0C0VGGc17completionHandlertF">list(roomId:personEmail:queue:completionHandler:)</a>
+                    <a name="/s:8WebexSDK16MembershipClientC4listySS7spaceId_AA12EmailAddressC06personH0So13DispatchQueueCSg5queueyAA15ServiceResponseVySayAA0C0VGGc17completionHandlertF"></a>
+                    <a name="//apple_ref/swift/Method/list(spaceId:personEmail:queue:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC4listySS7spaceId_AA12EmailAddressC06personH0So13DispatchQueueCSg5queueyAA15ServiceResponseVySayAA0C0VGGc17completionHandlertF">list(spaceId:personEmail:queue:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -527,7 +538,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Lists any room memberships for the given room (by room id) and person (by email address).</p>
+                        <p>Lists any space memberships for the given space (by space id) and person (by email address).</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -539,7 +550,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">list</span><span class="p">(</span><span class="nv">roomId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">personEmail</span><span class="p">:</span> <span class="kt"><a href="../Classes/EmailAddress.html">EmailAddress</a></span><span class="p">,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/Membership.html">Membership</a></span><span class="p">]</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">list</span><span class="p">(</span><span class="nv">spaceId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">personEmail</span><span class="p">:</span> <span class="kt"><a href="../Classes/EmailAddress.html">EmailAddress</a></span><span class="p">,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/Membership.html">Membership</a></span><span class="p">]</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -550,12 +561,12 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>roomId</em>
+                                <em>spaceId</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The identifier of the room where the memberships belong.</p>
+                                  <p>The identifier of the space where the memberships belong.</p>
                                 </div>
                               </td>
                             </tr>
@@ -608,9 +619,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK16MembershipClientC6createySS6roomId_SS06personG0Sb11isModeratorSo13DispatchQueueCSg5queueyAA15ServiceResponseVyAA0C0VGc17completionHandlertF"></a>
-                    <a name="//apple_ref/swift/Method/create(roomId:personId:isModerator:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK16MembershipClientC6createySS6roomId_SS06personG0Sb11isModeratorSo13DispatchQueueCSg5queueyAA15ServiceResponseVyAA0C0VGc17completionHandlertF">create(roomId:personId:isModerator:queue:completionHandler:)</a>
+                    <a name="/s:8WebexSDK16MembershipClientC6createySS7spaceId_SS06personG0Sb11isModeratorSo13DispatchQueueCSg5queueyAA15ServiceResponseVyAA0C0VGc17completionHandlertF"></a>
+                    <a name="//apple_ref/swift/Method/create(spaceId:personId:isModerator:queue:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC6createySS7spaceId_SS06personG0Sb11isModeratorSo13DispatchQueueCSg5queueyAA15ServiceResponseVyAA0C0VGc17completionHandlertF">create(spaceId:personId:isModerator:queue:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -618,7 +629,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Adds a person to a room by person id; optionally making the person a moderator.</p>
+                        <p>Adds a person to a space by person id; optionally making the person a moderator.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -630,7 +641,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">roomId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">personId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">isModerator</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Membership.html">Membership</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">spaceId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">personId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">isModerator</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Membership.html">Membership</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -641,12 +652,12 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>roomId</em>
+                                <em>spaceId</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The identifier of the room where the person is to be added.</p>
+                                  <p>The identifier of the space where the person is to be added.</p>
                                 </div>
                               </td>
                             </tr>
@@ -670,7 +681,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>If true, make the person a moderator of the room. The default is false.</p>
+                                  <p>If true, make the person a moderator of the space. The default is false.</p>
                                 </div>
                               </td>
                             </tr>
@@ -711,9 +722,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK16MembershipClientC6createySS6roomId_AA12EmailAddressC06personH0Sb11isModeratorSo13DispatchQueueCSg5queueyAA15ServiceResponseVyAA0C0VGc17completionHandlertF"></a>
-                    <a name="//apple_ref/swift/Method/create(roomId:personEmail:isModerator:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK16MembershipClientC6createySS6roomId_AA12EmailAddressC06personH0Sb11isModeratorSo13DispatchQueueCSg5queueyAA15ServiceResponseVyAA0C0VGc17completionHandlertF">create(roomId:personEmail:isModerator:queue:completionHandler:)</a>
+                    <a name="/s:8WebexSDK16MembershipClientC6createySS7spaceId_AA12EmailAddressC06personH0Sb11isModeratorSo13DispatchQueueCSg5queueyAA15ServiceResponseVyAA0C0VGc17completionHandlertF"></a>
+                    <a name="//apple_ref/swift/Method/create(spaceId:personEmail:isModerator:queue:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC6createySS7spaceId_AA12EmailAddressC06personH0Sb11isModeratorSo13DispatchQueueCSg5queueyAA15ServiceResponseVyAA0C0VGc17completionHandlertF">create(spaceId:personEmail:isModerator:queue:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -721,7 +732,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Adds a person to a room by email address; optionally making the person a moderator.</p>
+                        <p>Adds a person to a space by email address; optionally making the person a moderator.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -733,7 +744,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">roomId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">personEmail</span><span class="p">:</span> <span class="kt"><a href="../Classes/EmailAddress.html">EmailAddress</a></span><span class="p">,</span> <span class="nv">isModerator</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Membership.html">Membership</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">spaceId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">personEmail</span><span class="p">:</span> <span class="kt"><a href="../Classes/EmailAddress.html">EmailAddress</a></span><span class="p">,</span> <span class="nv">isModerator</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Membership.html">Membership</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -744,12 +755,12 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>roomId</em>
+                                <em>spaceId</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The identifier of the room where the person is to be added.</p>
+                                  <p>The identifier of the space where the person is to be added.</p>
                                 </div>
                               </td>
                             </tr>
@@ -773,7 +784,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>If true, make the person a moderator of the room. The default is false.</p>
+                                  <p>If true, make the person a moderator of the space. The default is false.</p>
                                 </div>
                               </td>
                             </tr>
@@ -943,7 +954,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>If true, make the person a moderator of the room in this membership. The default is false.</p>
+                                  <p>If true, make the person a moderator of the space in this membership. The default is false.</p>
                                 </div>
                               </td>
                             </tr>
@@ -994,7 +1005,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Deletes a membership by membership id. It removes the person from the room where the membership belongs.</p>
+                        <p>Deletes a membership by membership id. It removes the person from the space where the membership belongs.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -1065,7 +1076,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2018-07-05)</p>
+          <p>&copy; 2018 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2018-10-31)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

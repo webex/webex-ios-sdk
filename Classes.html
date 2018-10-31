@@ -14,7 +14,7 @@
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">WebexSDK Docs</a> (96% documented)</p>
+        <p><a href="index.html">WebexSDK Docs</a> (94% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -95,10 +95,13 @@
                 <a href="Classes/Phone/DefaultBandwidth.html">– DefaultBandwidth</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/RoomClient.html">RoomClient</a>
+                <a href="Classes/RemoteAuxVideo.html">RemoteAuxVideo</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SSOAuthenticator.html">SSOAuthenticator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SpaceClient.html">SpaceClient</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/TeamClient.html">TeamClient</a>
@@ -111,6 +114,14 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/WebhookClient.html">WebhookClient</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Global Variables.html">Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:8WebexSDK27MAX_REMOTE_AUX_VIDEO_NUMBERSivp">MAX_REMOTE_AUX_VIDEO_NUMBER</a>
               </li>
             </ul>
           </li>
@@ -136,10 +147,10 @@
                 <a href="Enums/Result.html">Result</a>
               </li>
               <li class="nav-group-task">
-                <a href="Enums/RoomSortType.html">RoomSortType</a>
+                <a href="Enums/SpaceSortType.html">SpaceSortType</a>
               </li>
               <li class="nav-group-task">
-                <a href="Enums/RoomType.html">RoomType</a>
+                <a href="Enums/SpaceType.html">SpaceType</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/WebexError.html">WebexError</a>
@@ -214,10 +225,10 @@
                 <a href="Structs/RemoteFile/Thumbnail.html">– Thumbnail</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/Room.html">Room</a>
+                <a href="Structs/ServiceResponse.html">ServiceResponse</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/ServiceResponse.html">ServiceResponse</a>
+                <a href="Structs/Space.html">Space</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Team.html">Team</a>
@@ -453,7 +464,7 @@ based authentication strategy used to authenticate a user on Cisco Webex.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>An iOS client wrapper of the Cisco Webex <a href="https://developer.webex.com/resource-memberships.html">Room Memberships REST API</a> .</p>
+                        <p>An iOS client wrapper of the Cisco Webex <a href="https://developer.webex.com/resource-memberships.html">Space Memberships REST API</a> .</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -704,6 +715,38 @@ based authentication strategy used to authenticate a user on Cisco Webex.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8WebexSDK14RemoteAuxVideoC"></a>
+                    <a name="//apple_ref/swift/Class/RemoteAuxVideo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK14RemoteAuxVideoC">RemoteAuxVideo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/RemoteAuxVideo.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">RemoteAuxVideo</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8WebexSDK5PhoneC"></a>
                     <a name="//apple_ref/swift/Class/Phone" class="dashAnchor"></a>
                     <a class="token" href="#/s:8WebexSDK5PhoneC">Phone</a>
@@ -752,9 +795,9 @@ The <em>phone</em> must be registered before it can make or receive calls.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK10RoomClientC"></a>
-                    <a name="//apple_ref/swift/Class/RoomClient" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK10RoomClientC">RoomClient</a>
+                    <a name="/s:8WebexSDK11SpaceClientC"></a>
+                    <a name="//apple_ref/swift/Class/SpaceClient" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11SpaceClientC">SpaceClient</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -762,20 +805,20 @@ The <em>phone</em> must be registered before it can make or receive calls.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>An iOS client wrapper of the Cisco Webex <a href="https://developer.webex.com/resource-rooms.html">Rooms REST API</a> .</p>
+                        <p>An iOS client wrapper of the Cisco Webex <a href="https://developer.webex.com/resource-rooms.html">Spaces REST API</a> .</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
 
 </div>
 
-                        <a href="Classes/RoomClient.html" class="slightly-smaller">See more</a>
+                        <a href="Classes/SpaceClient.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">RoomClient</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SpaceClient</span></code></pre>
 
                         </div>
                       </div>
@@ -1007,7 +1050,7 @@ The <em>phone</em> must be registered before it can make or receive calls.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2018-07-05)</p>
+          <p>&copy; 2018 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2018-10-31)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

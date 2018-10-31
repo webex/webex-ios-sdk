@@ -13,7 +13,7 @@
     <a title="WebexSDK  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">WebexSDK Docs</a> (96% documented)</p>
+        <p><a href="index.html">WebexSDK Docs</a> (94% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -94,10 +94,13 @@
                 <a href="Classes/Phone/DefaultBandwidth.html">– DefaultBandwidth</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/RoomClient.html">RoomClient</a>
+                <a href="Classes/RemoteAuxVideo.html">RemoteAuxVideo</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SSOAuthenticator.html">SSOAuthenticator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SpaceClient.html">SpaceClient</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/TeamClient.html">TeamClient</a>
@@ -110,6 +113,14 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/WebhookClient.html">WebhookClient</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Global Variables.html">Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Global Variables.html#/s:8WebexSDK27MAX_REMOTE_AUX_VIDEO_NUMBERSivp">MAX_REMOTE_AUX_VIDEO_NUMBER</a>
               </li>
             </ul>
           </li>
@@ -135,10 +146,10 @@
                 <a href="Enums/Result.html">Result</a>
               </li>
               <li class="nav-group-task">
-                <a href="Enums/RoomSortType.html">RoomSortType</a>
+                <a href="Enums/SpaceSortType.html">SpaceSortType</a>
               </li>
               <li class="nav-group-task">
-                <a href="Enums/RoomType.html">RoomType</a>
+                <a href="Enums/SpaceType.html">SpaceType</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/WebexError.html">WebexError</a>
@@ -213,10 +224,10 @@
                 <a href="Structs/RemoteFile/Thumbnail.html">– Thumbnail</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/Room.html">Room</a>
+                <a href="Structs/ServiceResponse.html">ServiceResponse</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/ServiceResponse.html">ServiceResponse</a>
+                <a href="Structs/Space.html">Space</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Team.html">Team</a>
@@ -250,6 +261,7 @@
 <li><a href="#install">Install</a></li>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#license">License</a></li>
+<li><a href="#migration-from-cisco-sparksdk">Migration From SparkSDK</a></li>
 </ul>
 <h2 id='install' class='heading'>Install</h2>
 
@@ -326,9 +338,9 @@
 <span class="p">}</span>
 </code></pre></li>
 <li><p>Use Webex service:</p>
-<pre class="highlight swift"><code><span class="n">webex</span><span class="o">.</span><span class="n">rooms</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">title</span><span class="p">:</span> <span class="s">"Hello World"</span><span class="p">)</span> <span class="p">{</span> <span class="n">response</span> <span class="k">in</span>
+<pre class="highlight swift"><code><span class="n">webex</span><span class="o">.</span><span class="n">spaces</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">title</span><span class="p">:</span> <span class="s">"Hello World"</span><span class="p">)</span> <span class="p">{</span> <span class="n">response</span> <span class="k">in</span>
     <span class="k">switch</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">room</span><span class="p">):</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">space</span><span class="p">):</span>
         <span class="c1">// ...</span>
     <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
         <span class="c1">// ...</span>
@@ -337,7 +349,7 @@
 
 <span class="c1">// ...</span>
 
-<span class="n">webex</span><span class="o">.</span><span class="n">memberships</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">roomId</span><span class="p">:</span> <span class="n">roomId</span><span class="p">,</span> <span class="nv">personEmail</span><span class="p">:</span> <span class="n">email</span><span class="p">)</span> <span class="p">{</span> <span class="n">response</span> <span class="k">in</span>
+<span class="n">webex</span><span class="o">.</span><span class="n">memberships</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">spaceId</span><span class="p">:</span> <span class="n">spaceId</span><span class="p">,</span> <span class="nv">personEmail</span><span class="p">:</span> <span class="n">email</span><span class="p">)</span> <span class="p">{</span> <span class="n">response</span> <span class="k">in</span>
     <span class="k">switch</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span> <span class="p">{</span>
     <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">membership</span><span class="p">):</span>
         <span class="c1">// ...</span>
@@ -373,8 +385,8 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></li>
-<li><p>Make an room call:</p>
-<pre class="highlight swift"><code><span class="n">webex</span><span class="o">.</span><span class="n">phone</span><span class="o">.</span><span class="nf">dial</span><span class="p">(</span><span class="n">roomId</span><span class="p">,</span> <span class="nv">option</span><span class="p">:</span> <span class="kt">MediaOption</span><span class="o">.</span><span class="nf">audioVideo</span><span class="p">(</span><span class="nv">local</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span> <span class="nv">remote</span><span class="p">:</span> <span class="o">...</span><span class="p">))</span> <span class="p">{</span> <span class="n">ret</span> <span class="k">in</span>
+<li><p>Make an space call:</p>
+<pre class="highlight swift"><code><span class="n">webex</span><span class="o">.</span><span class="n">phone</span><span class="o">.</span><span class="nf">dial</span><span class="p">(</span><span class="n">spaceId</span><span class="p">,</span> <span class="nv">option</span><span class="p">:</span> <span class="kt">MediaOption</span><span class="o">.</span><span class="nf">audioVideo</span><span class="p">(</span><span class="nv">local</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span> <span class="nv">remote</span><span class="p">:</span> <span class="o">...</span><span class="p">))</span> <span class="p">{</span> <span class="n">ret</span> <span class="k">in</span>
     <span class="k">switch</span> <span class="n">ret</span> <span class="p">{</span>
     <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">call</span><span class="p">):</span>
         <span class="n">call</span><span class="o">.</span><span class="n">onConnected</span> <span class="o">=</span> <span class="p">{</span>
@@ -513,10 +525,108 @@
             <span class="k">break</span>
     <span class="p">}</span>
 <span class="p">}</span>
+
 </code></pre>
 
 <p>11.3 Get more technical details about the <a href="https://github.com/webex/webex-ios-sdk/wiki/Implementation-Broadcast-upload-extension">Containing App &amp; Broadcast upload extension</a> and <a href="https://github.com/webex/webex-ios-sdk/wiki/Set-up-an-App-Group">Set up an App Group</a></p></li>
+<li><p>Receive more video streams in a meeting:</p>
+<pre class="highlight plaintext"><code>class VideoCallViewController: MultiStreamObserver {
+    ...
+    var onAuxStreamChanged: ((AuxStreamChangeEvent) -&gt; Void)? = {
+        ...
+        switch event {
+        case .auxStreamOpenedEvent(let view, let result):
+            switch result {
+                case .success(let auxStream):
+                    ...
+                case .failure(let error):
+                    ...
+            }
+        case .auxStreamPersonChangedEvent(let auxStream,_,_):
+                ...
+        case .auxStreamSendingVideoEvent(let auxStream):
+            ...
+        case .auxStreamSizeChangedEvent(let auxStream):
+            ...
+        case .auxStreamClosedEvent(let view, let error):
+            ...
+        }
+    }
+
+    var onAuxStreamAvailable: (() -&gt; MediaRenderView?)? = {
+        ...
+        return self.mediaRenderViews.filter({!$0.inUse}).first?
+    }
+
+    var onAuxStreamUnavailable: (() -&gt; MediaRenderView?)? = {
+        ...
+        return self.mediaRenderViews.filter({$0.inUse}).last?
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        ...
+        // set the observer of this call to get multi stream event.
+        self.call.multiStreamObserver = self
+        ...
+    }
+}
+</code></pre></li>
 </ol>
+<h2 id='migration-from-cisco-sparksdk' class='heading'>Migration from Cisco SparkSDK</h2>
+
+<p>The purpose of this guide is to help you to migrate from Cisco SparkSDK to Cisco WebexSDK.</p>
+
+<p>Assuming you already have an project integrated with SparkSDK. </p>
+
+<ol>
+<li><p>In your pod file:</p>
+
+<p>remove previous SparkSDK: <del>pod &lsquo;SparkSDK&rsquo;</del></p>
+
+<p>add WebexSDK: pod &lsquo;WebexSDK&rsquo;</p></li>
+<li><p>Go to project directory, and run: </p>
+<pre class="highlight c"><code><span class="n">pod</span> <span class="n">install</span>
+</code></pre></li>
+<li><p>Replace sdk import info for your code:</p>
+
+<p>Replace in project scope: </p>
+
+<p><q>import SparkSDK</q> =&gt; <q>import WebexSDK</q></p></li>
+<li><p>If you using story board for UI: </p>
+
+<p>Change meida render view&rsquo;s module in <q>Indentity inspector</q>: </p>
+
+<p><q>SparkSDK</q> =&gt; <q>WebexSDK</q></p></li>
+</ol>
+<h3 id='usage' class='heading'>Usage</h3>
+
+<p>API changes list from SparkSDK to WebexSDK.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: center">Description</th>
+<th style="text-align: center">SparkSDK Use</th>
+<th style="text-align: center">WebexSDK Use</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: center">Create a new instance</td>
+<td style="text-align: center">let spark = Spark(authenticator: authenticator)</td>
+<td style="text-align: center">let webex = Webex(authenticator: authenticator)</td>
+</tr>
+<tr>
+<td style="text-align: center"><q>Room</q> Client renamed to <q>Space</q> Client</td>
+<td style="text-align: center">spark.rooms.list(roomId:{rooomId})</td>
+<td style="text-align: center">webex.spaces.list(spaceId:{roomId})</td>
+</tr>
+<tr>
+<td style="text-align: center"><q>SparkError</q> renamed to <q>WebexError</q></td>
+<td style="text-align: center">let error = SparkError.Auth</td>
+<td style="text-align: center">let error = WebexError.Auth</td>
+</tr>
+</tbody></table>
+
+<p>Recomand to replace variables containing <q>spark</q> with <q>webex</q> in project code.  </p>
 <h2 id='license' class='heading'>License</h2>
 
 <p>&copy; 2016-2018 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.</p>
@@ -526,7 +636,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2018-07-05)</p>
+          <p>&copy; 2018 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2018-10-31)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
