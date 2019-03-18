@@ -172,7 +172,10 @@ public class Phone {
                     case .recvCall(let model):
                         strong.doLocusEvent(model);
                     case .recvActivity(let model):
+                        print("recvActivity")
+                        print(model)
                         strong.doConversationEvent(model);
+                        break;
                     case .recvKms(let model):
                         strong.doKmsEvent(model);
                     case .connected:
