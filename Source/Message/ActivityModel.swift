@@ -30,6 +30,9 @@ struct ActivityModel {
         case tombstone
         case acknowledge
         case updateKey
+        // 03-19-2019 ADDED BY OREL ABUTBUL FOR INTESA PROJECT
+        case add
+        case leave
     }
     
     private(set) var id: String?
@@ -38,7 +41,8 @@ struct ActivityModel {
     var toPersonId: String?
     private(set) var toPersonEmail: String?
     private(set) var text: String?
-    private(set) var personId: String?
+    private(set) var markdown: String?
+    private(set) var personId: String? // Actor
     private(set) var personEmail: String?
     private(set) var created: Date?
     private(set) var mentionedPeople: [String]?
@@ -47,6 +51,9 @@ struct ActivityModel {
     private(set) var encryptionKeyUrl: String?
     private(set) var kind: ActivityModel.Kind?
     private(set) var clientTempId: String?
+
+    // 03-19-2019 ADDED BY OREL ABUTBUL FOR INTESA PROJECT
+    private(set) var object_id: String?
 }
 
 extension ActivityModel : ImmutableMappable {
@@ -70,6 +77,7 @@ extension ActivityModel : ImmutableMappable {
         if let text: String = try? map.value("object.content") {
             self.text = text
         }
+        
         if let groupItems: [[String: Any]] = try? map.value("object.groupMentions.items"), groupItems.count > 0 {
             self.mentionedGroup = groupItems.compactMap { value in
                 return value["groupType"] as? String
@@ -84,6 +92,13 @@ extension ActivityModel : ImmutableMappable {
             self.files = fileItems.compactMap { value in
                 return Mapper<RemoteFile>().map(JSON: value)
             }
+        }
+
+        // 03-19-2019 ADDED BY OREL ABUTBUL FOR INTESA PROJECT
+        self.object_id = try? map.value("object.id",using: IdentityTransform(for: IdentityType.message))
+        
+        if let markdown: String = try? map.value("object.markdown") {
+            self.markdown = markdown
         }
     }
     
@@ -112,6 +127,7 @@ extension ActivityModel : ImmutableMappable {
 extension ActivityModel {
     func decrypt(key: String?) -> ActivityModel {
         var activity = self
+        activity.markdown = activity.markdown?.decrypt(key: key)
         activity.text = activity.text?.decrypt(key: key)
         activity.files = activity.files?.map { f in
             var file = f
@@ -211,4 +227,6 @@ private class SpaceTypeTransform : TransformType {
         }
         return nil
     }
+    
+    
 }

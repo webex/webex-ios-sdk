@@ -29,6 +29,15 @@ public enum MessageEvent {
     case messageReceived(Message)
     /// The call back when a message was deleted
     case messageDeleted(String)
+    
+    // ADDED BY OREL ABUTBUL - FOR INTESA PROJECT
+    /// The call back when a message was deleted
+                        //PersonId   SpaceId
+    case membershipDeleted(String,    String)
+                        //PersonId   SpaceId
+    case membershipCreated(String,     String)
+                        //Message ID   SpaceId  PersonID    Published(Date)
+    case membershipUpdated(String,   String,  String,     Date)
 }
 
 /// The struct of a Message on Cisco Webex.
@@ -75,6 +84,10 @@ public struct Message {
     /// The timestamp that the message being created.
     public var created: Date? {
         return self.activity.created
+    }
+    
+    public var markdown: String? {
+        return self.activity.markdown
     }
     
     /// Returns true if the user included in message's mention list

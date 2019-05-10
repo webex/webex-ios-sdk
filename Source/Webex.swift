@@ -98,6 +98,8 @@ public class Webex {
     /// - since: 1.2.0
     public lazy var phone: Phone = Phone(authenticator: self.authenticator)
     
+    public lazy var readreceiptsService: ReadreceiptsService = ReadreceiptsService(authenticator: self.authenticator)
+    
     /// MessageClient represent activities relates to the user.
     /// Use *activities* to create and manage the activities on behalf of the authenticated user.
     ///

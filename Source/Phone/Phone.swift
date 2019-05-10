@@ -204,6 +204,7 @@ public class Phone {
     /// - returns: Void
     /// - since: 1.2.0
     public func register(_ completionHandler: @escaping ((Error?) -> Void)) {
+        
         self.queue.sync {
             self.devices.registerDevice(phone: self, queue: self.queue.underlying) { result in
                 switch result {

@@ -162,7 +162,15 @@ class WebSocketService: WebSocketAdvancedDelegate {
                 else if eventType == "conversation.activity" {
                     if let activityObj = eventData["activity"].object as? [String: Any],
                         let verb = activityObj["verb"] as? String,
-                        verb == "post" || verb == "share" || verb == "delete" {
+                        verb == "post" || verb == "share" || verb == "delete"
+                    // Added by Orel for Intesa project
+                        || verb == "add" // notifies a user has been added to a conversation
+                        || verb == "tombstone"  // used for deleted messages
+                        || verb == "leave"  // notifies a user has been removed to a conversation
+                        || verb == "acknowledge" // notifies a message as been read by a teams user
+                        
+                    // End 
+                    {
                         if let activity = try? Mapper<ActivityModel>().map(JSON: activityObj) {
                             self.onEvent?(MercuryEvent.recvActivity(activity))
                         }

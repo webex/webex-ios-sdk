@@ -345,13 +345,24 @@ class MessageClientImpl {
                 SDKLogger.shared.error("Not a valid message \(activity.id ?? (activity.toJSONString() ?? ""))")
                 return
             }
+            
+            // 03-19-2018 UPDATED BY OREL ABUTBUL
             DispatchQueue.main.async {
                 switch kind {
                 case .post, .share:
                     decryption.toPersonId = self.userId?.hydraFormat(for: .people)
                     self.onEvent?(MessageEvent.messageReceived(Message(activity: decryption)))
-                case .delete:
+                    break;
+                case .delete, .tombstone:
                     self.onEvent?(MessageEvent.messageDeleted(decryption.id ?? "illegal id"))
+                    break;
+                case .add:
+                    self.onEvent?(MessageEvent.membershipCreated((decryption.personId ?? "illegal id"),(decryption.spaceId ?? "illegal id")))
+               case .leave:
+                    self.onEvent?(MessageEvent.membershipDeleted((decryption.personId ?? "illegal id"),(decryption.spaceId ?? "illegal id")))
+                case .acknowledge:
+                    //Message ID   SpaceId  PersonID    Published
+                    self.onEvent?(MessageEvent.membershipUpdated((decryption.object_id ?? "illegal id"),(decryption.spaceId ?? "illegal id"),(decryption.personId ?? "illegal id") , (decryption.created ??  Date()) ))
                 default:
                     SDKLogger.shared.error("Not a valid message \(activity.id ?? (activity.toJSONString() ?? ""))")
                 }
