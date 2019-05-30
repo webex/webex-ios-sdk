@@ -31,7 +31,7 @@ public enum MessageEvent {
     case messageDeleted(String)
 }
 
-/// The struct of a Message on Cisco Webex.
+/// This struct represents a Message on Cisco Webex.
 ///
 /// - since: 1.2.0
 public struct Message {
@@ -46,7 +46,7 @@ public struct Message {
         return self.activity.spaceId
     }
     
-    ///  The space type "group"/"direct"
+    ///  The type of the space, "group"/"direct", where the message is posted.
     public var spaceType: SpaceType {
         return self.activity.spaceType ?? SpaceType.group
     }
@@ -77,7 +77,7 @@ public struct Message {
         return self.activity.created
     }
     
-    /// Returns true if the user included in message's mention list
+    /// Returns true if the receipient of the message is included in message's mention list
     ///
     /// - since: 1.4.0
     public var isSelfMentioned: Bool {
@@ -96,7 +96,7 @@ public struct Message {
         return self.activity.text
     }
     
-    /// A array of the attachments in the message.
+    /// An array of file attachments in the message.
     ///
     /// - since: 1.4.0
     public var files: [RemoteFile]? {
@@ -189,7 +189,11 @@ public class LocalFile {
     public let thumbnail: Thumbnail?
     
     /// LocalFile constructor.
-    ///
+    /// - parameter path: The path of the local file.
+    /// - parameter name: The name of the local file.
+    /// - parameter mime: The MIME type of the local file.
+    /// - parameter thumbnail: The thumbnail of the local file.
+    /// - parameter progressHandler: the progress handler callback for uploading progresses.
     /// - since: 1.4.0
     public init?(path: String, name: String? = nil, mime: String? = nil, thumbnail: Thumbnail? = nil, progressHandler: ((Double) -> Void)? = nil) {
         let tempName = name ?? URL(fileURLWithPath: path).lastPathComponent
@@ -208,7 +212,7 @@ public class LocalFile {
     }
 }
 
-/// Data struct for a remote file.
+/// A data struct represents a remote file.
 ///
 /// - since: 1.4.0
 public struct RemoteFile {
@@ -233,7 +237,7 @@ public struct RemoteFile {
     public internal(set) var mimeType: String?
     /// The size in bytes of file.
     public internal(set) var size: UInt64?
-    /// The thumbnail object of file.
+    /// The thumbnail of file.
     public internal(set) var thumbnail: Thumbnail?
     
     var url: String?
