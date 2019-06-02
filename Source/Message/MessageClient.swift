@@ -100,6 +100,26 @@ public class MessageClient {
         }
     }
     
+    /// Retrieve the details of a message by id.
+    ///
+    /// - parameter messageId: The identifier of the message.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the message is retrieved.
+    /// - returns: Void
+    /// - since: 1.2.0
+    public func get(messageId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
+        self.doSomethingAfterRegistered { error in
+            if let impl = self.phone.messages {
+                impl.get(messageId: messageId, decrypt: true, queue: queue, completionHandler: completionHandler)
+            }
+            else {
+                (queue ?? DispatchQueue.main).async {
+                    completionHandler(ServiceResponse(nil, Result.failure(error ?? WebexError.unregistered)))
+                }
+            }
+        }
+    }
+    
     /// Posts a message with an optional file attachment, to a user by email address.
     ///
     /// The content of the message can be plain text, html, or markdown.
@@ -183,26 +203,6 @@ public class MessageClient {
         self.doSomethingAfterRegistered { error in
             if let impl = self.phone.messages {
                 impl.post(spaceId: spaceId, text: text, mentions: mentions, files: files, queue: queue, completionHandler: completionHandler)
-            }
-            else {
-                (queue ?? DispatchQueue.main).async {
-                    completionHandler(ServiceResponse(nil, Result.failure(error ?? WebexError.unregistered)))
-                }
-            }
-        }
-    }
-    
-    /// Retrieve the details of a message by id.
-    ///
-    /// - parameter messageId: The identifier of the message.
-    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the message is retrieved.
-    /// - returns: Void
-    /// - since: 1.2.0
-    public func get(messageId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.doSomethingAfterRegistered { error in
-            if let impl = self.phone.messages {
-                impl.get(messageId: messageId, decrypt: true, queue: queue, completionHandler: completionHandler)
             }
             else {
                 (queue ?? DispatchQueue.main).async {
