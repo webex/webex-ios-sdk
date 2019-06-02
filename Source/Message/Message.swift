@@ -25,9 +25,9 @@ import ObjectMapper
 ///
 /// - since: 1.4.0
 public enum MessageEvent {
-    /// The call back when receive a new message
+    /// The callback when receive a new message
     case messageReceived(Message)
-    /// The call back when a message was deleted
+    /// The callback when a message was deleted
     case messageDeleted(String)
 }
 
@@ -140,23 +140,28 @@ extension Message : CustomStringConvertible {
 /// - since: 1.4.0
 public class LocalFile {
     
-    /// A data type represents a local file thumbnail.
+    /// A data type represents the thumbnail of this local file.
+    /// The thumbnail typically is an image file to provide preview of the local file without opening.
     ///
     /// - since: 1.4.0
     public class Thumbnail {
-        /// The local path of the file's thumbnail.
+        /// The local path of the thumbnail file to be uploaded.
         public let path: String
-        /// The width of the file's thumbnail.
+        /// The width of the thumbnail.
         public let width: Int
-        /// The height of the file's thumbnail.
+        /// The height of the thumbnail.
         public let height: Int
-        /// The size of the file's thumbnail.
+        /// The size in bytes of the thumbnail.
         public let size: UInt64
-        /// The path type of the file's thumbnail.
+        /// The MIME type of thumbnail.
         public let mime: String
         
         /// LocalFile thumbnail constructor.
         ///
+        /// - parameter path: the local path of the thumbnail file.
+        /// - parameter mine: the MIME type of the thumbnail.
+        /// - parameter width: the width of the thumbnail.
+        /// - parameter height: the height of the thumbnail.
         /// - since: 1.4.0
         public init?(path: String, mime: String? = nil, width: Int, height: Int) {
             if width <= 0 || height <= 0 {
@@ -175,25 +180,25 @@ public class LocalFile {
             self.size = size
         }
     }
-    /// The local path of the file.
+    /// The path of the local file to be uploaded.
     public let path: String
-    /// The name of the file.
+    /// The display name of the file.
     public let name: String
-    /// The mime type of the file.
+    /// The MIME type of the file.
     public let mime: String
-    /// The size of the file.
+    /// The size in bytes of the file.
     public let size: UInt64
-    /// The progressHandler when uploading the file.
+    /// The progress indicator callback for uploading progresses.
     public let progressHandler: ((Double) -> Void)?
-    /// The thumbnail of the file.
+    /// The thumbnail for the local file. If not nil, the thumbnail will be uploaded with the local file.
     public let thumbnail: Thumbnail?
     
     /// LocalFile constructor.
     /// - parameter path: The path of the local file.
-    /// - parameter name: The name of the local file.
+    /// - parameter name: The name of the uploaded file.
     /// - parameter mime: The MIME type of the local file.
-    /// - parameter thumbnail: The thumbnail of the local file.
-    /// - parameter progressHandler: the progress handler callback for uploading progresses.
+    /// - parameter thumbnail: The thumbnail for the local file.
+    /// - parameter progressHandler: the progress indicator callback for uploading progresses.
     /// - since: 1.4.0
     public init?(path: String, name: String? = nil, mime: String? = nil, thumbnail: Thumbnail? = nil, progressHandler: ((Double) -> Void)? = nil) {
         let tempName = name ?? URL(fileURLWithPath: path).lastPathComponent
@@ -212,32 +217,34 @@ public class LocalFile {
     }
 }
 
-/// A data struct represents a remote file.
+/// A data struct represents a remote file on Cisco Webex.
+/// The content of the remote file can be downloaded via *MessageClient.downloadFile*.
 ///
 /// - since: 1.4.0
 public struct RemoteFile {
     
-    /// A data type represents a thumbnail file.
-    ///
+    /// A data type represents a thumbnail for this remote file.
+    /// The thumbnail typically is an image file which provides preview of the remote file without downloading.
+    /// The content of the thumbnail can be downloaded via *MessageClient.downloadThumbnail*.
     /// - since: 1.4.0
     public struct Thumbnail {
-        /// The width of thumbanil file.
+        /// The width of thumbanil.
         public internal(set) var width: Int?
-        /// The height of thumbanil file.
+        /// The height of thumbanil.
         public internal(set) var height: Int?
-        /// The mimetype of thumbanil file.
+        /// The MIME type of thumbanil file.
         public internal(set) var mimeType: String?
         var url: String?
         var secureContentRef: String?
     }
     
-    /// The display name of file.
+    /// The display name of the remote file.
     public internal(set) var displayName: String?
-    /// The mimeType of file.
+    /// The MIME type of the remote file.
     public internal(set) var mimeType: String?
-    /// The size in bytes of file.
+    /// The size in bytes of the remote file.
     public internal(set) var size: UInt64?
-    /// The thumbnail of file.
+    /// The thumbnail of the remote file. Nil if no thumbnail availabe.
     public internal(set) var thumbnail: Thumbnail?
     
     var url: String?
