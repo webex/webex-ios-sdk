@@ -45,12 +45,12 @@ public enum Mention {
 
 /// MessageClient represents a client to the Webex Teams platform. It can send and receive messages.
 ///
-/// Use *Webex.messages()* to get an instance of MessageClient.
+/// Use *Webex.messages* to get an instance of MessageClient.
 ///
 /// - since: 1.4.0
 public class MessageClient {
     
-    /// Callback when receive Message.
+    /// The callback handler when receiving a message event.
     ///
     /// - since: 1.4.0
     public var onEvent: ((MessageEvent) -> Void)? {
@@ -71,13 +71,16 @@ public class MessageClient {
     }
     
     /// Lists all messages in a space by space Id.
-    /// If present, it includes the associated file attachment for each message.
     /// The list sorts the messages in descending order by creation date.
     ///
+    /// Note that the file attachment of the message are not downloaded.
+    /// Use the *downloadFile* or *downloadThumbnail* to download
+    /// the actual content or the thumbnail of the attachment.
+    ///
     /// - parameter spaceId: The identifier of the space.
-    /// - parameter before: If not nil, only list messages sent only before this condition.
+    /// - parameter before: If not nil, only list messages sent before this condition.
     /// - parameter max: Limit the maximum number of messages in the response, default is 50.
-    /// - parameter mentionedPeople: List messages where the caller is mentioned by using Mention.person("me").
+    /// - parameter mentionedPeople: List messages where a person (using *Mention.person*) or all (using Mention.all*) is mentioned.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the request has finished with a list of messages based on the above criteria.
     /// - returns: Void
@@ -100,35 +103,13 @@ public class MessageClient {
         }
     }
     
-    /// Retrieve the details of a message by id.
-    ///
-    /// - parameter messageId: The identifier of the message.
-    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the message is retrieved.
-    /// - returns: Void
-    /// - since: 1.2.0
-    public func get(messageId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.doSomethingAfterRegistered { error in
-            if let impl = self.phone.messages {
-                impl.get(messageId: messageId, decrypt: true, queue: queue, completionHandler: completionHandler)
-            }
-            else {
-                (queue ?? DispatchQueue.main).async {
-                    completionHandler(ServiceResponse(nil, Result.failure(error ?? WebexError.unregistered)))
-                }
-            }
-        }
-    }
-    
-    /// Posts a message with an optional file attachment, to a user by email address.
+    /// Posts a message with optional file attachments to a user by email address.
     ///
     /// The content of the message can be plain text, html, or markdown.
-    /// To notify specific person or everyone in a space, mentions should be used.
-    /// Having <code>@johndoe</code> in the content of the message does not generate notification.
     ///
     /// - parameter personEmail: The email address of the user to whom the message is to be posted.
     /// - parameter content: The content of message to be posted to the user. The content can be plain text, html, or markdown.
-    /// - parameter files: Local file to be uploaded with the message.
+    /// - parameter files: Local files to be uploaded with the message.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the message is posted.
     /// - returns: Void
@@ -150,15 +131,13 @@ public class MessageClient {
         }
     }
     
-    /// Posts a message with an optional file attachment, to a user by id.
+    /// Posts a message with optional file attachments to a user by id.
     ///
     /// The content of the message can be plain text, html, or markdown.
-    /// To notify specific person or everyone in a space, mentions should be used.
-    /// Having <code>@johndoe</code> in the content of the message does not generate notification.
     ///
     /// - parameter personId: The id of the user to whom the message is to be posted.
     /// - parameter text: The content message to be posted to the user. The content can be plain text, html, or markdown.
-    /// - parameter files: Local file to be attached to the message.
+    /// - parameter files: Local files to be attached to the message.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the message is posted.
     /// - returns: Void
@@ -180,16 +159,17 @@ public class MessageClient {
         }
     }
     
-    /// Posts a message with an optional file attachment to a space by spaceId.
+    /// Posts a message with optional file attachments to a space by spaceId.
     ///
     /// The content of the message can be plain text, html, or markdown.
+    ///
     /// To notify specific person or everyone in a space, mentions should be used.
     /// Having <code>@johndoe</code> in the content of the message does not generate notification.
     ///
     /// - parameter spaceId: The identifier of the space where the message is to be posted.
     /// - parameter text: The content message to be posted to the space. The content can be plain text, html, or markdown.
-    /// - parameter mentions: The mention items to be posted to the space.
-    /// - parameter files: Local file objects to be uploaded to the space.
+    /// - parameter mentions: Notify these mentions.
+    /// - parameter files: Local files to be uploaded to the space.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the message is posted.
     /// - returns: Void
@@ -203,6 +183,30 @@ public class MessageClient {
         self.doSomethingAfterRegistered { error in
             if let impl = self.phone.messages {
                 impl.post(spaceId: spaceId, text: text, mentions: mentions, files: files, queue: queue, completionHandler: completionHandler)
+            }
+            else {
+                (queue ?? DispatchQueue.main).async {
+                    completionHandler(ServiceResponse(nil, Result.failure(error ?? WebexError.unregistered)))
+                }
+            }
+        }
+    }
+    
+    /// Retrieves the details of a message by id.
+    ///
+    /// Note that the file attachment of the message are not downloaded.
+    /// Use the *downloadFile* or *downloadThumbnail* to download
+    /// the actual content or the thumbnail of the attachment.
+    ///
+    /// - parameter messageId: The identifier of the message.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the message is retrieved.
+    /// - returns: Void
+    /// - since: 1.2.0
+    public func get(messageId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
+        self.doSomethingAfterRegistered { error in
+            if let impl = self.phone.messages {
+                impl.get(messageId: messageId, decrypt: true, queue: queue, completionHandler: completionHandler)
             }
             else {
                 (queue ?? DispatchQueue.main).async {
@@ -232,12 +236,12 @@ public class MessageClient {
         }
     }
     
-    /// Download a file attachement.
+    /// Download a file attachement to the specified local directory.
     ///
-    /// - parameter file: The reference to file attachement to be downloaded. Use *Message.remoteFiles* to get the references.
+    /// - parameter file: The RemoteFile object need to be downloaded. Use *Message.remoteFiles* to get the references.
     /// - parameter to: The local file directory for saving dwonloaded file attahement.
     /// - parameter progressHandler: The download progress indicator.
-    /// - parameter completionHandler: Downloaded file local address wiil be stored in "file.localFileUrl"
+    /// - parameter completionHandler: A closure to be executed once the download is completed. The URL contains the path to the downloded file.
     /// - returns: Void
     /// - since: 1.4.0
     public func downloadFile(_ file: RemoteFile, to: URL? = nil, progressHandler: ((Double)->Void)? = nil, completionHandler: @escaping (Result<URL>) -> Void) {
@@ -253,12 +257,13 @@ public class MessageClient {
         }
     }
     
-    /// Download a file object, save the file thumbnail.
+    /// Download the thumbnail for a file attachment to the specified local directory.
+    /// Note Cisco Webex doesn't generate thumbnail for all files.
     ///
-    /// - parameter file: The RemoteFile object need to be downloaded.
-    /// - parameter to: The local file directory for saving file after download.
+    /// - parameter file: The RemoteFile object whose thumbnail needs to be downloaded.
+    /// - parameter to: The local file directory for saving downloaded thumbnail.
     /// - parameter progressHandler: The download progress indicator.
-    /// - parameter completionHandler: Downloaded file local address wiil be stored in "file.localFileUrl"
+    /// - parameter completionHandler: A closure to be executed once the download is completed. The URL contains the path to the downloded thumbnail.
     /// - returns: Void
     /// - since: 1.4.0
     public func downloadThumbnail(for file: RemoteFile, to: URL? = nil, progressHandler: ((Double)->Void)? = nil, completionHandler: @escaping (Result<URL>) -> Void) {
