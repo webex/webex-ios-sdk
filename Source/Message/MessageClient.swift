@@ -45,7 +45,7 @@ public enum Mention {
 
 /// MessageClient represents a client to the Webex Teams platform. It can send and receive messages.
 ///
-/// Use *Webex.messages* to get an instance of MessageClient.
+/// Use `Webex.messages` to get an instance of MessageClient.
 ///
 /// - since: 1.4.0
 public class MessageClient {
@@ -74,13 +74,13 @@ public class MessageClient {
     /// The list sorts the messages in descending order by creation date.
     ///
     /// Note that the file attachment of the message are not downloaded.
-    /// Use the *downloadFile* or *downloadThumbnail* to download
+    /// Use the `downloadFile(...)` or `downloadThumbnail(...)` to download
     /// the actual content or the thumbnail of the attachment.
     ///
     /// - parameter spaceId: The identifier of the space.
     /// - parameter before: If not nil, only list messages sent before this condition.
     /// - parameter max: Limit the maximum number of messages in the response, default is 50.
-    /// - parameter mentionedPeople: List messages where a person (using *Mention.person*) or all (using Mention.all*) is mentioned.
+    /// - parameter mentionedPeople: List messages where a person (using `Mention.person`) or all (using `Mention.all`) is mentioned.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the request has finished with a list of messages based on the above criteria.
     /// - returns: Void
@@ -195,7 +195,7 @@ public class MessageClient {
     /// Retrieves the details of a message by id.
     ///
     /// Note that the file attachment of the message are not downloaded.
-    /// Use the *downloadFile* or *downloadThumbnail* to download
+    /// Use the `downloadFile(...)` or `downloadThumbnail(...)` to download
     /// the actual content or the thumbnail of the attachment.
     ///
     /// - parameter messageId: The identifier of the message.
@@ -238,7 +238,7 @@ public class MessageClient {
     
     /// Download a file attachement to the specified local directory.
     ///
-    /// - parameter file: The RemoteFile object need to be downloaded. Use *Message.remoteFiles* to get the references.
+    /// - parameter file: The RemoteFile object need to be downloaded. Use `Message.remoteFiles` to get the references.
     /// - parameter to: The local file directory for saving dwonloaded file attahement.
     /// - parameter progressHandler: The download progress indicator.
     /// - parameter completionHandler: A closure to be executed once the download is completed. The URL contains the path to the downloded file.

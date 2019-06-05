@@ -38,12 +38,12 @@ public protocol Authenticator : class {
     var authorized: Bool { get }
     
     /// Deauthorizes the current user and clears any persistent state with regards to the current user.
-    /// If the *phone* is registered, it should be deregistered before calling this method.
+    /// If the `Phone` is registered, it should be deregistered before calling this method.
     ///
     /// - since: 1.2.0
     func deauthorize()
     
-    /// Returns an access token of this *authenticator*. 
+    /// Returns an access token of this `Authenticator`. 
     /// 
     /// This may involve long-running operations such as service calls,
     /// but may also return immediately. The application should not make assumptions about how quickly this
@@ -54,7 +54,7 @@ public protocol Authenticator : class {
     /// - since: 1.2.0
     func accessToken(completionHandler: @escaping (_ accessToken: String?) -> Void)
     
-    /// Refresh the access token of this *authenticator*.
+    /// Refresh the access token of this `Authenticator`.
     ///
     /// - parameter completionHandler: a closure to be executed when completed, with the new access token if successfuly retrieved, otherwise nil.
     /// - since: 1.4.0

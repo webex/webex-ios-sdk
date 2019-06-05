@@ -44,13 +44,13 @@ public struct Team {
 
 extension Team: Mappable {
     
-    /// Constructs a *Team* object.
+    /// Constructs a `Team` object.
     ///
     /// - note: for internal use only.
     public init?(map: Map){
     }
     
-    /// Map a *Team* from JSON.
+    /// Map a `Team` from JSON.
     ///
     /// - note: for internal use only.
     public mutating func mapping(map: Map) {

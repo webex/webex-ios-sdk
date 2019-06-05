@@ -27,7 +27,7 @@ import Foundation
 public enum WebexError: Error {
     /// A service request to Cisco Webex cloud has failed.
     case serviceFailed(code: Int, reason: String)
-    /// The *Phone* has not been registered.
+    /// The `Phone` has not been registered.
     case unregistered
     /// The media requires H.264 codec.
     case requireH264

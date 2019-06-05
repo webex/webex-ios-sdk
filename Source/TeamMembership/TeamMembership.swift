@@ -21,7 +21,7 @@
 import Foundation
 import ObjectMapper
 
-/// A data type represents a relationship between *Team* and *Person* at Cisco Webex cloud.
+/// A data type represents a relationship between `Team` and `Person` at Cisco Webex cloud.
 ///
 /// - since: 1.2.0
 public struct TeamMembership {
@@ -69,13 +69,13 @@ public struct TeamMembership {
 
 extension TeamMembership: Mappable {
     
-    /// Contructus a new *TeamMembership* object.
+    /// Contructus a new `TeamMembership` object.
     ///
     /// - note: for internal use only.
     public init?(map: Map){
     }
     
-    /// Maps a *TeamMembership* from JSON.
+    /// Maps a `TeamMembership` from JSON.
     ///
     /// - note: for internal use only.
     public mutating func mapping(map: Map) {

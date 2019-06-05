@@ -20,7 +20,7 @@
 
 import Foundation
 
-/// The status of a *Call*.
+/// The status of a `Call`.
 ///
 /// The following diagram shows all statuses and transitions triggered
 /// by either an API call or an event received by the Webex iOS SDK.

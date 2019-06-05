@@ -75,13 +75,13 @@ public struct Webhook {
 
 extension Webhook: Mappable {
     
-    /// Constructs a new *Webhook* object.
+    /// Constructs a new `Webhook` object.
     ///
     /// - note: for internal use only.
     public init?(map: Map) {
     }
     
-    /// Maps a *Webhook from JSON.
+    /// Maps a `Webhook` from JSON.
     ///
     /// - note: for internal use only.
     public mutating func mapping(map: Map) {

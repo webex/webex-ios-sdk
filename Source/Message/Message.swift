@@ -218,14 +218,14 @@ public class LocalFile {
 }
 
 /// A data struct represents a remote file on Cisco Webex.
-/// The content of the remote file can be downloaded via *MessageClient.downloadFile*.
+/// The content of the remote file can be downloaded via `MessageClient.downloadFile(...)`.
 ///
 /// - since: 1.4.0
 public struct RemoteFile {
     
     /// A data type represents a thumbnail for this remote file.
     /// The thumbnail typically is an image file which provides preview of the remote file without downloading.
-    /// The content of the thumbnail can be downloaded via *MessageClient.downloadThumbnail*.
+    /// The content of the thumbnail can be downloaded via `MessageClient.downloadThumbnail(...)`.
     /// - since: 1.4.0
     public struct Thumbnail {
         /// The width of thumbanil.

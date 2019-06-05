@@ -22,7 +22,7 @@ import CoreMedia
 
 /// A Call represents a media call on Cisco Webex.
 ///
-/// The application can create an outgoing *call* by calling *phone.dial* function:
+/// The application can create an outgoing `Call` by calling `Phone.dial(...)` function:
 ///
 /// ```` swift
 ///     let address = "coworker@example.com"
@@ -45,7 +45,7 @@ import CoreMedia
 ///     }
 /// ````
 ///
-/// The application can receive an incoming *call* on *phone.onIncoming* function:
+/// The application can receive an incoming `Call` on `Phone.onIncoming` function:
 ///
 /// ```` swift
 ///     webex.phone.onIncoming = { call in
@@ -61,7 +61,7 @@ import CoreMedia
 /// ````
 ///
 /// - see: see Phone API about how to create calls.
-/// - see: CallStatus for the states and transitions of a *Call*.
+/// - see: CallStatus for the states and transitions of a `Call`.
 /// - since: 1.2.0
 public class Call {
     
@@ -82,24 +82,24 @@ public class Call {
         /// The local party has left the call.
         case localLeft
         /// The local party has declined the call.
-        /// This is only applicable when the *direction* of the call is *incoming*.
+        /// This is only applicable when the `Direction` of the `Call` is `incoming`.
         case localDecline
         /// The local party has cancelled the call.
-        /// This is only applicable when the *direction* of the call is *outgoing*.
+        /// This is only applicable when the `Direction` of the `Call` is `outgoing`.
         case localCancel
         /// The remote party has left the call.
         case remoteLeft
         /// The remote party has declined the call.
-        /// This is only applicable when the *direction* of the call is *outgoing*.
+        /// This is only applicable when the `Direction` of the `Call` is `outgoing`.
         case remoteDecline
         /// The remote party has cancelled the call.
-        /// This is only applicable when the *direction* of the call is *incoming*.
+        /// This is only applicable when the `Direction` of the `Call` is `incoming`.
         case remoteCancel
         /// One of the other phones of the authenticated user has answered the call.
-        /// This is only applicable when the *direction* of the call is *incoming*.
+        /// This is only applicable when the `Direction` of the `Call` is `incoming`.
         case otherConnected
         /// One of the other phones of the authenticated user has declined the call.
-        /// This is only applicable when the *direction* of the call is *incoming*.
+        /// This is only applicable when the `Direction` of the `Call` is `incoming`.
         case otherDeclined
         /// Unknown error
         case error(Error)
@@ -168,13 +168,13 @@ public class Call {
     ///
     /// - since: 1.3.0
     public enum CallMembershipChangedEvent {
-        /// The person in the membership joined this *call*.
+        /// The person in the membership joined this `Call`.
         case joined(CallMembership)
-        /// The person in the membership left this *call*.
+        /// The person in the membership left this `Call`.
         case left(CallMembership)
-        /// The person in the membership declined this *call*.
+        /// The person in the membership declined this `Call`.
         case declined(CallMembership)
-        /// The person in the membership started sending video this *call*.
+        /// The person in the membership started sending video this `Call`.
         case sendingVideo(CallMembership)
         /// The person in the membership started sending audio.
         case sendingAudio(CallMembership)
@@ -196,7 +196,7 @@ public class Call {
     ///
     /// - since: 1.2.0
     public enum Capabilities {
-        /// This *call* can send and receive DTMF.
+        /// This `Call` can send and receive DTMF.
         case dtmf
     }
     
@@ -216,7 +216,7 @@ public class Call {
         }
     }
     
-    /// Callback when remote participant(s) answered and this *call* is connected.
+    /// Callback when remote participant(s) answered and this `Call` is connected.
     ///
     /// - since: 1.2.0
     public var onConnected: (() -> Void)? {
@@ -233,27 +233,27 @@ public class Call {
         }
     }
     
-    /// Callback when this *call* is disconnected (hangup, cancelled, get declined or other self device pickup the call).
+    /// Callback when this `Call` is disconnected (hangup, cancelled, get declined or other self device pickup the call).
     ///
     /// - since: 1.2.0
     public var onDisconnected: ((DisconnectReason) -> Void)?
     
-    /// Callback when the memberships of this *call* have changed.
+    /// Callback when the memberships of this `Call` have changed.
     ///
     /// - since: 1.3.0
     public var onCallMembershipChanged: ((CallMembershipChangedEvent) -> Void)?
     
-    /// Callback when the media types of this *call* have changed.
+    /// Callback when the media types of this `Call` have changed.
     ///
     /// - since: 1.2.0
     public var onMediaChanged: ((MediaChangedEvent) -> Void)?
     
-    /// Callback when the capabilities of this *call* have changed.
+    /// Callback when the capabilities of this `Call` have changed.
     ///
     /// - since: 1.2.0
     public var onCapabilitiesChanged: ((Capabilities) -> Void)?
     
-    /// Callback when the iOS broadcasting status of this *call* have changed.
+    /// Callback when the iOS broadcasting status of this `Call` have changed.
     ///
     /// - since: 1.4.0
     public var oniOSBroadcastingChanged: ((iOSBroadcastingEvent) -> Void)?
@@ -264,46 +264,46 @@ public class Call {
     /// - since: 2.0.0
     public var multiStreamObserver: MultiStreamObserver?
     
-    /// The status of this *call*.
+    /// The status of this `Call`.
     ///
     /// - see: CallStatus
     /// - since: 1.2.0
     public internal(set) var status: CallStatus = CallStatus.initiated
     
-    /// The direction of this *call*.
+    /// The direction of this `Call`.
     ///
     /// - since: 1.2.0
     public private(set) var direction: Direction
     
-    /// True if the DTMF keypad is enabled for this *call*. Otherwise, false.
+    /// True if the DTMF keypad is enabled for this `Call`. Otherwise, false.
     ///
     /// - since: 1.2.0
     public var sendingDTMFEnabled: Bool {
         return self.model.isLocalSupportDTMF
     }
     
-    /// True if the remote party of this *call* is sending video. Otherwise, false.
+    /// True if the remote party of this `Call` is sending video. Otherwise, false.
     ///
     /// - since: 1.2.0
     public var remoteSendingVideo: Bool {
         return !self.mediaSession.remoteVideoMuted
     }
     
-    /// True if the remote party of this *call* is sending audio. Otherwise, false.
+    /// True if the remote party of this `Call` is sending audio. Otherwise, false.
     ///
     /// - since: 1.2.0
     public var remoteSendingAudio: Bool {
         return !model.isRemoteAudioMuted
     }
     
-    /// True if the remote party of this *call* is sending screen share. Otherwise, false.
+    /// True if the remote party of this `Call` is sending screen share. Otherwise, false.
     ///
     /// - since: 1.3.0
     public var remoteSendingScreenShare: Bool {
         return model.isGrantedScreenShare && !self.isScreenSharedBySelfDevice()
     }
     
-    /// True if the local party of this *call* is sending video. Otherwise, false.
+    /// True if the local party of this `Call` is sending video. Otherwise, false.
     ///
     /// - since: 1.2.0
     public var sendingVideo: Bool {
@@ -315,7 +315,7 @@ public class Call {
         }
     }
     
-    /// True if this *call* is sending audio. Otherwise, false.
+    /// True if this `Call` is sending audio. Otherwise, false.
     ///
     /// - since: 1.2.0
     public var sendingAudio: Bool {
@@ -327,7 +327,7 @@ public class Call {
         }
     }
     
-    /// True if the local party of this *call* is sending screen share. Otherwise, false.
+    /// True if the local party of this `Call` is sending screen share. Otherwise, false.
     ///
     /// - since: 1.4.0
     public var sendingScreenShare: Bool {
@@ -339,7 +339,7 @@ public class Call {
         }
     }
     
-    /// True if the local party of this *call* is receiving video. Otherwise, false.
+    /// True if the local party of this `Call` is receiving video. Otherwise, false.
     ///
     /// - since: 1.2.0
     public var receivingVideo: Bool {
@@ -351,7 +351,7 @@ public class Call {
         }
     }
     
-    /// True if the local party of this *call* is receiving audio. Otherwise, false.
+    /// True if the local party of this `Call` is receiving audio. Otherwise, false.
     ///
     /// - since: 1.2.0
     public var receivingAudio: Bool {
@@ -363,7 +363,7 @@ public class Call {
         }
     }
     
-    /// True if the local party of this *call* is receiving screen share. Otherwise, false.
+    /// True if the local party of this `Call` is receiving screen share. Otherwise, false.
     ///
     /// - since: 1.3.0
     public var receivingScreenShare: Bool {
@@ -387,7 +387,7 @@ public class Call {
         }
     }
     
-    /// True if the loud speaker is selected as the audio output device for this *call*. Otherwise, false.
+    /// True if the loud speaker is selected as the audio output device for this `Call`. Otherwise, false.
     ///
     /// - since: 1.2.0
     public var isSpeaker: Bool {
@@ -399,7 +399,7 @@ public class Call {
         }
     }
     
-    /// The camera facing mode selected for this *call*.
+    /// The camera facing mode selected for this `Call`.
     ///
     /// - since: 1.2.0
     public var facingMode: Phone.FacingMode {
@@ -411,7 +411,7 @@ public class Call {
         }
     }
     
-    /// The local video render view dimensions (points) of this *call*.
+    /// The local video render view dimensions (points) of this `Call`.
     ///
     /// - since: 1.2.0
     public var localVideoViewSize: CMVideoDimensions {
@@ -419,7 +419,7 @@ public class Call {
         return CMVideoDimensions(width: Int32(size.width), height: Int32(size.height))
     }
     
-    /// The remote video render view dimensions (points) of this *call*.
+    /// The remote video render view dimensions (points) of this `Call`.
     ///
     /// - since: 1.2.0
     public var remoteVideoViewSize: CMVideoDimensions {
@@ -427,7 +427,7 @@ public class Call {
         return CMVideoDimensions(width: Int32(size.width), height: Int32(size.height))
     }
     
-    /// The remote screen share render view dimensions (points) of this *call*.
+    /// The remote screen share render view dimensions (points) of this `Call`.
     ///
     /// - since: 1.3.0
     public var remoteScreenShareViewSize: CMVideoDimensions {
@@ -435,7 +435,7 @@ public class Call {
         return CMVideoDimensions(width: Int32(size.width), height: Int32(size.height))
     }
     
-    /// The local screen share render view dimensions (points) of this *call*.
+    /// The local screen share render view dimensions (points) of this `Call`.
     ///
     /// - since: 1.4.0
     public var localScreenShareViewSize: CMVideoDimensions {
@@ -443,7 +443,7 @@ public class Call {
         return CMVideoDimensions(width: Int32(size.width), height: Int32(size.height))
     }
     
-    /// Call Memberships represent participants in this *call*.
+    /// Call Memberships represent participants in this `Call`.
     ///
     /// - since: 1.2.0
     public private(set) var memberships: [CallMembership] {
@@ -462,21 +462,21 @@ public class Call {
         }
     }
     
-    /// The initiator of this *call*.
+    /// The initiator of this `Call`.
     ///
     /// - since: 1.2.0
     public var from: CallMembership? {
         return self.memberships.filter({ $0.isInitiator }).first
     }
     
-    /// The intended recipient of this *call*.
+    /// The intended recipient of this `Call`.
     ///
     /// - since: 1.2.0
     public var to: CallMembership? {
         return self.memberships.filter({ !$0.isInitiator }).first
     }
     
-    /// A local unique identifier of a *Call* for [Apple CallKit](https://developer.apple.com/reference/callkit).
+    /// A local unique identifier of a `Call` for [Apple CallKit](https://developer.apple.com/reference/callkit).
     ///
     /// - since: 1.2.0
     public var uuid: UUID
@@ -530,7 +530,7 @@ public class Call {
     /// - since: 2.0.0
     public lazy private(set) var auxStreams: Array<AuxStream> = Array<AuxStream>()
     
-    /// Speaking *CallMembership* in meeting.
+    /// Speaking `CallMembership` in meeting
     /// Video presented on remote media render view.
     /// - see: see CallMembership.isActiveSpeaker
     /// - since: 2.0.0

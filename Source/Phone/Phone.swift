@@ -21,7 +21,7 @@
 import AVFoundation
 
 /// Phone represents a Cisco Webex calling device.
-/// The application can obtain a *phone* object from *Webex* object
+/// The application can obtain a *phone* object from `Webex` object
 /// and use *phone* to call other Cisco Webex users or PSTN when enabled.
 /// The *phone* must be registered before it can make or receive calls.
 ///

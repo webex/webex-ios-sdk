@@ -20,7 +20,7 @@
 
 import Foundation
 
-/// A data type represents the media options of a *call*.
+/// A data type represents the media options of a `Call`.
 ///
 /// - since: 1.2.0
 public struct MediaOption {

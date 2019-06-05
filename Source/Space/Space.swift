@@ -90,13 +90,13 @@ public struct Space {
 
 extension Space: Mappable {
     
-    /// Constructs a *Space* object.
+    /// Constructs a `Space` object.
     ///
     /// - note: for internal use only.
     public init?(map: Map){
     }
     
-    /// Maps a *Space* from JSON.
+    /// Maps a `Space` from JSON.
     ///
     /// - note: for internal use only.
     public mutating func mapping(map: Map) {

@@ -35,7 +35,7 @@ public class AuxStream {
     
     static let invalidVid = -1
     
-    /// *AuxStream* render view.
+    /// `AuxStream` render view.
     ///
     /// - since: 2.0.0
     public private(set) var renderView:MediaRenderView?
@@ -57,7 +57,7 @@ public class AuxStream {
         }
     }
     
-    /// The render view dimensions (points) of this *AuxStream*.
+    /// The render view dimensions (points) of this `AuxStream`.
     ///
     /// - since: 2.0.0
     public var auxStreamSize: CMVideoDimensions {
