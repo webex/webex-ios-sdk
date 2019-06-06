@@ -11,7 +11,7 @@ env:
 before_install:
   - gem install cocoapods --pre
   - pod repo update > /dev/null
-  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+  # - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
   - brew install sendemail
 script:
   - set -o pipefail
