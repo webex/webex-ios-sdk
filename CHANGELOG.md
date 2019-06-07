@@ -61,7 +61,7 @@ All notable changes to this project will be documented in this file.
 Released on 2019-06-07.
 #### Updated
 - Improve API docs.
-- Refactor code to improve code quality.
+- Fixed Broadcast Extension Kit cannot find frameworks.
 
 ## [2.0.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.0.0)
 Released on 2018-10-31.
