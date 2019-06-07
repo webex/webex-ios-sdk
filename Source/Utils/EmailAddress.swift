@@ -1,4 +1,4 @@
-// Copyright 2016-2018 Cisco Systems Inc
+// Copyright 2016-2019 Cisco Systems Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ open class EmailAddress {
         self.address = address
     }
     
-    /// Creates an *EmailAddress* object from a string
+    /// Creates an `EmailAddress` object from a string
     ///
     /// - parameter address: The email address string.
     /// - returns: EmailAddress
@@ -44,7 +44,7 @@ open class EmailAddress {
         return EmailAddress(address)
     }
     
-    /// Returns the email address string from this *EmailAddress* object.
+    /// Returns the email address string from this `EmailAddress` object.
     ///
     /// - returns: The email address string
     /// - since: 1.2.0
@@ -62,8 +62,8 @@ open class EmailAddress {
 
 extension EmailAddress: Equatable {}
 
-/// Checks if two *EmailAddress* have same the sequence of characters.
-/// This is the Equatable implementation for *EmailAddress*. .
+/// Checks if two `EmailAddress` have same the sequence of characters.
+/// This is the Equatable implementation for `EmailAddress`.
 ///
 /// - returns: True if the two email addresses are equal. Otherwise, false.
 /// - since: 1.2.0

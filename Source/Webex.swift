@@ -1,4 +1,4 @@
-// Copyright 2016-2018 Cisco Systems Inc
+// Copyright 2016-2019 Cisco Systems Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,9 @@ import Foundation
 import UIKit
 import Alamofire
 
-/// *Webex* object is the entry point to use this Cisco Webex iOS SDK. A *Webex* object must be created with one of the following *Authenticator*.
+/// `Webex` object is the entry point to use this Cisco Webex iOS SDK. A `Webex` object must be created with one of the following `Authenticator`.
 ///
-/// - *OAuthAuthenticator* - this should be used when the SDK is to be authenticated as a registered user to Cisco Webex cloud.
+/// - `OAuthAuthenticator` - this should be used when the SDK is to be authenticated as a registered user to Cisco Webex cloud.
 ///
 /// ```` swift
 ///    let clientId = "Def123456..."
@@ -44,7 +44,7 @@ import Alamofire
 ///    }
 /// ````
 ///
-/// - *JWTAuthenticator* - this should be used when the SDK is to be authenticated as a guest user to Cisco Webex cloud.
+/// - `JWTAuthenticator` - this should be used when the SDK is to be authenticated as a guest user to Cisco Webex cloud.
 ///
 /// ```` swift
 ///    let authenticator = JWTAuthenticator()
@@ -62,7 +62,7 @@ public class Webex {
     /// The version number of this Cisco Webex iOS SDK.
     ///
     /// - since: 1.2.0
-    public static let version = "2.0.0"
+    public static let version = "2.1.0"
     
     /// The logger for this SDK.
     ///
@@ -86,25 +86,25 @@ public class Webex {
         }
     }
     
-    /// This is the *Authenticator* object from the application when constructing this Webex object.
+    /// This is the `Authenticator` object from the application when constructing this Webex object.
     /// It can be used to check and modify authentication state.
     ///
     /// - since: 1.2.0
     public let authenticator: Authenticator
     
-    /// *Phone* represents a calling device in Cisco Webex iOS SDK.
+    /// *phone* represents a calling device in Cisco Webex iOS SDK.
     /// It can be used to make audio and video calls on Cisco Webex.
     ///
     /// - since: 1.2.0
     public lazy var phone: Phone = Phone(authenticator: self.authenticator)
     
     /// MessageClient represent activities relates to the user.
-    /// Use *activities* to create and manage the activities on behalf of the authenticated user.
+    /// Use *messages* to create and manage the activities on behalf of the authenticated user.
     ///
     /// - since: 1.4.0
     public lazy var messages: MessageClient = MessageClient(phone: self.phone)
     
-    /// Constructs a new *Webex* object with an *Authenticator*.
+    /// Constructs a new *Webex* object with an `Authenticator`.
     ///
     /// - parameter authenticator: The authentication strategy for this SDK.
     /// - since: 1.2.0

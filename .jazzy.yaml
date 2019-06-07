@@ -1,4 +1,5 @@
-xcodebuild_arguments: [-workspace, WebexSDK.xcworkspace, -scheme,WebexSDK]
+xcodebuild_arguments: [-workspace, WebexSDK.xcworkspace, -scheme, WebexSDK, -configuration, Debug, CODE_SIGNING_ALLOWED=NO]
+module: WebexSDK
 clean: true
 author: Cisco Systems, Inc.
 author_url: https://developer.webex.com

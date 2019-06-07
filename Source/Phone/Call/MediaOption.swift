@@ -1,4 +1,4 @@
-// Copyright 2016-2018 Cisco Systems Inc
+// Copyright 2016-2019 Cisco Systems Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,7 @@
 
 import Foundation
 
-/// A data type represents the media options of a *call*.
+/// A data type represents the media options of a `Call`.
 ///
 /// - since: 1.2.0
 public struct MediaOption {

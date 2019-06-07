@@ -1,4 +1,4 @@
-// Copyright 2016-2018 Cisco Systems Inc
+// Copyright 2016-2019 Cisco Systems Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ import Foundation
 public enum WebexError: Error {
     /// A service request to Cisco Webex cloud has failed.
     case serviceFailed(code: Int, reason: String)
-    /// The *Phone* has not been registered.
+    /// The `Phone` has not been registered.
     case unregistered
     /// The media requires H.264 codec.
     case requireH264

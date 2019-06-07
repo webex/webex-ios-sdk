@@ -1,4 +1,4 @@
-// Copyright 2016-2018 Cisco Systems Inc
+// Copyright 2016-2019 Cisco Systems Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -44,13 +44,13 @@ public struct Team {
 
 extension Team: Mappable {
     
-    /// Constructs a *Team* object.
+    /// Constructs a `Team` object.
     ///
     /// - note: for internal use only.
     public init?(map: Map){
     }
     
-    /// Map a *Team* from JSON.
+    /// Map a `Team` from JSON.
     ///
     /// - note: for internal use only.
     public mutating func mapping(map: Map) {

@@ -1,4 +1,4 @@
-// Copyright 2016-2018 Cisco Systems Inc
+// Copyright 2016-2019 Cisco Systems Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -75,13 +75,13 @@ public struct Webhook {
 
 extension Webhook: Mappable {
     
-    /// Constructs a new *Webhook* object.
+    /// Constructs a new `Webhook` object.
     ///
     /// - note: for internal use only.
     public init?(map: Map) {
     }
     
-    /// Maps a *Webhook from JSON.
+    /// Maps a `Webhook` from JSON.
     ///
     /// - note: for internal use only.
     public mutating func mapping(map: Map) {

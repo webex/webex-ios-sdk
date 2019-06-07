@@ -1,4 +1,4 @@
-// Copyright 2016-2018 Cisco Systems Inc
+// Copyright 2016-2019 Cisco Systems Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 import AVFoundation
 
 /// Phone represents a Cisco Webex calling device.
-/// The application can obtain a *phone* object from *Webex* object
+/// The application can obtain a *phone* object from `Webex` object
 /// and use *phone* to call other Cisco Webex users or PSTN when enabled.
 /// The *phone* must be registered before it can make or receive calls.
 ///

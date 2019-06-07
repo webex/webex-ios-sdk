@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "WebexSDK"
-  s.version = "2.0.0"
+  s.version = "2.1.0"
   s.summary = "Webex iOS SDK"
   s.homepage = "https://developer.webex.com"
   s.license = "MIT"
@@ -9,10 +9,10 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = "10.0"
   s.source_files = "Source/**/*.{h,m,swift}"
   s.preserve_paths = 'Frameworks/*.framework'
+  s.vendored_frameworks = 'Frameworks/*.framework'
   s.xcconfig = {'FRAMEWORK_SEARCH_PATHS' => '$(PODS_ROOT)/WebexSDK/Frameworks',
                 'ENABLE_BITCODE' => 'NO',
                 }
-  s.vendored_frameworks = "Frameworks/*.framework"
   s.dependency 'Alamofire', '= 4.7.1'
   s.dependency 'ObjectMapper', '~> 3.3'
   s.dependency 'AlamofireObjectMapper', '~> 5.1'

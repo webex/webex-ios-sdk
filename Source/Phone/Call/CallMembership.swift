@@ -1,4 +1,4 @@
-// Copyright 2016-2018 Cisco Systems Inc
+// Copyright 2016-2019 Cisco Systems Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,7 @@
 
 import Foundation
 
-/// A data type represents a relationship between *Call* and *Person* at Cisco Webex cloud.
+/// A data type represents a relationship between `Call` and `Person` at Cisco Webex cloud.
 ///
 /// - since: 1.2.0
 public struct CallMembership {
@@ -51,49 +51,49 @@ public struct CallMembership {
     /// - since: 1.2.0
     public private(set) var personId: String?
 
-    /// The status of the person in this *CallMembership*.
+    /// The status of the person in this `CallMembership`.
     ///
     /// - since: 1.2.0
     public var state: State {
         return self.model.state ?? .idle
     }
     
-    /// The email address of the person in this *CallMembership*.
+    /// The email address of the person in this `CallMembership`.
     ///
     /// - since: 1.2.0
     public var email: String? {
         return self.model.person?.email
     }
     
-    /// The SIP address of the person in this *CallMembership*.
+    /// The SIP address of the person in this `CallMembership`.
     ///
     /// - since: 1.2.0
     public var sipUrl: String? {
         return self.model.person?.sipUrl
     }
     
-    /// The phone number of the person in this *CallMembership*.
+    /// The phone number of the person in this `CallMembership`.
     ///
     /// - since: 1.2.0
     public var phoneNumber: String? {
         return self.model.person?.phoneNumber
     }
     
-    /// True if the *CallMembership* is sending video. Otherwise, false.
+    /// True if the `CallMembership` is sending video. Otherwise, false.
     ///
     /// - since: 1.3.0
     public var sendingVideo: Bool {
         return self.model.status?.videoStatus == "SENDRECV"
     }
     
-    /// True if the *CallMembership* is sending audio. Otherwise, false.
+    /// True if the `CallMembership` is sending audio. Otherwise, false.
     ///
     /// - since: 1.3.0
     public var sendingAudio: Bool {
         return self.model.status?.audioStatus == "SENDRECV"
     }
     
-    /// True if the *CallMembership* is sending screen share. Otherwise, false.
+    /// True if the `CallMembership` is sending screen share. Otherwise, false.
     ///
     /// - since: 1.3.0
     public var sendingScreenShare: Bool {
@@ -102,7 +102,7 @@ public struct CallMembership {
             && self.call.model.screenShareMediaFloor?.disposition == MediaShareModel.ShareFloorDisposition.granted
     }
     
-    /// True if this *CallMembership* is speaking in this meeting and video is prsenting on remote media render view. Otherwise, false.
+    /// True if this `CallMembership` is speaking in this meeting and video is prsenting on remote media render view. Otherwise, false.
     ///
     /// - since: 2.0.0
     public var isActiveSpeaker: Bool {
@@ -130,7 +130,7 @@ public struct CallMembership {
     
     private var participantModel: ParticipantModel
 
-    /// Constructs a new *CallMembership*.
+    /// Constructs a new `CallMembership`.
     ///
     /// - since: 1.2.0
     init(participant: ParticipantModel, call: Call) {

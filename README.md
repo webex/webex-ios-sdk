@@ -219,8 +219,10 @@ Here are some examples of how to use the iOS SDK in your app.
         }
     }
     ```
+
 9. Post a message:
-    ```
+
+    ```swift
     webex.messages.post(personEmail: email, text: "Hello there") { response in
         switch response.result {
         case .success(let message):
@@ -230,8 +232,10 @@ Here are some examples of how to use the iOS SDK in your app.
         }
     }
     ```
+
 10. Receive a message:
-    ```
+
+    ```swift
     webex.messages.onEvent = { messageEvent in
         switch messageEvent{
         case .messageReceived(let message):
@@ -243,9 +247,11 @@ Here are some examples of how to use the iOS SDK in your app.
         }
     }
     ```
+
 11. Screen share (sending):
 
     11.1 In your containing app:
+
     ```swift
     webex.phone.dial("coworker@acm.com", option: MediaOption.audioVideoScreenShare(video: ..., screenShare: ..., applicationGroupIdentifier: "group.your.application.group.identifier"))) { ret in
         switch ret {
@@ -275,7 +281,9 @@ Here are some examples of how to use the iOS SDK in your app.
         }
     }
     ```
+
     11.2 In your broadcast upload extension sample handler:
+    
     ```swift
     override func broadcastStarted(withSetupInfo setupInfo: [String : NSObject]?) {
         // User has requested to start the broadcast. Setup info from the UI extension can be supplied but optional.
@@ -315,13 +323,13 @@ Here are some examples of how to use the iOS SDK in your app.
                 break
         }
     }
-    
     ```
+
     11.3 Get more technical details about the [Containing App & Broadcast upload extension](https://github.com/webex/webex-ios-sdk/wiki/Implementation-Broadcast-upload-extension) and [Set up an App Group](https://github.com/webex/webex-ios-sdk/wiki/Set-up-an-App-Group)
 
-
 12. Receive more video streams in a meeting:
-    ```
+
+    ```swift
     class VideoCallViewController: MultiStreamObserver {
         ...
         var onAuxStreamChanged: ((AuxStreamChangeEvent) -> Void)? = {
@@ -409,7 +417,7 @@ Recomand to replace variables containing "spark" with "webex" in project code.
 
 ## License
 
-&copy; 2016-2018 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.
+&copy; 2016-2019 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.
 
 See [LICENSE](https://github.com/webex/webex-ios-sdk/blob/master/LICENSE) for details.
 
