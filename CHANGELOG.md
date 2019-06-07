@@ -1,14 +1,21 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 2.1.0 Releases
+
+- `2.1.0` Releases - [2.1.0](#210)
+
 #### 2.0.0 Releases
 
 - `2.0.0` Releases - [2.0.0](#200)
+
 #### 1.4.1 Releases
 
 - `1.4.1` Releases - [1.4.1](#141)
+
 #### 1.4.0 Releases
 
 - `1.4.0` Releases - [1.4.0](#140)
+
 #### 1.3.1 Releases
 
 - `1.3.1` Releases - [1.3.1](#131)
@@ -50,8 +57,14 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ---
+## [2.1.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.1.0)
+Released on 2019-06-07.
+#### Updated
+- Improve API docs.
+- Refactor code to improve code quality.
+
 ## [2.0.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.0.0)
-Released on 2018-10-10.
+Released on 2018-10-31.
 #### Added
 - SDK rebranding.
 - Support multi streams in space call.
