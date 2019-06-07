@@ -251,10 +251,10 @@
 
                 </div>
               </div>
-            <p><em>Webex</em> object is the entry point to use this Cisco Webex iOS SDK. A <em>Webex</em> object must be created with one of the following <em>Authenticator</em>.</p>
+            <p><code>Webex</code> object is the entry point to use this Cisco Webex iOS SDK. A <code>Webex</code> object must be created with one of the following <code><a href="../Protocols/Authenticator.html">Authenticator</a></code>.</p>
 
 <ul>
-<li><em>OAuthAuthenticator</em> - this should be used when the SDK is to be authenticated as a registered user to Cisco Webex cloud.</li>
+<li><code><a href="../Classes/OAuthAuthenticator.html">OAuthAuthenticator</a></code> - this should be used when the SDK is to be authenticated as a registered user to Cisco Webex cloud.</li>
 </ul>
 <pre class="highlight swift"><code>   <span class="k">let</span> <span class="nv">clientId</span> <span class="o">=</span> <span class="s">"Def123456..."</span>
    <span class="k">let</span> <span class="nv">clientSecret</span> <span class="o">=</span> <span class="s">"fed456..."</span>
@@ -273,7 +273,7 @@
 </code></pre>
 
 <ul>
-<li><em>JWTAuthenticator</em> - this should be used when the SDK is to be authenticated as a guest user to Cisco Webex cloud.</li>
+<li><code><a href="../Classes/JWTAuthenticator.html">JWTAuthenticator</a></code> - this should be used when the SDK is to be authenticated as a guest user to Cisco Webex cloud.</li>
 </ul>
 <pre class="highlight swift"><code>   <span class="k">let</span> <span class="nv">authenticator</span> <span class="o">=</span> <span class="kt">JWTAuthenticator</span><span class="p">()</span>
    <span class="k">let</span> <span class="nv">webex</span> <span class="o">=</span> <span class="kt">Webex</span><span class="p">(</span><span class="nv">authenticator</span><span class="p">:</span> <span class="n">authenticator</span><span class="p">)</span>
@@ -406,7 +406,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>This is the <em>Authenticator</em> object from the application when constructing this Webex object.
+                        <p>This is the <code><a href="../Protocols/Authenticator.html">Authenticator</a></code> object from the application when constructing this Webex object.
 It can be used to check and modify authentication state.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
@@ -439,7 +439,7 @@ It can be used to check and modify authentication state.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p><em>Phone</em> represents a calling device in Cisco Webex iOS SDK.
+                        <p><em>phone</em> represents a calling device in Cisco Webex iOS SDK.
 It can be used to make audio and video calls on Cisco Webex.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
@@ -473,7 +473,7 @@ It can be used to make audio and video calls on Cisco Webex.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>MessageClient represent activities relates to the user.
-Use <em>activities</em> to create and manage the activities on behalf of the authenticated user.</p>
+Use <em>messages</em> to create and manage the activities on behalf of the authenticated user.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.4.0
@@ -495,9 +495,9 @@ Use <em>activities</em> to create and manage the activities on behalf of the aut
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK0A0CAcA13Authenticator_p13authenticator_tcfc"></a>
+                    <a name="/s:8WebexSDK0A0C13authenticatorAcA13Authenticator_p_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(authenticator:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK0A0CAcA13Authenticator_p13authenticator_tcfc">init(authenticator:)</a>
+                    <a class="token" href="#/s:8WebexSDK0A0C13authenticatorAcA13Authenticator_p_tcfc">init(authenticator:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -505,7 +505,7 @@ Use <em>activities</em> to create and manage the activities on behalf of the aut
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Constructs a new <em>Webex</em> object with an <em>Authenticator</em>.</p>
+                        <p>Constructs a new <em>Webex</em> object with an <code><a href="../Protocols/Authenticator.html">Authenticator</a></code>.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -797,8 +797,8 @@ Use <em>teamMemberships</em> to create and manage the team membership on behalf 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2018-10-31)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2019 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2019-06-07)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

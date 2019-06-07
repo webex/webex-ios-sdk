@@ -246,7 +246,7 @@
             
             <h1 id='cisco-webex-ios-sdk' class='heading'>Cisco Webex iOS SDK</h1>
 
-<p><a href="https://cocoapods.org/pods/Webex"><img src="https://img.shields.io/cocoapods/v/Webex.svg" alt="CocoaPods"></a>
+<p><a href="https://cocoapods.org/pods/WebexSDK"><img src="https://img.shields.io/cocoapods/v/WebexSDK.svg" alt="CocoaPods"></a>
 <a href="https://travis-ci.org/webex/webex-ios-sdk"><img src="https://travis-ci.org/webex/webex-ios-sdk.svg?branch=master" alt="Travis CI"></a>
 <a href="https://github.com/webex/webex-ios-sdk/blob/master/LICENSE"><img src="https://img.shields.io/github/license/webex/webex-ios-sdk.svg" alt="license"></a></p>
 
@@ -304,7 +304,7 @@
 <li><p>Create the Webex instance using Webex ID authentication (<a href="https://oauth.net/">OAuth</a>-based):</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">clientId</span> <span class="o">=</span> <span class="s">"$YOUR_CLIENT_ID"</span>
 <span class="k">let</span> <span class="nv">clientSecret</span> <span class="o">=</span> <span class="s">"$YOUR_CLIENT_SECRET"</span>
-<span class="k">let</span> <span class="nv">scope</span> <span class="o">=</span> <span class="s">"webex:all"</span>
+<span class="k">let</span> <span class="nv">scope</span> <span class="o">=</span> <span class="s">"spark:all"</span>
 <span class="k">let</span> <span class="nv">redirectUri</span> <span class="o">=</span> <span class="s">"Webexdemoapp://response"</span>
 
 <span class="k">let</span> <span class="nv">authenticator</span> <span class="o">=</span> <span class="kt">OAuthAuthenticator</span><span class="p">(</span><span class="nv">clientId</span><span class="p">:</span> <span class="n">clientId</span><span class="p">,</span> <span class="nv">clientSecret</span><span class="p">:</span> <span class="n">clientSecret</span><span class="p">,</span> <span class="nv">scope</span><span class="p">:</span> <span class="n">scope</span><span class="p">,</span> <span class="nv">redirectUri</span><span class="p">:</span> <span class="n">redirectUri</span><span class="p">)</span>
@@ -431,26 +431,26 @@
 <span class="p">}</span>
 </code></pre></li>
 <li><p>Post a message:</p>
-<pre class="highlight plaintext"><code>webex.messages.post(personEmail: email, text: "Hello there") { response in
-    switch response.result {
-    case .success(let message):
-        // ...
-    case .failure(let error):
-        // ...
-    }
-}
+<pre class="highlight swift"><code><span class="n">webex</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="nf">post</span><span class="p">(</span><span class="nv">personEmail</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span> <span class="nv">text</span><span class="p">:</span> <span class="s">"Hello there"</span><span class="p">)</span> <span class="p">{</span> <span class="n">response</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">message</span><span class="p">):</span>
+        <span class="c1">// ...</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></li>
 <li><p>Receive a message:</p>
-<pre class="highlight plaintext"><code>webex.messages.onEvent = { messageEvent in
-    switch messageEvent{
-    case .messageReceived(let message):
-        // ...
-        break
-    case .messageDeleted(let messageId):
-        // ...
-        break
-    }
-}
+<pre class="highlight swift"><code><span class="n">webex</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">onEvent</span> <span class="o">=</span> <span class="p">{</span> <span class="n">messageEvent</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">messageEvent</span><span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">messageReceived</span><span class="p">(</span><span class="k">let</span> <span class="nv">message</span><span class="p">):</span>
+        <span class="c1">// ...</span>
+        <span class="k">break</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">messageDeleted</span><span class="p">(</span><span class="k">let</span> <span class="nv">messageId</span><span class="p">):</span>
+        <span class="c1">// ...</span>
+        <span class="k">break</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></li>
 <li><p>Screen share (sending):</p>
 
@@ -523,51 +523,50 @@
             <span class="k">break</span>
     <span class="p">}</span>
 <span class="p">}</span>
-
 </code></pre>
 
 <p>11.3 Get more technical details about the <a href="https://github.com/webex/webex-ios-sdk/wiki/Implementation-Broadcast-upload-extension">Containing App &amp; Broadcast upload extension</a> and <a href="https://github.com/webex/webex-ios-sdk/wiki/Set-up-an-App-Group">Set up an App Group</a></p></li>
 <li><p>Receive more video streams in a meeting:</p>
-<pre class="highlight plaintext"><code>class VideoCallViewController: MultiStreamObserver {
-    ...
-    var onAuxStreamChanged: ((AuxStreamChangeEvent) -&gt; Void)? = {
-        ...
-        switch event {
-        case .auxStreamOpenedEvent(let view, let result):
-            switch result {
-                case .success(let auxStream):
-                    ...
-                case .failure(let error):
-                    ...
-            }
-        case .auxStreamPersonChangedEvent(let auxStream,_,_):
-                ...
-        case .auxStreamSendingVideoEvent(let auxStream):
-            ...
-        case .auxStreamSizeChangedEvent(let auxStream):
-            ...
-        case .auxStreamClosedEvent(let view, let error):
-            ...
-        }
-    }
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">VideoCallViewController</span><span class="p">:</span> <span class="kt">MultiStreamObserver</span> <span class="p">{</span>
+    <span class="o">...</span>
+    <span class="k">var</span> <span class="nv">onAuxStreamChanged</span><span class="p">:</span> <span class="p">((</span><span class="kt">AuxStreamChangeEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="o">...</span>
+        <span class="k">switch</span> <span class="n">event</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nf">auxStreamOpenedEvent</span><span class="p">(</span><span class="k">let</span> <span class="nv">view</span><span class="p">,</span> <span class="k">let</span> <span class="nv">result</span><span class="p">):</span>
+            <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
+                <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">auxStream</span><span class="p">):</span>
+                    <span class="o">...</span>
+                <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
+                    <span class="o">...</span>
+            <span class="p">}</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nf">auxStreamPersonChangedEvent</span><span class="p">(</span><span class="k">let</span> <span class="nv">auxStream</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">_</span><span class="p">):</span>
+                <span class="o">...</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nf">auxStreamSendingVideoEvent</span><span class="p">(</span><span class="k">let</span> <span class="nv">auxStream</span><span class="p">):</span>
+            <span class="o">...</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nf">auxStreamSizeChangedEvent</span><span class="p">(</span><span class="k">let</span> <span class="nv">auxStream</span><span class="p">):</span>
+            <span class="o">...</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nf">auxStreamClosedEvent</span><span class="p">(</span><span class="k">let</span> <span class="nv">view</span><span class="p">,</span> <span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
+            <span class="o">...</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-    var onAuxStreamAvailable: (() -&gt; MediaRenderView?)? = {
-        ...
-        return self.mediaRenderViews.filter({!$0.inUse}).first?
-    }
+    <span class="k">var</span> <span class="nv">onAuxStreamAvailable</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">MediaRenderView</span><span class="p">?)?</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="o">...</span>
+        <span class="k">return</span> <span class="k">self</span><span class="o">.</span><span class="n">mediaRenderViews</span><span class="o">.</span><span class="nf">filter</span><span class="p">({</span><span class="o">!</span><span class="nv">$0</span><span class="o">.</span><span class="n">inUse</span><span class="p">})</span><span class="o">.</span><span class="n">first</span><span class="p">?</span>
+    <span class="p">}</span>
 
-    var onAuxStreamUnavailable: (() -&gt; MediaRenderView?)? = {
-        ...
-        return self.mediaRenderViews.filter({$0.inUse}).last?
-    }
+    <span class="k">var</span> <span class="nv">onAuxStreamUnavailable</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">MediaRenderView</span><span class="p">?)?</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="o">...</span>
+        <span class="k">return</span> <span class="k">self</span><span class="o">.</span><span class="n">mediaRenderViews</span><span class="o">.</span><span class="nf">filter</span><span class="p">({</span><span class="nv">$0</span><span class="o">.</span><span class="n">inUse</span><span class="p">})</span><span class="o">.</span><span class="n">last</span><span class="p">?</span>
+    <span class="p">}</span>
 
-    override func viewWillAppear(_ animated: Bool) {
-        ...
-        // set the observer of this call to get multi stream event.
-        self.call.multiStreamObserver = self
-        ...
-    }
-}
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">viewWillAppear</span><span class="p">(</span><span class="n">_</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">...</span>
+        <span class="c1">// set the observer of this call to get multi stream event.</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">call</span><span class="o">.</span><span class="n">multiStreamObserver</span> <span class="o">=</span> <span class="k">self</span>
+        <span class="o">...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></li>
 </ol>
 <h2 id='migration-from-cisco-sparksdk' class='heading'>Migration from Cisco SparkSDK</h2>
@@ -627,15 +626,15 @@
 <p>Recomand to replace variables containing <q>spark</q> with <q>webex</q> in project code.  </p>
 <h2 id='license' class='heading'>License</h2>
 
-<p>&copy; 2016-2018 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.</p>
+<p>&copy; 2016-2019 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.</p>
 
 <p>See <a href="https://github.com/webex/webex-ios-sdk/blob/master/LICENSE">LICENSE</a> for details.</p>
 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2018-10-31)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2019 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2019-06-07)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

@@ -536,7 +536,9 @@ based authentication strategy used to authenticate a user on Cisco Webex.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>An iOS client wrapper of the Cisco Webex Message APIs.</p>
+                        <p>MessageClient represents a client to the Webex Teams platform. It can send and receive messages.</p>
+
+<p>Use <code><a href="Classes/Webex.html#/s:8WebexSDK0A0C8messagesAA13MessageClientCvp">Webex.messages</a></code> to get an instance of MessageClient.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.4.0
@@ -612,7 +614,7 @@ based authentication strategy used to authenticate a user on Cisco Webex.</p>
                       <div class="abstract">
                         <p>A Call represents a media call on Cisco Webex.</p>
 
-<p>The application can create an outgoing <em>call</em> by calling <em>phone.dial</em> function:</p>
+<p>The application can create an outgoing <code>Call</code> by calling <code><a href="Classes/Phone.html#/s:8WebexSDK5PhoneC4dial_6option17completionHandlerySS_AA11MediaOptionVyAA6ResultOyAA4CallCGctF">Phone.dial(...)</a></code> function:</p>
 <pre class="highlight swift"><code>    <span class="k">let</span> <span class="nv">address</span> <span class="o">=</span> <span class="s">"coworker@example.com"</span>
     <span class="k">let</span> <span class="nv">localVideoView</span> <span class="o">=</span> <span class="kt">MediaRenderView</span><span class="p">()</span>
     <span class="k">let</span> <span class="nv">remoteVideoView</span> <span class="o">=</span> <span class="kt">MediaRenderView</span><span class="p">()</span>
@@ -633,7 +635,7 @@ based authentication strategy used to authenticate a user on Cisco Webex.</p>
     <span class="p">}</span>
 </code></pre>
 
-<p>The application can receive an incoming <em>call</em> on <em>phone.onIncoming</em> function:</p>
+<p>The application can receive an incoming <code>Call</code> on <code><a href="Classes/Phone.html#/s:8WebexSDK5PhoneC10onIncomingyAA4CallCcSgvp">Phone.onIncoming</a></code> function:</p>
 <pre class="highlight swift"><code>    <span class="n">webex</span><span class="o">.</span><span class="n">phone</span><span class="o">.</span><span class="n">onIncoming</span> <span class="o">=</span> <span class="p">{</span> <span class="n">call</span> <span class="k">in</span>
       <span class="n">call</span><span class="o">.</span><span class="nf">answer</span><span class="p">(</span><span class="nv">option</span><span class="p">:</span> <span class="n">mediaOption</span><span class="p">)</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
         <span class="k">if</span> <span class="k">let</span> <span class="nv">error</span> <span class="o">=</span> <span class="n">error</span> <span class="p">{</span>
@@ -652,7 +654,7 @@ based authentication strategy used to authenticate a user on Cisco Webex.</p>
 </div>
 <div class="aside aside-see">
     <p class="aside-title">See</p>
-    CallStatus for the states and transitions of a <em>Call</em>.
+    CallStatus for the states and transitions of a <code>Call</code>.
 
 </div>
 <div class="aside aside-since">
@@ -756,7 +758,7 @@ based authentication strategy used to authenticate a user on Cisco Webex.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Phone represents a Cisco Webex calling device.
-The application can obtain a <em>phone</em> object from <em>Webex</em> object
+The application can obtain a <em>phone</em> object from <code><a href="Classes/Webex.html">Webex</a></code> object
 and use <em>phone</em> to call other Cisco Webex users or PSTN when enabled.
 The <em>phone</em> must be registered before it can make or receive calls.</p>
 <pre class="highlight swift"><code>    <span class="n">webex</span><span class="o">.</span><span class="n">phone</span><span class="o">.</span><span class="nf">register</span><span class="p">()</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
@@ -951,10 +953,10 @@ The <em>phone</em> must be registered before it can make or receive calls.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p><em>Webex</em> object is the entry point to use this Cisco Webex iOS SDK. A <em>Webex</em> object must be created with one of the following <em>Authenticator</em>.</p>
+                        <p><code>Webex</code> object is the entry point to use this Cisco Webex iOS SDK. A <code>Webex</code> object must be created with one of the following <code><a href="Protocols/Authenticator.html">Authenticator</a></code>.</p>
 
 <ul>
-<li><em>OAuthAuthenticator</em> - this should be used when the SDK is to be authenticated as a registered user to Cisco Webex cloud.</li>
+<li><code><a href="Classes/OAuthAuthenticator.html">OAuthAuthenticator</a></code> - this should be used when the SDK is to be authenticated as a registered user to Cisco Webex cloud.</li>
 </ul>
 <pre class="highlight swift"><code>   <span class="k">let</span> <span class="nv">clientId</span> <span class="o">=</span> <span class="s">"Def123456..."</span>
    <span class="k">let</span> <span class="nv">clientSecret</span> <span class="o">=</span> <span class="s">"fed456..."</span>
@@ -973,7 +975,7 @@ The <em>phone</em> must be registered before it can make or receive calls.</p>
 </code></pre>
 
 <ul>
-<li><em>JWTAuthenticator</em> - this should be used when the SDK is to be authenticated as a guest user to Cisco Webex cloud.</li>
+<li><code><a href="Classes/JWTAuthenticator.html">JWTAuthenticator</a></code> - this should be used when the SDK is to be authenticated as a guest user to Cisco Webex cloud.</li>
 </ul>
 <pre class="highlight swift"><code>   <span class="k">let</span> <span class="nv">authenticator</span> <span class="o">=</span> <span class="kt">JWTAuthenticator</span><span class="p">()</span>
    <span class="k">let</span> <span class="nv">webex</span> <span class="o">=</span> <span class="kt">Webex</span><span class="p">(</span><span class="nv">authenticator</span><span class="p">:</span> <span class="n">authenticator</span><span class="p">)</span>
@@ -1048,8 +1050,8 @@ The <em>phone</em> must be registered before it can make or receive calls.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2018-10-31)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2019 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2019-06-07)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

@@ -253,7 +253,7 @@
               </div>
             <p>A Call represents a media call on Cisco Webex.</p>
 
-<p>The application can create an outgoing <em>call</em> by calling <em>phone.dial</em> function:</p>
+<p>The application can create an outgoing <code>Call</code> by calling <code><a href="../Classes/Phone.html#/s:8WebexSDK5PhoneC4dial_6option17completionHandlerySS_AA11MediaOptionVyAA6ResultOyAA4CallCGctF">Phone.dial(...)</a></code> function:</p>
 <pre class="highlight swift"><code>    <span class="k">let</span> <span class="nv">address</span> <span class="o">=</span> <span class="s">"coworker@example.com"</span>
     <span class="k">let</span> <span class="nv">localVideoView</span> <span class="o">=</span> <span class="kt">MediaRenderView</span><span class="p">()</span>
     <span class="k">let</span> <span class="nv">remoteVideoView</span> <span class="o">=</span> <span class="kt">MediaRenderView</span><span class="p">()</span>
@@ -274,7 +274,7 @@
     <span class="p">}</span>
 </code></pre>
 
-<p>The application can receive an incoming <em>call</em> on <em>phone.onIncoming</em> function:</p>
+<p>The application can receive an incoming <code>Call</code> on <code><a href="../Classes/Phone.html#/s:8WebexSDK5PhoneC10onIncomingyAA4CallCcSgvp">Phone.onIncoming</a></code> function:</p>
 <pre class="highlight swift"><code>    <span class="n">webex</span><span class="o">.</span><span class="n">phone</span><span class="o">.</span><span class="n">onIncoming</span> <span class="o">=</span> <span class="p">{</span> <span class="n">call</span> <span class="k">in</span>
       <span class="n">call</span><span class="o">.</span><span class="nf">answer</span><span class="p">(</span><span class="nv">option</span><span class="p">:</span> <span class="n">mediaOption</span><span class="p">)</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
         <span class="k">if</span> <span class="k">let</span> <span class="nv">error</span> <span class="o">=</span> <span class="n">error</span> <span class="p">{</span>
@@ -293,7 +293,7 @@
 </div>
 <div class="aside aside-see">
     <p class="aside-title">See</p>
-    CallStatus for the states and transitions of a <em>Call</em>.
+    CallStatus for the states and transitions of a <code>Call</code>.
 
 </div>
 <div class="aside aside-since">
@@ -549,7 +549,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Callback when remote participant(s) answered and this <em>call</em> is connected.</p>
+                        <p>Callback when remote participant(s) answered and this <code>Call</code> is connected.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -581,7 +581,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Callback when this <em>call</em> is disconnected (hangup, cancelled, get declined or other self device pickup the call).</p>
+                        <p>Callback when this <code>Call</code> is disconnected (hangup, cancelled, get declined or other self device pickup the call).</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -613,7 +613,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Callback when the memberships of this <em>call</em> have changed.</p>
+                        <p>Callback when the memberships of this <code>Call</code> have changed.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.3.0
@@ -645,7 +645,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Callback when the media types of this <em>call</em> have changed.</p>
+                        <p>Callback when the media types of this <code>Call</code> have changed.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -677,7 +677,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Callback when the capabilities of this <em>call</em> have changed.</p>
+                        <p>Callback when the capabilities of this <code>Call</code> have changed.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -709,7 +709,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Callback when the iOS broadcasting status of this <em>call</em> have changed.</p>
+                        <p>Callback when the iOS broadcasting status of this <code>Call</code> have changed.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.4.0
@@ -779,7 +779,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The status of this <em>call</em>.</p>
+                        <p>The status of this <code>Call</code>.</p>
 <div class="aside aside-see">
     <p class="aside-title">See</p>
     CallStatus
@@ -816,7 +816,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The direction of this <em>call</em>.</p>
+                        <p>The direction of this <code>Call</code>.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -848,7 +848,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>True if the DTMF keypad is enabled for this <em>call</em>. Otherwise, false.</p>
+                        <p>True if the DTMF keypad is enabled for this <code>Call</code>. Otherwise, false.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -880,7 +880,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>True if the remote party of this <em>call</em> is sending video. Otherwise, false.</p>
+                        <p>True if the remote party of this <code>Call</code> is sending video. Otherwise, false.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -912,7 +912,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>True if the remote party of this <em>call</em> is sending audio. Otherwise, false.</p>
+                        <p>True if the remote party of this <code>Call</code> is sending audio. Otherwise, false.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -944,7 +944,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>True if the remote party of this <em>call</em> is sending screen share. Otherwise, false.</p>
+                        <p>True if the remote party of this <code>Call</code> is sending screen share. Otherwise, false.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.3.0
@@ -976,7 +976,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>True if the local party of this <em>call</em> is sending video. Otherwise, false.</p>
+                        <p>True if the local party of this <code>Call</code> is sending video. Otherwise, false.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -1008,7 +1008,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>True if this <em>call</em> is sending audio. Otherwise, false.</p>
+                        <p>True if this <code>Call</code> is sending audio. Otherwise, false.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -1040,7 +1040,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>True if the local party of this <em>call</em> is sending screen share. Otherwise, false.</p>
+                        <p>True if the local party of this <code>Call</code> is sending screen share. Otherwise, false.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.4.0
@@ -1072,7 +1072,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>True if the local party of this <em>call</em> is receiving video. Otherwise, false.</p>
+                        <p>True if the local party of this <code>Call</code> is receiving video. Otherwise, false.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -1104,7 +1104,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>True if the local party of this <em>call</em> is receiving audio. Otherwise, false.</p>
+                        <p>True if the local party of this <code>Call</code> is receiving audio. Otherwise, false.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -1136,7 +1136,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>True if the local party of this <em>call</em> is receiving screen share. Otherwise, false.</p>
+                        <p>True if the local party of this <code>Call</code> is receiving screen share. Otherwise, false.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.3.0
@@ -1168,7 +1168,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>True if the loud speaker is selected as the audio output device for this <em>call</em>. Otherwise, false.</p>
+                        <p>True if the loud speaker is selected as the audio output device for this <code>Call</code>. Otherwise, false.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -1200,7 +1200,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The camera facing mode selected for this <em>call</em>.</p>
+                        <p>The camera facing mode selected for this <code>Call</code>.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -1222,9 +1222,9 @@ Client need to set the protocol implemention into certain call.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK4CallC18localVideoViewSizeSC17CMVideoDimensionsVvp"></a>
+                    <a name="/s:8WebexSDK4CallC18localVideoViewSizeSo17CMVideoDimensionsavp"></a>
                     <a name="//apple_ref/swift/Property/localVideoViewSize" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC18localVideoViewSizeSC17CMVideoDimensionsVvp">localVideoViewSize</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC18localVideoViewSizeSo17CMVideoDimensionsavp">localVideoViewSize</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1232,7 +1232,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The local video render view dimensions (points) of this <em>call</em>.</p>
+                        <p>The local video render view dimensions (points) of this <code>Call</code>.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -1254,9 +1254,9 @@ Client need to set the protocol implemention into certain call.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK4CallC19remoteVideoViewSizeSC17CMVideoDimensionsVvp"></a>
+                    <a name="/s:8WebexSDK4CallC19remoteVideoViewSizeSo17CMVideoDimensionsavp"></a>
                     <a name="//apple_ref/swift/Property/remoteVideoViewSize" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC19remoteVideoViewSizeSC17CMVideoDimensionsVvp">remoteVideoViewSize</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC19remoteVideoViewSizeSo17CMVideoDimensionsavp">remoteVideoViewSize</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1264,7 +1264,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The remote video render view dimensions (points) of this <em>call</em>.</p>
+                        <p>The remote video render view dimensions (points) of this <code>Call</code>.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -1286,9 +1286,9 @@ Client need to set the protocol implemention into certain call.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK4CallC25remoteScreenShareViewSizeSC17CMVideoDimensionsVvp"></a>
+                    <a name="/s:8WebexSDK4CallC25remoteScreenShareViewSizeSo17CMVideoDimensionsavp"></a>
                     <a name="//apple_ref/swift/Property/remoteScreenShareViewSize" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC25remoteScreenShareViewSizeSC17CMVideoDimensionsVvp">remoteScreenShareViewSize</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC25remoteScreenShareViewSizeSo17CMVideoDimensionsavp">remoteScreenShareViewSize</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1296,7 +1296,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The remote screen share render view dimensions (points) of this <em>call</em>.</p>
+                        <p>The remote screen share render view dimensions (points) of this <code>Call</code>.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.3.0
@@ -1318,9 +1318,9 @@ Client need to set the protocol implemention into certain call.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK4CallC24localScreenShareViewSizeSC17CMVideoDimensionsVvp"></a>
+                    <a name="/s:8WebexSDK4CallC24localScreenShareViewSizeSo17CMVideoDimensionsavp"></a>
                     <a name="//apple_ref/swift/Property/localScreenShareViewSize" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC24localScreenShareViewSizeSC17CMVideoDimensionsVvp">localScreenShareViewSize</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC24localScreenShareViewSizeSo17CMVideoDimensionsavp">localScreenShareViewSize</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1328,7 +1328,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The local screen share render view dimensions (points) of this <em>call</em>.</p>
+                        <p>The local screen share render view dimensions (points) of this <code>Call</code>.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.4.0
@@ -1360,7 +1360,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Call Memberships represent participants in this <em>call</em>.</p>
+                        <p>Call Memberships represent participants in this <code>Call</code>.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -1392,7 +1392,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The initiator of this <em>call</em>.</p>
+                        <p>The initiator of this <code>Call</code>.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -1424,7 +1424,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The intended recipient of this <em>call</em>.</p>
+                        <p>The intended recipient of this <code>Call</code>.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -1456,7 +1456,7 @@ Client need to set the protocol implemention into certain call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A local unique identifier of a <em>Call</em> for <a href="https://developer.apple.com/reference/callkit">Apple CallKit</a>.</p>
+                        <p>A local unique identifier of a <code>Call</code> for <a href="https://developer.apple.com/reference/callkit">Apple CallKit</a>.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -1591,7 +1591,7 @@ If is nil, it will update the screen sharing state as inactive to the server sid
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Speaking <em>CallMembership</em> in meeting.
+                        <p>Speaking <code><a href="../Structs/CallMembership.html">CallMembership</a></code> in meeting
 Video presented on remote media render view.</p>
 <div class="aside aside-see">
     <p class="aside-title">See</p>
@@ -1651,9 +1651,9 @@ Video presented on remote media render view.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK4CallC11acknowledgeyys5Error_pSgc17completionHandler_tF"></a>
+                    <a name="/s:8WebexSDK4CallC11acknowledge17completionHandleryys5Error_pSgc_tF"></a>
                     <a name="//apple_ref/swift/Method/acknowledge(completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC11acknowledgeyys5Error_pSgc17completionHandler_tF">acknowledge(completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC11acknowledge17completionHandleryys5Error_pSgc_tF">acknowledge(completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1712,9 +1712,9 @@ Will cause the initiator&rsquo;s Call instance to emit the ringing event.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK4CallC6answeryAA11MediaOptionV6option_ys5Error_pSgc17completionHandlertF"></a>
+                    <a name="/s:8WebexSDK4CallC6answer6option17completionHandleryAA11MediaOptionV_ys5Error_pSgctF"></a>
                     <a name="//apple_ref/swift/Method/answer(option:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC6answeryAA11MediaOptionV6option_ys5Error_pSgc17completionHandlertF">answer(option:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC6answer6option17completionHandleryAA11MediaOptionV_ys5Error_pSgctF">answer(option:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1785,9 +1785,9 @@ This can only be invoked when this call is incoming and in ringing status.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK4CallC6rejectyys5Error_pSgc17completionHandler_tF"></a>
+                    <a name="/s:8WebexSDK4CallC6reject17completionHandleryys5Error_pSgc_tF"></a>
                     <a name="//apple_ref/swift/Method/reject(completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC6rejectyys5Error_pSgc17completionHandler_tF">reject(completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC6reject17completionHandleryys5Error_pSgc_tF">reject(completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1846,9 +1846,9 @@ This can only be invoked when this call is incoming and in ringing status.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK4CallC6hangupyys5Error_pSgc17completionHandler_tF"></a>
+                    <a name="/s:8WebexSDK4CallC6hangup17completionHandleryys5Error_pSgc_tF"></a>
                     <a name="//apple_ref/swift/Method/hangup(completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC6hangupyys5Error_pSgc17completionHandler_tF">hangup(completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC6hangup17completionHandleryys5Error_pSgc_tF">hangup(completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1907,9 +1907,9 @@ This can only be invoked when this call is in answered status.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK4CallC16sendFeedbackWithySi6rating_SSSg8commentsSb11includeLogstF"></a>
+                    <a name="/s:8WebexSDK4CallC16sendFeedbackWith6rating8comments11includeLogsySi_SSSgSbtF"></a>
                     <a name="//apple_ref/swift/Method/sendFeedbackWith(rating:comments:includeLogs:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC16sendFeedbackWithySi6rating_SSSg8commentsSb11includeLogstF">sendFeedbackWith(rating:comments:includeLogs:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC16sendFeedbackWith6rating8comments11includeLogsySi_SSSgSbtF">sendFeedbackWith(rating:comments:includeLogs:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1986,9 +1986,9 @@ This can only be invoked when this call is in answered status.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK4CallC4sendySS4dtmf_ys5Error_pSgcSg17completionHandlertF"></a>
+                    <a name="/s:8WebexSDK4CallC4send4dtmf17completionHandlerySS_ys5Error_pSgcSgtF"></a>
                     <a name="//apple_ref/swift/Method/send(dtmf:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC4sendySS4dtmf_ys5Error_pSgcSg17completionHandlertF">send(dtmf:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC4send4dtmf17completionHandlerySS_ys5Error_pSgcSgtF">send(dtmf:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2053,9 +2053,9 @@ This can only be invoked when this call is in answered status.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK4CallC12startSharingyys5Error_pSgc17completionHandler_tF"></a>
+                    <a name="/s:8WebexSDK4CallC12startSharing17completionHandleryys5Error_pSgc_tF"></a>
                     <a name="//apple_ref/swift/Method/startSharing(completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC12startSharingyys5Error_pSgc17completionHandler_tF">startSharing(completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC12startSharing17completionHandleryys5Error_pSgc_tF">startSharing(completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2109,9 +2109,9 @@ This can only be invoked when this call is in answered status.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK4CallC11stopSharingyys5Error_pSgc17completionHandler_tF"></a>
+                    <a name="/s:8WebexSDK4CallC11stopSharing17completionHandleryys5Error_pSgc_tF"></a>
                     <a name="//apple_ref/swift/Method/stopSharing(completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC11stopSharingyys5Error_pSgc17completionHandler_tF">stopSharing(completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC11stopSharing17completionHandleryys5Error_pSgc_tF">stopSharing(completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2165,9 +2165,9 @@ This can only be invoked when this call is in answered status.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK4CallC13openAuxStreamyAA15MediaRenderViewC4view_tF"></a>
+                    <a name="/s:8WebexSDK4CallC13openAuxStream4viewyAA15MediaRenderViewC_tF"></a>
                     <a name="//apple_ref/swift/Method/openAuxStream(view:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC13openAuxStreamyAA15MediaRenderViewC4view_tF">openAuxStream(view:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC13openAuxStream4viewyAA15MediaRenderViewC_tF">openAuxStream(view:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2227,9 +2227,9 @@ Result will call back through auxStreamOpenedEvent</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK4CallC14closeAuxStreamyAA15MediaRenderViewC4view_tF"></a>
+                    <a name="/s:8WebexSDK4CallC14closeAuxStream4viewyAA15MediaRenderViewC_tF"></a>
                     <a name="//apple_ref/swift/Method/closeAuxStream(view:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC14closeAuxStreamyAA15MediaRenderViewC4view_tF">closeAuxStream(view:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC14closeAuxStream4viewyAA15MediaRenderViewC_tF">closeAuxStream(view:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2327,8 +2327,8 @@ This must be called on <a href="https://developer.apple.com/documentation/callki
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2018-10-31)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2019 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2019-06-07)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

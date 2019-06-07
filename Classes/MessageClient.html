@@ -251,7 +251,9 @@
 
                 </div>
               </div>
-            <p>An iOS client wrapper of the Cisco Webex Message APIs.</p>
+            <p>MessageClient represents a client to the Webex Teams platform. It can send and receive messages.</p>
+
+<p>Use <code><a href="../Classes/Webex.html#/s:8WebexSDK0A0C8messagesAA13MessageClientCvp">Webex.messages</a></code> to get an instance of MessageClient.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.4.0
@@ -275,7 +277,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Callback when receive Message.</p>
+                        <p>The callback handler when receiving a message event.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.4.0
@@ -297,9 +299,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13MessageClientC4listySS7spaceId_AA6BeforeOSg6beforeSi3maxAA7MentionOSg15mentionedPeopleSo13DispatchQueueCSg5queueyAA15ServiceResponseVySayAA0C0VGGc17completionHandlertF"></a>
+                    <a name="/s:8WebexSDK13MessageClientC4list7spaceId6before3max15mentionedPeople5queue17completionHandlerySS_AA6BeforeOSgSiAA7MentionOSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVySayAA0C0VGGctF"></a>
                     <a name="//apple_ref/swift/Method/list(spaceId:before:max:mentionedPeople:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC4listySS7spaceId_AA6BeforeOSg6beforeSi3maxAA7MentionOSg15mentionedPeopleSo13DispatchQueueCSg5queueyAA15ServiceResponseVySayAA0C0VGGc17completionHandlertF">list(spaceId:before:max:mentionedPeople:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4list7spaceId6before3max15mentionedPeople5queue17completionHandlerySS_AA6BeforeOSgSiAA7MentionOSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVySayAA0C0VGGctF">list(spaceId:before:max:mentionedPeople:queue:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -308,8 +310,11 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Lists all messages in a space by space Id.
-If present, it includes the associated media content attachment for each message.
 The list sorts the messages in descending order by creation date.</p>
+
+<p>Note that the file attachment of the message are not downloaded.
+Use the <code><a href="../Classes/MessageClient.html#/s:8WebexSDK13MessageClientC12downloadFile_2to15progressHandler010completionI0yAA06RemoteF0V_10Foundation3URLVSgySdcSgyAA6ResultOyALGctF">downloadFile(...)</a></code> or <code><a href="../Classes/MessageClient.html#/s:8WebexSDK13MessageClientC17downloadThumbnail3for2to15progressHandler010completionJ0yAA10RemoteFileV_10Foundation3URLVSgySdcSgyAA6ResultOyAMGctF">downloadThumbnail(...)</a></code> to download
+the actual content or the thumbnail of the attachment.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.4.0
@@ -354,7 +359,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>If not nil, only list messages sent only before this condition.</p>
+                                  <p>If not nil, only list messages sent before this condition.</p>
                                 </div>
                               </td>
                             </tr>
@@ -378,7 +383,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>List messages where the caller is mentioned by using Mention.person(<q>me</q>).</p>
+                                  <p>List messages where a person (using <code>Mention.person</code>) or all (using <code><a href="../Enums/Mention.html#/s:8WebexSDK7MentionO3allyA2CmF">Mention.all</a></code>) is mentioned.</p>
                                 </div>
                               </td>
                             </tr>
@@ -402,7 +407,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>A closure to be executed once the request has finished.</p>
+                                  <p>A closure to be executed once the request has finished with a list of messages based on the above criteria.</p>
                                 </div>
                               </td>
                             </tr>
@@ -419,9 +424,9 @@ The list sorts the messages in descending order by creation date.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13MessageClientC4postyAA12EmailAddressC06personF0_SSSg4textSayAA9LocalFileCGSg5filesSo13DispatchQueueCSg5queueyAA15ServiceResponseVyAA0C0VGc17completionHandlertF"></a>
+                    <a name="/s:8WebexSDK13MessageClientC4post11personEmail4text5files5queue17completionHandleryAA0G7AddressC_SSSgSayAA9LocalFileCGSgSo012OS_dispatch_J0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/post(personEmail:text:files:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC4postyAA12EmailAddressC06personF0_SSSg4textSayAA9LocalFileCGSg5filesSo13DispatchQueueCSg5queueyAA15ServiceResponseVyAA0C0VGc17completionHandlertF">post(personEmail:text:files:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post11personEmail4text5files5queue17completionHandleryAA0G7AddressC_SSSgSayAA9LocalFileCGSgSo012OS_dispatch_J0CSgyAA15ServiceResponseVyAA0C0VGctF">post(personEmail:text:files:queue:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -429,7 +434,9 @@ The list sorts the messages in descending order by creation date.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Posts a plain text message, optionally a media content attachment, to a space by user email.</p>
+                        <p>Posts a message with optional file attachments to a user by email address.</p>
+
+<p>The content of the message can be plain text, html, or markdown.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.4.0
@@ -461,7 +468,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The EmailAddress of the user to whom the message is to be posted.</p>
+                                  <p>The email address of the user to whom the message is to be posted.</p>
                                 </div>
                               </td>
                             </tr>
@@ -473,7 +480,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The plain text message to be posted to the space.</p>
+                                  <p>The content of message to be posted to the user. The content can be plain text, html, or markdown.</p>
                                 </div>
                               </td>
                             </tr>
@@ -485,7 +492,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>Local file objects to be uploaded to the space.</p>
+                                  <p>Local files to be uploaded with the message.</p>
                                 </div>
                               </td>
                             </tr>
@@ -509,7 +516,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>A closure to be executed once the request has finished.</p>
+                                  <p>A closure to be executed once the message is posted.</p>
                                 </div>
                               </td>
                             </tr>
@@ -526,9 +533,9 @@ The list sorts the messages in descending order by creation date.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13MessageClientC4postySS8personId_SSSg4textSayAA9LocalFileCGSg5filesSo13DispatchQueueCSg5queueyAA15ServiceResponseVyAA0C0VGc17completionHandlertF"></a>
+                    <a name="/s:8WebexSDK13MessageClientC4post8personId4text5files5queue17completionHandlerySS_SSSgSayAA9LocalFileCGSgSo012OS_dispatch_J0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/post(personId:text:files:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC4postySS8personId_SSSg4textSayAA9LocalFileCGSg5filesSo13DispatchQueueCSg5queueyAA15ServiceResponseVyAA0C0VGc17completionHandlertF">post(personId:text:files:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post8personId4text5files5queue17completionHandlerySS_SSSgSayAA9LocalFileCGSgSo012OS_dispatch_J0CSgyAA15ServiceResponseVyAA0C0VGctF">post(personId:text:files:queue:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -536,7 +543,9 @@ The list sorts the messages in descending order by creation date.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Posts a plain text message, optionally a media content attachment, to a space by person id.</p>
+                        <p>Posts a message with optional file attachments to a user by id.</p>
+
+<p>The content of the message can be plain text, html, or markdown.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.4.0
@@ -568,7 +577,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The personId of the user to whom the message is to be posted.</p>
+                                  <p>The id of the user to whom the message is to be posted.</p>
                                 </div>
                               </td>
                             </tr>
@@ -580,7 +589,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The plain text message to be posted to the space.</p>
+                                  <p>The content message to be posted to the user. The content can be plain text, html, or markdown.</p>
                                 </div>
                               </td>
                             </tr>
@@ -592,7 +601,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>Local file objects to be uploaded to the space.</p>
+                                  <p>Local files to be attached to the message.</p>
                                 </div>
                               </td>
                             </tr>
@@ -616,7 +625,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>A closure to be executed once the request has finished.</p>
+                                  <p>A closure to be executed once the message is posted.</p>
                                 </div>
                               </td>
                             </tr>
@@ -633,9 +642,9 @@ The list sorts the messages in descending order by creation date.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13MessageClientC4postySS7spaceId_SSSg4textSayAA7MentionOGSg8mentionsSayAA9LocalFileCGSg5filesSo13DispatchQueueCSg5queueyAA15ServiceResponseVyAA0C0VGc17completionHandlertF"></a>
+                    <a name="/s:8WebexSDK13MessageClientC4post7spaceId4text8mentions5files5queue17completionHandlerySS_SSSgSayAA7MentionOGSgSayAA9LocalFileCGSgSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/post(spaceId:text:mentions:files:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC4postySS7spaceId_SSSg4textSayAA7MentionOGSg8mentionsSayAA9LocalFileCGSg5filesSo13DispatchQueueCSg5queueyAA15ServiceResponseVyAA0C0VGc17completionHandlertF">post(spaceId:text:mentions:files:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post7spaceId4text8mentions5files5queue17completionHandlerySS_SSSgSayAA7MentionOGSgSayAA9LocalFileCGSgSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAA0C0VGctF">post(spaceId:text:mentions:files:queue:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -643,7 +652,12 @@ The list sorts the messages in descending order by creation date.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Posts a plain text message, optionally a media content attachment, to a space by spaceId.</p>
+                        <p>Posts a message with optional file attachments to a space by spaceId.</p>
+
+<p>The content of the message can be plain text, html, or markdown.</p>
+
+<p>To notify specific person or everyone in a space, mentions should be used.
+Having <code>@johndoe</code> in the content of the message does not generate notification.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.4.0
@@ -688,7 +702,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The plain text message to be posted to the space.</p>
+                                  <p>The content message to be posted to the space. The content can be plain text, html, or markdown.</p>
                                 </div>
                               </td>
                             </tr>
@@ -700,7 +714,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The mention items to be posted to the space.</p>
+                                  <p>Notify these mentions.</p>
                                 </div>
                               </td>
                             </tr>
@@ -712,7 +726,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>Local file objects to be uploaded to the space.</p>
+                                  <p>Local files to be uploaded to the space.</p>
                                 </div>
                               </td>
                             </tr>
@@ -736,7 +750,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>A closure to be executed once the request has finished.</p>
+                                  <p>A closure to be executed once the message is posted.</p>
                                 </div>
                               </td>
                             </tr>
@@ -753,9 +767,9 @@ The list sorts the messages in descending order by creation date.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13MessageClientC3getySS9messageId_So13DispatchQueueCSg5queueyAA15ServiceResponseVyAA0C0VGc17completionHandlertF"></a>
+                    <a name="/s:8WebexSDK13MessageClientC3get9messageId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/get(messageId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC3getySS9messageId_So13DispatchQueueCSg5queueyAA15ServiceResponseVyAA0C0VGc17completionHandlertF">get(messageId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC3get9messageId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyAA0C0VGctF">get(messageId:queue:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -763,7 +777,11 @@ The list sorts the messages in descending order by creation date.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Detail of one message.</p>
+                        <p>Retrieves the details of a message by id.</p>
+
+<p>Note that the file attachment of the message are not downloaded.
+Use the <code><a href="../Classes/MessageClient.html#/s:8WebexSDK13MessageClientC12downloadFile_2to15progressHandler010completionI0yAA06RemoteF0V_10Foundation3URLVSgySdcSgyAA6ResultOyALGctF">downloadFile(...)</a></code> or <code><a href="../Classes/MessageClient.html#/s:8WebexSDK13MessageClientC17downloadThumbnail3for2to15progressHandler010completionJ0yAA10RemoteFileV_10Foundation3URLVSgySdcSgyAA6ResultOyAMGctF">downloadThumbnail(...)</a></code> to download
+the actual content or the thumbnail of the attachment.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -786,7 +804,7 @@ The list sorts the messages in descending order by creation date.</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>messageID</em>
+                                <em>messageId</em>
                                 </code>
                               </td>
                               <td>
@@ -815,7 +833,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>A closure to be executed once the request has finished.</p>
+                                  <p>A closure to be executed once the message is retrieved.</p>
                                 </div>
                               </td>
                             </tr>
@@ -832,9 +850,9 @@ The list sorts the messages in descending order by creation date.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13MessageClientC6deleteySS9messageId_So13DispatchQueueCSg5queueyAA15ServiceResponseVyypGc17completionHandlertF"></a>
+                    <a name="/s:8WebexSDK13MessageClientC6delete9messageId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyypGctF"></a>
                     <a name="//apple_ref/swift/Method/delete(messageId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC6deleteySS9messageId_So13DispatchQueueCSg5queueyAA15ServiceResponseVyypGc17completionHandlertF">delete(messageId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC6delete9messageId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyypGctF">delete(messageId:queue:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -842,7 +860,7 @@ The list sorts the messages in descending order by creation date.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Deletes a message to a space by messageId.</p>
+                        <p>Deletes a message by id.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -870,7 +888,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The messageId to be deleted in the space.</p>
+                                  <p>The identifier of the message to be deleted.</p>
                                 </div>
                               </td>
                             </tr>
@@ -894,7 +912,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>A closure to be executed once the request has finished.</p>
+                                  <p>A closure to be executed once the message is deleted.</p>
                                 </div>
                               </td>
                             </tr>
@@ -911,9 +929,9 @@ The list sorts the messages in descending order by creation date.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13MessageClientC12downloadFileyAA06RemoteF0V_10Foundation3URLVSg2toySdcSg15progressHandleryAA6ResultOyAIGc010completionL0tF"></a>
+                    <a name="/s:8WebexSDK13MessageClientC12downloadFile_2to15progressHandler010completionI0yAA06RemoteF0V_10Foundation3URLVSgySdcSgyAA6ResultOyALGctF"></a>
                     <a name="//apple_ref/swift/Method/downloadFile(_:to:progressHandler:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC12downloadFileyAA06RemoteF0V_10Foundation3URLVSg2toySdcSg15progressHandleryAA6ResultOyAIGc010completionL0tF">downloadFile(_:to:progressHandler:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC12downloadFile_2to15progressHandler010completionI0yAA06RemoteF0V_10Foundation3URLVSgySdcSgyAA6ResultOyALGctF">downloadFile(_:to:progressHandler:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -921,7 +939,7 @@ The list sorts the messages in descending order by creation date.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Download a file object, save the file to pointed destination.</p>
+                        <p>Download a file attachement to the specified local directory.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.4.0
@@ -949,7 +967,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The RemoteFile object need to be downloaded.</p>
+                                  <p>The RemoteFile object need to be downloaded. Use <code>Message.remoteFiles</code> to get the references.</p>
                                 </div>
                               </td>
                             </tr>
@@ -961,7 +979,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The local file directory for saving dwonloaded file.</p>
+                                  <p>The local file directory for saving dwonloaded file attahement.</p>
                                 </div>
                               </td>
                             </tr>
@@ -985,7 +1003,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>Downloaded file local address wiil be stored in <q>file.localFileUrl</q></p>
+                                  <p>A closure to be executed once the download is completed. The URL contains the path to the downloded file.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1002,9 +1020,9 @@ The list sorts the messages in descending order by creation date.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13MessageClientC17downloadThumbnailyAA10RemoteFileV3for_10Foundation3URLVSg2toySdcSg15progressHandleryAA6ResultOyAJGc010completionN0tF"></a>
+                    <a name="/s:8WebexSDK13MessageClientC17downloadThumbnail3for2to15progressHandler010completionJ0yAA10RemoteFileV_10Foundation3URLVSgySdcSgyAA6ResultOyAMGctF"></a>
                     <a name="//apple_ref/swift/Method/downloadThumbnail(for:to:progressHandler:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC17downloadThumbnailyAA10RemoteFileV3for_10Foundation3URLVSg2toySdcSg15progressHandleryAA6ResultOyAJGc010completionN0tF">downloadThumbnail(for:to:progressHandler:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC17downloadThumbnail3for2to15progressHandler010completionJ0yAA10RemoteFileV_10Foundation3URLVSgySdcSgyAA6ResultOyAMGctF">downloadThumbnail(for:to:progressHandler:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1012,7 +1030,8 @@ The list sorts the messages in descending order by creation date.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Download a file object, save the file thumbnail.</p>
+                        <p>Download the thumbnail for a file attachment to the specified local directory.
+Note Cisco Webex doesn&rsquo;t generate thumbnail for all files.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.4.0
@@ -1040,7 +1059,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The RemoteFile object need to be downloaded.</p>
+                                  <p>The RemoteFile object whose thumbnail needs to be downloaded.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1052,7 +1071,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The local file directory for saving file after download.</p>
+                                  <p>The local file directory for saving downloaded thumbnail.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1076,7 +1095,7 @@ The list sorts the messages in descending order by creation date.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>Downloaded file local address wiil be stored in <q>file.localFileUrl</q></p>
+                                  <p>A closure to be executed once the download is completed. The URL contains the path to the downloded thumbnail.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1095,8 +1114,8 @@ The list sorts the messages in descending order by creation date.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2018-10-31)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2019 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2019-06-07)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

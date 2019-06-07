@@ -275,7 +275,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A data type represents a local file thumbnail.</p>
+                        <p>A data type represents the thumbnail of this local file.
+The thumbnail typically is an image file to provide preview of the local file without opening.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.4.0
@@ -308,7 +309,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The local path of the file.</p>
+                        <p>The path of the local file to be uploaded.</p>
 
                       </div>
                       <div class="declaration">
@@ -335,7 +336,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The name of the file.</p>
+                        <p>The display name of the file.</p>
 
                       </div>
                       <div class="declaration">
@@ -362,7 +363,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The mime type of the file.</p>
+                        <p>The MIME type of the file.</p>
 
                       </div>
                       <div class="declaration">
@@ -389,7 +390,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The size of the file.</p>
+                        <p>The size in bytes of the file.</p>
 
                       </div>
                       <div class="declaration">
@@ -416,7 +417,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The progressHandler when uploading the file.</p>
+                        <p>The progress indicator callback for uploading progresses.</p>
 
                       </div>
                       <div class="declaration">
@@ -443,7 +444,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The thumbnail of the file.</p>
+                        <p>The thumbnail for the local file. If not nil, the thumbnail will be uploaded with the local file.</p>
 
                       </div>
                       <div class="declaration">
@@ -460,9 +461,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK9LocalFileCACSgSS4path_SSSg4nameAF4mimeAC9ThumbnailCSg9thumbnailySdcSg15progressHandlertcfc"></a>
+                    <a name="/s:8WebexSDK9LocalFileC4path4name4mime9thumbnail15progressHandlerACSgSS_SSSgAjC9ThumbnailCSgySdcSgtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(path:name:mime:thumbnail:progressHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK9LocalFileCACSgSS4path_SSSg4nameAF4mimeAC9ThumbnailCSg9thumbnailySdcSg15progressHandlertcfc">init(path:name:mime:thumbnail:progressHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK9LocalFileC4path4name4mime9thumbnail15progressHandlerACSgSS_SSSgAjC9ThumbnailCSgySdcSgtcfc">init(path:name:mime:thumbnail:progressHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -486,6 +487,73 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>path</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The path of the local file.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>name</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the uploaded file.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>mime</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The MIME type of the local file.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>thumbnail</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The thumbnail for the local file.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>progressHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the progress indicator callback for uploading progresses.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -494,8 +562,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2018-10-31)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2019 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2019-06-07)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
