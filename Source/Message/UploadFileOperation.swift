@@ -138,7 +138,7 @@ class UploadFileOperation {
             self.key.spaceUrl(authenticator: client.authenticator) { result in
                 if let url = result.data {
                     let headers: HTTPHeaders  = ["Authorization": "Bearer " + token]
-                    let parameters: Parameters = ["fileSize": size]
+                    let parameters: Parameters = ["uploadProtocol":"content-length"]
                     Alamofire.request(url + "/upload_sessions", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response: DataResponse<Any>) in
                        handleUploadSuccess(response: response)
                     }
