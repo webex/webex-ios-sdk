@@ -57,6 +57,15 @@ public struct Person {
     /// The nick type of person, default is "person"
     /// - since: 1.4.0
     public var type: String?
+    
+    /// The date and time of the person's last activity within Webex Teams
+    /// - since: 2.2.0
+    public var lastActivity:Date?
+
+    /// The current presence status of the person
+    /// - since: 2.2.0
+    public var status: String?
+    
 }
 
 extension Person: Mappable {
@@ -71,15 +80,19 @@ extension Person: Mappable {
     ///
     /// - note: for internal use only.
     public mutating func mapping(map: Map) {
-        id <- map["id"]
-        emails <- (map["emails"], EmailsTransform())
-        displayName <- map["displayName"]
-        avatar <- map["avatar"]
-        created <- (map["created"], CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
-        nickName <- map["nickName"]
-        firstName <- map["firstName"]
-        lastName <- map["lastName"]
-        orgId <- map["orgId"]
-        type <- map["type"]
+        id           <- map["id"]
+        emails       <- (map["emails"], EmailsTransform())
+        displayName  <- map["displayName"]
+        avatar       <- map["avatar"]
+        created      <- (map["created"], CustomDateFormatTransform(formatString:
+            "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
+        nickName     <- map["nickName"]
+        firstName    <- map["firstName"]
+        lastName     <- map["lastName"]
+        orgId        <- map["orgId"]
+        type         <- map["type"]
+        lastActivity <- (map["lastActivity"], CustomDateFormatTransform(formatString:
+            "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
+        status       <- map["status"]
     }
 }
