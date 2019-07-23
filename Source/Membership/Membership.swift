@@ -21,6 +21,20 @@
 import Foundation
 import ObjectMapper
 
+
+/// The struct of a membership event
+/// - since: 2.2.0
+public enum MembershipEvent {
+    // The callback when add membership
+    case add(EventPayload)
+    // The callback when leave membership
+    case leave(EventPayload)
+    // The callback when change moderator of membership
+    case update(EventPayload)
+    /// The callback when read receipt
+    case seen(EventPayload)
+}
+
 /// Membership contents.
 ///
 /// - since: 1.2.0

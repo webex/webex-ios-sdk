@@ -154,7 +154,7 @@ class MessageClientImpl {
         request.responseObject { (response : ServiceResponse<ActivityModel>) in
             switch response.result {
             case .success(let activity):
-                if let spaceId = activity.spaceId, decrypt {
+                if let spaceId = activity.targetId, decrypt {
                     let key = self.encryptionKey(spaceId: spaceId)
                     key.material(client: self) { material in
                         (queue ?? DispatchQueue.main).async {
@@ -265,7 +265,7 @@ class MessageClientImpl {
         request.responseObject { (response : ServiceResponse<ActivityModel>) in
             switch response.result {
             case .success(let activity):
-                if let spaceId = activity.spaceId {
+                if let spaceId = activity.targetId {
                     let object: [String: Any] = ["id": messageId.locusFormat, "objectType": ObjectType.activity.rawValue]
                     let target: [String: Any] = ["id": spaceId.locusFormat, "objectType": ObjectType.conversation.rawValue]
                     let body = RequestParameter(["verb": ActivityModel.Kind.delete.rawValue, "object": object, "target": target])
@@ -328,7 +328,7 @@ class MessageClientImpl {
     
     // MARK: Encryption Feature Functions
     func handle(activity: ActivityModel) {
-        guard let spaceId = activity.spaceId else {
+        guard let spaceId = activity.targetId else {
             SDKLogger.shared.error("Not a space message \(activity.id ?? (activity.toJSONString() ?? ""))")
             return
         }

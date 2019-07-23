@@ -25,6 +25,10 @@ import Foundation
 /// - since: 1.2.0
 public class MembershipClient {
     
+    /// The callback handler when receiving a memberShip event.
+    /// - since: 2.2.0
+    public var onEvent: ((MembershipEvent) -> Void)?
+    
     let authenticator: Authenticator
     init(authenticator: Authenticator) {
         self.authenticator = authenticator
@@ -202,4 +206,57 @@ public class MembershipClient {
         
         request.responseJSON(completionHandler)
     }
+
+}
+
+// MARK: handle conversation membership event
+extension MembershipClient {
+    
+    func handle(activity: ActivityModel, payload:EventPayload) {
+        guard let kind = activity.kind else {
+            return
+        }
+        var eventPayload = payload
+        var data = MembershipData()
+        data.id = activity.dataId
+        data.created = activity.created
+        data.isRoomHidden = false
+        data.roomId = activity.targetId
+        data.roomType = (activity.targetTag ?? SpaceType.direct).rawValue
+        
+        if activity.kind == ActivityModel.Kind.acknowledge { // seen
+            data.personId = activity.actorId
+            data.personOrgId = activity.actorOrgId
+            data.personDisplayName = activity.actorDisplayName
+            data.personEmail = activity.actorEmail
+            data.lastSeenId = activity.objectId
+        }else { // add, leave and update
+            data.personId = activity.objectId
+            data.personOrgId = activity.objectOrgId
+            data.personDisplayName = activity.objectDisplayName
+            data.personEmail = activity.objectEmail
+            data.isModerator = activity.isModerator
+        }
+        
+        eventPayload.data = data
+        eventPayload.resource = Event.Resource.memberships
+        
+        switch kind {
+        case .acknowledge:
+            eventPayload.event = Event.EventType.seen
+            self.onEvent?(MembershipEvent.seen(eventPayload))
+        case .add:
+            eventPayload.event = Event.EventType.created
+            self.onEvent?(MembershipEvent.add(eventPayload))
+        case .leave:
+            eventPayload.event = Event.EventType.deleted
+            self.onEvent?(MembershipEvent.leave(eventPayload))
+        case .update:
+            eventPayload.event = Event.EventType.updated
+            self.onEvent?(MembershipEvent.update(eventPayload))
+        default:
+            break
+        }
+    }
+    
 }
