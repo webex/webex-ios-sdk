@@ -24,10 +24,9 @@ struct Event {
         static let update = "update"
         
         static func isContained(_ verb:String) -> Bool {
-            if verb == acknowledge || verb == create || verb == post
-                || verb == share || verb == delete || verb == add
-                || verb == add || verb == leave || verb == assignModerator
-                || verb == unassignModerator {
+            if verb == post || verb == share || verb == delete
+                || verb == add || verb == leave || verb == acknowledge
+                || verb == assignModerator || verb == unassignModerator {
                 return true
             }else {
                 return false
