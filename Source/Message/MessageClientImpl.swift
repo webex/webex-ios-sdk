@@ -23,6 +23,14 @@ import ObjectMapper
 import Alamofire
 import SwiftyJSON
 
+
+enum ObjectType : String {
+    case activity
+    case comment
+    case content
+    case conversation
+}
+
 class MessageClientImpl {
     
     class MSGError {
@@ -33,16 +41,10 @@ class MessageClientImpl {
         static let keyMaterialFetchFail = WebexError.serviceFailed(code: -7000, reason: "Key Info Fetch Fail")
         static let encryptionUrlFetchFail = WebexError.serviceFailed(code: -7000, reason: "Encryption Info Fetch Fail")
         static let spaceUrlFetchFail = WebexError.serviceFailed(code: -7000, reason: "Space Info Fetch Fail")
+        static let spaceMessageFetchFail = WebexError.serviceFailed(code: -7000, reason: "Messages Of Space Fetch Fail")
         static let emptyTextError = WebexError.serviceFailed(code: -7000, reason: "Expected Text Not Found")
         static let downloadError = WebexError.serviceFailed(code: -7000, reason: "Expected File Not Found")
         static let timeOut = WebexError.serviceFailed(code: -7000, reason: "Timeout")
-    }
-    
-    private enum ObjectType : String {
-        case activity
-        case comment
-        case content
-        case conversation
     }
     
     private static let kmsMsgServerUrl = URL(string: ServiceRequest.kmsServerAddress + "/kms/messages")!

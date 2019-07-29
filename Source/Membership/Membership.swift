@@ -26,13 +26,13 @@ import ObjectMapper
 /// - since: 2.2.0
 public enum MembershipEvent {
     // The callback when add membership
-    case add(EventPayload)
+    case add(WebexEventPayload)
     // The callback when leave membership
-    case leave(EventPayload)
+    case leave(WebexEventPayload)
     // The callback when change moderator of membership
-    case update(EventPayload)
+    case update(WebexEventPayload)
     /// The callback when read receipt
-    case seen(EventPayload)
+    case seen(WebexEventPayload)
 }
 
 /// Membership contents.

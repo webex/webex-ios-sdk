@@ -168,6 +168,12 @@ public class Phone {
         self.prompter = prompter
         self.webSocket = webSocket
         self.members = MembershipClient(authenticator: authenticator)
+        self.members.getMessageClient = {[weak self] in
+            if let strong = self {
+                return MessageClient(phone: strong)
+            }
+            return nil
+        }
         self.getMe()
         self.webSocket.onEvent = { [weak self] event in
             if let strong = self {
@@ -812,8 +818,8 @@ public class Phone {
         
     }
     
-    private func setCommonPayload(_ activity:ActivityModel) -> EventPayload {
-        var payload = EventPayload()
+    private func setCommonPayload(_ activity:ActivityModel) -> WebexEventPayload {
+        var payload = WebexEventPayload()
         payload.actorId = activity.actorId
         payload.orgId = self.me?.orgId
         payload.createdBy = self.me?.id
@@ -824,14 +830,12 @@ public class Phone {
     }
     
     private func getMe() {
-        PersonClient(authenticator: self.authenticator).getMe {[weak self] response in
-            if let strongSelf = self {
-                switch response.result {
-                case .success(let person):
-                    strongSelf.me = person
-                case .failure:
-                    SDKLogger.shared.error("GetMe failed")
-                }
+        PersonClient(authenticator: self.authenticator).getMe { response in
+            switch response.result {
+            case .success(let person):
+                self.me = person
+            case .failure:
+                SDKLogger.shared.error("GetMe failed")
             }
         }
     }

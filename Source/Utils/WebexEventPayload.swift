@@ -8,10 +8,10 @@
 import Foundation
 
 
-public protocol EventData {
+public protocol WebexEventData {
 }
 
-public struct EventPayload {
+public struct WebexEventPayload {
     /// The personId of the user who caused the event to be sent
     public var actorId:String?
     
@@ -22,7 +22,7 @@ public struct EventPayload {
     public var createdBy:String?
     
     /// Contains the data representation of the resource that triggered the event
-    public var data:EventData?
+    public var data:WebexEventData?
     
     /// The type of the event
     public var event:String?
@@ -41,7 +41,7 @@ public struct EventPayload {
     
 }
 
-public struct MembershipData:EventData {
+public struct WebexMembershipData:WebexEventData {
     
     /// mixture id
     public var id: String?
