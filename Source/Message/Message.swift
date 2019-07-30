@@ -43,22 +43,22 @@ public struct Message {
     
     /// The identifier of the space where this message was posted.
     public var spaceId: String? {
-        return self.activity.spaceId
+        return self.activity.targetId
     }
     
     ///  The type of the space, "group"/"direct", where the message is posted.
     public var spaceType: SpaceType {
-        return self.activity.spaceType ?? SpaceType.group
+        return self.activity.targetTag ?? SpaceType.group
     }
     
     /// The identifier of the person who sent this message.
     public var personId: String? {
-        return self.activity.personId
+        return self.activity.actorId
     }
     
     /// The email address of the person who sent this message.
     public var personEmail: String? {
-        return self.activity.personEmail
+        return self.activity.actorEmail
     }
     
     /// The identifier of the recipient when sending a private 1:1 message.
@@ -93,7 +93,7 @@ public struct Message {
     
     /// The content of the message.
     public var text: String? {
-        return self.activity.text
+        return self.activity.objectDisplayName
     }
     
     /// An array of file attachments in the message.

@@ -127,6 +127,8 @@ public class Phone {
     let queue = SerialQueue()
     let metrics: MetricsEngine
     private(set) var messages: MessageClientImpl?
+    private(set) var members: MembershipClient
+    private var me:Person?
     
     private let devices: DeviceService
     private let webSocket: WebSocketService
@@ -165,6 +167,14 @@ public class Phone {
         self.metrics = metrics
         self.prompter = prompter
         self.webSocket = webSocket
+        self.members = MembershipClient(authenticator: authenticator)
+        self.members.getMessageClient = {[weak self] in
+            if let strong = self {
+                return MessageClient(phone: strong)
+            }
+            return nil
+        }
+        self.getMe()
         self.webSocket.onEvent = { [weak self] event in
             if let strong = self {
                 strong.queue.underlying.async {
@@ -788,9 +798,45 @@ public class Phone {
     }
     
     private func doConversationEvent(_ model: ActivityModel){
-        if let messages = self.messages {
-            SDKLogger.shared.debug("Receive Conversation Acitivity: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
-            messages.handle(activity: model)
+        SDKLogger.shared.debug("Receive Conversation Acitivity: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
+        
+        guard let kind = model.kind else {
+            return
+        }
+        let payload = self.setCommonPayload(model)
+        
+        switch kind {
+        case .post, .share, .delete:
+            if let messages = self.messages {
+                messages.handle(activity: model)
+            }
+        case .acknowledge, .add, .leave, .update:
+            members.handle(activity: model, payload:payload)
+        default:
+            SDKLogger.shared.error("Not a valid message \(model.id ?? (model.toJSONString() ?? ""))")
+        }
+        
+    }
+    
+    private func setCommonPayload(_ activity:ActivityModel) -> WebexEventPayload {
+        var payload = WebexEventPayload()
+        payload.actorId = activity.actorId
+        payload.orgId = self.me?.orgId
+        payload.createdBy = self.me?.id
+        payload.created = Date()
+        payload.ownedBy = "creator"
+        payload.status = "active"
+        return payload
+    }
+    
+    private func getMe() {
+        PersonClient(authenticator: self.authenticator).getMe { response in
+            switch response.result {
+            case .success(let person):
+                self.me = person
+            case .failure:
+                SDKLogger.shared.error("GetMe failed")
+            }
         }
     }
     

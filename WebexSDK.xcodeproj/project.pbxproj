@@ -107,6 +107,8 @@
 		68A7D44F2084477200AB7F8A /* MessageClientImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A7D44E2084477200AB7F8A /* MessageClientImpl.swift */; };
 		68A7D4512084822500AB7F8A /* Transforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A7D4502084822500AB7F8A /* Transforms.swift */; };
 		68A7D453208487B900AB7F8A /* ActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A7D452208487B900AB7F8A /* ActivityModel.swift */; };
+		84AAC35122E0268600A25159 /* EventPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AAC35022E0268500A25159 /* EventPayload.swift */; };
+		84AAC35322E0269E00A25159 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AAC35222E0269E00A25159 /* Constants.swift */; };
 		99E3FA891F3472AA00657180 /* SSOAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E3FA881F3472AA00657180 /* SSOAuthenticator.swift */; };
 		AE63E2ACB35FDD2C96AA88AD /* Pods_WebexSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B8CECD50F462D8FA87979D2 /* Pods_WebexSDK.framework */; };
 		B91E75981CE2D7B70080EAE0 /* OAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91E75351CE2D7B70080EAE0 /* OAuthViewController.swift */; };
@@ -299,6 +301,8 @@
 		68A7D452208487B900AB7F8A /* ActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityModel.swift; sourceTree = "<group>"; };
 		6B853CF3F28B8FF8D3908761 /* Pods_WebexBroadcastExtensionKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WebexBroadcastExtensionKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		841D36D97E3F240C87086D10 /* Pods-WebexSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebexSDKTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WebexSDKTests/Pods-WebexSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
+		84AAC35022E0268500A25159 /* EventPayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventPayload.swift; sourceTree = "<group>"; };
+		84AAC35222E0269E00A25159 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		85609E2073C59D0FDDCFB495 /* Pods-WebexBroadcastExtensionKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebexBroadcastExtensionKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WebexBroadcastExtensionKit/Pods-WebexBroadcastExtensionKit.debug.xcconfig"; sourceTree = "<group>"; };
 		99E3FA881F3472AA00657180 /* SSOAuthenticator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSOAuthenticator.swift; sourceTree = "<group>"; };
 		9B8CECD50F462D8FA87979D2 /* Pods_WebexSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WebexSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -738,6 +742,8 @@
 		B91E75891CE2D7B70080EAE0 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				84AAC35022E0268500A25159 /* EventPayload.swift */,
+				84AAC35222E0269E00A25159 /* Constants.swift */,
 				5A9350D81E00737900374B99 /* Clock.swift */,
 				B91E758B1CE2D7B70080EAE0 /* Array+Extension.swift */,
 				B91E758C1CE2D7B70080EAE0 /* Dictionary+Extension.swift */,
@@ -1146,6 +1152,7 @@
 				20EEA2D01EBDE43300D6BB75 /* MediaEngineObserver.swift in Sources */,
 				20EEA2771EB0E6B400D6BB75 /* CallModel.swift in Sources */,
 				209360381E89DA7300D6BC4A /* Logger.swift in Sources */,
+				84AAC35322E0269E00A25159 /* Constants.swift in Sources */,
 				B91E75AC1CE2D7B70080EAE0 /* MetricsBuffer.swift in Sources */,
 				B91E75AD1CE2D7B70080EAE0 /* MetricsClient.swift in Sources */,
 				B91E75E21CE2D7B70080EAE0 /* NotificationObserver.swift in Sources */,
@@ -1158,6 +1165,7 @@
 				1066EF112022F877003745D0 /* DownloadFileOperation.swift in Sources */,
 				5D10539B1D066CF6004B30B7 /* MediaOption.swift in Sources */,
 				5AC09EB31DE4D02C005F38BC /* Authenticator.swift in Sources */,
+				84AAC35122E0268600A25159 /* EventPayload.swift in Sources */,
 				B91E75C81CE2D7B70080EAE0 /* DeviceService.swift in Sources */,
 				3DEEA4F31D11419800EB73F6 /* UIAlertController+Extension.swift in Sources */,
 				20EEA2D21EBDE43300D6BB75 /* MediaSessionObserver.swift in Sources */,

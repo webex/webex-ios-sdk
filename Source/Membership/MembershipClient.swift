@@ -25,6 +25,12 @@ import Foundation
 /// - since: 1.2.0
 public class MembershipClient {
     
+    /// The callback handler when receiving a memberShip event.
+    /// - since: 2.2.0
+    public var onEvent: ((MembershipEvent) -> Void)?
+    
+    var getMessageClient:(() -> MessageClient?)?
+    
     let authenticator: Authenticator
     init(authenticator: Authenticator) {
         self.authenticator = authenticator
@@ -32,6 +38,12 @@ public class MembershipClient {
     
     private func requestBuilder() -> ServiceRequest.Builder {
         return ServiceRequest.Builder(authenticator).path("memberships")
+    }
+    
+    private func conversationBuilder() -> ServiceRequest.Builder {
+        return ServiceRequest.Builder(self.authenticator)
+            .baseUrl(ServiceRequest.conversationServerAddress)
+            .path("activities")
     }
 
     /// Lists all space memberships where the authenticated user belongs.
@@ -202,4 +214,114 @@ public class MembershipClient {
         
         request.responseJSON(completionHandler)
     }
+    
+    /// Send read receipt when the login user read a message, let others know you have seen it
+    ///
+    /// - parameter spaceId: The identifier of the space where the message is.
+    /// - parameter messageId: The identifier of the message which user read.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the delete readReceipt has finished.
+    /// - returns: Void
+    /// - since: 2.2.0
+    public func sendReadReceipt(spaceId:String, messageId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        let object = ["id": messageId.locusFormat, "objectType": ObjectType.activity.rawValue]
+        let target = ["id": spaceId.locusFormat, "objectType": ObjectType.conversation.rawValue]
+        let body = RequestParameter(["objectType":ObjectType.activity.rawValue,
+                                     "verb": Event.Verb.acknowledge,
+                                     "object": object,
+                                     "target": target])
+        let request = self.conversationBuilder()
+            .method(.post)
+            .body(body)
+            .queue(queue)
+            .build()
+        request.responseJSON(completionHandler)
+    }
+    
+    /// Send read receipt when the login user read all the messages in the space, let others know you have seen them
+    ///
+    /// - parameter messageId: The identifier of the space.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the delete readReceipt has finished.
+    /// - returns: Void
+    /// - since: 2.2.0
+    public func sendReadReceipt(spaceId:String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        guard let message = self.getMessageClient?() else {
+            (queue ?? DispatchQueue.main).async {
+                completionHandler(ServiceResponse(nil, Result.failure(WebexError.noAuth)))
+            }
+            return
+        }
+        
+        message.list(spaceId: spaceId, max: 1, queue:queue) { (response) in
+            switch response.result {
+            case .success(let messages):
+                if let message = messages.first, let lastMessageId = message.id {
+                    self.sendReadReceipt(spaceId: spaceId, messageId: lastMessageId, queue: queue,  completionHandler: completionHandler)
+                }
+                else {
+                    (queue ?? DispatchQueue.main).async {
+                        completionHandler(ServiceResponse(response.response, Result.failure(response.result.error ?? MessageClientImpl.MSGError.spaceMessageFetchFail)))
+                    }
+                }
+
+            case .failure(let error):
+                completionHandler(ServiceResponse(response.response, Result.failure(error)))
+            }
+        }
+    }
+    
+    
+}
+
+// MARK: handle conversation membership event
+extension MembershipClient {
+    
+    func handle(activity: ActivityModel, payload:WebexEventPayload) {
+        guard let kind = activity.kind else {
+            return
+        }
+        var eventPayload = payload
+        var data = WebexMembershipData()
+        data.id = activity.dataId
+        data.created = activity.created
+        data.isRoomHidden = false
+        data.roomId = activity.targetId
+        data.roomType = (activity.targetTag ?? SpaceType.direct).rawValue
+        
+        if activity.kind == ActivityModel.Kind.acknowledge { // seen
+            data.personId = activity.actorId
+            data.personOrgId = activity.actorOrgId
+            data.personDisplayName = activity.actorDisplayName
+            data.personEmail = activity.actorEmail
+            data.lastSeenId = activity.objectId
+        }else { // add, leave and update
+            data.personId = activity.objectId
+            data.personOrgId = activity.objectOrgId
+            data.personDisplayName = activity.objectDisplayName
+            data.personEmail = activity.objectEmail
+            data.isModerator = activity.isModerator
+        }
+        
+        eventPayload.data = data
+        eventPayload.resource = Event.Resource.memberships
+        
+        switch kind {
+        case .acknowledge:
+            eventPayload.event = Event.EventType.seen
+            self.onEvent?(MembershipEvent.seen(eventPayload))
+        case .add:
+            eventPayload.event = Event.EventType.created
+            self.onEvent?(MembershipEvent.add(eventPayload))
+        case .leave:
+            eventPayload.event = Event.EventType.deleted
+            self.onEvent?(MembershipEvent.leave(eventPayload))
+        case .update:
+            eventPayload.event = Event.EventType.updated
+            self.onEvent?(MembershipEvent.update(eventPayload))
+        default:
+            break
+        }
+    }
+    
 }
