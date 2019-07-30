@@ -290,6 +290,47 @@ class MessageClientImpl {
         }
     }
     
+    public func markAsRead(spaceId:String, messageId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        let object = ["id": messageId.locusFormat, "objectType": ObjectType.activity.rawValue]
+        let target = ["id": spaceId.locusFormat, "objectType": ObjectType.conversation.rawValue]
+        let body = RequestParameter(["objectType":ObjectType.activity.rawValue,
+                                     "verb": Event.Verb.acknowledge,
+                                     "object": object,
+                                     "target": target])
+        let request = self.messageServiceBuilder
+            .path("activities")
+            .method(.post)
+            .body(body)
+            .queue(queue)
+            .build()
+        request.responseJSON(completionHandler)
+    }
+    
+    /// Send read receipt when the login user read all the messages in the space, let others know you have seen them
+    ///
+    /// - parameter messageId: The identifier of the space.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the delete readReceipt has finished.
+    /// - returns: Void
+    /// - since: 2.2.0
+    public func markAsRead(spaceId:String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        self.list(spaceId: spaceId, max: 1, queue:queue) { (response) in
+            switch response.result {
+            case .success(let messages):
+                if let message = messages.first, let lastMessageId = message.id {
+                    self.markAsRead(spaceId: spaceId, messageId: lastMessageId, queue: queue,  completionHandler: completionHandler)
+                }
+                else {
+                    (queue ?? DispatchQueue.main).async {
+                        completionHandler(ServiceResponse(response.response, Result.failure(response.result.error ?? MSGError.spaceMessageFetchFail)))
+                    }
+                }
+            case .failure(let error):
+                completionHandler(ServiceResponse(response.response, Result.failure(error)))
+            }
+        }
+    }
+    
     func downloadFile(_ file: RemoteFile, to: URL? = nil, queue: DispatchQueue? = nil, progressHandler: ((Double)->Void)? = nil, completionHandler: @escaping (Result<URL>) -> Void) {
         if let source = file.url {
             let operation = DownloadFileOperation(authenticator: self.authenticator,

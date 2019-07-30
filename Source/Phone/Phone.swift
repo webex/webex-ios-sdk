@@ -168,12 +168,6 @@ public class Phone {
         self.prompter = prompter
         self.webSocket = webSocket
         self.members = MembershipClient(authenticator: authenticator)
-        self.members.getMessageClient = {[weak self] in
-            if let strong = self {
-                return MessageClient(phone: strong)
-            }
-            return nil
-        }
         self.getMe()
         self.webSocket.onEvent = { [weak self] event in
             if let strong = self {
