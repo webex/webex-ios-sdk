@@ -306,13 +306,6 @@ class MessageClientImpl {
         request.responseJSON(completionHandler)
     }
     
-    /// Send read receipt when the login user read all the messages in the space, let others know you have seen them
-    ///
-    /// - parameter messageId: The identifier of the space.
-    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the delete readReceipt has finished.
-    /// - returns: Void
-    /// - since: 2.2.0
     public func markAsRead(spaceId:String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
         self.list(spaceId: spaceId, max: 1, queue:queue) { (response) in
             switch response.result {

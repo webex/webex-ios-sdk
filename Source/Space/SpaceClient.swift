@@ -129,3 +129,87 @@ public class SpaceClient {
         request.responseJSON(completionHandler)
     }
 }
+
+// MARK: - Conversation Api
+extension SpaceClient {
+    private func conversationBuilder() -> ServiceRequest.Builder {
+        return ServiceRequest.Builder(self.authenticator)
+            .baseUrl(ServiceRequest.conversationServerAddress)
+    }
+    
+    /// Returns a single room object with details about the data of the last
+    /// actvity in the room, and the date of the users last presence in the room.
+    /// For rooms where lastActivityDate > lastSeenDate the room can be considerd to be "unread"
+    ///
+    /// - parameter spaceId: The identifier of the space.
+    /// - parameter queue: The queue on which the completion handler is dispatched.
+    /// - parameter completionHandler: A closure to be executed once the request has finished.
+    /// - returns: Void
+    /// - since: 2.2.0
+    public func getWithReadStatus(spaceId:String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<SpaceInfo>) -> Void) {
+        let request = conversationBuilder()
+            .method(.get)
+            .path("conversations")
+            .path(spaceId.locusFormat)
+            .query(RequestParameter(forConversation: ["includeParticipants":false]))
+            .queue(queue)
+            .build()
+        
+        request.responseObject(completionHandler)
+    }
+    
+    /// Returns a list of rooms with details about the data of the last
+    /// actvity in the room, and the date of the users last presences in the room. The list is sorted with this with most recent activity first
+    /// For rooms where lastActivityDate > lastSeenDate the space can be considerd to be "unread"
+    ///
+    /// - parameter max: the parameter is limited between 1 and 100, recommend it to be set to 30. if 0, will return 1000 spaces
+    /// - parameter queue: The queue on which the completion handler is dispatched.
+    /// - parameter completionHandler: A closure to be executed once the request has finished.
+    /// - returns: Void
+    /// - since: 2.2.0
+    public func listWithReadStatus(max:Int = 0, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[SpaceInfo]>) -> Void) {
+        if max < 0 || max > 100 {
+            completionHandler(ServiceResponse(nil, Result.failure(WebexError.illegalOperation(reason: "optional max parameter must be an integer between 1 and 100"))))
+            return
+        }
+
+        var conversationsLimit = max
+        var sinceDate:Int = 0
+        if max == 0 {
+            conversationsLimit = 1000
+        }else {
+            // 14 days ago
+            let date = Date(timeInterval: -(14 * 24 * 3600), since: Date())
+            sinceDate = Int(date.timeIntervalSince1970 * 1000)
+        }
+        
+        var parameter:[String:Any] = ["participantsLimit":0, "isActive":true, "conversationsLimit":conversationsLimit]
+        if sinceDate > 0 {
+            parameter["sinceDate"] = sinceDate
+        }
+        
+        let request = conversationBuilder()
+            .method(.get)
+            .path("conversations")
+            .keyPath("items")
+            .query(RequestParameter(forConversation: parameter))
+            .queue(queue)
+            .build()
+        
+        request.responseArray { (response:ServiceResponse<[SpaceInfo]>) in
+            switch response.result {
+            case .success(let spaceInfoArray):
+                let spaceInfos = spaceInfoArray.sorted(by: { (value1, value2) -> Bool in
+                    guard let date1 = value1.lastActivityDate else {return false}
+                    guard let date2 = value2.lastActivityDate else {return true}
+                    return Double(date1.timeIntervalSince1970) > Double(date2.timeIntervalSince1970)
+                })
+                completionHandler(ServiceResponse(response.response, Result.success(spaceInfos)))
+                
+            case .failure(let error):
+                completionHandler(ServiceResponse(response.response, Result.failure(error)))
+            }
+        }
+    }
+    
+}

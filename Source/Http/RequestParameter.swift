@@ -40,4 +40,19 @@ struct RequestParameter {
     func value() -> [String: Any] {
         return storage
     }
+    
+    /// used for convesations api
+    /// - since: 2.2.0
+    init(forConversation parameters: [String: Any?] = [:]) {
+        var defaultParams:[String: Any?] = ["uuidEntryFormat":true,
+                                           "personRefresh":true,
+                                           "activitiesLimit":0,
+                                           "includeConvWithDeletedUserUUID":false]
+        for (key, value) in parameters {
+            defaultParams.updateValue(value, forKey: key)
+        }
+        
+        self.init(defaultParams)
+    }
+    
 }
