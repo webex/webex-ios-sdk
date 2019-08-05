@@ -797,7 +797,7 @@ public class Phone {
         guard let kind = model.kind else {
             return
         }
-        let payload = self.setCommonPayload(model)
+        let payload = WebexEventPayload(me: self.me)
         
         switch kind {
         case .post, .share, .delete:
@@ -809,18 +809,6 @@ public class Phone {
         default:
             SDKLogger.shared.error("Not a valid message \(model.id ?? (model.toJSONString() ?? ""))")
         }
-        
-    }
-    
-    private func setCommonPayload(_ activity:ActivityModel) -> WebexEventPayload {
-        var payload = WebexEventPayload()
-        payload.actorId = activity.actorId
-        payload.orgId = self.me?.orgId
-        payload.createdBy = self.me?.id
-        payload.created = Date()
-        payload.ownedBy = "creator"
-        payload.status = "active"
-        return payload
     }
     
     private func getMe() {

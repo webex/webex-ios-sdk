@@ -39,6 +39,14 @@ public struct WebexEventPayload {
     /// default is "active"
     public var status:String?
     
+    init(me:Person?) {
+        self.orgId = me?.orgId
+        self.createdBy = me?.id
+        self.created = Date()
+        self.ownedBy = "creator"
+        self.status = "active"
+    }
+    
 }
 
 public struct WebexMembershipData:WebexEventData {
@@ -70,5 +78,27 @@ public struct WebexMembershipData:WebexEventData {
     
     /// the user is or not the moderator
     public var isModerator:Bool?
+    
+    init(activity:ActivityModel) {
+        self.id = activity.dataId
+        self.created = activity.created
+        self.isRoomHidden = false
+        self.roomId = activity.targetId
+        self.roomType = (activity.targetTag ?? SpaceType.group).rawValue
+        
+        if activity.kind == ActivityModel.Kind.acknowledge { // seen
+            self.personId = activity.actorId
+            self.personOrgId = activity.actorOrgId
+            self.personDisplayName = activity.actorDisplayName
+            self.personEmail = activity.actorEmail
+            self.lastSeenId = activity.objectId
+        }else { // add, leave and update
+            self.personId = activity.objectId
+            self.personOrgId = activity.objectOrgId
+            self.personDisplayName = activity.objectDisplayName
+            self.personEmail = activity.objectEmail
+            self.isModerator = activity.isModerator
+        }
+    }
     
 }

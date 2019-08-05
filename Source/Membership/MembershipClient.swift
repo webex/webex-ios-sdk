@@ -217,28 +217,9 @@ extension MembershipClient {
             return
         }
         var eventPayload = payload
-        var data = WebexMembershipData()
-        data.id = activity.dataId
-        data.created = activity.created
-        data.isRoomHidden = false
-        data.roomId = activity.targetId
-        data.roomType = (activity.targetTag ?? SpaceType.direct).rawValue
-        
-        if activity.kind == ActivityModel.Kind.acknowledge { // seen
-            data.personId = activity.actorId
-            data.personOrgId = activity.actorOrgId
-            data.personDisplayName = activity.actorDisplayName
-            data.personEmail = activity.actorEmail
-            data.lastSeenId = activity.objectId
-        }else { // add, leave and update
-            data.personId = activity.objectId
-            data.personOrgId = activity.objectOrgId
-            data.personDisplayName = activity.objectDisplayName
-            data.personEmail = activity.objectEmail
-            data.isModerator = activity.isModerator
-        }
-        
+        let data = WebexMembershipData(activity: activity)
         eventPayload.data = data
+        eventPayload.actorId = activity.actorId
         eventPayload.resource = Event.Resource.memberships
         
         switch kind {

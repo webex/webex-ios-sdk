@@ -162,3 +162,40 @@ public struct SpaceInfo: ImmutableMappable {
     }
 }
 
+
+/// Shows Webex meeting details for a room such as the SIP address, meeting URL, toll-free and toll dial-in numbers.
+///
+/// - since: 2.2.0
+public struct SpaceMeetingDetail:Mappable {
+    
+    /// A unique identifier for the room.
+    public var roomId:String?
+    
+    /// The Webex meeting URL for the room.
+    public var meetingLink:String?
+    
+    /// The SIP address for the room.
+    public var sipAddress:String?
+    
+    /// The Webex meeting number for the room.
+    public var meetingNumber:String?
+    
+    /// The toll-free PSTN number for the room.
+    public var callInTollFreeNumber:String?
+    
+    /// The toll (local) PSTN number for the room.
+    public var callInTollNumber:String?
+    
+    
+    public init(map: Map) {
+    }
+    
+    public mutating func mapping(map: Map) {
+        self.roomId           <- map["roomId"]
+        self.meetingLink      <- map["meetingLink"]
+        self.sipAddress       <- map["sipAddress"]
+        self.meetingNumber    <- map["meetingNumber"]
+        self.callInTollNumber <- map["callInTollNumber"]
+        self.callInTollFreeNumber <- map["callInTollFreeNumber"]
+    }
+}
