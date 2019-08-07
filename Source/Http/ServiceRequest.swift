@@ -31,7 +31,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     #else
     static let hydraServerAddress:String = "https://api.ciscospark.com/v1"
     #endif
-    static let conversationServerAddress: String = "https://conv-a.wbx2.com/conversation/api/v1"
+    static private(set) var conversationServerAddress: String = "https://conv-a.wbx2.com/conversation/api/v1"
     static let kmsServerAddress: String = "https://encryption-a.wbx2.com/encryption/api/v1"
     static let locusResponseOnlySdp: Bool = true
     
@@ -53,6 +53,9 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         return SessionManager(configuration: configuration)
     }()
     
+    static func setConversationAddress(_ urlString:String) {
+        self.conversationServerAddress = urlString
+    }
     
     private init(authenticator: Authenticator, url: URL, headers: [String: String], method: Alamofire.HTTPMethod, body: RequestParameter?, query: RequestParameter?, keyPath: String?, queue: DispatchQueue?) {
         self.authenticator = authenticator
