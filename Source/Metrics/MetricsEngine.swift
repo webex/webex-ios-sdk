@@ -34,7 +34,7 @@ class MetricsEngine {
         #if swift(>=4.2)
             RunLoop.current.add(self.timer, forMode: RunLoop.Mode.common)
         #else
-            RunLoop.current.add(self.timer, forMode: RunLoopMode.commonModes)
+            RunLoop.current.add(self.timer, forMode: RunLoop.Mode.common)
         #endif
     }
 

@@ -884,9 +884,9 @@ class PhoneTests: XCTestCase {
         if let user = fixture.createUser() {
             self.fakeCallClient?.otherParticipants = [user]
             self.fakeCallClient?.enableFetchCall = true
-            NotificationCenter.default.post(name: .UIApplicationDidEnterBackground, object: nil)
+            NotificationCenter.default.post(name: UIApplication.didEnterBackgroundNotification, object: nil)
             Thread.sleep(forTimeInterval: Config.TestcaseInterval)
-            NotificationCenter.default.post(name: .UIApplicationDidBecomeActive, object: nil)
+            NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
             let expect = expectation(description: "Call incoming")
             self.phone.onIncoming = {
                 call in

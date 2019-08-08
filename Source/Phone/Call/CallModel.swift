@@ -262,7 +262,7 @@ internal extension CallModel {
             }
             
             for participant in newParticipants {
-                if let index = oldParticipants.index(where:{$0.id == participant.id}) {
+                if let index = oldParticipants.firstIndex(where:{$0.id == participant.id}) {
                     //replace
                     if (participant.removed ?? false) == false {
                         oldParticipants[index] = participant
