@@ -163,7 +163,7 @@ class WebSocketService: WebSocketAdvancedDelegate {
                     if let activityObj = eventData["activity"].object as? [String: Any],
                         let verb = activityObj["verb"] as? String,
                         Event.Verb.isContained(verb) == true {
-                        if let activity = try? Mapper<ActivityModel>().map(JSON: activityObj) {
+                        if let activity = Mapper<ActivityModel>().map(JSON: activityObj) {
                             self.onEvent?(MercuryEvent.recvActivity(activity))
                         }
                     } 
