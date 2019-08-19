@@ -27,6 +27,10 @@ public class SpaceClient {
     
     let authenticator: Authenticator
     
+    /// The callback handler when receiving a space event.
+    /// - since: 2.2.0
+    public var onEvent: ((SpaceEvent) -> Void)?
+    
     init(authenticator: Authenticator) {
         self.authenticator = authenticator
     }
@@ -208,6 +212,33 @@ extension SpaceClient {
             case .failure(let error):
                 completionHandler(ServiceResponse(response.response, Result.failure(error)))
             }
+        }
+    }
+    
+}
+
+// MARK: handle conversation space event
+extension SpaceClient {
+    
+    func handle(activity: ActivityModel, payload:WebexEventPayload) {
+        guard let kind = activity.kind else {
+            return
+        }
+        var eventPayload = payload
+        let data = WebexSpaceData(activity: activity)
+        eventPayload.data = data
+        eventPayload.actorId = activity.actorId
+        eventPayload.resource = Event.Resource.rooms
+        
+        switch kind {
+        case .create:
+            eventPayload.event = Event.EventType.created
+            self.onEvent?(SpaceEvent.create(eventPayload))
+        case .update:
+            eventPayload.event = Event.EventType.updated
+            self.onEvent?(SpaceEvent.update(eventPayload))
+        default:
+            break
         }
     }
     

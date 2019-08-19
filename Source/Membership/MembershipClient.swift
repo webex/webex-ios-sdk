@@ -232,7 +232,7 @@ extension MembershipClient {
         case .leave:
             eventPayload.event = Event.EventType.deleted
             self.onEvent?(MembershipEvent.leave(eventPayload))
-        case .update:
+        case .assignModerator, .unassignModerator:
             eventPayload.event = Event.EventType.updated
             self.onEvent?(MembershipEvent.update(eventPayload))
         default:

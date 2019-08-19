@@ -40,6 +40,15 @@ public enum SpaceSortType : String{
     case byCreated = "created"
 }
 
+/// The struct of a space event
+/// - since: 2.2.0
+public enum SpaceEvent {
+    /// The callback when create a space
+    case create(WebexEventPayload)
+    /// The callback when update space
+    case update(WebexEventPayload)
+}
+
 /// A data type represents a Space at Cisco Webex cloud.
 ///
 /// - note: Space has been renamed to Space in Cisco Webex.

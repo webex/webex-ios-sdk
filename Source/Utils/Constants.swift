@@ -26,7 +26,8 @@ struct Event {
         static func isContained(_ verb:String) -> Bool {
             if verb == post || verb == share || verb == delete
                 || verb == add || verb == leave || verb == acknowledge
-                || verb == assignModerator || verb == unassignModerator {
+                || verb == assignModerator || verb == unassignModerator
+                || verb == create || verb == update {
                 return true
             }else {
                 return false
