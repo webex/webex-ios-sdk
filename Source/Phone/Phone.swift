@@ -218,6 +218,18 @@ public class Phone {
                     else {
                         self.messages = MessageClientImpl(authenticator: self.authenticator, deviceUrl: device.deviceUrl)
                     }
+                    
+                    self.messages?.requestUserId {error in
+                        if let error = error {
+                            SDKLogger.shared.error("request userId failed", error: error)
+                        }
+                    }
+                    self.messages?.requestClusterAndRSAPubKey{ error in
+                        if let error = error {
+                            SDKLogger.shared.error("request ClusterAndRSAPubKey failed", error: error)
+                        }
+                    }
+                    
                     self.webSocket.connect(device.webSocketUrl) { [weak self] error in
                         if let error = error {
                             SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.registerFailure), error: error)
