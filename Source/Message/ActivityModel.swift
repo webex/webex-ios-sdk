@@ -21,24 +21,44 @@
 import Foundation
 import ObjectMapper
 
-
 struct ActivityModel {
     
-    enum Kind : String {
+    enum Verb: String {
         case post
         case share
         case delete
         case tombstone
         case acknowledge
         case updateKey
+        case create
         case add
         case leave
         case update
+        case hide
+        case assignModerator
+        case unassignModerator
+        
+        static func isSupported(_ verb: String) -> Bool {
+            if verb == post.rawValue || verb == share.rawValue || verb == delete.rawValue
+                || verb == add.rawValue || verb == leave.rawValue || verb == acknowledge.rawValue
+                || verb == assignModerator.rawValue || verb == unassignModerator.rawValue {
+                return true
+            } else {
+                return false
+            }
+        }
+        
+        static func fromString(_ verb: String) -> Verb? {
+            if verb == ActivityModel.Verb.assignModerator.rawValue || verb == ActivityModel.Verb.unassignModerator.rawValue {
+                return ActivityModel.Verb.update
+            }
+            return ActivityModel.Verb(rawValue: verb)
+        }
     }
     
     private(set) var id: String?
     private(set) var clientTempId: String?
-    private(set) var kind: ActivityModel.Kind?
+    private(set) var verb: ActivityModel.Verb?
     private(set) var created: Date?
     private(set) var encryptionKeyUrl: String?
     var toPersonId: String?
@@ -73,7 +93,7 @@ extension ActivityModel : ImmutableMappable {
         self.id = try? map.value("id", using: IdentityTransform(for: IdentityType.message))
         self.created = try? map.value("published", using: CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
         self.encryptionKeyUrl = try? map.value("encryptionKeyUrl")
-        self.kind = try? map.value("verb", using: VerbTransform())
+        self.verb = try? map.value("verb", using: VerbTransform())
         self.actorId = try? map.value("actor.entryUUID", using: IdentityTransform(for: IdentityType.people))
         self.actorEmail = try? map.value("actor.emailAddress")
         self.actorDisplayName = try? map.value("actor.displayName")
@@ -108,18 +128,18 @@ extension ActivityModel : ImmutableMappable {
         self.objectOrgId = try? map.value("object.orgId", using: IdentityTransform(for: IdentityType.organization))
         
         let tid:String? = try? map.value("target.id")
-        if self.kind == Kind.acknowledge {
+        if self.verb == Verb.acknowledge {
             let aid:String? = try? map.value("actor.entryUUID")
             self.dataId = "\(aid ?? ""):\(tid ?? "")".hydraFormat(for: IdentityType.membership)
         }
-        else if self.kind == Kind.add || self.kind == Kind.leave || self.kind == Kind.update {
+        else if self.verb == Verb.add || self.verb == Verb.leave || self.verb == Verb.update {
             let aid:String? = try? map.value("object.entryUUID")
             self.dataId = "\(aid ?? ""):\(tid ?? "")".hydraFormat(for: IdentityType.membership)
             self.objectId = try? map.value("object.entryUUID", using: IdentityTransform(for: IdentityType.people))
         }
         
-        if self.kind == ActivityModel.Kind.update {
-            if let moderator:String = try? map.value("object.roomProperties.isModerator") {
+        if self.verb == ActivityModel.Verb.update {
+            if let moderator: String = try? map.value("object.roomProperties.isModerator") {
                 self.isModerator = moderator == "true" ? true : false
             }else {
                 self.isModerator = false
@@ -135,7 +155,7 @@ extension ActivityModel : ImmutableMappable {
         self.id >>> map["id"]
         self.targetId >>> map["roomId"]
         self.targetId >>> map["spaceId"]
-        self.kind >>> (map["verb"], VerbTransform())
+        self.verb >>> (map["verb"], VerbTransform())
         self.targetTag >>> (map["roomType"], SpaceTypeTransform())
         self.targetTag >>> (map["spaceType"], SpaceTypeTransform())
         self.toPersonId >>> map["toPersonId"]
@@ -196,7 +216,7 @@ extension String {
     func hydraFormat(for type: IdentityType) -> String {
         return "ciscospark://us/\(type.rawValue.uppercased())/\(self)".base64Encoded() ?? self
     }
-    
+        
     func encrypt(key: String?) -> String {
         if let key = key, let text = try? CjoseWrapper.ciphertext(fromContent: self.data(using: .utf8), key: key) {
             return text
@@ -229,27 +249,21 @@ private class IdentityTransform : TransformType {
     }
 }
 
-private class VerbTransform : TransformType {
+private class VerbTransform: TransformType {
     
-    func transformFromJSON(_ value: Any?) -> ActivityModel.Kind? {
+    func transformFromJSON(_ value: Any?) -> ActivityModel.Verb? {
         if let verb = value as? String {
-            if verb == Event.Verb.assignModerator || verb == Event.Verb.unassignModerator {
-                return ActivityModel.Kind(rawValue: Event.Verb.update)
-            }
-            return ActivityModel.Kind(rawValue: verb)
+            return ActivityModel.Verb.fromString(verb)
         }
         return nil
     }
     
-    func transformToJSON(_ value: ActivityModel.Kind?) -> String? {
-        if let value = value {
-            return value.rawValue
-        }
-        return nil
+    func transformToJSON(_ value: ActivityModel.Verb?) -> String? {
+        return value?.rawValue
     }
 }
 
-private class SpaceTypeTransform : TransformType {
+private class SpaceTypeTransform: TransformType {
     
     func transformFromJSON(_ value: Any?) -> SpaceType? {
         if let tags = value as? [String], tags.contains("ONE_ON_ONE") {

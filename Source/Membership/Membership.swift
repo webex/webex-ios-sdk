@@ -21,18 +21,18 @@
 import Foundation
 import ObjectMapper
 
-
 /// The struct of a membership event
+///
 /// - since: 2.2.0
-public enum MembershipEvent {
+public enum MembershipEvent: WebexEvent {
     // The callback when add membership
-    case add(WebexEventPayload)
+    case created(Membership)
     // The callback when leave membership
-    case leave(WebexEventPayload)
+    case deleted(Membership)
     // The callback when change moderator of membership
-    case update(WebexEventPayload)
+    case update(Membership)
     /// The callback when read receipt
-    case seen(WebexEventPayload)
+    case seen(Membership, lastSeenId: String)
 }
 
 /// Membership contents.
@@ -68,6 +68,7 @@ public struct Membership {
     /// Whether this member is a monitor of the space in this membership.
     ///
     /// - since: 1.2.0
+    @available(*, deprecated)
     public var isMonitor: Bool?
     
     /// The timestamp that the membership being created.

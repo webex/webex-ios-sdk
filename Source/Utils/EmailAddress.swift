@@ -36,11 +36,13 @@ open class EmailAddress {
     /// - parameter address: The email address string.
     /// - returns: EmailAddress
     /// - since: 1.2.0
-    open class func fromString(_ address: String) -> EmailAddress? {
+    open class func fromString(_ address: String?) -> EmailAddress? {
+        guard let address = address else {
+            return nil
+        }
         guard isValid(address) else {
             return nil
         }
-        
         return EmailAddress(address)
     }
     

@@ -25,23 +25,25 @@ import Foundation
 /// - since: 1.2.0
 public class MembershipClient {
     
-    /// The callback handler when receiving a memberShip event.
+    /// The callback handler when receiving a membership event.
+    
     /// - since: 2.2.0
     public var onEvent: ((MembershipEvent) -> Void)?
     
-    var getMessageClient:(() -> MessageClient?)?
-    
-    let authenticator: Authenticator
-    init(authenticator: Authenticator) {
-        self.authenticator = authenticator
+    private let phone: Phone
+    private let messages: MessageClient
+
+    init(phone: Phone, messages: MessageClient) {
+        self.phone = phone
+        self.messages = messages
     }
     
     private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(authenticator).path("memberships")
+        return ServiceRequest.Builder(self.phone.authenticator).path("memberships")
     }
     
     private func conversationBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(self.authenticator)
+        return ServiceRequest.Builder(self.phone.authenticator)
             .baseUrl(ServiceRequest.conversationServerAddress)
             .path("activities")
     }
@@ -94,7 +96,6 @@ public class MembershipClient {
     }
     
     private func list(spaceId: String?, personId: String?, personEmail: EmailAddress?, max: Int?, queue: DispatchQueue?, completionHandler: @escaping (ServiceResponse<[Membership]>) -> Void) {
-        
         let query = RequestParameter([
             "spaceId": spaceId,
             "roomId": spaceId,
@@ -227,7 +228,7 @@ public class MembershipClient {
         let object = ["id": messageId.locusFormat, "objectType": ObjectType.activity.rawValue]
         let target = ["id": spaceId.locusFormat, "objectType": ObjectType.conversation.rawValue]
         let body = RequestParameter(["objectType":ObjectType.activity.rawValue,
-                                     "verb": Event.Verb.acknowledge,
+                                     "verb": ActivityModel.Verb.acknowledge.rawValue,
                                      "object": object,
                                      "target": target])
         let request = self.conversationBuilder()
@@ -246,82 +247,65 @@ public class MembershipClient {
     /// - returns: Void
     /// - since: 2.2.0
     public func sendReadReceipt(spaceId:String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
-        guard let message = self.getMessageClient?() else {
-            (queue ?? DispatchQueue.main).async {
-                completionHandler(ServiceResponse(nil, Result.failure(WebexError.noAuth)))
-            }
-            return
-        }
-        
-        message.list(spaceId: spaceId, max: 1, queue:queue) { (response) in
+        self.messages.list(spaceId: spaceId, max: 1, queue:queue) { (response) in
             switch response.result {
             case .success(let messages):
                 if let message = messages.first, let lastMessageId = message.id {
                     self.sendReadReceipt(spaceId: spaceId, messageId: lastMessageId, queue: queue,  completionHandler: completionHandler)
                 }
-                else {
-                    (queue ?? DispatchQueue.main).async {
-                        completionHandler(ServiceResponse(response.response, Result.failure(response.result.error ?? MessageClientImpl.MSGError.spaceMessageFetchFail)))
-                    }
-                }
-
             case .failure(let error):
                 completionHandler(ServiceResponse(response.response, Result.failure(error)))
             }
         }
     }
     
-    
 }
 
 // MARK: handle conversation membership event
 extension MembershipClient {
     
-    func handle(activity: ActivityModel, payload:WebexEventPayload) {
-        guard let kind = activity.kind else {
+    func handle(activity: ActivityModel) {
+        guard let verb = activity.verb else {
             return
         }
-        var eventPayload = payload
-        var data = WebexMembershipData()
-        data.id = activity.dataId
-        data.created = activity.created
-        data.isRoomHidden = false
-        data.roomId = activity.targetId
-        data.roomType = (activity.targetTag ?? SpaceType.direct).rawValue
+        var membership = Membership()
+        membership.id = activity.dataId
+        membership.created = activity.created
+        membership.spaceId = activity.targetId
         
-        if activity.kind == ActivityModel.Kind.acknowledge { // seen
-            data.personId = activity.actorId
-            data.personOrgId = activity.actorOrgId
-            data.personDisplayName = activity.actorDisplayName
-            data.personEmail = activity.actorEmail
-            data.lastSeenId = activity.objectId
-        }else { // add, leave and update
-            data.personId = activity.objectId
-            data.personOrgId = activity.objectOrgId
-            data.personDisplayName = activity.objectDisplayName
-            data.personEmail = activity.objectEmail
-            data.isModerator = activity.isModerator
+        if verb == ActivityModel.Verb.acknowledge {
+            if let seenId = activity.objectId {
+                membership.personId = activity.actorId
+                membership.personOrgId = activity.actorOrgId
+                membership.personDisplayName = activity.actorDisplayName
+                membership.personEmail = EmailAddress.fromString(activity.actorEmail)
+                var event = MembershipEvent.seen(membership, lastSeenId: seenId)
+                event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, resource: EventResource.memberships, event: EventType.seen)
+                self.onEvent?(event)
+            }
         }
-        
-        eventPayload.data = data
-        eventPayload.resource = Event.Resource.memberships
-        
-        switch kind {
-        case .acknowledge:
-            eventPayload.event = Event.EventType.seen
-            self.onEvent?(MembershipEvent.seen(eventPayload))
-        case .add:
-            eventPayload.event = Event.EventType.created
-            self.onEvent?(MembershipEvent.add(eventPayload))
-        case .leave:
-            eventPayload.event = Event.EventType.deleted
-            self.onEvent?(MembershipEvent.leave(eventPayload))
-        case .update:
-            eventPayload.event = Event.EventType.updated
-            self.onEvent?(MembershipEvent.update(eventPayload))
-        default:
-            break
+        else {
+            membership.personId = activity.objectId
+            membership.personOrgId = activity.objectOrgId
+            membership.personDisplayName = activity.objectDisplayName
+            membership.personEmail = EmailAddress.fromString(activity.objectEmail)
+            membership.isModerator = activity.isModerator
+            switch verb {
+            case .add:
+                var event = MembershipEvent.created(membership)
+                event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, resource: EventResource.memberships, event: EventType.created)
+                self.onEvent?(event)
+            case .leave:
+                var event = MembershipEvent.deleted(membership)
+                event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, resource: EventResource.memberships, event: EventType.deleted)
+                self.onEvent?(event)
+            case .update:
+                var event = MembershipEvent.update(membership)
+                event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, resource: EventResource.memberships, event: EventType.updated)
+                self.onEvent?(event)
+            default:
+                break
+            }
         }
     }
-    
 }

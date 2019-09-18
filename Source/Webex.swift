@@ -96,13 +96,21 @@ public class Webex {
     /// It can be used to make audio and video calls on Cisco Webex.
     ///
     /// - since: 1.2.0
-    public lazy var phone: Phone = Phone(authenticator: self.authenticator)
+    public lazy var phone: Phone = Phone(webex: self)
     
     /// MessageClient represent activities relates to the user.
     /// Use *messages* to create and manage the activities on behalf of the authenticated user.
     ///
     /// - since: 1.4.0
     public lazy var messages: MessageClient = MessageClient(phone: self.phone)
+    
+    /// Memberships represent a person's relationships to spaces.
+    /// Use *membership* to manage the authenticated user's relationship to spaces.
+    ///
+    /// - since: 1.2.0
+    /// - see: Spaces API about how to manage spaces.
+    /// - see: Messages API about how post or otherwise manage the content in a space.
+    public lazy var memberships: MembershipClient = MembershipClient(phone: self.phone, messages: self.messages)
     
     /// Constructs a new *Webex* object with an `Authenticator`.
     ///
@@ -142,18 +150,7 @@ public class Webex {
     public var people: PersonClient {
         return PersonClient(authenticator: authenticator)
     }
-    
-    /// Memberships represent a person's relationships to spaces.
-    /// Use *membership* to manage the authenticated user's relationship to spaces.
-    ///
-    /// - since: 1.2.0
-    /// - see: Spaces API about how to manage spaces.
-    /// - see: Messages API about how post or otherwise manage the content in a space.
-    public var memberships: MembershipClient {
-        return self.phone.members
-    }
-
-    
+        
     /// Webhooks allow the application to be notified via HTTP (or HTTPS?) when a specific event occurs in Cisco Webex,
     /// e.g. a new message is posted into a specific space.
     /// Use *Webhooks* to create and manage the webhooks for specific events.

@@ -31,7 +31,7 @@ public enum SpaceType: String {
 
 /// The enumeration of sorting result
 /// - since: 1.4.0
-public enum SpaceSortType : String{
+public enum SpaceSortType: String{
     /// sort result by id
     case byId = "id"
     /// last active space comes first

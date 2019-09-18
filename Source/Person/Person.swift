@@ -84,15 +84,13 @@ extension Person: Mappable {
         emails       <- (map["emails"], EmailsTransform())
         displayName  <- map["displayName"]
         avatar       <- map["avatar"]
-        created      <- (map["created"], CustomDateFormatTransform(formatString:
-            "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
+        created      <- (map["created"], CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
         nickName     <- map["nickName"]
         firstName    <- map["firstName"]
         lastName     <- map["lastName"]
         orgId        <- map["orgId"]
         type         <- map["type"]
-        lastActivity <- (map["lastActivity"], CustomDateFormatTransform(formatString:
-            "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
+        lastActivity <- (map["lastActivity"], CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
         status       <- map["status"]
     }
 }

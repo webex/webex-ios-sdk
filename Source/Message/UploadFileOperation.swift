@@ -33,7 +33,7 @@ class UploadFileOperations {
         }
     }
     
-    func run(client: MessageClientImpl, completionHandler: @escaping (Result<[RemoteFile]>) -> Void) {
+    func run(client: MessageClient, completionHandler: @escaping (Result<[RemoteFile]>) -> Void) {
         var sucess = [RemoteFile]()
         self.operations.forEach { operation in
             if !operation.done {
@@ -64,7 +64,7 @@ class UploadFileOperation {
         self.key = key
     }
     
-    func run(client: MessageClientImpl, completionHandler: @escaping (Result<RemoteFile>) -> Void) {
+    func run(client: MessageClient, completionHandler: @escaping (Result<RemoteFile>) -> Void) {
         self.doUpload(client: client, path: self.local.path, size: self.local.size, progressStart: 0, progressHandler: self.local.progressHandler) { url, scr, error in
             if let url = url, let scr = scr {
                 self.key.material(client: client) { material in
@@ -95,7 +95,7 @@ class UploadFileOperation {
         }
     }
     
-    func doUpload(client: MessageClientImpl, path: String, size: UInt64, progressStart: Double, progressHandler: ((Double) -> Void)?, completionHandler: @escaping (String?, SecureContentReference?, Error?) -> Void) {
+    func doUpload(client: MessageClient, path: String, size: UInt64, progressStart: Double, progressHandler: ((Double) -> Void)?, completionHandler: @escaping (String?, SecureContentReference?, Error?) -> Void) {
         client.authenticator.accessToken { token in
             guard let token = token else {
                 completionHandler(nil, nil, WebexError.noAuth)

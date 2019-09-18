@@ -38,7 +38,7 @@ class EncryptionKey {
         }
     }
     
-    func material(client: MessageClientImpl, completionHandler: @escaping (Result<String>) -> Void) {
+    func material(client: MessageClient, completionHandler: @escaping (Result<String>) -> Void) {
         if let marterial = self.material {
             completionHandler(Result.success(marterial))
         }
@@ -64,7 +64,7 @@ class EncryptionKey {
         }
     }
     
-    func encryptionUrl(client: MessageClientImpl, completionHandler: @escaping (Result<String?>) -> Void) {
+    func encryptionUrl(client: MessageClient, completionHandler: @escaping (Result<String?>) -> Void) {
         if let url = self.encryptionUrl {
             completionHandler(Result.success(url))
         }
@@ -91,7 +91,7 @@ class EncryptionKey {
                     completionHandler(Result.success(url))
                 }
                 else {
-                    completionHandler(Result.failure(response.result.error ?? MessageClientImpl.MSGError.spaceUrlFetchFail))
+                    completionHandler(Result.failure(response.result.error ?? MSGError.spaceUrlFetchFail))
                 }
             }
         }

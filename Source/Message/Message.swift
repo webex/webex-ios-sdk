@@ -24,7 +24,7 @@ import ObjectMapper
 /// The struct of a message event
 ///
 /// - since: 1.4.0
-public enum MessageEvent {
+public enum MessageEvent: WebexEvent {
     /// The callback when receive a new message
     case messageReceived(Message)
     /// The callback when a message was deleted

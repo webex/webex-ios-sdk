@@ -119,18 +119,17 @@ public class Phone {
         return self.devices.device != nil
     }
     
+    let webex: Webex
     let authenticator: Authenticator
     let reachability: ReachabilityService
+    let devices: DeviceService
     let client: CallClient
     let conversations: ConversationClient
     let prompter: H264LicensePrompter
     let queue = SerialQueue()
     let metrics: MetricsEngine
-    private(set) var messages: MessageClientImpl?
-    private(set) var members: MembershipClient
-    private var me:Person?
+    private(set) var me:Person?
     
-    private let devices: DeviceService
     private let webSocket: WebSocketService
     private var calls = [String: Call]()
     private var mediaContext: MediaSessionWrapper?
@@ -147,19 +146,20 @@ public class Phone {
         case updateMediaShare(Call, ServiceResponse<Any>, (Error?) -> Void)
     }
 
-    convenience init(authenticator: Authenticator) {
-        let device = DeviceService(authenticator: authenticator)
-        let tempMetrics = MetricsEngine(authenticator: authenticator, service: device)
-        self.init(authenticator: authenticator,
+    convenience init(webex: Webex) {
+        let device = DeviceService(authenticator: webex.authenticator)
+        let tempMetrics = MetricsEngine(authenticator: webex.authenticator, service: device)
+        self.init(webex: webex,
                   devices: device,
-                  reachability: ReachabilityService(authenticator: authenticator, deviceService: device),
-                  client: CallClient(authenticator: authenticator),
-                  conversations: ConversationClient(authenticator: authenticator), metrics: tempMetrics, prompter: H264LicensePrompter(metrics: tempMetrics), webSocket: WebSocketService(authenticator: authenticator))
+                  reachability: ReachabilityService(authenticator: webex.authenticator, deviceService: device),
+                  client: CallClient(authenticator: webex.authenticator),
+                  conversations: ConversationClient(authenticator: webex.authenticator), metrics: tempMetrics, prompter: H264LicensePrompter(metrics: tempMetrics), webSocket: WebSocketService(authenticator: webex.authenticator))
     }
     
-    init(authenticator: Authenticator, devices:DeviceService, reachability:ReachabilityService, client:CallClient, conversations:ConversationClient, metrics:MetricsEngine, prompter:H264LicensePrompter, webSocket:WebSocketService) {
+    init(webex: Webex, devices:DeviceService, reachability:ReachabilityService, client:CallClient, conversations:ConversationClient, metrics:MetricsEngine, prompter:H264LicensePrompter, webSocket:WebSocketService) {
         let _ = MediaEngineWrapper.sharedInstance.wmeVersion
-        self.authenticator = authenticator
+        self.webex = webex
+        self.authenticator = webex.authenticator
         self.devices = devices
         self.reachability = reachability
         self.client = client
@@ -167,14 +167,6 @@ public class Phone {
         self.metrics = metrics
         self.prompter = prompter
         self.webSocket = webSocket
-        self.members = MembershipClient(authenticator: authenticator)
-        self.members.getMessageClient = {[weak self] in
-            if let strong = self {
-                return MessageClient(phone: strong)
-            }
-            return nil
-        }
-        self.getMe()
         self.webSocket.onEvent = { [weak self] event in
             if let strong = self {
                 strong.queue.underlying.async {
@@ -215,26 +207,32 @@ public class Phone {
             self.devices.registerDevice(phone: self, queue: self.queue.underlying) { result in
                 switch result {
                 case .success(let device):
-                    if let messages = self.messages {
-                        messages.deviceUrl = device.deviceUrl
-                    }
-                    else {
-                        self.messages = MessageClientImpl(authenticator: self.authenticator, deviceUrl: device.deviceUrl)
-                    }
-                    self.webSocket.connect(device.webSocketUrl) { [weak self] error in
-                        if let error = error {
-                            SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.registerFailure), error: error)
-                        }
-                        if let strong = self {
-                            strong.queue.underlying.async {
-                                strong.fetchActiveCalls()
-                                DispatchQueue.main.async {
-                                    strong.reachability.fetch()
-                                    strong.startObserving()
-                                    completionHandler(error)
+                    PersonClient(authenticator: self.authenticator).getMe { responseOfGetMe in
+                        switch responseOfGetMe.result {
+                        case .success(let person):
+                            self.me = person
+                            self.webSocket.connect(device.webSocketUrl) { [weak self] error in
+                                if let error = error {
+                                    SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.registerFailure), error: error)
                                 }
-                                strong.queue.yield()
+                                if let strong = self {
+                                    strong.queue.underlying.async {
+                                        strong.fetchActiveCalls()
+                                        DispatchQueue.main.async {
+                                            strong.reachability.fetch()
+                                            strong.startObserving()
+                                            completionHandler(error)
+                                        }
+                                        strong.queue.yield()
+                                    }
+                                }
                             }
+                        case .failure(let error):
+                            SDKLogger.shared.error("GetMe failed", error: error)
+                            DispatchQueue.main.async {
+                                completionHandler(error)
+                            }
+                            self.queue.yield()
                         }
                     }
                 case .failure(let error):
@@ -799,52 +797,21 @@ public class Phone {
     
     private func doConversationEvent(_ model: ActivityModel){
         SDKLogger.shared.debug("Receive Conversation Acitivity: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
-        
-        guard let kind = model.kind else {
-            return
-        }
-        let payload = self.setCommonPayload(model)
-        
-        switch kind {
-        case .post, .share, .delete:
-            if let messages = self.messages {
-                messages.handle(activity: model)
-            }
-        case .acknowledge, .add, .leave, .update:
-            members.handle(activity: model, payload:payload)
-        default:
-            SDKLogger.shared.error("Not a valid message \(model.id ?? (model.toJSONString() ?? ""))")
-        }
-        
-    }
-    
-    private func setCommonPayload(_ activity:ActivityModel) -> WebexEventPayload {
-        var payload = WebexEventPayload()
-        payload.actorId = activity.actorId
-        payload.orgId = self.me?.orgId
-        payload.createdBy = self.me?.id
-        payload.created = Date()
-        payload.ownedBy = "creator"
-        payload.status = "active"
-        return payload
-    }
-    
-    private func getMe() {
-        PersonClient(authenticator: self.authenticator).getMe { response in
-            switch response.result {
-            case .success(let person):
-                self.me = person
-            case .failure:
-                SDKLogger.shared.error("GetMe failed")
+        if let verb = model.verb {
+            switch verb {
+            case .post, .share, .delete:
+                self.webex.messages.handle(activity: model)
+            case .acknowledge, .add, .leave, .update:
+                self.webex.memberships.handle(activity: model)
+            default:
+                SDKLogger.shared.error("Not a valid message \(model.id ?? (model.toJSONString() ?? ""))")
             }
         }
     }
     
     private func doKmsEvent( _ model: KmsMessageModel){
-        if let messages = self.messages{
-            SDKLogger.shared.debug("Receive Kms Message: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
-            messages.handle(kms: model)
-        }
+        SDKLogger.shared.debug("Receive Kms Message: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
+        self.webex.messages.handle(kms: model)
     }
     
     private func prepare(option: MediaOption, completionHandler: @escaping (Error?) -> Void) {
