@@ -532,12 +532,14 @@ public class MessageClient {
                 switch verb {
                 case .post, .share:
                     decryption.toPersonId = self.userId?.hydraFormat(for: .people)
-                    var event = MessageEvent.messageReceived(Message(activity: decryption))
-                    event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, resource: EventResource.messages, event: EventType.created)
+                    let message = Message(activity: decryption)
+                    var event = MessageEvent.messageReceived(message)
+                    event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: message, event: EventType.created)
                     self.onEvent?(event)
                 case .delete:
-                    var event = MessageEvent.messageDeleted(decryption.id ?? "illegal id")
-                    event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, resource: EventResource.messages, event: EventType.deleted)
+                    let message = Message(activity: decryption)
+                    var event = MessageEvent.messageDeleted(message.id ?? "illegal id")
+                    event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: message, event: EventType.deleted)
                     self.onEvent?(event)
                 default:
                     SDKLogger.shared.error("Not a valid message \(activity.id ?? (activity.toJSONString() ?? ""))")

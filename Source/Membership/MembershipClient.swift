@@ -280,7 +280,7 @@ extension MembershipClient {
                 membership.personDisplayName = activity.actorDisplayName
                 membership.personEmail = EmailAddress.fromString(activity.actorEmail)
                 var event = MembershipEvent.seen(membership, lastSeenId: seenId)
-                event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, resource: EventResource.memberships, event: EventType.seen)
+                event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: membership, event: EventType.seen)
                 self.onEvent?(event)
             }
         }
@@ -293,15 +293,15 @@ extension MembershipClient {
             switch verb {
             case .add:
                 var event = MembershipEvent.created(membership)
-                event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, resource: EventResource.memberships, event: EventType.created)
+                event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: membership, event: EventType.created)
                 self.onEvent?(event)
             case .leave:
                 var event = MembershipEvent.deleted(membership)
-                event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, resource: EventResource.memberships, event: EventType.deleted)
+                event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: membership, event: EventType.deleted)
                 self.onEvent?(event)
             case .update:
                 var event = MembershipEvent.update(membership)
-                event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, resource: EventResource.memberships, event: EventType.updated)
+                event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: membership, event: EventType.updated)
                 self.onEvent?(event)
             default:
                 break
