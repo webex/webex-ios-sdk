@@ -27,12 +27,15 @@ import SwiftyJSON
 class ServiceRequest : RequestRetrier, RequestAdapter {
     
     #if INTEGRATIONTEST
-    static let hydraServerAddress:String = ProcessInfo().environment["hydraServerAddress"] == nil ? "https://api.ciscospark.com/v1":ProcessInfo().environment["hydraServerAddress"]!
+    static private(set) var hydraServerAddress:String = ProcessInfo().environment["hydraServerAddress"] == nil ? "https://apialpha.ciscospark.com/v1":ProcessInfo().environment["hydraServerAddress"]!
+    static private(set) var conversationServerAddress: String = "https://conversation-intb.ciscospark.com/conversation/api/v1"
+    static private(set) var kmsServerAddress: String = "https://encryption-intb.ciscospark.com/encryption/api/v1"
     #else
-    static let hydraServerAddress:String = "https://api.ciscospark.com/v1"
-    #endif
+    static private(set) var hydraServerAddress:String = "https://api.ciscospark.com/v1"
     static private(set) var conversationServerAddress: String = "https://conv-a.wbx2.com/conversation/api/v1"
-    static let kmsServerAddress: String = "https://encryption-a.wbx2.com/encryption/api/v1"
+    static private(set) var kmsServerAddress: String = "https://encryption-a.wbx2.com/encryption/api/v1"
+    #endif
+    
     static let locusResponseOnlySdp: Bool = true
     
     private let tokenPrefix: String = "Bearer "
@@ -53,8 +56,10 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         return SessionManager(configuration: configuration)
     }()
     
-    static func setConversationAddress(_ urlString:String) {
-        self.conversationServerAddress = urlString
+    static func setServerAddress(hydraUrlString:String, conversationUrlString:String, kmsUrlString:String) {
+        self.hydraServerAddress = hydraUrlString
+        self.conversationServerAddress = conversationUrlString
+        self.kmsServerAddress = kmsUrlString
     }
     
     private init(authenticator: Authenticator, url: URL, headers: [String: String], method: Alamofire.HTTPMethod, body: RequestParameter?, query: RequestParameter?, keyPath: String?, queue: DispatchQueue?) {

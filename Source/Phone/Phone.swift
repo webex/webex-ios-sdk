@@ -211,7 +211,7 @@ public class Phone {
             self.devices.registerDevice(phone: self, queue: self.queue.underlying) { result in
                 switch result {
                 case .success(let device):
-                    ServiceRequest.setConversationAddress(device.conversationServiceUrl.absoluteString)
+                    ServiceRequest.setServerAddress(hydraUrlString: device.hydraServiceUrl.absoluteString, conversationUrlString: device.conversationServiceUrl.absoluteString, kmsUrlString: device.kmsServiceUrl.absoluteString)
                     if let messages = self.messages {
                         messages.deviceUrl = device.deviceUrl
                     }

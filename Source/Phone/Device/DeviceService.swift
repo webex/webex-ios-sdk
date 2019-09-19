@@ -28,6 +28,8 @@ struct Device {
     let calliopeDiscoveryServiceUrl: URL
     let metricsServiceUrl: URL
     let conversationServiceUrl: URL
+    let hydraServiceUrl: URL
+    let kmsServiceUrl: URL
     let deviceType:String
     var regionCode: String
     var countryCode: String
@@ -60,7 +62,11 @@ class DeviceService {
                     let calliopeDiscoveryServiceUrlString = servicesDictionary["calliopeDiscoveryServiceUrl"],
                     let calliopeDiscoveryServiceUrl = URL(string: calliopeDiscoveryServiceUrlString),
                     let metricsServiceUrlString = servicesDictionary["metricsServiceUrl"],
-                    let metricsServiceUrl = URL(string: metricsServiceUrlString) {
+                    let metricsServiceUrl = URL(string: metricsServiceUrlString),
+                    let hydraServiceUrlString = servicesDictionary["hydraServiceUrl"],
+                    let hydraServiceUrl = URL(string: hydraServiceUrlString),
+                    let kmsServiceUrlString = servicesDictionary["encryptionServiceUrl"],
+                    let kmsServiceUrl = URL(string: kmsServiceUrlString) {
                     
                     self.client.fetchRegion(queue: queue) { regionRes in
                         var regionCode = "US-WEST";
@@ -69,7 +75,7 @@ class DeviceService {
                             regionCode = rc
                             countryCode = cc
                         }
-                        let tempDevice = Device(phone: phone, deviceUrl: deviceUrl, webSocketUrl: webSocketUrl, locusServiceUrl: locusServiceUrl, calliopeDiscoveryServiceUrl: calliopeDiscoveryServiceUrl, metricsServiceUrl: metricsServiceUrl, conversationServiceUrl: conversationServiceUrl, deviceType: UIDevice.current.kind, regionCode: regionCode, countryCode: countryCode)
+                        let tempDevice = Device(phone: phone, deviceUrl: deviceUrl, webSocketUrl: webSocketUrl, locusServiceUrl: locusServiceUrl, calliopeDiscoveryServiceUrl: calliopeDiscoveryServiceUrl, metricsServiceUrl: metricsServiceUrl, conversationServiceUrl: conversationServiceUrl, hydraServiceUrl: hydraServiceUrl, kmsServiceUrl: kmsServiceUrl, deviceType: UIDevice.current.kind, regionCode: regionCode, countryCode: countryCode)
                         self.device = tempDevice
                         UserDefaults.sharedInstance.deviceUrl = deviceUrlString
                         completionHandler(Result.success(tempDevice))
