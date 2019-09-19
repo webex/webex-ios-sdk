@@ -112,6 +112,14 @@ public class Webex {
     /// - see: Messages API about how post or otherwise manage the content in a space.
     public lazy var memberships: MembershipClient = MembershipClient(phone: self.phone, messages: self.messages)
     
+    /// Spaces are virtual meeting places in Cisco Webex where people post messages and collaborate to get work done.
+    /// Use *spaces* to manage the spaces on behalf of the authenticated user.
+    ///
+    /// - since: 1.2.0
+    /// - see: Memberships API about how to manage people in a space.
+    /// - see: Messages API about how post or otherwise manage the content in a space.
+    public lazy var spaces: SpaceClient  = SpaceClient(phone: self.phone)
+    
     /// Constructs a new *Webex* object with an `Authenticator`.
     ///
     /// - parameter authenticator: The authentication strategy for this SDK.
@@ -129,16 +137,6 @@ public class Webex {
             }
             return redirectedRequest
         }
-    }
-    
-    /// Spaces are virtual meeting places in Cisco Webex where people post messages and collaborate to get work done.
-    /// Use *spaces* to manage the spaces on behalf of the authenticated user.
-    ///
-    /// - since: 1.2.0
-    /// - see: Memberships API about how to manage people in a space.
-    /// - see: Messages API about how post or otherwise manage the content in a space.
-    public var spaces: SpaceClient {
-        return SpaceClient(authenticator: authenticator)
     }
     
     /// People are registered users of Cisco Webex.
