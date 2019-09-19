@@ -64,10 +64,14 @@ enum Service: String {
     }
     
     private func dynamicEndpoint(_ device: Device?, default: String) -> String {
-        if let device = device, let url = device.services["\(self.rawValue)ServiceUrl"] {
+        if let device = device, let url = device.services[self.serviceUrlKey] {
             return url
         }
         return `default`
+    }
+    
+    var serviceUrlKey: String {
+        return "\(self.rawValue)ServiceUrl"
     }
 }
 

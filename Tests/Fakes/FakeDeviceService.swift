@@ -26,28 +26,23 @@ class FakeDeviceService: DeviceService {
     var disableDeregister: Bool = false
     override func registerDevice(phone: Phone, queue: DispatchQueue, completionHandler: @escaping (Result<Device>) -> Void) {
         if disableRegister == false {
-        let deviceUrl = URL(string: Config.FakeSelfDeviceUrl)
-        
-        let webSocketUrl = URL(string: Config.FakeWebSocketUrl)
-        
-        
-        let locusServiceUrl = URL(string: Config.FakeLocusServiceUrl)
-        
-        let conversationServiceUrl = URL(string: Config.FakeConversationServiceUrl)
-        
-        let calliopeDiscoveryServiceUrl = URL(string: Config.FakeCalliopeDiscoveryServiceUrl)
-        
-        let metricsServiceUrl = URL(string: Config.FakeMetricsServiceUrl)
-        
-        let regionCode = "US-WEST";
-        let countryCode = "US";
-        
-        let device = Device(phone: phone, deviceUrl: deviceUrl!, webSocketUrl: webSocketUrl!, locusServiceUrl: locusServiceUrl!, calliopeDiscoveryServiceUrl: calliopeDiscoveryServiceUrl!, metricsServiceUrl: metricsServiceUrl!, conversationServiceUrl: conversationServiceUrl!, deviceType: "IPHONE", regionCode: regionCode, countryCode: countryCode)
-        
-        self.device = device
-        UserDefaults.sharedInstance.deviceUrl = Config.FakeSelfDeviceUrl
-            completionHandler(Result.success(device))
+            let deviceUrl = URL(string: Config.FakeSelfDeviceUrl)
             
+            let webSocketUrl = URL(string: Config.FakeWebSocketUrl)
+            
+            let services: [String: String] = [Service.locus.serviceUrlKey: Config.FakeLocusServiceUrl,
+                                              Service.conv.serviceUrlKey: Config.FakeConversationServiceUrl,
+                                              Service.calliopeDiscovery.serviceUrlKey: Config.FakeCalliopeDiscoveryServiceUrl,
+                                              Service.metrics.serviceUrlKey: Config.FakeMetricsServiceUrl]
+            
+            let regionCode = "US-WEST";
+            let countryCode = "US";
+            
+            let device = Device(phone: phone, deviceUrl: deviceUrl!, webSocketUrl: webSocketUrl!, services: services, deviceType: "IPHONE", regionCode: regionCode, countryCode: countryCode)
+            
+            self.device = device
+            UserDefaults.sharedInstance.deviceUrl = Config.FakeSelfDeviceUrl
+            completionHandler(Result.success(device))
         }
         else {
             let error = WebexError.serviceFailed(code: -7000, reason: "registering device error")

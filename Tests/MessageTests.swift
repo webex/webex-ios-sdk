@@ -393,7 +393,7 @@ class MessageTests: XCTestCase {
             let todaysDate = dateFormatter.string(from: date)
             let name = "Image-" + todaysDate + ".jpg"
             let destinationPath = path + name
-            try UIImageJPEGRepresentation(resultImg, 1.0)?.write(to: URL(fileURLWithPath: destinationPath))
+            try resultImg.jpegData(compressionQuality: 1.0)?.write(to: URL(fileURLWithPath: destinationPath))
             return destinationPath
         }catch{
             return nil

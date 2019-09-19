@@ -44,7 +44,7 @@ class PhoneTests: XCTestCase {
         self.fakeWebSocketService = FakeWebSocketService(authenticator: authenticator)
         self.fakeConversationClient = FakeConversationClient(authenticator: authenticator)
         let metricsEngine = MetricsEngine(authenticator: authenticator, service: self.fakeDeviceService!)
-        phone = Phone(authenticator: authenticator, devices: self.fakeDeviceService!, reachability: FakeReachabilityService(authenticator: authenticator, deviceService: self.fakeDeviceService!), client: self.fakeCallClient!, conversations: self.fakeConversationClient!, metrics: metricsEngine, prompter: H264LicensePrompter(metrics: metricsEngine), webSocket: self.fakeWebSocketService!)
+        phone = Phone(webex: fixture.webex, devices: self.fakeDeviceService!, reachability: FakeReachabilityService(authenticator: authenticator, deviceService: self.fakeDeviceService!), client: self.fakeCallClient!, conversations: self.fakeConversationClient!, metrics: metricsEngine, prompter: H264LicensePrompter(metrics: metricsEngine), webSocket: self.fakeWebSocketService!)
         phone.disableVideoCodecActivation()
         XCTAssertNotNil(phone)
         
@@ -884,9 +884,9 @@ class PhoneTests: XCTestCase {
         if let user = fixture.createUser() {
             self.fakeCallClient?.otherParticipants = [user]
             self.fakeCallClient?.enableFetchCall = true
-            NotificationCenter.default.post(name: .UIApplicationDidEnterBackground, object: nil)
+            NotificationCenter.default.post(name: UIApplication.didEnterBackgroundNotification, object: nil)
             Thread.sleep(forTimeInterval: Config.TestcaseInterval)
-            NotificationCenter.default.post(name: .UIApplicationDidBecomeActive, object: nil)
+            NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
             let expect = expectation(description: "Call incoming")
             self.phone.onIncoming = {
                 call in

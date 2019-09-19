@@ -826,7 +826,7 @@ public class Call {
                 return
             }
             
-            if let _ = self.auxStreams.index(where:{ $0.renderView == view }) {
+            if let _ = self.auxStreams.firstIndex(where:{ $0.renderView == view }) {
                 self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.illegalOperation(reason: "open multi aux stream with same view"))))
                 return
             }
@@ -860,7 +860,7 @@ public class Call {
     /// - since: 2.0.0
     public func closeAuxStream(view:MediaRenderView) {
         DispatchQueue.main.async {
-            if let index = self.auxStreams.index(where:{ $0.renderView == view }) {
+            if let index = self.auxStreams.firstIndex(where:{ $0.renderView == view }) {
                 let auxStream = self.auxStreams[index]
                 SDKLogger.shared.info("close auxiliary stream for vid:\(auxStream.vid)")
                 

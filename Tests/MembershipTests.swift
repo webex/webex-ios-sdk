@@ -37,7 +37,6 @@ class MembershipTests: XCTestCase {
         XCTAssertNotNil(membership.personEmail)
         XCTAssertNotNil(membership.spaceId)
         XCTAssertNotNil(membership.isModerator)
-        XCTAssertNotNil(membership.isMonitor)
         XCTAssertNotNil(membership.created)
     }
     
@@ -77,7 +76,6 @@ class MembershipTests: XCTestCase {
             XCTAssertEqual(membership.personEmail, other.email)
             XCTAssertEqual(membership.personId, other.personId)
             XCTAssertEqual(membership.isModerator, false)
-            XCTAssertEqual(membership.isMonitor, false)
             validate(membership: membership)
         } else {
             XCTFail("Failed to create membership")
@@ -103,7 +101,6 @@ class MembershipTests: XCTestCase {
             XCTAssertEqual(membership.spaceId, spaceId)
             XCTAssertEqual(membership.personEmail, other.email)
             XCTAssertEqual(membership.isModerator, false)
-            XCTAssertEqual(membership.isMonitor, false)
             validate(membership: membership)
         } else {
             XCTFail("Failed to create membership")
@@ -169,7 +166,6 @@ class MembershipTests: XCTestCase {
             XCTAssertEqual(foundMembership.personEmail, other.email)
             XCTAssertEqual(foundMembership.spaceId, spaceId)
             XCTAssertEqual(foundMembership.isModerator, false)
-            XCTAssertEqual(foundMembership.isMonitor, false)
             validate(membership: foundMembership)
         } else {
             XCTFail("No memberships returned")
