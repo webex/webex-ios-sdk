@@ -24,10 +24,7 @@ struct Device {
     let phone: Phone
     let deviceUrl: URL
     let webSocketUrl: URL
-    let locusServiceUrl: URL
-    let calliopeDiscoveryServiceUrl: URL
-    let metricsServiceUrl: URL
-    let conversationServiceUrl: URL
+    let services: [String: String]
     let deviceType:String
     var regionCode: String
     var countryCode: String
@@ -52,15 +49,7 @@ class DeviceService {
                     let deviceUrl = URL(string: deviceUrlString),
                     let webSocketUrlString = model.webSocketUrl,
                     let webSocketUrl = URL(string: webSocketUrlString),
-                    let servicesDictionary = model.services,
-                    let locusServiceUrlString = servicesDictionary["locusServiceUrl"],
-                    let locusServiceUrl = URL(string: locusServiceUrlString),
-                    let conversationServiceUrlString = servicesDictionary["conversationServiceUrl"],
-                    let conversationServiceUrl = URL(string: conversationServiceUrlString),
-                    let calliopeDiscoveryServiceUrlString = servicesDictionary["calliopeDiscoveryServiceUrl"],
-                    let calliopeDiscoveryServiceUrl = URL(string: calliopeDiscoveryServiceUrlString),
-                    let metricsServiceUrlString = servicesDictionary["metricsServiceUrl"],
-                    let metricsServiceUrl = URL(string: metricsServiceUrlString) {
+                    let servicesDictionary = model.services {
                     
                     self.client.fetchRegion(queue: queue) { regionRes in
                         var regionCode = "US-WEST";
@@ -69,7 +58,7 @@ class DeviceService {
                             regionCode = rc
                             countryCode = cc
                         }
-                        let tempDevice = Device(phone: phone, deviceUrl: deviceUrl, webSocketUrl: webSocketUrl, locusServiceUrl: locusServiceUrl, calliopeDiscoveryServiceUrl: calliopeDiscoveryServiceUrl, metricsServiceUrl: metricsServiceUrl, conversationServiceUrl: conversationServiceUrl, deviceType: UIDevice.current.kind, regionCode: regionCode, countryCode: countryCode)
+                        let tempDevice = Device(phone: phone, deviceUrl: deviceUrl, webSocketUrl: webSocketUrl, services: servicesDictionary, deviceType: UIDevice.current.kind, regionCode: regionCode, countryCode: countryCode)
                         self.device = tempDevice
                         UserDefaults.sharedInstance.deviceUrl = deviceUrlString
                         completionHandler(Result.success(tempDevice))

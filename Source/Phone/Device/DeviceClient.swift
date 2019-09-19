@@ -23,23 +23,14 @@ import Foundation
 class DeviceClient {
     
     private let authenticator: Authenticator
-#if INTEGRATIONTEST
-    static let WDM_SERVER_ADDRESS:String = ProcessInfo().environment["WDM_SERVER_ADDRESS"] == nil ? "https://wdm-a.wbx2.com/wdm/api/v1/devices":ProcessInfo().environment["WDM_SERVER_ADDRESS"]!
-#else
-    static let WDM_SERVER_ADDRESS:String = "https://wdm-a.wbx2.com/wdm/api/v1/devices"
-#endif
+
     init(authenticator: Authenticator) {
         self.authenticator = authenticator
     }
     
-    private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(authenticator)
-    }
-    
     func create(deviceInfo: UIDevice, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<DeviceModel>) -> Void) {
-        let request = requestBuilder()
+        let request = ServiceRequest.Builder(authenticator, service: .wdm)
             .method(.post)
-            .baseUrl(DeviceClient.WDM_SERVER_ADDRESS)
             .body(createBody(deviceInfo))
             .queue(queue)
             .build()
@@ -48,9 +39,8 @@ class DeviceClient {
     }
     
     func update(registeredDeviceUrl: String, deviceInfo: UIDevice, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<DeviceModel>) -> Void) {
-        let request = requestBuilder()
+        let request = ServiceRequest.Builder(authenticator, endpoint: registeredDeviceUrl)
             .method(.put)
-            .baseUrl(registeredDeviceUrl)
             .body(createBody(deviceInfo))
             .queue(queue)
             .build()
@@ -59,9 +49,8 @@ class DeviceClient {
     }
     
     func delete(registeredDeviceUrl: String, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
-        let request = requestBuilder()
+        let request = ServiceRequest.Builder(authenticator, endpoint: registeredDeviceUrl)
             .method(.delete)
-            .baseUrl(registeredDeviceUrl)
             .queue(queue)
             .build()
         
@@ -69,10 +58,9 @@ class DeviceClient {
     }
     
     func fetchRegion(queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<RegionModel>) -> Void) {
-        let request = requestBuilder()
+        let request = ServiceRequest.Builder(authenticator, service: .region)
             .method(.get)
             .headers(["Content-Type": "application/json"])
-            .baseUrl("https://ds.ciscospark.com/v1/region")
             .queue(queue)
             .build()
         

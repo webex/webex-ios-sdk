@@ -39,15 +39,9 @@ public class MembershipClient {
     }
     
     private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(self.phone.authenticator).path("memberships")
+        return ServiceRequest.Builder(self.phone.authenticator, service: .hydra, device: phone.devices.device).path("memberships")
     }
     
-    private func conversationBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(self.phone.authenticator)
-            .baseUrl(ServiceRequest.conversationServerAddress)
-            .path("activities")
-    }
-
     /// Lists all space memberships where the authenticated user belongs.
     ///
     /// - parameter max: The maximum number of items in the response.
@@ -215,50 +209,6 @@ public class MembershipClient {
         
         request.responseJSON(completionHandler)
     }
-    
-    /// Send read receipt when the login user read a message, let others know you have seen it
-    ///
-    /// - parameter spaceId: The identifier of the space where the message is.
-    /// - parameter messageId: The identifier of the message which user read.
-    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the delete readReceipt has finished.
-    /// - returns: Void
-    /// - since: 2.2.0
-    public func sendReadReceipt(spaceId:String, messageId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
-        let object = ["id": messageId.locusFormat, "objectType": ObjectType.activity.rawValue]
-        let target = ["id": spaceId.locusFormat, "objectType": ObjectType.conversation.rawValue]
-        let body = RequestParameter(["objectType":ObjectType.activity.rawValue,
-                                     "verb": ActivityModel.Verb.acknowledge.rawValue,
-                                     "object": object,
-                                     "target": target])
-        let request = self.conversationBuilder()
-            .method(.post)
-            .body(body)
-            .queue(queue)
-            .build()
-        request.responseJSON(completionHandler)
-    }
-    
-    /// Send read receipt when the login user read all the messages in the space, let others know you have seen them
-    ///
-    /// - parameter messageId: The identifier of the space.
-    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the delete readReceipt has finished.
-    /// - returns: Void
-    /// - since: 2.2.0
-    public func sendReadReceipt(spaceId:String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
-        self.messages.list(spaceId: spaceId, max: 1, queue:queue) { (response) in
-            switch response.result {
-            case .success(let messages):
-                if let message = messages.first, let lastMessageId = message.id {
-                    self.sendReadReceipt(spaceId: spaceId, messageId: lastMessageId, queue: queue,  completionHandler: completionHandler)
-                }
-            case .failure(let error):
-                completionHandler(ServiceResponse(response.response, Result.failure(error)))
-            }
-        }
-    }
-    
 }
 
 // MARK: handle conversation membership event

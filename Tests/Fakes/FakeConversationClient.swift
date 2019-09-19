@@ -22,7 +22,7 @@ import Foundation
 @testable import WebexSDK
 class FakeConversationClient : ConversationClient {
     var disableConversation: Bool = false
-    override func getLocusUrl(conversation: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<ConversationLocusModel>) -> Void) {
+    override func getLocusUrl(conversation: String, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<ConversationLocusModel>) -> Void) {
         if disableConversation {
             completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.failure(WebexError.serviceFailed(code: -7000, reason: "getLocusUrl error"))))
         }

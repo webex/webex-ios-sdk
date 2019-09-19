@@ -133,11 +133,10 @@ extension ActivityModel : ImmutableMappable {
             self.dataId = "\(aid ?? ""):\(tid ?? "")".hydraFormat(for: IdentityType.membership)
         }
         else if self.verb == Verb.add || self.verb == Verb.leave || self.verb == Verb.update {
-            let aid:String? = try? map.value("object.entryUUID")
-            self.dataId = "\(aid ?? ""):\(tid ?? "")".hydraFormat(for: IdentityType.membership)
+            let oid:String? = try? map.value("object.entryUUID")
+            self.dataId = "\(oid ?? ""):\(tid ?? "")".hydraFormat(for: IdentityType.membership)
             self.objectId = try? map.value("object.entryUUID", using: IdentityTransform(for: IdentityType.people))
         }
-        
         if self.verb == ActivityModel.Verb.update {
             if let moderator: String = try? map.value("object.roomProperties.isModerator") {
                 self.isModerator = moderator == "true" ? true : false
@@ -232,7 +231,7 @@ extension String {
     }
 }
 
-private class IdentityTransform : TransformType {
+class IdentityTransform : TransformType {
     
     private var identityType: IdentityType
     
@@ -263,7 +262,7 @@ private class VerbTransform: TransformType {
     }
 }
 
-private class SpaceTypeTransform: TransformType {
+class SpaceTypeTransform: TransformType {
     
     func transformFromJSON(_ value: Any?) -> SpaceType? {
         if let tags = value as? [String], tags.contains("ONE_ON_ONE") {

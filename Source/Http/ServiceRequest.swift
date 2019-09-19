@@ -24,15 +24,55 @@ import AlamofireObjectMapper
 import ObjectMapper
 import SwiftyJSON
 
+enum Service: String {
+    case hydra
+    case region
+    case wdm
+    case kms
+    case locus
+    case conv = "conversation"
+    case metrics
+    case calliopeDiscovery
+    
+    func endpoint(for: Device?) -> String {
+        switch self {
+        case .hydra:
+            #if INTEGRATIONTEST
+            return ProcessInfo().environment["hydraServerAddress"] == nil ? "https://api.ciscospark.com/v1" : ProcessInfo().environment["hydraServerAddress"]!
+            #else
+            return "https://api.ciscospark.com/v1"
+            #endif
+        case .wdm:
+            #if INTEGRATIONTEST
+            return ProcessInfo().environment["WDM_SERVER_ADDRESS"] == nil ? "https://wdm-a.wbx2.com/wdm/api/v1/devices" : ProcessInfo().environment["WDM_SERVER_ADDRESS"]!
+            #else
+            return "https://wdm-a.wbx2.com/wdm/api/v1/devices"
+            #endif
+        case .region:
+            return "https://ds.ciscospark.com/v1/region"
+        case .kms:
+            return "https://encryption-a.wbx2.com/encryption/api/v1"
+        case .conv:
+            return self.dynamicEndpoint(`for`, default: "https://conv-a.wbx2.com/conversation/api/v1")
+        case .locus:
+            return self.dynamicEndpoint(`for`, default: "https://locus-a.wbx2.com/conversation/api/v1") // TODO
+        case .metrics:
+            return self.dynamicEndpoint(`for`, default: "https://locus-a.wbx2.com/conversation/api/v1") // TODO
+        case .calliopeDiscovery:
+            return self.dynamicEndpoint(`for`, default: "https://locus-a.wbx2.com/conversation/api/v1") // TODO
+        }
+    }
+    
+    private func dynamicEndpoint(_ device: Device?, default: String) -> String {
+        if let device = device, let url = device.services["\(self.rawValue)ServiceUrl"] {
+            return url
+        }
+        return `default`
+    }
+}
+
 class ServiceRequest : RequestRetrier, RequestAdapter {
     
-    #if INTEGRATIONTEST
-    static let hydraServerAddress:String = ProcessInfo().environment["hydraServerAddress"] == nil ? "https://api.ciscospark.com/v1":ProcessInfo().environment["hydraServerAddress"]!
-    #else
-    static let hydraServerAddress:String = "https://api.ciscospark.com/v1"
-    #endif
-    static let conversationServerAddress: String = "https://conv-a.wbx2.com/conversation/api/v1"
-    static let kmsServerAddress: String = "https://encryption-a.wbx2.com/encryption/api/v1"
     static let locusResponseOnlySdp: Bool = true
     
     private let tokenPrefix: String = "Bearer "
@@ -44,7 +84,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     private let query: RequestParameter?
     private let keyPath: String?
     private let queue: DispatchQueue?
-    private let authenticator: Authenticator
+    private let authenticator: Authenticator?
     private var newAccessToken: String? = nil
     private var refreshTokenCount = 0
     private let sessionManager: SessionManager = {
@@ -53,8 +93,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         return SessionManager(configuration: configuration)
     }()
     
-    
-    private init(authenticator: Authenticator, url: URL, headers: [String: String], method: Alamofire.HTTPMethod, body: RequestParameter?, query: RequestParameter?, keyPath: String?, queue: DispatchQueue?) {
+    private init(authenticator: Authenticator? = nil, url: URL, headers: [String: String], method: Alamofire.HTTPMethod, body: RequestParameter?, query: RequestParameter?, keyPath: String?, queue: DispatchQueue?) {
         self.authenticator = authenticator
         self.url = url
         self.headers = headers
@@ -67,8 +106,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     
     class Builder {
         
-        private static let apiBaseUrl: URL = URL(string: ServiceRequest.hydraServerAddress)!
-        private let authenticator: Authenticator
+        private let authenticator: Authenticator?
         private var headers: [String: String]
         private var method: Alamofire.HTTPMethod
         private var baseUrl: URL
@@ -78,12 +116,20 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         private var keyPath: String?
         private var queue: DispatchQueue?
         
-        init(_ authenticator: Authenticator) {
+        convenience init(_ authenticator: Authenticator? = nil, service: Service) {
+            self.init(authenticator, service: service, device: nil)
+        }
+        
+        convenience init(_ authenticator: Authenticator? = nil, service: Service, device: Device?) {
+            self.init(authenticator, endpoint: service.endpoint(for: device))
+        }
+        
+        init(_ authenticator: Authenticator? = nil, endpoint: String) {
             self.authenticator = authenticator
             self.headers = ["Content-Type": "application/json",
                             "User-Agent": UserAgent.string,
                             "Webex-User-Agent": UserAgent.string]
-            self.baseUrl = Builder.apiBaseUrl
+            self.baseUrl = URL(string: endpoint)!
             self.method = .get
             self.path = ""
         }
@@ -249,8 +295,12 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
             completionHandler(self.sessionManager.request(urlRequestConvertible).validate())
         }
         
-        authenticator.accessToken { accessToken in
-            accessTokenCallback(accessToken)
+        if let authenticator = authenticator {
+            authenticator.accessToken { accessToken in
+                accessTokenCallback(accessToken)
+            }
+        } else {
+            accessTokenCallback(nil)
         }
     }
     
@@ -275,13 +325,13 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
                 self.pendingTimeCount += retryAfter
                 completion(true, TimeInterval(retryAfter))
             }
-        } else if let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 {
-            self.authenticator.refreshToken(completionHandler: { accessToken in
+        } else if let authenticator = self.authenticator, let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 {
+            authenticator.refreshToken(completionHandler: { accessToken in
                 if accessToken == nil {
                     self.newAccessToken = accessToken
                     completion(false, 0.0)
                 } else {
-                    if self.refreshTokenCount >= 2{// After Refreshed token twice, if still get 401 from server, returns error.
+                    if self.refreshTokenCount >= 2 {// After Refreshed token twice, if still get 401 from server, returns error.
                         completion(false, 0.0)
                     } else {
                         self.newAccessToken = accessToken
@@ -290,7 +340,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
                 }
             })
         } else {
-            completion(false,0.0)
+            completion(false, 0.0)
         }
     }
 }

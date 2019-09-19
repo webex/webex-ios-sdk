@@ -47,9 +47,7 @@ extension OAuthTokenModel : Mappable {
 class OAuthClient {
         
     private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(SimpleAuthenticator.empty())
-            .path("access_token")
-            .headers(["Content-Type": "application/x-www-form-urlencoded"])
+        return ServiceRequest.Builder(service: .hydra).path("access_token").headers(["Content-Type": "application/x-www-form-urlencoded"])
     }
     
     func fetchAccessTokenFrom(oauthCode: String, clientId: String, clientSecret: String, redirectUri: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<OAuthTokenModel>) -> Void) {

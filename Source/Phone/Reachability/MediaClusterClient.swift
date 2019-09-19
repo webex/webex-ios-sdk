@@ -30,13 +30,8 @@ class MediaClusterClient {
         self.deviceService = deviceService
     }
     
-    private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(authenticator).baseUrl(deviceService.device!.calliopeDiscoveryServiceUrl)
-    }
-    
     func get(queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<MediaCluster>) -> Void) {
-        let request = requestBuilder()
-            .method(.get)
+        let request = ServiceRequest.Builder(authenticator, service: .calliopeDiscovery, device: self.deviceService.device)
             .path("clusters")
             .queue(queue)
             .build()

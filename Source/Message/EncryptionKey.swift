@@ -76,13 +76,13 @@ class EncryptionKey {
         }
     }
     
-    func spaceUrl(authenticator: Authenticator, completionHandler: @escaping (Result<String>) -> Void) {
+    func spaceUrl(client: MessageClient, completionHandler: @escaping (Result<String>) -> Void) {
         if let url = self.spaceUrl {
             completionHandler(Result.success(url))
         }
         else {
-            let request = ServiceRequest.Builder(authenticator).baseUrl(ServiceRequest.conversationServerAddress)
-                .path("conversations/" + self.spaceId.locusFormat + "/space")
+            let request = ServiceRequest.Builder(client.authenticator, service: .conv, device: client.phone.devices.device)
+                .path("conversations").path(self.spaceId.locusFormat).path("space")
                 .method(.put)
                 .build()
             request.responseJSON { (response: ServiceResponse<Any>) in

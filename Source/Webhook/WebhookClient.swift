@@ -32,7 +32,7 @@ public class WebhookClient {
     }
     
     private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(authenticator).path("webhooks")
+        return ServiceRequest.Builder(authenticator, service: .hydra).path("webhooks")
     }
     
     /// Lists all webhooks of the authenticated user.

@@ -111,3 +111,91 @@ extension Space: Mappable {
     }
 }
 
+/// A data type representation of a space associated with conversation
+/// For rooms where lastActivityDate > lastSeenActivityDate the space can be considerd to be "unread"
+///
+/// - since: 2.2.0
+public struct SpaceInfo: ImmutableMappable {
+    
+    /// The identifier of this space.
+    public var id: String?
+    
+    /// The type of this space.
+    public var type: SpaceType?
+    
+    /// the published date of the last readable message.
+    public var lastActivityDate: Date?
+    
+    /// the published date of the last message that login user seen
+    public var lastSeenActivityDate: Date?
+    
+    private let dateTransform = CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ")
+    
+    /// Constructs a `SpaceInfo` object.
+    ///
+    /// - note: for internal use only.
+    public init(map: Map) throws {
+        
+        self.id = try? map.value("id", using:IdentityTransform(for: .room))
+        self.type = try? map.value("tags", using:SpaceTypeTransform())
+        
+        if let lastDate:Date = try? map.value("lastReadableActivityDate", using:dateTransform) {
+            self.lastActivityDate = lastDate
+        } else {
+            self.lastActivityDate = try? map.value("lastRelevantActivityDate", using:dateTransform)
+        }
+        
+        if let lastSeenDate:Date = try? map.value("lastSeenActivityDate", using:dateTransform) {
+            self.lastSeenActivityDate = lastSeenDate
+        } else {
+            self.lastSeenActivityDate = Date(timeIntervalSince1970: 0)
+        }
+    }
+    
+    /// Maps a `SpaceInfo` from JSON.
+    ///
+    /// - note: for internal use only.
+    public mutating func mapping(map: Map) {
+        self.id     >>> (map["id"], IdentityTransform(for: .room))
+        self.type   >>>  map["roomType"]
+        self.lastActivityDate  >>>  (map["lastActivityDate"], dateTransform)
+        self.lastSeenActivityDate  >>>  (map["lastSeenActivityDate"], dateTransform)
+    }
+}
+
+/// Shows Webex meeting details for a room such as the SIP address, meeting URL, toll-free and toll dial-in numbers.
+///
+/// - since: 2.2.0
+public struct SpaceMeetingDetail: Mappable {
+    
+    /// A unique identifier for the room.
+    public var roomId:String?
+    
+    /// The Webex meeting URL for the room.
+    public var meetingLink:String?
+    
+    /// The SIP address for the room.
+    public var sipAddress:String?
+    
+    /// The Webex meeting number for the room.
+    public var meetingNumber:String?
+    
+    /// The toll-free PSTN number for the room.
+    public var callInTollFreeNumber:String?
+    
+    /// The toll (local) PSTN number for the room.
+    public var callInTollNumber:String?
+    
+    
+    public init(map: Map) {
+    }
+    
+    public mutating func mapping(map: Map) {
+        self.roomId           <- map["roomId"]
+        self.meetingLink      <- map["meetingLink"]
+        self.sipAddress       <- map["sipAddress"]
+        self.meetingNumber    <- map["meetingNumber"]
+        self.callInTollNumber <- map["callInTollNumber"]
+        self.callInTollFreeNumber <- map["callInTollFreeNumber"]
+    }
+}

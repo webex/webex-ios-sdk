@@ -50,7 +50,7 @@ class AuxiliaryVideoTest: XCTestCase {
         self.fakeConversationClient = FakeConversationClient(authenticator: authenticator)
         self.fakeWME = FakeWME()
         let metricsEngine = MetricsEngine(authenticator: authenticator, service: self.fakeDeviceService!)
-        phone = Phone(authenticator: authenticator, devices: self.fakeDeviceService!, reachability: FakeReachabilityService(authenticator: authenticator, deviceService: self.fakeDeviceService!), client: self.fakeCallClient!, conversations: self.fakeConversationClient!, metrics: metricsEngine, prompter: H264LicensePrompter(metrics: metricsEngine), webSocket: self.fakeWebSocketService!)
+        phone = Phone(webex: fixture.webex, devices: self.fakeDeviceService!, reachability: FakeReachabilityService(authenticator: authenticator, deviceService: self.fakeDeviceService!), client: self.fakeCallClient!, conversations: self.fakeConversationClient!, metrics: metricsEngine, prompter: H264LicensePrompter(metrics: metricsEngine), webSocket: self.fakeWebSocketService!)
         phone.disableVideoCodecActivation()
         
         XCTAssertNotNil(phone)

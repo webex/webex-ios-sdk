@@ -135,7 +135,7 @@ class UploadFileOperation {
                 }
             }
             
-            self.key.spaceUrl(authenticator: client.authenticator) { result in
+            self.key.spaceUrl(client: client) { result in
                 if let url = result.data {
                     let headers: HTTPHeaders  = ["Authorization": "Bearer " + token]
                     let parameters: Parameters = ["uploadProtocol":"content-length"]

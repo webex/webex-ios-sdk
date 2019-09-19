@@ -32,7 +32,7 @@ public class TeamClient {
     }
 
     private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(authenticator).path("teams")
+        return ServiceRequest.Builder(authenticator, service: .hydra).path("teams")
     }
     
     /// Lists teams to which the authenticated user belongs.

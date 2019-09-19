@@ -49,16 +49,15 @@ extension JWTTokenModel : Mappable {
 
 
 class JWTAuthClient {
-    
-    private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(SimpleAuthenticator.empty()).path("jwt/login")
-    }
-    
+
     func fetchTokenFromJWT(_ jwt: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<JWTTokenModel>) -> Void) {
-        let request = requestBuilder()
+        let request = ServiceRequest.Builder(service: .hydra)
             .method(.post)
+            .path("jwt/login")
             .headers(["Authorization": jwt,
                       "Content-Type": "text/plain",
+                      "User-Agent": UserAgent.string,
+                      "Webex-User-Agent": UserAgent.string,
                       "Cache-Control": "no-cache",
                       "Accept-Encoding": "none"])
             .queue(queue)

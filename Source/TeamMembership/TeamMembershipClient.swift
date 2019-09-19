@@ -31,7 +31,7 @@ public class TeamMembershipClient {
     }
     
     private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(authenticator).path("team/memberships")
+        return ServiceRequest.Builder(authenticator, service: .hydra).path("team/memberships")
     }
     
     /// Lists all team memberships where the authenticated user belongs.

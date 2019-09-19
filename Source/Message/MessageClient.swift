@@ -55,9 +55,7 @@ public class MessageClient {
     /// - since: 1.4.0
     public var onEvent: ((MessageEvent) -> Void)?
     
-    private static let kmsMsgServerUrl = URL(string: ServiceRequest.kmsServerAddress + "/kms/messages")!
-    
-    private let phone: Phone
+    let phone: Phone
     private let queue = SerialQueue()
     
     private var uuid: String = UUID().uuidString
@@ -84,6 +82,14 @@ public class MessageClient {
     
     init(phone: Phone) {
         self.phone = phone
+    }
+    
+    private var messageServiceBuilder: ServiceRequest.Builder {
+        return ServiceRequest.Builder(self.authenticator, service: .conv, device: phone.devices.device)
+    }
+    
+    private var kmsServiceBuilder: ServiceRequest.Builder {
+        return ServiceRequest.Builder(self.authenticator, service: .kms, device: phone.devices.device)
     }
     
     /// Lists all messages in a space by space Id.
@@ -145,9 +151,8 @@ public class MessageClient {
     private func listBefore(spaceId: String, mentionedPeople: Mention? = nil, date: Date?, max: Int, result: [ActivityModel], queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[Message]>) -> Void) {
         let dateKey = mentionedPeople == nil ? "maxDate" : "sinceDate"
         let request = self.messageServiceBuilder.path(mentionedPeople == nil ? "activities" : "mentions")
-            .keyPath("items")
-            .method(.get)
             .query(RequestParameter(["conversationId": spaceId.locusFormat, "limit": max, dateKey: (date ?? Date()).iso8601String]))
+            .keyPath("items")
             .queue(queue)
             .build()
         request.responseArray { (response: ServiceResponse<[ActivityModel]>) in
@@ -352,11 +357,7 @@ public class MessageClient {
     }
     
     private func get(messageId: String, decrypt: Bool, queue: DispatchQueue?, completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        let request = self.messageServiceBuilder.path("activities")
-            .method(.get)
-            .path(messageId.locusFormat)
-            .queue(queue)
-            .build()
+        let request = self.messageServiceBuilder.path("activities").path(messageId.locusFormat).queue(queue).build()
         request.responseObject { (response : ServiceResponse<ActivityModel>) in
             switch response.result {
             case .success(let activity):
@@ -392,11 +393,7 @@ public class MessageClient {
                 }
             }
             else {
-                let request = self.messageServiceBuilder.path("activities")
-                    .method(.get)
-                    .path(messageId.locusFormat)
-                    .queue(queue)
-                    .build()
+                let request = self.messageServiceBuilder.path("activities").path(messageId.locusFormat).queue(queue).build()
                 request.responseObject { (response : ServiceResponse<ActivityModel>) in
                     switch response.result {
                     case .success(let activity):
@@ -419,6 +416,66 @@ public class MessageClient {
                     case .failure(let error):
                         completionHandler(ServiceResponse(response.response, Result.failure(error)))
                         break
+                    }
+                }
+            }
+        }
+    }
+    
+    /// Send read receipt when the login user read a message, let others know you have seen it
+    ///
+    /// - parameter spaceId: The identifier of the space where the message is.
+    /// - parameter messageId: The identifier of the message which user read.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the delete readReceipt has finished.
+    /// - returns: Void
+    /// - since: 2.2.0
+    public func markAsRead(spaceId:String, messageId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        self.doSomethingAfterRegistered { error in
+            if let error = error {
+                (queue ?? DispatchQueue.main).async {
+                    completionHandler(ServiceResponse(nil, Result.failure(error)))
+                }
+            }
+            else {
+                let object = ["id": messageId.locusFormat, "objectType": ObjectType.activity.rawValue]
+                let target = ["id": spaceId.locusFormat, "objectType": ObjectType.conversation.rawValue]
+                let body = RequestParameter(["objectType":ObjectType.activity.rawValue,
+                                             "verb": ActivityModel.Verb.acknowledge.rawValue,
+                                             "object": object,
+                                             "target": target])
+                let request = self.messageServiceBuilder
+                    .path("activities")
+                    .method(.post)
+                    .body(body)
+                    .queue(queue)
+                    .build()
+                request.responseJSON(completionHandler)
+            }
+        }
+    }
+    
+    public func markAsRead(spaceId:String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        self.doSomethingAfterRegistered { error in
+            if let error = error {
+                (queue ?? DispatchQueue.main).async {
+                    completionHandler(ServiceResponse(nil, Result.failure(error)))
+                }
+            }
+            else {
+                self.list(spaceId: spaceId, max: 1, queue:queue) { (response) in
+                    switch response.result {
+                    case .success(let messages):
+                        if let message = messages.first, let lastMessageId = message.id {
+                            self.markAsRead(spaceId: spaceId, messageId: lastMessageId, queue: queue,  completionHandler: completionHandler)
+                        }
+                        else {
+                            (queue ?? DispatchQueue.main).async {
+                                completionHandler(ServiceResponse(response.response, Result.failure(response.result.error ?? MSGError.spaceMessageFetchFail)))
+                            }
+                        }
+                    case .failure(let error):
+                        completionHandler(ServiceResponse(response.response, Result.failure(error)))
                     }
                 }
             }
@@ -612,9 +669,8 @@ public class MessageClient {
                 completionHandler(Result.success(nil))
             }
             
-            let request = self.messageServiceBuilder.path("conversations/" + spaceId.locusFormat)
+            let request = self.messageServiceBuilder.path("conversations").path(spaceId.locusFormat)
                 .query(RequestParameter(["includeActivities": false, "includeParticipants": true]))
-                .method(.get)
                 .build()
             request.responseJSON { (response: ServiceResponse<Any>) in
                 if let dict = response.result.data as? [String: Any] {
@@ -686,8 +742,9 @@ public class MessageClient {
                 self.keysCompletionHandlers[spaceId] = nil
             }
         }
+        
         if let parameters = parameters, parameters.count >= 2 {
-            Alamofire.request(MessageClient.kmsMsgServerUrl, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header).responseString { (response) in
+            Alamofire.request(URL(string: Service.kms.endpoint(for: phone.devices.device) + "/kms/messages")!, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header).responseString { (response) in
                 SDKLogger.shared.debug("RequestKMS Material Response ============  \(response)")
                 if response.result.isFailure {
                     failed()
@@ -743,9 +800,7 @@ public class MessageClient {
             completionHandler(nil)
             return
         }
-        let request = self.messageServiceBuilder.path("users")
-            .method(.get)
-            .build()
+        let request = self.messageServiceBuilder.path("users").build()
         request.responseJSON { (response: ServiceResponse<Any>) in
             if let usersDict = response.result.data as? [String: Any], let userId = usersDict["id"] as? String {
                 self.userId = userId
@@ -762,9 +817,7 @@ public class MessageClient {
             completionHandler(nil)
             return
         }
-        let request = ServiceRequest.Builder(self.authenticator).baseUrl(ServiceRequest.kmsServerAddress).path("kms")
-            .method(.get)
-            .build()
+        let request = self.kmsServiceBuilder.path("kms").build()
         request.responseJSON { (response: ServiceResponse<Any>) in
             if let kmsDict = response.result.data as? [String: Any], let kmsCluster = kmsDict["kmsCluster"] as? String, let rsaPublicKey = kmsDict["rsaPublicKey"] as? String {
                 self.kmsCluster = kmsCluster
@@ -811,7 +864,7 @@ public class MessageClient {
             self.ephemeralKeyRequest = (request, completionHandler)
             let parameters: [String: String] = ["kmsMessages": message, "destination": cluster]
             let header: [String: String]  = ["Cisco-Request-ID": self.uuid, "Authorization" : "Bearer " + token]
-            Alamofire.request(MessageClient.kmsMsgServerUrl, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header).responseString { response in
+            Alamofire.request(URL(string: Service.kms.endpoint(for: self.phone.devices.device) + "/kms/messages")!, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header).responseString { response in
                 SDKLogger.shared.debug("Request EphemeralKey Response ============ \(response)")
                 if response.result.isFailure {
                     self.ephemeralKeyRequest = nil
@@ -870,10 +923,6 @@ public class MessageClient {
         }
     }
     
-    private var messageServiceBuilder: ServiceRequest.Builder {
-        return ServiceRequest.Builder(self.authenticator).baseUrl(ServiceRequest.conversationServerAddress)
-    }
-    
     private func encryptionKey(spaceId: String) -> EncryptionKey {
         var key = self.encryptionKeys[spaceId]
         if key == nil {
@@ -890,7 +939,7 @@ public class MessageClient {
             }
         }
         else {
-            let request = self.messageServiceBuilder.path("conversations/user/" + person.locusFormat)
+            let request = self.messageServiceBuilder.path("conversations").path("user").path(person.locusFormat)
                 .method(.put)
                 .query(RequestParameter(["activitiesLimit": 0, "compact": true]))
                 .queue(queue)

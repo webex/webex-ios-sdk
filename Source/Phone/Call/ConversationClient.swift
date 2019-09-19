@@ -29,15 +29,10 @@ class ConversationClient {
         self.authenticator = authenticator
     }
     
-    private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(authenticator).keyPath("conversation")
-    }
-    
     func getLocusUrl(conversation: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<ConversationLocusModel>) -> Void) {
-        let request = requestBuilder()
+        let request = ServiceRequest.Builder(authenticator, service: .conv, device: device)
             .method(.get)
-            .baseUrl(device.conversationServiceUrl)
-            .path("conversations/\(conversation)/locus")
+            .path("conversations").path(conversation).path("locus")
             .keyPath("")
             .queue(queue)
             .build()

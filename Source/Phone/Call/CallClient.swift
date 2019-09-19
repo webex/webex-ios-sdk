@@ -114,10 +114,6 @@ class CallClient {
         self.authenticator = authenticator
     }
     
-    private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(authenticator)
-    }
-    
     private func body(deviceUrl: URL, json: [String:Any?] = [:]) -> RequestParameter {
         var result = json
         result["deviceUrl"] = deviceUrl.absoluteString
@@ -160,10 +156,9 @@ class CallClient {
         var json = convertToJson(mediaInfo: localMedia)
         json["invitee"] = ["address" : toAddress]
 
-        let request = requestBuilder()
+        let request = ServiceRequest.Builder(authenticator, service: .locus, device: device)
             .method(.post)
-            .baseUrl(device.locusServiceUrl)
-            .path("loci/call")
+            .path("loci").path("call")
             .body(body(device: device, json: json))
             .queue(queue)
             .build()
@@ -173,9 +168,8 @@ class CallClient {
     
     func join(_ callUrl: String, by device: Device, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
         let json = convertToJson(mediaInfo: localMedia)
-        let request = requestBuilder()
+        let request = ServiceRequest.Builder(authenticator, endpoint: callUrl)
             .method(.post)
-            .baseUrl(callUrl)
             .path("participant")
             .body(body(device: device, json: json))
             .queue(queue)
@@ -185,9 +179,8 @@ class CallClient {
     }
     
     func leave(_ participantUrl: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
-        let request = requestBuilder()
+        let request = ServiceRequest.Builder(authenticator, endpoint: participantUrl)
             .method(.put)
-            .baseUrl(participantUrl)
             .path("leave")
             .body(body(deviceUrl: device.deviceUrl))
             .queue(queue)
@@ -197,12 +190,11 @@ class CallClient {
     }
     
     func decline(_ callUrl: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
-        let request = requestBuilder()
+        let request = ServiceRequest.Builder(authenticator, endpoint: callUrl)
             .method(.put)
-            .baseUrl(callUrl)
-            .keyPath("locus")
+            .path("participant").path("decline")
             .body(body(deviceUrl: device.deviceUrl))
-            .path("participant/decline")
+            .keyPath("locus")
             .queue(queue)
             .build()
         
@@ -210,12 +202,11 @@ class CallClient {
     }
 
     func alert(_ callUrl: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
-        let request = requestBuilder()
+        let request = ServiceRequest.Builder(authenticator, endpoint: callUrl)
             .method(.put)
-            .baseUrl(callUrl)
-            .keyPath("locus")
+            .path("participant").path("alert")
             .body(body(deviceUrl: device.deviceUrl))
-            .path("participant/alert")
+            .keyPath("locus")
             .queue(queue)
             .build()
     
@@ -234,12 +225,11 @@ class CallClient {
         }
         let json: [String: Any] = ["dtmf" : dtmfInfo]
         
-        let request = requestBuilder()
+        let request = ServiceRequest.Builder(authenticator, endpoint: participantUrl)
             .method(.post)
-            .baseUrl(participantUrl)
-            .keyPath("locus")
-            .body(body(deviceUrl: device.deviceUrl, json: json))
             .path("sendDtmf")
+            .body(body(deviceUrl: device.deviceUrl, json: json))
+            .keyPath("locus")
             .queue(queue)
             .build()
         
@@ -248,9 +238,8 @@ class CallClient {
     
     func update(_ mediaUrl: String,by mediaID: String, by device: Device, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
         let json = convertToJson(mediaID,mediaInfo: localMedia)
-        let request = requestBuilder()
+        let request = ServiceRequest.Builder(authenticator, endpoint: mediaUrl)
             .method(.put)
-            .baseUrl(mediaUrl)
             .body(body(deviceUrl: device.deviceUrl, json: json))
             .queue(queue)
             .build()
@@ -259,10 +248,8 @@ class CallClient {
     }
     
     func fetch(_ callUrl: String, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
-        let request = requestBuilder()
-            .method(.get)
+        let request = ServiceRequest.Builder(authenticator, endpoint: callUrl)
             .keyPath("locus")
-            .baseUrl(callUrl)
             .queue(queue)
             .build()
         
@@ -270,9 +257,7 @@ class CallClient {
     }
     
     func fetch(by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<[CallModel]>) -> Void) {
-        let request = requestBuilder()
-            .method(.get)
-            .baseUrl(device.locusServiceUrl)
+        let request = ServiceRequest.Builder(authenticator, service: .locus, device: device)
             .path("loci")
             .keyPath("loci")
             .queue(queue)
@@ -289,11 +274,10 @@ class CallClient {
                                                           "devices": ["url": device.deviceUrl.absoluteString] as Any]]
         mediaShareUpdateParam = ["floor": floorParam]
         let body = RequestParameter(mediaShareUpdateParam)
-        let request = requestBuilder()
+        let request = ServiceRequest.Builder(authenticator, endpoint: mediaShareUrl)
             .method(.put)
-            .keyPath("locus")
-            .baseUrl(mediaShareUrl)
             .body(body)
+            .keyPath("locus")
             .queue(queue)
             .build()
             
