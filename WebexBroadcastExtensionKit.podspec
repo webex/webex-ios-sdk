@@ -12,4 +12,5 @@ Pod::Spec.new do |s|
   s.xcconfig = {'FRAMEWORK_SEARCH_PATHS' => '$(PODS_ROOT)/WebexBroadcastExtensionKit/Frameworks',
                 'ENABLE_BITCODE' => 'NO',
                 }
+  s.swift_version = '5.0'                
 end

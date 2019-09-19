@@ -162,7 +162,7 @@ class WebSocketService: WebSocketAdvancedDelegate {
                 else if eventType == "conversation.activity" {
                     if let activityObj = eventData["activity"].object as? [String: Any],
                         let verb = activityObj["verb"] as? String, ActivityModel.Verb.isSupported(verb) {
-                        if let activity = try? Mapper<ActivityModel>().map(JSON: activityObj) {
+                        if let activity = Mapper<ActivityModel>().map(JSON: activityObj) {
                             self.onEvent?(MercuryEvent.recvActivity(activity))
                         }
                     } 
