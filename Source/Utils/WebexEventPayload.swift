@@ -9,6 +9,15 @@ import Foundation
 
 
 public protocol WebexEventData {
+    
+    /// explained by respective event data
+    var id:String? { get set }
+    
+    /// the date when the activity published
+    var created:Date? { get set }
+    
+    /// group or direct
+    var roomType:String? { get set }
 }
 
 public struct WebexEventPayload {
@@ -54,7 +63,7 @@ public struct WebexMembershipData:WebexEventData {
     /// mixture id
     public var id: String?
     
-    /// the date when the behaviour occured
+    /// the date when the activity published
     public var created: Date?
     
     /// default is false
@@ -92,7 +101,7 @@ public struct WebexMembershipData:WebexEventData {
             self.personDisplayName = activity.actorDisplayName
             self.personEmail = activity.actorEmail
             self.lastSeenId = activity.objectId
-        }else { // add, leave and update
+        }else { // add, leave, assignModerator and unassignModerator
             self.personId = activity.objectId
             self.personOrgId = activity.objectOrgId
             self.personDisplayName = activity.objectDisplayName
@@ -100,5 +109,41 @@ public struct WebexMembershipData:WebexEventData {
             self.isModerator = activity.isModerator
         }
     }
+}
+
+public struct WebexSpaceData: WebexEventData {
     
+    /// the id of the space
+    public var id:String?
+    
+    /// the date when the activity published
+    public var created: Date?
+    
+    /// the type of the space
+    public var roomType:String?
+    
+    /// the id of the person who created the space
+    public var creatorId:String?
+    
+    /// Indicate if this space is locked
+    public var isLocked:Bool?
+    
+    /// the last activity date of the space, but it is nil for updating space at present
+    public var lastActivity:Date?
+    
+    init(activity:ActivityModel) {
+        self.created = activity.created
+        if activity.kind == ActivityModel.Kind.create {
+            self.id = activity.objectId
+            self.roomType = (activity.objectTag ?? SpaceType.group).rawValue
+            self.isLocked = activity.objectLocked
+            self.creatorId = activity.actorId
+            self.lastActivity = activity.created
+        }
+        else if activity.kind == ActivityModel.Kind.update {
+            self.id = activity.targetId
+            self.roomType = (activity.targetTag ?? SpaceType.group).rawValue
+            self.isLocked = activity.targetLocked
+        }
+    }
 }

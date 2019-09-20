@@ -128,6 +128,7 @@ public class Phone {
     let metrics: MetricsEngine
     private(set) var messages: MessageClientImpl?
     private(set) var members: MembershipClient
+    private(set) var spaces: SpaceClient
     private var me:Person?
     
     private let devices: DeviceService
@@ -168,6 +169,7 @@ public class Phone {
         self.prompter = prompter
         self.webSocket = webSocket
         self.members = MembershipClient(authenticator: authenticator)
+        self.spaces = SpaceClient(authenticator: authenticator)
         self.getMe()
         self.webSocket.onEvent = { [weak self] event in
             if let strong = self {
@@ -805,8 +807,12 @@ public class Phone {
             if let messages = self.messages {
                 messages.handle(activity: model)
             }
-        case .acknowledge, .add, .leave, .update:
+        case .acknowledge, .add, .leave, .assignModerator, .unassignModerator:
             members.handle(activity: model, payload:payload)
+            
+        case .create, .update:
+            spaces.handle(activity: model, payload: payload)
+ 
         default:
             SDKLogger.shared.error("Not a valid message \(model.id ?? (model.toJSONString() ?? ""))")
         }

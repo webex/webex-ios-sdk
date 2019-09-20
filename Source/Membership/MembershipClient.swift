@@ -19,11 +19,16 @@
 // THE SOFTWARE.
 
 import Foundation
+import ObjectMapper
 
 /// An iOS client wrapper of the Cisco Webex [Space Memberships REST API](https://developer.webex.com/resource-memberships.html) .
 ///
 /// - since: 1.2.0
 public class MembershipClient {
+    
+    class MemberError {
+        static let participantFetchFail = WebexError.serviceFailed(code: -7000, reason: "participants info Fetch Fail")
+    }
     
     /// The callback handler when receiving a memberShip event.
     /// - since: 2.2.0
@@ -206,6 +211,55 @@ public class MembershipClient {
         
         request.responseJSON(completionHandler)
     }
+}
+
+// MARK: - Conversation Api
+extension MembershipClient {
+    private func conversationBuilder() -> ServiceRequest.Builder {
+        return ServiceRequest.Builder(self.authenticator)
+            .baseUrl(ServiceRequest.conversationServerAddress).path("conversations")
+    }
+    
+    /// return a list of memberships with details about the lastSeenId for each user, allowing a client to indicate "read status" in a space GUI
+    ///
+    /// - parameter spaceId: The identifier of the space.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the delete request has finished.
+    /// - returns: Void
+    /// - since: 2.2.0
+    public func listWithReadStatus(spaceId:String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[MembershipReadStatus]>) -> Void) {
+        let request = conversationBuilder()
+            .method(.get)
+            .path(spaceId.locusFormat)
+            .query(RequestParameter(forConversation: ["participantAckFilter":"all"]))
+            .queue(queue)
+            .build()
+        
+        request.responseJSON { (response: ServiceResponse<Any>) in
+            switch response.result {
+            case .success(let json):
+                guard let dict = json as? [String: Any],
+                    let items = (dict["participants"] as? [String: Any])?["items"] as? [[String: Any]]
+                    else {
+                    completionHandler(ServiceResponse(response.response, Result.failure(MemberError.participantFetchFail)))
+                    return
+                }
+                
+                var readStatuses = [MembershipReadStatus]()
+                let context = MembershipReadStatus.Context(spaceId: dict["id"] as? String)
+                items.forEach({ (item) in
+                    if let readStatus = MembershipReadStatus(JSON: item, context: context) {
+                        readStatuses.append(readStatus)
+                    }
+                })
+                
+                completionHandler(ServiceResponse(response.response, Result.success(readStatuses)))
+                
+            case .failure(let error):
+                completionHandler(ServiceResponse(response.response, Result.failure(error)))
+            }
+        }
+    }
     
 }
 
@@ -232,7 +286,7 @@ extension MembershipClient {
         case .leave:
             eventPayload.event = Event.EventType.deleted
             self.onEvent?(MembershipEvent.leave(eventPayload))
-        case .update:
+        case .assignModerator, .unassignModerator:
             eventPayload.event = Event.EventType.updated
             self.onEvent?(MembershipEvent.update(eventPayload))
         default:

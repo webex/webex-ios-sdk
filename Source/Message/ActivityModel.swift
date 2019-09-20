@@ -33,7 +33,10 @@ struct ActivityModel {
         case updateKey
         case add
         case leave
+        case assignModerator
+        case unassignModerator
         case update
+        case create
     }
     
     private(set) var id: String?
@@ -46,6 +49,7 @@ struct ActivityModel {
     
     private(set) var targetId: String?
     private(set) var targetTag: SpaceType?
+    private(set) var targetLocked: Bool?
     
     private(set) var actorId: String?
     private(set) var actorEmail: String?
@@ -53,6 +57,8 @@ struct ActivityModel {
     private(set) var actorOrgId: String?
     
     private(set) var objectId: String?
+    private(set) var objectTag: SpaceType?
+    private(set) var objectLocked: Bool?
     private(set) var objectEmail: String?
     private(set) var objectOrgId: String?
     private(set) var objectDisplayName: String?
@@ -80,6 +86,7 @@ extension ActivityModel : ImmutableMappable {
         self.actorOrgId = try? map.value("actor.orgId", using: IdentityTransform(for: IdentityType.organization))
         self.targetId = try? map.value("target.id", using: IdentityTransform(for: IdentityType.room))
         self.targetTag = try? map.value("target.tags", using: SpaceTypeTransform())
+        self.targetLocked = try? map.value("target.tags", using: LockedTransform())
         self.clientTempId = try? map.value("clientTempId")
         if let text: String = try? map.value("object.displayName") {
             self.objectDisplayName = text
@@ -106,25 +113,26 @@ extension ActivityModel : ImmutableMappable {
         self.objectId = try? map.value("object.id", using: IdentityTransform(for: IdentityType.message))
         self.objectEmail = try? map.value("object.emailAddress")
         self.objectOrgId = try? map.value("object.orgId", using: IdentityTransform(for: IdentityType.organization))
+        self.objectTag = try? map.value("object.tags", using: SpaceTypeTransform())
+        self.objectLocked = try? map.value("object.tags", using: LockedTransform())
         
         let tid:String? = try? map.value("target.id")
         if self.kind == Kind.acknowledge {
             let aid:String? = try? map.value("actor.entryUUID")
             self.dataId = "\(aid ?? ""):\(tid ?? "")".hydraFormat(for: IdentityType.membership)
         }
-        else if self.kind == Kind.add || self.kind == Kind.leave || self.kind == Kind.update {
+        else if self.kind == Kind.add || self.kind == Kind.leave || self.kind == Kind.assignModerator || self.kind == Kind.unassignModerator {
             let oid:String? = try? map.value("object.entryUUID")
             self.dataId = "\(oid ?? ""):\(tid ?? "")".hydraFormat(for: IdentityType.membership)
             self.objectId = try? map.value("object.entryUUID", using: IdentityTransform(for: IdentityType.people))
         }
         
-        if self.kind == ActivityModel.Kind.update {
-            if let moderator:String = try? map.value("object.roomProperties.isModerator") {
-                self.isModerator = moderator == "true" ? true : false
-            }else {
-                self.isModerator = false
-            }
+        if let moderator:String = try? map.value("object.roomProperties.isModerator") {
+            self.isModerator = moderator == "true" ? true : false
+        }else {
+            self.isModerator = false
         }
+        
         
     }
     
@@ -138,6 +146,7 @@ extension ActivityModel : ImmutableMappable {
         self.kind >>> (map["verb"], VerbTransform())
         self.targetTag >>> (map["roomType"], SpaceTypeTransform())
         self.targetTag >>> (map["spaceType"], SpaceTypeTransform())
+        self.targetLocked >>> (map["isLocked"], LockedTransform())
         self.toPersonId >>> map["toPersonId"]
         self.toPersonEmail >>> map["toPersonEmail"]
         self.objectDisplayName >>> map["text"]
@@ -148,6 +157,8 @@ extension ActivityModel : ImmutableMappable {
         self.mentionedGroup >>> map["mentionedGroup"]
         self.files >>> map["files"]
         self.objectId >>> map["objectId"]
+        self.objectTag >>> (map["spaceType"], SpaceTypeTransform())
+        self.objectLocked >>> (map["isLocked"], LockedTransform())
         self.objectEmail >>> map["objectEmail"]
         self.objectOrgId >>> map["objectOrgId"]
         self.dataId >>> map["dataId"]
@@ -233,9 +244,6 @@ private class VerbTransform : TransformType {
     
     func transformFromJSON(_ value: Any?) -> ActivityModel.Kind? {
         if let verb = value as? String {
-            if verb == Event.Verb.assignModerator || verb == Event.Verb.unassignModerator {
-                return ActivityModel.Kind(rawValue: Event.Verb.update)
-            }
             return ActivityModel.Kind(rawValue: verb)
         }
         return nil
@@ -263,5 +271,22 @@ class SpaceTypeTransform : TransformType {
             return "ONE_ON_ONE"
         }
         return nil
+    }
+}
+
+class LockedTransform : TransformType {
+    
+    func transformFromJSON(_ value: Any?) -> Bool? {
+        if let tags = value as? [String], tags.contains("LOCKED") {
+            return true
+        }
+        return false
+    }
+    
+    func transformToJSON(_ value: Bool?) -> String? {
+        if let value = value, value == true {
+            return "LOCKED"
+        }
+        return "UNLOCKED"
     }
 }

@@ -130,7 +130,7 @@ public class Webex {
     /// - see: Memberships API about how to manage people in a space.
     /// - see: Messages API about how post or otherwise manage the content in a space.
     public var spaces: SpaceClient {
-        return SpaceClient(authenticator: authenticator)
+        return self.phone.spaces
     }
     
     /// People are registered users of Cisco Webex.
