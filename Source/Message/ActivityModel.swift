@@ -136,12 +136,7 @@ extension ActivityModel : ImmutableMappable {
             self.dataId = "\(oid ?? ""):\(tid ?? "")".hydraFormat(for: IdentityType.membership)
             self.objectId = try? map.value("object.entryUUID", using: IdentityTransform(for: IdentityType.people))
         }
-        if let moderator:String = try? map.value("object.roomProperties.isModerator") {
-            self.isModerator = moderator == "true" ? true : false
-        } else {
-            self.isModerator = false
-        }
-        
+        self.isModerator = try? map.value("object.roomProperties.isModerator", using: StringAndBoolTransform())
     }
     
     /// Mapping activity model to json format.

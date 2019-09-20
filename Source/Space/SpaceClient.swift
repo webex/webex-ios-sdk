@@ -241,7 +241,7 @@ extension SpaceClient {
 
 extension RequestParameter {
     
-    fileprivate init(forConversation parameters: [String: Any?] = [:]) {
+    init(forConversation parameters: [String: Any?] = [:]) {
         var defaultParams:[String: Any?] = ["uuidEntryFormat":true,
                                             "personRefresh":true,
                                             "activitiesLimit":0,

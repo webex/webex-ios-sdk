@@ -116,3 +116,41 @@ extension Membership : Mappable {
         personOrgId <- map["personOrgId"]
     }
 }
+
+public struct MembershipReadStatus: ImmutableMappable {
+    
+    struct Context: MapContext {
+        var spaceId:String?
+    }
+    
+    /// the membership of the space
+    public var member: Membership = Membership()
+    
+    /// the id of the last message which the member have seen
+    public var lastSeenId: String?
+    
+    /// the published date of the last message that the member have seen
+    public var lastSeenDate: Date?
+    
+    public init(map: Map) throws {
+        let entryUUID:String? = try? map.value("entryUUID")
+        if let context = map.context as? Context, let spaceId = context.spaceId {
+            self.member.id = "\(entryUUID ?? ""):\(spaceId)".hydraFormat(for: .membership)
+            self.member.spaceId = spaceId.hydraFormat(for: .room)
+        }
+        self.member.personId = entryUUID?.hydraFormat(for: .people)
+        self.member.personEmail = EmailAddress.fromString(try? map.value("emailAddress"))
+        self.member.personDisplayName = try? map.value("displayName")
+        self.member.personOrgId = try? map.value("orgId", using:IdentityTransform(for: .organization))
+        self.member.isModerator = try? map.value("roomProperties.isModerator", using: StringAndBoolTransform())
+        self.lastSeenId = try? map.value("roomProperties.lastSeenActivityUUID", using:IdentityTransform(for: .message))
+        self.lastSeenDate = try? map.value("roomProperties.lastSeenActivityDate", using:CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
+    }
+    
+    public mutating func mapping(map: Map) {
+        self.member >>> map["member"]
+        self.lastSeenId >>> map["lastSeenId"]
+        self.lastSeenDate?.longString >>> map["lastSeenDate"]
+    }
+    
+}

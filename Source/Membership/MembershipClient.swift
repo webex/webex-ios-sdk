@@ -42,6 +42,10 @@ public class MembershipClient {
         return ServiceRequest.Builder(self.phone.authenticator, service: .hydra, device: phone.devices.device).path("memberships")
     }
     
+    private func convRequestBuilder() -> ServiceRequest.Builder {
+        return ServiceRequest.Builder(self.phone.authenticator, service: .conv, device: phone.devices.device).path("conversations")
+    }
+    
     /// Lists all space memberships where the authenticated user belongs.
     ///
     /// - parameter max: The maximum number of items in the response.
@@ -208,6 +212,42 @@ public class MembershipClient {
             .build()
         
         request.responseJSON(completionHandler)
+    }
+    
+    /// Return a list of memberships with details about the lastSeenId for each user, allowing a client to indicate "read status" in a space GUI
+    ///
+    /// - parameter spaceId: The identifier of the space.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the delete request has finished.
+    /// - returns: Void
+    /// - since: 2.2.0
+    public func listWithReadStatus(spaceId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[MembershipReadStatus]>) -> Void) {
+        let request = convRequestBuilder()
+            .path(spaceId.locusFormat)
+            .query(RequestParameter(forConversation: ["participantAckFilter":"all"]))
+            .queue(queue)
+            .build()
+        
+        request.responseJSON { (response: ServiceResponse<Any>) in
+            switch response.result {
+            case .success(let json):
+                guard let dict = json as? [String: Any],
+                    let items = (dict["participants"] as? [String: Any])?["items"] as? [[String: Any]] else {
+                    completionHandler(ServiceResponse(response.response, Result.failure(WebexError.serviceFailed(code: -7000, reason: "participants info Fetch Fail"))))
+                    return
+                }
+                var readStatuses = [MembershipReadStatus]()
+                let context = MembershipReadStatus.Context(spaceId: dict["id"] as? String)
+                items.forEach({ (item) in
+                    if let readStatus = MembershipReadStatus(JSON: item, context: context) {
+                        readStatuses.append(readStatus)
+                    }
+                })
+                completionHandler(ServiceResponse(response.response, Result.success(readStatuses)))
+            case .failure(let error):
+                completionHandler(ServiceResponse(response.response, Result.failure(error)))
+            }
+        }
     }
 }
 
