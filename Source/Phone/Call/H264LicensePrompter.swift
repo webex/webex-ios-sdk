@@ -76,7 +76,7 @@ class H264LicensePrompter {
                 SDKLogger.shared.info("Video license opened for viewing")
                 completionHandler(false)
                 if let url = URL(string: "http://www.openh264.org/BINARY_LICENSE.txt") {
-                UIApplication.shared.open(url, options:[:], completionHandler: nil)
+                UIApplication.shared.open(url, options:convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
                 }
                 })
                 alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { _ in
@@ -95,4 +95,9 @@ class H264LicensePrompter {
     func reset() {
         UserDefaults.sharedInstance.resetVideoLicenseActivation()
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

@@ -363,11 +363,11 @@ extension MediaSessionWrapper : BroadcastConnectionServerDelegate {
 }
 
 internal extension MediaSessionWrapper {
-    internal func getMediaSession() -> MediaSession {
+    func getMediaSession() -> MediaSession {
             return self.mediaSession
     }
     
-    internal func setMediaSession(mediaSession:MediaSession) {
+    func setMediaSession(mediaSession:MediaSession) {
         self.mediaSession = mediaSession
     }
 }

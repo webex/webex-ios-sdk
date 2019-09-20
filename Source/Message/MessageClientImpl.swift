@@ -407,7 +407,7 @@ class MessageClientImpl {
     }
     
     private func handleEphemeralKeyRequest(request: (KmsEphemeralKeyRequest, (Error?) -> Void), response: String) {
-        if let key = try? KmsEphemeralKeyResponse(responseMessage: response, request: request.0).jwkEphemeralKey {
+        if let key = ((try? KmsEphemeralKeyResponse(responseMessage: response, request: request.0).jwkEphemeralKey) as String??) {
             self.ephemeralKey = key
             request.1(nil)
         }

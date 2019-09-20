@@ -25,7 +25,7 @@ public extension Call {
     /// This must be called on [provider:didActivateAudioSession:](https://developer.apple.com/documentation/callkit/cxproviderdelegate/1833280-provider) to reactivate the audio session.
     ///
     /// - since: 1.3.0
-    public func updateAudioSession() {
+    func updateAudioSession() {
         self.mediaSession.restartAudio()
     }
 }

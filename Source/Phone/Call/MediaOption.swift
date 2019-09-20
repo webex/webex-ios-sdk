@@ -100,7 +100,7 @@ public extension MediaOption {
     /// A local unique identifier of a media options.
     ///
     /// - since: 1.2.0
-    public var uuid: UUID? {
+    var uuid: UUID? {
         get {
             return self._uuid
         }
