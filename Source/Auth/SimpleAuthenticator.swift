@@ -21,11 +21,7 @@
 import Foundation
 
 class SimpleAuthenticator : Authenticator {
-    
-    static func empty() -> Authenticator {
-        return SimpleAuthenticator(possibleAccessToken: nil)
-    }
-    
+        
     private var accessToken: String?
     
     var authorized: Bool {

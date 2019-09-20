@@ -117,14 +117,14 @@ class CallClient {
     private func body(deviceUrl: URL, json: [String:Any?] = [:]) -> RequestParameter {
         var result = json
         result["deviceUrl"] = deviceUrl.absoluteString
-        result["respOnlySdp"] = ServiceRequest.locusResponseOnlySdp
+        result["respOnlySdp"] = true //coreFeatures.isResponseOnlySdpEnabled()
         return RequestParameter(result)
     }
 
     private func body(device: Device, json: [String:Any?] = [:]) -> RequestParameter {
         var result = json
         result["device"] = ["url":device.deviceUrl.absoluteString, "deviceType":device.deviceType, "regionCode":device.countryCode, "countryCode":device.regionCode]
-        result["respOnlySdp"] = ServiceRequest.locusResponseOnlySdp
+        result["respOnlySdp"] = true //coreFeatures.isResponseOnlySdpEnabled()
         return RequestParameter(result)
     }
     

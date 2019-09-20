@@ -88,8 +88,6 @@ enum Service: String {
 
 class ServiceRequest : RequestRetrier, RequestAdapter {
     
-    static let locusResponseOnlySdp: Bool = true
-    
     private let tokenPrefix: String = "Bearer "
     private var pendingTimeCount : Int = 0
     private let url: URL
