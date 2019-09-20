@@ -25,6 +25,10 @@ import Foundation
 /// - since: 1.2.0
 public class MembershipClient {
     
+    /// The callback handler when receiving a memberShip event.
+    /// - since: 2.2.0
+    public var onEvent: ((MembershipEvent) -> Void)?
+    
     let authenticator: Authenticator
     init(authenticator: Authenticator) {
         self.authenticator = authenticator
@@ -202,4 +206,38 @@ public class MembershipClient {
         
         request.responseJSON(completionHandler)
     }
+    
+}
+
+// MARK: handle conversation membership event
+extension MembershipClient {
+    
+    func handle(activity: ActivityModel, payload:WebexEventPayload) {
+        guard let kind = activity.kind else {
+            return
+        }
+        var eventPayload = payload
+        let data = WebexMembershipData(activity: activity)
+        eventPayload.data = data
+        eventPayload.actorId = activity.actorId
+        eventPayload.resource = Event.Resource.memberships
+        
+        switch kind {
+        case .acknowledge:
+            eventPayload.event = Event.EventType.seen
+            self.onEvent?(MembershipEvent.seen(eventPayload))
+        case .add:
+            eventPayload.event = Event.EventType.created
+            self.onEvent?(MembershipEvent.add(eventPayload))
+        case .leave:
+            eventPayload.event = Event.EventType.deleted
+            self.onEvent?(MembershipEvent.leave(eventPayload))
+        case .update:
+            eventPayload.event = Event.EventType.updated
+            self.onEvent?(MembershipEvent.update(eventPayload))
+        default:
+            break
+        }
+    }
+    
 }

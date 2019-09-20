@@ -21,6 +21,7 @@
 import Foundation
 import ObjectMapper
 
+
 struct ActivityModel {
     
     enum Kind : String {
@@ -30,23 +31,37 @@ struct ActivityModel {
         case tombstone
         case acknowledge
         case updateKey
+        case add
+        case leave
+        case update
     }
     
     private(set) var id: String?
-    private(set) var spaceId: String?
-    private(set) var spaceType: SpaceType?
+    private(set) var clientTempId: String?
+    private(set) var kind: ActivityModel.Kind?
+    private(set) var created: Date?
+    private(set) var encryptionKeyUrl: String?
     var toPersonId: String?
     private(set) var toPersonEmail: String?
-    private(set) var text: String?
-    private(set) var personId: String?
-    private(set) var personEmail: String?
-    private(set) var created: Date?
+    
+    private(set) var targetId: String?
+    private(set) var targetTag: SpaceType?
+    
+    private(set) var actorId: String?
+    private(set) var actorEmail: String?
+    private(set) var actorDisplayName: String?
+    private(set) var actorOrgId: String?
+    
+    private(set) var objectId: String?
+    private(set) var objectEmail: String?
+    private(set) var objectOrgId: String?
+    private(set) var objectDisplayName: String?
     private(set) var mentionedPeople: [String]?
     private(set) var mentionedGroup: [String]?
     private(set) var files : [RemoteFile]?
-    private(set) var encryptionKeyUrl: String?
-    private(set) var kind: ActivityModel.Kind?
-    private(set) var clientTempId: String?
+    
+    private(set) var dataId:String?
+    private(set) var isModerator:Bool?
 }
 
 extension ActivityModel : ImmutableMappable {
@@ -59,16 +74,18 @@ extension ActivityModel : ImmutableMappable {
         self.created = try? map.value("published", using: CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
         self.encryptionKeyUrl = try? map.value("encryptionKeyUrl")
         self.kind = try? map.value("verb", using: VerbTransform())
-        self.personId = try? map.value("actor.entryUUID", using: IdentityTransform(for: IdentityType.people))
-        self.personEmail = try? map.value("actor.emailAddress")
-        self.spaceId = try? map.value("target.id", using: IdentityTransform(for: IdentityType.room))
-        self.spaceType = try? map.value("target.tags", using: SpaceTypeTransform())
+        self.actorId = try? map.value("actor.entryUUID", using: IdentityTransform(for: IdentityType.people))
+        self.actorEmail = try? map.value("actor.emailAddress")
+        self.actorDisplayName = try? map.value("actor.displayName")
+        self.actorOrgId = try? map.value("actor.orgId", using: IdentityTransform(for: IdentityType.organization))
+        self.targetId = try? map.value("target.id", using: IdentityTransform(for: IdentityType.room))
+        self.targetTag = try? map.value("target.tags", using: SpaceTypeTransform())
         self.clientTempId = try? map.value("clientTempId")
         if let text: String = try? map.value("object.displayName") {
-            self.text = text
+            self.objectDisplayName = text
         }
         if let text: String = try? map.value("object.content") {
-            self.text = text
+            self.objectDisplayName = text
         }
         if let groupItems: [[String: Any]] = try? map.value("object.groupMentions.items"), groupItems.count > 0 {
             self.mentionedGroup = groupItems.compactMap { value in
@@ -85,6 +102,30 @@ extension ActivityModel : ImmutableMappable {
                 return Mapper<RemoteFile>().map(JSON: value)
             }
         }
+        
+        self.objectId = try? map.value("object.id", using: IdentityTransform(for: IdentityType.message))
+        self.objectEmail = try? map.value("object.emailAddress")
+        self.objectOrgId = try? map.value("object.orgId", using: IdentityTransform(for: IdentityType.organization))
+        
+        let tid:String? = try? map.value("target.id")
+        if self.kind == Kind.acknowledge {
+            let aid:String? = try? map.value("actor.entryUUID")
+            self.dataId = "\(aid ?? ""):\(tid ?? "")".hydraFormat(for: IdentityType.membership)
+        }
+        else if self.kind == Kind.add || self.kind == Kind.leave || self.kind == Kind.update {
+            let oid:String? = try? map.value("object.entryUUID")
+            self.dataId = "\(oid ?? ""):\(tid ?? "")".hydraFormat(for: IdentityType.membership)
+            self.objectId = try? map.value("object.entryUUID", using: IdentityTransform(for: IdentityType.people))
+        }
+        
+        if self.kind == ActivityModel.Kind.update {
+            if let moderator:String = try? map.value("object.roomProperties.isModerator") {
+                self.isModerator = moderator == "true" ? true : false
+            }else {
+                self.isModerator = false
+            }
+        }
+        
     }
     
     /// Mapping activity model to json format.
@@ -92,27 +133,32 @@ extension ActivityModel : ImmutableMappable {
     /// - note: for internal use only.
     public func mapping(map: Map) {
         self.id >>> map["id"]
-        self.spaceId >>> map["roomId"]
-        self.spaceId >>> map["spaceId"]
+        self.targetId >>> map["roomId"]
+        self.targetId >>> map["spaceId"]
         self.kind >>> (map["verb"], VerbTransform())
-        self.spaceType >>> (map["roomType"], SpaceTypeTransform())
-        self.spaceType >>> (map["spaceType"], SpaceTypeTransform())
+        self.targetTag >>> (map["roomType"], SpaceTypeTransform())
+        self.targetTag >>> (map["spaceType"], SpaceTypeTransform())
         self.toPersonId >>> map["toPersonId"]
         self.toPersonEmail >>> map["toPersonEmail"]
-        self.text >>> map["text"]
-        self.personId >>> map["personId"]
-        self.personEmail >>> map["personEmail"]
+        self.objectDisplayName >>> map["text"]
+        self.actorId >>> map["actorId"]
+        self.actorEmail >>> map["actorEmail"]
         self.created?.longString >>> map["created"]
         self.mentionedPeople >>> map["mentionedPeople"]
         self.mentionedGroup >>> map["mentionedGroup"]
         self.files >>> map["files"]
+        self.objectId >>> map["objectId"]
+        self.objectEmail >>> map["objectEmail"]
+        self.objectOrgId >>> map["objectOrgId"]
+        self.dataId >>> map["dataId"]
+        self.isModerator >>> map["isModerator"]
     }
 }
 
 extension ActivityModel {
     func decrypt(key: String?) -> ActivityModel {
         var activity = self
-        activity.text = activity.text?.decrypt(key: key)
+        activity.objectDisplayName = activity.objectDisplayName?.decrypt(key: key)
         activity.files = activity.files?.map { f in
             var file = f
             file.decrypt(key: key)
@@ -128,6 +174,10 @@ enum IdentityType : String {
     case room
     case people
     case message
+    case membership
+    case organization
+    case content
+    case team
 }
 
 extension String {
@@ -162,7 +212,7 @@ extension String {
     }
 }
 
-private class IdentityTransform : TransformType {
+class IdentityTransform : TransformType {
     
     private var identityType: IdentityType
     
@@ -183,6 +233,9 @@ private class VerbTransform : TransformType {
     
     func transformFromJSON(_ value: Any?) -> ActivityModel.Kind? {
         if let verb = value as? String {
+            if verb == Event.Verb.assignModerator || verb == Event.Verb.unassignModerator {
+                return ActivityModel.Kind(rawValue: Event.Verb.update)
+            }
             return ActivityModel.Kind(rawValue: verb)
         }
         return nil
@@ -196,7 +249,7 @@ private class VerbTransform : TransformType {
     }
 }
 
-private class SpaceTypeTransform : TransformType {
+class SpaceTypeTransform : TransformType {
     
     func transformFromJSON(_ value: Any?) -> SpaceType? {
         if let tags = value as? [String], tags.contains("ONE_ON_ONE") {

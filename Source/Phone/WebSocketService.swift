@@ -162,11 +162,11 @@ class WebSocketService: WebSocketAdvancedDelegate {
                 else if eventType == "conversation.activity" {
                     if let activityObj = eventData["activity"].object as? [String: Any],
                         let verb = activityObj["verb"] as? String,
-                        verb == "post" || verb == "share" || verb == "delete" {
+                        Event.Verb.isContained(verb) == true {
                         if let activity = try? Mapper<ActivityModel>().map(JSON: activityObj) {
                             self.onEvent?(MercuryEvent.recvActivity(activity))
                         }
-                    }
+                    } 
                 }
                 else if eventType == "encryption.kms_message" {
                     if let kmsObj = eventData["encryption"].object as? [String: Any],

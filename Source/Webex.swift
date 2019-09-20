@@ -150,7 +150,7 @@ public class Webex {
     /// - see: Spaces API about how to manage spaces.
     /// - see: Messages API about how post or otherwise manage the content in a space.
     public var memberships: MembershipClient {
-        return MembershipClient(authenticator: authenticator)
+        return self.phone.members
     }
 
     

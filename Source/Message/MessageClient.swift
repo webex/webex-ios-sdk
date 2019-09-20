@@ -236,6 +236,47 @@ public class MessageClient {
         }
     }
     
+    /// Send read receipt when the login user read a message, let others know you have seen it
+    ///
+    /// - parameter spaceId: The identifier of the space where the message is.
+    /// - parameter messageId: The identifier of the message which user read.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the delete readReceipt has finished.
+    /// - returns: Void
+    /// - since: 2.2.0
+    public func markAsRead(spaceId:String, messageId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        self.doSomethingAfterRegistered { error in
+            if let impl = self.phone.messages {
+                impl.markAsRead(spaceId: spaceId, messageId: messageId, queue: queue, completionHandler: completionHandler)
+            }
+            else {
+                (queue ?? DispatchQueue.main).async {
+                    completionHandler(ServiceResponse(nil, Result.failure(error ?? WebexError.unregistered)))
+                }
+            }
+        }
+    }
+    
+    /// Send read receipt when the login user read all the messages in the space, let others know you have seen them
+    ///
+    /// - parameter messageId: The identifier of the space.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the delete readReceipt has finished.
+    /// - returns: Void
+    /// - since: 2.2.0
+    public func markAsRead(spaceId:String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        self.doSomethingAfterRegistered { error in
+            if let impl = self.phone.messages {
+                impl.markAsRead(spaceId: spaceId, queue: queue, completionHandler: completionHandler)
+            }
+            else {
+                (queue ?? DispatchQueue.main).async {
+                    completionHandler(ServiceResponse(nil, Result.failure(error ?? WebexError.unregistered)))
+                }
+            }
+        }
+    }
+    
     /// Download a file attachement to the specified local directory.
     ///
     /// - parameter file: The RemoteFile object need to be downloaded. Use `Message.remoteFiles` to get the references.

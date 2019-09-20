@@ -128,4 +128,87 @@ public class SpaceClient {
         
         request.responseJSON(completionHandler)
     }
+    
+    /// Shows Webex meeting details for a room such as the SIP address, meeting URL, toll-free and toll dial-in numbers.
+    ///
+    /// - parameter spaceId: The identifier of the space.
+    /// - parameter queue: The queue on which the completion handler is dispatched.
+    /// - parameter completionHandler: A closure to be executed once the request has finished.
+    /// - returns: Void
+    /// - since: 2.2.0
+    public func getMeetingDetail(spaceId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<SpaceMeetingDetail>) -> Void) {
+        let request = requestBuilder()
+        .method(.get)
+        .path(spaceId)
+        .path("meetingInfo")
+        .queue(queue)
+        .build()
+        
+        request.responseObject(completionHandler)
+    }
+}
+
+// MARK: - Conversation Api
+extension SpaceClient {
+    private func conversationBuilder() -> ServiceRequest.Builder {
+        return ServiceRequest.Builder(self.authenticator)
+            .baseUrl(ServiceRequest.conversationServerAddress)
+    }
+    
+    /// Returns a single room object with details about the data of the last
+    /// actvity in the room, and the date of the users last presence in the room.
+    /// For rooms where lastActivityDate > lastSeenDate the room can be considerd to be "unread"
+    ///
+    /// - parameter spaceId: The identifier of the space.
+    /// - parameter queue: The queue on which the completion handler is dispatched.
+    /// - parameter completionHandler: A closure to be executed once the request has finished.
+    /// - returns: Void
+    /// - since: 2.2.0
+    public func getWithReadStatus(spaceId:String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<SpaceInfo>) -> Void) {
+        let request = conversationBuilder()
+            .method(.get)
+            .path("conversations")
+            .path(spaceId.locusFormat)
+            .query(RequestParameter(forConversation: ["includeParticipants":false]))
+            .queue(queue)
+            .build()
+        
+        request.responseObject(completionHandler)
+    }
+    
+    /// Returns a list of rooms with details about the data of the last
+    /// actvity in the room, and the date of the users last presences in the room. The list is sorted with this with most recent activity first
+    /// For rooms where lastActivityDate > lastSeenDate the space can be considerd to be "unread"
+    ///
+    /// - parameter max: recommend that the parameter is limited between 1 and 100
+    /// - parameter queue: The queue on which the completion handler is dispatched.
+    /// - parameter completionHandler: A closure to be executed once the request has finished.
+    /// - returns: Void
+    /// - since: 2.2.0
+    public func listWithReadStatus(max:UInt, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[SpaceInfo]>) -> Void) {
+        let parameter:[String:Any] = ["participantsLimit":0, "isActive":true, "conversationsLimit":max]
+        let request = conversationBuilder()
+            .method(.get)
+            .path("conversations")
+            .keyPath("items")
+            .query(RequestParameter(forConversation: parameter))
+            .queue(queue)
+            .build()
+        
+        request.responseArray { (response:ServiceResponse<[SpaceInfo]>) in
+            switch response.result {
+            case .success(let spaceInfoArray):
+                let spaceInfos = spaceInfoArray.sorted(by: { (value1, value2) -> Bool in
+                    guard let date1 = value1.lastActivityDate else {return false}
+                    guard let date2 = value2.lastActivityDate else {return true}
+                    return Double(date1.timeIntervalSince1970) > Double(date2.timeIntervalSince1970)
+                })
+                completionHandler(ServiceResponse(response.response, Result.success(spaceInfos)))
+                
+            case .failure(let error):
+                completionHandler(ServiceResponse(response.response, Result.failure(error)))
+            }
+        }
+    }
+    
 }

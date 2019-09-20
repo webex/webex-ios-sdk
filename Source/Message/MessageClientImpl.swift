@@ -23,6 +23,14 @@ import ObjectMapper
 import Alamofire
 import SwiftyJSON
 
+
+enum ObjectType : String {
+    case activity
+    case comment
+    case content
+    case conversation
+}
+
 class MessageClientImpl {
     
     class MSGError {
@@ -33,16 +41,10 @@ class MessageClientImpl {
         static let keyMaterialFetchFail = WebexError.serviceFailed(code: -7000, reason: "Key Info Fetch Fail")
         static let encryptionUrlFetchFail = WebexError.serviceFailed(code: -7000, reason: "Encryption Info Fetch Fail")
         static let spaceUrlFetchFail = WebexError.serviceFailed(code: -7000, reason: "Space Info Fetch Fail")
+        static let spaceMessageFetchFail = WebexError.serviceFailed(code: -7000, reason: "Messages Of Space Fetch Fail")
         static let emptyTextError = WebexError.serviceFailed(code: -7000, reason: "Expected Text Not Found")
         static let downloadError = WebexError.serviceFailed(code: -7000, reason: "Expected File Not Found")
         static let timeOut = WebexError.serviceFailed(code: -7000, reason: "Timeout")
-    }
-    
-    private enum ObjectType : String {
-        case activity
-        case comment
-        case content
-        case conversation
     }
     
     private static let kmsMsgServerUrl = URL(string: ServiceRequest.kmsServerAddress + "/kms/messages")!
@@ -154,7 +156,7 @@ class MessageClientImpl {
         request.responseObject { (response : ServiceResponse<ActivityModel>) in
             switch response.result {
             case .success(let activity):
-                if let spaceId = activity.spaceId, decrypt {
+                if let spaceId = activity.targetId, decrypt {
                     let key = self.encryptionKey(spaceId: spaceId)
                     key.material(client: self) { material in
                         (queue ?? DispatchQueue.main).async {
@@ -265,7 +267,7 @@ class MessageClientImpl {
         request.responseObject { (response : ServiceResponse<ActivityModel>) in
             switch response.result {
             case .success(let activity):
-                if let spaceId = activity.spaceId {
+                if let spaceId = activity.targetId {
                     let object: [String: Any] = ["id": messageId.locusFormat, "objectType": ObjectType.activity.rawValue]
                     let target: [String: Any] = ["id": spaceId.locusFormat, "objectType": ObjectType.conversation.rawValue]
                     let body = RequestParameter(["verb": ActivityModel.Kind.delete.rawValue, "object": object, "target": target])
@@ -284,6 +286,40 @@ class MessageClientImpl {
             case .failure(let error):
                 completionHandler(ServiceResponse(response.response, Result.failure(error)))
                 break
+            }
+        }
+    }
+    
+    public func markAsRead(spaceId:String, messageId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        let object = ["id": messageId.locusFormat, "objectType": ObjectType.activity.rawValue]
+        let target = ["id": spaceId.locusFormat, "objectType": ObjectType.conversation.rawValue]
+        let body = RequestParameter(["objectType":ObjectType.activity.rawValue,
+                                     "verb": Event.Verb.acknowledge,
+                                     "object": object,
+                                     "target": target])
+        let request = self.messageServiceBuilder
+            .path("activities")
+            .method(.post)
+            .body(body)
+            .queue(queue)
+            .build()
+        request.responseJSON(completionHandler)
+    }
+    
+    public func markAsRead(spaceId:String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        self.list(spaceId: spaceId, max: 1, queue:queue) { (response) in
+            switch response.result {
+            case .success(let messages):
+                if let message = messages.first, let lastMessageId = message.id {
+                    self.markAsRead(spaceId: spaceId, messageId: lastMessageId, queue: queue,  completionHandler: completionHandler)
+                }
+                else {
+                    (queue ?? DispatchQueue.main).async {
+                        completionHandler(ServiceResponse(response.response, Result.failure(response.result.error ?? MSGError.spaceMessageFetchFail)))
+                    }
+                }
+            case .failure(let error):
+                completionHandler(ServiceResponse(response.response, Result.failure(error)))
             }
         }
     }
@@ -328,7 +364,7 @@ class MessageClientImpl {
     
     // MARK: Encryption Feature Functions
     func handle(activity: ActivityModel) {
-        guard let spaceId = activity.spaceId else {
+        guard let spaceId = activity.targetId else {
             SDKLogger.shared.error("Not a space message \(activity.id ?? (activity.toJSONString() ?? ""))")
             return
         }
