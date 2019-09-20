@@ -75,7 +75,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     
     class Builder {
         
-        private static let apiBaseUrl: URL = URL(string: ServiceRequest.hydraServerAddress)!
+        private let apiBaseUrl: URL = URL(string: ServiceRequest.hydraServerAddress)!
         private let authenticator: Authenticator
         private var headers: [String: String]
         private var method: Alamofire.HTTPMethod
@@ -91,7 +91,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
             self.headers = ["Content-Type": "application/json",
                             "User-Agent": UserAgent.string,
                             "Webex-User-Agent": UserAgent.string]
-            self.baseUrl = Builder.apiBaseUrl
+            self.baseUrl = self.apiBaseUrl
             self.method = .get
             self.path = ""
         }
