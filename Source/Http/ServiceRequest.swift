@@ -28,7 +28,7 @@ enum Service: String {
     case hydra
     case region
     case wdm
-    case kms
+    case kms = "encryption"
     case locus
     case conv = "conversation"
     case metrics
@@ -36,24 +36,35 @@ enum Service: String {
     
     func endpoint(for: Device?) -> String {
         switch self {
-        case .hydra:
-            #if INTEGRATIONTEST
-            return ProcessInfo().environment["hydraServerAddress"] == nil ? "https://api.ciscospark.com/v1" : ProcessInfo().environment["hydraServerAddress"]!
-            #else
-            return "https://api.ciscospark.com/v1"
-            #endif
+        case .region:
+            return "https://ds.ciscospark.com/v1/region"
         case .wdm:
             #if INTEGRATIONTEST
-            return ProcessInfo().environment["WDM_SERVER_ADDRESS"] == nil ? "https://wdm-a.wbx2.com/wdm/api/v1/devices" : ProcessInfo().environment["WDM_SERVER_ADDRESS"]!
+            return ProcessInfo().environment["WDM_SERVER_ADDRESS"] == nil ? "https://wdm-intb.ciscospark.com/wdm/api/v1/devices":ProcessInfo().environment["WDM_SERVER_ADDRESS"]!
             #else
             return "https://wdm-a.wbx2.com/wdm/api/v1/devices"
             #endif
-        case .region:
-            return "https://ds.ciscospark.com/v1/region"
+        case .hydra:
+            #if INTEGRATIONTEST
+            let `default` = ProcessInfo().environment["hydraServerAddress"] == nil ? "https://apialpha.ciscospark.com/v1" : ProcessInfo().environment["hydraServerAddress"]!
+            #else
+            let `default` = "https://api.ciscospark.com/v1"
+            #endif
+            return self.dynamicEndpoint(`for`, default: `default`)
         case .kms:
-            return "https://encryption-a.wbx2.com/encryption/api/v1"
+            #if INTEGRATIONTEST
+            let `default` = "https://encryption-intb.ciscospark.com/encryption/api/v1"
+            #else
+            let `default` = "https://encryption-a.wbx2.com/encryption/api/v1"
+            #endif
+            return self.dynamicEndpoint(`for`, default: `default`)
         case .conv:
-            return self.dynamicEndpoint(`for`, default: "https://conv-a.wbx2.com/conversation/api/v1")
+            #if INTEGRATIONTEST
+            let `default` = "https://conversation-intb.ciscospark.com/conversation/api/v1"
+            #else
+            let `default` = "https://conv-a.wbx2.com/conversation/api/v1"
+            #endif
+            return self.dynamicEndpoint(`for`, default: `default`)
         case .locus:
             return self.dynamicEndpoint(`for`, default: "https://locus-a.wbx2.com/conversation/api/v1") // TODO
         case .metrics:

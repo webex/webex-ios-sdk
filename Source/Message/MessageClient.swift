@@ -149,6 +149,7 @@ public class MessageClient {
     }
     
     private func listBefore(spaceId: String, mentionedPeople: Mention? = nil, date: Date?, max: Int, result: [ActivityModel], queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[Message]>) -> Void) {
+        let max = max * 2
         let dateKey = mentionedPeople == nil ? "maxDate" : "sinceDate"
         let request = self.messageServiceBuilder.path(mentionedPeople == nil ? "activities" : "mentions")
             .query(RequestParameter(["conversationId": spaceId.locusFormat, "limit": max, dateKey: (date ?? Date()).iso8601String]))

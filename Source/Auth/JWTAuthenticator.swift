@@ -77,6 +77,12 @@ public class JWTAuthenticator : Authenticator {
         return unexpiredJwt != nil
     }
     
+    /// return the expiration date of the access token
+    /// - since: 2.3.0
+    public var expiration: Date? {
+        return self.storage.authenticationInfo?.accessTokenExpirationDate
+    }
+    
     private static func payloadFor(jwt: String?) -> [String: Any]? {
         if let segments = jwt?.components(separatedBy: "."), segments.count == 3, let payloadData = JWTAuthenticator.base64UrlDecode(segments[1]) {
             return (try? JSONSerialization.jsonObject(with: payloadData, options: [])) as? [String: Any]
