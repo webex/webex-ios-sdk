@@ -23,7 +23,7 @@ import Foundation
 extension UIAlertController {
     
     // Present the alert on top of the visible UIViewController.
-    func present(_ animated: Bool, completion: (() -> Void)?) {
+    func present(_ animated: Bool, completion: (() -> Void)?) -> UIWindow {
         // Get new UIWindow at the top of the window hierarchy
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()
@@ -37,5 +37,6 @@ extension UIAlertController {
             window.makeKeyAndVisible()
             rootVC.present(self, animated: animated, completion: completion)
         }
+        return window
     }
 }
