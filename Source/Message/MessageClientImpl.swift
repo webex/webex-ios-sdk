@@ -110,11 +110,12 @@ class MessageClientImpl {
     }
     
     private func listBefore(spaceId: String, mentionedPeople: Mention? = nil, date: Date?, max: Int, result: [ActivityModel], queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[Message]>) -> Void) {
+        let requestMax = max * 2
         let dateKey = mentionedPeople == nil ? "maxDate" : "sinceDate"
         let request = self.messageServiceBuilder.path(mentionedPeople == nil ? "activities" : "mentions")
             .keyPath("items")
             .method(.get)
-            .query(RequestParameter(["conversationId": spaceId.locusFormat, "limit": max, dateKey: (date ?? Date()).iso8601String]))
+            .query(RequestParameter(["conversationId": spaceId.locusFormat, "limit": requestMax, dateKey: (date ?? Date()).iso8601String]))
             .queue(queue)
             .build()
         request.responseArray { (response: ServiceResponse<[ActivityModel]>) in
@@ -122,7 +123,7 @@ class MessageClientImpl {
             case .success:
                 guard let responseValue = response.result.data else { return }
                 let result = result + responseValue.filter({$0.kind == ActivityModel.Kind.post || $0.kind == ActivityModel.Kind.share})
-                if result.count >= max || responseValue.count < max {
+                if result.count >= max || responseValue.count < requestMax {
                     let key = self.encryptionKey(spaceId: spaceId)
                     key.material(client: self) { material in
                         if let material = material.data {
@@ -585,7 +586,7 @@ class MessageClientImpl {
         }
     }
     
-    private func requestUserId(completionHandler: @escaping (Error?) -> Void) {
+    func requestUserId(completionHandler: @escaping (Error?) -> Void) {
         if self.userId != nil {
             completionHandler(nil)
             return
@@ -604,7 +605,7 @@ class MessageClientImpl {
         }
     }
     
-    private func requestClusterAndRSAPubKey(completionHandler: @escaping (Error?) -> Void) {
+    func requestClusterAndRSAPubKey(completionHandler: @escaping (Error?) -> Void) {
         if self.kmsCluster != nil && self.rsaPublicKey != nil {
             completionHandler(nil)
             return

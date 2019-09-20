@@ -211,13 +211,25 @@ public class Phone {
             self.devices.registerDevice(phone: self, queue: self.queue.underlying) { result in
                 switch result {
                 case .success(let device):
-                    ServiceRequest.setConversationAddress(device.conversationServiceUrl.absoluteString)
+                    ServiceRequest.setServerAddress(hydraUrlString: device.hydraServiceUrl.absoluteString, conversationUrlString: device.conversationServiceUrl.absoluteString, kmsUrlString: device.kmsServiceUrl.absoluteString)
                     if let messages = self.messages {
                         messages.deviceUrl = device.deviceUrl
                     }
                     else {
                         self.messages = MessageClientImpl(authenticator: self.authenticator, deviceUrl: device.deviceUrl)
                     }
+                    
+                    self.messages?.requestUserId {error in
+                        if let error = error {
+                            SDKLogger.shared.error("request userId failed", error: error)
+                        }
+                    }
+                    self.messages?.requestClusterAndRSAPubKey{ error in
+                        if let error = error {
+                            SDKLogger.shared.error("request ClusterAndRSAPubKey failed", error: error)
+                        }
+                    }
+                    
                     self.webSocket.connect(device.webSocketUrl) { [weak self] error in
                         if let error = error {
                             SDKLogger.shared.error(PhoneErrorDescription.errorDesc(.registerFailure), error: error)

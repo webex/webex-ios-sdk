@@ -24,7 +24,7 @@ class DeviceClient {
     
     private let authenticator: Authenticator
 #if INTEGRATIONTEST
-    static let WDM_SERVER_ADDRESS:String = ProcessInfo().environment["WDM_SERVER_ADDRESS"] == nil ? "https://wdm-a.wbx2.com/wdm/api/v1/devices":ProcessInfo().environment["WDM_SERVER_ADDRESS"]!
+    static let WDM_SERVER_ADDRESS:String = ProcessInfo().environment["WDM_SERVER_ADDRESS"] == nil ? "https://wdm-intb.ciscospark.com/wdm/api/v1/devices":ProcessInfo().environment["WDM_SERVER_ADDRESS"]!
 #else
     static let WDM_SERVER_ADDRESS:String = "https://wdm-a.wbx2.com/wdm/api/v1/devices"
 #endif
@@ -43,7 +43,7 @@ class DeviceClient {
             .body(createBody(deviceInfo))
             .queue(queue)
             .build()
-        
+
         request.responseObject(completionHandler)
     }
     
@@ -54,7 +54,7 @@ class DeviceClient {
             .body(createBody(deviceInfo))
             .queue(queue)
             .build()
-        
+
         request.responseObject(completionHandler)
     }
     
