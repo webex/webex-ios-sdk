@@ -249,7 +249,7 @@ extension MembershipClient {
                 var event = MembershipEvent.deleted(membership)
                 event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: membership, event: EventType.deleted)
                 self.onEvent?(event)
-            case .update:
+            case .assignModerator, .unassignModerator:
                 var event = MembershipEvent.update(membership)
                 event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: membership, event: EventType.updated)
                 self.onEvent?(event)

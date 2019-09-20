@@ -25,6 +25,10 @@ import Foundation
 /// - since: 1.2.0
 public class SpaceClient {
     
+    /// The callback handler when receiving a space event.
+    /// - since: 2.2.0
+    public var onEvent: ((SpaceEvent) -> Void)?
+    
     let phone: Phone
 
     var authenticator: Authenticator {
@@ -205,6 +209,32 @@ public class SpaceClient {
             case .failure(let error):
                 completionHandler(ServiceResponse(response.response, Result.failure(error)))
             }
+        }
+    }
+}
+
+extension SpaceClient {
+    
+    func handle(activity: ActivityModel) {
+        guard let verb = activity.verb else {
+            return
+        }
+        var space = Space()
+        if verb == ActivityModel.Verb.create {
+            space.id = activity.objectId
+            space.type = activity.objectTag ?? SpaceType.group
+            space.isLocked = activity.objectLocked
+            space.lastActivityTimestamp = activity.created
+            var event = SpaceEvent.create(space)
+            event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: space, event: EventType.created)
+            self.onEvent?(event)
+        } else if verb == ActivityModel.Verb.update {
+            space.id = activity.targetId
+            space.type = activity.targetTag ?? SpaceType.group
+            space.isLocked = activity.targetLocked
+            var event = SpaceEvent.update(space)
+            event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: space, event: EventType.updated)
+            self.onEvent?(event)
         }
     }
 }

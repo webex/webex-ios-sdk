@@ -801,8 +801,10 @@ public class Phone {
             switch verb {
             case .post, .share, .delete:
                 self.webex.messages.handle(activity: model)
-            case .acknowledge, .add, .leave, .update:
+            case .acknowledge, .add, .leave, .assignModerator, .unassignModerator:
                 self.webex.memberships.handle(activity: model)
+            case .create, .update:
+                self.webex.spaces.handle(activity: model)
             default:
                 SDKLogger.shared.error("Not a valid message \(model.id ?? (model.toJSONString() ?? ""))")
             }

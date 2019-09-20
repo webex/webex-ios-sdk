@@ -47,7 +47,7 @@ public enum EventType: String {
 }
 
 public enum EventResource: String {
-    case memberships, messages, rooms
+    case memberships, messages, spaces
 }
 
 extension Membership: EventData {
@@ -55,6 +55,10 @@ extension Membership: EventData {
 }
 
 extension Message: EventData {
+    
+}
+
+extension Space: EventData {
     
 }
 
@@ -75,7 +79,7 @@ public struct EventPayload {
         case is Membership:
             self.resource = EventResource.memberships
         case is Space:
-            self.resource = EventResource.rooms
+            self.resource = EventResource.spaces
         default:
             break
         }
