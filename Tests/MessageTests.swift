@@ -395,7 +395,7 @@ class MessageTests: XCTestCase {
             let destinationPath = path + name
             try resultImg.jpegData(compressionQuality: 1.0)?.write(to: URL(fileURLWithPath: destinationPath))
             return destinationPath
-        }catch{
+        } catch {
             return nil
         }
     }

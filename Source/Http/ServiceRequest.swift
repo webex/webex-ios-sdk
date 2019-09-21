@@ -66,11 +66,11 @@ enum Service: String {
             #endif
             return self.dynamicEndpoint(`for`, default: `default`)
         case .locus:
-            return self.dynamicEndpoint(`for`, default: "https://locus-a.wbx2.com/conversation/api/v1") // TODO
+            return self.dynamicEndpoint(`for`, default: "https://locus-a.wbx2.com/locus/api/v1")
         case .metrics:
-            return self.dynamicEndpoint(`for`, default: "https://locus-a.wbx2.com/conversation/api/v1") // TODO
+            return self.dynamicEndpoint(`for`, default: "https://metrics-a.wbx2.com/metrics/api/v1")
         case .calliopeDiscovery:
-            return self.dynamicEndpoint(`for`, default: "https://locus-a.wbx2.com/conversation/api/v1") // TODO
+            return self.dynamicEndpoint(`for`, default: "https://calliope-a.wbx2.com/calliope/api/discovery/v1")
         }
     }
     
