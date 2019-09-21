@@ -177,22 +177,22 @@ public struct SpaceInfo: ImmutableMappable {
 /// - since: 2.2.0
 public struct SpaceMeetingDetail: Mappable {
     
-    /// A unique identifier for the room.
-    public var roomId:String?
+    /// A unique identifier for the space.
+    public var spaceId:String?
     
-    /// The Webex meeting URL for the room.
+    /// The Webex meeting URL for the space.
     public var meetingLink:String?
     
-    /// The SIP address for the room.
+    /// The SIP address for the space.
     public var sipAddress:String?
     
-    /// The Webex meeting number for the room.
+    /// The Webex meeting number for the space.
     public var meetingNumber:String?
     
-    /// The toll-free PSTN number for the room.
+    /// The toll-free PSTN number for the space.
     public var callInTollFreeNumber:String?
     
-    /// The toll (local) PSTN number for the room.
+    /// The toll (local) PSTN number for the space.
     public var callInTollNumber:String?
     
     
@@ -200,7 +200,12 @@ public struct SpaceMeetingDetail: Mappable {
     }
     
     public mutating func mapping(map: Map) {
-        self.roomId           <- map["roomId"]
+        if map.JSON["spaceId"] == nil {
+            self.spaceId <- map["roomId"]
+        }
+        else {
+            self.spaceId <- map["spaceId"]
+        }
         self.meetingLink      <- map["meetingLink"]
         self.sipAddress       <- map["sipAddress"]
         self.meetingNumber    <- map["meetingNumber"]

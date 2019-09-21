@@ -73,6 +73,8 @@ struct ActivityModel {
     private(set) var objectEmail: String?
     private(set) var objectOrgId: String?
     private(set) var objectDisplayName: String?
+    private(set) var objectConetnt: String?
+    private(set) var objectMarkdown: String?
     private(set) var mentionedPeople: [String]?
     private(set) var mentionedGroup: [String]?
     private(set) var files : [RemoteFile]?
@@ -99,12 +101,9 @@ extension ActivityModel : ImmutableMappable {
         self.targetTag = try? map.value("target.tags", using: SpaceTypeTransform())
         self.targetLocked = try? map.value("target.tags", using: LockedTransform())
         self.clientTempId = try? map.value("clientTempId")
-        if let text: String = try? map.value("object.displayName") {
-            self.objectDisplayName = text
-        }
-        if let text: String = try? map.value("object.content") {
-            self.objectDisplayName = text
-        }
+        self.objectDisplayName = try? map.value("object.displayName")
+        self.objectConetnt = try? map.value("object.content")
+        self.objectMarkdown = try? map.value("object.markdown")
         if let groupItems: [[String: Any]] = try? map.value("object.groupMentions.items"), groupItems.count > 0 {
             self.mentionedGroup = groupItems.compactMap { value in
                 return value["groupType"] as? String
@@ -153,6 +152,8 @@ extension ActivityModel : ImmutableMappable {
         self.toPersonId >>> map["toPersonId"]
         self.toPersonEmail >>> map["toPersonEmail"]
         self.objectDisplayName >>> map["text"]
+        self.objectConetnt >>> map["html"]
+        self.objectMarkdown >>> map["markdown"]
         self.actorId >>> map["actorId"]
         self.actorEmail >>> map["actorEmail"]
         self.created?.longString >>> map["created"]
@@ -173,6 +174,8 @@ extension ActivityModel {
     func decrypt(key: String?) -> ActivityModel {
         var activity = self
         activity.objectDisplayName = activity.objectDisplayName?.decrypt(key: key)
+        activity.objectConetnt = activity.objectConetnt?.decrypt(key: key)
+        activity.objectMarkdown = activity.objectMarkdown?.decrypt(key: key)
         activity.files = activity.files?.map { f in
             var file = f
             file.decrypt(key: key)

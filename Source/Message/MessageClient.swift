@@ -202,7 +202,30 @@ public class MessageClient {
                      files: [LocalFile]? = nil,
                      queue: DispatchQueue? = nil,
                      completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.post(person: personEmail.toString(), text: text, files: files, queue: queue, completionHandler: completionHandler)
+        self.post(person: personEmail.toString(), plainText: text, formattedText: text, markdown: text, files: files, queue: queue, completionHandler: completionHandler)
+    }
+    
+    /// Posts a message with optional file attachments to a user by email address.
+    ///
+    /// The content of the message can be plain text, html, or markdown.
+    ///
+    /// - parameter personEmail: The email address of the user to whom the message is to be posted.
+    /// - parameter plainText: The plain text to be posted to the user.
+    /// - parameter formattedText: The formatted text to be posted to the user, such as HTML.
+    /// - parameter markdown: The markdown message to be posted to the user.
+    /// - parameter files: Local files to be uploaded with the message.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the message is posted.
+    /// - returns: Void
+    /// - since: 2.3.0
+    public func post(personEmail: EmailAddress,
+                     plainText: String? = nil,
+                     formattedText: String? = nil,
+                     markdown: String? = nil,
+                     files: [LocalFile]? = nil,
+                     queue: DispatchQueue? = nil,
+                     completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
+        self.post(person: personEmail.toString(), plainText: plainText, formattedText: formattedText, markdown: markdown, files: files, queue: queue, completionHandler: completionHandler)
     }
     
     /// Posts a message with optional file attachments to a user by id.
@@ -221,7 +244,30 @@ public class MessageClient {
                      files: [LocalFile]? = nil,
                      queue: DispatchQueue? = nil,
                      completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.post(person: personId, text: text, files: files, queue: queue, completionHandler: completionHandler)
+        self.post(person: personId, plainText: text, formattedText: text, markdown: text, files: files, queue: queue, completionHandler: completionHandler)
+    }
+    
+    /// Posts a message with optional file attachments to a user by id.
+    ///
+    /// The content of the message can be plain text, html, or markdown.
+    ///
+    /// - parameter personId: The id of the user to whom the message is to be posted.
+    /// - parameter plainText: The plain text to be posted to the user.
+    /// - parameter formattedText: The formatted text to be posted to the user, such as HTML.
+    /// - parameter markdown: The markdown message to be posted to the user.
+    /// - parameter files: Local files to be attached to the message.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the message is posted.
+    /// - returns: Void
+    /// - since: 2.3.0
+    public func post(personId: String,
+                     plainText: String? = nil,
+                     formattedText: String? = nil,
+                     markdown: String? = nil,
+                     files: [LocalFile]? = nil,
+                     queue: DispatchQueue? = nil,
+                     completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
+        self.post(person: personId, plainText: plainText, formattedText: formattedText, files: files, queue: queue, completionHandler: completionHandler)
     }
     
     /// Posts a message with optional file attachments to a space by spaceId.
@@ -245,6 +291,34 @@ public class MessageClient {
                      files: [LocalFile]? = nil,
                      queue: DispatchQueue? = nil,
                      completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
+        self.post(spaceId: spaceId, plainText: text, formattedText: text, markdown: text, mentions: mentions, files: files, queue: queue, completionHandler: completionHandler)
+    }
+    
+    /// Posts a message with optional file attachments to a space by spaceId.
+    ///
+    /// The content of the message can be plain text, html, or markdown.
+    ///
+    /// To notify specific person or everyone in a space, mentions should be used.
+    /// Having <code>@johndoe</code> in the content of the message does not generate notification.
+    ///
+    /// - parameter spaceId: The identifier of the space where the message is to be posted.
+    /// - parameter plainText: The plain text to be posted to the space.
+    /// - parameter formattedText: The formatted text to be posted to the space, such as HTML.
+    /// - parameter markdown: The markdown message to be posted to the space.
+    /// - parameter mentions: Notify these mentions.
+    /// - parameter files: Local files to be uploaded to the space.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the message is posted.
+    /// - returns: Void
+    /// - since: 2.3.0
+    public func post(spaceId: String,
+                     plainText: String? = nil,
+                     formattedText: String? = nil,
+                     markdown: String? = nil,
+                     mentions: [Mention]? = nil,
+                     files: [LocalFile]? = nil,
+                     queue: DispatchQueue? = nil,
+                     completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
         self.doSomethingAfterRegistered { error in
             if let error = error {
                 (queue ?? DispatchQueue.main).async {
@@ -254,8 +328,9 @@ public class MessageClient {
             else {
                 var object = [String: Any]()
                 object["objectType"] = ObjectType.comment.rawValue
-                object["displayName"] = text
-                object["content"] = text
+                object["displayName"] = plainText
+                object["content"] = formattedText
+                object["markdown"] = markdown
                 var mentionedGroup = [[String: String]]()
                 var mentionedPeople = [[String: String]]()
                 mentions?.forEach { mention in
@@ -272,9 +347,30 @@ public class MessageClient {
                 var verb = ActivityModel.Verb.post
                 let key = self.encryptionKey(spaceId: spaceId)
                 key.material(client: self) { material in
-                    if let material = material.data, let encrypt = text?.encrypt(key: material) {
-                        object["displayName"] = encrypt
-                        object["content"] = encrypt
+                    if let material = material.data {
+                        var set1 = false
+                        var set2 = false
+                        if let encrypt = plainText?.encrypt(key: material) {
+                            object["displayName"] = encrypt
+                            if plainText == formattedText {
+                                object["content"] = encrypt
+                                set1 = true
+                            }
+                            if plainText == markdown {
+                                object["markdown"] = encrypt
+                                set2 = true
+                            }
+                        }
+                        if !set1, let encrypt = formattedText?.encrypt(key: material) {
+                            object["content"] = encrypt
+                            if !set2 && formattedText == markdown {
+                                object["markdown"] = encrypt
+                                set2 = true
+                            }
+                        }
+                        if !set2, let encrypt = markdown?.encrypt(key: material) {
+                            object["markdown"] = encrypt
+                        }
                     }
                     let opeations = UploadFileOperations(key: key, files: files ?? [LocalFile]())
                     opeations.run(client: self) { result in
@@ -319,13 +415,15 @@ public class MessageClient {
     }
     
     private func post(person: String,
-              text: String? = nil,
+              plainText: String? = nil,
+              formattedText: String? = nil,
+              markdown: String? = nil,
               files: [LocalFile]? = nil,
               queue: DispatchQueue? = nil,
               completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
         self.lookupSpace(person: person, queue: queue) { result in
             if let spaceId = result.data {
-                self.post(spaceId: spaceId, text: text, files: files, queue: queue, completionHandler: completionHandler)
+                self.post(spaceId: spaceId, plainText: plainText, formattedText: formattedText, markdown: markdown, files: files, queue: queue, completionHandler: completionHandler)
             }
             else {
                 completionHandler(ServiceResponse(nil, Result.failure(result.error ?? MSGError.spaceFetchFail)))

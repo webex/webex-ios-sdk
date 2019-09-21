@@ -93,7 +93,28 @@ public struct Message {
     
     /// The content of the message.
     public var text: String? {
+        return self.formattedText ?? self.markdown ?? self.plainText
+    }
+    
+    /// Returns the content of the message in plain text.
+    ///
+    /// - since: 2.3.0
+    public var plainText: String? {
         return self.activity.objectDisplayName
+    }
+    
+    /// Returns the content of the message in formatted text.
+    ///
+    /// - since: 2.3.0
+    public var formattedText: String? {
+        return self.activity.objectConetnt
+    }
+    
+    /// Returns the content of the message in markdown format.
+    ///
+    /// - since: 2.3.0
+    public var markdown: String? {
+        return self.activity.objectMarkdown
     }
     
     /// An array of file attachments in the message.
