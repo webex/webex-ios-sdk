@@ -149,10 +149,10 @@ public class MessageClient {
     }
     
     private func listBefore(spaceId: String, mentionedPeople: Mention? = nil, date: Date?, max: Int, result: [ActivityModel], queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[Message]>) -> Void) {
-        let max = max * 2
+        let requestMax = max * 2
         let dateKey = mentionedPeople == nil ? "maxDate" : "sinceDate"
         let request = self.messageServiceBuilder.path(mentionedPeople == nil ? "activities" : "mentions")
-            .query(RequestParameter(["conversationId": spaceId.locusFormat, "limit": max, dateKey: (date ?? Date()).iso8601String]))
+            .query(RequestParameter(["conversationId": spaceId.locusFormat, "limit": requestMax, dateKey: (date ?? Date()).iso8601String]))
             .keyPath("items")
             .queue(queue)
             .build()
@@ -161,7 +161,7 @@ public class MessageClient {
             case .success:
                 guard let responseValue = response.result.data else { return }
                 let result = result + responseValue.filter({$0.verb == ActivityModel.Verb.post || $0.verb == ActivityModel.Verb.share})
-                if result.count >= max || responseValue.count < max {
+                if result.count >= max || responseValue.count < requestMax {
                     let key = self.encryptionKey(spaceId: spaceId)
                     key.material(client: self) { material in
                         if let material = material.data {
