@@ -29,6 +29,11 @@ public class MembershipClient {
     
     /// - since: 2.2.0
     public var onEvent: ((MembershipEvent) -> Void)?
+
+    /// The callback handler when receiving a membership event.
+    
+    /// - since: 2.2.0
+    public var onEventWithPayload: ((MembershipEvent, EventPayload) -> Void)?
     
     private let phone: Phone
     private let messages: MessageClient
@@ -258,6 +263,8 @@ extension MembershipClient {
         guard let verb = activity.verb else {
             return
         }
+                
+        var event: MembershipEvent?
         var membership = Membership()
         membership.id = activity.dataId
         membership.created = activity.created
@@ -269,9 +276,7 @@ extension MembershipClient {
                 membership.personOrgId = activity.actorOrgId
                 membership.personDisplayName = activity.actorDisplayName
                 membership.personEmail = EmailAddress.fromString(activity.actorEmail)
-                var event = MembershipEvent.seen(membership, lastSeenId: seenId)
-                event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: membership, event: EventType.seen)
-                self.onEvent?(event)
+                event = MembershipEvent.seen(membership, lastSeenId: seenId)
             }
         }
         else {
@@ -280,22 +285,22 @@ extension MembershipClient {
             membership.personDisplayName = activity.objectDisplayName
             membership.personEmail = EmailAddress.fromString(activity.objectEmail)
             membership.isModerator = activity.isModerator
+            
             switch verb {
             case .add:
-                var event = MembershipEvent.created(membership)
-                event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: membership, event: EventType.created)
-                self.onEvent?(event)
+                event = MembershipEvent.created(membership)
             case .leave:
-                var event = MembershipEvent.deleted(membership)
-                event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: membership, event: EventType.deleted)
-                self.onEvent?(event)
+                event = MembershipEvent.deleted(membership)
             case .assignModerator, .unassignModerator:
-                var event = MembershipEvent.update(membership)
-                event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: membership, event: EventType.updated)
-                self.onEvent?(event)
+                event = MembershipEvent.update(membership)
             default:
                 break
             }
         }
+        
+        if let event = event {
+            self.onEvent?(event)
+            self.onEventWithPayload?(event, EventPayload(activity: activity, person: self.phone.me, data: membership))
+        }        
     }
 }

@@ -25,18 +25,6 @@ import Foundation
 public protocol WebexEvent {
 }
 
-private var AssociatedObjectHandle: UInt8 = 0
-
-public extension WebexEvent {
-    var payload:EventPayload? {
-        get {
-            return objc_getAssociatedObject(self, &AssociatedObjectHandle) as? EventPayload
-        }
-        set {
-            objc_setAssociatedObject(self, &AssociatedObjectHandle, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        }
-    }
-}
 
 public protocol EventData {
 
@@ -67,11 +55,22 @@ extension Space: EventData {
 /// - since: 2.2.0
 public struct EventPayload {
     
-    init(actorId: String?, person: Person?, data: EventData, event: EventType) {
-        self.actorId = actorId
+    init(activity: ActivityModel?, person: Person?, data: EventData) {
+        self.actorId = activity?.actorId
         self.createdBy = person?.id
         self.orgId = person?.orgId
-        self.event = event
+        switch activity?.verb {
+        case .add, .create, .post, .share:
+            self.event = EventType.created
+        case .leave, .delete:
+            self.event = EventType.deleted
+        case .assignModerator, .unassignModerator, .hide, .update:
+            self.event = EventType.updated
+        case .acknowledge:
+            self.event = EventType.seen
+        default:
+            break
+        }
         self.data = data
         switch data {
         case is Message:

@@ -38,6 +38,9 @@ public struct Message {
     
     /// The identifier of this message.
     public var id: String? {
+        if self.activity.verb == ActivityModel.Verb.delete, let id = self.activity.objectId {
+            return id
+        }
         return self.activity.id
     }
     

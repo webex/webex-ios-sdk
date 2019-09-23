@@ -86,7 +86,7 @@ class H264LicensePrompter {
                 })
                 alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { _ in
                 SDKLogger.shared.warn("Video license has not been activated")
-                completion(true)
+                completion(false)
                 })
                 #endif
                 

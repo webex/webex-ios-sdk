@@ -55,6 +55,11 @@ public class MessageClient {
     /// - since: 1.4.0
     public var onEvent: ((MessageEvent) -> Void)?
     
+    /// The callback handler when receiving a message event.
+    ///
+    /// - since: 2.3.0
+    public var onEventWithPayload: ((MessageEvent, EventPayload) -> Void)?
+    
     let phone: Phone
     private let queue = SerialQueue()
     
@@ -689,14 +694,14 @@ public class MessageClient {
                 case .post, .share:
                     decryption.toPersonId = self.userId?.hydraFormat(for: .people)
                     let message = Message(activity: decryption)
-                    var event = MessageEvent.messageReceived(message)
-                    event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: message, event: EventType.created)
+                    let event = MessageEvent.messageReceived(message)
                     self.onEvent?(event)
+                    self.onEventWithPayload?(event, EventPayload(activity: activity, person: self.phone.me, data: message));
                 case .delete:
                     let message = Message(activity: decryption)
-                    var event = MessageEvent.messageDeleted(message.id ?? "illegal id")
-                    event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: message, event: EventType.deleted)
+                    let event = MessageEvent.messageDeleted(message.id ?? "illegal id")
                     self.onEvent?(event)
+                    self.onEventWithPayload?(event, EventPayload(activity: activity, person: self.phone.me, data: message));
                 default:
                     SDKLogger.shared.error("Not a valid message \(activity.id ?? (activity.toJSONString() ?? ""))")
                 }

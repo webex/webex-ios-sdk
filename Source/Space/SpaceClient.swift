@@ -29,6 +29,10 @@ public class SpaceClient {
     /// - since: 2.2.0
     public var onEvent: ((SpaceEvent) -> Void)?
     
+    /// The callback handler when receiving a space event.
+    /// - since: 2.3.0
+    public var onEventWithPayload: ((SpaceEvent, EventPayload) -> Void)?
+    
     let phone: Phone
 
     var authenticator: Authenticator {
@@ -219,22 +223,23 @@ extension SpaceClient {
         guard let verb = activity.verb else {
             return
         }
+        var event: SpaceEvent?
         var space = Space()
         if verb == ActivityModel.Verb.create {
             space.id = activity.objectId
             space.type = activity.objectTag ?? SpaceType.group
             space.isLocked = activity.objectLocked
             space.lastActivityTimestamp = activity.created
-            var event = SpaceEvent.create(space)
-            event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: space, event: EventType.created)
-            self.onEvent?(event)
+            event = SpaceEvent.create(space)
         } else if verb == ActivityModel.Verb.update {
             space.id = activity.targetId
             space.type = activity.targetTag ?? SpaceType.group
             space.isLocked = activity.targetLocked
-            var event = SpaceEvent.update(space)
-            event.payload = EventPayload(actorId: activity.actorId, person: self.phone.me, data: space, event: EventType.updated)
+            event = SpaceEvent.update(space)
+        }
+        if let event = event {
             self.onEvent?(event)
+            self.onEventWithPayload?(event, EventPayload(activity: activity, person: self.phone.me, data: space))
         }
     }
 }
