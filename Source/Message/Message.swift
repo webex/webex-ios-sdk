@@ -37,12 +37,7 @@ public enum MessageEvent: WebexEvent {
 public struct Message {
     
     /// The identifier of this message.
-    public var id: String? {
-        if self.activity.verb == ActivityModel.Verb.delete, let id = self.activity.objectId {
-            return id
-        }
-        return self.activity.id
-    }
+    private(set) var id: String?
     
     /// The identifier of the space where this message was posted.
     public var spaceId: String? {
@@ -51,7 +46,7 @@ public struct Message {
     
     ///  The type of the space, "group"/"direct", where the message is posted.
     public var spaceType: SpaceType {
-        return self.activity.targetTag ?? SpaceType.group
+        return self.activity.targetTag
     }
     
     /// The identifier of the person who sent this message.
@@ -128,9 +123,13 @@ public struct Message {
     }
     
     private let activity: ActivityModel
-    
+        
     init(activity: ActivityModel) {
         self.activity = activity
+        self.id = activity.uuid?.hydraFormat(for: .message)
+        if self.activity.verb == ActivityModel.Verb.delete, let uuid = self.activity.objectUUID {
+            self.id = uuid.hydraFormat(for: .message)
+        }
     }
     
     private var mentions: [Mention]? {

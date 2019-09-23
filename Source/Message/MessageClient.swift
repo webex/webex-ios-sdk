@@ -673,7 +673,7 @@ public class MessageClient {
     // MARK: Encryption Feature Functions
     func handle(activity: ActivityModel) {
         guard let spaceId = activity.targetId else {
-            SDKLogger.shared.error("Not a space message \(activity.id ?? (activity.toJSONString() ?? ""))")
+            SDKLogger.shared.error("Not a space message \(activity.uuid ?? (activity.toJSONString() ?? ""))")
             return
         }
         if let clientTempId = activity.clientTempId, clientTempId.starts(with: self.uuid) {
@@ -686,7 +686,7 @@ public class MessageClient {
         key.material(client: self) { material in
             var decryption = activity.decrypt(key: material.data)
             guard let verb = decryption.verb else {
-                SDKLogger.shared.error("Not a valid message \(activity.id ?? (activity.toJSONString() ?? ""))")
+                SDKLogger.shared.error("Not a valid message \(activity.uuid ?? (activity.toJSONString() ?? ""))")
                 return
             }
             DispatchQueue.main.async {
@@ -703,7 +703,7 @@ public class MessageClient {
                     self.onEvent?(event)
                     self.onEventWithPayload?(event, EventPayload(activity: activity, person: self.phone.me, data: message));
                 default:
-                    SDKLogger.shared.error("Not a valid message \(activity.id ?? (activity.toJSONString() ?? ""))")
+                    SDKLogger.shared.error("Not a valid message \(activity.uuid ?? (activity.toJSONString() ?? ""))")
                 }
             }
         }

@@ -226,14 +226,14 @@ extension SpaceClient {
         var event: SpaceEvent?
         var space = Space()
         if verb == ActivityModel.Verb.create {
-            space.id = activity.objectId
-            space.type = activity.objectTag ?? SpaceType.group
+            space.id = activity.objectUUID?.hydraFormat(for: .room)
+            space.type = activity.objectTag
             space.isLocked = activity.objectLocked
             space.lastActivityTimestamp = activity.created
             event = SpaceEvent.create(space)
         } else if verb == ActivityModel.Verb.update {
             space.id = activity.targetId
-            space.type = activity.targetTag ?? SpaceType.group
+            space.type = activity.targetTag
             space.isLocked = activity.targetLocked
             event = SpaceEvent.update(space)
         }

@@ -266,12 +266,12 @@ extension MembershipClient {
                 
         var event: MembershipEvent?
         var membership = Membership()
-        membership.id = activity.dataId
         membership.created = activity.created
         membership.spaceId = activity.targetId
         
         if verb == ActivityModel.Verb.acknowledge {
-            if let seenId = activity.objectId {
+            if let seenId = activity.objectUUID?.hydraFormat(for: .message) {
+                membership.id = "\(activity.actorUUID ?? ""):\(activity.targetUUID ?? "")".hydraFormat(for: IdentityType.membership)
                 membership.personId = activity.actorId
                 membership.personOrgId = activity.actorOrgId
                 membership.personDisplayName = activity.actorDisplayName
@@ -280,7 +280,8 @@ extension MembershipClient {
             }
         }
         else {
-            membership.personId = activity.objectId
+            membership.id = "\(activity.objectUUID ?? ""):\(activity.targetUUID ?? "")".hydraFormat(for: IdentityType.membership)
+            membership.personId = activity.objectUUID?.hydraFormat(for: .people)
             membership.personOrgId = activity.objectOrgId
             membership.personDisplayName = activity.objectDisplayName
             membership.personEmail = EmailAddress.fromString(activity.objectEmail)

@@ -806,7 +806,7 @@ public class Phone {
             case .create, .update:
                 self.webex.spaces.handle(activity: model)
             default:
-                SDKLogger.shared.error("Not a valid message \(model.id ?? (model.toJSONString() ?? ""))")
+                SDKLogger.shared.error("Not a valid message \(model.uuid ?? (model.toJSONString() ?? ""))")
             }
         }
     }

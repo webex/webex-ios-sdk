@@ -50,7 +50,7 @@ struct ActivityModel {
         }
     }
     
-    private(set) var id: String?
+    private(set) var uuid: String?
     private(set) var clientTempId: String?
     private(set) var verb: ActivityModel.Verb?
     private(set) var created: Date?
@@ -59,16 +59,18 @@ struct ActivityModel {
     private(set) var toPersonEmail: String?
     
     private(set) var targetId: String?
-    private(set) var targetTag: SpaceType?
+    private(set) var targetUUID: String?
+    private(set) var targetTag: SpaceType
     private(set) var targetLocked: Bool?
     
     private(set) var actorId: String?
+    private(set) var actorUUID: String?
     private(set) var actorEmail: String?
     private(set) var actorDisplayName: String?
     private(set) var actorOrgId: String?
     
-    private(set) var objectId: String?
-    private(set) var objectTag: SpaceType?
+    private(set) var objectUUID: String?
+    private(set) var objectTag: SpaceType
     private(set) var objectLocked: Bool?
     private(set) var objectEmail: String?
     private(set) var objectOrgId: String?
@@ -79,7 +81,6 @@ struct ActivityModel {
     private(set) var mentionedGroup: [String]?
     private(set) var files : [RemoteFile]?
     
-    private(set) var dataId:String?
     private(set) var isModerator:Bool?
 }
 
@@ -89,16 +90,18 @@ extension ActivityModel : ImmutableMappable {
     ///
     /// - note: for internal use only.
     public init(map: Map) throws {
-        self.id = try? map.value("id", using: IdentityTransform(for: IdentityType.message))
+        self.uuid = try? map.value("id")
         self.created = try? map.value("published", using: CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
         self.encryptionKeyUrl = try? map.value("encryptionKeyUrl")
         self.verb = try? map.value("verb", using: VerbTransform())
-        self.actorId = try? map.value("actor.entryUUID", using: IdentityTransform(for: IdentityType.people))
+        self.actorUUID = try? map.value("actor.entryUUID")
+        self.actorId = self.actorUUID?.hydraFormat(for: .people)
         self.actorEmail = try? map.value("actor.emailAddress")
         self.actorDisplayName = try? map.value("actor.displayName")
         self.actorOrgId = try? map.value("actor.orgId", using: IdentityTransform(for: IdentityType.organization))
-        self.targetId = try? map.value("target.id", using: IdentityTransform(for: IdentityType.room))
-        self.targetTag = try? map.value("target.tags", using: SpaceTypeTransform())
+        self.targetUUID = try? map.value("target.id")
+        self.targetId = self.targetUUID?.hydraFormat(for: .room)
+        self.targetTag = (try? map.value("target.tags", using: SpaceTypeTransform())) ?? SpaceType.group
         self.targetLocked = try? map.value("target.tags", using: LockedTransform())
         self.clientTempId = try? map.value("clientTempId")
         self.objectDisplayName = try? map.value("object.displayName")
@@ -120,21 +123,11 @@ extension ActivityModel : ImmutableMappable {
             }
         }
         
-        self.objectId = try? map.value("object.id", using: IdentityTransform(for: IdentityType.message))
+        self.objectUUID = try? map.value("object.entryUUID") ?? map.value("object.id")
         self.objectEmail = try? map.value("object.emailAddress")
         self.objectOrgId = try? map.value("object.orgId", using: IdentityTransform(for: IdentityType.organization))
-        self.objectTag = try? map.value("object.tags", using: SpaceTypeTransform())
+        self.objectTag = (try? map.value("object.tags", using: SpaceTypeTransform())) ?? SpaceType.group
         self.objectLocked = try? map.value("object.tags", using: LockedTransform())
-        
-        let tid:String? = try? map.value("target.id")
-        if self.verb == Verb.acknowledge {
-            let aid:String? = try? map.value("actor.entryUUID")
-            self.dataId = "\(aid ?? ""):\(tid ?? "")".hydraFormat(for: IdentityType.membership)
-        } else if self.verb == Verb.add || self.verb == Verb.leave || self.verb == Verb.assignModerator || self.verb == Verb.unassignModerator {
-            let oid:String? = try? map.value("object.entryUUID")
-            self.dataId = "\(oid ?? ""):\(tid ?? "")".hydraFormat(for: IdentityType.membership)
-            self.objectId = try? map.value("object.entryUUID", using: IdentityTransform(for: IdentityType.people))
-        }
         self.isModerator = try? map.value("object.roomProperties.isModerator", using: StringAndBoolTransform())
     }
     
@@ -142,7 +135,7 @@ extension ActivityModel : ImmutableMappable {
     ///
     /// - note: for internal use only.
     public func mapping(map: Map) {
-        self.id >>> map["id"]
+        self.uuid >>> map["id"]
         self.targetId >>> map["roomId"]
         self.targetId >>> map["spaceId"]
         self.verb >>> (map["verb"], VerbTransform())
@@ -160,12 +153,11 @@ extension ActivityModel : ImmutableMappable {
         self.mentionedPeople >>> map["mentionedPeople"]
         self.mentionedGroup >>> map["mentionedGroup"]
         self.files >>> map["files"]
-        self.objectId >>> map["objectId"]
+        self.objectUUID >>> map["objectId"]
         self.objectTag >>> (map["spaceType"], SpaceTypeTransform())
         self.objectLocked >>> (map["isLocked"], LockedTransform())
         self.objectEmail >>> map["objectEmail"]
         self.objectOrgId >>> map["objectOrgId"]
-        self.dataId >>> map["dataId"]
         self.isModerator >>> map["isModerator"]
     }
 }
