@@ -37,7 +37,7 @@ public enum MessageEvent: WebexEvent {
 public struct Message {
     
     /// The identifier of this message.
-    private(set) var id: String?
+    public private(set) var id: String?
     
     /// The identifier of the space where this message was posted.
     public var spaceId: String? {
@@ -72,7 +72,10 @@ public struct Message {
     
     /// The timestamp that the message being created.
     public var created: Date? {
-        return self.activity.created
+        if let verb =  self.activity.verb, verb == .post || verb == .share {
+            return self.activity.created
+        }
+        return nil
     }
     
     /// Returns true if the receipient of the message is included in message's mention list

@@ -47,6 +47,8 @@ public class JWTAuthenticator : Authenticator {
     private let storage: JWTAuthStorage
     private var tokenCompletionHandlers: [(String?) -> Void] = []
     
+    private let queue = DispatchQueue(label: "com.cisoc.webex-ios-sdk.FetchTokenQueue")
+    
     private var unexpiredAccessToken: String? {
         guard authorized else {
             return nil
@@ -150,24 +152,26 @@ public class JWTAuthenticator : Authenticator {
     }
     
     private func fetchToken(force: Bool, completionHandler: @escaping (String?) -> Void) {
-        tokenCompletionHandlers.append(completionHandler)
-        if let jwt = unexpiredJwt, force || unexpiredAccessToken == nil {
-            if tokenCompletionHandlers.count == 1 {
-                client.fetchTokenFromJWT(jwt) { response in
-                    switch response.result {
-                    case .success(let jwtAccessTokenCreationResult):
-                        if let authInfo = JWTAuthenticator.authenticationInfoFrom(jwtAccessTokenCreationResult: jwtAccessTokenCreationResult) {
-                            self.storage.authenticationInfo = authInfo
+        queue.async {
+            self.tokenCompletionHandlers.append(completionHandler)
+            if let jwt = self.unexpiredJwt, force || self.unexpiredAccessToken == nil {
+                if self.tokenCompletionHandlers.count == 1 {
+                    self.client.fetchTokenFromJWT(jwt) { response in
+                        switch response.result {
+                        case .success(let jwtAccessTokenCreationResult):
+                            if let authInfo = JWTAuthenticator.authenticationInfoFrom(jwtAccessTokenCreationResult: jwtAccessTokenCreationResult) {
+                                self.storage.authenticationInfo = authInfo
+                            }
+                        case .failure(let error):
+                            self.deauthorize()
+                            SDKLogger.shared.error("Failed to fetch token", error: error)
                         }
-                    case .failure(let error):
-                        self.deauthorize()
-                        SDKLogger.shared.error("Failed to fetch token", error: error)
+                        self.fireCompletionHandlers()
                     }
-                    self.fireCompletionHandlers()
                 }
+            } else {
+                self.fireCompletionHandlers()
             }
-        } else {
-            self.fireCompletionHandlers()
         }
     }
     

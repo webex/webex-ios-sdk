@@ -266,7 +266,6 @@ extension MembershipClient {
                 
         var event: MembershipEvent?
         var membership = Membership()
-        membership.created = activity.created
         membership.spaceId = activity.targetId
         
         if verb == ActivityModel.Verb.acknowledge {
