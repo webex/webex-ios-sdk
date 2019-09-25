@@ -1,5 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 2.3.0 Releases
+
+- `2.3.0` Releases - [2.3.0](#230)
+
 #### 2.1.0 Releases
 
 - `2.1.0` Releases - [2.1.0](#210)
@@ -57,6 +61,25 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ---
+## [2.3.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.3.0)
+Released on 2019-09-27.
+#### Added
+- Add API to receive membership events.
+- Add API to receive room events.
+- Add API to get last activity status of a space.
+- Add API to get a list of last activity statuses of all spaces.
+- Add API to get a list of read statuses of all memberships in a space.
+- Add API to get space meeting details.
+- Add API to send read receipt for message.
+- Add API to support "markdown" and "formatted" for messages.post().
+- Add lastActivity property for Person.
+
+#### Updated
+- Support Swift5 and Xcode11.
+- Update Wme.framework.
+- Optimize message.list method to reduce latency.
+- Fixed camera shows my video as green.
+
 ## [2.1.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.1.0)
 Released on 2019-06-07.
 #### Updated
@@ -135,7 +158,7 @@ Released on 2016-07-25.
 
 #### Updated
 - Media engine refactor
-- Use NSDate for object mapper 
+- Use NSDate for object mapper
 
 ## [0.9.149](https://github.com/ciscospark/spark-ios-sdk/releases/tag/0.9.149)
 Released on 2016-07-11.
