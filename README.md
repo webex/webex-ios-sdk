@@ -36,14 +36,14 @@ Assuming you already have an Xcode project, e.g. _MyWebexApp_, for your iOS app,
 
     ```ruby
     source 'https://github.com/CocoaPods/Specs.git'
-    
+
     use_frameworks!
 
     target 'MyWebexApp' do
       platform :ios, '10.0'
       pod 'WebexSDK'
     end
-    
+
     target 'MyWebexAppBroadcastExtension' do
         platform :ios, '11.2'
         pod 'WebexBroadcastExtensionKit'
@@ -132,7 +132,7 @@ Here are some examples of how to use the iOS SDK in your app.
             // ...
         }
     }
-    
+
     ```
 
 5. Make an outgoing call:
@@ -194,7 +194,7 @@ Here are some examples of how to use the iOS SDK in your app.
         }
     }
     ```
-    
+
 8. Screen share (view only):
 
     ```swift
@@ -233,7 +233,7 @@ Here are some examples of how to use the iOS SDK in your app.
     }
     ```
 
-10. Receive a message:
+10. Receive a message event:
 
     ```swift
     webex.messages.onEvent = { messageEvent in
@@ -248,7 +248,20 @@ Here are some examples of how to use the iOS SDK in your app.
     }
     ```
 
-11. Screen share (sending):
+11. send read receipt of a message
+
+    ```swift
+    webex.messages.markAsRead(spaceId: spaceId, messageId: messageId, completionHandler: { response in
+         switch response.result {
+         case .success(_):
+             // ...
+         case .failure(let error):
+             // ...
+         }
+    })
+    ```
+
+12. Screen share (sending):
 
     11.1 In your containing app:
 
@@ -283,7 +296,7 @@ Here are some examples of how to use the iOS SDK in your app.
     ```
 
     11.2 In your broadcast upload extension sample handler:
-    
+
     ```swift
     override func broadcastStarted(withSetupInfo setupInfo: [String : NSObject]?) {
         // User has requested to start the broadcast. Setup info from the UI extension can be supplied but optional.
@@ -303,12 +316,12 @@ Here are some examples of how to use the iOS SDK in your app.
             }
         }
     }
-    
+
     override func broadcastFinished() {
         // User has requested to finish the broadcast.
         WebexBroadcastExtension.sharedInstance.finish()
     }
-    
+
     override func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
         switch sampleBufferType {
             case RPSampleBufferType.video:
@@ -327,7 +340,7 @@ Here are some examples of how to use the iOS SDK in your app.
 
     11.3 Get more technical details about the [Containing App & Broadcast upload extension](https://github.com/webex/webex-ios-sdk/wiki/Implementation-Broadcast-upload-extension) and [Set up an App Group](https://github.com/webex/webex-ios-sdk/wiki/Set-up-an-App-Group)
 
-12. Receive more video streams in a meeting:
+13. Receive more video streams in a meeting:
 
     ```swift
     class VideoCallViewController: MultiStreamObserver {
@@ -352,18 +365,17 @@ Here are some examples of how to use the iOS SDK in your app.
                 ...
             }
         }
-        
+
         var onAuxStreamAvailable: (() -> MediaRenderView?)? = {
             ...
             return self.mediaRenderViews.filter({!$0.inUse}).first?
         }
-    
+
         var onAuxStreamUnavailable: (() -> MediaRenderView?)? = {
             ...
             return self.mediaRenderViews.filter({$0.inUse}).last?
         }
-        
-        
+
         override func viewWillAppear(_ animated: Bool) {
             ...
             // set the observer of this call to get multi stream event.
@@ -373,32 +385,111 @@ Here are some examples of how to use the iOS SDK in your app.
     }
     ```
 
+14. receive a membership event
+
+    ```swift
+    webex.memberships.onEvent = { membershipEvent in
+          switch membershipEvent {
+          case .created(let membership):
+              // ...
+          case .deleted(let membership):
+              // ...
+          case .update(let membership):
+              // ...
+          case .seen(let membership, let lastSeenId):
+              // ...
+          }
+    }
+    ```
+
+15. get read statuses of all memberships in a space
+
+    ```swift
+    webex.memberships.listWithReadStatus(spaceId: spaceId, completionHandler: { response in
+          switch response.result {
+          case .success(let readStatuses):
+              // ...
+          case .failure(let error):
+              // ...
+          }
+    })
+    ```
+
+16. receive a space event
+
+    ```swift
+    webex.spaces.onEvent = { spaceEvent in
+          switch spaceEvent {
+          case .create(let space):
+              // ...
+          case .update(let space):
+              // ...
+          }
+    }
+    ```
+
+17. get read status of a space for login user
+
+    ```swift
+    webex.spaces.getWithReadStatus(spaceId: spaceId, completionHandler: { response in
+          switch response.result {
+          case .success(let spaceInfo):
+              if let lastActivityDate = spaceInfo.lastActivityDate,
+                  let lastSeenDate = spaceInfo.lastSeenActivityDate,
+                  lastActivityDate > lastSeenDate {
+
+                  // space is unreadable
+
+              }else {
+
+                  // space is readable
+              }
+          case .failure(let error):
+              // ...
+          }
+    })
+    ```
+
+18. get meeting detail of a space
+
+    ```swift
+    webex.spaces.getMeetingDetail(spaceId: spaceId, completionHandler: { response in
+          switch response.result {
+          case .success(let meetingDetail):
+              // ...
+          case .failure(let error):
+              // ...
+          }
+    })
+    ```
+
+
 ## Migration from Cisco SparkSDK
 
 The purpose of this guide is to help you to migrate from Cisco SparkSDK to Cisco WebexSDK.
 
-Assuming you already have an project integrated with SparkSDK. 
+Assuming you already have an project integrated with SparkSDK.
 
 1. In your pod file:
 
     remove previous SparkSDK: ~~pod 'SparkSDK'~~
-    
+
     add WebexSDK: pod 'WebexSDK'
-    
-2. Go to project directory, and run: 
+
+2. Go to project directory, and run:
     ```c
     pod install
     ```
 3. Replace sdk import info for your code:
 
-    Replace in project scope: 
-    
-    "import SparkSDK" => "import WebexSDK"
-    
-4. If you using story board for UI: 
+    Replace in project scope:
 
-    Change meida render view's module in "Indentity inspector": 
-    
+    "import SparkSDK" => "import WebexSDK"
+
+4. If you using story board for UI:
+
+    Change meida render view's module in "Indentity inspector":
+
     "SparkSDK" => "WebexSDK"
 
 ### Usage
@@ -408,7 +499,7 @@ API changes list from SparkSDK to WebexSDK.
 | Description | SparkSDK Use | WebexSDK Use |
 | :----:| :----: | :----:
 | Create a new instance | let spark = Spark(authenticator: authenticator) | let webex = Webex(authenticator: authenticator)
-| "Room" Client renamed to "Space" Client | spark.rooms.list(roomId:{rooomId}) | webex.spaces.list(spaceId:{roomId}) 
+| "Room" Client renamed to "Space" Client | spark.rooms.list(roomId:{rooomId}) | webex.spaces.list(spaceId:{roomId})
 | "SparkError" renamed to "WebexError" | let error = SparkError.Auth | let error = WebexError.Auth |
 
 
@@ -420,4 +511,3 @@ Recomand to replace variables containing "spark" with "webex" in project code.
 &copy; 2016-2019 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.
 
 See [LICENSE](https://github.com/webex/webex-ios-sdk/blob/master/LICENSE) for details.
-
