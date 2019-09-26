@@ -59,11 +59,11 @@ public struct Person {
     public var type: String?
     
     /// The date and time of the person's last activity within Webex Teams
-    /// - since: 2.2.0
+    /// - since: 2.3.0
     public var lastActivity:Date?
 
     /// The current presence status of the person
-    /// - since: 2.2.0
+    /// - since: 2.3.0
     public var status: String?
     
 }

@@ -58,7 +58,7 @@ public class MessageClient {
     /// The callback handler when receiving a message event.
     ///
     /// - since: 2.3.0
-    public var onEventWithPayload: ((MessageEvent, EventPayload) -> Void)?
+    public var onEventWithPayload: ((MessageEvent, WebexEventPayload) -> Void)?
     
     let phone: Phone
     private let queue = SerialQueue()
@@ -133,17 +133,17 @@ public class MessageClient {
                 }
                 if let before = before {
                     switch before {
-                    case .message(let messageId):
-                        self.get(messageId: messageId, decrypt: false, queue: queue) { response in
-                            if let error = response.result.error {
-                                completionHandler(ServiceResponse(response.response, Result.failure(error)))
-                            }
-                            else {
-                                self.listBefore(spaceId:spaceId, mentionedPeople: mentionedPeople, date: response.result.data?.created, max:max, result: [], completionHandler: completionHandler)
-                            }
+                        case .message(let messageId):
+                            self.get(messageId: messageId, decrypt: false, queue: queue) { response in
+                                if let error = response.result.error {
+                                    completionHandler(ServiceResponse(response.response, Result.failure(error)))
+                                }
+                                else {
+                                    self.listBefore(spaceId:spaceId, mentionedPeople: mentionedPeople, date: response.result.data?.created, max:max, result: [], completionHandler: completionHandler)
+                                }
                         }
-                    case .date(let date):
-                        self.listBefore(spaceId:spaceId, mentionedPeople: mentionedPeople, date: date, max:max, result: [], completionHandler: completionHandler)
+                        case .date(let date):
+                            self.listBefore(spaceId:spaceId, mentionedPeople: mentionedPeople, date: date, max:max, result: [], completionHandler: completionHandler)
                     }
                 }
                 else {
@@ -163,53 +163,34 @@ public class MessageClient {
             .build()
         request.responseArray { (response: ServiceResponse<[ActivityModel]>) in
             switch response.result {
-            case .success:
-                guard let responseValue = response.result.data else { return }
-                let result = result + responseValue.filter({$0.verb == ActivityModel.Verb.post || $0.verb == ActivityModel.Verb.share})
-                if result.count >= max || responseValue.count < requestMax {
-                    let key = self.encryptionKey(spaceId: spaceId)
-                    key.material(client: self) { material in
-                        if let material = material.data {
-                            let messages = result.prefix(max).map { $0.decrypt(key: material) }.map { Message(activity: $0) }
-                            (queue ?? DispatchQueue.main).async {
-                                completionHandler(ServiceResponse(response.response, Result.success(messages)))
+                case .success:
+                    guard let responseValue = response.result.data else { return }
+                    let result = result + responseValue.filter({$0.verb == ActivityModel.Verb.post || $0.verb == ActivityModel.Verb.share})
+                    if result.count >= max || responseValue.count < requestMax {
+                        let key = self.encryptionKey(spaceId: spaceId)
+                        key.material(client: self) { material in
+                            if let material = material.data {
+                                let messages = result.prefix(max).map { $0.decrypt(key: material) }.map { Message(activity: $0) }
+                                (queue ?? DispatchQueue.main).async {
+                                    completionHandler(ServiceResponse(response.response, Result.success(messages)))
+                                }
                             }
-                        }
-                        else {
-                            (queue ?? DispatchQueue.main).async {
-                                completionHandler(ServiceResponse(response.response, Result.failure(material.error ?? MSGError.keyMaterialFetchFail)))
+                            else {
+                                (queue ?? DispatchQueue.main).async {
+                                    completionHandler(ServiceResponse(response.response, Result.failure(material.error ?? MSGError.keyMaterialFetchFail)))
+                                }
                             }
                         }
                     }
+                    else {
+                        self.listBefore(spaceId:spaceId, mentionedPeople: mentionedPeople, date: responseValue.last?.created, max:max, result: result, completionHandler: completionHandler)
                 }
-                else {
-                    self.listBefore(spaceId:spaceId, mentionedPeople: mentionedPeople, date: responseValue.last?.created, max:max, result: result, completionHandler: completionHandler)
-                }
-            case .failure(let error):
-                completionHandler(ServiceResponse(response.response, Result.failure(error)))
+                case .failure(let error):
+                    completionHandler(ServiceResponse(response.response, Result.failure(error)))
             }
         }
     }
-    
-    /// Posts a message with optional file attachments to a user by email address.
-    ///
-    /// The content of the message can be plain text, html, or markdown.
-    ///
-    /// - parameter personEmail: The email address of the user to whom the message is to be posted.
-    /// - parameter content: The content of message to be posted to the user. The content can be plain text, html, or markdown.
-    /// - parameter files: Local files to be uploaded with the message.
-    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the message is posted.
-    /// - returns: Void
-    /// - since: 1.4.0
-    public func post(personEmail: EmailAddress,
-                     text: String? = nil,
-                     files: [LocalFile]? = nil,
-                     queue: DispatchQueue? = nil,
-                     completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.post(person: personEmail.toString(), plainText: text, formattedText: text, markdown: text, files: files, queue: queue, completionHandler: completionHandler)
-    }
-    
+        
     /// Posts a message with optional file attachments to a user by email address.
     ///
     /// The content of the message can be plain text, html, or markdown.
@@ -223,35 +204,14 @@ public class MessageClient {
     /// - parameter completionHandler: A closure to be executed once the message is posted.
     /// - returns: Void
     /// - since: 2.3.0
-    public func post(personEmail: EmailAddress,
-                     plainText: String? = nil,
-                     formattedText: String? = nil,
-                     markdown: String? = nil,
-                     files: [LocalFile]? = nil,
+    public func post(_ text: Message.Text? = nil,
+                     toPersonEmail: EmailAddress,
+                     withFiles: [LocalFile]? = nil,
                      queue: DispatchQueue? = nil,
                      completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.post(person: personEmail.toString(), plainText: plainText, formattedText: formattedText, markdown: markdown, files: files, queue: queue, completionHandler: completionHandler)
+        self.post(person: toPersonEmail.toString(), text: text, files: withFiles, queue: queue, completionHandler: completionHandler)
     }
-    
-    /// Posts a message with optional file attachments to a user by id.
-    ///
-    /// The content of the message can be plain text, html, or markdown.
-    ///
-    /// - parameter personId: The id of the user to whom the message is to be posted.
-    /// - parameter text: The content message to be posted to the user. The content can be plain text, html, or markdown.
-    /// - parameter files: Local files to be attached to the message.
-    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the message is posted.
-    /// - returns: Void
-    /// - since: 1.4.0
-    public func post(personId: String,
-                     text: String? = nil,
-                     files: [LocalFile]? = nil,
-                     queue: DispatchQueue? = nil,
-                     completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.post(person: personId, plainText: text, formattedText: text, markdown: text, files: files, queue: queue, completionHandler: completionHandler)
-    }
-    
+        
     /// Posts a message with optional file attachments to a user by id.
     ///
     /// The content of the message can be plain text, html, or markdown.
@@ -265,16 +225,14 @@ public class MessageClient {
     /// - parameter completionHandler: A closure to be executed once the message is posted.
     /// - returns: Void
     /// - since: 2.3.0
-    public func post(personId: String,
-                     plainText: String? = nil,
-                     formattedText: String? = nil,
-                     markdown: String? = nil,
-                     files: [LocalFile]? = nil,
+    public func post(_ text: Message.Text? = nil,
+                     toPerson: String,
+                     withFiles: [LocalFile]? = nil,
                      queue: DispatchQueue? = nil,
                      completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.post(person: personId, plainText: plainText, formattedText: formattedText, files: files, queue: queue, completionHandler: completionHandler)
+        self.post(person: toPerson, text: text, files: withFiles, queue: queue, completionHandler: completionHandler)
     }
-    
+        
     /// Posts a message with optional file attachments to a space by spaceId.
     ///
     /// The content of the message can be plain text, html, or markdown.
@@ -283,45 +241,17 @@ public class MessageClient {
     /// Having <code>@johndoe</code> in the content of the message does not generate notification.
     ///
     /// - parameter spaceId: The identifier of the space where the message is to be posted.
-    /// - parameter text: The content message to be posted to the space. The content can be plain text, html, or markdown.
-    /// - parameter mentions: Notify these mentions.
-    /// - parameter files: Local files to be uploaded to the space.
-    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the message is posted.
-    /// - returns: Void
-    /// - since: 1.4.0
-    public func post(spaceId: String,
-                     text: String? = nil,
-                     mentions: [Mention]? = nil,
-                     files: [LocalFile]? = nil,
-                     queue: DispatchQueue? = nil,
-                     completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.post(spaceId: spaceId, plainText: text, formattedText: text, markdown: text, mentions: mentions, files: files, queue: queue, completionHandler: completionHandler)
-    }
-    
-    /// Posts a message with optional file attachments to a space by spaceId.
-    ///
-    /// The content of the message can be plain text, html, or markdown.
-    ///
-    /// To notify specific person or everyone in a space, mentions should be used.
-    /// Having <code>@johndoe</code> in the content of the message does not generate notification.
-    ///
-    /// - parameter spaceId: The identifier of the space where the message is to be posted.
-    /// - parameter plainText: The plain text to be posted to the space.
-    /// - parameter formattedText: The formatted text to be posted to the space, such as HTML.
-    /// - parameter markdown: The markdown message to be posted to the space.
+    /// - parameter complexText: The plain text to be posted to the space.
     /// - parameter mentions: Notify these mentions.
     /// - parameter files: Local files to be uploaded to the space.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the message is posted.
     /// - returns: Void
     /// - since: 2.3.0
-    public func post(spaceId: String,
-                     plainText: String? = nil,
-                     formattedText: String? = nil,
-                     markdown: String? = nil,
+    public func post(_ text: Message.Text? = nil,
+                     toSpace: String,
                      mentions: [Mention]? = nil,
-                     files: [LocalFile]? = nil,
+                     withFiles: [LocalFile]? = nil,
                      queue: DispatchQueue? = nil,
                      completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
         self.doSomethingAfterRegistered { error in
@@ -331,6 +261,9 @@ public class MessageClient {
                 }
             }
             else {
+                let plainText = text?.plain
+                let formattedText = text?.html
+                let markdown = text?.markdown
                 var object = [String: Any]()
                 object["objectType"] = ObjectType.comment.rawValue
                 object["displayName"] = plainText
@@ -340,17 +273,17 @@ public class MessageClient {
                 var mentionedPeople = [[String: String]]()
                 mentions?.forEach { mention in
                     switch mention {
-                    case .all:
-                        mentionedGroup.append(["objectType": "groupMention", "groupType": "all"])
-                    case .person(let person):
-                        mentionedPeople.append(["objectType": "person", "id": person.locusFormat])
+                        case .all:
+                            mentionedGroup.append(["objectType": "groupMention", "groupType": "all"])
+                        case .person(let person):
+                            mentionedPeople.append(["objectType": "person", "id": person.locusFormat])
                     }
                 }
                 object["mentions"] = ["items" : mentionedPeople]
                 object["groupMentions"] = ["items" : mentionedGroup]
                 
                 var verb = ActivityModel.Verb.post
-                let key = self.encryptionKey(spaceId: spaceId)
+                let key = self.encryptionKey(spaceId: toSpace)
                 key.material(client: self) { material in
                     if let material = material.data {
                         var set1 = false
@@ -377,7 +310,7 @@ public class MessageClient {
                             object["markdown"] = encrypt
                         }
                     }
-                    let opeations = UploadFileOperations(key: key, files: files ?? [LocalFile]())
+                    let opeations = UploadFileOperations(key: key, files: withFiles ?? [LocalFile]())
                     opeations.run(client: self) { result in
                         if let files = result.data, files.count > 0 {
                             object["objectType"] = ObjectType.content.rawValue
@@ -385,7 +318,7 @@ public class MessageClient {
                             object["files"] = ["items": files.toJSON()]
                             verb = ActivityModel.Verb.share
                         }
-                        let target: [String: Any] = ["id": spaceId.locusFormat, "objectType": ObjectType.conversation.rawValue]
+                        let target: [String: Any] = ["id": toSpace.locusFormat, "objectType": ObjectType.conversation.rawValue]
                         key.encryptionUrl(client: self) { encryptionUrl in
                             postMessageRequest(encryptionUrl: encryptionUrl, material: material,target: target)
                         }
@@ -402,10 +335,10 @@ public class MessageClient {
                             .build()
                         request.responseObject { (response: ServiceResponse<ActivityModel>) in
                             switch response.result{
-                            case .success(let activity):
-                                completionHandler(ServiceResponse(response.response, Result.success(Message(activity: activity.decrypt(key: material.data)))))
-                            case .failure(let error):
-                                completionHandler(ServiceResponse(response.response, Result.failure(error)))
+                                case .success(let activity):
+                                    completionHandler(ServiceResponse(response.response, Result.success(Message(activity: activity.decrypt(key: material.data)))))
+                                case .failure(let error):
+                                    completionHandler(ServiceResponse(response.response, Result.failure(error)))
                             }
                         }
                     }
@@ -420,15 +353,13 @@ public class MessageClient {
     }
     
     private func post(person: String,
-              plainText: String? = nil,
-              formattedText: String? = nil,
-              markdown: String? = nil,
-              files: [LocalFile]? = nil,
-              queue: DispatchQueue? = nil,
-              completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
+                      text: Message.Text? = nil,
+                      files: [LocalFile]? = nil,
+                      queue: DispatchQueue? = nil,
+                      completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
         self.lookupSpace(person: person, queue: queue) { result in
             if let spaceId = result.data {
-                self.post(spaceId: spaceId, plainText: plainText, formattedText: formattedText, markdown: markdown, files: files, queue: queue, completionHandler: completionHandler)
+                self.post(text, toSpace: spaceId, withFiles: files, queue: queue, completionHandler: completionHandler)
             }
             else {
                 completionHandler(ServiceResponse(nil, Result.failure(result.error ?? MSGError.spaceFetchFail)))
@@ -464,20 +395,20 @@ public class MessageClient {
         let request = self.messageServiceBuilder.path("activities").path(messageId.locusFormat).queue(queue).build()
         request.responseObject { (response : ServiceResponse<ActivityModel>) in
             switch response.result {
-            case .success(let activity):
-                if let spaceId = activity.targetId, decrypt {
-                    let key = self.encryptionKey(spaceId: spaceId)
-                    key.material(client: self) { material in
-                        (queue ?? DispatchQueue.main).async {
-                            completionHandler(ServiceResponse(response.response, Result.success(Message(activity: activity.decrypt(key: material.data)))))
+                case .success(let activity):
+                    if let spaceId = activity.targetId, decrypt {
+                        let key = self.encryptionKey(spaceId: spaceId)
+                        key.material(client: self) { material in
+                            (queue ?? DispatchQueue.main).async {
+                                completionHandler(ServiceResponse(response.response, Result.success(Message(activity: activity.decrypt(key: material.data)))))
+                            }
                         }
                     }
+                    else {
+                        completionHandler(ServiceResponse(response.response, Result.success(Message(activity: activity))))
                 }
-                else {
-                    completionHandler(ServiceResponse(response.response, Result.success(Message(activity: activity))))
-                }
-            case .failure(let error):
-                completionHandler(ServiceResponse(response.response, Result.failure(error)))
+                case .failure(let error):
+                    completionHandler(ServiceResponse(response.response, Result.failure(error)))
             }
         }
     }
@@ -500,26 +431,26 @@ public class MessageClient {
                 let request = self.messageServiceBuilder.path("activities").path(messageId.locusFormat).queue(queue).build()
                 request.responseObject { (response : ServiceResponse<ActivityModel>) in
                     switch response.result {
-                    case .success(let activity):
-                        if let spaceId = activity.targetId {
-                            let object: [String: Any] = ["id": messageId.locusFormat, "objectType": ObjectType.activity.rawValue]
-                            let target: [String: Any] = ["id": spaceId.locusFormat, "objectType": ObjectType.conversation.rawValue]
-                            let body = RequestParameter(["verb": ActivityModel.Verb.delete.rawValue, "object": object, "target": target])
-                            let request = self.messageServiceBuilder.path("activities")
-                                .method(.post)
-                                .body(body)
-                                .queue(queue)
-                                .build()
-                            request.responseJSON(completionHandler)
-                        }
-                        else {
-                            (queue ?? DispatchQueue.main).async {
-                                completionHandler(ServiceResponse(response.response, Result.failure(response.result.error ?? MSGError.spaceFetchFail)))
+                        case .success(let activity):
+                            if let spaceId = activity.targetId {
+                                let object: [String: Any] = ["id": messageId.locusFormat, "objectType": ObjectType.activity.rawValue]
+                                let target: [String: Any] = ["id": spaceId.locusFormat, "objectType": ObjectType.conversation.rawValue]
+                                let body = RequestParameter(["verb": ActivityModel.Verb.delete.rawValue, "object": object, "target": target])
+                                let request = self.messageServiceBuilder.path("activities")
+                                    .method(.post)
+                                    .body(body)
+                                    .queue(queue)
+                                    .build()
+                                request.responseJSON(completionHandler)
                             }
+                            else {
+                                (queue ?? DispatchQueue.main).async {
+                                    completionHandler(ServiceResponse(response.response, Result.failure(response.result.error ?? MSGError.spaceFetchFail)))
+                                }
                         }
-                    case .failure(let error):
-                        completionHandler(ServiceResponse(response.response, Result.failure(error)))
-                        break
+                        case .failure(let error):
+                            completionHandler(ServiceResponse(response.response, Result.failure(error)))
+                            break
                     }
                 }
             }
@@ -533,7 +464,7 @@ public class MessageClient {
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the delete readReceipt has finished.
     /// - returns: Void
-    /// - since: 2.2.0
+    /// - since: 2.3.0
     public func markAsRead(spaceId:String, messageId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
         self.doSomethingAfterRegistered { error in
             if let error = error {
@@ -569,17 +500,17 @@ public class MessageClient {
             else {
                 self.list(spaceId: spaceId, max: 1, queue:queue) { (response) in
                     switch response.result {
-                    case .success(let messages):
-                        if let message = messages.first, let lastMessageId = message.id {
-                            self.markAsRead(spaceId: spaceId, messageId: lastMessageId, queue: queue,  completionHandler: completionHandler)
-                        }
-                        else {
-                            (queue ?? DispatchQueue.main).async {
-                                completionHandler(ServiceResponse(response.response, Result.failure(response.result.error ?? MSGError.spaceMessageFetchFail)))
+                        case .success(let messages):
+                            if let message = messages.first, let lastMessageId = message.id {
+                                self.markAsRead(spaceId: spaceId, messageId: lastMessageId, queue: queue,  completionHandler: completionHandler)
                             }
+                            else {
+                                (queue ?? DispatchQueue.main).async {
+                                    completionHandler(ServiceResponse(response.response, Result.failure(response.result.error ?? MSGError.spaceMessageFetchFail)))
+                                }
                         }
-                    case .failure(let error):
-                        completionHandler(ServiceResponse(response.response, Result.failure(error)))
+                        case .failure(let error):
+                            completionHandler(ServiceResponse(response.response, Result.failure(error)))
                     }
                 }
             }
@@ -691,19 +622,19 @@ public class MessageClient {
             }
             DispatchQueue.main.async {
                 switch verb {
-                case .post, .share:
-                    decryption.toPersonId = self.userId?.hydraFormat(for: .people)
-                    let message = Message(activity: decryption)
-                    let event = MessageEvent.messageReceived(message)
-                    self.onEvent?(event)
-                    self.onEventWithPayload?(event, EventPayload(activity: activity, person: self.phone.me, data: message));
-                case .delete:
-                    let message = Message(activity: decryption)
-                    let event = MessageEvent.messageDeleted(message.id ?? "illegal id")
-                    self.onEvent?(event)
-                    self.onEventWithPayload?(event, EventPayload(activity: activity, person: self.phone.me, data: message));
-                default:
-                    SDKLogger.shared.error("Not a valid message \(activity.uuid ?? (activity.toJSONString() ?? ""))")
+                    case .post, .share:
+                        decryption.toPersonId = self.userId?.hydraFormat(for: .people)
+                        let message = Message(activity: decryption)
+                        let event = MessageEvent.messageReceived(message)
+                        self.onEvent?(event)
+                        self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me));
+                    case .delete:
+                        let message = Message(activity: decryption)
+                        let event = MessageEvent.messageDeleted(message.id ?? "illegal id")
+                        self.onEvent?(event)
+                        self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me));
+                    default:
+                        SDKLogger.shared.error("Not a valid message \(activity.uuid ?? (activity.toJSONString() ?? ""))")
                 }
             }
         }
@@ -1000,11 +931,11 @@ public class MessageClient {
                         .build()
                     request.responseJSON { (response: ServiceResponse<Any>) in
                         switch response.result {
-                        case .success(_):
-                            handlers.forEach { $0(Result.success((key.uri, key.jwk))) }
-                        case .failure(let error):
-                            handlers.forEach { $0(Result.failure(error)) }
-                            break
+                            case .success(_):
+                                handlers.forEach { $0(Result.success((key.uri, key.jwk))) }
+                            case .failure(let error):
+                                handlers.forEach { $0(Result.failure(error)) }
+                                break
                         }
                     }
                 }
@@ -1060,6 +991,73 @@ public class MessageClient {
             }
         }
     }
+    
+    // MARK: - Deprecated
+
+    /// Posts a message with optional file attachments to a user by email address.
+    ///
+    /// The content of the message can be plain text, html, or markdown.
+    ///
+    /// - parameter personEmail: The email address of the user to whom the message is to be posted.
+    /// - parameter content: The content of message to be posted to the user. The content can be plain text, html, or markdown.
+    /// - parameter files: Local files to be uploaded with the message.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the message is posted.
+    /// - returns: Void
+    /// - since: 1.4.0
+    @available(*, deprecated)
+    public func post(personEmail: EmailAddress,
+                     text: String? = nil,
+                     files: [LocalFile]? = nil,
+                     queue: DispatchQueue? = nil,
+                     completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
+        self.post(text?.toComplexText, toPersonEmail: personEmail, withFiles: files, queue: queue, completionHandler: completionHandler)
+    }
+
+    /// Posts a message with optional file attachments to a user by id.
+    ///
+    /// The content of the message can be plain text, html, or markdown.
+    ///
+    /// - parameter personId: The id of the user to whom the message is to be posted.
+    /// - parameter text: The content message to be posted to the user. The content can be plain text, html, or markdown.
+    /// - parameter files: Local files to be attached to the message.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the message is posted.
+    /// - returns: Void
+    /// - since: 1.4.0
+    @available(*, deprecated)
+    public func post(personId: String,
+                     text: String? = nil,
+                     files: [LocalFile]? = nil,
+                     queue: DispatchQueue? = nil,
+                     completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
+        self.post(text?.toComplexText, toPerson: personId, withFiles: files, queue: queue, completionHandler: completionHandler)
+    }
+
+    /// Posts a message with optional file attachments to a space by spaceId.
+    ///
+    /// The content of the message can be plain text, html, or markdown.
+    ///
+    /// To notify specific person or everyone in a space, mentions should be used.
+    /// Having <code>@johndoe</code> in the content of the message does not generate notification.
+    ///
+    /// - parameter spaceId: The identifier of the space where the message is to be posted.
+    /// - parameter text: The content message to be posted to the space. The content can be plain text, html, or markdown.
+    /// - parameter mentions: Notify these mentions.
+    /// - parameter files: Local files to be uploaded to the space.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the message is posted.
+    /// - returns: Void
+    /// - since: 1.4.0
+    ///@available(*, deprecated)
+    public func post(spaceId: String,
+                     text: String? = nil,
+                     mentions: [Mention]? = nil,
+                     files: [LocalFile]? = nil,
+                     queue: DispatchQueue? = nil,
+                     completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
+        self.post(text?.toComplexText, toSpace: spaceId, mentions: mentions, withFiles: files, queue: queue, completionHandler: completionHandler)
+    }
 }
 
 extension Date {
@@ -1073,4 +1071,10 @@ extension Date {
     }
 }
 
-
+extension String {
+    
+    var toComplexText: Message.Text {
+        return Message.Text.html(html: self, plain: self)
+    }
+    
+}

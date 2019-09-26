@@ -79,7 +79,8 @@ public class JWTAuthenticator : Authenticator {
         return unexpiredJwt != nil
     }
     
-    /// return the expiration date of the access token
+    /// Returns the expiration of the access token
+    /// 
     /// - since: 2.3.0
     public var expiration: Date? {
         return self.storage.authenticationInfo?.accessTokenExpirationDate

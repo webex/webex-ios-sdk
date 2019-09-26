@@ -41,8 +41,8 @@ public enum SpaceSortType: String{
 }
 
 /// The struct of a space event
-/// - since: 2.2.0
-public enum SpaceEvent: WebexEvent {
+/// - since: 2.3.0
+public enum SpaceEvent {
     /// The callback when create a space
     case create(Space)
     /// The callback when update space
@@ -123,8 +123,8 @@ extension Space: Mappable {
 /// A data type representation of a space associated with conversation
 /// For rooms where lastActivityDate > lastSeenActivityDate the space can be considerd to be "unread"
 ///
-/// - since: 2.2.0
-public struct SpaceInfo: ImmutableMappable {
+/// - since: 2.3.0
+public struct SpaceReadStatus: ImmutableMappable {
     
     /// The identifier of this space.
     public var id: String?
@@ -140,7 +140,7 @@ public struct SpaceInfo: ImmutableMappable {
     
     private let dateTransform = CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ")
     
-    /// Constructs a `SpaceInfo` object.
+    /// Constructs a `SpaceReadStatus` object.
     ///
     /// - note: for internal use only.
     public init(map: Map) throws {
@@ -161,7 +161,7 @@ public struct SpaceInfo: ImmutableMappable {
         }
     }
     
-    /// Maps a `SpaceInfo` from JSON.
+    /// Maps a `SpaceReadStatus` from JSON.
     ///
     /// - note: for internal use only.
     public mutating func mapping(map: Map) {
@@ -174,8 +174,8 @@ public struct SpaceInfo: ImmutableMappable {
 
 /// Shows Webex meeting details for a room such as the SIP address, meeting URL, toll-free and toll dial-in numbers.
 ///
-/// - since: 2.2.0
-public struct SpaceMeetingDetail: Mappable {
+/// - since: 2.3.0
+public struct SpaceMeetingInfo: Mappable {
     
     /// A unique identifier for the space.
     public var spaceId:String?

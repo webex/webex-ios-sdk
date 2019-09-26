@@ -26,12 +26,12 @@ import Foundation
 public class SpaceClient {
     
     /// The callback handler when receiving a space event.
-    /// - since: 2.2.0
+    /// - since: 2.3.0
     public var onEvent: ((SpaceEvent) -> Void)?
     
     /// The callback handler when receiving a space event.
     /// - since: 2.3.0
-    public var onEventWithPayload: ((SpaceEvent, EventPayload) -> Void)?
+    public var onEventWithPayload: ((SpaceEvent, WebexEventPayload) -> Void)?
     
     let phone: Phone
 
@@ -151,8 +151,8 @@ public class SpaceClient {
     /// - parameter queue: The queue on which the completion handler is dispatched.
     /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
-    /// - since: 2.2.0
-    public func getMeetingDetail(spaceId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<SpaceMeetingDetail>) -> Void) {
+    /// - since: 2.3.0
+    public func getMeetingInfo(spaceId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<SpaceMeetingInfo>) -> Void) {
         let request = requestBuilder()
             .path(spaceId)
             .path("meetingInfo")
@@ -170,8 +170,8 @@ public class SpaceClient {
     /// - parameter queue: The queue on which the completion handler is dispatched.
     /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
-    /// - since: 2.2.0
-    public func getWithReadStatus(spaceId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<SpaceInfo>) -> Void) {
+    /// - since: 2.3.0
+    public func getWithReadStatus(spaceId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<SpaceReadStatus>) -> Void) {
         let request = self.convServiceBuilder()
             .path("conversations")
             .path(spaceId.locusFormat)
@@ -190,8 +190,8 @@ public class SpaceClient {
     /// - parameter queue: The queue on which the completion handler is dispatched.
     /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
-    /// - since: 2.2.0
-    public func listWithReadStatus(max:UInt, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[SpaceInfo]>) -> Void) {
+    /// - since: 2.3.0
+    public func listWithReadStatus(max:UInt, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[SpaceReadStatus]>) -> Void) {
         let parameter: [String: Any] = ["participantsLimit": 0, "isActive": true, "conversationsLimit": max]
         let request = convServiceBuilder()
             .path("conversations")
@@ -200,7 +200,7 @@ public class SpaceClient {
             .queue(queue)
             .build()
         
-        request.responseArray { (response:ServiceResponse<[SpaceInfo]>) in
+        request.responseArray { (response:ServiceResponse<[SpaceReadStatus]>) in
             switch response.result {
             case .success(let spaceInfoArray):
                 let spaceInfos = spaceInfoArray.sorted(by: { (value1, value2) -> Bool in
@@ -239,7 +239,7 @@ extension SpaceClient {
         }
         if let event = event {
             self.onEvent?(event)
-            self.onEventWithPayload?(event, EventPayload(activity: activity, person: self.phone.me, data: space))
+            self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me))
         }
     }
 }

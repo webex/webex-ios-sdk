@@ -23,8 +23,8 @@ import ObjectMapper
 
 /// The struct of a membership event
 ///
-/// - since: 2.2.0
-public enum MembershipEvent: WebexEvent {
+/// - since: 2.3.0
+public enum MembershipEvent {
     // The callback when add membership
     case created(Membership)
     // The callback when leave membership
@@ -32,7 +32,7 @@ public enum MembershipEvent: WebexEvent {
     // The callback when change moderator of membership
     case update(Membership)
     /// The callback when read receipt
-    case seen(Membership, lastSeenId: String)
+    case seen(Membership, lastSeenMessage: String)
 }
 
 /// Membership contents.

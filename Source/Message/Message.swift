@@ -24,7 +24,7 @@ import ObjectMapper
 /// The struct of a message event
 ///
 /// - since: 1.4.0
-public enum MessageEvent: WebexEvent {
+public enum MessageEvent {
     /// The callback when receive a new message
     case messageReceived(Message)
     /// The callback when a message was deleted
@@ -36,8 +36,38 @@ public enum MessageEvent: WebexEvent {
 /// - since: 1.2.0
 public struct Message {
     
+    public struct Text {
+        
+        var plain:String?
+        
+        var html:String?
+        
+        var markdown:String?
+  
+        public static func plain(plain: String) -> Text {
+            return Text(plain: plain, html: nil, markdown: nil)
+        }
+        
+        public static func html(html: String, plain: String) -> Text {
+            return Text(plain: plain, html: html, markdown: nil)
+        }
+        
+        public static func markdown(markdown: String, html: String, plain: String) -> Text {
+            return Text(plain: plain, html: html, markdown: markdown)
+        }
+        
+        var simple: String? {
+            return self.html ?? self.markdown ?? self.plain
+        }
+    }
+    
     /// The identifier of this message.
     public private(set) var id: String?
+    
+    /// The content of the message in multi-formatt if supported.
+    ///
+    /// - since: 2.3.0
+    public private(set) var complexText: Message.Text?
     
     /// The identifier of the space where this message was posted.
     public var spaceId: String? {
@@ -89,35 +119,14 @@ public struct Message {
             case .all:
                 return true
             }
-            } != nil
+        } != nil
     }
     
     /// The content of the message.
     public var text: String? {
-        return self.formattedText ?? self.markdown ?? self.plainText
+        return self.complexText?.simple
     }
-    
-    /// Returns the content of the message in plain text.
-    ///
-    /// - since: 2.3.0
-    public var plainText: String? {
-        return self.activity.objectDisplayName
-    }
-    
-    /// Returns the content of the message in formatted text.
-    ///
-    /// - since: 2.3.0
-    public var formattedText: String? {
-        return self.activity.objectConetnt
-    }
-    
-    /// Returns the content of the message in markdown format.
-    ///
-    /// - since: 2.3.0
-    public var markdown: String? {
-        return self.activity.objectMarkdown
-    }
-    
+        
     /// An array of file attachments in the message.
     ///
     /// - since: 1.4.0
@@ -133,6 +142,7 @@ public struct Message {
         if self.activity.verb == ActivityModel.Verb.delete, let uuid = self.activity.objectUUID {
             self.id = uuid.hydraFormat(for: .message)
         }
+        self.complexText = Message.Text(plain: activity.objectDisplayName, html: activity.objectConetnt, markdown: activity.objectMarkdown)
     }
     
     private var mentions: [Mention]? {

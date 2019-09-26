@@ -25,15 +25,13 @@ import Foundation
 /// - since: 1.2.0
 public class MembershipClient {
     
-    /// The callback handler when receiving a membership event.
-    
-    /// - since: 2.2.0
+    /// The callback handler for incoming membership events
+    /// - since: 2.3.0
     public var onEvent: ((MembershipEvent) -> Void)?
 
     /// The callback handler when receiving a membership event.
-    
-    /// - since: 2.2.0
-    public var onEventWithPayload: ((MembershipEvent, EventPayload) -> Void)?
+    /// - since: 2.3.0
+    public var onEventWithPayload: ((MembershipEvent, WebexEventPayload) -> Void)?
     
     private let phone: Phone
     private let messages: MessageClient
@@ -225,7 +223,7 @@ public class MembershipClient {
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the delete request has finished.
     /// - returns: Void
-    /// - since: 2.2.0
+    /// - since: 2.3.0
     public func listWithReadStatus(spaceId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[MembershipReadStatus]>) -> Void) {
         let request = convRequestBuilder()
             .path(spaceId.locusFormat)
@@ -275,7 +273,7 @@ extension MembershipClient {
                 membership.personOrgId = activity.actorOrgId
                 membership.personDisplayName = activity.actorDisplayName
                 membership.personEmail = EmailAddress.fromString(activity.actorEmail)
-                event = MembershipEvent.seen(membership, lastSeenId: seenId)
+                event = MembershipEvent.seen(membership, lastSeenMessage: seenId)
             }
         }
         else {
@@ -300,7 +298,7 @@ extension MembershipClient {
         
         if let event = event {
             self.onEvent?(event)
-            self.onEventWithPayload?(event, EventPayload(activity: activity, person: self.phone.me, data: membership))
+            self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me))
         }        
     }
 }

@@ -55,7 +55,7 @@
 		208C13511E88C10500B8DEF0 /* CallEventSequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208C13501E88C10500B8DEF0 /* CallEventSequencer.swift */; };
 		209360381E89DA7300D6BC4A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209360371E89DA7300D6BC4A /* Logger.swift */; };
 		2099E2491EC44F1B002BDB0C /* MetricsEngine+Call.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099E2481EC44F1B002BDB0C /* MetricsEngine+Call.swift */; };
-		20B918E922F025F6003A9FFA /* EventPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B918E822F025F6003A9FFA /* EventPayload.swift */; };
+		20BC40E0233B4D7500B6A8FD /* WebexEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20BC40DF233B4D7500B6A8FD /* WebexEvent.swift */; };
 		20EEA2771EB0E6B400D6BB75 /* CallModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EEA2731EB0E6B400D6BB75 /* CallModel.swift */; };
 		20EEA2781EB0E6B400D6BB75 /* MediaConnectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EEA2741EB0E6B400D6BB75 /* MediaConnectionModel.swift */; };
 		20EEA2791EB0E6B400D6BB75 /* ParticipantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EEA2751EB0E6B400D6BB75 /* ParticipantModel.swift */; };
@@ -243,7 +243,7 @@
 		208C13501E88C10500B8DEF0 /* CallEventSequencer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallEventSequencer.swift; sourceTree = "<group>"; };
 		209360371E89DA7300D6BC4A /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		2099E2481EC44F1B002BDB0C /* MetricsEngine+Call.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MetricsEngine+Call.swift"; sourceTree = "<group>"; };
-		20B918E822F025F6003A9FFA /* EventPayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventPayload.swift; sourceTree = "<group>"; };
+		20BC40DF233B4D7500B6A8FD /* WebexEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebexEvent.swift; sourceTree = "<group>"; };
 		20EEA2731EB0E6B400D6BB75 /* CallModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallModel.swift; sourceTree = "<group>"; };
 		20EEA2741EB0E6B400D6BB75 /* MediaConnectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaConnectionModel.swift; sourceTree = "<group>"; };
 		20EEA2751EB0E6B400D6BB75 /* ParticipantModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantModel.swift; sourceTree = "<group>"; };
@@ -594,6 +594,7 @@
 			children = (
 				B91E75841CE2D7B70080EAE0 /* Webex.swift */,
 				20EEA2C91EBDAAEB00D6BB75 /* WebexError.swift */,
+				20BC40DF233B4D7500B6A8FD /* WebexEvent.swift */,
 				B91E75311CE2D7B70080EAE0 /* Auth */,
 				B91E75371CE2D7B70080EAE0 /* Http */,
 				5D67C64C1CF04E6400758F6B /* Logger */,
@@ -756,7 +757,6 @@
 				3D2DF7581CFEAB0A00002F36 /* UserDefaults.swift */,
 				207434411E9B30CC00C5EBCD /* SerialQueue.swift */,
 				68A7D4502084822500AB7F8A /* Transforms.swift */,
-				20B918E822F025F6003A9FFA /* EventPayload.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1150,6 +1150,7 @@
 				209360381E89DA7300D6BC4A /* Logger.swift in Sources */,
 				84AAC35322E0269E00A25159 /* Constants.swift in Sources */,
 				B91E75AC1CE2D7B70080EAE0 /* MetricsBuffer.swift in Sources */,
+				20BC40E0233B4D7500B6A8FD /* WebexEvent.swift in Sources */,
 				B91E75AD1CE2D7B70080EAE0 /* MetricsClient.swift in Sources */,
 				B91E75E21CE2D7B70080EAE0 /* NotificationObserver.swift in Sources */,
 				B91E75A61CE2D7B70080EAE0 /* MembershipClient.swift in Sources */,
@@ -1187,7 +1188,6 @@
 				B91E75D71CE2D7B70080EAE0 /* WebSocketService.swift in Sources */,
 				1066EF152022F877003745D0 /* UploadFileOperation.swift in Sources */,
 				B91E75B21CE2D7B70080EAE0 /* PersonClient.swift in Sources */,
-				20B918E922F025F6003A9FFA /* EventPayload.swift in Sources */,
 				B91E75A11CE2D7B70080EAE0 /* UserAgent.swift in Sources */,
 				C7957FF8207C6FD30069D672 /* MediaRenderView.swift in Sources */,
 				5AFA0BD51DEE376A00B6F6C9 /* SimpleAuthenticator.swift in Sources */,
