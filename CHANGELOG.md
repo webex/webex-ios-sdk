@@ -73,6 +73,7 @@ Released on 2019-09-27.
 - Add API to send read receipt for message.
 - Add API to support "markdown" and "formatted" for messages.post().
 - Add lastActivity property for Person.
+- Add token expiration getter to JWTAuthenticator.
 
 #### Updated
 - Support Swift5 and Xcode11.

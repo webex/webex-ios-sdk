@@ -261,9 +261,12 @@ public class MessageClient {
                 }
             }
             else {
-                let plainText = text?.plain
+                var plainText = text?.plain
                 let formattedText = text?.html
                 let markdown = text?.markdown
+                if plainText?.isEmpty != false && formattedText?.isEmpty != false {
+                    plainText = markdown
+                }
                 var object = [String: Any]()
                 object["objectType"] = ObjectType.comment.rawValue
                 object["displayName"] = plainText
@@ -1049,7 +1052,7 @@ public class MessageClient {
     /// - parameter completionHandler: A closure to be executed once the message is posted.
     /// - returns: Void
     /// - since: 1.4.0
-    ///@available(*, deprecated)
+    @available(*, deprecated)
     public func post(spaceId: String,
                      text: String? = nil,
                      mentions: [Mention]? = nil,

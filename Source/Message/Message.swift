@@ -48,11 +48,11 @@ public struct Message {
             return Text(plain: plain, html: nil, markdown: nil)
         }
         
-        public static func html(html: String, plain: String) -> Text {
+        public static func html(html: String, plain: String? = nil) -> Text {
             return Text(plain: plain, html: html, markdown: nil)
         }
         
-        public static func markdown(markdown: String, html: String, plain: String) -> Text {
+        public static func markdown(markdown: String, html: String, plain: String? = nil) -> Text {
             return Text(plain: plain, html: html, markdown: markdown)
         }
         
