@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.xcconfig = {'FRAMEWORK_SEARCH_PATHS' => '$(PODS_ROOT)/WebexSDK/Frameworks',
                 'ENABLE_BITCODE' => 'NO',
                 }
-  s.swift_version = '5.0'                
+  s.swift_version = '4.2'                
   s.dependency 'Alamofire', '= 4.9.0'
   s.dependency 'ObjectMapper', '~> 3.3'
   s.dependency 'AlamofireObjectMapper', '~> 5.1'
