@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
                 'ENABLE_BITCODE' => 'NO',
                 }
   s.swift_version = '5.0'                
-  s.dependency 'Alamofire', '= 4.7.1'
+  s.dependency 'Alamofire', '= 4.9.0'
   s.dependency 'ObjectMapper', '~> 3.3'
   s.dependency 'AlamofireObjectMapper', '~> 5.1'
   s.dependency 'SwiftyJSON', '~> 4.1'
