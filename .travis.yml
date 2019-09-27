@@ -16,6 +16,6 @@ before_install:
 script:
   - set -o pipefail
   # - travis_wait 3 bash StartIntegrationTest.sh
-  - travis_retry xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -destination "$DESTINATION" -configuration "$CONFIGURATION" CLIENTSECRET="$CLIENTSECRET" test | xcpretty -c
+  # - travis_retry xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -destination "$DESTINATION" -configuration "$CONFIGURATION" CLIENTSECRET="$CLIENTSECRET" test | xcpretty -c
   # - travis_wait 50 bash FetchTestingResult.sh
 branches:
