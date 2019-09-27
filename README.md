@@ -6,7 +6,7 @@
 
 The Cisco Webex iOS SDK makes it easy to integrate secure and convenient Cisco Webex messaging and calling features in your iOS apps.
 
-This SDK is written in [Swift 4](https://developer.apple.com/swift) and requires **iOS 10** or later.
+This SDK is written in [Swift 5](https://developer.apple.com/swift) and requires **iOS 11** or later.
 
 ## Table of Contents
 
@@ -40,7 +40,7 @@ Assuming you already have an Xcode project, e.g. _MyWebexApp_, for your iOS app,
     use_frameworks!
 
     target 'MyWebexApp' do
-      platform :ios, '10.0'
+      platform :ios, '11.0'
       pod 'WebexSDK'
     end
 
@@ -223,7 +223,24 @@ Here are some examples of how to use the iOS SDK in your app.
 9. Post a message:
 
     ```swift
-    webex.messages.post(personEmail: email, text: "Hello there") { response in
+    let plain = "foo"
+    let markdown = "**foo**"
+    let html = "<strong>foo</strong>"
+    ```
+    ```swift
+    let text = Message.Text.html(html: html)
+    webex.messages.post(text, toPersonEmail: emailAddress, completionHandler: { response in
+        switch response.result {
+        case .success(let message):
+            // ...
+        case .failure(let error):
+            // ...
+        }
+    }
+    ```
+    ```swift
+    let text = Message.Text.markdown(markdown: markdown, html: html, plain: text)
+    webex.messages.post(text, toPersonEmail: emailAddress, completionHandler: { response in
         switch response.result {
         case .success(let message):
             // ...
@@ -453,9 +470,9 @@ Here are some examples of how to use the iOS SDK in your app.
 18. get meeting detail of a space
 
     ```swift
-    webex.spaces.getMeetingDetail(spaceId: spaceId, completionHandler: { response in
+    webex.spaces.getMeetingInfo(spaceId: spaceId, completionHandler: { response in
           switch response.result {
-          case .success(let meetingDetail):
+          case .success(let meetingInfo):
               // ...
           case .failure(let error):
               // ...
