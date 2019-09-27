@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "WebexSDK"
-  s.version = "2.1.0"
+  s.version = "2.3.0"
   s.summary = "Webex iOS SDK"
   s.homepage = "https://developer.webex.com"
   s.license = "MIT"
