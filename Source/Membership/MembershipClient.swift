@@ -25,11 +25,13 @@ import Foundation
 /// - since: 1.2.0
 public class MembershipClient {
     
-    /// The callback handler for incoming membership events
+    /// The callback handler for incoming membership events.
+    ///
     /// - since: 2.3.0
     public var onEvent: ((MembershipEvent) -> Void)?
 
-    /// The callback handler when receiving a membership event.
+    /// The callback handler for incoming membership events with the event payload.
+    ///
     /// - since: 2.3.0
     public var onEventWithPayload: ((MembershipEvent, WebexEventPayload) -> Void)?
     

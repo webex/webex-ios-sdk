@@ -25,11 +25,13 @@ import Foundation
 /// - since: 1.2.0
 public class SpaceClient {
     
-    /// The callback handler when receiving a space event.
+    /// The callback handler for incoming space events.
+    ///
     /// - since: 2.3.0
     public var onEvent: ((SpaceEvent) -> Void)?
     
-    /// The callback handler when receiving a space event.
+    /// The callback handler for incoming space events.
+    /// 
     /// - since: 2.3.0
     public var onEventWithPayload: ((SpaceEvent, WebexEventPayload) -> Void)?
     
@@ -145,7 +147,7 @@ public class SpaceClient {
         request.responseJSON(completionHandler)
     }
     
-    /// Shows Webex meeting details for a room such as the SIP address, meeting URL, toll-free and toll dial-in numbers.
+    /// Shows Webex meeting details for a space such as the SIP address, meeting URL, toll-free and toll dial-in numbers.
     ///
     /// - parameter spaceId: The identifier of the space.
     /// - parameter queue: The queue on which the completion handler is dispatched.
@@ -162,9 +164,10 @@ public class SpaceClient {
         request.responseObject(completionHandler)
     }
     
-    /// Returns a single room object with details about the data of the last
-    /// actvity in the room, and the date of the users last presence in the room.
-    /// For rooms where lastActivityDate > lastSeenDate the room can be considerd to be "unread"
+    /// Returns a SpaceReadStatus with the details about the date of the last
+    /// activity in the space, and the date of current user last presence in the space.
+    ///
+    /// For spaces where lastActivityDate > lastSeenDate the space can be considered to be "unread"
     ///
     /// - parameter spaceId: The identifier of the space.
     /// - parameter queue: The queue on which the completion handler is dispatched.
@@ -182,9 +185,11 @@ public class SpaceClient {
         request.responseObject(completionHandler)
     }
     
-    /// Returns a list of rooms with details about the data of the last
-    /// actvity in the room, and the date of the users last presences in the room. The list is sorted with this with most recent activity first
-    /// For rooms where lastActivityDate > lastSeenDate the space can be considerd to be "unread"
+    /// Returns a list of SpaceReadStatus with details about the date of the last
+    /// activity in the space, and the date of current user last presence in the space. The
+    /// list is sorted with this with most recent activity first.
+    ///
+    /// For spaces where lastActivityDate > lastSeenDate the space can be considered to be "unread"
     ///
     /// - parameter max: recommend that the parameter is limited between 1 and 100
     /// - parameter queue: The queue on which the completion handler is dispatched.

@@ -36,22 +36,40 @@ public enum MessageEvent {
 /// - since: 1.2.0
 public struct Message {
     
+    /// This struct for the message text in different formats.
+    ///
+    /// - since: 2.3.0
     public struct Text {
         
+        /// Returns the plain text if exist
         var plain:String?
         
+        /// Returns the html if exist.
         var html:String?
         
+        ///Returns the markdown if exist.
         var markdown:String?
   
+        /// Make a Text object for the plain text.
+        ///
+        /// - parameter plain: The plain text.
         public static func plain(plain: String) -> Text {
             return Text(plain: plain, html: nil, markdown: nil)
         }
         
+        /// Make a Text object for the html.
+        ///
+        /// - parameter html: The text with the html markup.
+        /// - parameter plain: The alternate plain text for cases that do not support html markup.
         public static func html(html: String, plain: String? = nil) -> Text {
             return Text(plain: plain, html: html, markdown: nil)
         }
         
+        /// Make a Text object for the markdown.
+        ///
+        /// - parameter markdown: The text with the markdown markup.
+        /// - parameter html: The html text for how to render the markdown.
+        /// - parameter plain: The alternate plain text for cases that do not support markdown and html markup.
         public static func markdown(markdown: String, html: String, plain: String? = nil) -> Text {
             return Text(plain: plain, html: html, markdown: markdown)
         }
@@ -64,7 +82,7 @@ public struct Message {
     /// The identifier of this message.
     public private(set) var id: String?
     
-    /// The content of the message in multi-formatt if supported.
+    /// Returns the content of the message in different formats.
     ///
     /// - since: 2.3.0
     public private(set) var complexText: Message.Text?

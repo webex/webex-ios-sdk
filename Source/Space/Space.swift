@@ -43,9 +43,9 @@ public enum SpaceSortType: String{
 /// The struct of a space event
 /// - since: 2.3.0
 public enum SpaceEvent {
-    /// The callback when create a space
+    /// The callback when a new space was created.
     case create(Space)
-    /// The callback when update space
+    /// The callback when a space was changed (usually a rename).
     case update(Space)
 }
 
@@ -120,8 +120,9 @@ extension Space: Mappable {
     }
 }
 
-/// A data type representation of a space associated with conversation
-/// For rooms where lastActivityDate > lastSeenActivityDate the space can be considerd to be "unread"
+/// Read status about the date of last activity in the space and the date of current user last presence in the space.
+///
+/// For spaces where lastActivityDate > lastSeenDate the space can be considered to be "unread".
 ///
 /// - since: 2.3.0
 public struct SpaceReadStatus: ImmutableMappable {
@@ -132,10 +133,10 @@ public struct SpaceReadStatus: ImmutableMappable {
     /// The type of this space.
     public var type: SpaceType?
     
-    /// the published date of the last readable message.
+    /// The date of last activity in the space.
     public var lastActivityDate: Date?
     
-    /// the published date of the last message that login user seen
+    /// The date of the last message in the space that login user seen.
     public var lastSeenActivityDate: Date?
     
     private let dateTransform = CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ")
@@ -172,7 +173,7 @@ public struct SpaceReadStatus: ImmutableMappable {
     }
 }
 
-/// Shows Webex meeting details for a room such as the SIP address, meeting URL, toll-free and toll dial-in numbers.
+/// The Webex meeting details for a space such as the SIP address, meeting URL, toll-free and toll dial-in numbers.
 ///
 /// - since: 2.3.0
 public struct SpaceMeetingInfo: Mappable {

@@ -32,7 +32,9 @@ public struct WebexEventPayload {
         //        self.orgId = person?.orgId
     }
     
-    /// The personId of the user who caused the event to be sent
+    /// Returns the personId of the user that caused the event to be sent. For example, for a messsage received event,
+    /// the author of the message will be the actor. For a membership deleted event, the actor is the person who removed the user
+    /// from space.
     public let actorId: String?
     
     /// the current date on client

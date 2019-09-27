@@ -25,13 +25,13 @@ import ObjectMapper
 ///
 /// - since: 2.3.0
 public enum MembershipEvent {
-    // The callback when add membership
+    // The callback when a user is added to a space.
     case created(Membership)
-    // The callback when leave membership
+    // The callback when a user is removed to a space.
     case deleted(Membership)
-    // The callback when change moderator of membership
+    // The callback when a membership's properties changed.
     case update(Membership)
-    /// The callback when read receipt
+    /// The callback a membership has sent a read receipt.
     case seen(Membership, lastSeenMessage: String)
 }
 
@@ -117,19 +117,22 @@ extension Membership : Mappable {
     }
 }
 
+/// The read status of the membership for space.
+///
+/// - since: 2.3.0
 public struct MembershipReadStatus: ImmutableMappable {
     
     struct Context: MapContext {
         var spaceId:String?
     }
     
-    /// the membership of the space
+    /// The membership of the space
     public var member: Membership = Membership()
     
-    /// the id of the last message which the member have seen
+    /// The id of the last message which the member have seen
     public var lastSeenId: String?
     
-    /// the published date of the last message that the member have seen
+    /// The last date the member have seen
     public var lastSeenDate: Date?
     
     public init(map: Map) throws {

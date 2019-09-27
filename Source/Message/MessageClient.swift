@@ -50,12 +50,12 @@ public enum Mention {
 /// - since: 1.4.0
 public class MessageClient {
     
-    /// The callback handler when receiving a message event.
+    /// The callback handler for incoming message events.
     ///
     /// - since: 1.4.0
     public var onEvent: ((MessageEvent) -> Void)?
     
-    /// The callback handler when receiving a message event.
+    /// The callback handler for incoming message events.
     ///
     /// - since: 2.3.0
     public var onEventWithPayload: ((MessageEvent, WebexEventPayload) -> Void)?
@@ -195,11 +195,8 @@ public class MessageClient {
     ///
     /// The content of the message can be plain text, html, or markdown.
     ///
-    /// - parameter personEmail: The email address of the user to whom the message is to be posted.
-    /// - parameter plainText: The plain text to be posted to the user.
-    /// - parameter formattedText: The formatted text to be posted to the user, such as HTML.
-    /// - parameter markdown: The markdown message to be posted to the user.
-    /// - parameter files: Local files to be uploaded with the message.
+    /// - parameter toPersonEmail: The email address of the user to whom the message is to be posted.
+    /// - parameter withFiles: Local files to be uploaded with the message.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the message is posted.
     /// - returns: Void
@@ -216,11 +213,8 @@ public class MessageClient {
     ///
     /// The content of the message can be plain text, html, or markdown.
     ///
-    /// - parameter personId: The id of the user to whom the message is to be posted.
-    /// - parameter plainText: The plain text to be posted to the user.
-    /// - parameter formattedText: The formatted text to be posted to the user, such as HTML.
-    /// - parameter markdown: The markdown message to be posted to the user.
-    /// - parameter files: Local files to be attached to the message.
+    /// - parameter toPerson: The id of the user to whom the message is to be posted.
+    /// - parameter withFiles: Local files to be attached to the message.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the message is posted.
     /// - returns: Void
@@ -240,10 +234,9 @@ public class MessageClient {
     /// To notify specific person or everyone in a space, mentions should be used.
     /// Having <code>@johndoe</code> in the content of the message does not generate notification.
     ///
-    /// - parameter spaceId: The identifier of the space where the message is to be posted.
-    /// - parameter complexText: The plain text to be posted to the space.
+    /// - parameter toSpace: The identifier of the space where the message is to be posted.
     /// - parameter mentions: Notify these mentions.
-    /// - parameter files: Local files to be uploaded to the space.
+    /// - parameter withFiles: Local files to be uploaded to the space.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the message is posted.
     /// - returns: Void
@@ -264,9 +257,6 @@ public class MessageClient {
                 var plainText = text?.plain
                 let formattedText = text?.html
                 let markdown = text?.markdown
-                if plainText?.isEmpty != false && formattedText?.isEmpty != false {
-                    plainText = markdown
-                }
                 var object = [String: Any]()
                 object["objectType"] = ObjectType.comment.rawValue
                 object["displayName"] = plainText
@@ -460,7 +450,7 @@ public class MessageClient {
         }
     }
     
-    /// Send read receipt when the login user read a message, let others know you have seen it
+    /// Mark all messages in the space read.
     ///
     /// - parameter spaceId: The identifier of the space where the message is.
     /// - parameter messageId: The identifier of the message which user read.
@@ -493,6 +483,13 @@ public class MessageClient {
         }
     }
     
+    /// Mark all messages in the space read.
+    ///
+    /// - parameter spaceId: The identifier of the space where the message is.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the delete readReceipt has finished.
+    /// - returns: Void
+    /// - since: 2.3.0
     public func markAsRead(spaceId:String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
         self.doSomethingAfterRegistered { error in
             if let error = error {
