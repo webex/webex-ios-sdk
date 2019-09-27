@@ -133,6 +133,9 @@
                 <a href="../Enums/LogLevel.html">LogLevel</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/MembershipEvent.html">MembershipEvent</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/Mention.html">Mention</a>
               </li>
               <li class="nav-group-task">
@@ -140,6 +143,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/Result.html">Result</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SpaceEvent.html">SpaceEvent</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/SpaceSortType.html">SpaceSortType</a>
@@ -208,7 +214,13 @@
                 <a href="../Structs/Membership.html">Membership</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/MembershipReadStatus.html">MembershipReadStatus</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/Message.html">Message</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Message/Text.html">– Text</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/OAuthTokens.html">OAuthTokens</a>
@@ -229,10 +241,19 @@
                 <a href="../Structs/Space.html">Space</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/SpaceMeetingInfo.html">SpaceMeetingInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SpaceReadStatus.html">SpaceReadStatus</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/Team.html">Team</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/TeamMembership.html">TeamMembership</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/WebexEventPayload.html">WebexEventPayload</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Webhook.html">Webhook</a>
@@ -262,6 +283,70 @@
           <section class="section task-group-section">
             <div class="task-group">
               <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK16MembershipClientC7onEventyAA0cF0OcSgvp"></a>
+                    <a name="//apple_ref/swift/Property/onEvent" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC7onEventyAA0cF0OcSgvp">onEvent</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The callback handler for incoming membership events.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.3.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onEvent</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Enums/MembershipEvent.html">MembershipEvent</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK16MembershipClientC18onEventWithPayloadyAA0cF0O_AA0afH0VtcSgvp"></a>
+                    <a name="//apple_ref/swift/Property/onEventWithPayload" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC18onEventWithPayloadyAA0cF0O_AA0afH0VtcSgvp">onEventWithPayload</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The callback handler for incoming membership events with the event payload.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.3.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onEventWithPayload</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Enums/MembershipEvent.html">MembershipEvent</a></span><span class="p">,</span> <span class="kt"><a href="../Structs/WebexEventPayload.html">WebexEventPayload</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -1069,13 +1154,92 @@
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK16MembershipClientC18listWithReadStatus7spaceId5queue17completionHandlerySS_So012OS_dispatch_K0CSgyAA15ServiceResponseVySayAA0cgH0VGGctF"></a>
+                    <a name="//apple_ref/swift/Method/listWithReadStatus(spaceId:queue:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC18listWithReadStatus7spaceId5queue17completionHandlerySS_So012OS_dispatch_K0CSgyAA15ServiceResponseVySayAA0cgH0VGGctF">listWithReadStatus(spaceId:queue:completionHandler:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Return a list of memberships with details about the lastSeenId for each user, allowing a client to indicate <q>read status</q> in a space GUI</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.3.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">listWithReadStatus</span><span class="p">(</span><span class="nv">spaceId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/MembershipReadStatus.html">MembershipReadStatus</a></span><span class="p">]</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spaceId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the space.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application&rsquo;s main thread.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure to be executed once the delete request has finished.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Void</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2019-06-07)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2019 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2019-09-27)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
