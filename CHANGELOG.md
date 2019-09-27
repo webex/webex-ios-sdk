@@ -62,23 +62,23 @@ All notable changes to this project will be documented in this file.
 
 ---
 ## [2.3.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.3.0)
-Released on 2019-09-27.
+Released on 2019-09-30.
 #### Added
-- Add API to receive membership events.
-- Add API to receive room events.
+- Add API to receive membership created/deleted/updated/seen events.
+- Add API to receive room created/updated events.
 - Add API to get last activity status of a space.
-- Add API to get a list of last activity statuses of all spaces.
-- Add API to get a list of read statuses of all memberships in a space.
+- Add API to get a list of last activity status of all spaces.
+- Add API to get a list of read status of all memberships in a space.
 - Add API to get space meeting details.
 - Add API to send read receipt for message.
-- Add API to support "markdown" and "formatted" for messages.post().
-- Add lastActivity property for Person.
-- Add token expiration getter to JWTAuthenticator.
+- Add API to get the lastActivity of person.
+- Add API to get the token expiration date for JWTAuthenticator.
 
 #### Updated
+- Support iOS 13.
 - Support Swift5 and Xcode11.
 - Update Wme.framework.
-- Optimize message.list method to reduce latency.
+- Reduce latency when list messages.
 - Fixed camera shows my video as green.
 
 ## [2.1.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.1.0)
