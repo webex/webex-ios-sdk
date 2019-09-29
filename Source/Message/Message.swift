@@ -36,7 +36,9 @@ public enum MessageEvent {
 /// - since: 1.2.0
 public struct Message {
     
-    /// This struct for the message text in different formats.
+    /// The wrapper for the message text in different formats: plain text, markdown, and html.
+    /// Please note this version of the SDK requires the application to convert markdown to html.
+    /// Future version of the SDK will provide auto conversion from markdown to html.
     ///
     /// - since: 2.3.0
     public struct Text {
@@ -68,7 +70,7 @@ public struct Message {
         /// Make a Text object for the markdown.
         ///
         /// - parameter markdown: The text with the markdown markup.
-        /// - parameter html: The html text for how to render the markdown.
+        /// - parameter html: The html text for how to render the markdown. This will be optional in the future.
         /// - parameter plain: The alternate plain text for cases that do not support markdown and html markup.
         public static func markdown(markdown: String, html: String, plain: String? = nil) -> Text {
             return Text(plain: plain, html: html, markdown: markdown)
@@ -82,10 +84,10 @@ public struct Message {
     /// The identifier of this message.
     public private(set) var id: String?
     
-    /// Returns the content of the message in different formats.
+    /// Returns the content of the message in as Message.Text object.
     ///
     /// - since: 2.3.0
-    public private(set) var complexText: Message.Text?
+    public private(set) var textAsObject: Message.Text?
     
     /// The identifier of the space where this message was posted.
     public var spaceId: String? {
@@ -142,7 +144,7 @@ public struct Message {
     
     /// The content of the message.
     public var text: String? {
-        return self.complexText?.simple
+        return self.textAsObject?.simple
     }
         
     /// An array of file attachments in the message.
@@ -160,7 +162,7 @@ public struct Message {
         if self.activity.verb == ActivityModel.Verb.delete, let uuid = self.activity.objectUUID {
             self.id = uuid.hydraFormat(for: .message)
         }
-        self.complexText = Message.Text(plain: activity.objectDisplayName, html: activity.objectConetnt, markdown: activity.objectMarkdown)
+        self.textAsObject = Message.Text(plain: activity.objectDisplayName, html: activity.objectConetnt, markdown: activity.objectMarkdown)
     }
     
     private var mentions: [Mention]? {

@@ -455,7 +455,7 @@ public class MessageClient {
     /// - parameter spaceId: The identifier of the space where the message is.
     /// - parameter messageId: The identifier of the message which user read.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the delete readReceipt has finished.
+    /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
     /// - since: 2.3.0
     public func markAsRead(spaceId:String, messageId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
@@ -487,7 +487,7 @@ public class MessageClient {
     ///
     /// - parameter spaceId: The identifier of the space where the message is.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the delete readReceipt has finished.
+    /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
     /// - since: 2.3.0
     public func markAsRead(spaceId:String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
@@ -1011,7 +1011,7 @@ public class MessageClient {
                      files: [LocalFile]? = nil,
                      queue: DispatchQueue? = nil,
                      completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.post(text?.toComplexText, toPersonEmail: personEmail, withFiles: files, queue: queue, completionHandler: completionHandler)
+        self.post(text?.toTextObject, toPersonEmail: personEmail, withFiles: files, queue: queue, completionHandler: completionHandler)
     }
 
     /// Posts a message with optional file attachments to a user by id.
@@ -1031,7 +1031,7 @@ public class MessageClient {
                      files: [LocalFile]? = nil,
                      queue: DispatchQueue? = nil,
                      completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.post(text?.toComplexText, toPerson: personId, withFiles: files, queue: queue, completionHandler: completionHandler)
+        self.post(text?.toTextObject, toPerson: personId, withFiles: files, queue: queue, completionHandler: completionHandler)
     }
 
     /// Posts a message with optional file attachments to a space by spaceId.
@@ -1056,7 +1056,7 @@ public class MessageClient {
                      files: [LocalFile]? = nil,
                      queue: DispatchQueue? = nil,
                      completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.post(text?.toComplexText, toSpace: spaceId, mentions: mentions, withFiles: files, queue: queue, completionHandler: completionHandler)
+        self.post(text?.toTextObject, toSpace: spaceId, mentions: mentions, withFiles: files, queue: queue, completionHandler: completionHandler)
     }
 }
 
@@ -1073,7 +1073,7 @@ extension Date {
 
 extension String {
     
-    var toComplexText: Message.Text {
+    var toTextObject: Message.Text {
         return Message.Text.html(html: self, plain: self)
     }
     

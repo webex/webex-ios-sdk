@@ -21,7 +21,7 @@
 
 import Foundation
 
-/// The raw payload of the event.
+/// The payload of the event.
 ///
 /// - since: 2.3.0
 public struct WebexEventPayload {
@@ -32,7 +32,7 @@ public struct WebexEventPayload {
         //        self.orgId = person?.orgId
     }
     
-    /// Returns the personId of the user that caused the event to be sent. For example, for a messsage received event,
+    /// Returns the identifier of the user that caused the event to be sent. For example, for a messsage received event,
     /// the author of the message will be the actor. For a membership deleted event, the actor is the person who removed the user
     /// from space.
     public let actorId: String?

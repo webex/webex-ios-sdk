@@ -136,7 +136,7 @@ public struct SpaceReadStatus: ImmutableMappable {
     /// The date of last activity in the space.
     public var lastActivityDate: Date?
     
-    /// The date of the last message in the space that login user seen.
+    /// The date of the last message in the space that login user has read.
     public var lastSeenActivityDate: Date?
     
     private let dateTransform = CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ")

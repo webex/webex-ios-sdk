@@ -25,12 +25,12 @@ import Foundation
 /// - since: 1.2.0
 public class MembershipClient {
     
-    /// The callback handler for incoming membership events.
+    /// The callback to receive events about membership changes
     ///
     /// - since: 2.3.0
     public var onEvent: ((MembershipEvent) -> Void)?
 
-    /// The callback handler for incoming membership events with the event payload.
+    /// The callback to receive events with the event payload about membership changes.
     ///
     /// - since: 2.3.0
     public var onEventWithPayload: ((MembershipEvent, WebexEventPayload) -> Void)?
@@ -170,7 +170,7 @@ public class MembershipClient {
     ///
     /// - parameter membershipId: The identifier of the membership.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the get request has finished.
+    /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
     /// - since: 1.2.0
     public func get(membershipId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Membership>) -> Void) {
@@ -206,7 +206,7 @@ public class MembershipClient {
     ///
     /// - parameter membershipId: The identifier of the membership.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the delete request has finished.
+    /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
     /// - since: 1.2.0
     public func delete(membershipId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
@@ -219,11 +219,12 @@ public class MembershipClient {
         request.responseJSON(completionHandler)
     }
     
-    /// Return a list of memberships with details about the lastSeenId for each user, allowing a client to indicate "read status" in a space GUI
+    /// Returns a list of memberships with details about the lastSeenId for each user so that application can tell
+    /// which message was the last message was read by each user.
     ///
     /// - parameter spaceId: The identifier of the space.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the delete request has finished.
+    /// - parameter completionHandler: A closure to be executed once the request has finished.
     /// - returns: Void
     /// - since: 2.3.0
     public func listWithReadStatus(spaceId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[MembershipReadStatus]>) -> Void) {
@@ -275,7 +276,7 @@ extension MembershipClient {
                 membership.personOrgId = activity.actorOrgId
                 membership.personDisplayName = activity.actorDisplayName
                 membership.personEmail = EmailAddress.fromString(activity.actorEmail)
-                event = MembershipEvent.seen(membership, lastSeenMessage: seenId)
+                event = MembershipEvent.messageSeen(membership, lastSeenMessage: seenId)
             }
         }
         else {
