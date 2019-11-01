@@ -41,6 +41,24 @@ public struct CallMembership {
         case declined
     }
     
+    /// The enumeration of the type of membership's devices in the membership.
+    ///
+    /// - since: 2.4.0
+    public enum DeviceIntentType : String {
+
+        case none
+        
+        case join
+        
+        case leave
+
+        case wait
+        
+        case dialog
+        
+        case unknown
+    }
+    
     /// True if the person is the initiator of the call.
     ///
     /// - since: 1.2.0
@@ -91,6 +109,13 @@ public struct CallMembership {
     /// - since: 1.3.0
     public var sendingAudio: Bool {
         return self.model.status?.audioStatus == "SENDRECV"
+    }
+    
+    /// True if the `CallMembership` is waiting in lobby.
+    ///
+    /// - since: 2.4.0
+    public var isInLobby: Bool {
+        return self.model.isInLobby()
     }
     
     /// True if the `CallMembership` is sending screen share. Otherwise, false.

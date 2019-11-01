@@ -24,12 +24,20 @@ import ObjectMapper
 struct ParticipantModel {
     
     struct DeviceModel {
+        
+        struct IntentModel {
+            var id: String?
+            var type: CallMembership.DeviceIntentType?
+            var associatedWith: String?
+        }
+        
         var url: String?
         var deviceType: String?
         var featureToggles: String?
         var mediaConnections: [MediaConnectionModel]?
         var state: String?
         var callLegId: String?
+        var intent: IntentModel?
     }
     
     struct StatusModel {
@@ -65,6 +73,10 @@ struct ParticipantModel {
     var isLeft: Bool {
         return self.state == CallMembership.State.left
     }
+    
+    var isIdle:Bool {
+        return self.state == CallMembership.State.idle
+    }
 
     func isLefted(device url: URL) -> Bool{
         return isLeft || self.devices?.filter{ $0.url == url.absoluteString }.count == 0
@@ -81,6 +93,20 @@ struct ParticipantModel {
     func isCIUser() -> Bool {
         if let typeString = self.type, typeString == "USER" || typeString == "RESOURCE_ROOM"{
             return true
+        }
+        
+        return false
+    }
+    
+    func isInLobby() -> Bool {
+        guard self.isIdle == true, let devices = self.devices else{
+            return false
+        }
+        for device in devices {
+            if device.intent?.type == CallMembership.DeviceIntentType.wait ||
+                device.intent?.type == CallMembership.DeviceIntentType.dialog {
+                return true
+            }
         }
         
         return false
@@ -165,6 +191,7 @@ extension ParticipantModel.DeviceModel: Mappable {
         mediaConnections <- map["mediaConnections"]
         state <- map["state"]
         callLegId <- map["callLegId"]
+        intent <- map["intent"]
     }
 }
 
@@ -177,6 +204,34 @@ extension ParticipantModel.StatusModel: Mappable {
         audioStatus <- map["audioStatus"]
         videoStatus <- map["videoStatus"]
         csis <- map["csis"]
+    }
+}
+
+extension ParticipantModel.DeviceModel.IntentModel: Mappable {
+    init?(map: Map){
+    }
+    
+    mutating func mapping(map: Map) {
+        id <- map["id"]
+        type <- (map["type"], DeviceIntentTransform())
+        associatedWith <- map["associatedWith"]
+    }
+    
+    class DeviceIntentTransform: TransformType {
+        
+        func transformFromJSON(_ value: Any?) -> CallMembership.DeviceIntentType? {
+            guard let type = value as? String else {
+                return nil
+            }
+            return CallMembership.DeviceIntentType(rawValue: type.lowercased()) ?? CallMembership.DeviceIntentType.unknown
+        }
+        
+        func transformToJSON(_ value: CallMembership.DeviceIntentType?) -> String? {
+            guard let type = value else {
+                return nil
+            }
+            return type.rawValue
+        }
     }
 }
 

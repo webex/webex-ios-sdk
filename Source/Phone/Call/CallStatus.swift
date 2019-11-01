@@ -42,13 +42,15 @@ public enum CallStatus {
     case connected
     /// The call is terminated.
     case disconnected
+    /// The call is waiting in lobby
+    case inLobby
     
     func handle(model: CallModel, for call: Call) {
         guard let local = model.myself else {
             return;
         }
         switch self {
-        case .initiated, .ringing:
+        case .initiated, .ringing, .inLobby:
             handelInitiateAndRingingFor(call, local)
         case .connected:
             if call.isGroup {
@@ -98,6 +100,11 @@ private func handelInitiateAndRingingFor(_ call: Call, _ participant: Participan
             call.end(reason: Call.DisconnectReason.localCancel)
         }
         else if participant.isJoined(by: call.device.deviceUrl) {
+            if call.status == .inLobby {
+                DispatchQueue.main.async {
+                    call.startMedia()
+                }
+            }
             if call.isGroup {
                 call.status = .ringing
                 DispatchQueue.main.async {
@@ -123,6 +130,13 @@ private func handelInitiateAndRingingFor(_ call: Call, _ participant: Participan
                 }
                 else if call.isRemoteDeclined {
                     call.end(reason: Call.DisconnectReason.remoteDecline)
+                }
+            }
+        }else if participant.isInLobby() {
+            if call.status != .inLobby {
+                call.status = .inLobby
+                DispatchQueue.main.async {
+                    call.onLobby?()
                 }
             }
         }

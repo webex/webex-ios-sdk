@@ -283,4 +283,19 @@ class CallClient {
             
         request.responseJSON(completionHandler)
     }
+    
+    func letIn(_ locusUrl: String, memberships:[CallMembership], queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
+        let participantIds = memberships.compactMap {$0.model.id}
+        let parameters: [String: Any?] = ["admit":["participantIds":participantIds]]
+        let request = ServiceRequest.Builder(authenticator, endpoint: locusUrl)
+            .method(.patch)
+            .path("controls")
+            .body(RequestParameter(parameters))
+            .keyPath("locus")
+            .queue(queue)
+            .build()
+        
+        request.responseObject(completionHandler)
+    }
+    
 }

@@ -180,6 +180,8 @@ public class Call {
         case sendingAudio(CallMembership)
         /// The person in the membership started screen sharing.
         case sendingScreenShare(CallMembership)
+        /// The person in the membership waiting this `Call`.
+        case waitingInLobby(CallMembership)
     }
     
     /// The enumeration of iOS broadcasting events.
@@ -225,6 +227,22 @@ public class Call {
                 self.onConnectedOnceToken = UUID().uuidString
                 if let block = self.onConnected, self.status == CallStatus.connected {
                     DispatchQueue.main.asyncOnce(token: self.onConnectedOnceToken) {
+                        block()
+                    }
+                }
+                self.device.phone.queue.yield()
+            }
+        }
+    }
+    
+    /// Callback when local participant(s) is in lobby.
+    ///
+    /// - since: 2.4.0
+    public var onLobby: (() -> Void)? {
+        didSet {
+            self.device.phone.queue.sync {
+                if let block = self.onLobby, self.status == CallStatus.inLobby {
+                    DispatchQueue.main.async {
                         block()
                     }
                 }
@@ -711,6 +729,17 @@ public class Call {
         self.device.phone.hangup(call: self, completionHandler: completionHandler)
     }
     
+    /// Let someone in from lobby.
+    /// This should be called by host participants.
+    ///
+    /// - parameter memberships: array of CallMembership
+    /// - parameter completionHandler: A closure to be executed when completed, with error if the invocation is illegal or failed, otherwise nil.
+    /// - returns: Void
+    /// - since: 2.4.0
+    public func letIn(_ memberships: [CallMembership], completionHandler: @escaping (Error?) -> Void) {
+        self.device.phone.letIn(call: self, memberships: memberships, completionHandler: completionHandler)
+    }
+    
     /// Sends feedback for this call to Cisco Webex team.
     ///
     /// - parameter rating: The rating of the quality of this call between 1 and 5 where 5 means excellent quality.
@@ -1154,6 +1183,7 @@ public class Call {
                     let oldState = membership.state
                     let tempSendingAudio = membership.sendingAudio
                     let tempSendingVideo = membership.sendingVideo
+                    let tempInLobby = membership.isInLobby
                     membership.model = participant
                     if membership.state != oldState {
                         onCallMembershipChanges.append(contentsOf: checkMembershipChangeEventFor(membership))
@@ -1164,6 +1194,10 @@ public class Call {
                     if membership.sendingVideo != tempSendingVideo {
                         onCallMembershipChanges.append(CallMembershipChangedEvent.sendingVideo(membership))
                     }
+                    if tempInLobby != membership.isInLobby {
+                        onCallMembershipChanges.append(CallMembershipChangedEvent.waitingInLobby(membership))
+                    }
+                    
                     newMemberships.append(membership)
                 }
                 else {
