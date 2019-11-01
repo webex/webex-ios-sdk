@@ -44,7 +44,7 @@ struct MediaShareModel {
     struct MediaShareFloor {
         var beneficiary: ParticipantModel?
         var disposition: ShareFloorDisposition?
-        var granted: String?
+        var granted: String? = ""
         var released: String?
         var requested: String?
         var requester: ParticipantModel?
