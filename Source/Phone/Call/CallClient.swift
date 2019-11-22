@@ -123,7 +123,7 @@ class CallClient {
 
     private func body(device: Device, json: [String:Any?] = [:]) -> RequestParameter {
         var result = json
-        result["device"] = ["url":device.deviceUrl.absoluteString, "deviceType":device.deviceType, "regionCode":device.countryCode, "countryCode":device.regionCode]
+        result["device"] = ["url":device.deviceUrl.absoluteString, "deviceType":device.deviceType, "regionCode":device.countryCode, "countryCode":device.regionCode, "capabilities":["groupCallSupported":true, "sdpSupported":true]]
         result["respOnlySdp"] = true //coreFeatures.isResponseOnlySdpEnabled()
         return RequestParameter(result)
     }
@@ -152,10 +152,12 @@ class CallClient {
         
     }
     
-    func create(_ toAddress: String, by device: Device, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
+    func create(_ toAddress: String, moderator:Bool? = false, PIN:String? = nil, by device: Device, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
         var json = convertToJson(mediaInfo: localMedia)
         json["invitee"] = ["address" : toAddress]
-
+        json["supportsNativeLobby"] = true
+        json["moderator"] = moderator
+        json["pin"] = PIN
         let request = ServiceRequest.Builder(authenticator, service: .locus, device: device)
             .method(.post)
             .path("loci").path("call")
@@ -296,6 +298,15 @@ class CallClient {
             .build()
         
         request.responseObject(completionHandler)
+    }
+    
+    func keepAlive(_ url: String, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        let request = ServiceRequest.Builder(authenticator, endpoint: url)
+            .method(.get)
+            .queue(queue)
+            .build()
+        
+        request.responseJSON(completionHandler)
     }
     
 }

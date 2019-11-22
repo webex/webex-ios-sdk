@@ -103,8 +103,7 @@ struct ParticipantModel {
             return false
         }
         for device in devices {
-            if device.intent?.type == CallMembership.DeviceIntentType.wait ||
-                device.intent?.type == CallMembership.DeviceIntentType.dialog {
+            if device.intent?.type == CallMembership.DeviceIntentType.wait {
                 return true
             }
         }

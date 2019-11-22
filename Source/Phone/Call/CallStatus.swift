@@ -100,11 +100,6 @@ private func handelInitiateAndRingingFor(_ call: Call, _ participant: Participan
             call.end(reason: Call.DisconnectReason.localCancel)
         }
         else if participant.isJoined(by: call.device.deviceUrl) {
-            if call.status == .inLobby {
-                DispatchQueue.main.async {
-                    call.startMedia()
-                }
-            }
             if call.isGroup {
                 call.status = .ringing
                 DispatchQueue.main.async {
@@ -133,10 +128,12 @@ private func handelInitiateAndRingingFor(_ call: Call, _ participant: Participan
                 }
             }
         }else if participant.isInLobby() {
-            if call.status != .inLobby {
-                call.status = .inLobby
-                DispatchQueue.main.async {
-                    call.onLobby?()
+            call.status = .inLobby
+            DispatchQueue.main.async {
+                if call.model.fullState?.active == true {
+                    call.inLobby?(.waitingforAdmitting)
+                }else {
+                    call.inLobby?(.meetingNotStart)
                 }
             }
         }
