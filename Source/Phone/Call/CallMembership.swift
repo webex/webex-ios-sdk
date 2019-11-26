@@ -39,6 +39,8 @@ public struct CallMembership {
         case left
         /// The person has declined the call.
         case declined
+        /// The person is in lobby
+        case inLobby
     }
     
     /// The enumeration of the type of membership's devices in the membership.
@@ -68,12 +70,15 @@ public struct CallMembership {
     ///
     /// - since: 1.2.0
     public private(set) var personId: String?
-
+    
     /// The status of the person in this `CallMembership`.
     ///
     /// - since: 1.2.0
     public var state: State {
-        return self.model.state ?? .idle
+        guard let state = self.model.state else {
+            return .idle
+        }
+        return self.model.isInLobby() ? .inLobby : state
     }
     
     /// The email address of the person in this `CallMembership`.
@@ -109,13 +114,6 @@ public struct CallMembership {
     /// - since: 1.3.0
     public var sendingAudio: Bool {
         return self.model.status?.audioStatus == "SENDRECV"
-    }
-    
-    /// True if the `CallMembership` is waiting in lobby.
-    ///
-    /// - since: 2.4.0
-    public var isInLobby: Bool {
-        return self.model.isInLobby()
     }
     
     /// True if the `CallMembership` is sending screen share. Otherwise, false.

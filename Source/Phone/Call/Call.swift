@@ -1245,7 +1245,6 @@ public class Call {
                     let oldState = membership.state
                     let tempSendingAudio = membership.sendingAudio
                     let tempSendingVideo = membership.sendingVideo
-                    let tempInLobby = membership.isInLobby
                     membership.model = participant
                     if membership.state != oldState {
                         onCallMembershipChanges.append(contentsOf: checkMembershipChangeEventFor(membership))
@@ -1255,9 +1254,6 @@ public class Call {
                     }
                     if membership.sendingVideo != tempSendingVideo {
                         onCallMembershipChanges.append(CallMembershipChangedEvent.sendingVideo(membership))
-                    }
-                    if tempInLobby != membership.isInLobby {
-                        onCallMembershipChanges.append(CallMembershipChangedEvent.waitingInLobby(membership))
                     }
                     
                     newMemberships.append(membership)
@@ -1319,6 +1315,9 @@ public class Call {
         }
         else if membership.state == CallMembership.State.declined {
             onCallMembershipChanges.append(CallMembershipChangedEvent.declined(membership))
+        }
+        else if membership.state == CallMembership.State.inLobby {
+            onCallMembershipChanges.append(CallMembershipChangedEvent.waitingInLobby(membership))
         }
         return onCallMembershipChanges
     }
