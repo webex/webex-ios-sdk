@@ -1259,8 +1259,12 @@ public class Call {
                     newMemberships.append(membership)
                 }
                 else {
-                    newMemberships.append(CallMembership(participant: participant, call: self))
-                    //TODO participant add event?
+                    let membership = CallMembership(participant: participant, call: self)
+                    onCallMembershipChanges.append(contentsOf: checkMembershipChangeEventFor(membership))
+                    onCallMembershipChanges.append(CallMembershipChangedEvent.sendingAudio(membership))
+                    onCallMembershipChanges.append(CallMembershipChangedEvent.sendingAudio(membership))
+                    
+                    newMemberships.append(membership)
                 }
             }
             //TODO participant remove event?
