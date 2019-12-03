@@ -599,7 +599,7 @@ public class Phone {
         self.queue.sync {
             if let url = call.model.locusUrl {
                 self.client.letIn(url, memberships: memberships, queue: self.queue.underlying) { res in
-                    self.doLocusResponse(LocusResult.update(call, res))
+                    self.doLocusResponse(LocusResult.update(call, res, completionHandler))
                     self.queue.yield()
                 }
             }
