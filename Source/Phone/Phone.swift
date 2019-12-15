@@ -697,8 +697,8 @@ public class Phone {
                     }
                     self.add(call: call)
                     DispatchQueue.main.async {
-                        if call.model.myself?.isInLobby() == true {
-                            call.timerKeepAlive()
+                        if call.model.myself?.isInLobby == true {
+                            call.startKeepAlive()
                         }else {
                             call.startMedia()
                         }

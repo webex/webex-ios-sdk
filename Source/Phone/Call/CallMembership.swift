@@ -39,28 +39,21 @@ public struct CallMembership {
         case left
         /// The person has declined the call.
         case declined
-        /// The person is in lobby
-        case inLobby
+        /// The person is waiting in lobby
+        /// - since: 2.4.0
+        case waiting
+        
+        static func from(participant: ParticipantModel) -> CallMembership.State {
+            guard let state = participant.state else {
+                return .idle
+            }
+            if participant.isInLobby {
+                return .waiting
+            }
+            return State(rawValue: state.rawValue) ?? .idle
+        }
     }
-    
-    /// The enumeration of the type of membership's devices in the membership.
-    ///
-    /// - since: 2.4.0
-    public enum DeviceIntentType : String {
-
-        case none
         
-        case join
-        
-        case leave
-
-        case wait
-        
-        case dialog
-        
-        case unknown
-    }
-    
     /// True if the person is the initiator of the call.
     ///
     /// - since: 1.2.0
@@ -75,10 +68,7 @@ public struct CallMembership {
     ///
     /// - since: 1.2.0
     public var state: State {
-        guard let state = self.model.state else {
-            return .idle
-        }
-        return self.model.isInLobby() ? .inLobby : state
+        return State.from(participant: self.model)
     }
     
     /// The email address of the person in this `CallMembership`.
@@ -172,6 +162,6 @@ public struct CallMembership {
     }
     
     func isMediaActive() -> Bool {
-        return model.state == State.joined
+        return model.state == ParticipantModel.State.joined
     }
 }

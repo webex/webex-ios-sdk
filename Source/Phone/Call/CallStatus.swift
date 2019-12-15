@@ -43,15 +43,16 @@ public enum CallStatus {
     /// The call is terminated.
     case disconnected
     /// The call is waiting in lobby
-    case inLobby
+    /// - since: 2.4.0
+    case waiting
     
     func handle(model: CallModel, for call: Call) {
         guard let local = model.myself else {
             return;
         }
         switch self {
-        case .initiated, .ringing, .inLobby:
-            handelInitiateAndRingingFor(call, local)
+        case .initiated, .ringing, .waiting:
+            handleNonStartFor(call, local)
         case .connected:
             if call.isGroup {
                 if local.isLefted(device: call.device.deviceUrl)  {
@@ -72,7 +73,7 @@ public enum CallStatus {
     }
 }
 
-private func handelInitiateAndRingingFor(_ call: Call, _ participant: ParticipantModel) {
+private func handleNonStartFor(_ call: Call, _ participant: ParticipantModel) {
     if call.direction == Call.Direction.incoming {
         if call.isRemoteJoined {
             if participant.isJoined(by: call.device.deviceUrl) {
@@ -127,14 +128,10 @@ private func handelInitiateAndRingingFor(_ call: Call, _ participant: Participan
                     call.end(reason: Call.DisconnectReason.remoteDecline)
                 }
             }
-        }else if participant.isInLobby() {
-            call.status = .inLobby
+        } else if participant.isInLobby {
+            call.status = .waiting
             DispatchQueue.main.async {
-                if call.model.fullState?.active == true {
-                    call.inLobby?(.waitingforAdmitting)
-                }else {
-                    call.inLobby?(.meetingNotStart)
-                }
+                call.onWaiting?(Call.WaitReason.from(call: call))
             }
         }
     }

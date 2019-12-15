@@ -181,7 +181,7 @@ public class Call {
         /// The person in the membership started screen sharing.
         case sendingScreenShare(CallMembership)
         /// The person in the membership waiting this `Call`.
-        case waitingInLobby(CallMembership)
+        case waiting(CallMembership, WaitReason)
     }
     
     /// The enumeration of iOS broadcasting events.
@@ -205,11 +205,15 @@ public class Call {
     /// The enumuaration of reasons for a call on lobby.
     ///
     /// - since: 2.4.0
-    public enum InLobbyReason {
-        /// the meeting haven't started
+    public enum WaitReason {
+        /// The meeting haven't started
         case meetingNotStart
-        /// waiting in lobby for admiting by hosts
+        /// Waiting in lobby for admiting by hosts
         case waitingforAdmitting
+        
+        static func from(call: Call) -> WaitReason {
+            return call.model.fullState?.active == true ? .waitingforAdmitting : .meetingNotStart
+        }
     }
     
     /// Callback when remote participant(s) is ringing.
@@ -221,6 +225,22 @@ public class Call {
                 if let block = self.onRinging, self.status == CallStatus.ringing {
                     DispatchQueue.main.async {
                         block()
+                    }
+                }
+                self.device.phone.queue.yield()
+            }
+        }
+    }
+    
+    /// Callback when local participant(s) is waiting in lobby.
+    ///
+    /// - since: 2.4.0
+    public var onWaiting: ((WaitReason) -> Void)? {
+        didSet {
+            self.device.phone.queue.sync {
+                if let block = self.onWaiting, self.status == CallStatus.waiting {
+                    DispatchQueue.main.async {
+                        block(Call.WaitReason.from(call: self))
                     }
                 }
                 self.device.phone.queue.yield()
@@ -244,23 +264,7 @@ public class Call {
             }
         }
     }
-    
-    /// Callback when local participant(s) is in lobby.
-    ///
-    /// - since: 2.4.0
-    public var inLobby: ((InLobbyReason) -> Void)? {
-        didSet {
-            self.device.phone.queue.sync {
-                if let block = self.inLobby, self.status == CallStatus.inLobby {
-                    DispatchQueue.main.async {
-                        block(self.callModel.fullState?.active == true ? .waitingforAdmitting : .meetingNotStart)
-                    }
-                }
-                self.device.phone.queue.yield()
-            }
-        }
-    }
-    
+        
     /// Callback when this `Call` is disconnected (hangup, cancelled, get declined or other self device pickup the call).
     ///
     /// - since: 1.2.0
@@ -680,7 +684,7 @@ public class Call {
         return nil
     }
     
-    private var timer:Timer?
+    private var keepAliveTimer: Timer?
     
     var keepAliveUrl: String? {
         return self.model.myself?[device: self.device.deviceUrl]?.mediaConnections?.first?.keepAliveUrl ?? self.model.mediaConnections?.first?.keepAliveUrl
@@ -984,25 +988,21 @@ public class Call {
         self.device.phone.update(call: self, sendingAudio: self.sendingAudio, sendingVideo: self.sendingVideo, localSDP:self.mediaSession.getLocalSdp(), completionHandler: completionHandler)
     }
     
-    func keepAlive() {
-        self.device.phone.keepAlive(call: self)
-    }
-    
-    func timerKeepAlive() {
+    func startKeepAlive() {
         guard let second = self.keepAliveSecs else {
             return
         }
         DispatchQueue.global().async {
-            self.timer = Timer.scheduledTimer(withTimeInterval: TimeInterval(second/2), repeats: true, block: { (timer) in
-                self.keepAlive()
+            self.keepAliveTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(second/2), repeats: true, block: { (timer) in
+                self.device.phone.keepAlive(call: self)
             })
             RunLoop.current.run()
         }
     }
     
-    func timerInvalidate() {
-        timer?.invalidate()
-        timer = nil
+    func stopKeepAlive() {
+        self.keepAliveTimer?.invalidate()
+        self.keepAliveTimer = nil
     }
     
     func startMedia() {
@@ -1236,7 +1236,7 @@ public class Call {
     
     private func doCallModel(_ model: CallModel) {
         self.model = model
-        if let participants = self.model.participants?.filter({ $0.isCIUser() }) {
+        if let participants = self.model.participants?.filter({ $0.isCIUser }) {
             let oldMemberships = self.memberships
             var newMemberships = [CallMembership]()
             var onCallMembershipChanges = [CallMembershipChangedEvent]()
@@ -1282,8 +1282,8 @@ public class Call {
         self.updateAuxStreamCount()
         self.status.handle(model: self.model, for: self)
         
-        if self.status != .inLobby {
-            self.timerInvalidate()
+        if self.status != .waiting {
+            self.stopKeepAlive()
         }
         
         if (self.status == .connected || self.status == .ringing) && self.mediaSession.status != .running {
@@ -1320,8 +1320,8 @@ public class Call {
         else if membership.state == CallMembership.State.declined {
             onCallMembershipChanges.append(CallMembershipChangedEvent.declined(membership))
         }
-        else if membership.state == CallMembership.State.inLobby {
-            onCallMembershipChanges.append(CallMembershipChangedEvent.waitingInLobby(membership))
+        else if membership.state == CallMembership.State.waiting {
+            onCallMembershipChanges.append(CallMembershipChangedEvent.waiting(membership, Call.WaitReason.from(call: self)))
         }
         return onCallMembershipChanges
     }
