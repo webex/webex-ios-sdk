@@ -180,6 +180,8 @@ public class Call {
         case sendingAudio(CallMembership)
         /// The person in the membership started screen sharing.
         case sendingScreenShare(CallMembership)
+        /// The person in the membership waiting this `Call`.
+        case waitingInLobby(CallMembership)
     }
     
     /// The enumeration of iOS broadcasting events.
@@ -198,6 +200,16 @@ public class Call {
     public enum Capabilities {
         /// This `Call` can send and receive DTMF.
         case dtmf
+    }
+    
+    /// The enumuaration of reasons for a call on lobby.
+    ///
+    /// - since: 2.4.0
+    public enum InLobbyReason {
+        /// the meeting haven't started
+        case meetingNotStart
+        /// waiting in lobby for admiting by hosts
+        case waitingforAdmitting
     }
     
     /// Callback when remote participant(s) is ringing.
@@ -226,6 +238,22 @@ public class Call {
                 if let block = self.onConnected, self.status == CallStatus.connected {
                     DispatchQueue.main.asyncOnce(token: self.onConnectedOnceToken) {
                         block()
+                    }
+                }
+                self.device.phone.queue.yield()
+            }
+        }
+    }
+    
+    /// Callback when local participant(s) is in lobby.
+    ///
+    /// - since: 2.4.0
+    public var inLobby: ((InLobbyReason) -> Void)? {
+        didSet {
+            self.device.phone.queue.sync {
+                if let block = self.inLobby, self.status == CallStatus.inLobby {
+                    DispatchQueue.main.async {
+                        block(self.callModel.fullState?.active == true ? .waitingforAdmitting : .meetingNotStart)
                     }
                 }
                 self.device.phone.queue.yield()
@@ -339,6 +367,9 @@ public class Call {
         }
     }
     
+    private var _receivingVideo:Bool = true
+    private var _receivingAudio:Bool = true
+    
     /// True if the local party of this `Call` is receiving video. Otherwise, false.
     ///
     /// - since: 1.2.0
@@ -348,6 +379,7 @@ public class Call {
         }
         set {
             self.mediaSession.videoOutputMuted = !newValue
+            _receivingVideo = newValue
         }
     }
     
@@ -360,6 +392,7 @@ public class Call {
         }
         set {
             self.mediaSession.audioOutputMuted = !newValue
+            _receivingAudio = newValue
         }
     }
     
@@ -493,7 +526,11 @@ public class Call {
                 //update media session
                 self.mediaSession.updateMedia(mediaType:MediaSessionWrapper.MediaType.video(self.videoRenderViews))
                 //update locus local medias
-                self.device.phone.update(call: self, sendingAudio: self.sendingAudio, sendingVideo: self.sendingVideo,localSDP: self.mediaSession.getLocalSdp())
+                self.device.phone.update(call: self, sendingAudio: self.sendingAudio, sendingVideo: self.sendingVideo, localSDP: self.mediaSession.getLocalSdp()) { (error) in
+                    if error != nil {
+                        SDKLogger.shared.error("update media failed")
+                    }
+                }
             }
         }
     }
@@ -511,7 +548,11 @@ public class Call {
                 //update media session
                 self.mediaSession.updateMedia(mediaType:MediaSessionWrapper.MediaType.screenShare(self.screenShareRenderView))
                 //update locus local medias
-                self.device.phone.update(call: self, sendingAudio: self.sendingAudio, sendingVideo: self.sendingVideo,localSDP: self.mediaSession.getLocalSdp())
+                self.device.phone.update(call: self, sendingAudio: self.sendingAudio, sendingVideo: self.sendingVideo, localSDP: self.mediaSession.getLocalSdp()) { (error) in
+                    if error != nil {
+                        SDKLogger.shared.error("update media failed")
+                    }
+                }
                 //join or leave screen share
                 if let granted = self.model.screenMediaShare?.shareFloor?.granted {
                     if self.screenShareRenderView != nil {
@@ -639,6 +680,16 @@ public class Call {
         return nil
     }
     
+    private var timer:Timer?
+    
+    var keepAliveUrl: String? {
+        return self.model.myself?[device: self.device.deviceUrl]?.mediaConnections?.first?.keepAliveUrl ?? self.model.mediaConnections?.first?.keepAliveUrl
+    }
+    
+    private var keepAliveSecs: Int? {
+        return self.model.myself?[device: self.device.deviceUrl]?.mediaConnections?.first?.keepAliveSecs ?? self.model.mediaConnections?.first?.keepAliveSecs
+    }
+    
     init(model: CallModel, device: Device, media: MediaSessionWrapper, direction: Direction, group: Bool, uuid: UUID?) {
         self.direction = direction
         self.isGroup = group
@@ -709,6 +760,17 @@ public class Call {
     /// - see: see CallStatus
     public func hangup(completionHandler: @escaping (Error?) -> Void) {
         self.device.phone.hangup(call: self, completionHandler: completionHandler)
+    }
+    
+    /// Let someone in from lobby.
+    /// This should be called by moderator participants.
+    ///
+    /// - parameter memberships: array of CallMembership
+    /// - parameter completionHandler: A closure to be executed when completed, with error if the invocation is illegal or failed, otherwise nil.
+    /// - returns: Void
+    /// - since: 2.4.0
+    public func letIn(_ memberships: [CallMembership], completionHandler: @escaping (Error?) -> Void) {
+        self.device.phone.letIn(call: self, memberships: memberships, completionHandler: completionHandler)
     }
     
     /// Sends feedback for this call to Cisco Webex team.
@@ -911,16 +973,45 @@ public class Call {
     }
     
     func updateMedia(sendingAudio: Bool, sendingVideo: Bool) {
-        self.device.phone.update(call: self, sendingAudio: sendingAudio, sendingVideo: sendingVideo)
+        self.device.phone.update(call: self, sendingAudio: sendingAudio, sendingVideo: sendingVideo) { (error) in
+            if error == nil {
+                SDKLogger.shared.error("update media failed")
+            }
+        }
+    }
+    
+    private func updateSdp(completionHandler: @escaping (Error?) -> Void) {
+        self.device.phone.update(call: self, sendingAudio: self.sendingAudio, sendingVideo: self.sendingVideo, localSDP:self.mediaSession.getLocalSdp(), completionHandler: completionHandler)
+    }
+    
+    func keepAlive() {
+        self.device.phone.keepAlive(call: self)
+    }
+    
+    func timerKeepAlive() {
+        guard let second = self.keepAliveSecs else {
+            return
+        }
+        DispatchQueue.global().async {
+            self.timer = Timer.scheduledTimer(withTimeInterval: TimeInterval(second/2), repeats: true, block: { (timer) in
+                self.keepAlive()
+            })
+            RunLoop.current.run()
+        }
+    }
+    
+    func timerInvalidate() {
+        timer?.invalidate()
+        timer = nil
     }
     
     func startMedia() {
-        if let remoteSDP = self.remoteSDP {
-            self.mediaSession.setRemoteSdp(remoteSDP)
-        }
-        else {
+        guard let remoteSDP = self.remoteSDP else {
             SDKLogger.shared.error("Failure: remoteSdp is nil")
+            return
         }
+        
+        self.mediaSession.setRemoteSdp(remoteSDP)
         self.mediaSession.onBroadcasting = {
             isBroadcasting in
             DispatchQueue.main.async {
@@ -1164,11 +1255,16 @@ public class Call {
                     if membership.sendingVideo != tempSendingVideo {
                         onCallMembershipChanges.append(CallMembershipChangedEvent.sendingVideo(membership))
                     }
+                    
                     newMemberships.append(membership)
                 }
                 else {
-                    newMemberships.append(CallMembership(participant: participant, call: self))
-                    //TODO participant add event?
+                    let membership = CallMembership(participant: participant, call: self)
+                    onCallMembershipChanges.append(contentsOf: checkMembershipChangeEventFor(membership))
+                    onCallMembershipChanges.append(CallMembershipChangedEvent.sendingAudio(membership))
+                    onCallMembershipChanges.append(CallMembershipChangedEvent.sendingAudio(membership))
+                    
+                    newMemberships.append(membership)
                 }
             }
             //TODO participant remove event?
@@ -1185,6 +1281,24 @@ public class Call {
         
         self.updateAuxStreamCount()
         self.status.handle(model: self.model, for: self)
+        
+        if self.status != .inLobby {
+            self.timerInvalidate()
+        }
+        
+        if (self.status == .connected || self.status == .ringing) && self.mediaSession.status != .running {
+            self.updateSdp { (error) in
+                if error == nil && self.mediaSession.status != .running {
+                    self.startMedia()
+                    self.receivingVideo = self._receivingVideo
+                    self.receivingAudio = self._receivingAudio
+                    if self.status == .connected {
+                        self.onConnected?()
+                    }
+                }
+            }
+        }
+        
     }
     
     private func checkMembershipChangeEventFor(_ membership: CallMembership) -> [CallMembershipChangedEvent] {
@@ -1205,6 +1319,9 @@ public class Call {
         }
         else if membership.state == CallMembership.State.declined {
             onCallMembershipChanges.append(CallMembershipChangedEvent.declined(membership))
+        }
+        else if membership.state == CallMembership.State.inLobby {
+            onCallMembershipChanges.append(CallMembershipChangedEvent.waitingInLobby(membership))
         }
         return onCallMembershipChanges
     }

@@ -39,6 +39,26 @@ public struct CallMembership {
         case left
         /// The person has declined the call.
         case declined
+        /// The person is in lobby
+        case inLobby
+    }
+    
+    /// The enumeration of the type of membership's devices in the membership.
+    ///
+    /// - since: 2.4.0
+    public enum DeviceIntentType : String {
+
+        case none
+        
+        case join
+        
+        case leave
+
+        case wait
+        
+        case dialog
+        
+        case unknown
     }
     
     /// True if the person is the initiator of the call.
@@ -50,12 +70,15 @@ public struct CallMembership {
     ///
     /// - since: 1.2.0
     public private(set) var personId: String?
-
+    
     /// The status of the person in this `CallMembership`.
     ///
     /// - since: 1.2.0
     public var state: State {
-        return self.model.state ?? .idle
+        guard let state = self.model.state else {
+            return .idle
+        }
+        return self.model.isInLobby() ? .inLobby : state
     }
     
     /// The email address of the person in this `CallMembership`.
