@@ -1262,7 +1262,7 @@ public class Call {
                     let membership = CallMembership(participant: participant, call: self)
                     onCallMembershipChanges.append(contentsOf: checkMembershipChangeEventFor(membership))
                     onCallMembershipChanges.append(CallMembershipChangedEvent.sendingAudio(membership))
-                    onCallMembershipChanges.append(CallMembershipChangedEvent.sendingAudio(membership))
+                    onCallMembershipChanges.append(CallMembershipChangedEvent.sendingVideo(membership))
                     
                     newMemberships.append(membership)
                 }
