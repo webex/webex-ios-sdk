@@ -344,6 +344,7 @@ public class Call {
         }
         set {
             self.mediaSession.videoMuted = !newValue
+            _sendingVideo = newValue
         }
     }
     
@@ -356,6 +357,7 @@ public class Call {
         }
         set {
             self.mediaSession.audioMuted = !newValue
+            _sendingAudio = newValue
         }
     }
     
@@ -371,6 +373,8 @@ public class Call {
         }
     }
     
+    private var _sendingVideo:Bool = true
+    private var _sendingAudio:Bool = true
     private var _receivingVideo:Bool = true
     private var _receivingAudio:Bool = true
     
@@ -978,7 +982,7 @@ public class Call {
     
     func updateMedia(sendingAudio: Bool, sendingVideo: Bool) {
         self.device.phone.update(call: self, sendingAudio: sendingAudio, sendingVideo: sendingVideo) { (error) in
-            if error == nil {
+            if error != nil {
                 SDKLogger.shared.error("update media failed")
             }
         }
@@ -1290,6 +1294,8 @@ public class Call {
             self.updateSdp { (error) in
                 if error == nil && self.mediaSession.status != .running {
                     self.startMedia()
+                    self.sendingVideo = self._sendingVideo
+                    self.sendingAudio = self._sendingAudio
                     self.receivingVideo = self._receivingVideo
                     self.receivingAudio = self._receivingAudio
                     if self.status == .connected {
