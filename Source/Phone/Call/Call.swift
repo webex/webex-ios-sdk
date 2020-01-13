@@ -232,7 +232,7 @@ public class Call {
         }
     }
     
-    /// Callback when local participant(s) is waiting in lobby.
+    /// Callback when the caller is waiting in lobby.
     ///
     /// - since: 2.4.0
     public var onWaiting: ((WaitReason) -> Void)? {
@@ -767,7 +767,7 @@ public class Call {
     }
     
     /// Let someone in from lobby.
-    /// This should be called by moderator participants.
+    /// This should be called by moderator.
     ///
     /// - parameter memberships: array of CallMembership
     /// - parameter completionHandler: A closure to be executed when completed, with error if the invocation is illegal or failed, otherwise nil.
