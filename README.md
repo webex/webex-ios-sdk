@@ -280,7 +280,7 @@ Here are some examples of how to use the iOS SDK in your app.
 
 12. Screen share (sending):
 
-    11.1 In your containing app:
+    12.1 In your containing app:
 
     ```swift
     webex.phone.dial("coworker@acm.com", option: MediaOption.audioVideoScreenShare(video: ..., screenShare: ..., applicationGroupIdentifier: "group.your.application.group.identifier"))) { ret in
@@ -312,7 +312,7 @@ Here are some examples of how to use the iOS SDK in your app.
     }
     ```
 
-    11.2 In your broadcast upload extension sample handler:
+    12.2 In your broadcast upload extension sample handler:
 
     ```swift
     override func broadcastStarted(withSetupInfo setupInfo: [String : NSObject]?) {
@@ -355,7 +355,7 @@ Here are some examples of how to use the iOS SDK in your app.
     }
     ```
 
-    11.3 Get more technical details about the [Containing App & Broadcast upload extension](https://github.com/webex/webex-ios-sdk/wiki/Implementation-Broadcast-upload-extension) and [Set up an App Group](https://github.com/webex/webex-ios-sdk/wiki/Set-up-an-App-Group)
+    12.3 Get more technical details about the [Containing App & Broadcast upload extension](https://github.com/webex/webex-ios-sdk/wiki/Implementation-Broadcast-upload-extension) and [Set up an App Group](https://github.com/webex/webex-ios-sdk/wiki/Set-up-an-App-Group)
 
 13. Receive more video streams in a meeting:
 
