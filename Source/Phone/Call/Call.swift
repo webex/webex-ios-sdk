@@ -180,7 +180,9 @@ public class Call {
         case sendingAudio(CallMembership)
         /// The person in the membership started screen sharing.
         case sendingScreenShare(CallMembership)
-        /// The person in the membership waiting this `Call`.
+        /// The person in the membership is waiting in the lobby.
+        ///
+        /// - since: 2.4.0
         case waiting(CallMembership, WaitReason)
     }
     
@@ -202,13 +204,13 @@ public class Call {
         case dtmf
     }
     
-    /// The enumuaration of reasons for a call on lobby.
+    /// The reasons for the call is waiting.
     ///
     /// - since: 2.4.0
     public enum WaitReason {
-        /// The meeting haven't started
+        /// Waiting in the lobby for the meeting to start.
         case meetingNotStart
-        /// Waiting in lobby for admiting by hosts
+        /// Waiting in the lobby for admiting by hosts
         case waitingforAdmitting
         
         static func from(call: Call) -> WaitReason {
@@ -232,7 +234,7 @@ public class Call {
         }
     }
     
-    /// Callback when the caller is waiting in lobby.
+    /// Callback when the call is waiting.
     ///
     /// - since: 2.4.0
     public var onWaiting: ((WaitReason) -> Void)? {
@@ -770,10 +772,10 @@ public class Call {
         self.device.phone.hangup(call: self, completionHandler: completionHandler)
     }
     
-    /// Let someone in from lobby.
+    /// Admit CallMemberships into the meeting from the lobby.
     /// This should be called by moderator.
     ///
-    /// - parameter memberships: array of CallMembership
+    /// - parameter memberships: the call memberships that waiting in the lobby.
     /// - parameter completionHandler: A closure to be executed when completed, with error if the invocation is illegal or failed, otherwise nil.
     /// - returns: Void
     /// - since: 2.4.0

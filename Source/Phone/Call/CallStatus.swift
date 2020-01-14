@@ -42,7 +42,7 @@ public enum CallStatus {
     case connected
     /// The call is terminated.
     case disconnected
-    /// The call is waiting in lobby
+    /// The call is waiting.
     /// - since: 2.4.0
     case waiting
     

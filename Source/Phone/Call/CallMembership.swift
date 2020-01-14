@@ -39,7 +39,7 @@ public struct CallMembership {
         case left
         /// The person has declined the call.
         case declined
-        /// The person is waiting in lobby
+        /// The person is waiting in the lobby about the call.
         /// - since: 2.4.0
         case waiting
         
