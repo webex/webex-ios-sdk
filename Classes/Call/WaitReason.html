@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Text Structure Reference</title>
+    <title>WaitReason Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Struct/Text" class="dashAnchor"></a>
-    <a title="Text Structure Reference"></a>
+    <a name="//apple_ref/swift/Enum/WaitReason" class="dashAnchor"></a>
+    <a title="WaitReason Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../../index.html">WebexSDK Docs</a> (96% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../../index.html">WebexSDK Reference</a>
         <img id="carat" src="../../img/carat.png" />
-        Text Structure Reference
+        WaitReason Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -268,19 +268,17 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>Text</h1>
+            <h1>WaitReason</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Text</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">WaitReason</span></code></pre>
 
                 </div>
               </div>
-            <p>The wrapper for the message text in different formats: plain text, markdown, and html.
-Please note this version of the SDK requires the application to convert markdown to html.
-Future version of the SDK will provide auto conversion from markdown to html.</p>
+            <p>The reasons for the call is waiting.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
-    2.3.0
+    2.4.0
 
 </div>
 
@@ -291,9 +289,9 @@ Future version of the SDK will provide auto conversion from markdown to html.</p
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK7MessageV4TextV5plainAfESS_tFZ"></a>
-                    <a name="//apple_ref/swift/Method/plain(plain:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK7MessageV4TextV5plainAfESS_tFZ">plain(plain:)</a>
+                    <a name="/s:8WebexSDK4CallC10WaitReasonO15meetingNotStartyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/meetingNotStart" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC10WaitReasonO15meetingNotStartyA2EmF">meetingNotStart</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -301,35 +299,16 @@ Future version of the SDK will provide auto conversion from markdown to html.</p
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Make a Text object for the plain text.</p>
+                        <p>Waiting in the lobby for the meeting to start.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">plain</span><span class="p">(</span><span class="nv">plain</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Text</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">meetingNotStart</span></code></pre>
 
                         </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>plain</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The plain text.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
                       </div>
                     </section>
                   </div>
@@ -337,9 +316,9 @@ Future version of the SDK will provide auto conversion from markdown to html.</p
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK7MessageV4TextV4htmlAF5plainAESS_SSSgtFZ"></a>
-                    <a name="//apple_ref/swift/Method/html(html:plain:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK7MessageV4TextV4htmlAF5plainAESS_SSSgtFZ">html(html:plain:)</a>
+                    <a name="/s:8WebexSDK4CallC10WaitReasonO19waitingforAdmittingyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/waitingforAdmitting" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC10WaitReasonO19waitingforAdmittingyA2EmF">waitingforAdmitting</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -347,117 +326,16 @@ Future version of the SDK will provide auto conversion from markdown to html.</p
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Make a Text object for the html.</p>
+                        <p>Waiting in the lobby for admiting by hosts</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">html</span><span class="p">(</span><span class="nv">html</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">plain</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Text</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">waitingforAdmitting</span></code></pre>
 
                         </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>html</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The text with the html markup.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>plain</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The alternate plain text for cases that do not support html markup.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK7MessageV4TextV8markdownAF4html5plainAESS_S2SSgtFZ"></a>
-                    <a name="//apple_ref/swift/Method/markdown(markdown:html:plain:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK7MessageV4TextV8markdownAF4html5plainAESS_S2SSgtFZ">markdown(markdown:html:plain:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Make a Text object for the markdown.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">markdown</span><span class="p">(</span><span class="nv">markdown</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">html</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">plain</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Text</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>markdown</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The text with the markdown markup.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>html</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The html text for how to render the markdown. This will be optional in the future.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>plain</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The alternate plain text for cases that do not support markdown and html markup.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
                       </div>
                     </section>
                   </div>
