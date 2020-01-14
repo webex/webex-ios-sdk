@@ -142,7 +142,7 @@ public class Phone {
         case leave(Call, ServiceResponse<CallModel>, (Error?) -> Void)
         case reject(Call, ServiceResponse<Any>, (Error?) -> Void)
         case alert(Call, ServiceResponse<Any>, (Error?) -> Void)
-        case update(Call, ServiceResponse<CallModel>, ((Error?) -> Void)? = nil)
+        case update(Call, ServiceResponse<CallModel>, ((Error?) -> Void)?)
         case updateMediaShare(Call, ServiceResponse<Any>, (Error?) -> Void)
     }
 
@@ -589,7 +589,7 @@ public class Phone {
                 SDKLogger.shared.debug("Requesting full sync Delta for locus: \(syncUrl)")
             }
             self.client.fetch(syncUrl, queue: self.queue.underlying) { res in
-                self.doLocusResponse(LocusResult.update(call, res))
+                self.doLocusResponse(LocusResult.update(call, res, nil))
                 self.queue.yield()
             }
         }
