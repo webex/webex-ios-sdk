@@ -68,8 +68,8 @@ All notable changes to this project will be documented in this file.
 ## [2.4.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.4.0)
 Released on 2020-1-15.
 #### Added
-- Add waiting status to callStatus, indicate user is now waiting in lobby.
-- Add API to admit callMembership join meeting from lobby.
+- Support to join the meeting where lobby is enabled.
+- Support to let-in waiting people from looby to the meeting.
 
 #### Updated
 - Fixed screen share didn't work.
