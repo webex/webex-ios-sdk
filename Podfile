@@ -8,7 +8,7 @@ def shared_pods
     pod 'ObjectMapper', '~> 3.1'
     pod 'AlamofireObjectMapper', '~> 5.0'
     pod 'SwiftyJSON', '~> 4.0'
-    pod 'Starscream', '= 3.0.5'
+    pod 'Starscream', '= 4.0.0'
     pod 'KeychainAccess', '~> 3.1'
 end
 
