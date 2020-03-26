@@ -245,7 +245,7 @@ public class MembershipClient {
                 var readStatuses = [MembershipReadStatus]()
                 let context = MembershipReadStatus.Context(spaceId: dict["id"] as? String)
                 items.forEach({ (item) in
-                    if let readStatus = MembershipReadStatus(JSON: item, context: context) {
+                    if let readStatus = try? MembershipReadStatus(JSON: item, context: context) {
                         readStatuses.append(readStatus)
                     }
                 })
