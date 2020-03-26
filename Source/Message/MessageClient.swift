@@ -1,4 +1,4 @@
-// Copyright 2016-2019 Cisco Systems Inc
+// Copyright 2016-2020 Cisco Systems Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -197,6 +197,7 @@ public class MessageClient {
     ///
     /// - parameter toPersonEmail: The email address of the user to whom the message is to be posted.
     /// - parameter withFiles: Local files to be uploaded with the message.
+    /// - parameter parentMessage: If not nil, you sending message will belong to its thread message.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the message is posted.
     /// - returns: Void
@@ -204,9 +205,10 @@ public class MessageClient {
     public func post(_ text: Message.Text? = nil,
                      toPersonEmail: EmailAddress,
                      withFiles: [LocalFile]? = nil,
+                     parentMessage: Message? = nil,
                      queue: DispatchQueue? = nil,
                      completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.post(person: toPersonEmail.toString(), text: text, files: withFiles, queue: queue, completionHandler: completionHandler)
+        self.post(person: toPersonEmail.toString(), text: text, files: withFiles, parentMessage: parentMessage, queue: queue, completionHandler: completionHandler)
     }
         
     /// Posts a message with optional file attachments to a user by id.
@@ -215,6 +217,7 @@ public class MessageClient {
     ///
     /// - parameter toPerson: The id of the user to whom the message is to be posted.
     /// - parameter withFiles: Local files to be attached to the message.
+    /// - parameter parentMessage: If not nil, you sending message will belong to its thread message.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the message is posted.
     /// - returns: Void
@@ -222,9 +225,10 @@ public class MessageClient {
     public func post(_ text: Message.Text? = nil,
                      toPerson: String,
                      withFiles: [LocalFile]? = nil,
+                     parentMessage: Message? = nil,
                      queue: DispatchQueue? = nil,
                      completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        self.post(person: toPerson, text: text, files: withFiles, queue: queue, completionHandler: completionHandler)
+        self.post(person: toPerson, text: text, files: withFiles, parentMessage: parentMessage, queue: queue, completionHandler: completionHandler)
     }
         
     /// Posts a message with optional file attachments to a space by spaceId.
@@ -237,6 +241,7 @@ public class MessageClient {
     /// - parameter toSpace: The identifier of the space where the message is to be posted.
     /// - parameter mentions: Notify these mentions.
     /// - parameter withFiles: Local files to be uploaded to the space.
+    /// - parameter parentMessage: If not nil, you sending message will belong to its thread message.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the message is posted.
     /// - returns: Void
@@ -245,6 +250,7 @@ public class MessageClient {
                      toSpace: String,
                      mentions: [Mention]? = nil,
                      withFiles: [LocalFile]? = nil,
+                     parentMessage: Message? = nil,
                      queue: DispatchQueue? = nil,
                      completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
         self.doSomethingAfterRegistered { error in
@@ -274,6 +280,11 @@ public class MessageClient {
                 }
                 object["mentions"] = ["items" : mentionedPeople]
                 object["groupMentions"] = ["items" : mentionedGroup]
+                
+                var parent:[String: Any]?
+                if let message = parentMessage, let id = message.id {
+                    parent = ["id": id.locusFormat, "type": "reply"]
+                }
                 
                 var verb = ActivityModel.Verb.post
                 let key = self.encryptionKey(spaceId: toSpace)
@@ -313,14 +324,14 @@ public class MessageClient {
                         }
                         let target: [String: Any] = ["id": toSpace.locusFormat, "objectType": ObjectType.conversation.rawValue]
                         key.encryptionUrl(client: self) { encryptionUrl in
-                            postMessageRequest(encryptionUrl: encryptionUrl, material: material,target: target)
+                            postMessageRequest(encryptionUrl: encryptionUrl, material: material, target: target)
                         }
                     }
                 }
                 
                 func postMessageRequest(encryptionUrl: Result<String?>, material: Result<String>, target: [String: Any]){
                     if let url = encryptionUrl.data {
-                        let body = RequestParameter(["verb": verb.rawValue, "encryptionKeyUrl": url, "object": object, "target": target, "clientTempId": "\(self.uuid):\(UUID().uuidString)", "kmsMessage": self.keySerialization ?? nil])
+                        let body = RequestParameter(["verb": verb.rawValue, "encryptionKeyUrl": url, "object": object, "target": target, "clientTempId": "\(self.uuid):\(UUID().uuidString)", "kmsMessage": self.keySerialization ?? nil, "parent": parent])
                         let request = self.messageServiceBuilder.path("activities")
                             .method(.post)
                             .body(body)
@@ -348,11 +359,12 @@ public class MessageClient {
     private func post(person: String,
                       text: Message.Text? = nil,
                       files: [LocalFile]? = nil,
+                      parentMessage: Message? = nil,
                       queue: DispatchQueue? = nil,
                       completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
         self.lookupSpace(person: person, queue: queue) { result in
             if let spaceId = result.data {
-                self.post(text, toSpace: spaceId, withFiles: files, queue: queue, completionHandler: completionHandler)
+                self.post(text, toSpace: spaceId, withFiles: files, parentMessage: parentMessage, queue: queue, completionHandler: completionHandler)
             }
             else {
                 completionHandler(ServiceResponse(nil, Result.failure(result.error ?? MSGError.spaceFetchFail)))

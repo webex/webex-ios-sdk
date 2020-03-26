@@ -1,5 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 2.4.0 Releases
+
+- `2.4.0` Releases - [2.4.0](#240)
+
 #### 2.3.0 Releases
 
 - `2.3.0` Releases - [2.3.0](#230)
@@ -61,6 +65,17 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ---
+## [2.4.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.4.0)
+Released on 2020-1-15.
+#### Added
+- Support to join the meeting where lobby is enabled.
+- Support to let-in waiting people from looby to the meeting.
+
+#### Updated
+- Fixed screen share didn't work.
+- Fixed loud speaker didn't work.
+
+
 ## [2.3.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.3.0)
 Released on 2019-09-30.
 #### Added

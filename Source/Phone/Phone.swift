@@ -1,4 +1,4 @@
-// Copyright 2016-2019 Cisco Systems Inc
+// Copyright 2016-2020 Cisco Systems Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -142,7 +142,7 @@ public class Phone {
         case leave(Call, ServiceResponse<CallModel>, (Error?) -> Void)
         case reject(Call, ServiceResponse<Any>, (Error?) -> Void)
         case alert(Call, ServiceResponse<Any>, (Error?) -> Void)
-        case update(Call, ServiceResponse<CallModel>, ((Error?) -> Void)? = nil)
+        case update(Call, ServiceResponse<CallModel>, ((Error?) -> Void)?)
         case updateMediaShare(Call, ServiceResponse<Any>, (Error?) -> Void)
     }
 
@@ -589,7 +589,7 @@ public class Phone {
                 SDKLogger.shared.debug("Requesting full sync Delta for locus: \(syncUrl)")
             }
             self.client.fetch(syncUrl, queue: self.queue.underlying) { res in
-                self.doLocusResponse(LocusResult.update(call, res))
+                self.doLocusResponse(LocusResult.update(call, res, nil))
                 self.queue.yield()
             }
         }
