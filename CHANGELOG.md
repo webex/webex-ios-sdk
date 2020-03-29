@@ -1,5 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 2.5.0 Releases
+
+- `2.5.0` Releases - [2.5.0](#250)
+
 #### 2.4.0 Releases
 
 - `2.4.0` Releases - [2.4.0](#240)
@@ -65,6 +69,16 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ---
+## [2.5.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.5.0)
+Released on 2020-3-30.
+#### Added
+- Support for threaded messaging.
+
+#### Updated
+- Update Wme.framework.
+- Update Starscream.framework.
+- Remove deprecated Apple UIWebView API.
+
 ## [2.4.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.4.0)
 Released on 2020-1-15.
 #### Added
