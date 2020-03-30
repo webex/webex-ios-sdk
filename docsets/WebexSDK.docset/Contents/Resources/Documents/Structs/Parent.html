@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>JWTAuthStorage Protocol Reference</title>
+    <title>Parent Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Protocol/JWTAuthStorage" class="dashAnchor"></a>
-    <a title="JWTAuthStorage Protocol Reference"></a>
+    <a name="//apple_ref/swift/Struct/Parent" class="dashAnchor"></a>
+    <a title="Parent Structure Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">WebexSDK Docs</a> (96% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">WebexSDK Reference</a>
         <img id="carat" src="../img/carat.png" />
-        JWTAuthStorage Protocol Reference
+        Parent Structure Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -271,17 +271,17 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>JWTAuthStorage</h1>
+            <h1>Parent</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">JWTAuthStorage</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Parent</span></code></pre>
 
                 </div>
               </div>
-            <p>A protocol represents a storage mechanism for JWT authorization information</p>
+            <p>A data struct  represents  parent message of some thread messags</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
-    1.2.0
+    2.5.0
 
 </div>
 
@@ -292,9 +292,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK14JWTAuthStorageP3jwtSSSgvp"></a>
-                    <a name="//apple_ref/swift/Property/jwt" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK14JWTAuthStorageP3jwtSSSgvp">jwt</a>
+                    <a name="/s:8WebexSDK6ParentV2idSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/id" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK6ParentV2idSSSgvp">id</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -302,14 +302,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The JSON Web Token</p>
+                        <p>The message id of parent message.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">jwt</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -319,9 +319,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK14JWTAuthStorageP18authenticationInfoAA017JWTAuthenticationF0VSgvp"></a>
-                    <a name="//apple_ref/swift/Property/authenticationInfo" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK14JWTAuthStorageP18authenticationInfoAA017JWTAuthenticationF0VSgvp">authenticationInfo</a>
+                    <a name="/s:8WebexSDK6ParentV7actorIdSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/actorId" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK6ParentV7actorIdSSSgvp">actorId</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -329,14 +329,68 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The JWT authentication information</p>
+                        <p>The actor id of parent message.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">authenticationInfo</span><span class="p">:</span> <span class="kt"><a href="../Structs/JWTAuthenticationInfo.html">JWTAuthenticationInfo</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">actorId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK6ParentV4typeSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/type" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK6ParentV4typeSSSgvp">type</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The action type of thread message.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK6ParentV9published10Foundation4DateVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/published" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK6ParentV9published10Foundation4DateVSgvp">published</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The published date of parent message.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">published</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>

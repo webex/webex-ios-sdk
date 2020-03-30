@@ -30,7 +30,7 @@
     },
     {
       "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Message/ActivityModel.swift",
-      "line": 87,
+      "line": 92,
       "symbol": "ActivityModel",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"

@@ -229,6 +229,9 @@
                 <a href="../Structs/OAuthTokens.html">OAuthTokens</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/Parent.html">Parent</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/Person.html">Person</a>
               </li>
               <li class="nav-group-task">
@@ -480,9 +483,9 @@ the actual content or the thumbnail of the attachment.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13MessageClientC4post_13toPersonEmail9withFiles5queue17completionHandleryAA0C0V4TextVSg_AA0H7AddressCSayAA9LocalFileCGSgSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAJGctF"></a>
-                    <a name="//apple_ref/swift/Method/post(_:toPersonEmail:withFiles:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_13toPersonEmail9withFiles5queue17completionHandleryAA0C0V4TextVSg_AA0H7AddressCSayAA9LocalFileCGSgSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAJGctF">post(_:toPersonEmail:withFiles:queue:completionHandler:)</a>
+                    <a name="/s:8WebexSDK13MessageClientC4post_13toPersonEmail9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_AA0H7AddressCSayAA9LocalFileCGSgAKSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVyAKGctF"></a>
+                    <a name="//apple_ref/swift/Method/post(_:toPersonEmail:withFiles:parent:queue:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_13toPersonEmail9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_AA0H7AddressCSayAA9LocalFileCGSgAKSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVyAKGctF">post(_:toPersonEmail:withFiles:parent:queue:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -507,6 +510,7 @@ the actual content or the thumbnail of the attachment.</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">post</span><span class="p">(</span><span class="n">_</span> <span class="nv">text</span><span class="p">:</span> <span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">.</span><span class="kt">Text</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">toPersonEmail</span><span class="p">:</span> <span class="kt"><a href="../Classes/EmailAddress.html">EmailAddress</a></span><span class="p">,</span>
                  <span class="nv">withFiles</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/LocalFile.html">LocalFile</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                 <span class="nv">parent</span><span class="p">:</span> <span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
@@ -543,6 +547,18 @@ the actual content or the thumbnail of the attachment.</p>
                             <tr>
                               <td>
                                 <code>
+                                <em>parent</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If not nil, the sent message will belong to the thread of the parent message.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
                                 <em>queue</em>
                                 </code>
                               </td>
@@ -577,9 +593,9 @@ the actual content or the thumbnail of the attachment.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13MessageClientC4post_8toPerson9withFiles5queue17completionHandleryAA0C0V4TextVSg_SSSayAA9LocalFileCGSgSo012OS_dispatch_J0CSgyAA15ServiceResponseVyAJGctF"></a>
-                    <a name="//apple_ref/swift/Method/post(_:toPerson:withFiles:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_8toPerson9withFiles5queue17completionHandleryAA0C0V4TextVSg_SSSayAA9LocalFileCGSgSo012OS_dispatch_J0CSgyAA15ServiceResponseVyAJGctF">post(_:toPerson:withFiles:queue:completionHandler:)</a>
+                    <a name="/s:8WebexSDK13MessageClientC4post_8toPerson9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_SSSayAA9LocalFileCGSgAKSgSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAKGctF"></a>
+                    <a name="//apple_ref/swift/Method/post(_:toPerson:withFiles:parent:queue:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_8toPerson9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_SSSayAA9LocalFileCGSgAKSgSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAKGctF">post(_:toPerson:withFiles:parent:queue:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -604,6 +620,7 @@ the actual content or the thumbnail of the attachment.</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">post</span><span class="p">(</span><span class="n">_</span> <span class="nv">text</span><span class="p">:</span> <span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">.</span><span class="kt">Text</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">toPerson</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
                  <span class="nv">withFiles</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/LocalFile.html">LocalFile</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                 <span class="nv">parent</span><span class="p">:</span> <span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
@@ -640,6 +657,18 @@ the actual content or the thumbnail of the attachment.</p>
                             <tr>
                               <td>
                                 <code>
+                                <em>parent</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If not nil, the sent message will belong to the thread of the parent message.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
                                 <em>queue</em>
                                 </code>
                               </td>
@@ -674,9 +703,9 @@ the actual content or the thumbnail of the attachment.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13MessageClientC4post_7toSpace8mentions9withFiles5queue17completionHandleryAA0C0V4TextVSg_SSSayAA7MentionOGSgSayAA9LocalFileCGSgSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAKGctF"></a>
-                    <a name="//apple_ref/swift/Method/post(_:toSpace:mentions:withFiles:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_7toSpace8mentions9withFiles5queue17completionHandleryAA0C0V4TextVSg_SSSayAA7MentionOGSgSayAA9LocalFileCGSgSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAKGctF">post(_:toSpace:mentions:withFiles:queue:completionHandler:)</a>
+                    <a name="/s:8WebexSDK13MessageClientC4post_7toSpace8mentions9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_SSSayAA7MentionOGSgSayAA9LocalFileCGSgALSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVyALGctF"></a>
+                    <a name="//apple_ref/swift/Method/post(_:toSpace:mentions:withFiles:parent:queue:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_7toSpace8mentions9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_SSSayAA7MentionOGSgSayAA9LocalFileCGSgALSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVyALGctF">post(_:toSpace:mentions:withFiles:parent:queue:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -705,6 +734,7 @@ Having <code>@johndoe</code> in the content of the message does not generate not
                  <span class="nv">toSpace</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
                  <span class="nv">mentions</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/Mention.html">Mention</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">withFiles</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/LocalFile.html">LocalFile</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                 <span class="nv">parent</span><span class="p">:</span> <span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
@@ -747,6 +777,18 @@ Having <code>@johndoe</code> in the content of the message does not generate not
                               <td>
                                 <div>
                                   <p>Local files to be uploaded to the space.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>parent</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If not nil, the sent message will belong to the thread of the parent message.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1661,7 +1703,7 @@ Having <code>@johndoe</code> in the content of the message does not generate not
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-01-14)</p>
+          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-03-30)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
