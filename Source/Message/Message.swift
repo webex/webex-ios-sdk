@@ -154,24 +154,22 @@ public struct Message {
         return self.activity.files
     }
     
-    /// Parent message of this message
+    /// Returns the parent message for the reply message.
     ///
-    /// - note: If parent != nil , this is a thread message,  cannot use thread message as parent when posting.
     /// - since: 2.5.0
-    public var parent: Parent?
+    public private(set) var parentId: String?
     
-    /// Returns true if this is a reply message.
+    /// Returns true for reply message.
     ///
     /// - since: 2.5.0
-    public var isReply: Bool {
-        return self.parent?.type == "reply"
-    }
+    public private(set) var isReply: Bool
     
     private let activity: ActivityModel
-        
+    
     init(activity: ActivityModel) {
         self.activity = activity
-        self.parent = Parent(activity: activity)
+        self.parentId = activity.parentId
+        self.isReply = activity.parentType == "reply"
         self.id = activity.uuid?.hydraFormat(for: .message)
         if self.activity.verb == ActivityModel.Verb.delete, let uuid = self.activity.objectUUID {
             self.id = uuid.hydraFormat(for: .message)
@@ -319,30 +317,6 @@ public struct RemoteFile {
     
     var url: String?
     var secureContentRef: String?
-}
-
-/// A data struct  represents  parent message of some thread messags
-///
-/// - since: 2.5.0
-public struct Parent {
-    /// The message id of parent message.
-    public internal(set) var id: String?
-    /// The actor id of parent message.
-    public internal(set) var actorId: String?
-    /// The action type of thread message.
-    public internal(set) var type: String?
-    /// The published date of parent message.
-    public internal(set) var published: Date?
-    
-    init?(activity:ActivityModel) {
-        guard let id = activity.parentId else {
-            return nil
-        }
-        self.id = id
-        self.actorId = activity.parentActorId
-        self.type = activity.parentType
-        self.published = activity.parentPublished
-    }
 }
 
 extension RemoteFile {

@@ -563,7 +563,9 @@ public class Phone {
         DispatchQueue.main.async {
             let reachabilities = self.reachability.feedback?.reachabilities
             self.queue.sync {
-                guard let url = call.model.myself?.mediaBaseUrl, let sdp = call.model.mediaConnections?.first?.localSdp?.sdp ?? localSDP, let mediaID = call.model.myself?[device: call.device.deviceUrl]?.mediaConnections?.first?.mediaId ?? call.model.mediaConnections?.first?.mediaId else {
+                guard let url = call.model.myself?.mediaBaseUrl,
+                    let sdp = call.model.mediaConnections?.first?.localSdp?.sdp ?? localSDP,
+                    let mediaID = call.model.myself?[device: call.device.deviceUrl]?.mediaConnections?.first?.mediaId ?? call.model.mediaConnections?.first?.mediaId else {
                     completionHandler(WebexError.serviceFailed(code: -7000, reason: "Missing media data"))
                     self.queue.yield()
                     return
