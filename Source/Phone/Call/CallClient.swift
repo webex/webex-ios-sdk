@@ -121,9 +121,9 @@ class CallClient {
         return RequestParameter(result)
     }
 
-    private func body(device: Device, json: [String:Any?] = [:]) -> RequestParameter {
+    private func body(composedVideo: Bool, device: Device, json: [String:Any?] = [:]) -> RequestParameter {
         var result = json
-        result["device"] = ["url":device.deviceUrl.absoluteString, "deviceType":device.deviceType, "regionCode":device.countryCode, "countryCode":device.regionCode, "capabilities":["groupCallSupported":true, "sdpSupported":true]]
+        result["device"] = ["url":device.deviceUrl.absoluteString, "deviceType": (composedVideo ? "WEB" : device.deviceType), "regionCode":device.countryCode, "countryCode":device.regionCode, "capabilities":["groupCallSupported":true, "sdpSupported":true]]
         result["respOnlySdp"] = true //coreFeatures.isResponseOnlySdpEnabled()
         return RequestParameter(result)
     }
@@ -136,23 +136,28 @@ class CallClient {
         return ["localMedias": [["type": "SDP", "localSdp": mediaInfoJSON]]]
     }
     
-    private func handleLocusOnlySDPResponse(completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) ->((ServiceResponse<CallResponseModel>) -> Void) {
+    private func handleLocusOnlySDPResponse(layout: MediaOption.VideoLayout? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) ->((ServiceResponse<CallResponseModel>) -> Void) {
         return {
             result in
             switch result.result {
             case .success(let callResponse):
                 if var callModel = callResponse.callModel {
                     callModel.setMediaConnections(newMediaConnections: callResponse.mediaConnections)
+                    if let layout = layout, let url = callModel.myself?.url, let device = callModel.myself?.deviceUrl  {
+                        self.layout(url, by: device, layout: layout, queue: queue ?? DispatchQueue.main) { _ in
+                            completionHandler(ServiceResponse.init(result.response, Result.success(callModel)))
+                        }
+                        return;
+                    }
                     completionHandler(ServiceResponse.init(result.response, Result.success(callModel)))
                 }
             case .failure(let error):
                 completionHandler(ServiceResponse.init(result.response, Result.failure(error)))
             }
         }
-        
     }
     
-    func create(_ toAddress: String, moderator:Bool? = false, PIN:String? = nil, by device: Device, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
+    func create(_ toAddress: String, moderator:Bool? = false, PIN:String? = nil, by device: Device, localMedia: MediaModel, layout: MediaOption.VideoLayout?, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
         var json = convertToJson(mediaInfo: localMedia)
         json["invitee"] = ["address" : toAddress]
         json["supportsNativeLobby"] = true
@@ -161,23 +166,22 @@ class CallClient {
         let request = ServiceRequest.Builder(authenticator, service: .locus, device: device)
             .method(.post)
             .path("loci").path("call")
-            .body(body(device: device, json: json))
+            .body(body(composedVideo: layout != .single, device: device, json: json))
             .queue(queue)
             .build()
         
-        request.responseObject(handleLocusOnlySDPResponse(completionHandler: completionHandler))
+        request.responseObject(handleLocusOnlySDPResponse(layout: layout, queue: queue, completionHandler: completionHandler))
     }
     
-    func join(_ callUrl: String, by device: Device, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
+    func join(_ callUrl: String, by device: Device, localMedia: MediaModel, layout: MediaOption.VideoLayout?, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
         let json = convertToJson(mediaInfo: localMedia)
         let request = ServiceRequest.Builder(authenticator, endpoint: callUrl)
             .method(.post)
             .path("participant")
-            .body(body(device: device, json: json))
+            .body(body(composedVideo: layout != .single, device: device, json: json))
             .queue(queue)
             .build()
-        
-        request.responseObject(handleLocusOnlySDPResponse(completionHandler: completionHandler))
+        request.responseObject(handleLocusOnlySDPResponse(layout: layout, queue: queue, completionHandler: completionHandler))
     }
     
     func leave(_ participantUrl: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
@@ -290,6 +294,19 @@ class CallClient {
         let participantIds = memberships.compactMap {$0.model.id}
         let parameters: [String: Any?] = ["admit":["participantIds":participantIds]]
         let request = ServiceRequest.Builder(authenticator, endpoint: locusUrl)
+            .method(.patch)
+            .path("controls")
+            .body(RequestParameter(parameters))
+            .keyPath("locus")
+            .queue(queue)
+            .build()
+        
+        request.responseObject(completionHandler)
+    }
+    
+    func layout(_ participantUrl: String, by deviceUrl: String, layout: MediaOption.VideoLayout, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
+        let parameters: [String: Any?] = ["layout":["deviceUrl":deviceUrl, "type":layout.type]]
+        let request = ServiceRequest.Builder(authenticator, endpoint: participantUrl)
             .method(.patch)
             .path("controls")
             .body(RequestParameter(parameters))

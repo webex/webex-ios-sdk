@@ -25,6 +25,26 @@ import Foundation
 /// - since: 1.2.0
 public struct MediaOption {
     
+    /// The video layout for the active speaker and other attendees in the group video meeting.
+    ///
+    /// - since: 2.5.0
+    public enum VideoLayout {
+        case single
+        case filmstrip
+        case grid
+        
+        var type: String {
+            switch self {
+            case .single:
+                return "Single"
+            case .grid:
+                return "Equal"
+            default:
+                return "ActivePresence"
+            }
+        }
+    }
+    
     /// Constructs an audio only media option.
     ///
     /// - since: 1.2.0
@@ -65,18 +85,17 @@ public struct MediaOption {
     }
     
     var localVideoView: MediaRenderView?
-    
     var remoteVideoView: MediaRenderView?
-    
     var screenShareView: MediaRenderView?
-    
     fileprivate var _uuid: UUID?
-    
     let hasVideo: Bool
-    
     let hasScreenShare: Bool
-    
     let applicationGroupIdentifier:String?
+    
+    /// The video layout for the active speaker and other attendees in the group video meeting.
+    ///
+    /// - since: 2.5.0
+    public var layout: VideoLayout?
     
     init() {
         self.hasVideo = false

@@ -480,6 +480,17 @@ Here are some examples of how to use the iOS SDK in your app.
     })
     ```
 
+19. Change the layout for the active speaker and other attendee composed video
+
+    ```swift
+    let option: MediaOption = MediaOption.audioVideo(local: ..., remote: ...)
+    option.layout = .grid
+
+    webex.phone.dial(spaceId, option: option) { ret in
+        // ...
+    }
+    ```
+
 
 ## Migration from Cisco SparkSDK
 

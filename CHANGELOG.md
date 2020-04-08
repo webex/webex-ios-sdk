@@ -73,6 +73,8 @@ All notable changes to this project will be documented in this file.
 Released on 2020-3-30.
 #### Added
 - Support for threaded messaging.
+- Support compose and render the active speaker video with other attendee video and all the names in one single view.
+- Support single, filmstrip and grid layouts for the composed video view.
 
 #### Updated
 - Update Wme.framework.
