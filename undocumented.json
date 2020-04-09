@@ -43,6 +43,27 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/MediaOption.swift",
+      "line": 32,
+      "symbol": "MediaOption.VideoLayout.single",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/MediaOption.swift",
+      "line": 33,
+      "symbol": "MediaOption.VideoLayout.filmstrip",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/MediaOption.swift",
+      "line": 34,
+      "symbol": "MediaOption.VideoLayout.grid",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Media/AuxStream.swift",
       "line": 25,
       "symbol": "AuxStream",

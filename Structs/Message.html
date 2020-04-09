@@ -14,7 +14,7 @@
     <a title="Message Structure Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK Docs</a> (96% documented)</p>
+        <p><a href="../index.html">WebexSDK Docs</a> (95% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -214,6 +214,9 @@
                 <a href="../Structs/MediaOption.html">MediaOption</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/MediaOption/VideoLayout.html">– VideoLayout</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/Membership.html">Membership</a>
               </li>
               <li class="nav-group-task">
@@ -227,9 +230,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/OAuthTokens.html">OAuthTokens</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Structs/Parent.html">Parent</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Person.html">Person</a>
@@ -666,9 +666,9 @@ Future version of the SDK will provide auto conversion from markdown to html.</p
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK7MessageV6parentAA6ParentVSgvp"></a>
-                    <a name="//apple_ref/swift/Property/parent" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK7MessageV6parentAA6ParentVSgvp">parent</a>
+                    <a name="/s:8WebexSDK7MessageV8parentIdSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/parentId" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK7MessageV8parentIdSSSgvp">parentId</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -676,12 +676,7 @@ Future version of the SDK will provide auto conversion from markdown to html.</p
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Parent message of this message</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    If parent != nil , this is a thread message,  cannot use thread message as parent when posting.
-
-</div>
+                        <p>Returns the parent message for the reply message.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     2.5.0
@@ -693,7 +688,7 @@ Future version of the SDK will provide auto conversion from markdown to html.</p
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">parent</span><span class="p">:</span> <span class="kt"><a href="../Structs/Parent.html">Parent</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">parentId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -713,7 +708,7 @@ Future version of the SDK will provide auto conversion from markdown to html.</p
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns true if this is a reply message.</p>
+                        <p>Returns true for reply message.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     2.5.0
@@ -725,7 +720,7 @@ Future version of the SDK will provide auto conversion from markdown to html.</p
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isReply</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">isReply</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -773,7 +768,7 @@ Future version of the SDK will provide auto conversion from markdown to html.</p
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-03-30)</p>
+          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-04-09)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
