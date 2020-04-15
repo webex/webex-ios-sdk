@@ -1,5 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 2.5.0.1 Releases
+
+- `2.5.0.1` Releases - [2.5.0.1](#2501)
+
 #### 2.5.0 Releases
 
 - `2.5.0` Releases - [2.5.0](#250)
@@ -69,6 +73,11 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ---
+## [2.5.0.1](https://github.com/webex/webex-ios-sdk/releases/tag/2.5.0.1)
+Released on 2020-4-15.
+#### Updated
+- Fixed almost no audio while someone turn on speaker on phone.
+
 ## [2.5.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.5.0)
 Released on 2020-3-30.
 #### Added
