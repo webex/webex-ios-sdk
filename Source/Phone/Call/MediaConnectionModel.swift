@@ -39,7 +39,7 @@ struct MediaModel {
     var reachabilities: [String /* media cluster tag */ : ReachabilityModel]?
     var type: String? = "SDP"
     
-    init(sdp: String, audioMuted: Bool, videoMuted: Bool, reachabilities: [String: ReachabilityModel]?) {
+    init(sdp: String?, audioMuted: Bool, videoMuted: Bool, reachabilities: [String: ReachabilityModel]?) {
         self.sdp = sdp
         self.audioMuted = audioMuted
         self.videoMuted = videoMuted

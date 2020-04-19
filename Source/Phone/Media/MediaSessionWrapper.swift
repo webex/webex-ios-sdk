@@ -42,7 +42,7 @@ class MediaSessionWrapper {
     private var broadcastServer: BroadcastConnectionServer?
     
     // MARK: - SDP
-    func getLocalSdp() -> String {
+    func getLocalSdp() -> String? {
         mediaSession.createLocalSdpOffer()
         return mediaSession.localSdpOffer
     }
