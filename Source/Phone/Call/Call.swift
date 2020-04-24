@@ -1292,7 +1292,7 @@ public class Call {
             self.stopKeepAlive()
         }
         
-        if (self.status == .connected || self.status == .ringing) && self.mediaSession.status != .running {
+        if self.remoteSDP == nil && (self.status == .connected || self.status == .ringing) {
             self.updateSdp { (error) in
                 if error == nil && self.mediaSession.status != .running {
                     self.startMedia()
