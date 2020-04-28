@@ -67,26 +67,82 @@ public class Phone {
         case maxBandwidthAudio = 64000
     }
     
-    /// The max bandwidth for audio in unit bps for the call.
+    /// MARK: - Deprecated
+    /// The max receiving bandwidth for audio in unit bps for the call.
     /// Only effective if set before the start of call.
     /// if 0, default value of 64 * 1000 is used.
     ///
     /// - since: 1.3.0
-    public var audioMaxBandwidth: UInt32 = DefaultBandwidth.maxBandwidthAudio.rawValue
+    @available(*, deprecated)
+    public var audioMaxBandwidth: UInt32 {
+        get {
+            return self.audioMaxRxBandwidth
+        }
+        set {
+            self.audioMaxRxBandwidth = newValue
+        }
+    }
     
-    /// The max bandwidth for video in unit bps for the call.
+    /// MARK: - Deprecated
+    /// The max receiving bandwidth for video in unit bps for the call.
     /// Only effective if set before the start of call.
     /// if 0, default value of 2000*1000 is used.
     ///
     /// - since: 1.3.0
-    public var videoMaxBandwidth: UInt32 = DefaultBandwidth.maxBandwidth720p.rawValue
+    @available(*, deprecated)
+    public var videoMaxBandwidth: UInt32 {
+        get {
+            return self.videoMaxRxBandwidth
+        }
+        set {
+            self.videoMaxRxBandwidth = newValue
+        }
+    }
     
-    /// The max bandwidth for screen sharing in unit bps for the call.
+    /// MARK: - Deprecated
+    /// The max receiving bandwidth for screen sharing in unit bps for the call.
     /// Only effective if set before the start of call.
     /// if 0, default value of 4000*1000 is used.
     ///
     /// - since: 1.3.0
-    public var screenShareMaxBandwidth: UInt32 = DefaultBandwidth.maxBandwidthSession.rawValue
+    @available(*, deprecated)
+    public var screenShareMaxBandwidth: UInt32 {
+        get {
+            return self.sharingMaxRxBandwidth
+        }
+        set {
+            self.sharingMaxRxBandwidth = newValue
+        }
+    }
+    
+    /// The max receiving bandwidth for audio in unit bps for the call.
+    /// Only effective if set before the start of call.
+    /// if 0, default value of 64 * 1000 is used.
+    ///
+    /// - since: 2.5.0.2
+    public var audioMaxRxBandwidth: UInt32 = DefaultBandwidth.maxBandwidthAudio.rawValue
+    
+    /// The max receiving bandwidth for video in unit bps for the call.
+    /// Only effective if set before the start of call.
+    /// if 0, default value of 2000*1000 is used.
+    ///
+    /// - since: 2.5.0.2
+    public var videoMaxRxBandwidth: UInt32 = DefaultBandwidth.maxBandwidth720p.rawValue
+    
+    /// The max sending bandwidth for video in unit bps for the call.
+    /// Only effective if set before the start of call.
+    /// if 0, default value of 2000*1000 is used.
+    ///
+    /// - since: 2.5.0.2
+    public var videoMaxTxBandwidth: UInt32 = DefaultBandwidth.maxBandwidth720p.rawValue
+    
+    /// The max receiving bandwidth for screen sharing in unit bps for the call.
+    /// Only effective if set before the start of call.
+    /// if 0, default value of 4000*1000 is used.
+    ///
+    /// - since: 2.5.0.2
+    public var sharingMaxRxBandwidth: UInt32 = DefaultBandwidth.maxBandwidthSession.rawValue
+    
     
     /// Default camera facing mode of this phone, used as the default when dialing or answering a call.
     /// The default mode is the front camera.

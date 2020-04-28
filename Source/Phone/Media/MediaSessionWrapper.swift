@@ -219,26 +219,27 @@ class MediaSessionWrapper {
             self.status = .prepare
             
             let mediaConfig :MediaCapabilityConfig = MediaCapabilityConfig()
-            mediaConfig.audioMaxBandwidth = phone.audioMaxBandwidth
+            mediaConfig.audioMaxRxBandwidth = phone.audioMaxRxBandwidth
             
-            if option.hasVideo && option.hasScreenShare {
-                mediaConfig.videoMaxBandwidth = phone.videoMaxBandwidth
-                mediaConfig.screenShareMaxBandwidth = phone.screenShareMaxBandwidth
-                mediaSession.mediaConstraint = MediaConstraint(constraint: MediaConstraintFlag.audio.rawValue | MediaConstraintFlag.video.rawValue | MediaConstraintFlag.screenShare.rawValue, withCapability:mediaConfig)
+            var constraint = MediaConstraintFlag.audio.rawValue
+            if option.hasVideo {
+                mediaConfig.videoMaxRxBandwidth = phone.videoMaxRxBandwidth
+                mediaConfig.videoMaxTxBandwidth = phone.videoMaxTxBandwidth
+                constraint = constraint | MediaConstraintFlag.video.rawValue
+            }
+            if option.hasScreenShare {
+                mediaConfig.sharingMaxRxBandwidth = phone.sharingMaxRxBandwidth
+                constraint = constraint | MediaConstraintFlag.screenShare.rawValue
+            }
+            mediaSession.mediaConstraint = MediaConstraint(constraint: constraint, withCapability:mediaConfig)
+            if option.hasVideo {
                 mediaSession.addRenderView(option.localVideoView, type: .localVideo)
                 mediaSession.addRenderView(option.remoteVideoView, type: .remoteVideo)
+            }
+            if option.hasScreenShare {
                 mediaSession.addRenderView(option.screenShareView, type: .remoteScreenShare)
             }
-            else if option.hasVideo {
-                mediaConfig.videoMaxBandwidth = phone.videoMaxBandwidth
-                mediaSession.mediaConstraint = MediaConstraint(constraint: MediaConstraintFlag.audio.rawValue | MediaConstraintFlag.video.rawValue, withCapability:mediaConfig)
-            
-                mediaSession.addRenderView(option.localVideoView, type: .localVideo)
-                mediaSession.addRenderView(option.remoteVideoView, type: .remoteVideo)
-            }
-            else {
-                mediaSession.mediaConstraint = MediaConstraint(constraint: MediaConstraintFlag.audio.rawValue, withCapability:mediaConfig)
-            }
+
             mediaSession.createMediaConnection()
             mediaSession.setDefaultCamera(phone.defaultFacingMode == Phone.FacingMode.user)
             mediaSession.setDefaultAudioOutput(phone.defaultLoudSpeaker)

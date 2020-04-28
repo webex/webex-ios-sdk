@@ -1,11 +1,3 @@
-//
-//  MediaSessionBaseConfig.h
-//  Wme
-//
-//  Created by panzh on 25/08/2017.
-//  Copyright © 2017 cisco. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 
 #define DEFAULT_AUDIO_MAX_BANDWIDTH 64000
@@ -14,8 +6,13 @@
 #define DEFAULT_MULTISTREAM_TRACK_NUMBER 4
 @interface MediaCapabilityConfig : NSObject
 
-@property (nonatomic) UInt32 audioMaxBandwidth;
-@property (nonatomic) UInt32 videoMaxBandwidth;
-@property (nonatomic) UInt32 screenShareMaxBandwidth;
+@property (nonatomic) UInt32 audioMaxRxBandwidth;
+@property (nonatomic) UInt32 audioMaxTxBandwidth;
+@property (nonatomic) UInt32 videoMaxRxBandwidth;
+@property (nonatomic) UInt32 videoMaxTxBandwidth;
+@property (nonatomic) UInt32 sharingMaxRxBandwidth;
+@property (nonatomic) UInt32 sharingMaxTxBandwidth;
+
 @property (nonatomic) UInt8 multiStreamTrackNumber;
+
 @end
