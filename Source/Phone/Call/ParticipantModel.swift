@@ -48,6 +48,7 @@ struct ParticipantModel {
         var state: String?
         var callLegId: String?
         var intent: IntentModel?
+        var serverComposed: Bool?
     }
     
     struct StatusModel {
@@ -126,11 +127,18 @@ struct ParticipantModel {
         }
         return false
     }
+
+    var device: ParticipantModel.DeviceModel? {
+        if let deviceUrl = self.deviceUrl {
+            return self.devices?.filter{ $0.url == deviceUrl }.first
+        }
+        return nil
+    }
     
     subscript(device url: URL) -> ParticipantModel.DeviceModel? {
         return self.devices?.filter{ $0.url == url.absoluteString }.first
     }
-    
+
 }
 
 struct PersonModel {
@@ -207,6 +215,7 @@ extension ParticipantModel.DeviceModel: Mappable {
         state <- map["state"]
         callLegId <- map["callLegId"]
         intent <- map["intent"]
+        serverComposed <- map["serverComposed"]
     }
 }
 

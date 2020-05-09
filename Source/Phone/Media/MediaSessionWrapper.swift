@@ -40,6 +40,7 @@ class MediaSessionWrapper {
     fileprivate var mediaSession = MediaSession()
     private var mediaSessionObserver: MediaSessionObserver?
     private var broadcastServer: BroadcastConnectionServer?
+    private var _remoteVideoRenderMode: Call.VideoRenderMode = .cropFill
     
     // MARK: - SDP
     func getLocalSdp() -> String? {
@@ -79,6 +80,16 @@ class MediaSessionWrapper {
     
     var localScreenShareViewSize: CGSize {
         return mediaSession.getRenderViewSize(with: .localScreenShare)
+    }
+    
+    var remoteVideoRenderMode: Call.VideoRenderMode {
+        get {
+            return self._remoteVideoRenderMode
+        }
+        set {
+            self._remoteVideoRenderMode = newValue
+            mediaSession.setRemoteVideoRenderMode(newValue.wmeMode)
+        }
     }
     
     var videoViews: (local:MediaRenderView,remote:MediaRenderView)? {
@@ -258,6 +269,12 @@ class MediaSessionWrapper {
             mediaSessionObserver = MediaSessionObserver(call: call)
             mediaSessionObserver?.startObserving(mediaSession)
             mediaSession.connectToCloud()
+            
+            if call.model.myself?.device?.serverComposed ?? false {
+                SDKLogger.shared.error("Set the remote video render mode to CropFill for composed video.")
+                mediaSession.setRemoteVideoRenderMode(self._remoteVideoRenderMode.wmeMode)
+            }
+            
             self.broadcastServer?.start() {
                 error in
                 if error != nil {
@@ -417,4 +434,21 @@ extension MediaSessionWrapper {
     func auxStreamCount() -> Int {
         return self.mediaSession.auxStreamCount
     }
+}
+
+extension Call.VideoRenderMode {
+    
+    var wmeMode: VideoScalingModeType {
+        get {
+            switch self {
+            case .fit:
+                return VideoScalingModeType.fit
+            case .cropFill:
+                return VideoScalingModeType.cropFill
+            case .stretchFill:
+                return VideoScalingModeType.stretchFill
+            }
+        }
+    }
+    
 }
