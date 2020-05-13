@@ -82,6 +82,7 @@
 		3DB6A8D71D35D7DB00077E56 /* DtmfQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6A8D61D35D7DB00077E56 /* DtmfQueue.swift */; };
 		3DEEA4F11D11418800EB73F6 /* H264LicensePrompter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEEA4F01D11418800EB73F6 /* H264LicensePrompter.swift */; };
 		3DEEA4F31D11419800EB73F6 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEEA4F21D11419800EB73F6 /* UIAlertController+Extension.swift */; };
+		480E5F12246BAAB500814099 /* TrackingIdGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480E5F11246BAAB500814099 /* TrackingIdGenerator.swift */; };
 		5A8B997F1DF1D43C003633E1 /* OAuthLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8B997E1DF1D43C003633E1 /* OAuthLauncher.swift */; };
 		5A8B99811DF222FB003633E1 /* OAuthUrlUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8B99801DF222FB003633E1 /* OAuthUrlUtil.swift */; };
 		5A9350D91E00737900374B99 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9350D81E00737900374B99 /* Clock.swift */; };
@@ -274,6 +275,7 @@
 		3DB6A8D61D35D7DB00077E56 /* DtmfQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DtmfQueue.swift; sourceTree = "<group>"; };
 		3DEEA4F01D11418800EB73F6 /* H264LicensePrompter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = H264LicensePrompter.swift; sourceTree = "<group>"; };
 		3DEEA4F21D11419800EB73F6 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
+		480E5F11246BAAB500814099 /* TrackingIdGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingIdGenerator.swift; sourceTree = "<group>"; };
 		4F8A1BC7C31B0041F1223544 /* Pods-WebexSDK.releasetest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebexSDK.releasetest.xcconfig"; path = "Pods/Target Support Files/Pods-WebexSDK/Pods-WebexSDK.releasetest.xcconfig"; sourceTree = "<group>"; };
 		5A8B997E1DF1D43C003633E1 /* OAuthLauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthLauncher.swift; sourceTree = "<group>"; };
 		5A8B99801DF222FB003633E1 /* OAuthUrlUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthUrlUtil.swift; sourceTree = "<group>"; };
@@ -765,6 +767,7 @@
 				3D2DF7581CFEAB0A00002F36 /* UserDefaults.swift */,
 				207434411E9B30CC00C5EBCD /* SerialQueue.swift */,
 				68A7D4502084822500AB7F8A /* Transforms.swift */,
+				480E5F11246BAAB500814099 /* TrackingIdGenerator.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1207,6 +1210,7 @@
 				B91E75C71CE2D7B70080EAE0 /* DeviceClient.swift in Sources */,
 				5D1A5D031CF6FB3A00313515 /* ReachabilityModel.swift in Sources */,
 				5AC09EB71DE63C27005F38BC /* OAuthKeychainStorage.swift in Sources */,
+				480E5F12246BAAB500814099 /* TrackingIdGenerator.swift in Sources */,
 				1066EF0C2022F877003745D0 /* MessageClient.swift in Sources */,
 				B91E75DB1CE2D7B70080EAE0 /* Webex.swift in Sources */,
 				5D67C6661CF4525C00758F6B /* MediaCluster.swift in Sources */,

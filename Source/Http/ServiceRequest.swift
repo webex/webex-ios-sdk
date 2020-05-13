@@ -140,6 +140,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         init(_ authenticator: Authenticator? = nil, endpoint: String) {
             self.authenticator = authenticator
             self.headers = ["Content-Type": "application/json",
+                            "TrackingID": TrackingId.generator.next,
                             "User-Agent": UserAgent.string,
                             "Webex-User-Agent": UserAgent.string]
             self.baseUrl = URL(string: endpoint)!

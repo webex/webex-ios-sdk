@@ -121,10 +121,13 @@ class CallClient {
         return RequestParameter(result)
     }
 
-    private func body(composedVideo: Bool, device: Device, json: [String:Any?] = [:]) -> RequestParameter {
+    private func body(composedVideo: Bool, callId:String? = nil, device: Device, json: [String:Any?] = [:]) -> RequestParameter {
         var result = json
         result["device"] = ["url":device.deviceUrl.absoluteString, "deviceType": (composedVideo ? "WEB" : device.deviceType), "regionCode":device.countryCode, "countryCode":device.regionCode, "capabilities":["groupCallSupported":true, "sdpSupported":true]]
         result["respOnlySdp"] = true //coreFeatures.isResponseOnlySdpEnabled()
+        if let callId = callId {
+            result["correlationId"] = callId
+        }
         return RequestParameter(result)
     }
     
@@ -166,7 +169,7 @@ class CallClient {
         let request = ServiceRequest.Builder(authenticator, service: .locus, device: device)
             .method(.post)
             .path("loci").path("call")
-            .body(body(composedVideo: layout != .single, device: device, json: json))
+            .body(body(composedVideo: layout != .single, callId: UUID().uuidString, device: device, json: json))
             .queue(queue)
             .build()
         
@@ -178,7 +181,7 @@ class CallClient {
         let request = ServiceRequest.Builder(authenticator, endpoint: callUrl)
             .method(.post)
             .path("participant")
-            .body(body(composedVideo: layout != .single, device: device, json: json))
+            .body(body(composedVideo: layout != .single, callId: UUID().uuidString, device: device, json: json))
             .queue(queue)
             .build()
         request.responseObject(handleLocusOnlySDPResponse(layout: layout, queue: queue, completionHandler: completionHandler))
