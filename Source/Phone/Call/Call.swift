@@ -218,6 +218,19 @@ public class Call {
         }
     }
     
+    ///  The options to specify how the video adjusts its content to be render in a view.
+    ///
+    /// - since: 2.6.0
+    public enum VideoRenderMode {
+        /// The option to scale the video to fit the size of the view by maintaining the aspect ratio.
+        /// The black paddings will be added to the remaining area of the view.
+        case fit
+        /// The option to scale the video to fill the size of the view. Some portion of the video may be cropped.
+        case cropFill
+        /// The option to scale the video to fit the size of the view by changing the aspect ratio of the video if necessary.
+        case stretchFill
+    }
+    
     /// Callback when remote participant(s) is ringing.
     ///
     /// - since: 1.2.0
@@ -484,6 +497,15 @@ public class Call {
     public var localScreenShareViewSize: CMVideoDimensions {
         let size = self.mediaSession.localScreenShareViewSize
         return CMVideoDimensions(width: Int32(size.width), height: Int32(size.height))
+    }
+    
+    public var remoteVideoRenderMode: VideoRenderMode {
+        get {
+            return self.mediaSession.remoteVideoRenderMode
+        }
+        set {
+            self.mediaSession.remoteVideoRenderMode = newValue
+        }
     }
     
     /// Call Memberships represent participants in this `Call`.

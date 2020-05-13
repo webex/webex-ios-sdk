@@ -13,6 +13,12 @@ typedef NS_ENUM(NSInteger, MediaSessionType) {
     MediaSessionTypePreview
 };
 
+typedef NS_ENUM(NSInteger, VideoScalingModeType) {
+    VideoScalingModeStretchFill = 0,           ///< Stretch the Pic to fit the window
+    VideoScalingModeFit = 1,                  ///< Maintain the aspect ratio and content of the Pic
+    VideoScalingModeCropFill = 2,            ///< Crop some content to fix the aspect ratio of the window
+};
+
 @interface MediaSession : NSObject
 
 // SDP & constraint
@@ -45,6 +51,8 @@ typedef NS_ENUM(NSInteger, MediaSessionType) {
 - (UIView *)getRenderViewWithType:(MediaSessionType)type;
 - (CGSize)getRenderViewSizeWithType:(MediaSessionType)type andVid:(int)vid;
 - (CGSize)getRenderViewSizeWithType:(MediaSessionType)type;
+
+- (void)setRemoteVideoRenderMode:(VideoScalingModeType)mode;
 
 // audio & video control
 - (void)muteMedia:(MediaSessionType)type;
