@@ -76,6 +76,7 @@ public class MessageClient {
     private var encryptionKeys: [String: EncryptionKey] = [String: EncryptionKey]()
     private var spaces: [String: String] = [String: String]()
     private typealias KeyHandler = (Result<(String, String)>) -> Void
+    private var objectAndActivityIds: [String: String] = [:]
     
     var authenticator: Authenticator {
         return self.phone.authenticator
@@ -171,6 +172,13 @@ public class MessageClient {
                         key.material(client: self) { material in
                             if let material = material.data {
                                 let messages = result.prefix(max).map { $0.decrypt(key: material) }.map { Message(activity: $0) }
+                                
+                                DispatchQueue.global().async {
+                                    messages.forEach { (message) in
+                                        self.cacheObjectAndActivityIdsOfMessage(message)
+                                    }
+                                }
+                                
                                 (queue ?? DispatchQueue.main).async {
                                     completionHandler(ServiceResponse(response.response, Result.success(messages)))
                                 }
@@ -288,6 +296,10 @@ public class MessageClient {
                 
                 var verb = ActivityModel.Verb.post
                 let key = self.encryptionKey(spaceId: toSpace)
+                
+                var query: RequestParameter? = nil
+                var path = "activities"
+                
                 key.material(client: self) { material in
                     if let material = material.data {
                         var set1 = false
@@ -321,6 +333,11 @@ public class MessageClient {
                             object["contentCategory"] = "documents"
                             object["files"] = ["items": files.toJSON()]
                             verb = ActivityModel.Verb.share
+                            // transcode file
+                            if (withFiles?.contains{ $0.name.shouldTranscode }) == true {
+                                query = RequestParameter(["async" : false, "transcode" : true])
+                                path = "content"
+                            }
                         }
                         let target: [String: Any] = ["id": toSpace.locusFormat, "objectType": ObjectType.conversation.rawValue]
                         key.encryptionUrl(client: self) { encryptionUrl in
@@ -332,15 +349,18 @@ public class MessageClient {
                 func postMessageRequest(encryptionUrl: Result<String?>, material: Result<String>, target: [String: Any]){
                     if let url = encryptionUrl.data {
                         let body = RequestParameter(["verb": verb.rawValue, "encryptionKeyUrl": url, "object": object, "target": target, "clientTempId": "\(self.uuid):\(UUID().uuidString)", "parent": parentModel])
-                        let request = self.messageServiceBuilder.path("activities")
+                        let request = self.messageServiceBuilder.path(path)
                             .method(.post)
+                            .query(query, forcedInURL: true)
                             .body(body)
                             .queue(queue)
                             .build()
                         request.responseObject { (response: ServiceResponse<ActivityModel>) in
                             switch response.result{
                                 case .success(let activity):
-                                    completionHandler(ServiceResponse(response.response, Result.success(Message(activity: activity.decrypt(key: material.data)))))
+                                    let message = Message(activity: activity.decrypt(key: material.data))
+                                    completionHandler(ServiceResponse(response.response, Result.success(message)))
+                                    self.cacheObjectAndActivityIdsOfMessage(message)
                                 case .failure(let error):
                                     completionHandler(ServiceResponse(response.response, Result.failure(error)))
                             }
@@ -632,23 +652,61 @@ public class MessageClient {
                 SDKLogger.shared.error("Not a valid message \(activity.uuid ?? (activity.toJSONString() ?? ""))")
                 return
             }
+            
+            var event:MessageEvent?
+            switch verb {
+                case .post, .share:
+                    decryption.toPersonId = self.userId?.hydraFormat(for: .people)
+                    let message = Message(activity: decryption)
+                    event = MessageEvent.messageReceived(message)
+                    self.cacheObjectAndActivityIdsOfMessage(message)
+                
+                case .delete:
+                    let message = Message(activity: decryption)
+                    event = MessageEvent.messageDeleted(message.id ?? "illegal id")
+                
+                case .update:
+                    decryption.toPersonId = self.userId?.hydraFormat(for: .people)
+                    let message = Message(activity: decryption)
+                    guard let objectId = message.activity.objectUUID, let messageId = self.objectAndActivityIds[objectId], let files = message.files else {
+                        return
+                    }
+                    event = MessageEvent.messageUpdated(messageId: messageId, type: .thumbnail(files))
+                    
+                    SDKLogger.shared.debug("Updated file Message: \(message)")
+                
+                default:
+                    SDKLogger.shared.error("Not a valid message \(activity.uuid ?? (activity.toJSONString() ?? ""))")
+            }
+            
             DispatchQueue.main.async {
-                switch verb {
-                    case .post, .share:
-                        decryption.toPersonId = self.userId?.hydraFormat(for: .people)
-                        let message = Message(activity: decryption)
-                        let event = MessageEvent.messageReceived(message)
-                        self.onEvent?(event)
-                        self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me));
-                    case .delete:
-                        let message = Message(activity: decryption)
-                        let event = MessageEvent.messageDeleted(message.id ?? "illegal id")
-                        self.onEvent?(event)
-                        self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me));
-                    default:
-                        SDKLogger.shared.error("Not a valid message \(activity.uuid ?? (activity.toJSONString() ?? ""))")
+                if let event = event {
+                    self.onEvent?(event)
+                    self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me));
                 }
             }
+        }
+    }
+    
+    // Cache transcode messages which don't have thumbnail
+    private func cacheObjectAndActivityIdsOfMessage(_ message: Message) {
+        guard message.activity.verb == ActivityModel.Verb.share  else {
+            return
+        }
+        
+        let created = message.created ?? Date()
+        guard created.timeIntervalSinceNow <= 3 * 60 else {
+            return
+        }
+        
+        guard let files = message.files,
+            (files.contains{ ($0.displayName ?? "").shouldTranscode && $0.thumbnail == nil }) == true else {
+            return
+        }
+        
+        if let objectId = message.activity.objectUUID, let messageId = message.id {
+            objectAndActivityIds[objectId] = messageId
+            SDKLogger.shared.debug("Cache a transcode message, messageId: \(messageId)")
         }
     }
     

@@ -25,10 +25,18 @@ import ObjectMapper
 ///
 /// - since: 1.4.0
 public enum MessageEvent {
+    
+    public enum UpdateType {
+        case thumbnail([RemoteFile])
+    }
+    
     /// The callback when receive a new message
     case messageReceived(Message)
     /// The callback when a message was deleted
     case messageDeleted(String)
+    /// The callback when a message was updated
+    /// if type == .thumbnail, replace the 'files' property of related message
+    case messageUpdated(messageId:String, type:UpdateType)
 }
 
 /// This struct represents a Message on Cisco Webex.
@@ -150,9 +158,7 @@ public struct Message {
     /// An array of file attachments in the message.
     ///
     /// - since: 1.4.0
-    public var files: [RemoteFile]? {
-        return self.activity.files
-    }
+    public var files: [RemoteFile]?
     
     /// Returns the parent message for the reply message.
     ///
@@ -164,7 +170,7 @@ public struct Message {
     /// - since: 2.5.0
     public private(set) var isReply: Bool
     
-    private let activity: ActivityModel
+    internal let activity: ActivityModel
     
     init(activity: ActivityModel) {
         self.activity = activity
@@ -175,6 +181,7 @@ public struct Message {
             self.id = uuid.hydraFormat(for: .message)
         }
         self.textAsObject = Message.Text(plain: activity.objectDisplayName, html: activity.objectConetnt, markdown: activity.objectMarkdown)
+        self.files = self.activity.files
     }
     
     private var mentions: [Mention]? {

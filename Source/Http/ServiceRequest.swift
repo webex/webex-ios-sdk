@@ -100,13 +100,14 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     private let authenticator: Authenticator?
     private var newAccessToken: String? = nil
     private var refreshTokenCount = 0
+    private var queryForcedInURL = false
     private let sessionManager: SessionManager = {
         let configuration = URLSessionConfiguration.default
         configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
         return SessionManager(configuration: configuration)
     }()
     
-    private init(authenticator: Authenticator? = nil, url: URL, headers: [String: String], method: Alamofire.HTTPMethod, body: RequestParameter?, query: RequestParameter?, keyPath: String?, queue: DispatchQueue?) {
+    private init(authenticator: Authenticator? = nil, url: URL, headers: [String: String], method: Alamofire.HTTPMethod, body: RequestParameter?, query: RequestParameter?, keyPath: String?, queue: DispatchQueue?, forcedInURL:Bool = false) {
         self.authenticator = authenticator
         self.url = url
         self.headers = headers
@@ -115,6 +116,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         self.query = query
         self.keyPath = keyPath
         self.queue = queue
+        self.queryForcedInURL = forcedInURL
     }
     
     class Builder {
@@ -128,6 +130,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         private var query: RequestParameter?
         private var keyPath: String?
         private var queue: DispatchQueue?
+        private var queryForcedInURL = false
         
         convenience init(_ authenticator: Authenticator? = nil, service: Service) {
             self.init(authenticator, service: service, device: nil)
@@ -149,7 +152,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         }
         
         func build() -> ServiceRequest {
-            return ServiceRequest(authenticator: authenticator, url: baseUrl.appendingPathComponent(path), headers: headers, method: method, body: body, query: query, keyPath: keyPath, queue: queue)
+            return ServiceRequest(authenticator: authenticator, url: baseUrl.appendingPathComponent(path), headers: headers, method: method, body: body, query: query, keyPath: keyPath, queue: queue, forcedInURL: queryForcedInURL)
         }
         
         func method(_ method: Alamofire.HTTPMethod) -> Builder {
@@ -182,8 +185,9 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
             return self
         }
         
-        func query(_ query: RequestParameter) -> Builder {
+        func query(_ query: RequestParameter?, forcedInURL:Bool = false) -> Builder {
             self.query = query
+            self.queryForcedInURL = forcedInURL
             return self
         }
         
@@ -280,7 +284,9 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
                     urlRequest = try JSONEncoding.default.encode(urlRequest, with: body.value())
                 }
                 if let query = self.query {
-                    urlRequest = try URLEncoding.default.encode(urlRequest, with: query.value())
+                    urlRequest = self.queryForcedInURL ?
+                        try URLEncoding.queryString.encode(urlRequest, with: query.value()) :
+                        try URLEncoding.default.encode(urlRequest, with: query.value())
                 }
                 urlRequestConvertible = urlRequest
             } catch {

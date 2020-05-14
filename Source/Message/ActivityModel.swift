@@ -53,6 +53,7 @@ struct ActivityModel {
     private(set) var uuid: String?
     private(set) var clientTempId: String?
     private(set) var verb: ActivityModel.Verb?
+    private(set) var objectType: ObjectType?
     private(set) var created: Date?
     private(set) var encryptionKeyUrl: String?
     var toPersonId: String?
@@ -99,6 +100,7 @@ extension ActivityModel : ImmutableMappable {
         self.created = try? map.value("published", using: CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
         self.encryptionKeyUrl = try? map.value("encryptionKeyUrl")
         self.verb = try? map.value("verb", using: VerbTransform())
+        self.objectType = try? map.value("objectType", using: ObjectTypeTransform())
         self.actorUUID = try? map.value("actor.entryUUID")
         self.actorId = self.actorUUID?.hydraFormat(for: .people)
         self.actorEmail = try? map.value("actor.emailAddress")
@@ -297,5 +299,19 @@ class LockedTransform : TransformType {
             return "LOCKED"
         }
         return "UNLOCKED"
+    }
+}
+
+private class ObjectTypeTransform: TransformType {
+    
+    func transformFromJSON(_ value: Any?) -> ObjectType? {
+        if let type = value as? String {
+            return ObjectType(rawValue: type)
+        }
+        return nil
+    }
+    
+    func transformToJSON(_ value: ObjectType?) -> String? {
+        return value?.rawValue
     }
 }

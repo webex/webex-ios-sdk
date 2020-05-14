@@ -93,3 +93,71 @@ extension String {
     
 }
 
+enum ContentType: String {
+    case IMAGE
+    case EXCEL
+    case POWERPOINT
+    case WORD
+    case PDF
+    case VIDEO
+    case AUDIO
+    case ZIP
+    case UNKNOWN
+}
+
+extension String {
+    static let imageExtensions = ["jpg", "jpeg", "png", "gif"]
+    static let excelExtensions = ["xls", "xlsx", "xlsm", "xltx", "xltm"]
+    static let powerpointExtensions = ["ppt", "pptx", "pptm", "potx", "potm", "ppsx", "ppsm", "sldx", "sldm"]
+    static let wordExtensions = ["doc", "docx", "docm", "dotx", "dotm"]
+    static let pdfExtensions = ["pdf"]
+    static let videoExtensions = ["mp4", "m4p", "mpg", "mpeg", "3gp", "3g2", "mov", "avi", "wmv", "qt", "m4v", "flv", "m4v"]
+    static let audioExtension = ["mp3", "wav", "wma"]
+    static let zipExtension = ["zip"]
+    
+    var shouldTranscode: Bool {
+        switch self.contentType {
+        case .POWERPOINT, .WORD, .PDF, .EXCEL:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    var contentType: ContentType {
+        guard let extention = self.extention else {
+            return .UNKNOWN
+        }
+        
+        var type: ContentType = .UNKNOWN
+        
+        switch extention.lowercased() {
+        case let ext where String.imageExtensions.contains(ext):
+            type = .IMAGE
+        case let ext where String.excelExtensions.contains(ext):
+            type = .EXCEL
+        case let ext where String.powerpointExtensions.contains(ext):
+            type = .POWERPOINT
+        case let ext where String.wordExtensions.contains(ext):
+            type = .WORD
+        case let ext where String.pdfExtensions.contains(ext):
+            type = .PDF
+        case let ext where String.videoExtensions.contains(ext):
+            type = .VIDEO
+        case let ext where String.audioExtension.contains(ext):
+            type = .AUDIO
+        case let ext where String.zipExtension.contains(ext):
+            type = .ZIP
+        default:
+            type = .UNKNOWN
+        }
+        return type
+    }
+    
+    var extention: String? {
+        if let ext = self.components(separatedBy: ".").last, ext.count > 0 {
+            return ext
+        }
+        return nil
+    }
+}
