@@ -42,6 +42,9 @@ class MediaSessionWrapper {
     private var broadcastServer: BroadcastConnectionServer?
     private var _remoteVideoRenderMode: Call.VideoRenderMode = .cropFill
     
+    private var remoteViewConstraint: NSLayoutConstraint?
+    private var sizeWasChanged = false
+    
     // MARK: - SDP
     func getLocalSdp() -> String? {
         mediaSession.createLocalSdpOffer()
@@ -89,6 +92,7 @@ class MediaSessionWrapper {
         set {
             self._remoteVideoRenderMode = newValue
             mediaSession.setRemoteVideoRenderMode(newValue.wmeMode)
+            adjustRemoteRenderViewSize()
         }
     }
     
@@ -176,6 +180,38 @@ class MediaSessionWrapper {
                 return true
             }
             return false
+        }
+    }
+    
+    private func adjustRemoteRenderViewSize() {
+        guard let remoteView = mediaSession.getRenderView(with: .remoteVideo) else {
+            return
+        }
+        
+        if let changedConstraint = remoteViewConstraint, sizeWasChanged == true {
+            changedConstraint.constant -= 0.5
+            sizeWasChanged = false
+            SDKLogger.shared.debug("adjust constraint back to original value")
+        }
+        else if let constraint = remoteView.getSizeConstraint() {
+            remoteViewConstraint = constraint
+            remoteViewConstraint?.constant += 0.5
+            sizeWasChanged = true
+            SDKLogger.shared.debug("adjust constraint = \(remoteViewConstraint?.firstAttribute.rawValue ?? 1000)")
+        }
+        else {
+            let frame = remoteView.frame
+            let width = frame.width
+            var height = frame.height
+            if sizeWasChanged == true {
+                height -= 0.5
+                sizeWasChanged = false
+            }else {
+                height += 0.5
+                sizeWasChanged = true
+            }
+            remoteView.frame = CGRect(origin: frame.origin, size: CGSize(width: width, height: height))
+            SDKLogger.shared.debug("adjust frame = \(remoteView.frame)")
         }
     }
     
@@ -449,6 +485,43 @@ extension Call.VideoRenderMode {
                 return VideoScalingModeType.stretchFill
             }
         }
+    }
+    
+}
+
+extension UIView {
+    func getSizeConstraint() -> NSLayoutConstraint? {
+        for constraint in self.constraints {
+            if constraint.firstAttribute == .width || constraint.firstAttribute == .height {
+                return constraint
+            }
+        }
+        
+        let includeSizeChangedAttribute: ((NSLayoutConstraint.Attribute) -> Bool) = { attribute in
+            switch attribute {
+            case .width, .height, .leading, .left, .top, .bottom, .right, .trailing, .leftMargin, .rightMargin, .topMargin, .bottomMargin, .leadingMargin, .trailingMargin:
+                return true
+            default:
+                return false
+            }
+        }
+        
+        var _superview = self.superview
+        while let superview = _superview {
+            for constraint in superview.constraints {
+
+                if let first = constraint.firstItem as? UIView, first == self, includeSizeChangedAttribute(constraint.firstAttribute) {
+                    return constraint
+                }
+
+                if let second = constraint.secondItem as? UIView, second == self, includeSizeChangedAttribute(constraint.secondAttribute) {
+                    return constraint
+                }
+            }
+            _superview = superview.superview
+        }
+        
+        return nil
     }
     
 }
