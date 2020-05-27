@@ -35,5 +35,8 @@ extension Date {
     var longString: String {
         return Date.formatter.string(from: self)
     }
-
+    
+    var utc: String {
+        Timestamp.iSO8601FullFormatterInUTC.string(from: self)
+    }    
 }

@@ -24,6 +24,7 @@ import ObjectMapper
 struct DeviceModel {
     var deviceUrl: String?
     var webSocketUrl: String?
+    var deviceIdentifier: String?
     var services: [String: String]?
 }
 
@@ -35,6 +36,7 @@ extension DeviceModel: Mappable {
     mutating func mapping(map: Map) {
         deviceUrl <- map["url"]
         webSocketUrl <- map["webSocketUrl"]
+        deviceIdentifier <- map["deviceIdentifier"]
         services <- map["services"]
     }
 }

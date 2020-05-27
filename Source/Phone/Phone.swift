@@ -193,7 +193,7 @@ public class Phone {
     var debug = true;
     
     enum LocusResult {
-        case call(Bool, Device, UUID?, MediaSessionWrapper, ServiceResponse<CallModel>, (Result<Call>) -> Void)
+        case call(UUID, Bool, Device, MediaOption, MediaSessionWrapper, ServiceResponse<CallModel>, (Result<Call>) -> Void)
         case join(Call, ServiceResponse<CallModel>, (Error?) -> Void)
         case leave(Call, ServiceResponse<CallModel>, (Error?) -> Void)
         case reject(Call, ServiceResponse<Any>, (Error?) -> Void)
@@ -361,17 +361,18 @@ public class Phone {
                         self.queue.sync {
                             if let device = self.devices.device {
                                 let media = MediaModel(sdp: localSDP, audioMuted: false, videoMuted: false, reachabilities: reachabilities)
+                                let correlationId = UUID()
                                 if target.isEndpoint {
-                                    self.client.create(target.address, by: device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { res in
-                                        self.doLocusResponse(LocusResult.call(target.isGroup, device, option.uuid, tempMediaContext, res, completionHandler))
+                                    self.client.create(target.address, correlationId: correlationId,  by: device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { res in
+                                        self.doLocusResponse(LocusResult.call(correlationId, target.isGroup, device, option, tempMediaContext, res, completionHandler))
                                         self.queue.yield()
                                     }
                                 }
                                 else {
                                     self.conversations.getLocusUrl(conversation: target.address, by: device, queue: self.queue.underlying) { res in
                                         if let url = res.result.data?.locusUrl {
-                                            self.client.join(url, by: device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { resNew in
-                                                self.doLocusResponse(LocusResult.call(target.isGroup, device, option.uuid, tempMediaContext, resNew, completionHandler))
+                                            self.client.join(url, correlationId: correlationId, by: device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { resNew in
+                                                self.doLocusResponse(LocusResult.call(correlationId, target.isGroup, device, option, tempMediaContext, resNew, completionHandler))
                                                 self.queue.yield()
                                             }
                                         }
@@ -521,13 +522,12 @@ public class Phone {
             if let uuid = option.uuid {
                 call.uuid = uuid
             }
-            
             self.requestMediaAccess(option: option) {
                 let tempMediaContext = call.mediaSession
                 tempMediaContext.prepare(option: option, phone: self)
                 let media = MediaModel(sdp: tempMediaContext.getLocalSdp(), audioMuted: false, videoMuted: false, reachabilities: self.reachability.feedback?.reachabilities)
                 self.queue.sync {
-                    self.client.join(call.url, by: call.device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { res in
+                    self.client.join(call.url, correlationId: call.correlationId, by: call.device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { res in
                         self.doLocusResponse(LocusResult.join(call, res, completionHandler))
                         self.queue.yield()
                     }
@@ -738,12 +738,15 @@ public class Phone {
     
     private func doLocusResponse(_ ret: LocusResult) {
         switch ret {
-        case .call(let group, let device, let uuid, let media, let res, let completionHandler):
+        case .call(let correlationId, let group, let device, let option, let media, let res, let completionHandler):
             switch res.result {
             case .success(let model):
                 SDKLogger.shared.debug("Receive call locus response: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
                 if model.isValid {
-                    let call = Call(model: model, device: device, media: media, direction: Call.Direction.outgoing, group: (group ? group : !model.isOneOnOne), uuid: uuid)
+                    let call = Call(model: model, device: device, media: media, direction: Call.Direction.outgoing, group: (group ? group : !model.isOneOnOne), correlationId: correlationId)
+                    if let uuid = option.uuid {
+                        call.uuid = uuid
+                    }
                     if call.isInIllegalStatus {
                         DispatchQueue.main.async {
                             let error = WebexError.illegalStatus(reason: "The previous session did not end")
@@ -878,7 +881,7 @@ public class Phone {
             // a race condition and this MAY be the solution to not dropping a call before reregistration has been completed.
             // If so it needs improvement, if not it may be able to be dropped.
             if model.isValid {
-                let call = Call(model: model, device: device, media: self.mediaContext ?? MediaSessionWrapper(), direction: Call.Direction.incoming, group: !model.isOneOnOne, uuid: nil)
+                let call = Call(model: model, device: device, media: self.mediaContext ?? MediaSessionWrapper(), direction: Call.Direction.incoming, group: !model.isOneOnOne, correlationId:UUID())
                 self.add(call: call)
                 SDKLogger.shared.info("Receive incoming call: \(call.model.callUrl ?? call.uuid.uuidString)")
                 DispatchQueue.main.async {

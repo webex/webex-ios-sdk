@@ -28,6 +28,8 @@ extern NSString *const MediaEngineDidDetectScreenShareMediaAvailableNotification
 extern NSString *const MediaEngineDidDetectScreenShareMediaUnavailableNotification;
 extern NSString *const MediaEngineDidActiveSpeakerChangeNotification;
 extern NSString *const MediaEngineDidCSIChangeNotification;
+extern NSString *const MediaEngineDidMQENotification;
+extern NSString *const MediaEngineDidICENotification;
 extern NSString *const MediaEngineDidMuteAuxVideoNotification;
 extern NSString *const MediaEngineDidUnMuteAuxVideoNotification;
 

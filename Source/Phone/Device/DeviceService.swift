@@ -23,6 +23,7 @@ import Foundation
 struct Device {
     let phone: Phone
     let deviceUrl: URL
+    let deviceIdentifier: String?
     let webSocketUrl: URL
     let services: [String: String]
     let deviceType:String
@@ -58,9 +59,10 @@ class DeviceService {
                             regionCode = rc
                             countryCode = cc
                         }
-                        let tempDevice = Device(phone: phone, deviceUrl: deviceUrl, webSocketUrl: webSocketUrl, services: servicesDictionary, deviceType: UIDevice.current.kind, regionCode: regionCode, countryCode: countryCode)
+                        let tempDevice = Device(phone: phone, deviceUrl: deviceUrl, deviceIdentifier: model.deviceIdentifier, webSocketUrl: webSocketUrl, services: servicesDictionary, deviceType: UIDevice.current.kind, regionCode: regionCode, countryCode: countryCode)
                         self.device = tempDevice
                         UserDefaults.sharedInstance.deviceUrl = deviceUrlString
+                        UserDefaults.sharedInstance.deviceIdentifier = model.deviceIdentifier
                         completionHandler(Result.success(tempDevice))
                     }
                     
@@ -76,7 +78,7 @@ class DeviceService {
         }
         
         if let deviceUrl = UserDefaults.sharedInstance.deviceUrl {
-            self.client.update(registeredDeviceUrl: deviceUrl, deviceInfo: UIDevice.current, queue: queue, completionHandler: registrationHandler)
+            self.client.update(registeredDeviceUrl: deviceUrl, deviceIdentifier: UserDefaults.sharedInstance.deviceIdentifier, deviceInfo: UIDevice.current, queue: queue, completionHandler: registrationHandler)
         }
         else {
             self.client.create(deviceInfo: UIDevice.current, queue: queue, completionHandler: registrationHandler)
@@ -95,6 +97,7 @@ class DeviceService {
                 }
             }
             UserDefaults.sharedInstance.deviceUrl = nil
+            UserDefaults.sharedInstance.deviceIdentifier = nil
         } else {
             completionHandler(nil)
         }

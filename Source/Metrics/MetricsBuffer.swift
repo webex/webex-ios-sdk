@@ -19,58 +19,61 @@
 // THE SOFTWARE.
 
 import Foundation
+import ObjectMapper
 
 class MetricsBuffer: NSObject {
-    private var metrics = [Metric]()
-    
-    var count: Int {
-        var tempCount: Int = 0
-        synchronized(lock: self) {
-            tempCount = metrics.count
-        }
-        return tempCount
-    }
+    private var metrics = [[String: Any]]()
+    private var clientMetrics = [[String: Any]]()
     
     func add(metric: Metric) {
         synchronized(lock: self) {
-            metrics.append(metric)
+            self.metrics.append(makePayloadWith(metric: metric))
         }
     }
     
-    func add(metrics: [Metric]) {
+    func add(clientMetric: ClientMetric) {
         synchronized(lock: self) {
-            self.metrics.append(contentsOf: metrics)
+            self.clientMetrics.append(Mapper().toJSON(clientMetric))
         }
     }
     
-    func popAllIfGreaterThan(_ amount: Int) -> [Metric]? {
-        var metricsCopy: [Metric]?
+    func popAll(client: Bool) -> [[String: Any]]? {
+        var ret: [[String: Any]]?
         synchronized(lock: self) {
-            if metrics.count > amount {
-                metricsCopy = metrics
-                metrics.removeAll()
+            if client && self.clientMetrics.count > 0 {
+                ret = self.clientMetrics
+                self.clientMetrics.removeAll()
+            }
+            else if !client && self.metrics.count > 0 {
+                ret = self.metrics
+                self.metrics.removeAll()
             }
         }
-        return metricsCopy
+        return ret
     }
     
-    func popAmount(_ amount: Int) -> [Metric]? {
-        var metricsCopy: [Metric]?
+    func count(client: Bool) -> Int {
+        var ret = 0
         synchronized(lock: self) {
-            if metrics.count >= amount {
-                metricsCopy = Array(metrics.prefix(amount))
-                metrics.removeFirst(amount)
+            if client {
+                ret = self.clientMetrics.count
+            }
+            else {
+                ret = self.metrics.count
             }
         }
-        return metricsCopy
+        return ret
     }
     
-    func popAll() -> [Metric]? {
-        var metricsCopy: [Metric]?
-        synchronized(lock: self) {
-            metricsCopy = metrics
-            metrics.removeAll()
+    private func makePayloadWith(metric: Metric) -> [String: Any] {
+        var payload: [String: Any] = metric.data
+        payload["key"] = metric.name
+        payload["time"] = metric.time
+        payload["postTime"] = Timestamp.nowInUTC
+        payload["type"] = metric.type.rawValue
+        if metric.background {
+            payload["background"] = String(metric.background)
         }
-        return metricsCopy
+        return payload
     }
 }

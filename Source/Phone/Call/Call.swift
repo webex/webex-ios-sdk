@@ -315,7 +315,13 @@ public class Call {
     ///
     /// - see: CallStatus
     /// - since: 1.2.0
-    public internal(set) var status: CallStatus = CallStatus.initiated
+    public internal(set) var status: CallStatus = CallStatus.initiated {
+        didSet {
+            if status == .connected {
+                self.connectedTime = Date()
+            }
+        }
+    }
     
     /// The direction of this `Call`.
     ///
@@ -722,13 +728,20 @@ public class Call {
         return self.model.myself?[device: self.device.deviceUrl]?.mediaConnections?.first?.keepAliveSecs ?? self.model.mediaConnections?.first?.keepAliveSecs
     }
     
-    init(model: CallModel, device: Device, media: MediaSessionWrapper, direction: Direction, group: Bool, uuid: UUID?) {
+    let correlationId: UUID
+    
+    var connectedTime: Date?
+    
+    private var MQETimer: Timer?
+    
+    init(model: CallModel, device: Device, media: MediaSessionWrapper, direction: Direction, group: Bool, correlationId: UUID) {
         self.direction = direction
         self.isGroup = group
         self.device = device
         self.mediaSession = media
         self.callModel = model
-        self.uuid = uuid ?? UUID()
+        self.correlationId = correlationId
+        self.uuid = correlationId
         self.dtmfQueue = DtmfQueue(client: device.phone.client)
         self.metrics = CallMetrics()
         self.metrics.trackCallStarted()
@@ -738,6 +751,7 @@ public class Call {
     }
     
     deinit{
+        self.MQETimer?.invalidate()
         pthread_mutex_init(&mutex, nil)
         DispatchQueue.main.removeOnceToken(token: self.onConnectedOnceToken)
     }
@@ -1063,9 +1077,21 @@ public class Call {
         if let granted = self.model.screenShareMediaFloor?.granted, self.mediaSession.hasScreenShare {
             self.mediaSession.joinScreenShare(granted, isSending: self.isScreenSharedBySelfDevice())
         }
+        
+        DispatchQueue.global().async {
+            self.MQETimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(60), repeats: true, block: { (timer) in
+                let string = self.mediaSession.MQEReport
+                SDKLogger.shared.debug(string ?? "No MQE report")
+                if let string = string, let metric = string.json {
+                    self.device.phone.metrics.reportMQE(phone: self.device.phone, call: self, metric: metric)
+                }
+            })
+            RunLoop.current.run()
+        }
     }
     
     func stopMedia() {
+        self.MQETimer?.invalidate()
         //stopMedia must run in the main thread.Because WME will remove the videoRender view.
         if let granted = self.model.screenShareMediaFloor?.granted ,self.mediaSession.hasScreenShare{
             self.mediaSession.leaveScreenShare(granted, isSending: self.isScreenSharedBySelfDevice())

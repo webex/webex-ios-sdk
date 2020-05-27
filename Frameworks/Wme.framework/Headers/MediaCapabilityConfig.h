@@ -15,4 +15,6 @@
 
 @property (nonatomic) UInt8 multiStreamTrackNumber;
 
+@property (nonatomic) BOOL MQECallback;
+
 @end

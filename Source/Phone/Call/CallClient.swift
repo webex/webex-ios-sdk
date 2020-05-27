@@ -121,13 +121,11 @@ class CallClient {
         return RequestParameter(result)
     }
 
-    private func body(composedVideo: Bool, callId:String? = nil, device: Device, json: [String:Any?] = [:]) -> RequestParameter {
+    private func body(composedVideo: Bool, correlationId: UUID, device: Device, json: [String:Any?] = [:]) -> RequestParameter {
         var result = json
         result["device"] = ["url":device.deviceUrl.absoluteString, "deviceType": (composedVideo ? "WEB" : device.deviceType), "regionCode":device.countryCode, "countryCode":device.regionCode, "capabilities":["groupCallSupported":true, "sdpSupported":true]]
         result["respOnlySdp"] = true //coreFeatures.isResponseOnlySdpEnabled()
-        if let callId = callId {
-            result["correlationId"] = callId
-        }
+        result["correlationId"] = correlationId.uuidString
         return RequestParameter(result)
     }
     
@@ -160,7 +158,7 @@ class CallClient {
         }
     }
     
-    func create(_ toAddress: String, moderator:Bool? = false, PIN:String? = nil, by device: Device, localMedia: MediaModel, layout: MediaOption.VideoLayout?, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
+    func create(_ toAddress: String, correlationId: UUID, moderator:Bool? = false, PIN:String? = nil, by device: Device, localMedia: MediaModel, layout: MediaOption.VideoLayout?, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
         var json = convertToJson(mediaInfo: localMedia)
         json["invitee"] = ["address" : toAddress]
         json["supportsNativeLobby"] = true
@@ -169,19 +167,19 @@ class CallClient {
         let request = ServiceRequest.Builder(authenticator, service: .locus, device: device)
             .method(.post)
             .path("loci").path("call")
-            .body(body(composedVideo: layout != .single, callId: UUID().uuidString, device: device, json: json))
+            .body(body(composedVideo: layout != .single, correlationId: correlationId, device: device, json: json))
             .queue(queue)
             .build()
         
         request.responseObject(handleLocusOnlySDPResponse(layout: layout, queue: queue, completionHandler: completionHandler))
     }
     
-    func join(_ callUrl: String, by device: Device, localMedia: MediaModel, layout: MediaOption.VideoLayout?, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
+    func join(_ callUrl: String, correlationId: UUID, by device: Device, localMedia: MediaModel, layout: MediaOption.VideoLayout?, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
         let json = convertToJson(mediaInfo: localMedia)
         let request = ServiceRequest.Builder(authenticator, endpoint: callUrl)
             .method(.post)
             .path("participant")
-            .body(body(composedVideo: layout != .single, callId: UUID().uuidString, device: device, json: json))
+            .body(body(composedVideo: layout != .single, correlationId: correlationId, device: device, json: json))
             .queue(queue)
             .build()
         request.responseObject(handleLocusOnlySDPResponse(layout: layout, queue: queue, completionHandler: completionHandler))

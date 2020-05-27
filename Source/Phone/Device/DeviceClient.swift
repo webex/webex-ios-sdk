@@ -31,17 +31,17 @@ class DeviceClient {
     func create(deviceInfo: UIDevice, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<DeviceModel>) -> Void) {
         let request = ServiceRequest.Builder(authenticator, service: .wdm)
             .method(.post)
-            .body(createBody(deviceInfo))
+            .body(createBody(deviceInfo, deviceIdentifier: UUID().uuidString))
             .queue(queue)
             .build()
         
         request.responseObject(completionHandler)
     }
     
-    func update(registeredDeviceUrl: String, deviceInfo: UIDevice, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<DeviceModel>) -> Void) {
+    func update(registeredDeviceUrl: String, deviceIdentifier: String?, deviceInfo: UIDevice, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<DeviceModel>) -> Void) {
         let request = ServiceRequest.Builder(authenticator, endpoint: registeredDeviceUrl)
             .method(.put)
-            .body(createBody(deviceInfo))
+            .body(createBody(deviceInfo, deviceIdentifier: deviceIdentifier))
             .queue(queue)
             .build()
         
@@ -67,10 +67,10 @@ class DeviceClient {
         request.responseObject(completionHandler)
     }
     
-    private func createBody(_ device: UIDevice) -> RequestParameter {
+    private func createBody(_ device: UIDevice, deviceIdentifier: String?) -> RequestParameter {
         let deviceName = device.name.isEmpty ? "notset" : device.name
         
-        let deviceParameters:[String: Any] = [
+        var deviceParameters:[String: Any] = [
             "deviceName": deviceName,
             "name": device.name,
             "model": device.model,
@@ -80,6 +80,9 @@ class DeviceClient {
             "deviceType": UIDevice.current.kind,
             "capabilities": ["sdpSupported":true, "groupCallSupported":true]]
         
+        if let deviceIdentifier = deviceIdentifier {
+            deviceParameters["deviceIdentifier"] = deviceIdentifier
+        }
         return RequestParameter(deviceParameters)
     }
     

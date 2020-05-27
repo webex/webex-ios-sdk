@@ -230,6 +230,7 @@ class MediaSessionWrapper {
             self.status = .prepare
             
             let mediaConfig :MediaCapabilityConfig = MediaCapabilityConfig()
+            mediaConfig.mqeCallback = false
             mediaConfig.audioMaxRxBandwidth = phone.audioMaxRxBandwidth
             
             var constraint = MediaConstraintFlag.audio.rawValue
@@ -433,6 +434,10 @@ extension MediaSessionWrapper {
     
     func auxStreamCount() -> Int {
         return self.mediaSession.auxStreamCount
+    }
+    
+    var MQEReport: String? {
+        return self.mediaSession.getEventReport()
     }
 }
 
