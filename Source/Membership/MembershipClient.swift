@@ -20,7 +20,7 @@
 
 import Foundation
 
-/// An iOS client wrapper of the Cisco Webex [Space Memberships REST API](https://developer.webex.com/resource-memberships.html) .
+/// An iOS client wrapper of the Cisco Webex [Space Memberships REST API](https://developer.webex.com/docs/api/v1/memberships) .
 ///
 /// - since: 1.2.0
 public class MembershipClient {

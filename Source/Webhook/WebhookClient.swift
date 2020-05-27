@@ -20,7 +20,7 @@
 
 import Foundation
 
-/// An iOS client wrapper of the Cisco Webex [Webhooks REST API](https://developer.webex.com/resource-webhooks.html) .
+/// An iOS client wrapper of the Cisco Webex [Webhooks REST API](https://developer.webex.com/docs/api/v1/webhooks) .
 ///
 /// - since: 1.2.0
 public class WebhookClient {

@@ -20,7 +20,7 @@
 
 import Foundation
 
-/// An iOS client wrapper of the Cisco Webex [Spaces REST API](https://developer.webex.com/resource-rooms.html) .
+/// An iOS client wrapper of the Cisco Webex [Spaces REST API](https://developer.webex.com/docs/api/v1/rooms) .
 ///
 /// - since: 1.2.0
 public class SpaceClient {

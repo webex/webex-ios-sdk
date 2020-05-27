@@ -20,7 +20,7 @@
 
 import Foundation
 
-/// An iOS client wrapper of the Cisco Webex [Teams REST API](https://developer.webex.com/resource-teams.html) .
+/// An iOS client wrapper of the Cisco Webex [Teams REST API](https://developer.webex.com/docs/api/v1/teams) .
 ///
 /// - since: 1.2.0
 public class TeamClient {
