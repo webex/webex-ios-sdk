@@ -45,12 +45,8 @@ public class SpaceClient {
         self.phone = phone
     }
     
-    private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(authenticator, service: .hydra, device: phone.devices.device).path("rooms")
-    }
-    
-    private func convServiceBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(authenticator, service: .conv, device: phone.devices.device)
+    private func hydraRequest() -> ServiceRequest.Builder {
+        return Service.hydra.global.authenticator(authenticator).path("rooms")
     }
     
     /// Lists all spaces where the authenticated user belongs.
@@ -65,9 +61,9 @@ public class SpaceClient {
     /// - returns: Void
     /// - since: 1.2.0
     public func list(teamId: String? = nil , max: Int? = nil, type: SpaceType? = nil, sortBy: SpaceSortType? = nil,queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[Space]>) -> Void) {
-        let request = requestBuilder()
+        let request = hydraRequest()
             .method(.get)
-            .query(RequestParameter(["teamId": teamId, "max": max, "type": type?.rawValue, "sortBy": sortBy?.rawValue]))
+            .query(["teamId": teamId, "max": max, "type": type?.rawValue, "sortBy": sortBy?.rawValue])
             .keyPath("items")
             .queue(queue)
             .build()
@@ -85,9 +81,9 @@ public class SpaceClient {
     /// - since: 1.2.0
     /// - see: see MemebershipClient API
     public func create(title: String, teamId: String? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Space>) -> Void) {
-        let request = requestBuilder()
+        let request = hydraRequest()
             .method(.post)
-            .body(RequestParameter(["title": title, "teamId": teamId]))
+            .body(["title": title, "teamId": teamId])
             .queue(queue)
             .build()
         
@@ -102,7 +98,7 @@ public class SpaceClient {
     /// - returns: Void
     /// - since: 1.2.0
     public func get(spaceId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Space>) -> Void) {
-        let request = requestBuilder()
+        let request = hydraRequest()
             .method(.get)
             .path(spaceId)
             .queue(queue)
@@ -120,9 +116,9 @@ public class SpaceClient {
     /// - returns: Void
     /// - since: 1.2.0
     public func update(spaceId: String, title: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Space>) -> Void) {
-        let request = requestBuilder()
+        let request = hydraRequest()
             .method(.put)
-            .body(RequestParameter(["title": title]))
+            .body(["title": title])
             .path(spaceId)
             .queue(queue)
             .build()
@@ -138,7 +134,7 @@ public class SpaceClient {
     /// - returns: Void
     /// - since: 1.2.0
     public func delete(spaceId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
-        let request = requestBuilder()
+        let request = hydraRequest()
             .method(.delete)
             .path(spaceId)
             .queue(queue)
@@ -155,7 +151,7 @@ public class SpaceClient {
     /// - returns: Void
     /// - since: 2.3.0
     public func getMeetingInfo(spaceId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<SpaceMeetingInfo>) -> Void) {
-        let request = requestBuilder()
+        let request = hydraRequest()
             .path(spaceId)
             .path("meetingInfo")
             .queue(queue)
@@ -175,9 +171,10 @@ public class SpaceClient {
     /// - returns: Void
     /// - since: 2.3.0
     public func getWithReadStatus(spaceId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<SpaceReadStatus>) -> Void) {
-        let request = self.convServiceBuilder()
-            .path("conversations")
-            .path(spaceId.locusFormat)
+        // TODO Find the cluster for the identifier instead of use home cluster always.
+        let request = Service.conv.homed(for: self.phone.devices.device)
+            .authenticator(self.authenticator)
+            .path("conversations").path(WebexId.uuid(spaceId))
             .query(RequestParameter(forConversation: ["includeParticipants": false]))
             .queue(queue)
             .build()
@@ -197,10 +194,12 @@ public class SpaceClient {
     /// - returns: Void
     /// - since: 2.3.0
     public func listWithReadStatus(max:UInt, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[SpaceReadStatus]>) -> Void) {
-        let parameter: [String: Any] = ["participantsLimit": 0, "isActive": true, "conversationsLimit": max]
-        let request = convServiceBuilder()
+        // TODO additionalUrls
+        // TODO Find the cluster for the identifier instead of use home cluster always.
+        let request = Service.conv.homed(for: self.phone.devices.device)
+            .authenticator(self.authenticator)
             .path("conversations")
-            .query(RequestParameter(forConversation: parameter))
+            .query(RequestParameter(forConversation: ["participantsLimit": 0, "isActive": true, "conversationsLimit": max]))
             .keyPath("items")
             .queue(queue)
             .build()
@@ -231,13 +230,13 @@ extension SpaceClient {
         var event: SpaceEvent?
         var space = Space()
         if verb == ActivityModel.Verb.create {
-            space.id = activity.objectUUID?.hydraFormat(for: .room)
+            space.id = WebexId(type: .room, uuid: activity.object)?.base64Id
             space.type = activity.objectTag
             space.isLocked = activity.objectLocked
             space.lastActivityTimestamp = activity.created
             event = SpaceEvent.create(space)
         } else if verb == ActivityModel.Verb.update {
-            space.id = activity.targetId
+            space.id = WebexId(type: .room, uuid: activity.targetUUID)?.base64Id
             space.type = activity.targetTag
             space.isLocked = activity.targetLocked
             event = SpaceEvent.update(space)

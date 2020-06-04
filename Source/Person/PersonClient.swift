@@ -32,7 +32,7 @@ public class PersonClient {
     }
     
     private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(authenticator, service: .hydra).path("people")
+        return Service.hydra.global.authenticator(self.authenticator).path("people")
     }
     
     /// Lists people in the authenticated user's organization.

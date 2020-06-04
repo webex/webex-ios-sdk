@@ -31,7 +31,7 @@ public class TeamMembershipClient {
     }
     
     private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(authenticator, service: .hydra).path("team/memberships")
+        return Service.hydra.global.authenticator(self.authenticator).path("team/memberships")
     }
     
     /// Lists all team memberships where the authenticated user belongs.
@@ -43,13 +43,9 @@ public class TeamMembershipClient {
     /// - returns: Void
     /// - since: 1.2.0
     public func list(teamId: String, max: Int? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[TeamMembership]>) -> Void) {
-        let query = RequestParameter([
-            "teamId": teamId,
-            "max": max])
-        
         let request = requestBuilder()
             .method(.get)
-            .query(query)
+            .query(["teamId": teamId, "max": max])
             .keyPath("items")
             .queue(queue)
             .build()
@@ -67,14 +63,9 @@ public class TeamMembershipClient {
     /// - returns: TeamMembership
     /// - since: 1.2.0
     public func create(teamId: String, personId: String, isModerator: Bool = false, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<TeamMembership>) -> Void) {
-        let body = RequestParameter([
-            "teamId": teamId,
-            "personId": personId,
-            "isModerator": isModerator])
-        
         let request = requestBuilder()
             .method(.post)
-            .body(body)
+            .body(["teamId": teamId, "personId": personId, "isModerator": isModerator])
             .queue(queue)
             .build()
         
@@ -91,15 +82,10 @@ public class TeamMembershipClient {
     /// - returns: Void
     /// - since: 1.2.0
     public func create(teamId: String, personEmail: EmailAddress, isModerator: Bool = false, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<TeamMembership>) -> Void) {
-        let body = RequestParameter([
-            "teamId": teamId,
-            "personEmail": personEmail.toString(),
-            "isModerator": isModerator])
-        
         let request = requestBuilder()
             .method(.post)
             .queue(queue)
-            .body(body)
+            .body(["teamId": teamId, "personEmail": personEmail.toString(), "isModerator": isModerator])
             .build()
         
         request.responseObject(completionHandler)
@@ -133,7 +119,7 @@ public class TeamMembershipClient {
     public func update(membershipId: String, isModerator: Bool, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<TeamMembership>) -> Void) {
         let request = requestBuilder()
             .method(.put)
-            .body(RequestParameter(["isModerator": isModerator]))
+            .body(["isModerator": isModerator])
             .path(membershipId)
             .queue(queue)
             .build()

@@ -43,14 +43,10 @@ public class MembershipClient {
         self.messages = messages
     }
     
-    private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(self.phone.authenticator, service: .hydra, device: phone.devices.device).path("memberships")
+    private func hydraReqeust() -> ServiceRequest.Builder {
+        return Service.hydra.global.authenticator(self.phone.authenticator).path("memberships")
     }
-    
-    private func convRequestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(self.phone.authenticator, service: .conv, device: phone.devices.device).path("conversations")
-    }
-    
+        
     /// Lists all space memberships where the authenticated user belongs.
     ///
     /// - parameter max: The maximum number of items in the response.
@@ -99,14 +95,14 @@ public class MembershipClient {
     }
     
     private func list(spaceId: String?, personId: String?, personEmail: EmailAddress?, max: Int?, queue: DispatchQueue?, completionHandler: @escaping (ServiceResponse<[Membership]>) -> Void) {
-        let query = RequestParameter([
+        let query: [String: Any?] = [
             "spaceId": spaceId,
             "roomId": spaceId,
             "personId": personId,
             "personEmail": personEmail?.toString(),
-            "max": max])
-        
-        let request = requestBuilder()
+            "max": max
+        ]
+        let request = hydraReqeust()
             .method(.get)
             .query(query)
             .keyPath("items")
@@ -131,8 +127,8 @@ public class MembershipClient {
             "roomId": spaceId,
             "personId": personId,
             "isModerator": isModerator])
-        
-        let request = requestBuilder()
+
+        let request = hydraReqeust()
             .method(.post)
             .body(body)
             .queue(queue)
@@ -157,7 +153,7 @@ public class MembershipClient {
             "personEmail": personEmail.toString(),
             "isModerator": isModerator])
         
-        let request = requestBuilder()
+        let request = hydraReqeust()
             .method(.post)
             .queue(queue)
             .body(body)
@@ -174,7 +170,7 @@ public class MembershipClient {
     /// - returns: Void
     /// - since: 1.2.0
     public func get(membershipId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Membership>) -> Void) {
-        let request = requestBuilder()
+        let request = hydraReqeust()
             .method(.get)
             .path(membershipId)
             .queue(queue)
@@ -192,9 +188,9 @@ public class MembershipClient {
     /// - returns: Void
     /// - since: 1.2.0
     public func update(membershipId: String, isModerator: Bool, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Membership>) -> Void) {
-        let request = requestBuilder()
+        let request = hydraReqeust()
             .method(.put)
-            .body(RequestParameter(["isModerator": isModerator]))
+            .body(["isModerator": isModerator])
             .path(membershipId)
             .queue(queue)
             .build()
@@ -210,7 +206,7 @@ public class MembershipClient {
     /// - returns: Void
     /// - since: 1.2.0
     public func delete(membershipId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
-        let request = requestBuilder()
+        let request = hydraReqeust()
             .method(.delete)
             .path(membershipId)
             .queue(queue)
@@ -228,8 +224,12 @@ public class MembershipClient {
     /// - returns: Void
     /// - since: 2.3.0
     public func listWithReadStatus(spaceId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[MembershipReadStatus]>) -> Void) {
-        let request = convRequestBuilder()
-            .path(spaceId.locusFormat)
+        // TODO additionalUrls
+        // TODO Find the cluster for the identifier instead of use home cluster always.
+        let request = Service.conv.homed(for: phone.devices.device)
+            .authenticator(self.phone.authenticator)
+            .path("conversations")
+            .path(WebexId.uuid(spaceId))
             .query(RequestParameter(forConversation: ["participantAckFilter":"all"]))
             .queue(queue)
             .build()
@@ -243,7 +243,7 @@ public class MembershipClient {
                     return
                 }
                 var readStatuses = [MembershipReadStatus]()
-                let context = MembershipReadStatus.Context(spaceId: dict["id"] as? String)
+                let context = MembershipReadStatus.Context(conversationId: dict["id"] as? String)
                 items.forEach({ (item) in
                     if let readStatus = try? MembershipReadStatus(JSON: item, context: context) {
                         readStatuses.append(readStatus)
@@ -267,22 +267,22 @@ extension MembershipClient {
                 
         var event: MembershipEvent?
         var membership = Membership()
-        membership.spaceId = activity.targetId
+        membership.spaceId = WebexId(type: .room, uuid: activity.targetUUID)?.base64Id
         
         if verb == ActivityModel.Verb.acknowledge {
-            if let seenId = activity.objectUUID?.hydraFormat(for: .message) {
-                membership.id = "\(activity.actorUUID ?? ""):\(activity.targetUUID ?? "")".hydraFormat(for: IdentityType.membership)
-                membership.personId = activity.actorId
-                membership.personOrgId = activity.actorOrgId
+            if let seenId = WebexId(type: .membership, uuid: activity.object)?.base64Id {
+                membership.id = WebexId(type: .membership, uuid: "\(activity.actorUUID ?? ""):\(activity.targetUUID ?? "")")?.base64Id
+                membership.personId = WebexId(type: .people, uuid: activity.actorUUID)?.base64Id
+                membership.personOrgId = WebexId(type: .organization, uuid: activity.actorOrgUUID)?.base64Id
                 membership.personDisplayName = activity.actorDisplayName
                 membership.personEmail = EmailAddress.fromString(activity.actorEmail)
                 event = MembershipEvent.messageSeen(membership, lastSeenMessage: seenId)
             }
         }
         else {
-            membership.id = "\(activity.objectUUID ?? ""):\(activity.targetUUID ?? "")".hydraFormat(for: IdentityType.membership)
-            membership.personId = activity.objectUUID?.hydraFormat(for: .people)
-            membership.personOrgId = activity.objectOrgId
+            membership.id = WebexId(type: .membership, uuid: "\(activity.object ?? ""):\(activity.targetUUID ?? "")")?.base64Id
+            membership.personId = WebexId(type: .people, uuid: activity.object)?.base64Id
+            membership.personOrgId = WebexId(type: .organization, uuid: activity.objectOrgUUID)?.base64Id
             membership.personDisplayName = activity.objectDisplayName
             membership.personEmail = EmailAddress.fromString(activity.objectEmail)
             membership.isModerator = activity.isModerator

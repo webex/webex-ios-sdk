@@ -9,18 +9,6 @@
 import Foundation
 import ObjectMapper
 
-struct ConversationLocusModel {
-    fileprivate(set) var locusUrl: String?
-}
-
-extension ConversationLocusModel: Mappable {
-    init?(map: Map) { }
-    
-    mutating func mapping(map: Map) {
-        locusUrl <- map["url"]
-    }
-}
-
 class ConversationClient {
     
     private let authenticator: Authenticator
@@ -29,8 +17,10 @@ class ConversationClient {
         self.authenticator = authenticator
     }
     
-    func getLocusUrl(conversation: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<ConversationLocusModel>) -> Void) {
-        let request = ServiceRequest.Builder(authenticator, service: .conv, device: device)
+    func getLocusUrl(conversation: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusUrlResponseModel>) -> Void) {
+        // TODO Find the cluster for the conversation instead of use home cluster always.
+        let request = Service.conv.homed(for: device)
+            .authenticator(self.authenticator)
             .method(.get)
             .path("conversations").path(conversation).path("locus")
             .keyPath("")

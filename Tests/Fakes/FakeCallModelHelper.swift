@@ -342,8 +342,8 @@ class FakeCallModelHelper {
     
     
     
-    private static func getPersonModel(testUser:TestUser) -> PersonModel {
-        return PersonModel(JSON: ["name" : testUser.name,
+    private static func getPersonModel(testUser:TestUser) -> LocusParticipantInfoModel {
+        return LocusParticipantInfoModel(JSON: ["name" : testUser.name,
                                   "email" : testUser.email,
                                   "id" : testUser.id,
                                   "orgId" : testUser.orgId])!

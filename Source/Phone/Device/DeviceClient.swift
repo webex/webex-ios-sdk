@@ -28,28 +28,34 @@ class DeviceClient {
         self.authenticator = authenticator
     }
     
-    func create(deviceInfo: UIDevice, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<DeviceModel>) -> Void) {
-        let request = ServiceRequest.Builder(authenticator, service: .wdm)
+    func create(deviceInfo: [String: Any], hosts: ServiceHostModel?, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<DeviceModel>) -> Void) {
+        let request = Service.wdm.homed(for: nil, with: hosts)
+            .authenticator(self.authenticator)
             .method(.post)
-            .body(createBody(deviceInfo))
+            .path("devices")
+            .body(deviceInfo)
+            .headers(["x-catalog-version2": "true"])
             .queue(queue)
             .build()
         
         request.responseObject(completionHandler)
     }
     
-    func update(registeredDeviceUrl: String, deviceInfo: UIDevice, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<DeviceModel>) -> Void) {
-        let request = ServiceRequest.Builder(authenticator, endpoint: registeredDeviceUrl)
+    func update(url: String, deviceInfo: [String: Any], queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<DeviceModel>) -> Void) {
+        let request = Service.wdm.specific(url: url)
+            .authenticator(self.authenticator)
             .method(.put)
-            .body(createBody(deviceInfo))
+            .body(deviceInfo)
+            .headers(["x-catalog-version2": "true"])
             .queue(queue)
             .build()
         
         request.responseObject(completionHandler)
     }
     
-    func delete(registeredDeviceUrl: String, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
-        let request = ServiceRequest.Builder(authenticator, endpoint: registeredDeviceUrl)
+    func delete(url: String, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        let request = Service.wdm.specific(url: url)
+            .authenticator(self.authenticator)
             .method(.delete)
             .queue(queue)
             .build()
@@ -58,8 +64,10 @@ class DeviceClient {
     }
     
     func fetchRegion(queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<RegionModel>) -> Void) {
-        let request = ServiceRequest.Builder(authenticator, service: .region)
+        let request = Service.region.global
+            .authenticator(self.authenticator)
             .method(.get)
+            .path("region")
             .headers(["Content-Type": "application/json"])
             .queue(queue)
             .build()
@@ -67,20 +75,16 @@ class DeviceClient {
         request.responseObject(completionHandler)
     }
     
-    private func createBody(_ device: UIDevice) -> RequestParameter {
-        let deviceName = device.name.isEmpty ? "notset" : device.name
+    func fetchHosts(queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<ServiceHostModel>) -> Void) {
+        let request = Service.u2c.global
+            .authenticator(self.authenticator)
+            .method(.get)
+            .path("user/catalog")
+            .query(["format": "hostMap"])
+            .queue(queue)
+            .build()
         
-        let deviceParameters:[String: Any] = [
-            "deviceName": deviceName,
-            "name": device.name,
-            "model": device.model,
-            "localizedModel": device.localizedModel,
-            "systemName": device.systemName,
-            "systemVersion": device.systemVersion,
-            "deviceType": UIDevice.current.kind,
-            "capabilities": ["sdpSupported":true, "groupCallSupported":true]]
-        
-        return RequestParameter(deviceParameters)
+        request.responseObject(completionHandler)
     }
     
 }

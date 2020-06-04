@@ -50,7 +50,7 @@ struct CallModel {
     fileprivate(set) var locusUrl: String? // Mandatory
     fileprivate(set) var participants: [ParticipantModel]?
     fileprivate(set) var myself: ParticipantModel?
-    fileprivate(set) var host: PersonModel?
+    fileprivate(set) var host: LocusParticipantInfoModel?
     fileprivate(set) var fullState: FullStateModel?
     fileprivate(set) var sequence: SequenceModel? // Mandatory
     fileprivate(set) var baseSequence: SequenceModel? = nil
@@ -217,7 +217,7 @@ extension CallModel {
         self.myself = newParticipant
     }
     
-    mutating func setHost(newPerson:PersonModel?) {
+    mutating func setHost(newPerson:LocusParticipantInfoModel?) {
         self.host = newPerson
     }
     

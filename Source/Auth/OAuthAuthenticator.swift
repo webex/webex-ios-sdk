@@ -144,13 +144,12 @@ public class OAuthAuthenticator : Authenticator {
         if let encodedClientId = clientId.encodeQueryParamString,
             let encodedRedirectUri = redirectUri.encodeQueryParamString,
             let encodedScope = scope.encodeQueryParamString {
-            return URL(string: "\(Service.hydra.endpoint(for: nil))/authorize?response_type=code"
+            return URL(string: "\(Service.hydra.global.url.absoluteString)/authorize?response_type=code"
                 + "&client_id=" + encodedClientId
                 + "&redirect_uri=" + encodedRedirectUri
                 + "&scope=" + encodedScope
                 + "&state=iossdkstate")
         }
-        
         return nil
     }
     

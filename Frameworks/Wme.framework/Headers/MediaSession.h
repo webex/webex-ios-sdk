@@ -19,6 +19,12 @@ typedef NS_ENUM(NSInteger, VideoScalingModeType) {
     VideoScalingModeCropFill = 2,            ///< Crop some content to fix the aspect ratio of the window
 };
 
+typedef NS_ENUM(NSInteger, MediaMetricType) {
+    MediaMetricTypeIce,
+    MediaMetricTypeMediaQuality,
+    MediaMetricTypeMqe4Telemetry
+};
+
 @interface MediaSession : NSObject
 
 // SDP & constraint
@@ -93,4 +99,6 @@ typedef NS_ENUM(NSInteger, VideoScalingModeType) {
 @property (atomic) NSInteger auxStreamCount;
 - (int)subscribeVideoTrack:(UIView *)renderView;
 - (void)unsubscribeVideoTrack:(int)vid;
+
+-(NSString*)getEventReport;
 @end

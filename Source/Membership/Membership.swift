@@ -123,7 +123,7 @@ extension Membership : Mappable {
 public struct MembershipReadStatus: ImmutableMappable {
     
     struct Context: MapContext {
-        var spaceId:String?
+        var conversationId:String?
     }
     
     /// The membership of the space
@@ -137,11 +137,11 @@ public struct MembershipReadStatus: ImmutableMappable {
     
     public init(map: Map) throws {
         let entryUUID:String? = try? map.value("entryUUID")
-        if let context = map.context as? Context, let spaceId = context.spaceId {
-            self.member.id = "\(entryUUID ?? ""):\(spaceId)".hydraFormat(for: .membership)
-            self.member.spaceId = spaceId.hydraFormat(for: .room)
+        if let context = map.context as? Context, let conversationId = context.conversationId {
+            self.member.id = WebexId(type: .membership, uuid: "\(entryUUID ?? ""):\(conversationId)")?.base64Id
+            self.member.spaceId = WebexId(type: .room, uuid: conversationId)?.base64Id
         }
-        self.member.personId = entryUUID?.hydraFormat(for: .people)
+        self.member.personId = WebexId(type: .people, uuid: entryUUID)?.base64Id
         self.member.personEmail = EmailAddress.fromString(try? map.value("emailAddress"))
         self.member.personDisplayName = try? map.value("displayName")
         self.member.personOrgId = try? map.value("orgId", using:IdentityTransform(for: .organization))
@@ -152,7 +152,7 @@ public struct MembershipReadStatus: ImmutableMappable {
     
     public mutating func mapping(map: Map) {
         self.member >>> map["member"]
-        self.lastSeenId >>> map["lastSeenId"]
+        self.lastSeenId >>> (map["lastSeenId"], IdentityTransform(for: .message))
         self.lastSeenDate?.longString >>> map["lastSeenDate"]
     }
     

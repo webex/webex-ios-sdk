@@ -20,15 +20,15 @@
 
 class EncryptionKey {
     
-    let spaceId: String // locus format
+    let conversation: Identifier
     var spaceUserIds: [String] = []
     
     private var encryptionUrl: String?
     private var material: String?
     private var spaceUrl: String?
     
-    init(spaceId: String) {
-        self.spaceId = spaceId
+    init(conversation: Identifier) {
+        self.conversation = conversation
     }
     
     func tryRefresh(encryptionUrl: String) {
@@ -49,7 +49,7 @@ class EncryptionKey {
                 }
                 else {
                     let encrptionUrl = response.data as? String
-                    client.requestSpaceKeyMaterial(spaceId: self.spaceId, encryptionUrl: encrptionUrl) { result in
+                    client.requestSpaceKeyMaterial(conversation: self.conversation, encryptionUrl: encrptionUrl) { result in
                         switch result {
                         case .success(let data):
                             self.encryptionUrl = data.0
@@ -69,7 +69,7 @@ class EncryptionKey {
             completionHandler(Result.success(url))
         }
         else {
-            client.requestSpaceEncryptionURL(spaceId: self.spaceId) { result in
+            client.requestSpaceEncryptionURL(conversation: self.conversation) { result in
                 self.encryptionUrl = result.data as? String
                 completionHandler(result)
             }
@@ -81,8 +81,9 @@ class EncryptionKey {
             completionHandler(Result.success(url))
         }
         else {
-            let request = ServiceRequest.Builder(client.authenticator, service: .conv, device: client.phone.devices.device)
-                .path("conversations").path(self.spaceId.locusFormat).path("space")
+            let request = Service.conv.specific(url: self.conversation.url(device: client.phone.devices.device))
+                .authenticator(client.authenticator)
+                .path("space")
                 .method(.put)
                 .build()
             request.responseJSON { (response: ServiceResponse<Any>) in

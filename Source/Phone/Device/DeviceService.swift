@@ -22,12 +22,18 @@ import Foundation
 
 struct Device {
     let phone: Phone
-    let deviceUrl: URL
-    let webSocketUrl: URL
-    let services: [String: String]
-    let deviceType:String
-    var regionCode: String
-    var countryCode: String
+    let deviceType:String = UIDevice.current.kind
+    let deviceModel: DeviceModel
+    let regionModel: RegionModel
+    
+    var deviceUrl: URL { return deviceModel.deviceUrl! }
+    var webSocketUrl: URL { return deviceModel.webSocketUrl! }
+    var countryCode: String { return regionModel.countryCode! }
+    var regionCode: String { return regionModel.regionCode! }
+    
+    subscript(service name: String) -> String? {
+        return self.deviceModel[service: name]
+    }
 }
 
 class DeviceService {
@@ -41,51 +47,62 @@ class DeviceService {
     var device: Device?
     
     func registerDevice(phone: Phone, queue: DispatchQueue, completionHandler: @escaping (Result<Device>) -> Void) {
-        
-        let registrationHandler: (ServiceResponse<DeviceModel>) -> Void = { response in
-            switch response.result {
-            case .success(let model):
-                if let deviceUrlString = model.deviceUrl,
-                    let deviceUrl = URL(string: deviceUrlString),
-                    let webSocketUrlString = model.webSocketUrl,
-                    let webSocketUrl = URL(string: webSocketUrlString),
-                    let servicesDictionary = model.services {
-                    
-                    self.client.fetchRegion(queue: queue) { regionRes in
-                        var regionCode = "US-WEST";
-                        var countryCode = "US";
-                        if let model = regionRes.result.data, let rc = model.regionCode, let cc = model.countryCode {
-                            regionCode = rc
-                            countryCode = cc
-                        }
-                        let tempDevice = Device(phone: phone, deviceUrl: deviceUrl, webSocketUrl: webSocketUrl, services: servicesDictionary, deviceType: UIDevice.current.kind, regionCode: regionCode, countryCode: countryCode)
-                        self.device = tempDevice
-                        UserDefaults.sharedInstance.deviceUrl = deviceUrlString
-                        completionHandler(Result.success(tempDevice))
+        self.client.fetchRegion(queue: queue) { regionRes in
+            var region = regionRes.result.data ?? RegionModel()
+            if region.regionCode == nil {
+                region.regionCode = "US-WEST"
+            }
+            if region.countryCode == nil {
+                region.countryCode = "US"
+            }
+            
+            let registrationHandler: (ServiceResponse<DeviceModel>) -> Void = { response in
+                switch response.result {
+                case .success(let model):
+                    if let _ = model.deviceUrl, let _ = model.webSocketUrl {
+                        self.device = Device(phone: phone, deviceModel: model, regionModel: region)
+                        UserDefaults.sharedInstance.deviceUrl = model.deviceUrlString
+                        UserDefaults.sharedInstance.deviceIdentifier = model.deviceIdentifier
+                        completionHandler(Result.success(self.device!))
+                    } else {
+                        let error = WebexError.serviceFailed(code: -7000, reason: "Missing required URLs when registering device")
+                        SDKLogger.shared.error("Failed to register device", error: error)
+                        completionHandler(Result.failure(error))
                     }
-                    
-                } else {
-                    let error = WebexError.serviceFailed(code: -7000, reason: "Missing required URLs when registering device")
+                case .failure(let error):
                     SDKLogger.shared.error("Failed to register device", error: error)
                     completionHandler(Result.failure(error))
                 }
-            case .failure(let error):
-                SDKLogger.shared.error("Failed to register device", error: error)
-                completionHandler(Result.failure(error))
             }
-        }
-        
-        if let deviceUrl = UserDefaults.sharedInstance.deviceUrl {
-            self.client.update(registeredDeviceUrl: deviceUrl, deviceInfo: UIDevice.current, queue: queue, completionHandler: registrationHandler)
-        }
-        else {
-            self.client.create(deviceInfo: UIDevice.current, queue: queue, completionHandler: registrationHandler)
+            
+            let deviceInfo: [String: Any] = [
+                "deviceName": UIDevice.current.name.isEmpty ? "notset" : UIDevice.current.name,
+                "name": UIDevice.current.name.isEmpty ? "notset" : UIDevice.current.name,
+                "model": UIDevice.current.model,
+                "localizedModel": UIDevice.current.localizedModel,
+                "systemName": UIDevice.current.systemName,
+                "systemVersion": UIDevice.current.systemVersion,
+                "deviceType": UIDevice.current.kind,
+                "deviceIdentifier": UserDefaults.sharedInstance.deviceIdentifier ?? UUID().uuidString,
+                "countryCode": region.countryCode!,
+                "regionCode": region.regionCode!,
+                "ttl": String(180*24*3600),
+                "capabilities": ["sdpSupported":true, "groupCallSupported":true]
+            ]
+            if let deviceUrl = UserDefaults.sharedInstance.deviceUrl {
+                self.client.update(url: deviceUrl, deviceInfo: deviceInfo, queue: queue, completionHandler: registrationHandler)
+            }
+            else {
+                self.client.fetchHosts(queue: queue) { hostsRes in
+                    self.client.create(deviceInfo: deviceInfo, hosts: hostsRes.result.data, queue: queue, completionHandler: registrationHandler)
+                }
+            }
         }
     }
     
     func deregisterDevice(queue: DispatchQueue, completionHandler: @escaping (Error?) -> Void) {
         if let deviceUrl = UserDefaults.sharedInstance.deviceUrl {
-            self.client.delete(registeredDeviceUrl: deviceUrl, queue: queue) { (response: ServiceResponse<Any>) in
+            self.client.delete(url: deviceUrl, queue: queue) { (response: ServiceResponse<Any>) in
                 switch response.result {
                 case .success:
                     completionHandler(nil)
@@ -95,6 +112,7 @@ class DeviceService {
                 }
             }
             UserDefaults.sharedInstance.deviceUrl = nil
+            UserDefaults.sharedInstance.deviceIdentifier = nil
         } else {
             completionHandler(nil)
         }
@@ -113,9 +131,6 @@ extension UIDevice {
         } else {
             return "UNKNOWN"
         }
-        
-        //fake current device as desktop client
-//        return "MAC"
     }
     
 }

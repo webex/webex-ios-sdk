@@ -32,7 +32,7 @@ public class TeamClient {
     }
 
     private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(authenticator, service: .hydra).path("teams")
+        return Service.hydra.global.authenticator(self.authenticator).path("teams")
     }
     
     /// Lists teams to which the authenticated user belongs.
@@ -45,7 +45,7 @@ public class TeamClient {
     public func list(max: Int? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[Team]>) -> Void) {
         let request = requestBuilder()
             .method(.get)
-            .query(RequestParameter(["max": max]))
+            .query(["max": max])
             .keyPath("items")
             .queue(queue)
             .build()
@@ -65,7 +65,7 @@ public class TeamClient {
     public func create(name: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Team>) -> Void) {
         let request = requestBuilder()
             .method(.post)
-            .body(RequestParameter(["name": name]))
+            .body(["name": name])
             .queue(queue)
             .build()
         
@@ -101,7 +101,7 @@ public class TeamClient {
     public func update(teamId: String, name: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Team>) -> Void) {
         let request = requestBuilder()
             .method(.put)
-            .body(RequestParameter(["name": name]))
+            .body(["name": name])
             .path(teamId)
             .queue(queue)
             .build()

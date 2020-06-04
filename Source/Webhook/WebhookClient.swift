@@ -32,7 +32,7 @@ public class WebhookClient {
     }
     
     private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(authenticator, service: .hydra).path("webhooks")
+        return Service.hydra.global.authenticator(self.authenticator).path("webhooks")
     }
     
     /// Lists all webhooks of the authenticated user.
@@ -45,7 +45,7 @@ public class WebhookClient {
     public func list(max: Int? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[Webhook]>) -> Void) {
         let request = requestBuilder()
             .method(.get)
-            .query(RequestParameter(["max": max]))
+            .query(["max": max])
             .keyPath("items")
             .queue(queue)
             .build()
@@ -67,13 +67,14 @@ public class WebhookClient {
     /// - returns: Void
     /// - since: 1.2.0
     public func create(name: String, targetUrl: String, resource: String, event: String, filter: String? = nil, secret: String? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Webhook>) -> Void) {
-        let body = RequestParameter([
+        let body = [
             "name": name,
             "targetUrl": targetUrl,
             "resource": resource,
             "event": event,
             "filter": filter,
-            "secret": secret])
+            "secret": secret
+        ]
         
         let request = requestBuilder()
             .method(.post)
@@ -115,7 +116,7 @@ public class WebhookClient {
     public func update(webhookId: String, name: String, targetUrl: String,  secret: String? = nil, status: String? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Webhook>) -> Void) {
         let request = requestBuilder()
             .method(.put)
-            .body(RequestParameter(["name": name, "targetUrl": targetUrl, "secret" : secret, "status" : status ]))
+            .body(["name": name, "targetUrl": targetUrl, "secret" : secret, "status" : status ])
             .path(webhookId)
             .queue(queue)
             .build()

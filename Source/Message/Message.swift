@@ -91,7 +91,7 @@ public struct Message {
     
     /// The identifier of the space where this message was posted.
     public var spaceId: String? {
-        return self.activity.targetId
+        return WebexId(type: .room, uuid: self.activity.targetUUID)?.base64Id
     }
     
     ///  The type of the space, "group"/"direct", where the message is posted.
@@ -101,7 +101,7 @@ public struct Message {
     
     /// The identifier of the person who sent this message.
     public var personId: String? {
-        return self.activity.actorId
+        return WebexId(type: .people, uuid: self.activity.actorUUID)?.base64Id
     }
     
     /// The email address of the person who sent this message.
@@ -168,11 +168,11 @@ public struct Message {
     
     init(activity: ActivityModel) {
         self.activity = activity
-        self.parentId = activity.parentId
+        self.parentId = WebexId(type: .message, uuid: activity.parentUUID)?.base64Id
         self.isReply = activity.parentType == "reply"
-        self.id = activity.uuid?.hydraFormat(for: .message)
-        if self.activity.verb == ActivityModel.Verb.delete, let uuid = self.activity.objectUUID {
-            self.id = uuid.hydraFormat(for: .message)
+        self.id = WebexId(type: .membership, uuid: activity.uuid)?.base64Id
+        if self.activity.verb == ActivityModel.Verb.delete, let uuid = self.activity.object {
+            self.id = WebexId(type: .membership, uuid: uuid)?.base64Id
         }
         self.textAsObject = Message.Text(plain: activity.objectDisplayName, html: activity.objectConetnt, markdown: activity.objectMarkdown)
     }
@@ -180,7 +180,7 @@ public struct Message {
     private var mentions: [Mention]? {
         var mentionList = [Mention]()
         if let peoples = self.activity.mentionedPeople {
-            mentionList.append(contentsOf: (peoples.map { Mention.person($0) }))
+            mentionList.append(contentsOf: (peoples.map { Mention.person(WebexId(type: .people, uuid: $0)!.base64Id)}))
         }
         if let groups = self.activity.mentionedGroup {
             for group in groups where group == "all" {

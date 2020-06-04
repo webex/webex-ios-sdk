@@ -27,7 +27,7 @@ import Foundation
 public struct WebexEventPayload {
     
     init(activity: ActivityModel?, person: Person?) {
-        self.actorId = activity?.actorId
+        self.actorId = WebexId(type: .people, uuid: activity?.actorUUID)?.base64Id
         //        self.createdBy = person?.id
         //        self.orgId = person?.orgId
     }

@@ -70,7 +70,7 @@ struct ParticipantModel {
     var url: String?
     var state: ParticipantModel.State?
     var type: String?
-    var person: PersonModel?
+    var person: LocusParticipantInfoModel?
     var status: ParticipantModel.StatusModel?
     var deviceUrl: String?
     var mediaBaseUrl: String?
@@ -141,7 +141,7 @@ struct ParticipantModel {
 
 }
 
-struct PersonModel {
+struct LocusParticipantInfoModel {
     var id: String?
     var email: String?
     var name: String?
@@ -259,7 +259,7 @@ extension ParticipantModel.DeviceModel.IntentModel: Mappable {
     }
 }
 
-extension PersonModel: Mappable {
+extension LocusParticipantInfoModel: Mappable {
     
     init?(map: Map){
     }

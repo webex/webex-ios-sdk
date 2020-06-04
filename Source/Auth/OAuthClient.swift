@@ -45,20 +45,19 @@ extension OAuthTokenModel : Mappable {
 }
 
 class OAuthClient {
-        
-    private func requestBuilder() -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(service: .hydra).path("access_token").headers(["Content-Type": "application/x-www-form-urlencoded"])
-    }
     
     func fetchAccessTokenFrom(oauthCode: String, clientId: String, clientSecret: String, redirectUri: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<OAuthTokenModel>) -> Void) {
-        let query = RequestParameter(["grant_type": "authorization_code",
+        let query = [
+            "grant_type": "authorization_code",
             "redirect_uri": redirectUri,
             "code": oauthCode,
             "client_id": clientId,
-            "client_secret": clientSecret])
-        
-        let request = requestBuilder()
+            "client_secret": clientSecret
+        ]
+        let request = Service.hydra.global
             .method(.post)
+            .headers(["Content-Type": "application/x-www-form-urlencoded"])
+            .path("access_token")
             .query(query)
             .queue(queue)
             .build()
@@ -67,13 +66,16 @@ class OAuthClient {
     }
     
     func refreshAccessTokenFrom(refreshToken: String, clientId: String, clientSecret: String, queue: DispatchQueue? = nil, completionHandler: @escaping  (ServiceResponse<OAuthTokenModel>) -> Void) {
-        let query = RequestParameter(["grant_type": "refresh_token",
+        let query = [
+            "grant_type": "refresh_token",
             "refresh_token": refreshToken,
             "client_id": clientId,
-            "client_secret": clientSecret])
-        
-        let request = requestBuilder()
+            "client_secret": clientSecret
+        ]
+        let request = Service.hydra.global
             .method(.post)
+            .headers(["Content-Type": "application/x-www-form-urlencoded"])
+            .path("access_token")
             .query(query)
             .queue(queue)
             .build()
