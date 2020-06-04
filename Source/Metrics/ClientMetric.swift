@@ -19,24 +19,23 @@
 // THE SOFTWARE.
 
 import Foundation
+import ObjectMapper
 
-extension Date {
-    func isAfterDate(_ date: Date) -> Bool {
-        return self.compare(date) == .orderedDescending
+struct ClientMetric : Mappable {
+    
+    private(set) var type:[String]?
+    private(set) var eventPayload:DiagnosticEvent?
+    
+    init(event: DiagnosticEvent, type: String) {
+        self.eventPayload = event
+        self.type = [type]
     }
     
-    private static let formatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss:SSS"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        return formatter
-    }()
+    init?(map: Map) {}
     
-    var longString: String {
-        return Date.formatter.string(from: self)
+    mutating func mapping(map: Map) {
+        self.eventPayload <- map["eventPayload"]
+        self.type <- map["type"]
     }
-    
-    var utc: String {
-        Timestamp.iSO8601FullFormatterInUTC.string(from: self)
-    }    
+
 }

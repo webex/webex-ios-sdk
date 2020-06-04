@@ -19,24 +19,12 @@
 // THE SOFTWARE.
 
 import Foundation
+import ObjectMapper
 
-extension Date {
-    func isAfterDate(_ date: Date) -> Bool {
-        return self.compare(date) == .orderedDescending
-    }
-    
-    private static let formatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss:SSS"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        return formatter
-    }()
-    
-    var longString: String {
-        return Date.formatter.string(from: self)
-    }
-    
-    var utc: String {
-        Timestamp.iSO8601FullFormatterInUTC.string(from: self)
-    }    
+enum ClientEventMediaType: String {
+    case audio
+    case video
+    case share
+    case shareAudio = "share_audio"
+    case whiteboard
 }

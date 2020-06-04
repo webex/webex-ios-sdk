@@ -21,6 +21,7 @@
 import Foundation
 import AVFoundation
 import Wme
+import ObjectMapper
 
 class MediaSessionObserver: NotificationObserver {
     
@@ -62,8 +63,19 @@ class MediaSessionObserver: NotificationObserver {
             (.MediaEngineDidUnMuteAuxVideo,#selector(onMediaEngineDidUnMuteAuxVideo(_:))),
             (.MediaEngineDidActiveSpeakerChange,      #selector(onMediaEngineDidActiveSpeakerChange(_:))),
             (.MediaEngineDidCSIChange,      #selector(onMediaEngineDidDidCSIChange(_:))),
+            (.MediaEngineDidMQE, #selector(onMediaEngineDidDidMQE(_:))),
             (.MediaEngineDidAuxVideoSizeChange,      #selector(onMediaEngineDidAuxVideoSizeChange(_:)))]
         
+    }
+    
+    @objc private func onMediaEngineDidDidMQE(_ notification: Notification) {
+        DispatchQueue.main.async {
+            if let retainCall = self.call,
+                let string = notification.userInfo?["metric"] as? String,
+                let metric = string.json {
+                retainCall.device.phone.metrics.reportMQE(phone: retainCall.device.phone, call: retainCall, metric:metric)
+            }
+        }
     }
     
     @objc private func onMediaEngineDidSwitchCameras(_ notification: Notification) {

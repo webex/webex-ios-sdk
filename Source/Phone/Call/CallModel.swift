@@ -76,6 +76,13 @@ struct CallModel {
         return self.replaces?.first?.locusUrl ?? self.locusUrl
     }
     
+    var locusId: String? {
+        if let url = self.callUrl {
+            return URL(string: url)?.lastPathComponent
+        }
+        return nil
+    }
+    
     var myselfId: String? {
         return self.myself?.id
     }

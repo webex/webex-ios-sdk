@@ -19,24 +19,33 @@
 // THE SOFTWARE.
 
 import Foundation
+import ObjectMapper
 
-extension Date {
-    func isAfterDate(_ date: Date) -> Bool {
-        return self.compare(date) == .orderedDescending
+struct DiagnosticEvent: Mappable {
+    
+    static let sentTimeKeyPath = "originTime.sent"
+    
+    private(set) var eventId: String?
+    private(set) var version: Int?
+    private(set) var origin: DiagnosticOrigin?
+    private(set) var originTime: DiagnosticOriginTime?
+    private(set) var event: ClientEvent?
+    
+    init(eventId: UUID, version: Int?, origin: DiagnosticOrigin, originTime: DiagnosticOriginTime, event: ClientEvent) {
+        self.eventId = eventId.uuidString
+        self.version = version
+        self.origin = origin
+        self.originTime = originTime
+        self.event = event
     }
     
-    private static let formatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss:SSS"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        return formatter
-    }()
-    
-    var longString: String {
-        return Date.formatter.string(from: self)
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        self.eventId <- map["eventId"]
+        self.version <- map["version"]
+        self.origin <- map["origin"]
+        self.originTime <- map["originTime"]
+        self.event <- map["event"]
     }
-    
-    var utc: String {
-        Timestamp.iSO8601FullFormatterInUTC.string(from: self)
-    }    
 }
