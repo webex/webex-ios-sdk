@@ -47,11 +47,8 @@ class WebexId: Equatable, Hashable {
     }
     
     static func from(base64Id: String) -> WebexId? {
-        SDKLogger.shared.debug(base64Id)
         if let decode = base64Id.base64Decoded() {
-            SDKLogger.shared.debug(decode)
             let ids = decode.components(separatedBy: "/")
-            SDKLogger.shared.debug("\(ids.count)")
             if let id = ids[safeIndex: ids.count - 1],
                 let typeString = ids[safeIndex: ids.count - 2], let type = IdentityType(rawValue: typeString.lowercased()),
                 let cluster = ids[safeIndex: ids.count - 3] {

@@ -230,7 +230,7 @@ class MediaSessionWrapper {
             self.status = .prepare
             
             let mediaConfig :MediaCapabilityConfig = MediaCapabilityConfig()
-            mediaConfig.mqeCallback = false
+            // mediaConfig.mqeCallback = false
             mediaConfig.audioMaxRxBandwidth = phone.audioMaxRxBandwidth
             
             var constraint = MediaConstraintFlag.audio.rawValue

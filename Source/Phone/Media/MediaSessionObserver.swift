@@ -70,10 +70,12 @@ class MediaSessionObserver: NotificationObserver {
     
     @objc private func onMediaEngineDidDidMQE(_ notification: Notification) {
         DispatchQueue.main.async {
-            if let retainCall = self.call,
-                let string = notification.userInfo?["metric"] as? String,
-                let metric = string.json {
-                retainCall.device.phone.metrics.reportMQE(phone: retainCall.device.phone, call: retainCall, metric:metric)
+            if let retainCall = self.call {
+                let string = notification.userInfo?["@metric"] as? String
+                let metric = string?.json
+                if let metric = metric {
+                    retainCall.device.phone.metrics.reportMQE(phone: retainCall.device.phone, call: retainCall, metric:metric)
+                }
             }
         }
     }

@@ -239,7 +239,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         let tempKeyPath = self.keyPath
         createAlamofireRequest() { request in
             request.responseObject(queue: tempQueue, keyPath: tempKeyPath) { (response: DataResponse<T>) in
-                SDKLogger.shared.debug(response.debugDescription)
+                SDKLogger.shared.verbose(response.debugDescription)
                 var result: Result<T>
                 switch response.result {
                 case .success(let value):
@@ -262,7 +262,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         let tempKeyPath = self.keyPath
         createAlamofireRequest() { request in
             request.responseArray(queue: tempQueue, keyPath: tempKeyPath) { (response: DataResponse<[T]>) in
-                SDKLogger.shared.debug(response.debugDescription)
+                SDKLogger.shared.verbose(response.debugDescription)
                 var result: Result<[T]>
                 switch response.result {
                 case .success(let value):
@@ -284,7 +284,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         let tempQueue = self.queue
         createAlamofireRequest() { request in
             request.responseJSON(queue: tempQueue) { (response: DataResponse<Any>) in
-                SDKLogger.shared.debug(response.debugDescription)
+                SDKLogger.shared.verbose(response.debugDescription)
                 var result: Result<Any>
                 switch response.result {
                 case .success(let value):
@@ -306,7 +306,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         let tempQueue = self.queue
         createAlamofireRequest() { request in
             request.responseString(queue: tempQueue) { (response: DataResponse<String>) in
-                SDKLogger.shared.debug(response.debugDescription)
+                SDKLogger.shared.verbose(response.debugDescription)
                 var result: Result<String>
                 switch response.result {
                 case .success(let value):
@@ -368,7 +368,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
                 return finalRequest
             }
             let request = self.sessionManager.request(urlRequestConvertible).validate()
-            SDKLogger.shared.debug(request.debugDescription)
+            SDKLogger.shared.verbose(request.debugDescription)
             completionHandler(request)
         }
         

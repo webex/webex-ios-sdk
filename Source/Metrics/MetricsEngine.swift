@@ -62,7 +62,7 @@ class MetricsEngine {
                 SDKLogger.shared.debug("\(response)")
                 switch response.result {
                 case .success:
-                    SDKLogger.shared.info("Success: post metrics")
+                    SDKLogger.shared.debug("Success: post metrics")
                     completionHandler?(true)
                 case .failure(let error):
                     SDKLogger.shared.error("Failure", error: error)

@@ -109,10 +109,8 @@ class WebSocketService: WebSocketDelegate {
             isConnected = false
             websocketDidDisconnect(socket: client, error: error)
         case .ping(_):
-            SDKLogger.shared.debug("ping")
             break
         case .pong(_):
-            SDKLogger.shared.debug("pong")
             break
         default:
             break
@@ -176,7 +174,7 @@ class WebSocketService: WebSocketDelegate {
     
     func websocketDidReceiveData(socket: WebSocket, data: Data) {
         do {
-            SDKLogger.shared.info("Websocket got some data: \(String(decoding: data, as: UTF8.self))")
+            SDKLogger.shared.verbose("Websocket got some data: \(String(decoding: data, as: UTF8.self))")
             let json = try JSON(data: data)
             ackMessage(socket, messageId: json["id"].string ?? "")
             let eventData = json["data"]
@@ -186,7 +184,7 @@ class WebSocketService: WebSocketDelegate {
                         let event = Mapper<CallEventModel>().map(JSON: eventObj),
                         let call = event.callModel,
                         let type = event.type {
-                        SDKLogger.shared.info("Receive locus event: \(type)")
+                        SDKLogger.shared.debug("Receive locus event: \(type)")
                         self.onEvent?(MercuryEvent.recvCall(call))
                     }
                     else {

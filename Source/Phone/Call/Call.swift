@@ -1078,20 +1078,20 @@ public class Call {
             self.mediaSession.joinScreenShare(granted, isSending: self.isScreenSharedBySelfDevice())
         }
         
-        DispatchQueue.global().async {
-            self.MQETimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(60), repeats: true, block: { (timer) in
-                let string = self.mediaSession.MQEReport
-                SDKLogger.shared.debug(string ?? "No MQE report")
-                if let string = string, let metric = string.json {
-                    self.device.phone.metrics.reportMQE(phone: self.device.phone, call: self, metric: metric)
-                }
-            })
-            RunLoop.current.run()
-        }
+//        DispatchQueue.global().async {
+//            self.MQETimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(60), repeats: true, block: { (timer) in
+//                let string = self.mediaSession.MQEReport
+//                SDKLogger.shared.debug(string ?? "No MQE report")
+//                if let string = string, let metric = string.json {
+//                    self.device.phone.metrics.reportMQE(phone: self.device.phone, call: self, metric: metric)
+//                }
+//            })
+//            RunLoop.current.run()
+//        }
     }
     
     func stopMedia() {
-        self.MQETimer?.invalidate()
+//        self.MQETimer?.invalidate()
         //stopMedia must run in the main thread.Because WME will remove the videoRender view.
         if let granted = self.model.screenShareMediaFloor?.granted ,self.mediaSession.hasScreenShare{
             self.mediaSession.leaveScreenShare(granted, isSending: self.isScreenSharedBySelfDevice())
