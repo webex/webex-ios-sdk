@@ -24,6 +24,14 @@ import AlamofireObjectMapper
 import ObjectMapper
 import SwiftyJSON
 
+enum EndpointErrorCodes: Int {
+    case LOCUS_REQUIRES_MODERATOR_PIN_OR_GUEST = 2423005
+    case LOCUS_REQUIRES_MODERATOR_PIN_OR_GUEST_PIN = 2423006
+    case LOCUS_REQUIRES_MODERATOR_KEY_OR_MEETING_PASSWORD = 2423016
+    case LOCUS_REQUIRES_MODERATOR_KEY_OR_GUEST = 2423017
+    case LOCUS_REQUIRES_MEETING_PASSWORD = 2423018
+}
+
 enum Service: String {
     case hydra
     case region
@@ -427,12 +435,26 @@ extension WebexError {
     static func requestErrorWith(data: Data) -> Error {
         var failureReason = "Service request failed without error message"
         do {
-            if let errorMessage = try JSON(data: data)["message"].string  {
+            let json = try JSON(data: data)
+            if let errorMessage = json["message"].string  {
                 failureReason = errorMessage
             }
-        } catch {
             
+            if let code = json["errorCode"].int  {
+                switch code {
+                case EndpointErrorCodes.LOCUS_REQUIRES_MODERATOR_PIN_OR_GUEST.rawValue,
+                    EndpointErrorCodes.LOCUS_REQUIRES_MODERATOR_PIN_OR_GUEST_PIN.rawValue,
+                    EndpointErrorCodes.LOCUS_REQUIRES_MEETING_PASSWORD.rawValue,
+                    EndpointErrorCodes.LOCUS_REQUIRES_MODERATOR_KEY_OR_GUEST.rawValue,
+                    EndpointErrorCodes.LOCUS_REQUIRES_MODERATOR_KEY_OR_MEETING_PASSWORD.rawValue:
+                    return WebexError.hostPinOrMeetingPasswordRequired(reason: failureReason)
+                default:
+                    return WebexError.serviceFailed(code: -7000, reason: failureReason)
+                }
+            }
+        } catch {
         }
+        
         return WebexError.serviceFailed(code: -7000, reason: failureReason)
     }
 }

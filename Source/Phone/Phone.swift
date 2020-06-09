@@ -334,13 +334,15 @@ public class Phone {
     /// >
     ///
     /// - parameter address: Intended recipient address in one of the supported formats.
+    /// - parameter moderator: if true, join the meeting as a moderator. The default is false.
+    /// - parameter PIN: if moderator == true, PIN should be a host key, if moderator == false, PIN should be a meeting password.
     /// - parameter option: Intended media options - audio only or audio and video - for the call.
     /// - parameter completionHandler: A closure to be executed when completed.
     /// - returns: a Call object
     /// - throw:
     /// - since: 1.2.0
-    /// - attention: Currently the SDK only supports one active call at a time. Invoking this function while there is an active call will generate an exception.
-    public func dial(_ address: String, option: MediaOption, completionHandler: @escaping ((Result<Call>) -> Void)) {
+    /// - attention: Currently the SDK only supports one active call at a time. Invoking this function while there is an active call will generate an exception. In general, you don't have to pass in moderator and PIN. You are expected to pass in a host PIN or meeting password when you receive an error named WebexError.hostPinOrMeetingPasswordRequired.
+    public func dial(_ address: String, moderator:Bool? = false, PIN:String? = nil, option: MediaOption, completionHandler: @escaping ((Result<Call>) -> Void)) {
         prepare(option: option) { error in
             if let error = error {
                 completionHandler(Result.failure(error))
@@ -363,7 +365,7 @@ public class Phone {
                                 let media = MediaModel(sdp: localSDP, audioMuted: false, videoMuted: false, reachabilities: reachabilities)
                                 let correlationId = UUID()
                                 if target.isEndpoint {
-                                    self.client.create(target.address, correlationId: correlationId,  by: device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { res in
+                                    self.client.create(target.address, correlationId: correlationId, moderator: moderator, PIN: PIN, by: device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { res in
                                         self.doLocusResponse(LocusResult.call(correlationId, target.isGroup, device, option, tempMediaContext, res, completionHandler))
                                         self.queue.yield()
                                     }
@@ -371,7 +373,7 @@ public class Phone {
                                 else {
                                     self.conversations.getLocusUrl(conversation: target.address, by: device, queue: self.queue.underlying) { res in
                                         if let url = res.result.data?.locusUrl {
-                                            self.client.join(url, correlationId: correlationId, by: device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { resNew in
+                                            self.client.join(url, correlationId: correlationId, moderator: moderator, PIN: PIN, by: device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { resNew in
                                                 self.doLocusResponse(LocusResult.call(correlationId, target.isGroup, device, option, tempMediaContext, resNew, completionHandler))
                                                 self.queue.yield()
                                             }
@@ -495,7 +497,7 @@ public class Phone {
         }
     }
     
-    func answer(call: Call, option: MediaOption, completionHandler: @escaping (Error?) -> Void) {
+    func answer(call: Call, moderator:Bool? = false, PIN:String? = nil, option: MediaOption, completionHandler: @escaping (Error?) -> Void) {
         DispatchQueue.main.async {
             if self.calls.filter({ $0.key != call.url && $0.value.status == CallStatus.connected}).count > 0 {
                 SDKLogger.shared.error(PhoneError.otherActiveCall.failureDesc)
@@ -527,7 +529,7 @@ public class Phone {
                 tempMediaContext.prepare(option: option, phone: self)
                 let media = MediaModel(sdp: tempMediaContext.getLocalSdp(), audioMuted: false, videoMuted: false, reachabilities: self.reachability.feedback?.reachabilities)
                 self.queue.sync {
-                    self.client.join(call.url, correlationId: call.correlationId, by: call.device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { res in
+                    self.client.join(call.url, correlationId: call.correlationId, moderator: moderator, PIN: PIN, by: call.device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { res in
                         self.doLocusResponse(LocusResult.join(call, res, completionHandler))
                         self.queue.yield()
                     }

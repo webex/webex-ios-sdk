@@ -42,6 +42,8 @@ public enum WebexError: Error {
     /// The authentication is failed.
     /// - since 1.4.0
     case noAuth
+    /// The host pin or meeting password is required while dialing.
+    case hostPinOrMeetingPasswordRequired(reason: String)
 }
 
 extension WebexError: LocalizedError {
@@ -64,6 +66,8 @@ extension WebexError: LocalizedError {
             return reason
         case .noAuth:
             return "noAuth"
+        case .hostPinOrMeetingPasswordRequired(let reason):
+            return reason
         }
     }
 }

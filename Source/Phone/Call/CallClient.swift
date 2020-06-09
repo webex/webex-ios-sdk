@@ -175,8 +175,11 @@ class CallClient {
         request.responseObject(handleLocusOnlySDPResponse(layout: layout, queue: queue, completionHandler: completionHandler))
     }
     
-    func join(_ callUrl: String, correlationId: UUID, by device: Device, localMedia: MediaModel, layout: MediaOption.VideoLayout?, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
-        let json = convertToJson(mediaInfo: localMedia)
+    func join(_ callUrl: String, correlationId: UUID, moderator:Bool? = false, PIN:String? = nil, by device: Device, localMedia: MediaModel, layout: MediaOption.VideoLayout?, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
+        var json = convertToJson(mediaInfo: localMedia)
+        json["supportsNativeLobby"] = true
+        json["moderator"] = moderator
+        json["pin"] = PIN
         let request = Service.locus.specific(url: callUrl)
             .authenticator(self.authenticator)
             .method(.post)

@@ -782,8 +782,8 @@ public class Call {
     /// - returns: Void
     /// - see: see CallStatus
     /// - since: 1.2.0
-    public func answer(option: MediaOption, completionHandler: @escaping (Error?) -> Void) {
-        self.device.phone.answer(call: self, option: option, completionHandler: completionHandler)
+    public func answer(moderator:Bool? = false, PIN:String? = nil, option: MediaOption, completionHandler: @escaping (Error?) -> Void) {
+        self.device.phone.answer(call: self, moderator: moderator, PIN: PIN, option: option, completionHandler: completionHandler)
     }
     
     /// Rejects this call. 
