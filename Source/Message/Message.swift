@@ -20,15 +20,23 @@
 
 import UIKit
 import ObjectMapper
+import CoreServices
 
 /// The struct of a message event
 ///
 /// - since: 1.4.0
 public enum MessageEvent {
+
+    public enum UpdateType {
+        case fileThumbnail([RemoteFile])
+    }
+
     /// The callback when receive a new message
     case messageReceived(Message)
     /// The callback when a message was deleted
     case messageDeleted(String)
+    /// The callback when a message was updated
+    case messageUpdated(messageId: String, type: UpdateType)
 }
 
 /// This struct represents a Message on Cisco Webex.
@@ -163,16 +171,32 @@ public struct Message {
     ///
     /// - since: 2.5.0
     public private(set) var isReply: Bool
-    
-    private let activity: ActivityModel
+
+    let activity: ActivityModel
+
+    var isMissingThumbnail: Bool {
+        if self.activity.verb != .share
+                   || self.activity.objectObjectType != .content
+                   || self.activity.objectContentCategory != "documents" {
+            return false
+        }
+        if let files = self.files {
+            for file in files {
+                if file.thumbnail == nil && file.shouldTranscode {
+                    return true
+                }
+            }
+        }
+        return false
+    }
     
     init(activity: ActivityModel) {
         self.activity = activity
         self.parentId = WebexId(type: .message, uuid: activity.parentUUID)?.base64Id
         self.isReply = activity.parentType == "reply"
-        self.id = WebexId(type: .membership, uuid: activity.uuid)?.base64Id
+        self.id = WebexId(type: .message, uuid: activity.uuid)?.base64Id
         if self.activity.verb == ActivityModel.Verb.delete, let uuid = self.activity.object {
-            self.id = WebexId(type: .membership, uuid: uuid)?.base64Id
+            self.id = WebexId(type: .message, uuid: uuid)?.base64Id
         }
         self.textAsObject = Message.Text(plain: activity.objectDisplayName, html: activity.objectConetnt, markdown: activity.objectMarkdown)
     }
@@ -290,7 +314,51 @@ public class LocalFile {
 ///
 /// - since: 1.4.0
 public struct RemoteFile {
-    
+
+    private enum FileType: String, CaseIterable {
+        case image
+        case excel
+        case powerpoint
+        case word
+        case pdf
+        case video
+        case audio
+        case zip
+        case unknown
+
+        var shouldTranscode: Bool {
+            switch self {
+            case .powerpoint, .excel, .word, .pdf:
+                return true
+            default:
+                return false
+            }
+        }
+
+        var extensions: [String] {
+            switch self {
+            case .image:
+                return ["jpg", "jpeg", "png", "gif"]
+            case .excel:
+                return ["xls", "xlsx", "xlsm", "xltx", "xltm"]
+            case .powerpoint:
+                return ["ppt", "pptx", "pptm", "potx", "potm", "ppsx", "ppsm", "sldx", "sldm"]
+            case .word:
+                return ["doc", "docx", "docm", "dotx", "dotm"]
+            case .pdf:
+                return ["pdf"]
+            case .video:
+                return ["mp4", "m4p", "mpg", "mpeg", "3gp", "3g2", "mov", "avi", "wmv", "qt", "m4v", "flv", "m4v"]
+            case .audio:
+                return ["mp3", "wav", "wma"]
+            case .zip:
+                return ["zip"]
+            case .unknown:
+                return []
+            }
+        }
+    }
+
     /// A data type represents a thumbnail for this remote file.
     /// The thumbnail typically is an image file which provides preview of the remote file without downloading.
     /// The content of the thumbnail can be downloaded via `MessageClient.downloadThumbnail(...)`.
@@ -317,6 +385,30 @@ public struct RemoteFile {
     
     var url: String?
     var secureContentRef: String?
+
+    var shouldTranscode: Bool {
+        return self.fileType.shouldTranscode
+    }
+
+    private var fileType: FileType {
+        var fileExt: String?
+        if let mime = self.mimeType,
+           let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, mime as CFString, nil),
+           let ext = UTTypeCopyPreferredTagWithClass(uti.takeRetainedValue(), kUTTagClassFilenameExtension) {
+            fileExt = ext.takeRetainedValue() as String
+        }
+        if fileExt == nil, let urlString = self.url, let url = URL(string: urlString) {
+            fileExt = url.pathExtension
+        }
+        if fileExt == nil, let ext = self.displayName?.components(separatedBy: ".").last, ext.count > 0 {
+            fileExt = ext
+        }
+        if let fileExt = fileExt?.lowercased(),
+           let fileType = FileType.allCases.find(predicate: { $0.extensions.contains(fileExt) }) {
+            return fileType
+        }
+        return .unknown
+    }
 }
 
 extension RemoteFile {

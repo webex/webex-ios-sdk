@@ -71,11 +71,12 @@ public class MessageClient {
     private var keySerialization: String?
     
     private var ephemeralKeyRequest: (KmsEphemeralKeyRequest, (Error?) -> Void)?
-    private var keyMaterialCompletionHandlers: [String: [(Result<(String, String)>) -> Void]] = [String: [(Result<(String, String)>) -> Void]]()
-    private var keysCompletionHandlers: [Identifier: [(Result<(String, String)>) -> Void]] = [Identifier: [(Result<(String, String)>) -> Void]]()
-    private var encryptionKeys: [String: EncryptionKey] = [String: EncryptionKey]()
-    private var conversations: [String: Identifier] = [String: Identifier]()
+    private var keyMaterialCompletionHandlers: [String: [(Result<(String, String)>) -> Void]] = [:]
+    private var keysCompletionHandlers: [Identifier: [(Result<(String, String)>) -> Void]] = [:]
+    private var encryptionKeys: [String: EncryptionKey] = [:]
+    private var conversations: [String: Identifier] = [:]
     private typealias KeyHandler = (Result<(String, String)>) -> Void
+    private var cachedMessages: [String: String] = [:]
     
     var authenticator: Authenticator {
         return self.phone.authenticator
@@ -169,7 +170,7 @@ public class MessageClient {
                         let key = self.encryptionKey(conversation: Identifier(base64Id: spaceId)!)
                         key.material(client: self) { material in
                             if let material = material.data {
-                                let messages = result.prefix(max).map { $0.decrypt(key: material) }.map { Message(activity: $0) }
+                                let messages = result.prefix(max).map { $0.decrypt(key: material) }.map { self.cacheMessageIfNeeded(message: Message(activity: $0)) }
                                 (queue ?? DispatchQueue.main).async {
                                     completionHandler(ServiceResponse(response.response, Result.success(messages)))
                                 }
@@ -350,7 +351,7 @@ public class MessageClient {
                                 request.responseObject { (response: ServiceResponse<ActivityModel>) in
                                     switch response.result{
                                         case .success(let activity):
-                                            completionHandler(ServiceResponse(response.response, Result.success(Message(activity: activity.decrypt(key: material.data)))))
+                                            completionHandler(ServiceResponse(response.response, Result.success(self.cacheMessageIfNeeded(message: Message(activity: activity.decrypt(key: material.data))))))
                                         case .failure(let error):
                                             completionHandler(ServiceResponse(response.response, Result.failure(error)))
                                     }
@@ -422,7 +423,7 @@ public class MessageClient {
                         let key = self.encryptionKey(conversation: Identifier(id: id))
                         key.material(client: self) { material in
                             (queue ?? DispatchQueue.main).async {
-                                completionHandler(ServiceResponse(response.response, Result.success(Message(activity: activity.decrypt(key: material.data)))))
+                                completionHandler(ServiceResponse(response.response, Result.success(self.cacheMessageIfNeeded(message: Message(activity: activity.decrypt(key: material.data))))))
                             }
                         }
                     }
@@ -444,6 +445,7 @@ public class MessageClient {
     /// - since: 1.2.0
     public func delete(messageId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
         Service.hydra.global.authenticator(self.authenticator).path("messages").path(messageId).method(.delete).queue(queue).build().responseJSON(completionHandler)
+        invalidCacheBy(messageId: messageId)
     }
     
     /// Mark all messages in the space read.
@@ -616,20 +618,28 @@ public class MessageClient {
                 return
             }
             DispatchQueue.main.async {
+                var event: MessageEvent?
                 switch verb {
-                    case .post, .share:
-                        decryption.toPersonId = self.userId?.base64Id
-                        let message = Message(activity: decryption)
-                        let event = MessageEvent.messageReceived(message)
-                        self.onEvent?(event)
-                        self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me));
-                    case .delete:
-                        let message = Message(activity: decryption)
-                        let event = MessageEvent.messageDeleted(message.id ?? "illegal id")
-                        self.onEvent?(event)
-                        self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me));
-                    default:
-                        SDKLogger.shared.error("Not a valid message \(activity.uuid ?? (activity.toJSONString() ?? ""))")
+                case .post, .share:
+                    decryption.toPersonId = self.userId?.base64Id
+                    event = MessageEvent.messageReceived(self.cacheMessageIfNeeded(message: Message(activity: decryption)))
+                case .update:
+                    if let contentId = decryption.object, let messageId = self.cachedMessages[contentId], let files = activity.files {
+                        event = MessageEvent.messageUpdated(messageId: messageId, type: .fileThumbnail(files))
+                        self.cachedMessages[contentId] = nil
+                    }
+                case .delete:
+                    let message = Message(activity: decryption)
+                    if let id = message.id {
+                        event = MessageEvent.messageDeleted(id)
+                        self.invalidCacheBy(messageId: id)
+                    }
+                default:
+                    SDKLogger.shared.error("Not a valid message \(activity.uuid ?? (activity.toJSONString() ?? ""))")
+                }
+                if let event = event {
+                    self.onEvent?(event)
+                    self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me))
                 }
             }
         }
@@ -1018,7 +1028,27 @@ public class MessageClient {
             }
         }
     }
-    
+
+    func cacheMessageIfNeeded(message: Message) -> Message {
+        if (message.created ?? Date()).timeIntervalSinceNow <= 3 * 60 && message.isMissingThumbnail {
+            if let contentId = message.activity.object, let messageId = message.id {
+                DispatchQueue.main.async {
+                    self.cachedMessages[contentId] = messageId
+                    SDKLogger.shared.debug("Cache a transcode message, messageId: \(messageId)")
+                }
+            }
+        }
+        return message
+    }
+
+    func invalidCacheBy(messageId: String) {
+        DispatchQueue.main.async {
+            for (key, value) in self.cachedMessages where value == messageId {
+                self.cachedMessages.removeValue(forKey: key)
+            }
+        }
+    }
+
     // MARK: - Deprecated
 
     /// Posts a message with optional file attachments to a user by email address.

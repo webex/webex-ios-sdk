@@ -906,8 +906,15 @@ public class Phone {
                 self.webex.messages.handle(activity: model)
             case .acknowledge, .add, .leave, .assignModerator, .unassignModerator:
                 self.webex.memberships.handle(activity: model)
-            case .create, .update:
+            case .create:
                 self.webex.spaces.handle(activity: model)
+            case .update:
+                if model.objectType == ObjectType.activity {
+                    self.webex.messages.handle(activity: model)
+                }
+                else if model.objectType == ObjectType.conversation {
+                    self.webex.spaces.handle(activity: model)
+                }
             default:
                 SDKLogger.shared.error("Not a valid message \(model.uuid ?? (model.toJSONString() ?? ""))")
             }

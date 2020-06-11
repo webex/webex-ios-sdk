@@ -53,6 +53,7 @@ struct ActivityModel : Mappable {
     private(set) var uuid: String?
     private(set) var clientTempId: String?
     private(set) var verb: ActivityModel.Verb?
+    private(set) var objectType: ObjectType?
     private(set) var created: Date?
     private(set) var encryptionKeyUrl: String?
     var toPersonId: String?
@@ -76,6 +77,8 @@ struct ActivityModel : Mappable {
     private(set) var objectDisplayName: String?
     private(set) var objectConetnt: String?
     private(set) var objectMarkdown: String?
+    private(set) var objectObjectType: ObjectType?
+    private(set) var objectContentCategory: String?
     
     private(set) var isModerator:Bool?
     
@@ -123,6 +126,7 @@ struct ActivityModel : Mappable {
         self.created <- (map["published"], CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
         self.encryptionKeyUrl <- map["encryptionKeyUrl"]
         self.verb <- (map["verb"], VerbTransform())
+        self.objectType <- (map["objectType"], ObjectTypeTransform())
         self.actorUUID <- map["actor.entryUUID"]
         self.actorEmail <- map["actor.emailAddress"]
         self.actorDisplayName <- map["actor.displayName"]
@@ -144,6 +148,8 @@ struct ActivityModel : Mappable {
         self.objectTag <- (map["object.tags"], SpaceTypeTransform())
         self.objectLocked <- (map["object.tags"], LockedTransform())
         self.isModerator <- (map["object.roomProperties.isModerator"], StringAndBoolTransform())
+        self.objectObjectType <- (map["object.objectType"], ObjectTypeTransform())
+        self.objectContentCategory <- map["object.contentCategory"]
         
         self.parentUUID <- map["parent.id"]
         self.parentActorUUID <- map["parent.actorId"]
@@ -213,8 +219,22 @@ class VerbTransform: TransformType {
         }
         return nil
     }
-    
+
     func transformToJSON(_ value: ActivityModel.Verb?) -> String? {
+        return value?.rawValue
+    }
+}
+
+private class ObjectTypeTransform: TransformType {
+
+    func transformFromJSON(_ value: Any?) -> ObjectType? {
+        if let type = value as? String {
+            return ObjectType(rawValue: type)
+        }
+        return nil
+    }
+
+    func transformToJSON(_ value: ObjectType?) -> String? {
         return value?.rawValue
     }
 }
