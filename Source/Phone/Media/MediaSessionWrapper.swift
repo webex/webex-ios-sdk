@@ -42,9 +42,6 @@ class MediaSessionWrapper {
     private var broadcastServer: BroadcastConnectionServer?
     private var _remoteVideoRenderMode: Call.VideoRenderMode = .cropFill
     
-    private var remoteViewConstraint: NSLayoutConstraint?
-    private var sizeWasChanged = false
-    
     // MARK: - SDP
     func getLocalSdp() -> String? {
         mediaSession.createLocalSdpOffer()
@@ -91,8 +88,8 @@ class MediaSessionWrapper {
         }
         set {
             self._remoteVideoRenderMode = newValue
-            mediaSession.setRemoteVideoRenderMode(newValue.wmeMode)
             adjustRemoteRenderViewSize()
+            mediaSession.setRemoteVideoRenderMode(newValue.wmeMode)
         }
     }
     
@@ -188,29 +185,25 @@ class MediaSessionWrapper {
             return
         }
         
-        if let changedConstraint = remoteViewConstraint, sizeWasChanged == true {
-            changedConstraint.constant -= 0.5
-            sizeWasChanged = false
-            SDKLogger.shared.debug("adjust constraint back to original value")
-        }
-        else if let constraint = remoteView.getSizeConstraint() {
-            remoteViewConstraint = constraint
-            remoteViewConstraint?.constant += 0.5
-            sizeWasChanged = true
-            SDKLogger.shared.debug("adjust constraint = \(remoteViewConstraint?.firstAttribute.rawValue ?? 1000)")
+        if let constraint = remoteView.getSizeConstraint() {
+            constraint.constant += 0.5
+            
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) {
+                constraint.constant -= 0.5
+            }
+            SDKLogger.shared.debug("adjust constraint = \(constraint.firstAttribute.rawValue)")
         }
         else {
             let frame = remoteView.frame
             let width = frame.width
             var height = frame.height
-            if sizeWasChanged == true {
-                height -= 0.5
-                sizeWasChanged = false
-            }else {
-                height += 0.5
-                sizeWasChanged = true
-            }
+            height += 0.5
             remoteView.frame = CGRect(origin: frame.origin, size: CGSize(width: width, height: height))
+            
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) {
+                height -= 0.5
+                remoteView.frame = CGRect(origin: frame.origin, size: CGSize(width: width, height: height))
+            }
             SDKLogger.shared.debug("adjust frame = \(remoteView.frame)")
         }
     }
