@@ -122,21 +122,20 @@ public class MembershipClient {
     /// - returns: Void
     /// - since: 1.2.0
     public func create(spaceId: String, personId: String, isModerator: Bool = false, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Membership>) -> Void) {
-        let body = RequestParameter([
+        let body: [String: Any?] = [
             "spaceId": spaceId,
             "roomId": spaceId,
             "personId": personId,
-            "isModerator": isModerator])
-
+            "isModerator": isModerator]
         let request = hydraReqeust()
-            .method(.post)
-            .body(body)
-            .queue(queue)
-            .build()
-        
+                .method(.post)
+                .body(body)
+                .queue(queue)
+                .build()
+
         request.responseObject(completionHandler)
     }
-    
+
     /// Adds a person to a space by email address; optionally making the person a moderator.
     ///
     /// - parameter spaceId: The identifier of the space where the person is to be added.
@@ -147,18 +146,18 @@ public class MembershipClient {
     /// - returns: Void
     /// - since: 1.2.0
     public func create(spaceId: String, personEmail: EmailAddress, isModerator: Bool = false, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Membership>) -> Void) {
-        let body = RequestParameter([
+        let body: [String: Any?] = [
             "spaceId": spaceId,
             "roomId": spaceId,
             "personEmail": personEmail.toString(),
-            "isModerator": isModerator])
-        
+            "isModerator": isModerator]
+
         let request = hydraReqeust()
-            .method(.post)
-            .queue(queue)
-            .body(body)
-            .build()
-        
+                .method(.post)
+                .queue(queue)
+                .body(body)
+                .build()
+
         request.responseObject(completionHandler)
     }
     
@@ -227,13 +226,16 @@ public class MembershipClient {
         // TODO additionalUrls
         // TODO Find the cluster for the identifier instead of use home cluster always.
         let request = Service.conv.homed(for: phone.devices.device)
-            .authenticator(self.phone.authenticator)
-            .path("conversations")
-            .path(WebexId.uuid(spaceId))
-            .query(RequestParameter(forConversation: ["participantAckFilter":"all"]))
-            .queue(queue)
-            .build()
-        
+                .authenticator(self.phone.authenticator)
+                .path("conversations")
+                .path(WebexId.uuid(spaceId))
+                .query(["uuidEntryFormat": true,
+                        "personRefresh": true,
+                        "activitiesLimit": 0,
+                        "includeConvWithDeletedUserUUID": false, 
+                        "participantAckFilter": "all"])
+                .queue(queue)
+                .build()
         request.responseJSON { (response: ServiceResponse<Any>) in
             switch response.result {
             case .success(let json):

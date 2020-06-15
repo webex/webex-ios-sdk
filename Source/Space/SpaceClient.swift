@@ -173,15 +173,18 @@ public class SpaceClient {
     public func getWithReadStatus(spaceId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<SpaceReadStatus>) -> Void) {
         // TODO Find the cluster for the identifier instead of use home cluster always.
         let request = Service.conv.homed(for: self.phone.devices.device)
-            .authenticator(self.authenticator)
-            .path("conversations").path(WebexId.uuid(spaceId))
-            .query(RequestParameter(forConversation: ["includeParticipants": false]))
-            .queue(queue)
-            .build()
-        
+                .authenticator(self.authenticator)
+                .path("conversations").path(WebexId.uuid(spaceId))
+                .query(["uuidEntryFormat": true,
+                        "personRefresh": true,
+                        "activitiesLimit": 0,
+                        "includeConvWithDeletedUserUUID": false, 
+                        "includeParticipants": false])
+                .queue(queue)
+                .build()
         request.responseObject(completionHandler)
     }
-    
+
     /// Returns a list of SpaceReadStatus with details about the date of the last
     /// activity in the space, and the date of current user last presence in the space. The
     /// list is sorted with this with most recent activity first.
@@ -197,13 +200,19 @@ public class SpaceClient {
         // TODO additionalUrls
         // TODO Find the cluster for the identifier instead of use home cluster always.
         let request = Service.conv.homed(for: self.phone.devices.device)
-            .authenticator(self.authenticator)
-            .path("conversations")
-            .query(RequestParameter(forConversation: ["participantsLimit": 0, "isActive": true, "conversationsLimit": max]))
-            .keyPath("items")
-            .queue(queue)
-            .build()
-        
+                .authenticator(self.authenticator)
+                .path("conversations")
+                .query(["uuidEntryFormat": true,
+                        "personRefresh": true,
+                        "activitiesLimit": 0,
+                        "includeConvWithDeletedUserUUID": false,
+                        "participantsLimit": 0,
+                        "isActive": true,
+                        "conversationsLimit": max])
+                .keyPath("items")
+                .queue(queue)
+                .build()
+
         request.responseArray { (response:ServiceResponse<[SpaceReadStatus]>) in
             switch response.result {
             case .success(let spaceInfoArray):
@@ -213,7 +222,7 @@ public class SpaceClient {
                     return Double(date1.timeIntervalSince1970) > Double(date2.timeIntervalSince1970)
                 })
                 completionHandler(ServiceResponse(response.response, Result.success(spaceInfos)))
-                
+
             case .failure(let error):
                 completionHandler(ServiceResponse(response.response, Result.failure(error)))
             }
@@ -246,19 +255,5 @@ extension SpaceClient {
             self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me))
         }
     }
-}
 
-extension RequestParameter {
-    
-    init(forConversation parameters: [String: Any?] = [:]) {
-        var defaultParams:[String: Any?] = ["uuidEntryFormat":true,
-                                            "personRefresh":true,
-                                            "activitiesLimit":0,
-                                            "includeConvWithDeletedUserUUID":false]
-        for (key, value) in parameters {
-            defaultParams.updateValue(value, forKey: key)
-        }
-
-        self.init(defaultParams)
-    }
 }

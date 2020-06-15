@@ -307,6 +307,10 @@ public class LocalFile {
         }
         self.size = size
     }
+
+    var shouldTranscode: Bool {
+        return FileType.from(name: self.name, mime: self.mime, url: nil, path: self.path).shouldTranscode
+    }
 }
 
 /// A data struct represents a remote file on Cisco Webex.
@@ -314,50 +318,6 @@ public class LocalFile {
 ///
 /// - since: 1.4.0
 public struct RemoteFile {
-
-    private enum FileType: String, CaseIterable {
-        case image
-        case excel
-        case powerpoint
-        case word
-        case pdf
-        case video
-        case audio
-        case zip
-        case unknown
-
-        var shouldTranscode: Bool {
-            switch self {
-            case .powerpoint, .excel, .word, .pdf:
-                return true
-            default:
-                return false
-            }
-        }
-
-        var extensions: [String] {
-            switch self {
-            case .image:
-                return ["jpg", "jpeg", "png", "gif"]
-            case .excel:
-                return ["xls", "xlsx", "xlsm", "xltx", "xltm"]
-            case .powerpoint:
-                return ["ppt", "pptx", "pptm", "potx", "potm", "ppsx", "ppsm", "sldx", "sldm"]
-            case .word:
-                return ["doc", "docx", "docm", "dotx", "dotm"]
-            case .pdf:
-                return ["pdf"]
-            case .video:
-                return ["mp4", "m4p", "mpg", "mpeg", "3gp", "3g2", "mov", "avi", "wmv", "qt", "m4v", "flv", "m4v"]
-            case .audio:
-                return ["mp3", "wav", "wma"]
-            case .zip:
-                return ["zip"]
-            case .unknown:
-                return []
-            }
-        }
-    }
 
     /// A data type represents a thumbnail for this remote file.
     /// The thumbnail typically is an image file which provides preview of the remote file without downloading.
@@ -387,27 +347,7 @@ public struct RemoteFile {
     var secureContentRef: String?
 
     var shouldTranscode: Bool {
-        return self.fileType.shouldTranscode
-    }
-
-    private var fileType: FileType {
-        var fileExt: String?
-        if let mime = self.mimeType,
-           let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, mime as CFString, nil),
-           let ext = UTTypeCopyPreferredTagWithClass(uti.takeRetainedValue(), kUTTagClassFilenameExtension) {
-            fileExt = ext.takeRetainedValue() as String
-        }
-        if fileExt == nil, let urlString = self.url, let url = URL(string: urlString) {
-            fileExt = url.pathExtension
-        }
-        if fileExt == nil, let ext = self.displayName?.components(separatedBy: ".").last, ext.count > 0 {
-            fileExt = ext
-        }
-        if let fileExt = fileExt?.lowercased(),
-           let fileType = FileType.allCases.find(predicate: { $0.extensions.contains(fileExt) }) {
-            return fileType
-        }
-        return .unknown
+        return FileType.from(name: self.displayName, mime: self.mimeType, url: self.url, path: nil).shouldTranscode
     }
 }
 
@@ -492,5 +432,81 @@ extension RemoteFile.Thumbnail : Mappable {
         width <- map["width"]
         height <- map["height"]
         secureContentRef <- map["scr"]
+    }
+}
+
+enum FileType: String, CaseIterable {
+    case image
+    case excel
+    case powerpoint
+    case word
+    case pdf
+    case video
+    case audio
+    case zip
+    case unknown
+
+    var shouldTranscode: Bool {
+        switch self {
+        case .powerpoint, .excel, .word, .pdf:
+            return true
+        default:
+            return false
+        }
+    }
+
+    var extensions: [String] {
+        switch self {
+        case .image:
+            return ["jpg", "jpeg", "png", "gif"]
+        case .excel:
+            return ["xls", "xlsx", "xlsm", "xltx", "xltm"]
+        case .powerpoint:
+            return ["ppt", "pptx", "pptm", "potx", "potm", "ppsx", "ppsm", "sldx", "sldm"]
+        case .word:
+            return ["doc", "docx", "docm", "dotx", "dotm"]
+        case .pdf:
+            return ["pdf"]
+        case .video:
+            return ["mp4", "m4p", "mpg", "mpeg", "3gp", "3g2", "mov", "avi", "wmv", "qt", "m4v", "flv", "m4v"]
+        case .audio:
+            return ["mp3", "wav", "wma"]
+        case .zip:
+            return ["zip"]
+        case .unknown:
+            return []
+        }
+    }
+
+    private static func from(_ ext: String) -> FileType? {
+        if let type = FileType.allCases.find(predicate: { $0.extensions.contains(ext) }) {
+            return type
+        }
+        return nil
+    }
+
+    static func from(name: String?, mime: String?, url: String?, path: String?) -> FileType {
+        if let mime = mime,
+           let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, mime as CFString, nil),
+           let ext = UTTypeCopyPreferredTagWithClass(uti.takeRetainedValue(), kUTTagClassFilenameExtension),
+           let type = from((ext.takeRetainedValue() as String).lowercased()) {
+            return type
+        }
+        if let urlString = url,
+           let url = URL(string: urlString),
+           let type = from(url.pathExtension.lowercased()) {
+            return type
+        }
+        if let path = path,
+           let ext = path.components(separatedBy: ".").last, ext.count > 0,
+           let type = from(ext.lowercased()) {
+            return type
+        }
+        if let name = name,
+           let ext = name.components(separatedBy: ".").last, ext.count > 0,
+           let type = from(ext.lowercased()) {
+            return type
+        }
+        return .unknown
     }
 }

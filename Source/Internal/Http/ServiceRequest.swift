@@ -52,7 +52,11 @@ enum Service: String {
         case .region:
             return "https://ds.ciscospark.com/v1"
         case .u2c:
+            #if INTEGRATIONTEST
+            return "https://u2c-intb.ciscospark.com/u2c/api/v1"
+            #else
             return "https://u2c.wbx2.com/u2c/api/v1"
+            #endif
         case .wdm:
             #if INTEGRATIONTEST
             let `default` = ProcessInfo().environment["WDM_SERVER_ADDRESS"] == nil ? "https://wdm-intb.ciscospark.com/wdm/api/v1" : ProcessInfo().environment["WDM_SERVER_ADDRESS"]!
@@ -114,6 +118,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     private let method: Alamofire.HTTPMethod
     private let body: RequestParameter?
     private let query: RequestParameter?
+    private let form: Bool
     private let keyPath: String?
     private let queue: DispatchQueue?
     private let authenticator: Authenticator?
@@ -125,7 +130,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         return SessionManager(configuration: configuration)
     }()
     
-    private init(authenticator: Authenticator? = nil, url: URL, headers: [String: String], method: Alamofire.HTTPMethod, body: RequestParameter?, query: RequestParameter?, keyPath: String?, queue: DispatchQueue?) {
+    private init(authenticator: Authenticator? = nil, url: URL, headers: [String: String], method: Alamofire.HTTPMethod, body: RequestParameter?, query: RequestParameter?, form: Bool?, keyPath: String?, queue: DispatchQueue?) {
         self.authenticator = authenticator
         self.url = url
         self.headers = headers
@@ -134,6 +139,12 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         self.query = query
         self.keyPath = keyPath
         self.queue = queue
+        if let form = form {
+            self.form = form
+        }
+        else {
+            self.form = self.headers["Content-Type"]?.contains("x-www-form-urlencoded") ?? false
+        }
     }
     
     class Builder {
@@ -145,6 +156,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         private var path: String
         private var body: RequestParameter?
         private var query: RequestParameter?
+        private var form: Bool?
         private var keyPath: String?
         private var queue: DispatchQueue?
         
@@ -161,16 +173,17 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         var url: URL {
             return self.baseUrl.appendingPathComponent(self.path)
         }
-        
+
         func build() -> ServiceRequest {
             return ServiceRequest(authenticator: self.authenticator,
-                                  url: self.baseUrl.appendingPathComponent(self.path),
-                                  headers: self.headers,
-                                  method: self.method,
-                                  body: self.body,
-                                  query: self.query,
-                                  keyPath: self.keyPath,
-                                  queue: self.queue)
+                    url: self.baseUrl.appendingPathComponent(self.path),
+                    headers: self.headers,
+                    method: self.method,
+                    body: self.body,
+                    query: self.query,
+                    form: self.form,
+                    keyPath: self.keyPath,
+                    queue: self.queue)
         }
         
         func authenticator(_ authenticator: Authenticator) -> Builder {
@@ -202,24 +215,19 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
             self.path += "/" + path
             return self
         }
-        
-        func body(_ body: RequestParameter) -> Builder {
-            self.body = body
-            return self
-        }
-        
+
         func body(_ body: [String: Any?]) -> Builder {
             self.body = RequestParameter(body)
             return self
         }
-        
-        func query(_ query: RequestParameter) -> Builder {
-            self.query = query
-            return self
-        }
-        
+
         func query(_ query: [String: Any?]) -> Builder {
             self.query = RequestParameter(query)
+            return self
+        }
+
+        func form(_ form: Bool) -> Builder {
+            self.form = form
             return self
         }
         
@@ -237,7 +245,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     func responseObject<T: BaseMappable>(_ completionHandler: @escaping (ServiceResponse<T>) -> Void) {
         let tempQueue = self.queue
         let tempKeyPath = self.keyPath
-        createAlamofireRequest() { request in
+        makeRequest() { request in
             request.responseObject(queue: tempQueue, keyPath: tempKeyPath) { (response: DataResponse<T>) in
                 SDKLogger.shared.verbose(response.debugDescription)
                 var result: Result<T>
@@ -260,7 +268,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     func responseArray<T: BaseMappable>(_ completionHandler: @escaping (ServiceResponse<[T]>) -> Void) {
         let tempQueue = self.queue
         let tempKeyPath = self.keyPath
-        createAlamofireRequest() { request in
+        makeRequest() { request in
             request.responseArray(queue: tempQueue, keyPath: tempKeyPath) { (response: DataResponse<[T]>) in
                 SDKLogger.shared.verbose(response.debugDescription)
                 var result: Result<[T]>
@@ -282,7 +290,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     
     func responseJSON(_ completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
         let tempQueue = self.queue
-        createAlamofireRequest() { request in
+        makeRequest() { request in
             request.responseJSON(queue: tempQueue) { (response: DataResponse<Any>) in
                 SDKLogger.shared.verbose(response.debugDescription)
                 var result: Result<Any>
@@ -304,7 +312,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     
     func responseString(_ completionHandler: @escaping (ServiceResponse<String>) -> Void) {
         let tempQueue = self.queue
-        createAlamofireRequest() { request in
+        makeRequest() { request in
             request.responseString(queue: tempQueue) { (response: DataResponse<String>) in
                 SDKLogger.shared.verbose(response.debugDescription)
                 var result: Result<String>
@@ -324,7 +332,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         }
     }
     
-    private func createAlamofireRequest(completionHandler: @escaping (Alamofire.DataRequest) -> Void) {
+    private func makeRequest(completionHandler: @escaping (Alamofire.DataRequest) -> Void) {
         let accessTokenCallback: (String?) -> Void = { accessToken in
             var headerDict = self.headers
             let tempTokenPrefix = self.tokenPrefix
@@ -338,15 +346,16 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
                 //disable http local cache data.
                 urlRequest.cachePolicy = .reloadIgnoringLocalCacheData
                 if let body = self.body {
-                    urlRequest = try JSONEncoding.default.encode(urlRequest, with: body.value())
+                    let parameterEncoding: ParameterEncoding = self.form ? URLEncoding.httpBody : JSONEncoding.default
+                    urlRequest = try parameterEncoding.encode(urlRequest, with: body.value())
                 }
                 if let query = self.query {
-                    urlRequest = try URLEncoding.default.encode(urlRequest, with: query.value())
+                    urlRequest = try URLEncoding.queryString.encode(urlRequest, with: query.value())
                 }
                 urlRequestConvertible = urlRequest
             } catch {
                 class ErrorRequestConvertible : URLRequestConvertible {
-                    private let error: Error
+                    let error: Error
                     
                     init(_ error: Error) {
                         self.error = error
@@ -434,6 +443,29 @@ extension WebexError {
             
         }
         return WebexError.serviceFailed(code: -7000, reason: failureReason)
+    }
+}
+
+fileprivate struct RequestParameter {
+
+    private var storage: [String: Any] = [:]
+
+    init(_ parameters: [String: Any?] = [:]) {
+        for (key, value) in parameters {
+            guard let realValue = value else {
+                continue
+            }
+            switch realValue {
+            case let bool as Bool:
+                storage.updateValue(String(bool), forKey: key)
+            default:
+                storage.updateValue(realValue, forKey: key)
+            }
+        }
+    }
+
+    func value() -> [String: Any] {
+        return storage
     }
 }
 

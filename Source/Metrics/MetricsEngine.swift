@@ -58,7 +58,7 @@ class MetricsEngine {
     
     private func track(metrics: [[String: Any]], client: Bool, completionHandler: ((Bool) -> Void)? = nil) {
         if metrics.count > 0 {
-            self.client.post(RequestParameter(["metrics": metrics]), client: client) { response in
+            self.client.post(["metrics": metrics], client: client) { response in
                 SDKLogger.shared.debug("\(response)")
                 switch response.result {
                 case .success:

@@ -49,7 +49,7 @@ public class PersonClient {
     public func list(email: EmailAddress? = nil, displayName: String? = nil, id: String? = nil, orgId: String? = nil, max: Int? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[Person]>) -> Void) {
         let request = requestBuilder()
             .method(.get)
-            .query(RequestParameter(["email": email?.toString(), "displayName": displayName, "id": id, "orgId":orgId, "max": max]))
+            .query(["email": email?.toString(), "displayName": displayName, "id": id, "orgId":orgId, "max": max])
             .keyPath("items")
             .queue(queue)
             .build()
@@ -107,19 +107,19 @@ public class PersonClient {
     /// - since: 1.4.0
     public func create(email: EmailAddress, displayName: String? = nil, firstName: String? = nil, lastName: String? = nil, avatar: String? = nil, orgId: String? = nil, roles: String? = nil, licenses: String? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Person>) -> Void) {
         let request = requestBuilder()
-            .method(.post)
-            .query(RequestParameter(["email": email.toString(),
-                                     "displayName": displayName,
-                                     "orgId":orgId,
-                                     "firstName": firstName,
-                                     "lastName": lastName,
-                                     "avatar": avatar,
-                                     "orgId": orgId,
-                                     "roles": roles,
-                                     "licenses": licenses,
-                                     ]))
-            .queue(queue)
-            .build()
+                .method(.post)
+                .query(["email": email.toString(),
+                        "displayName": displayName,
+                        "orgId": orgId,
+                        "firstName": firstName,
+                        "lastName": lastName,
+                        "avatar": avatar,
+                        "orgId": orgId,
+                        "roles": roles,
+                        "licenses": licenses,
+                ])
+                .queue(queue)
+                .build()
         request.responseObject(completionHandler)
     }
     
@@ -141,20 +141,20 @@ public class PersonClient {
     /// - since: 1.4.0
     public func update(personId: String, email: EmailAddress? = nil, displayName: String? = nil, firstName: String? = nil, lastName: String? = nil, avatar: String? = nil, orgId: String? = nil, roles: String? = nil, licenses: String? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Person>) -> Void) {
         let request = requestBuilder()
-            .method(.put)
-            .path(personId)
-            .query(RequestParameter(["email": email?.toString(),
-                                     "displayName": displayName,
-                                     "orgId":orgId,
-                                     "firstName": firstName,
-                                     "lastName": lastName,
-                                     "avatar": avatar,
-                                     "orgId": orgId,
-                                     "roles": roles,
-                                     "licenses": licenses,
-                                     ]))
-            .queue(queue)
-            .build()
+                .method(.put)
+                .path(personId)
+                .query(["email": email?.toString(),
+                        "displayName": displayName,
+                        "orgId": orgId,
+                        "firstName": firstName,
+                        "lastName": lastName,
+                        "avatar": avatar,
+                        "orgId": orgId,
+                        "roles": roles,
+                        "licenses": licenses,
+                ])
+                .queue(queue)
+                .build()
         request.responseObject(completionHandler)
     }
     

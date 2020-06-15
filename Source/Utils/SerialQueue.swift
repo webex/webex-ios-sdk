@@ -52,7 +52,6 @@ class SerialQueue {
             self.ops.isSuspended = false
         }
     }
-    
 }
 
 func synchronized<T: Any>(lock: T, block: () throws -> Void) rethrows {

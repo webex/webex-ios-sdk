@@ -30,7 +30,7 @@ class MetricsClient {
         self.service = service
     }
     
-    func post(_ metrics: RequestParameter, client: Bool, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+    func post(_ metrics: [String: Any?], client: Bool, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
         if let device = self.service.device {
             let request = Service.metrics.homed(for: device)
                 .authenticator(self.authenticator)

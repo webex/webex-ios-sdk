@@ -114,19 +114,19 @@ class CallClient {
         self.authenticator = authenticator
     }
     
-    private func body(deviceUrl: URL, json: [String:Any?] = [:]) -> RequestParameter {
+    private func body(deviceUrl: URL, json: [String:Any?] = [:]) -> [String:Any?]  {
         var result = json
         result["deviceUrl"] = deviceUrl.absoluteString
         result["respOnlySdp"] = true //coreFeatures.isResponseOnlySdpEnabled()
-        return RequestParameter(result)
+        return result
     }
 
-    private func body(composedVideo: Bool, correlationId: UUID, device: Device, json: [String:Any?] = [:]) -> RequestParameter {
+    private func body(composedVideo: Bool, correlationId: UUID, device: Device, json: [String:Any?] = [:]) -> [String:Any?]  {
         var result = json
         result["device"] = ["url":device.deviceUrl.absoluteString, "deviceType": (composedVideo ? "WEB" : device.deviceType), "regionCode":device.countryCode, "countryCode":device.regionCode, "capabilities":["groupCallSupported":true, "sdpSupported":true]]
         result["respOnlySdp"] = true //coreFeatures.isResponseOnlySdpEnabled()
         result["correlationId"] = correlationId.uuidString
-        return RequestParameter(result)
+        return result
     }
     
     private func convertToJson(_ mediaID: String? = nil, mediaInfo: MediaModel) -> [String:Any?] {
@@ -281,23 +281,21 @@ class CallClient {
         
         request.responseArray(completionHandler)
     }
-    
-    func updateMediaShare(_ mediaShare: MediaShareModel, by device: Device, mediaShareUrl:String, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
-        var mediaShareUpdateParam: [String: Any?]
+
+    func updateMediaShare(_ mediaShare: MediaShareModel, by device: Device, mediaShareUrl: String, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
         let floorParam: [String: Any?] = ["disposition": mediaShare.shareFloor?.disposition?.rawValue.uppercased() ?? "RELEASE",
                                           "requester": ["url": mediaShare.shareFloor?.requester?.url],
                                           "beneficiary": ["url": mediaShare.shareFloor?.beneficiary?.url as Any,
                                                           "devices": ["url": device.deviceUrl.absoluteString] as Any]]
-        mediaShareUpdateParam = ["floor": floorParam]
-        let body = RequestParameter(mediaShareUpdateParam)
+        let body: [String: Any?] = ["floor": floorParam]
         let request = Service.locus.specific(url: mediaShareUrl)
-            .authenticator(self.authenticator)
-            .method(.put)
-            .body(body)
-            .keyPath("locus")
-            .queue(queue)
-            .build()
-            
+                .authenticator(self.authenticator)
+                .method(.put)
+                .body(body)
+                .keyPath("locus")
+                .queue(queue)
+                .build()
+
         request.responseJSON(completionHandler)
     }
     
@@ -308,7 +306,7 @@ class CallClient {
             .authenticator(self.authenticator)
             .method(.patch)
             .path("controls")
-            .body(RequestParameter(parameters))
+            .body(parameters)
             .keyPath("locus")
             .queue(queue)
             .build()
@@ -322,7 +320,7 @@ class CallClient {
             .authenticator(self.authenticator)
             .method(.patch)
             .path("controls")
-            .body(RequestParameter(parameters))
+            .body(parameters)
             .keyPath("locus")
             .queue(queue)
             .build()

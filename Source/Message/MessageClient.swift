@@ -77,7 +77,7 @@ public class MessageClient {
     private var conversations: [String: Identifier] = [:]
     private typealias KeyHandler = (Result<(String, String)>) -> Void
     private var cachedMessages: [String: String] = [:]
-    
+
     var authenticator: Authenticator {
         return self.phone.authenticator
     }
@@ -342,18 +342,21 @@ public class MessageClient {
                         key.encryptionUrl(client: self) { encryptionUrl in
                             if let url = encryptionUrl.data {
                                 let request = Service.conv.specific(url: conversation.url(device: self.device))
-                                    .authenticator(self.authenticator)
-                                    .method(.post)
-                                    .body(["verb": verb.rawValue, "encryptionKeyUrl": url, "object": object, "target": target, "clientTempId": "\(self.uuid):\(UUID().uuidString)", "parent": parentModel])
-                                    .path("activities")
-                                    .queue(queue)
-                                    .build()
+                                        .authenticator(self.authenticator)
+                                        .method(.post)
+                                        .body(["verb": verb.rawValue, "encryptionKeyUrl": url, "object": object, "target": target, "clientTempId": "\(self.uuid):\(UUID().uuidString)", "parent": parentModel])
+                                        .path(verb == ActivityModel.Verb.share ? "content" : "activities")
+                                        .query(((withFiles ?? []).contains {
+                                            $0.shouldTranscode
+                                        }) ? ["async": false, "transcode": true] : [:])
+                                        .queue(queue)
+                                        .build()
                                 request.responseObject { (response: ServiceResponse<ActivityModel>) in
-                                    switch response.result{
-                                        case .success(let activity):
-                                            completionHandler(ServiceResponse(response.response, Result.success(self.cacheMessageIfNeeded(message: Message(activity: activity.decrypt(key: material.data))))))
-                                        case .failure(let error):
-                                            completionHandler(ServiceResponse(response.response, Result.failure(error)))
+                                    switch response.result {
+                                    case .success(let activity):
+                                        completionHandler(ServiceResponse(response.response, Result.success(self.cacheMessageIfNeeded(message: Message(activity: activity.decrypt(key: material.data))))))
+                                    case .failure(let error):
+                                        completionHandler(ServiceResponse(response.response, Result.failure(error)))
                                     }
                                 }
                             }
@@ -445,7 +448,11 @@ public class MessageClient {
     /// - since: 1.2.0
     public func delete(messageId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
         Service.hydra.global.authenticator(self.authenticator).path("messages").path(messageId).method(.delete).queue(queue).build().responseJSON(completionHandler)
-        invalidCacheBy(messageId: messageId)
+        DispatchQueue.main.async {
+            for (key, value) in self.cachedMessages where value == messageId {
+                self.cachedMessages.removeValue(forKey: key)
+            }
+        }
     }
     
     /// Mark all messages in the space read.
@@ -624,15 +631,22 @@ public class MessageClient {
                     decryption.toPersonId = self.userId?.base64Id
                     event = MessageEvent.messageReceived(self.cacheMessageIfNeeded(message: Message(activity: decryption)))
                 case .update:
-                    if let contentId = decryption.object, let messageId = self.cachedMessages[contentId], let files = activity.files {
+                    if let contentId = decryption.object, let messageId = self.cachedMessages[contentId], let files = decryption.files {
                         event = MessageEvent.messageUpdated(messageId: messageId, type: .fileThumbnail(files))
-                        self.cachedMessages[contentId] = nil
+                        // TODO Check the validity of the caches regularly
+                        guard let _ = files.first(where: { $0.thumbnail == nil && $0.shouldTranscode }) else {
+                            self.cachedMessages[contentId] = nil
+                        }
                     }
                 case .delete:
                     let message = Message(activity: decryption)
                     if let id = message.id {
                         event = MessageEvent.messageDeleted(id)
-                        self.invalidCacheBy(messageId: id)
+                        DispatchQueue.main.async {
+                            for (key, value) in self.cachedMessages where value == id {
+                                self.cachedMessages.removeValue(forKey: key)
+                            }
+                        }
                     }
                 default:
                     SDKLogger.shared.error("Not a valid message \(activity.uuid ?? (activity.toJSONString() ?? ""))")
@@ -953,17 +967,17 @@ public class MessageClient {
                     object["defaultActivityEncryptionKeyUrl"] = key.uri
                     let target: [String: Any] = ["id": conversation.uuid, "objectType": ObjectType.conversation.rawValue]
                     let verb = ActivityModel.Verb.updateKey
-                    let body = RequestParameter(["objectType":"activity",
-                                                 "verb": verb.rawValue,
-                                                 "object": object,
-                                                 "target": target,
-                                                 "kmsMessage":chiperText])
+                    let body: [String: Any?] = ["objectType": "activity",
+                                "verb": verb.rawValue,
+                                "object": object,
+                                "target": target,
+                                "kmsMessage": chiperText]
                     let request = Service.conv.specific(url: conversation.url(device: self.device))
-                        .authenticator(self.authenticator)
-                        .path("activities")
-                        .method(.post)
-                        .body(body)
-                        .build()
+                            .authenticator(self.authenticator)
+                            .path("activities")
+                            .method(.post)
+                            .body(body)
+                            .build()
                     request.responseJSON { (response: ServiceResponse<Any>) in
                         switch response.result {
                             case .success(_):
@@ -1029,6 +1043,7 @@ public class MessageClient {
         }
     }
 
+    // MARK: cache messages for update activities
     func cacheMessageIfNeeded(message: Message) -> Message {
         if (message.created ?? Date()).timeIntervalSinceNow <= 3 * 60 && message.isMissingThumbnail {
             if let contentId = message.activity.object, let messageId = message.id {
@@ -1039,14 +1054,6 @@ public class MessageClient {
             }
         }
         return message
-    }
-
-    func invalidCacheBy(messageId: String) {
-        DispatchQueue.main.async {
-            for (key, value) in self.cachedMessages where value == messageId {
-                self.cachedMessages.removeValue(forKey: key)
-            }
-        }
     }
 
     // MARK: - Deprecated

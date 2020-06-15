@@ -94,6 +94,7 @@ class DeviceService {
             }
             else {
                 self.client.fetchHosts(queue: queue) { hostsRes in
+                    // TDOO handle u2c error
                     self.client.create(deviceInfo: deviceInfo, hosts: hostsRes.result.data, queue: queue, completionHandler: registrationHandler)
                 }
             }
