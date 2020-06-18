@@ -634,7 +634,7 @@ public class MessageClient {
                     if let contentId = decryption.object, let messageId = self.cachedMessages[contentId], let files = decryption.files {
                         event = MessageEvent.messageUpdated(messageId: messageId, type: .fileThumbnail(files))
                         // TODO Check the validity of the caches regularly
-                        guard let _ = files.first(where: { $0.thumbnail == nil && $0.shouldTranscode }) else {
+                        if files.first(where: { $0.thumbnail == nil && $0.shouldTranscode }) == nil {
                             self.cachedMessages[contentId] = nil
                         }
                     }
