@@ -17,4 +17,6 @@
 
 @property (nonatomic) BOOL MQECallback;
 
+@property (nonatomic) NSString* deviceSettings;
+
 @end

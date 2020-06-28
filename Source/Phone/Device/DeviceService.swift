@@ -28,6 +28,7 @@ struct Device {
     
     var deviceUrl: URL { return deviceModel.deviceUrl! }
     var webSocketUrl: URL { return deviceModel.webSocketUrl! }
+    var deviceSettings: String? { return deviceModel.deviceSettingsString }
     var countryCode: String { return regionModel.countryCode! }
     var regionCode: String { return regionModel.regionCode! }
     

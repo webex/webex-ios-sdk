@@ -232,7 +232,9 @@ class MediaSessionWrapper {
             let mediaConfig :MediaCapabilityConfig = MediaCapabilityConfig()
             // mediaConfig.mqeCallback = false
             mediaConfig.audioMaxRxBandwidth = phone.audioMaxRxBandwidth
-            
+            if let settings = phone.devices.device?.deviceSettings {
+                mediaConfig.deviceSettings = settings
+            }
             var constraint = MediaConstraintFlag.audio.rawValue
             if option.hasVideo {
                 mediaConfig.videoMaxRxBandwidth = phone.videoMaxRxBandwidth
