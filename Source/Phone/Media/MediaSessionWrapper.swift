@@ -251,12 +251,7 @@ class MediaSessionWrapper {
                 case .audioVoiceActivityDetection(let value):
                     mediaConfig.isVADEnabled = value
                 case .audioMixingStream(let value):
-                    if value >= 3 {
-                        mediaConfig.mixingStreamNum = 3
-                    }
-                    else if value == 1 || value == 2 {
-                        mediaConfig.mixingStreamNum = 1
-                    }
+                    mediaConfig.mixingStreamNum = value.rawValue
                 }
             }
             

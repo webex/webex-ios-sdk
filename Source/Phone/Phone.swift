@@ -71,9 +71,14 @@ public class Phone {
     ///
     /// - since: 2.5.0.12
     public enum AdvanceSettings {
+        
+        public enum MixingStream: UInt8 {
+            case client = 3, server = 1, `default` = 0
+        }
+        
         case audioForwardErrorCorrection(Bool)
         case audioEchoCanccellation(Bool)
-        case audioMixingStream(UInt8)
+        case audioMixingStream(MixingStream)
         case activeSpeakerOverRTCP(Bool)
         case audioAutomaticGainControl(Bool)
         case audioNoiseSupression(Bool)
@@ -165,7 +170,7 @@ public class Phone {
                                                             .audioForwardErrorCorrection(true),
                                                             .audioNoiseSupression(false),
                                                             .audioVoiceActivityDetection(false),
-                                                            .audioMixingStream(0)]
+                                                            .audioMixingStream(AdvanceSettings.MixingStream.default)]
     
     /// Default camera facing mode of this phone, used as the default when dialing or answering a call.
     /// The default mode is the front camera.
