@@ -67,6 +67,19 @@ public class Phone {
         case maxBandwidthAudio = 64000
     }
     
+    /// The enumeration of common bandwidth choices.
+    ///
+    /// - since: 2.5.0.12
+    public enum AdvanceSettings {
+        case audioForwardErrorCorrection(Bool)
+        case audioEchoCanccellation(Bool)
+        case audioMixingStream(UInt8)
+        case activeSpeakerOverRTCP(Bool)
+        case audioAutomaticGainControl(Bool)
+        case audioNoiseSupression(Bool)
+        case audioVoiceActivityDetection(Bool)
+    }
+    
     /// MARK: - Deprecated
     /// The max receiving bandwidth for audio in unit bps for the call.
     /// Only effective if set before the start of call.
@@ -143,6 +156,16 @@ public class Phone {
     /// - since: 2.5.0.2
     public var sharingMaxRxBandwidth: UInt32 = DefaultBandwidth.maxBandwidthSession.rawValue
     
+    /// - since: 2.5.0.12
+    public var advanceSettings: [AdvanceSettings] = []
+    
+    public let defaultAdvanceSettings: [AdvanceSettings] = [.activeSpeakerOverRTCP(true),
+                                                            .audioAutomaticGainControl(true),
+                                                            .audioEchoCanccellation(true),
+                                                            .audioForwardErrorCorrection(true),
+                                                            .audioNoiseSupression(false),
+                                                            .audioVoiceActivityDetection(false),
+                                                            .audioMixingStream(0)]
     
     /// Default camera facing mode of this phone, used as the default when dialing or answering a call.
     /// The default mode is the front camera.

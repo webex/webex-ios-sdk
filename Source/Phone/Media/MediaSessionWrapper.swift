@@ -235,6 +235,31 @@ class MediaSessionWrapper {
             if let settings = phone.devices.device?.deviceSettings {
                 mediaConfig.deviceSettings = settings
             }
+            
+            for setting in phone.advanceSettings {
+                switch setting {
+                case .activeSpeakerOverRTCP(let value):
+                    mediaConfig.isASNOEnabled = value
+                case .audioAutomaticGainControl(let value):
+                    mediaConfig.isAGCEnabled = value
+                case .audioEchoCanccellation(let value):
+                    mediaConfig.isECEnabled = value
+                case .audioForwardErrorCorrection(let value):
+                    mediaConfig.isFECEnabled = value
+                case .audioNoiseSupression(let value):
+                    mediaConfig.isNSEnabled = value
+                case .audioVoiceActivityDetection(let value):
+                    mediaConfig.isVADEnabled = value
+                case .audioMixingStream(let value):
+                    if value >= 3 {
+                        mediaConfig.mixingStreamNum = 3
+                    }
+                    else if value == 1 || value == 2 {
+                        mediaConfig.mixingStreamNum = 1
+                    }
+                }
+            }
+            
             var constraint = MediaConstraintFlag.audio.rawValue
             if option.hasVideo {
                 mediaConfig.videoMaxRxBandwidth = phone.videoMaxRxBandwidth

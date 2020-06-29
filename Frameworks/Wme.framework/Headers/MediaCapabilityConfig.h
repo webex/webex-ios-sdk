@@ -19,4 +19,12 @@
 
 @property (nonatomic) NSString* deviceSettings;
 
+@property (nonatomic) BOOL isASNOEnabled;
+@property (nonatomic) BOOL isAGCEnabled;
+@property (nonatomic) BOOL isFECEnabled;
+@property (nonatomic) BOOL isECEnabled;
+@property (nonatomic) BOOL isNSEnabled;
+@property (nonatomic) BOOL isVADEnabled;
+@property (nonatomic) UInt8 mixingStreamNum;
+
 @end
