@@ -232,12 +232,13 @@ class MediaSessionWrapper {
             let mediaConfig :MediaCapabilityConfig = MediaCapabilityConfig()
             // mediaConfig.mqeCallback = false
             mediaConfig.audioMaxRxBandwidth = phone.audioMaxRxBandwidth
-            if let settings = phone.devices.device?.deviceSettings {
-                mediaConfig.deviceSettings = settings
-            }
-            
+
             for setting in phone.advanceSettings {
                 switch setting {
+                case .deviceUseRemoteSettings(let value):
+                    if let settings = phone.devices.device?.deviceSettings, value {
+                        mediaConfig.deviceSettings = settings
+                    }
                 case .activeSpeakerOverRTCP(let value):
                     mediaConfig.isASNOEnabled = value
                 case .audioAutomaticGainControl(let value):

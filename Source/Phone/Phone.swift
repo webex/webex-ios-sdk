@@ -83,6 +83,7 @@ public class Phone {
         case audioAutomaticGainControl(Bool)
         case audioNoiseSupression(Bool)
         case audioVoiceActivityDetection(Bool)
+        case deviceUseRemoteSettings(Bool)
     }
     
     /// MARK: - Deprecated
@@ -164,8 +165,9 @@ public class Phone {
     /// - since: 2.5.0.12
     public var advanceSettings: [AdvanceSettings] = []
     
-    public let defaultAdvanceSettings: [AdvanceSettings] = [.activeSpeakerOverRTCP(true),
-                                                            .audioAutomaticGainControl(true),
+    public let defaultAdvanceSettings: [AdvanceSettings] = [.deviceUseRemoteSettings(false),
+                                                            .activeSpeakerOverRTCP(true),
+                                                            .audioAutomaticGainControl(false),
                                                             .audioEchoCanccellation(true),
                                                             .audioForwardErrorCorrection(true),
                                                             .audioNoiseSupression(false),
