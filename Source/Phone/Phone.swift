@@ -167,7 +167,7 @@ public class Phone {
     
     public let defaultAdvanceSettings: [AdvanceSettings] = [.deviceUseRemoteSettings(false),
                                                             .activeSpeakerOverRTCP(true),
-                                                            .audioAutomaticGainControl(false),
+                                                            .audioAutomaticGainControl(true),
                                                             .audioEchoCanccellation(false),
                                                             .audioForwardErrorCorrection(true),
                                                             .audioNoiseSupression(false),
