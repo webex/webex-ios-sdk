@@ -135,8 +135,11 @@ class WebexBroadcastClient : BroadcastConnectionClientDelegate{
     
     func invalidateClient() {
         if self.broadcastState == .Broadcasting || self.broadcastState == .Suspended {
-            self.connectionClient?.invalidate()
             self.broadcastState = .Stopped
         }
+    }
+    
+    deinit {
+        self.connectionClient?.invalidate()
     }
 }
