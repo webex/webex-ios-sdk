@@ -451,7 +451,7 @@ extension MediaSessionWrapper {
 
         if let constraint = remoteView.getSizeConstraint() {
             constraint.constant += 0.5
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
                 constraint.constant -= 0.5
             }
             SDKLogger.shared.debug("adjust constraint = \(constraint.firstAttribute.rawValue)")
@@ -462,7 +462,7 @@ extension MediaSessionWrapper {
             var height = frame.height
             height += 0.5
             remoteView.frame = CGRect(origin: frame.origin, size: CGSize(width: width, height: height))
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
                 height -= 0.5
                 remoteView.frame = CGRect(origin: frame.origin, size: CGSize(width: width, height: height))
             }
