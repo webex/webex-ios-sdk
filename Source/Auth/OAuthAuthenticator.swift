@@ -125,11 +125,7 @@ public class OAuthAuthenticator : Authenticator {
         if let authorizationUrl = self.authorizationUrl() {
             oauthLauncher.launchOAuthViewController(parentViewController: parentViewController, authorizationUrl: authorizationUrl, redirectUri: redirectUri) { oauthCode in
                 if let oauthCode = oauthCode {
-                    self.fetchingAccessTokenInProcess = true
-                    self.oauthClient.fetchAccessTokenFrom(oauthCode: oauthCode, clientId: self.clientId, clientSecret: self.clientSecret, redirectUri: self.redirectUri, completionHandler: { response in
-                        self.createAccessTokenHandler(errorHandler: { error in SDKLogger.shared.error("Failure retrieving the access token from the oauth code", error: error)})(response)
-                        completionHandler?(true)
-                    })
+                    self.access(oauthCode: oauthCode, completionHandler: completionHandler)
                 } else {
                     completionHandler?(false)
                 }
@@ -140,6 +136,19 @@ public class OAuthAuthenticator : Authenticator {
         }
     }
     
+    /// Handles fetching the access token using the OAuth code generated during authorization. Assumes the application handles the authentication part of the process itself.
+    ///
+    /// - parameter oauthCode: the OAuth code generated during authorization.
+    /// - parameter completionHandler: the completion handler will be called when fetching the access token is complete, with a boolean to indicate if the process was successful.
+    /// - since: 2.6.0
+    public func access(oauthCode: String, completionHandler: ((_ success: Bool) -> Void)? = nil) {
+        self.fetchingAccessTokenInProcess = true
+        self.oauthClient.fetchAccessTokenFrom(oauthCode: oauthCode, clientId: self.clientId, clientSecret: self.clientSecret, redirectUri: self.redirectUri, completionHandler: { response in
+            self.createAccessTokenHandler(errorHandler: { error in SDKLogger.shared.error("Failure retrieving the access token from the oauth code", error: error)})(response)
+            completionHandler?(true)
+        })
+    }
+
     func authorizationUrl() -> URL? {
         if let encodedClientId = clientId.encodeQueryParamString,
             let encodedRedirectUri = redirectUri.encodeQueryParamString,
