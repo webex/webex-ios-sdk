@@ -246,13 +246,15 @@ class MediaSessionWrapper {
                 case .audioEchoCanccellation(let value):
                     mediaConfig.isECEnabled = value
                 case .audioForwardErrorCorrection(let value):
-                    mediaConfig.isFECEnabled = value
+                    mediaConfig.isAudioFECEnabled = value
                 case .audioNoiseSupression(let value):
                     mediaConfig.isNSEnabled = value
                 case .audioVoiceActivityDetection(let value):
                     mediaConfig.isVADEnabled = value
                 case .audioMixingStream(let value):
                     mediaConfig.mixingStreamNum = value.rawValue
+                case .videoEnableDecoderMosaic(let value):
+                    mediaConfig.isDecoderMosaicEnabled = value
                 }
             }
             
