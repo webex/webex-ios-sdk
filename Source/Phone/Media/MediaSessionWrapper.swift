@@ -88,6 +88,7 @@ class MediaSessionWrapper {
         }
         set {
             self._remoteVideoRenderMode = newValue
+            adjustRemoteRenderViewSize()
             mediaSession.setRemoteVideoRenderMode(newValue.wmeMode)
         }
     }
@@ -466,6 +467,36 @@ extension MediaSessionWrapper {
     }
 }
 
+extension MediaSessionWrapper {
+
+    private func adjustRemoteRenderViewSize() {
+        guard let remoteView = mediaSession.getRenderView(with: .remoteVideo) else {
+            return
+        }
+
+        if let constraint = remoteView.getSizeConstraint() {
+            constraint.constant += 0.5
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
+                constraint.constant -= 0.5
+            }
+            SDKLogger.shared.debug("adjust constraint = \(constraint.firstAttribute.rawValue)")
+        }
+        else {
+            let frame = remoteView.frame
+            let width = frame.width
+            var height = frame.height
+            height += 0.5
+            remoteView.frame = CGRect(origin: frame.origin, size: CGSize(width: width, height: height))
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
+                height -= 0.5
+                remoteView.frame = CGRect(origin: frame.origin, size: CGSize(width: width, height: height))
+            }
+            SDKLogger.shared.debug("adjust frame = \(remoteView.frame)")
+        }
+    }
+
+}
+
 extension Call.VideoRenderMode {
     
     var wmeMode: VideoScalingModeType {
@@ -481,4 +512,41 @@ extension Call.VideoRenderMode {
         }
     }
     
+}
+
+extension UIView {
+    func getSizeConstraint() -> NSLayoutConstraint? {
+        for constraint in self.constraints {
+            if constraint.firstAttribute == .width || constraint.firstAttribute == .height {
+                return constraint
+            }
+        }
+
+        let includeSizeChangedAttribute: (NSLayoutConstraint.Attribute) -> Bool = { attribute in
+            switch attribute {
+            case .width, .height, .leading, .left, .top, .bottom, .right, .trailing, .leftMargin, .rightMargin, .topMargin, .bottomMargin, .leadingMargin, .trailingMargin:
+                return true
+            default:
+                return false
+            }
+        }
+
+        var _superview = self.superview
+        while let superview = _superview {
+            for constraint in superview.constraints {
+
+                if let first = constraint.firstItem as? UIView, first == self, includeSizeChangedAttribute(constraint.firstAttribute) {
+                    return constraint
+                }
+
+                if let second = constraint.secondItem as? UIView, second == self, includeSizeChangedAttribute(constraint.secondAttribute) {
+                    return constraint
+                }
+            }
+            _superview = superview.superview
+        }
+
+        return nil
+    }
+
 }
