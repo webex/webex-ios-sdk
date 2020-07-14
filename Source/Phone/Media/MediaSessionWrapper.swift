@@ -233,6 +233,31 @@ class MediaSessionWrapper {
             let mediaConfig :MediaCapabilityConfig = MediaCapabilityConfig()
             // mediaConfig.mqeCallback = false
             mediaConfig.audioMaxRxBandwidth = phone.audioMaxRxBandwidth
+
+            for setting in phone.advanceSettings {
+                switch setting {
+                case .deviceUseRemoteSettings(let value):
+                    if let settings = phone.devices.device?.deviceSettings, value {
+                        mediaConfig.deviceSettings = settings
+                    }
+                case .activeSpeakerOverRTCP(let value):
+                    mediaConfig.isASNOEnabled = value
+                case .audioAutomaticGainControl(let value):
+                    mediaConfig.isAGCEnabled = value
+                case .audioEchoCanccellation(let value):
+                    mediaConfig.isECEnabled = value
+                case .audioForwardErrorCorrection(let value):
+                    mediaConfig.isAudioFECEnabled = value
+                case .audioNoiseSupression(let value):
+                    mediaConfig.isNSEnabled = value
+                case .audioVoiceActivityDetection(let value):
+                    mediaConfig.isVADEnabled = value
+                case .audioMixingStream(let value):
+                    mediaConfig.mixingStreamNum = value.rawValue
+                case .videoEnableDecoderMosaic(let value):
+                    mediaConfig.isDecoderMosaicEnabled = value
+                }
+            }
             
             var constraint = MediaConstraintFlag.audio.rawValue
             if option.hasVideo {

@@ -41,7 +41,6 @@ typedef NS_ENUM(NSInteger, MediaMetricType) {
 - (void)setCamrea:(BOOL)frontCamera;
 
 - (void)setDefaultAudioOutput:(BOOL)useSpeaker;
-- (void)toggleSpeaker;
 - (BOOL)isSpeakerSelected;
 - (void)setSpeaker:(BOOL)useSpeaker;
 
