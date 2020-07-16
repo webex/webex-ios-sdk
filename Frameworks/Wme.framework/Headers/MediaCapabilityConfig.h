@@ -43,5 +43,8 @@
 @property (nonatomic) BOOL isAVCSimulcastEnabled;
 @property (nonatomic) BOOL isDecoderMosaicEnabled;
 @property (nonatomic) unsigned int maxPacketSize;
+@property (nonatomic) unsigned int videoMaxTxFPS;
+@property (nonatomic) BOOL isVideoReceiverBasedQosSupported;
+@property (nonatomic) BOOL isVideoCHPEnabled;
 
 @end

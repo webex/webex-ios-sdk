@@ -256,6 +256,10 @@ class MediaSessionWrapper {
                     mediaConfig.mixingStreamNum = value.rawValue
                 case .videoEnableDecoderMosaic(let value):
                     mediaConfig.isDecoderMosaicEnabled = value
+                case .videoReceiverBasedQosSupported(let value):
+                    mediaConfig.isVideoReceiverBasedQosSupported = value
+                case .videoMaxTxFPS(let value):
+                    mediaConfig.videoMaxTxFPS = UInt32(value)
                 }
             }
             

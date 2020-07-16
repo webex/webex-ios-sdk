@@ -85,6 +85,8 @@ public class Phone {
         case audioVoiceActivityDetection(Bool)
         case deviceUseRemoteSettings(Bool)
         case videoEnableDecoderMosaic(Bool)
+        case videoMaxTxFPS(UInt)
+        case videoReceiverBasedQosSupported(Bool)
     }
     
     /// MARK: - Deprecated
@@ -174,7 +176,9 @@ public class Phone {
                                                             .audioNoiseSupression(false),
                                                             .audioVoiceActivityDetection(false),
                                                             .audioMixingStream(AdvanceSettings.MixingStream.default),
-                                                            .videoEnableDecoderMosaic(true)]
+                                                            .videoEnableDecoderMosaic(true),
+                                                            .videoReceiverBasedQosSupported(true),
+                                                            .videoMaxTxFPS(0)]
     
     /// Default camera facing mode of this phone, used as the default when dialing or answering a call.
     /// The default mode is the front camera.
