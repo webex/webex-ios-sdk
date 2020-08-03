@@ -223,6 +223,7 @@ public class Phone {
     private var mediaContext: MediaSessionWrapper?
     private let nilJsonStr = "Nil JSON"
     var debug = true;
+    private var endedDialingAddresses = [String]()
     
     enum LocusResult {
         case call(UUID, Bool, Device, MediaOption, MediaSessionWrapper, ServiceResponse<CallModel>, (Result<Call>) -> Void)
@@ -373,6 +374,18 @@ public class Phone {
     /// - since: 1.2.0
     /// - attention: Currently the SDK only supports one active call at a time. Invoking this function while there is an active call will generate an exception.
     public func dial(_ address: String, option: MediaOption, completionHandler: @escaping ((Result<Call>) -> Void)) {
+        func checkDialIfEnded() -> Bool {
+            if self.endedDialingAddresses.contains(address) {
+                SDKLogger.shared.debug(PhoneError.currentDialEnded.rawValue)
+                self.endedDialingAddresses.removeObject(address)
+                DispatchQueue.main.async {
+                  completionHandler(Result.failure(WebexError.illegalOperation(reason: PhoneError.currentDialEnded.rawValue)))
+                }
+                return true
+            }
+            return false
+        }
+        
         prepare(option: option) { error in
             if let error = error {
                 completionHandler(Result.failure(error))
@@ -394,17 +407,41 @@ public class Phone {
                             if let device = self.devices.device {
                                 let media = MediaModel(sdp: localSDP, audioMuted: false, videoMuted: false, reachabilities: reachabilities)
                                 let correlationId = UUID()
+                                
+                                func handleLocusResponse(_ result: ServiceResponse<CallModel>) {
+                                    if checkDialIfEnded() == false {
+                                        self.doLocusResponse(LocusResult.call(correlationId, target.isGroup, device, option, tempMediaContext, result, completionHandler))
+                                    }
+                                    else if let model = result.result.data {
+                                        let call = Call(model: model, device: device, media: tempMediaContext, direction: Call.Direction.outgoing, group: target.isGroup, correlationId: correlationId)
+                                        self.hangup(call: call) { (error) in
+                                            SDKLogger.shared.debug("Call was hung up due to validate dial")
+                                        }
+                                    }
+                                }
+                                
+                                if checkDialIfEnded() == true {
+                                    self.queue.yield()
+                                    return
+                                }
+                                
                                 if target.isEndpoint {
                                     self.client.create(target.address, correlationId: correlationId,  by: device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { res in
-                                        self.doLocusResponse(LocusResult.call(correlationId, target.isGroup, device, option, tempMediaContext, res, completionHandler))
+                                        handleLocusResponse(res)
                                         self.queue.yield()
                                     }
                                 }
                                 else {
                                     self.conversations.getLocusUrl(conversation: target.address, by: device, queue: self.queue.underlying) { res in
+                                        
+                                        if checkDialIfEnded() == true {
+                                            self.queue.yield()
+                                            return
+                                        }
+                                        
                                         if let url = res.result.data?.locusUrl {
                                             self.client.join(url, correlationId: correlationId, by: device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { resNew in
-                                                self.doLocusResponse(LocusResult.call(correlationId, target.isGroup, device, option, tempMediaContext, resNew, completionHandler))
+                                                handleLocusResponse(resNew)
                                                 self.queue.yield()
                                             }
                                         }
@@ -430,6 +467,14 @@ public class Phone {
                 }
             }
         }
+    }
+    
+    /// End a dial.
+    /// - attention: it is associated with self.dial(), it is only used when you has not got Call object, if you get one, please use call.hangup() to end the call.
+    /// - parameter address: the value should be the same as the address of self.dial()
+    /// - returns: Void
+    public func endDial(_ address: String) {
+        self.endedDialingAddresses.append(address)
     }
     
     /// Pops up an Alert for the end user to approve the use of H.264 codec license from Cisco Systems, Inc.
@@ -630,7 +675,6 @@ public class Phone {
                     }
                     call.mediaSession.stopLocalScreenShare()
                 }
-                
                 
                 self.client.leave(url, by: call.device, queue: self.queue.underlying) { res in
                     self.doLocusResponse(LocusResult.leave(call, res, completionHandler))
@@ -1083,6 +1127,7 @@ enum PhoneError: String {
     case alreadyConnected = "Already connected"
     case failureCall = "Failure call"
     case otherActiveCall = "There are other active calls"
+    case currentDialEnded = "Current dial has ended"
     
     var failureDesc: String {
         return "Failure: " + self.rawValue
