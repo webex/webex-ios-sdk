@@ -440,8 +440,8 @@ public class Phone {
                                         }
                                         
                                         if let url = res.result.data?.locusUrl {
-                                            self.client.join(url, correlationId: correlationId, by: device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { resNew in
-                                                handleLocusResponse(resNew)
+                                            self.client.join(url, correlationId: correlationId, by: device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { res in
+                                                handleLocusResponse(res)
                                                 self.queue.yield()
                                             }
                                         }
@@ -470,7 +470,7 @@ public class Phone {
     }
     
     /// End a dial.
-    /// - attention: it is associated with self.dial(), it is only used when you has not got Call object, if you get one, please use call.hangup() to end the call.
+    /// - attention: it is associated with self.dial(), and only used when you have not got Call object, if you get one, please use call.hangup() to end the call.
     /// - parameter address: the value should be the same as the address of self.dial()
     /// - returns: Void
     public func endDial(_ address: String) {
