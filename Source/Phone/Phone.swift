@@ -960,14 +960,7 @@ public class Phone {
     
     private func prepare(option: MediaOption, completionHandler: @escaping (Error?) -> Void) {
         if option.hasVideo {
-            self.prompter.check() { activated in
-                if activated {
-                    completionHandler(nil)
-                }
-                else {
-                    completionHandler(WebexError.requireH264)
-                }
-            }
+            self.prompter.check(completionHandler: completionHandler)
         }
         else {
             DispatchQueue.main.async {

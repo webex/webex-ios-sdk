@@ -37,15 +37,15 @@ class H264LicensePrompter {
         self.metrics = metrics
     }
     
-    func check(completionHandler: @escaping ((Bool) -> Void)) {
+    func check(completionHandler: @escaping (Error?) -> Void) {
         DispatchQueue.main.async {
             if UserDefaults.sharedInstance.isVideoLicenseActivated || self.disable {
-                completionHandler(true)
+                completionHandler(nil)
             }
             else {
                 var window: UIWindow?
-                let completion:((Bool) -> Void) = { activate in
-                    completionHandler(activate)
+                let completion:((Error?) -> Void) = { error in
+                    completionHandler(error)
                     window?.resignKey()
                 }
                 let alertTitle = "Activate License"
@@ -56,18 +56,18 @@ class H264LicensePrompter {
                     SDKLogger.shared.info("Video license has been activated")
                     UserDefaults.sharedInstance.isVideoLicenseActivated = true
                     self.metrics.trackVideoLicenseActivation()
-                    completion(true)
+                    completion(nil)
                 })
                 alertController.addAction(UIAlertAction(title: "View License", style: UIAlertAction.Style.default) { _ in
                     SDKLogger.shared.info("Video license opened for viewing")
-                    completion(false)
+                    completion(WebexError.viewH264)
                     if let url = URL(string: "http://www.openh264.org/BINARY_LICENSE.txt") {
                         UIApplication.shared.open(url, options:[:], completionHandler: nil)
                     }
                 })
                 alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { _ in
                     SDKLogger.shared.warn("Video license has not been activated")
-                    completion(false)
+                    completion(WebexError.cancelH264)
                 })
                 #else
                 let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
@@ -75,18 +75,18 @@ class H264LicensePrompter {
                 SDKLogger.shared.info("Video license has been activated")
                 UserDefaults.sharedInstance.isVideoLicenseActivated = true
                 self.metrics.trackVideoLicenseActivation()
-                completion(true)
+                completion(nil)
                 })
                 alertController.addAction(UIAlertAction(title: "View License", style: UIAlertActionStyle.default) { _ in
                 SDKLogger.shared.info("Video license opened for viewing")
-                completion(false)
+                completion(WebexError.viewH264)
                 if let url = URL(string: "http://www.openh264.org/BINARY_LICENSE.txt") {
                 UIApplication.shared.open(url, options:[:], completionHandler: nil)
                 }
                 })
                 alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { _ in
                 SDKLogger.shared.warn("Video license has not been activated")
-                completion(false)
+                completion(WebexError.cancelH264)
                 })
                 #endif
                 

@@ -29,8 +29,10 @@ public enum WebexError: Error {
     case serviceFailed(code: Int, reason: String)
     /// The `Phone` has not been registered.
     case unregistered
-    /// The media requires H.264 codec.
-    case requireH264
+    /// User cancel H264 license.
+    case cancelH264
+    /// User views H264 license, however not activate
+    case viewH264
     /// The DTMF is invalid.
     case invalidDTMF
     /// The DTMF is unsupported.
@@ -52,8 +54,10 @@ extension WebexError: LocalizedError {
             return "The service returned an error \(code), \(reason)"
         case .unregistered:
             return "unregistered"
-        case .requireH264:
-            return "requireH264"
+        case .cancelH264:
+            return "cancelH264"
+        case .viewH264:
+            return "viewH264"
         case .invalidDTMF:
             return "invalidDTMF"
         case .unsupportedDTMF:
