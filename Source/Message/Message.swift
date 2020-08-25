@@ -150,6 +150,37 @@ public struct Message {
         } != nil
     }
     
+    /// Returns all the people mentioned
+    ///
+    /// - since: 2.6.0
+    public var mentionedPeople:[Mention]? {
+        return self.mentions?.filter({ (mention) -> Bool in
+            switch mention {
+            case .person:
+                return true
+            default:
+                return false
+            }
+        })
+    }
+    
+    /// Returns true if the message mentioned all the people in the space
+    ///
+    /// - since: 2.6.0
+    public var isAllMentioned: Bool {
+        guard let mentions = self.mentions else {
+            return false
+        }
+        return mentions.contains(where: { (mention) -> Bool in
+            switch mention {
+            case .all:
+                return true
+            default:
+                return false
+            }
+        })
+    }
+    
     /// The content of the message.
     public var text: String? {
         return self.textAsObject?.simple
@@ -198,7 +229,8 @@ public struct Message {
         if self.activity.verb == ActivityModel.Verb.delete, let uuid = self.activity.object {
             self.id = WebexId(type: .message, uuid: uuid)?.base64Id
         }
-        self.textAsObject = Message.Text(plain: activity.objectDisplayName, html: activity.objectConetnt, markdown: activity.objectMarkdown)
+        let html = convertUuidToWebexId(activity.objectConetnt)
+        self.textAsObject = Message.Text(plain: activity.objectDisplayName, html: html, markdown: activity.objectMarkdown)
     }
     
     private var mentions: [Mention]? {
@@ -214,6 +246,30 @@ public struct Message {
         }
         return mentionList.count > 0 ? mentionList : nil
     }
+    
+    private func convertUuidToWebexId(_ htmlString:String?) -> String? {
+        guard let html = htmlString else {
+            return nil
+        }
+        let pattern = "data-object-type=\"[a-zA-Z]*\"\\s+data-object-id=\"[0-9a-zA-Z-]{1,}\""
+        let regular = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+        var newHtml = html
+        regular?.enumerateMatches(in: html, options: .reportProgress, range: NSRange(location: 0, length: html.count), using: { (result, flags, objc) in
+            if let result = result {
+                let subStr = (html as NSString).substring(with: result.range)
+                let strArray = subStr.components(separatedBy: "\"")
+                let type = strArray[1] == "person" ? "people" : strArray[1]
+                let uuid = strArray[strArray.count - 2]
+                if let identityType = IdentityType.init(rawValue: type) {
+                    let base64Id = WebexId(type: identityType, uuid: uuid)?.base64Id ?? uuid
+                    newHtml = newHtml.replacingOccurrences(of: uuid, with: base64Id)
+                }
+            }
+        })
+        SDKLogger.shared.debug("convert uuid to base64Id, html = \(newHtml)")
+        return newHtml
+    }
+    
 }
 
 extension Message : CustomStringConvertible {
