@@ -103,6 +103,7 @@ public struct MediaOption {
     public var moderator: Bool = false
 
     /// If join as moderator, PIN should be a host key, else PIN should be a meeting password.
+    /// In general, The PIN is not required. unless the WebexError.requireHostPinOrMeetingPassword error be received when dial.
     ///
     /// - since: 2.6.0
     public var pin: String?

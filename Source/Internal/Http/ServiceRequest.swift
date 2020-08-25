@@ -24,6 +24,17 @@ import AlamofireObjectMapper
 import ObjectMapper
 import SwiftyJSON
 
+enum ServiceError {
+    enum locus : Int {
+        case requireModeratorPinOrGuest = 2423005
+        case requireModeratorPinOrGuestPin = 2423006
+        case requireModeratorKeyOrMeetingPassword = 2423016
+        case requireModeratorKeyOrGuest = 2423017
+        case requireMeetingPassword = 2423018
+    }
+}
+
+
 enum Service: String {
     case hydra
     case region
@@ -426,8 +437,21 @@ extension WebexError {
     static func requestErrorWith(data: Data) -> Error {
         var failureReason = "Service request failed without error message"
         do {
-            if let errorMessage = try JSON(data: data)["message"].string  {
+            let json = try JSON(data: data)
+            if let errorMessage = json["message"].string  {
                 failureReason = errorMessage
+            }
+            if let code = json["errorCode"].int  {
+                switch code {
+                case ServiceError.locus.requireModeratorPinOrGuest.rawValue,
+                     ServiceError.locus.requireModeratorPinOrGuestPin.rawValue,
+                     ServiceError.locus.requireMeetingPassword.rawValue,
+                     ServiceError.locus.requireModeratorKeyOrGuest.rawValue,
+                     ServiceError.locus.requireModeratorKeyOrMeetingPassword.rawValue:
+                    return WebexError.requireHostPinOrMeetingPassword(reason: failureReason)
+                default:
+                    return WebexError.serviceFailed(code: -7000, reason: failureReason)
+                }
             }
         } catch {
             
