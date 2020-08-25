@@ -21,17 +21,17 @@
 import Foundation
 
 class MSGError {
-    static let spaceFetchFail = WebexError.serviceFailed(code: -7000, reason: "Space Fetch Fail")
-    static let clientInfoFetchFail = WebexError.serviceFailed(code: -7000, reason: "Client Info Fetch Fail")
-    static let ephemaralKeyFetchFail = WebexError.serviceFailed(code: -7000, reason: "EphemaralKey Fetch Fail")
-    static let kmsInfoFetchFail = WebexError.serviceFailed(code: -7000, reason: "KMS Info Fetch Fail")
-    static let keyMaterialFetchFail = WebexError.serviceFailed(code: -7000, reason: "Key Info Fetch Fail")
-    static let encryptionUrlFetchFail = WebexError.serviceFailed(code: -7000, reason: "Encryption Info Fetch Fail")
-    static let spaceUrlFetchFail = WebexError.serviceFailed(code: -7000, reason: "Space Info Fetch Fail")
-    static let spaceMessageFetchFail = WebexError.serviceFailed(code: -7000, reason: "Messages Of Space Fetch Fail")
-    static let emptyTextError = WebexError.serviceFailed(code: -7000, reason: "Expected Text Not Found")
-    static let downloadError = WebexError.serviceFailed(code: -7000, reason: "Expected File Not Found")
-    static let timeOut = WebexError.serviceFailed(code: -7000, reason: "Timeout")
+    static let spaceFetchFail = WebexError.serviceFailed(reason: "Space Fetch Fail")
+    static let clientInfoFetchFail = WebexError.serviceFailed(reason: "Client Info Fetch Fail")
+    static let ephemaralKeyFetchFail = WebexError.serviceFailed(reason: "EphemaralKey Fetch Fail")
+    static let kmsInfoFetchFail = WebexError.serviceFailed(reason: "KMS Info Fetch Fail")
+    static let keyMaterialFetchFail = WebexError.serviceFailed(reason: "Key Info Fetch Fail")
+    static let encryptionUrlFetchFail = WebexError.serviceFailed(reason: "Encryption Info Fetch Fail")
+    static let spaceUrlFetchFail = WebexError.serviceFailed(reason: "Space Info Fetch Fail")
+    static let spaceMessageFetchFail = WebexError.serviceFailed(reason: "Messages Of Space Fetch Fail")
+    static let emptyTextError = WebexError.serviceFailed(reason: "Expected Text Not Found")
+    static let downloadError = WebexError.serviceFailed(reason: "Expected File Not Found")
+    static let timeOut = WebexError.serviceFailed(reason: "Timeout")
 }
 
 

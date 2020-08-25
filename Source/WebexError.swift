@@ -26,7 +26,7 @@ import Foundation
 /// - since: 1.2.0
 public enum WebexError: Error {
     /// A service request to Cisco Webex cloud has failed.
-    case serviceFailed(code: Int, reason: String)
+    case serviceFailed(code: Int = -7000, reason: String)
     /// The `Phone` has not been registered.
     case unregistered
     /// The media requires H.264 codec.
@@ -71,3 +71,31 @@ extension WebexError: LocalizedError {
         }
     }
 }
+
+extension Error {
+    
+    func report<T>(by queue: DispatchQueue? = nil, resultCallback: ((Result<T>) -> Void)? = nil) {
+        (queue ?? DispatchQueue.main).async {
+            if let error = self as? WebexError, let desc = error.errorDescription {
+                SDKLogger.shared.error(desc, error: self)
+            }
+            else {
+                SDKLogger.shared.error(self.localizedDescription, error: self)
+            }
+            resultCallback?(Result.failure(self))
+        }
+    }
+
+    func report(by queue: DispatchQueue? = nil, errorCallback: ((Error?) -> Void)? = nil) {
+        (queue ?? DispatchQueue.main).async {
+            if let error = self as? WebexError, let desc = error.errorDescription {
+                SDKLogger.shared.error(desc, error: self)
+            }
+            else {
+                SDKLogger.shared.error(self.localizedDescription, error: self)
+            }
+            errorCallback?(self)
+        }
+    }
+}
+

@@ -847,9 +847,7 @@ public class Call {
             }
         }
         else {
-            let error = WebexError.serviceFailed(code: -700, reason: "Missing self participant URL")
-            completionHandler?(error)
-            SDKLogger.shared.error("Failure", error: error)
+            WebexError.serviceFailed(reason: "Missing self participant URL").report(errorCallback: completionHandler)
         }
     }
     
@@ -948,7 +946,7 @@ public class Call {
             if (self.mediaSession.status == .running) {
                 vid = self.mediaSession.subscribeAuxStream(view: view)
                 if vid == AuxStream.invalidVid {
-                    self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.serviceFailed(code: -7000, reason: "open stream fail"))))
+                    self.onAuxStreamChanged?(AuxStreamChangeEvent.auxStreamOpenedEvent(view,Result.failure(WebexError.serviceFailed(reason: "open stream fail"))))
                     return
                 }
             }

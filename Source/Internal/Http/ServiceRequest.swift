@@ -450,13 +450,13 @@ extension WebexError {
                      ServiceError.locus.requireModeratorKeyOrMeetingPassword.rawValue:
                     return WebexError.requireHostPinOrMeetingPassword(reason: failureReason)
                 default:
-                    return WebexError.serviceFailed(code: -7000, reason: failureReason)
+                    return WebexError.serviceFailed(reason: failureReason)
                 }
             }
         } catch {
             
         }
-        return WebexError.serviceFailed(code: -7000, reason: failureReason)
+        return WebexError.serviceFailed(reason: failureReason)
     }
 }
 

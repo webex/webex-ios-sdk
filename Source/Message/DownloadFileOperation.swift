@@ -121,9 +121,8 @@ class DownloadFileOperation : NSObject, URLSessionDataDelegate {
     }
     
     private func downloadError(_ error: Error? = nil) {
-        SDKLogger.shared.info("File download fail...")
         self.queue.async {
-            self.completionHandler(Result.failure(error ?? WebexError.serviceFailed(code: -7000, reason: "download error")))
+            (error ?? WebexError.serviceFailed(reason: "download error")).report(resultCallback: self.completionHandler)
         }
     }
 }

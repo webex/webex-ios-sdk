@@ -101,9 +101,7 @@ class DeviceService {
                             UserDefaults.sharedInstance.deviceIdentifier = model.deviceIdentifier
                             completionHandler(Result.success(self.device!))
                         } else {
-                            let error = WebexError.serviceFailed(code: -7000, reason: "Missing required URLs when registering device")
-                            SDKLogger.shared.error("Failed to register device", error: error)
-                            completionHandler(Result.failure(error))
+                            WebexError.serviceFailed(reason: "Missing required URLs when registering device").report(resultCallback: completionHandler)
                         }
                     case .failure(let error):
                         SDKLogger.shared.error("Failed to register device", error: error)

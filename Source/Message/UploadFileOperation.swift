@@ -91,9 +91,8 @@ class UploadFileOperation {
                 }
             }
             else {
-                SDKLogger.shared.info("File Uoload Fail...")
                 self.done = true
-                completionHandler(Result.failure(error ?? WebexError.serviceFailed(code: -7000, reason: "upload error")))
+                (error ?? WebexError.serviceFailed(reason: "upload error")).report(resultCallback: completionHandler)
             }
         }
     }
