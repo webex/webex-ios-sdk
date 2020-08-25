@@ -21,39 +21,41 @@
 import Foundation
 import ObjectMapper
 
-struct DeviceModel : Mappable {
-    
-    private(set) var deviceUrlString: String?
-    private(set) var deviceIdentifier: String?
-    private(set) var deviceSettingsString: String?
-    private var webSocketUrlString: String?
-    private var serviceHostMap: ServiceHostModel?
-    var deviceUrl: URL? {
-        if let string = self.deviceUrlString {
-            return URL(string: string)
+class ContentModel : CommentModel {
+
+    enum Category : String {
+        case images
+        case documents
+        case videos
+        case links
+    }
+
+    private(set) var files: ItemsModel<FileModel>?
+    private(set) var contentCategory: String?
+
+    required init?(map: Map) {
+        super.init(map: map)
+    }
+
+    override func mapping(map: Map) {
+        super.mapping(map: map)
+        self.files <- map["files"]
+        self.contentCategory <- map["contentCategory"]
+    }
+
+    override func encrypt(key: String?) {
+        super.encrypt(key: key)
+        self.files?.items?.forEach { file in
+            file.encrypt(key: key)
         }
-        return nil
     }
-    
-    var webSocketUrl: URL? {
-        if let string = self.webSocketUrlString {
-            return URL(string: string)
+
+    override func decrypt(key: String?) {
+        super.decrypt(key: key)
+        self.files?.items?.forEach { file in
+            file.decrypt(key: key)
         }
-        return nil
     }
-    
-    subscript(service name: String) -> String? {
-        return self.serviceHostMap?.serviceLinks?[name]
-    }
-    
-    init?(map: Map){
-    }
-    
-    mutating func mapping(map: Map) {
-        deviceUrlString <- map["url"]
-        deviceIdentifier <- map["deviceIdentifier"]
-        webSocketUrlString <- map["webSocketUrl"]
-        deviceSettingsString <- map["deviceSettingsString"]
-        serviceHostMap <- map["serviceHostMap"]
-    }
+
 }
+

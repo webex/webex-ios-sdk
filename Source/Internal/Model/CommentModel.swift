@@ -21,39 +21,32 @@
 import Foundation
 import ObjectMapper
 
-struct DeviceModel : Mappable {
-    
-    private(set) var deviceUrlString: String?
-    private(set) var deviceIdentifier: String?
-    private(set) var deviceSettingsString: String?
-    private var webSocketUrlString: String?
-    private var serviceHostMap: ServiceHostModel?
-    var deviceUrl: URL? {
-        if let string = self.deviceUrlString {
-            return URL(string: string)
-        }
-        return nil
+class CommentModel : ObjectModel {
+
+    private(set) var markdown: String?
+    private(set) var mentions: ItemsModel<PersonModel>?
+    private(set) var groupMentions: ItemsModel<GroupMentionModel>?
+
+    required init?(map: Map) {
+        super.init(map: map)
     }
-    
-    var webSocketUrl: URL? {
-        if let string = self.webSocketUrlString {
-            return URL(string: string)
-        }
-        return nil
+
+    override func mapping(map: Map) {
+        super.mapping(map: map)
+        self.markdown <- map["markdown"]
+        self.mentions <- map["mentions"]
+        self.groupMentions <- map["groupMentions"]
     }
-    
-    subscript(service name: String) -> String? {
-        return self.serviceHostMap?.serviceLinks?[name]
+
+    override func encrypt(key: String?) {
+        super.encrypt(key: key)
+        self.markdown = self.markdown?.encrypt(key: key)
     }
-    
-    init?(map: Map){
+
+    override func decrypt(key: String?) {
+        super.decrypt(key: key)
+        self.markdown = self.markdown?.decrypt(key: key)
     }
-    
-    mutating func mapping(map: Map) {
-        deviceUrlString <- map["url"]
-        deviceIdentifier <- map["deviceIdentifier"]
-        webSocketUrlString <- map["webSocketUrl"]
-        deviceSettingsString <- map["deviceSettingsString"]
-        serviceHostMap <- map["serviceHostMap"]
-    }
+
 }
+

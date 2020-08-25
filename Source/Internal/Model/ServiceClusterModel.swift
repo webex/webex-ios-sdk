@@ -21,39 +21,18 @@
 import Foundation
 import ObjectMapper
 
-struct DeviceModel : Mappable {
-    
-    private(set) var deviceUrlString: String?
-    private(set) var deviceIdentifier: String?
-    private(set) var deviceSettingsString: String?
-    private var webSocketUrlString: String?
-    private var serviceHostMap: ServiceHostModel?
-    var deviceUrl: URL? {
-        if let string = self.deviceUrlString {
-            return URL(string: string)
-        }
-        return nil
-    }
-    
-    var webSocketUrl: URL? {
-        if let string = self.webSocketUrlString {
-            return URL(string: string)
-        }
-        return nil
-    }
-    
-    subscript(service name: String) -> String? {
-        return self.serviceHostMap?.serviceLinks?[name]
-    }
-    
+struct ServiceClusterModel : Mappable {
+
+    private(set) var id: String?
+    private(set) var serviceName: String?
+    private(set) var serviceUrls: [[String: Any]]?
+
     init?(map: Map){
     }
-    
+
     mutating func mapping(map: Map) {
-        deviceUrlString <- map["url"]
-        deviceIdentifier <- map["deviceIdentifier"]
-        webSocketUrlString <- map["webSocketUrl"]
-        deviceSettingsString <- map["deviceSettingsString"]
-        serviceHostMap <- map["serviceHostMap"]
+        id <- map["id"]
+        serviceName <- map["serviceName"]
+        serviceUrls <- map["serviceUrls"]
     }
 }

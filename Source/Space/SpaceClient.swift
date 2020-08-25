@@ -171,18 +171,27 @@ public class SpaceClient {
     /// - returns: Void
     /// - since: 2.3.0
     public func getWithReadStatus(spaceId: String, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<SpaceReadStatus>) -> Void) {
-        // TODO Find the cluster for the identifier instead of use home cluster always.
-        let request = Service.conv.homed(for: self.phone.devices.device)
+        guard let conversation = WebexId.from(base64Id: spaceId), let convUrl = conversation.urlBy(device: self.phone.devices.device) else {
+            completionHandler(ServiceResponse(nil, Result.failure(WebexError.illegalOperation(reason: "Cannot found the space: \(spaceId)"))))
+            return
+        }
+        let request = ServiceRequest.make(convUrl)
                 .authenticator(self.authenticator)
-                .path("conversations").path(WebexId.uuid(spaceId))
                 .query(["uuidEntryFormat": true,
                         "personRefresh": true,
                         "activitiesLimit": 0,
-                        "includeConvWithDeletedUserUUID": false, 
+                        "includeConvWithDeletedUserUUID": false,
                         "includeParticipants": false])
                 .queue(queue)
                 .build()
-        request.responseObject(completionHandler)
+        request.responseObject { (response: ServiceResponse<ConversationModel>) in
+            switch response.result {
+            case .success(let model):
+                completionHandler(ServiceResponse(response.response, Result.success(SpaceReadStatus(model: model, clusterId: conversation.clusterId))))
+            case .failure(let error):
+                completionHandler(ServiceResponse(response.response, Result.failure(error)))
+            }
+        }
     }
 
     /// Returns a list of SpaceReadStatus with details about the date of the last
@@ -198,7 +207,6 @@ public class SpaceClient {
     /// - since: 2.3.0
     public func listWithReadStatus(max:UInt, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<[SpaceReadStatus]>) -> Void) {
         // TODO additionalUrls
-        // TODO Find the cluster for the identifier instead of use home cluster always.
         let request = Service.conv.homed(for: self.phone.devices.device)
                 .authenticator(self.authenticator)
                 .path("conversations")
@@ -213,15 +221,16 @@ public class SpaceClient {
                 .queue(queue)
                 .build()
 
-        request.responseArray { (response:ServiceResponse<[SpaceReadStatus]>) in
+        request.responseArray { (response:ServiceResponse<[ConversationModel]>) in
             switch response.result {
-            case .success(let spaceInfoArray):
-                let spaceInfos = spaceInfoArray.sorted(by: { (value1, value2) -> Bool in
+            case .success(let models):
+                let array = models.map({ SpaceReadStatus(model: $0, clusterId: self.phone.devices.device?.getClusterId(url: $0.url)) })
+                        .sorted(by: { (value1, value2) -> Bool in
                     guard let date1 = value1.lastActivityDate else {return false}
                     guard let date2 = value2.lastActivityDate else {return true}
                     return Double(date1.timeIntervalSince1970) > Double(date2.timeIntervalSince1970)
                 })
-                completionHandler(ServiceResponse(response.response, Result.success(spaceInfos)))
+                completionHandler(ServiceResponse(response.response, Result.success(array)))
 
             case .failure(let error):
                 completionHandler(ServiceResponse(response.response, Result.failure(error)))
@@ -236,19 +245,15 @@ extension SpaceClient {
         guard let verb = activity.verb else {
             return
         }
+        let space = Space(activity: activity, clusterId: phone.devices.device?.getClusterId(url: activity.url))
         var event: SpaceEvent?
-        var space = Space()
-        if verb == ActivityModel.Verb.create {
-            space.id = WebexId(type: .room, uuid: activity.object)?.base64Id
-            space.type = activity.objectTag
-            space.isLocked = activity.objectLocked
-            space.lastActivityTimestamp = activity.created
+        switch verb {
+        case .create:
             event = SpaceEvent.create(space)
-        } else if verb == ActivityModel.Verb.update {
-            space.id = WebexId(type: .room, uuid: activity.targetUUID)?.base64Id
-            space.type = activity.targetTag
-            space.isLocked = activity.targetLocked
+        case .update:
             event = SpaceEvent.update(space)
+         default:
+            break
         }
         if let event = event {
             self.onEvent?(event)

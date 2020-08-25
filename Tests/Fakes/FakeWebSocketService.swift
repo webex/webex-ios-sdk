@@ -25,7 +25,7 @@ import SwiftyJSON
 import ObjectMapper
 
 class FakeWebSocketService:WebSocketService {
-    private var callModel:CallModel?
+    private var callModel:LocusModel?
     
     override func connect(_ webSocketUrl: URL, _ block: @escaping (Error?) -> Void) {
         block(nil)

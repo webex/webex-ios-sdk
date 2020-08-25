@@ -21,39 +21,25 @@
 import Foundation
 import ObjectMapper
 
-struct DeviceModel : Mappable {
-    
-    private(set) var deviceUrlString: String?
-    private(set) var deviceIdentifier: String?
-    private(set) var deviceSettingsString: String?
-    private var webSocketUrlString: String?
-    private var serviceHostMap: ServiceHostModel?
-    var deviceUrl: URL? {
-        if let string = self.deviceUrlString {
-            return URL(string: string)
-        }
-        return nil
+class ParentModel : Mappable {
+
+    private(set) var id: String?
+    private(set) var type: String?
+    private(set) var published: Date?
+    private(set) var actorId: String?
+
+    var isReply: Bool {
+        return self.type == "reply"
     }
-    
-    var webSocketUrl: URL? {
-        if let string = self.webSocketUrlString {
-            return URL(string: string)
-        }
-        return nil
+
+    required init?(map: Map) {}
+
+    func mapping(map: Map) {
+        self.id <- map["id"]
+        self.actorId <- map["actorId"]
+        self.type <- map["type"]
+        self.published <- (map["published"], CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
+
     }
-    
-    subscript(service name: String) -> String? {
-        return self.serviceHostMap?.serviceLinks?[name]
-    }
-    
-    init?(map: Map){
-    }
-    
-    mutating func mapping(map: Map) {
-        deviceUrlString <- map["url"]
-        deviceIdentifier <- map["deviceIdentifier"]
-        webSocketUrlString <- map["webSocketUrl"]
-        deviceSettingsString <- map["deviceSettingsString"]
-        serviceHostMap <- map["serviceHostMap"]
-    }
+
 }

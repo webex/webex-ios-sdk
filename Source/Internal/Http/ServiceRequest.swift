@@ -35,19 +35,15 @@ enum Service: String {
     case metrics
     case calliopeDiscovery
     
-    func homed(for device: Device?, with hosts: ServiceHostModel? = nil) -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(url: self.baseUrl(for: device, with: hosts))
+    func homed(for device: Device?) -> ServiceRequest.Builder {
+        return ServiceRequest.make(self.baseUrl(for: device))
     }
-    
-    func specific(url: String) -> ServiceRequest.Builder {
-        return ServiceRequest.Builder(url: url)
-    }
-    
+
     var global: ServiceRequest.Builder {
-        return self.homed(for: nil)
+        return ServiceRequest.make(self.baseUrl())
     }
     
-    private func baseUrl(for device: Device? = nil, with hosts: ServiceHostModel? = nil) -> String {
+    func baseUrl(for device: Device? = nil) -> String {
         switch self {
         case .region:
             return "https://ds.ciscospark.com/v1"
@@ -63,53 +59,47 @@ enum Service: String {
             #else
             let `default` = "https://wdm-a.wbx2.com/wdm/api/v1"
             #endif
-            return self.dynamicUrl(device: device, hosts: hosts, default: `default`)
+            return self.baseUrl(device: device, default: `default`)
         case .hydra:
             #if INTEGRATIONTEST
             let `default` = ProcessInfo().environment["hydraServerAddress"] == nil ? "https://apialpha.ciscospark.com/v1" : ProcessInfo().environment["hydraServerAddress"]!
             #else
             let `default` = "https://api.ciscospark.com/v1"
             #endif
-            return self.dynamicUrl(device: device, hosts: hosts, default: `default`)
+            return self.baseUrl(device: device, default: `default`)
         case .kms:
             #if INTEGRATIONTEST
             let `default` = "https://encryption-intb.ciscospark.com/encryption/api/v1"
             #else
             let `default` = "https://encryption-a.wbx2.com/encryption/api/v1"
             #endif
-            return self.dynamicUrl(device: device, hosts: hosts, default: `default`)
+            return self.baseUrl(device: device, default: `default`)
         case .conv:
             #if INTEGRATIONTEST
             let `default` = "https://conversation-intb.ciscospark.com/conversation/api/v1"
             #else
             let `default` = "https://conv-a.wbx2.com/conversation/api/v1"
             #endif
-            return self.dynamicUrl(device: device, hosts: hosts, default: `default`)
+            return self.baseUrl(device: device, default: `default`)
         case .locus:
-            let `default` = "https://locus-a.wbx2.com/locus/api/v1"
-            return self.dynamicUrl(device: device, hosts: hosts, default: `default`)
+            return self.baseUrl(device: device, default: "https://locus-a.wbx2.com/locus/api/v1")
         case .metrics:
-            let `default` = "https://metrics-a.wbx2.com/metrics/api/v1"
-            return self.dynamicUrl(device: device, hosts: hosts, default: `default`)
+            return self.baseUrl(device: device, default: "https://metrics-a.wbx2.com/metrics/api/v1")
         case .calliopeDiscovery:
-            let `default` = "https://calliope-a.wbx2.com/calliope/api/discovery/v1"
-            return self.dynamicUrl(device: device, hosts: hosts, default: `default`)
+            return self.baseUrl(device: device, default: "https://calliope-a.wbx2.com/calliope/api/discovery/v1")
         }
     }
     
-    private func dynamicUrl(device: Device?, hosts: ServiceHostModel?, default: String) -> String {
-        var ret: String? = nil
-        if let device = device, let url = device[service: self.rawValue] {
-            ret = url
-        }
-        if ret == nil, let hosts = hosts, let url = hosts.serviceLinks?[self.rawValue] {
-            ret = url
-        }
-        return ret ?? `default`
+    private func baseUrl(device: Device?, default: String) -> String {
+        return device?[service: self.rawValue] ?? `default`
     }
 }
 
 class ServiceRequest : RequestRetrier, RequestAdapter {
+
+    static func make(_ url: String) -> ServiceRequest.Builder {
+        return ServiceRequest.Builder(url: url)
+    }
     
     private let tokenPrefix: String = "Bearer "
     private var pendingTimeCount : Int = 0
@@ -161,7 +151,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         private var queue: DispatchQueue?
         
         fileprivate init(url: String) {
-            self.headers = ["Content-Type": "application/json",
+            self.headers = ["Content-Type": "application/json;charset=UTF-8",
                             "TrackingID": TrackingId.generator.next,
                             "User-Agent": UserAgent.string,
                             "Webex-User-Agent": UserAgent.string]

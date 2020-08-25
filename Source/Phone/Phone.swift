@@ -212,7 +212,6 @@ public class Phone {
     let reachability: ReachabilityService
     let devices: DeviceService
     let client: CallClient
-    let conversations: ConversationClient
     let prompter: H264LicensePrompter
     let queue = SerialQueue()
     let metrics: MetricsEngine
@@ -225,12 +224,12 @@ public class Phone {
     var debug = true;
     
     enum LocusResult {
-        case call(UUID, Bool, Device, MediaOption, MediaSessionWrapper, ServiceResponse<CallModel>, (Result<Call>) -> Void)
-        case join(Call, ServiceResponse<CallModel>, (Error?) -> Void)
-        case leave(Call, ServiceResponse<CallModel>, (Error?) -> Void)
+        case call(UUID, Device, MediaOption, MediaSessionWrapper, ServiceResponse<LocusModel>, (Result<Call>) -> Void)
+        case join(Call, ServiceResponse<LocusModel>, (Error?) -> Void)
+        case leave(Call, ServiceResponse<LocusModel>, (Error?) -> Void)
         case reject(Call, ServiceResponse<Any>, (Error?) -> Void)
         case alert(Call, ServiceResponse<Any>, (Error?) -> Void)
-        case update(Call, ServiceResponse<CallModel>, ((Error?) -> Void)?)
+        case update(Call, ServiceResponse<LocusModel>, ((Error?) -> Void)?)
         case updateMediaShare(Call, ServiceResponse<Any>, (Error?) -> Void)
     }
 
@@ -238,20 +237,19 @@ public class Phone {
         let device = DeviceService(authenticator: webex.authenticator)
         let tempMetrics = MetricsEngine(authenticator: webex.authenticator, service: device)
         self.init(webex: webex,
-                  devices: device,
-                  reachability: ReachabilityService(authenticator: webex.authenticator, deviceService: device),
-                  client: CallClient(authenticator: webex.authenticator),
-                  conversations: ConversationClient(authenticator: webex.authenticator), metrics: tempMetrics, prompter: H264LicensePrompter(metrics: tempMetrics), webSocket: WebSocketService(authenticator: webex.authenticator))
+                devices: device,
+                reachability: ReachabilityService(authenticator: webex.authenticator, deviceService: device),
+                client: CallClient(authenticator: webex.authenticator),
+                metrics: tempMetrics, prompter: H264LicensePrompter(metrics: tempMetrics), webSocket: WebSocketService(authenticator: webex.authenticator))
     }
     
-    init(webex: Webex, devices:DeviceService, reachability:ReachabilityService, client:CallClient, conversations:ConversationClient, metrics:MetricsEngine, prompter:H264LicensePrompter, webSocket:WebSocketService) {
+    init(webex: Webex, devices:DeviceService, reachability:ReachabilityService, client:CallClient, metrics:MetricsEngine, prompter:H264LicensePrompter, webSocket:WebSocketService) {
         let _ = MediaEngineWrapper.sharedInstance.wmeVersion
         self.webex = webex
         self.authenticator = webex.authenticator
         self.devices = devices
         self.reachability = reachability
         self.client = client
-        self.conversations = conversations
         self.metrics = metrics
         self.prompter = prompter
         self.webSocket = webSocket
@@ -384,9 +382,9 @@ public class Phone {
                     return
                 }
                 self.requestMediaAccess(option: option) {
-                    let tempMediaContext = self.mediaContext ?? MediaSessionWrapper()
-                    tempMediaContext.prepare(option: option, phone: self)
-                    let localSDP = tempMediaContext.getLocalSdp()
+                    let session = self.mediaContext ?? MediaSessionWrapper()
+                    session.prepare(option: option, phone: self)
+                    let localSDP = session.getLocalSdp()
                     let reachabilities = self.reachability.feedback?.reachabilities
                     
                     CallClient.DialTarget.lookup(address, by: Webex(authenticator: self.authenticator)) { target in
@@ -394,21 +392,21 @@ public class Phone {
                             if let device = self.devices.device {
                                 let media = MediaModel(sdp: localSDP, audioMuted: false, videoMuted: false, reachabilities: reachabilities)
                                 let correlationId = UUID()
-                                if target.isEndpoint {
-                                    self.client.create(target.address, correlationId: correlationId,  by: device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { res in
-                                        self.doLocusResponse(LocusResult.call(correlationId, target.isGroup, device, option, tempMediaContext, res, completionHandler))
+                                switch target {
+                                case .callable(let callee):
+                                    self.client.call(callee, correlationId: correlationId, by: device, option: option, localMedia: media, queue: self.queue.underlying) { res in
+                                        self.doLocusResponse(LocusResult.call(correlationId, device, option, session, res, completionHandler))
                                         self.queue.yield()
                                     }
-                                }
-                                else {
-                                    self.conversations.getLocusUrl(conversation: target.address, by: device, queue: self.queue.underlying) { res in
-                                        if let url = res.result.data?.locusUrl {
-                                            self.client.join(url, correlationId: correlationId, by: device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { resNew in
-                                                self.doLocusResponse(LocusResult.call(correlationId, target.isGroup, device, option, tempMediaContext, resNew, completionHandler))
+                                case .joinable(let joinee):
+                                    self.client.getOrCreatePermanentLocus(conversation: joinee, by: device, queue: self.queue.underlying) { res in
+                                        if let url = res.data {
+                                            self.client.join(url, correlationId: correlationId, by: device, option: option, localMedia: media, queue: self.queue.underlying) { joinRes in
+                                                self.doLocusResponse(LocusResult.call(correlationId, device, option, session, joinRes, completionHandler))
                                                 self.queue.yield()
                                             }
                                         }
-                                        else if let error = res.result.error {
+                                        else if let error = res.error {
                                             SDKLogger.shared.error(PhoneError.failureCall.rawValue, error: error)
                                             DispatchQueue.main.async {
                                                 completionHandler(Result.failure(error))
@@ -555,11 +553,11 @@ public class Phone {
                 call.uuid = uuid
             }
             self.requestMediaAccess(option: option) {
-                let tempMediaContext = call.mediaSession
-                tempMediaContext.prepare(option: option, phone: self)
-                let media = MediaModel(sdp: tempMediaContext.getLocalSdp(), audioMuted: false, videoMuted: false, reachabilities: self.reachability.feedback?.reachabilities)
+                let session = call.mediaSession
+                session.prepare(option: option, phone: self)
+                let media = MediaModel(sdp: session.getLocalSdp(), audioMuted: false, videoMuted: false, reachabilities: self.reachability.feedback?.reachabilities)
                 self.queue.sync {
-                    self.client.join(call.url, correlationId: call.correlationId, by: call.device, localMedia: media, layout: option.layout, queue: self.queue.underlying) { res in
+                    self.client.join(call.url, correlationId: call.correlationId, by: call.device, option: option, localMedia: media, queue: self.queue.underlying) { res in
                         self.doLocusResponse(LocusResult.join(call, res, completionHandler))
                         self.queue.yield()
                     }
@@ -659,7 +657,7 @@ public class Phone {
                     return
                 }
                 let media = MediaModel(sdp: localSDP == nil ? sdp:localSDP!, audioMuted: !sendingAudio, videoMuted: !sendingVideo, reachabilities: reachabilities)
-                self.client.update(url,by: mediaID,by: call.device, localMedia: media, queue: self.queue.underlying) { res in
+                self.client.update(url, mediaID: mediaID, localMedia: media, by: call.device, queue: self.queue.underlying) { res in
                     self.doLocusResponse(LocusResult.update(call, res, completionHandler))
                     self.queue.yield()
                 }
@@ -688,7 +686,7 @@ public class Phone {
     func letIn(call:Call, memberships:[CallMembership], completionHandler: @escaping (Error?) -> Void) {
         self.queue.sync {
             if let url = call.model.locusUrl {
-                self.client.letIn(url, memberships: memberships, queue: self.queue.underlying) { res in
+                self.client.admit(url, memberships: memberships, queue: self.queue.underlying) { res in
                     self.doLocusResponse(LocusResult.update(call, res, completionHandler))
                     self.queue.yield()
                 }
@@ -770,12 +768,12 @@ public class Phone {
     
     private func doLocusResponse(_ ret: LocusResult) {
         switch ret {
-        case .call(let correlationId, let group, let device, let option, let media, let res, let completionHandler):
+        case .call(let correlationId, let device, let option, let media, let res, let completionHandler):
             switch res.result {
             case .success(let model):
                 SDKLogger.shared.debug("Receive call locus response: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
                 if model.isValid {
-                    let call = Call(model: model, device: device, media: media, direction: Call.Direction.outgoing, group: (group ? group : !model.isOneOnOne), correlationId: correlationId)
+                    let call = Call(model: model, device: device, media: media, direction: Call.Direction.outgoing, group: !model.isOneOnOne, correlationId: correlationId)
                     if let uuid = option.uuid {
                         call.uuid = uuid
                     }
@@ -896,7 +894,7 @@ public class Phone {
         
     }
     
-    private func doLocusEvent(_ model: CallModel) {
+    private func doLocusEvent(_ model: LocusModel) {
         SDKLogger.shared.debug("Receive locus event: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
         guard let url = model.callUrl else {
             SDKLogger.shared.error("CallModel is missing call url")
@@ -948,7 +946,7 @@ public class Phone {
                     self.webex.spaces.handle(activity: model)
                 }
             default:
-                SDKLogger.shared.error("Not a valid message \(model.uuid ?? (model.toJSONString() ?? ""))")
+                SDKLogger.shared.error("Not a valid message \(model.id ?? (model.toJSONString() ?? ""))")
             }
         }
     }
@@ -1059,9 +1057,9 @@ public class Phone {
         }
     }
     
-    func updateMeidaShare(call:Call, mediaShare: MediaShareModel,completionHandler: @escaping ((Error?) -> Void)) {
-        if let mediaShareUrl = mediaShare.url {
-            self.client.updateMediaShare(mediaShare, by: call.device, mediaShareUrl: mediaShareUrl, queue: self.queue.underlying) { res in
+    func updateMeidaShare(call:Call, mediaShare: MediaShareModel,completionHandler: @escaping (Error?) -> Void) {
+        if let url = mediaShare.url {
+            self.client.updateMediaShare(mediaShare, shareUrl: url, by: call.device, queue: self.queue.underlying) { res in
                 self.doLocusResponse(LocusResult.updateMediaShare(call, res,completionHandler))
                 self.queue.yield()
             }

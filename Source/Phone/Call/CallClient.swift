@@ -25,87 +25,33 @@ import ObjectMapper
 class CallClient {
     
     enum DialTarget {
-        case peopleId(String)
-        case peopleMail(String)
-        case spaceId(String)
-        case spaceMail(String)
-        case other(String)
-        
-        var isEndpoint: Bool {
-            switch self {
-            case .peopleId(_), .peopleMail(_), .spaceMail(_), .other(_):
-                return true
-            case .spaceId(_):
-                return false
-            }
-        }
-        
-        var isGroup: Bool {
-            switch self {
-            case .peopleId(_), .peopleMail(_), .other(_):
-                return false
-            case .spaceId(_), .spaceMail(_):
-                return true
-            }
-        }
-        
-        var address: String {
-            switch self {
-            case .peopleId(let id):
-                return id
-            case .peopleMail(let mail):
-                return mail
-            case .spaceId(let id):
-                return id
-            case .spaceMail(let mail):
-                return mail
-            case .other(let other):
-                return other
-            }
-        }
-        
+        case callable(String)
+        case joinable(WebexId)
+
         static func lookup(_ address: String, by webex: Webex, completionHandler: @escaping (DialTarget) -> Void) {
-            if let target = parseHydraId(id: address) {
-                completionHandler(target)
-            }
-            else if let email = EmailAddress.fromString(address) {
-                if address.lowercased().hasSuffix("@meet.ciscospark.com") {
-                    completionHandler(DialTarget.spaceMail(address))
-                }
-                else if address.contains("@") && !address.contains(".") {
-                    webex.people.list(email: email, displayName: nil, max: 1) { persons in
-                        if let id = persons.result.data?.first?.id, let target = parseHydraId(id: id) {
-                            completionHandler(target)
-                        }
-                        else {
-                            completionHandler(DialTarget.peopleMail(address))
-                        }
-                    }
+            if let id = WebexId.from(base64Id: address) {
+                if id.is(.room) {
+                    completionHandler(.joinable(id))
                 }
                 else {
-                    completionHandler(DialTarget.peopleMail(address))
+                    completionHandler(.callable(id.uuid))
+                }
+            }
+            else if let email = EmailAddress.fromString(address), address.contains("@") && !address.contains(".") {
+                webex.people.list(email: email, displayName: nil, max: 1) { persons in
+                    if let id = persons.result.data?.first?.id, let target = WebexId.from(base64Id: id) {
+                        completionHandler(.callable(target.uuid))
+                    }
+                    else {
+                        completionHandler(.callable(address))
+                    }
                 }
             }
             else {
-                completionHandler(DialTarget.other(address))
+                completionHandler(.callable(address))
             }
         }
-        
-        private static func parseHydraId(id: String) -> DialTarget? {
-            if let decode = id.base64Decoded(), let uri = URL(string: decode), uri.scheme == "ciscospark" {
-                let path = uri.pathComponents
-                if path.count > 2 {
-                    let type = path[path.count - 2]
-                    if type == "PEOPLE" {
-                        return DialTarget.peopleId(path[path.count - 1])
-                    }
-                    else if type == "ROOM" {
-                        return DialTarget.spaceId(path[path.count - 1])
-                    }
-                }
-            }
-            return nil
-        }
+
     }
     
     private let authenticator: Authenticator
@@ -113,44 +59,237 @@ class CallClient {
     init(authenticator: Authenticator) {
         self.authenticator = authenticator
     }
-    
-    private func body(deviceUrl: URL, json: [String:Any?] = [:]) -> [String:Any?]  {
-        var result = json
-        result["deviceUrl"] = deviceUrl.absoluteString
-        result["respOnlySdp"] = true //coreFeatures.isResponseOnlySdpEnabled()
-        return result
+
+    func getOrCreatePermanentLocus(conversation: WebexId, by device: Device, queue: DispatchQueue, completionHandler: @escaping (Result<String>) -> Void) {
+        let request = ServiceRequest.make(conversation.urlBy(device: device)!)
+                .authenticator(self.authenticator)
+                .method(.get)
+                .path("locus")
+                .queue(queue)
+                .build()
+        request.responseObject { (response: ServiceResponse<LocusUrlResponseModel>) in
+            if let url = response.result.data?.locusUrl {
+                completionHandler(Result.success(url))
+            }
+            else {
+                completionHandler(Result.failure(response.result.error ?? WebexError.illegalStatus(reason: "No locus uri")))
+            }
+        }
     }
 
-    private func body(composedVideo: Bool, correlationId: UUID, device: Device, json: [String:Any?] = [:]) -> [String:Any?]  {
-        var result = json
-        result["device"] = ["url":device.deviceUrl.absoluteString, "deviceType": (composedVideo ? "WEB" : device.deviceType), "regionCode":device.countryCode, "countryCode":device.regionCode, "capabilities":["groupCallSupported":true, "sdpSupported":true]]
-        result["respOnlySdp"] = true //coreFeatures.isResponseOnlySdpEnabled()
-        result["correlationId"] = correlationId.uuidString
-        return result
+    func call(_ target: String, correlationId: UUID, by device: Device, option: MediaOption, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
+        let request = Service.locus.homed(for: device)
+            .authenticator(self.authenticator)
+            .method(.post)
+            .path("loci").path("call")
+            .body(self.makeBody(correlationId: correlationId, option: option, device: device, localMedia: localMedia, callee: target))
+            .queue(queue)
+            .build()
+        
+        request.responseObject(handleLocusOnlySDPResponse(option: option, queue: queue, completionHandler: completionHandler))
     }
     
-    private func convertToJson(_ mediaID: String? = nil, mediaInfo: MediaModel) -> [String:Any?] {
-        let mediaInfoJSON = Mapper().toJSONString(mediaInfo, prettyPrint: true)!
-        if let id = mediaID {
-            return ["localMedias": [["mediaId":id ,"type": "SDP", "localSdp": mediaInfoJSON]]]
+    func join(_ locusUrl: String, correlationId: UUID, by device: Device, option: MediaOption, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
+        let request = ServiceRequest.make(locusUrl)
+            .authenticator(self.authenticator)
+            .method(.post)
+            .path("participant")
+            .body(makeBody(correlationId: correlationId, option: option, device: device, localMedia: localMedia, callee: nil))
+            .queue(queue)
+            .build()
+
+        request.responseObject(handleLocusOnlySDPResponse(option: option, queue: queue, completionHandler: completionHandler))
+    }
+    
+    func leave(_ participantUrl: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
+        let request = ServiceRequest.make(participantUrl)
+            .authenticator(self.authenticator)
+            .method(.put)
+            .path("leave")
+            .body(makeBody(deviceUrl: device.deviceUrl))
+            .queue(queue)
+            .build()
+        
+        request.responseObject(handleLocusOnlySDPResponse(completionHandler: completionHandler))
+    }
+    
+    func decline(_ locusUrl: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        let request = ServiceRequest.make(locusUrl)
+            .authenticator(self.authenticator)
+            .method(.put)
+            .path("participant").path("decline")
+            .body(makeBody(deviceUrl: device.deviceUrl))
+            .keyPath("locus")
+            .queue(queue)
+            .build()
+        
+        request.responseJSON(completionHandler)
+    }
+
+    func alert(_ locusUrl: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        let request = ServiceRequest.make(locusUrl)
+            .authenticator(self.authenticator)
+            .method(.put)
+            .path("participant").path("alert")
+            .body(makeBody(deviceUrl: device.deviceUrl))
+            .keyPath("locus")
+            .queue(queue)
+            .build()
+    
+        request.responseJSON(completionHandler)
+    }
+
+    func update(_ mediaUrl: String, mediaID: String, localMedia: MediaModel, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
+        let request = ServiceRequest.make(mediaUrl)
+                .authenticator(self.authenticator)
+                .method(.put)
+                .body(makeBody(deviceUrl: device.deviceUrl, mediaId: mediaID, localMedia: localMedia))
+                .queue(queue)
+                .build()
+
+        request.responseObject(handleLocusOnlySDPResponse(completionHandler: completionHandler))
+    }
+
+    func updateMediaShare(_ share: MediaShareModel, shareUrl: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        let floor: [String: Any?] = ["disposition": share.disposition,
+                                     "requester": ["url": share.requesterUrl],
+                                     "beneficiary": ["url": share.beneficiaryUrl as Any, "devices": ["url": device.deviceUrl.absoluteString] as Any]]
+        let request = ServiceRequest.make(shareUrl)
+                .authenticator(self.authenticator)
+                .method(.put)
+                .body(["floor": floor])
+                .keyPath("locus")
+                .queue(queue)
+                .build()
+
+        request.responseJSON(completionHandler)
+    }
+
+    func fetch(_ locusUrl: String, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
+        let request = ServiceRequest.make(locusUrl)
+                .authenticator(self.authenticator)
+                .queue(queue)
+                .build()
+
+        request.responseObject(handleLocusOnlySDPResponse(completionHandler: completionHandler))
+    }
+
+    func fetch(by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<[LocusModel]>) -> Void) {
+        let request = Service.locus.homed(for: device)
+                .authenticator(self.authenticator)
+                .path("loci")
+                .keyPath("loci")
+                .queue(queue)
+                .build()
+
+        request.responseArray(completionHandler)
+    }
+
+    func admit(_ locusUrl: String, memberships:[CallMembership], queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
+        let body: [String: Any?] = ["admit": ["participantIds": memberships.compactMap {$0.model.id}]]
+        let request = ServiceRequest.make(locusUrl)
+                .authenticator(self.authenticator)
+                .method(.patch)
+                .path("controls")
+                .body(body)
+                .queue(queue)
+                .build()
+
+        request.responseObject(handleLocusOnlySDPResponse(completionHandler: completionHandler))
+    }
+
+    func layout(_ participantUrl: String, by deviceUrl: String, layout: MediaOption.VideoLayout, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
+        let body: [String: Any?] = ["layout": ["deviceUrl":deviceUrl, "type":layout.type]]
+        let request = ServiceRequest.make(participantUrl)
+                .authenticator(self.authenticator)
+                .method(.patch)
+                .path("controls")
+                .body(body)
+                .queue(queue)
+                .build()
+
+        request.responseObject(handleLocusOnlySDPResponse(completionHandler: completionHandler))
+    }
+
+    func keepAlive(_ url: String, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        let request = ServiceRequest.make(url)
+                .authenticator(self.authenticator)
+                .method(.get)
+                .queue(queue)
+                .build()
+
+        request.responseJSON(completionHandler)
+    }
+
+    func sendDtmf(_ participantUrl: String, by device: Device, correlationId: Int, events: String, volume: Int? = nil, durationMillis: Int? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        var dtmf: [String: Any] = ["tones": events, "correlationId" : correlationId]
+        if let volume = volume {
+            dtmf["volume"] = volume
         }
-        return ["localMedias": [["type": "SDP", "localSdp": mediaInfoJSON]]]
+        if let durationMillis = durationMillis {
+            dtmf["durationMillis"] = durationMillis
+        }
+        var body: [String: Any?] = makeBody(deviceUrl: device.deviceUrl)
+        body["dtmf"] = dtmf
+
+        let request = ServiceRequest.make(participantUrl)
+            .authenticator(self.authenticator)
+            .method(.post)
+            .path("sendDtmf")
+            .body(body)
+            .keyPath("locus")
+            .queue(queue)
+            .build()
+        
+        request.responseJSON(completionHandler)
     }
-    
-    private func handleLocusOnlySDPResponse(layout: MediaOption.VideoLayout? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) ->((ServiceResponse<CallResponseModel>) -> Void) {
+
+    private func makeBody(deviceUrl: URL) -> [String:Any?]  {
+        return ["deviceUrl": deviceUrl.absoluteString, "respOnlySdp": true]
+    }
+
+    private func makeBody(deviceUrl: URL, mediaId: String, localMedia: MediaModel) -> [String:Any?]  {
+        var json = localMedia.toJson(mediaId: mediaId)
+        json["deviceUrl"] = deviceUrl.absoluteString
+        json["respOnlySdp"] = true
+        return json
+    }
+
+    private func makeBody(correlationId: UUID, option: MediaOption, device: Device, localMedia: MediaModel, callee: String?) -> [String:Any?] {
+        var json = localMedia.toJson()
+        json["device"] = ["url":device.deviceUrl.absoluteString, "deviceType": (option.layout != MediaOption.VideoLayout.single ? "WEB" : device.deviceType), "regionCode":device.countryCode, "countryCode":device.regionCode, "capabilities":["groupCallSupported":true, "sdpSupported":true]]
+        json["respOnlySdp"] = true
+        json["correlationId"] = correlationId.uuidString
+        if let pin = option.pin {
+            json["pin"] = pin
+        }
+        if option.moderator {
+            json["moderator"] = true
+        }
+        if let callee = callee {
+            json["invitee"] = ["address" : callee]
+            json["supportsNativeLobby"] = true
+            json["moderator"] = false
+        }
+        return json
+    }
+
+    private func handleLocusOnlySDPResponse(option: MediaOption? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) -> (ServiceResponse<LocusMediaResponseModel>) -> Void {
         return {
             result in
             switch result.result {
-            case .success(let callResponse):
-                if var callModel = callResponse.callModel {
-                    callModel.setMediaConnections(newMediaConnections: callResponse.mediaConnections)
-                    if let layout = layout, let url = callModel.myself?.url, let device = callModel.myself?.deviceUrl  {
+            case .success(let model):
+                if var locus = model.locus {
+                    if let media = model.mediaConnections {
+                        locus.setMediaConnections(newMediaConnections: media)
+                    }
+                    if let layout = option?.layout, let url = locus.myself?.url, let device = locus.myself?.deviceUrl  {
                         self.layout(url, by: device, layout: layout, queue: queue ?? DispatchQueue.main) { _ in
-                            completionHandler(ServiceResponse.init(result.response, Result.success(callModel)))
+                            completionHandler(ServiceResponse.init(result.response, Result.success(locus)))
                         }
                         return;
                     }
-                    completionHandler(ServiceResponse.init(result.response, Result.success(callModel)))
+                    completionHandler(ServiceResponse.init(result.response, Result.success(locus)))
                 }
             case .failure(let error):
                 completionHandler(ServiceResponse.init(result.response, Result.failure(error)))
@@ -158,184 +297,16 @@ class CallClient {
         }
     }
     
-    func create(_ toAddress: String, correlationId: UUID, moderator:Bool? = false, PIN:String? = nil, by device: Device, localMedia: MediaModel, layout: MediaOption.VideoLayout?, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
-        var json = convertToJson(mediaInfo: localMedia)
-        json["invitee"] = ["address" : toAddress]
-        json["supportsNativeLobby"] = true
-        json["moderator"] = moderator
-        json["pin"] = PIN
-        let request = Service.locus.homed(for: device)
-            .authenticator(self.authenticator)
-            .method(.post)
-            .path("loci").path("call")
-            .body(body(composedVideo: layout != .single, correlationId: correlationId, device: device, json: json))
-            .queue(queue)
-            .build()
-        
-        request.responseObject(handleLocusOnlySDPResponse(layout: layout, queue: queue, completionHandler: completionHandler))
-    }
-    
-    func join(_ callUrl: String, correlationId: UUID, by device: Device, localMedia: MediaModel, layout: MediaOption.VideoLayout?, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
-        let json = convertToJson(mediaInfo: localMedia)
-        let request = Service.locus.specific(url: callUrl)
-            .authenticator(self.authenticator)
-            .method(.post)
-            .path("participant")
-            .body(body(composedVideo: layout != .single, correlationId: correlationId, device: device, json: json))
-            .queue(queue)
-            .build()
-        request.responseObject(handleLocusOnlySDPResponse(layout: layout, queue: queue, completionHandler: completionHandler))
-    }
-    
-    func leave(_ participantUrl: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
-        let request = Service.locus.specific(url: participantUrl)
-            .authenticator(self.authenticator)
-            .method(.put)
-            .path("leave")
-            .body(body(deviceUrl: device.deviceUrl))
-            .queue(queue)
-            .build()
-        
-        request.responseObject(handleLocusOnlySDPResponse(completionHandler: completionHandler))
-    }
-    
-    func decline(_ callUrl: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
-        let request = Service.locus.specific(url: callUrl)
-            .authenticator(self.authenticator)
-            .method(.put)
-            .path("participant").path("decline")
-            .body(body(deviceUrl: device.deviceUrl))
-            .keyPath("locus")
-            .queue(queue)
-            .build()
-        
-        request.responseJSON(completionHandler)
-    }
+}
 
-    func alert(_ callUrl: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
-        let request = Service.locus.specific(url: callUrl)
-            .authenticator(self.authenticator)
-            .method(.put)
-            .path("participant").path("alert")
-            .body(body(deviceUrl: device.deviceUrl))
-            .keyPath("locus")
-            .queue(queue)
-            .build()
-    
-        request.responseJSON(completionHandler)
-    }
-    
-    func sendDtmf(_ participantUrl: String, by device: Device, correlationId: Int, events: String, volume: Int? = nil, durationMillis: Int? = nil, queue: DispatchQueue? = nil, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
-        var dtmfInfo: [String:Any] = [
-            "tones": events,
-            "correlationId" : correlationId]
-        if let volume = volume {
-            dtmfInfo["volume"] = volume
+extension MediaModel {
+
+    func toJson(mediaId: String? = nil) -> [String:Any?] {
+        let sdp = Mapper().toJSONString(self, prettyPrint: true)
+        if let mediaId = mediaId {
+            return ["localMedias": [["mediaId": mediaId ,"type": "SDP", "localSdp": sdp]]]
         }
-        if let durationMillis = durationMillis {
-            dtmfInfo["durationMillis"] = durationMillis
-        }
-        let json: [String: Any] = ["dtmf" : dtmfInfo]
-        
-        let request = Service.locus.specific(url: participantUrl)
-            .authenticator(self.authenticator)
-            .method(.post)
-            .path("sendDtmf")
-            .body(body(deviceUrl: device.deviceUrl, json: json))
-            .keyPath("locus")
-            .queue(queue)
-            .build()
-        
-        request.responseJSON(completionHandler)
-    }
-    
-    func update(_ mediaUrl: String,by mediaID: String, by device: Device, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
-        let json = convertToJson(mediaID,mediaInfo: localMedia)
-        let request = Service.locus.specific(url: mediaUrl)
-            .authenticator(self.authenticator)
-            .method(.put)
-            .body(body(deviceUrl: device.deviceUrl, json: json))
-            .queue(queue)
-            .build()
-        
-        request.responseObject(handleLocusOnlySDPResponse(completionHandler: completionHandler))
-    }
-    
-    func fetch(_ callUrl: String, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
-        let request = Service.locus.specific(url: callUrl)
-            .authenticator(self.authenticator)
-            .keyPath("locus")
-            .queue(queue)
-            .build()
-        
-        request.responseObject(completionHandler)
-    }
-    
-    func fetch(by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<[CallModel]>) -> Void) {
-        let request = Service.locus.homed(for: device)
-            .authenticator(self.authenticator)
-            .path("loci")
-            .keyPath("loci")
-            .queue(queue)
-            .build()
-        
-        request.responseArray(completionHandler)
+        return ["localMedias": [["type": "SDP", "localSdp": sdp]]]
     }
 
-    func updateMediaShare(_ mediaShare: MediaShareModel, by device: Device, mediaShareUrl: String, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
-        let floorParam: [String: Any?] = ["disposition": mediaShare.shareFloor?.disposition?.rawValue.uppercased() ?? "RELEASE",
-                                          "requester": ["url": mediaShare.shareFloor?.requester?.url],
-                                          "beneficiary": ["url": mediaShare.shareFloor?.beneficiary?.url as Any,
-                                                          "devices": ["url": device.deviceUrl.absoluteString] as Any]]
-        let body: [String: Any?] = ["floor": floorParam]
-        let request = Service.locus.specific(url: mediaShareUrl)
-                .authenticator(self.authenticator)
-                .method(.put)
-                .body(body)
-                .keyPath("locus")
-                .queue(queue)
-                .build()
-
-        request.responseJSON(completionHandler)
-    }
-    
-    func letIn(_ locusUrl: String, memberships:[CallMembership], queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
-        let participantIds = memberships.compactMap {$0.model.id}
-        let parameters: [String: Any?] = ["admit":["participantIds":participantIds]]
-        let request = Service.locus.specific(url: locusUrl)
-            .authenticator(self.authenticator)
-            .method(.patch)
-            .path("controls")
-            .body(parameters)
-            .keyPath("locus")
-            .queue(queue)
-            .build()
-        
-        request.responseObject(completionHandler)
-    }
-    
-    func layout(_ participantUrl: String, by deviceUrl: String, layout: MediaOption.VideoLayout, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
-        let parameters: [String: Any?] = ["layout":["deviceUrl":deviceUrl, "type":layout.type]]
-        let request = Service.locus.specific(url: participantUrl)
-            .authenticator(self.authenticator)
-            .method(.patch)
-            .path("controls")
-            .body(parameters)
-            .keyPath("locus")
-            .queue(queue)
-            .build()
-        
-        request.responseObject(completionHandler)
-    }
-    
-    func keepAlive(_ url: String, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
-        let request = Service.locus.specific(url: url)
-            .authenticator(self.authenticator)
-            .method(.get)
-            .queue(queue)
-            .build()
-        
-        request.responseJSON(completionHandler)
-    }
-    
 }

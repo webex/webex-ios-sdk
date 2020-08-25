@@ -21,23 +21,49 @@
 import Foundation
 import ObjectMapper
 
-class PersonModel : ObjectModel {
+class FileModel : ObjectModel {
 
-    private(set) var roomProperties: RoomPropertiesModel?
-    private(set) var orgId: String?
-    private(set) var emailAddress: String?
-    private(set) var entryUUID: String?
-    
+    private(set) var fileSize: UInt64?
+    private(set) var mimeType: String?
+    private(set) var image: ImageModel?
+    private(set) var scr: String?
+    var scrObject: SecureContentReference?
+
+    private var contentId: String?
+    private var version: String?
+
     required init?(map: Map) {
         super.init(map: map)
     }
-    
+
     override func mapping(map: Map) {
         super.mapping(map: map)
-        self.roomProperties <- map["roomProperties"]
-        self.orgId <- map["orgId"]
-        self.emailAddress <- map["emailAddress"]
-        self.entryUUID <- map["entryUUID"]
+        self.mimeType <- map["mimeType"]
+        self.fileSize <- map["fileSize"]
+        self.image <- map["image"]
+        self.scr <- map["scr"]
+    }
+
+    override func encrypt(key: String?) {
+        super.encrypt(key: key)
+        if let url = self.url {
+            self.scrObject?.loc = URL(string: url)
+        }
+        if let scrObject = self.scrObject {
+            self.scr = try? scrObject.encryptedSecureContentReference(withKey: key)
+            self.scrObject = nil
+        }
+        self.image?.encrypt(key: key)
+    }
+
+    override func decrypt(key: String?) {
+        super.decrypt(key: key)
+        self.scr = self.scr?.decrypt(key: key)
+        if let scr = self.scr {
+            self.scrObject = try? SecureContentReference(json: scr)
+        }
+        self.image?.decrypt(key: key)
     }
 
 }
+

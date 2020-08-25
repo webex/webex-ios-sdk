@@ -27,7 +27,7 @@ class FakeCallModelHelper {
         case missingCallUrl
     }
     
-    static func dialCallModel(caller:TestUser,callee:TestUser,otherParticipantUsers:[TestUser]? = nil) -> CallModel {
+    static func dialCallModel(caller:TestUser,callee:TestUser,otherParticipantUsers:[TestUser]? = nil) -> LocusModel {
         let locusUrl = FakeCallModelHelper.getLocusUrl()
         
         let myselfModel = getParticipant(userInfo: caller, userState: CallMembership.State.joined, isSelfModel: true, isCreater: true)
@@ -53,10 +53,10 @@ class FakeCallModelHelper {
         
         let sequenceModel = getSequenceModel()
         let mediaShares = getMediaShareModels()
-        return CallModel.init(locusUrl: locusUrl, participants: participants, myself: myselfModel, host: host, fullState: fullStateModel, sequence: sequenceModel, baseSequence: nil, syncUrl: nil, replaces: nil, mediaShares: mediaShares, mediaConnections: nil)
+        return LocusModel.init(locusUrl: locusUrl, participants: participants, myself: myselfModel, host: host, fullState: fullStateModel, sequence: sequenceModel, baseSequence: nil, syncUrl: nil, replaces: nil, mediaShares: mediaShares, mediaConnections: nil)
     }
     
-    static func dialIllegalCallModel(caller:TestUser,callee:TestUser,type:CallIllegalStatusType) -> CallModel {
+    static func dialIllegalCallModel(caller:TestUser,callee:TestUser,type:CallIllegalStatusType) -> LocusModel {
         var callModel = dialCallModel(caller: caller, callee: callee)
         
         switch type {
@@ -77,7 +77,7 @@ class FakeCallModelHelper {
     }
     
     
-    static func hangUpCallModel(callModel:CallModel,hanupUser:TestUser) -> CallModel {
+    static func hangUpCallModel(callModel:LocusModel,hanupUser:TestUser) -> LocusModel {
         
         var newModel = callModel
         var mySelf = newModel.myself
@@ -104,7 +104,7 @@ class FakeCallModelHelper {
         
     }
     
-    static func initCallModel(caller:TestUser,allParticipantUsers:[TestUser],selfUser:TestUser) -> CallModel {
+    static func initCallModel(caller:TestUser,allParticipantUsers:[TestUser],selfUser:TestUser) -> LocusModel {
         //self part
         let isCreator = caller.id == selfUser.id ? true:false
         let selfState = caller.id == selfUser.id ? CallMembership.State.joined:CallMembership.State.idle
@@ -139,10 +139,10 @@ class FakeCallModelHelper {
         let fullStateModel = getFullState(participants: participants)
         let sequenceModel = getSequenceModel()
         let mediaShareModels = getMediaShareModels()
-        return CallModel.init(locusUrl: locusUrl, participants: participants, myself: mySelf, host: host, fullState: fullStateModel, sequence: sequenceModel, baseSequence: nil, syncUrl: nil, replaces: nil, mediaShares: mediaShareModels, mediaConnections: nil)
+        return LocusModel.init(locusUrl: locusUrl, participants: participants, myself: mySelf, host: host, fullState: fullStateModel, sequence: sequenceModel, baseSequence: nil, syncUrl: nil, replaces: nil, mediaShares: mediaShareModels, mediaConnections: nil)
     }
     
-    static func answerCallModel(callModel:CallModel,answerUser:TestUser) -> CallModel {
+    static func answerCallModel(callModel:LocusModel,answerUser:TestUser) -> LocusModel {
         var newModel = callModel
         var mySelf = newModel.myself
         var participants:[ParticipantModel] = []
@@ -171,7 +171,7 @@ class FakeCallModelHelper {
         
     }
     
-    static func declineCallModel(callModel:CallModel,declineUser:TestUser) -> CallModel {
+    static func declineCallModel(callModel:LocusModel,declineUser:TestUser) -> LocusModel {
         var newModel = callModel
         var mySelf = newModel.myself
         var participants:[ParticipantModel] = []
@@ -197,7 +197,7 @@ class FakeCallModelHelper {
         return newModel
     }
     
-    static func alertCallModel(callModel:CallModel,alertUser:TestUser) -> CallModel {
+    static func alertCallModel(callModel:LocusModel,alertUser:TestUser) -> LocusModel {
         var newModel = callModel
         var mySelf = newModel.myself
         var participants:[ParticipantModel] = []
@@ -224,7 +224,7 @@ class FakeCallModelHelper {
         return newModel
     }
     
-    static func updateMediaCallModel(callModel:CallModel,updateUser:TestUser,localMedia:MediaModel) -> CallModel {
+    static func updateMediaCallModel(callModel:LocusModel,updateUser:TestUser,localMedia:MediaModel) -> LocusModel {
         var newModel = callModel
         var mySelf = newModel.myself
         var participants:[ParticipantModel] = []
@@ -283,15 +283,15 @@ class FakeCallModelHelper {
         return "locusUrl\(UUID.init())"
     }
     
-    static func grantedScreenShareCallModel(callModel:CallModel,shareUser:TestUser) -> CallModel {
+    static func grantedScreenShareCallModel(callModel:LocusModel,shareUser:TestUser) -> LocusModel {
         return getGrantedScreenShareCallModel(callModel:callModel,shareUser:shareUser,isSelfDevice:false)
     }
     
-    static func grantedLocalScreenShareCallModel(callModel:CallModel,shareUser:TestUser) -> CallModel {
+    static func grantedLocalScreenShareCallModel(callModel:LocusModel,shareUser:TestUser) -> LocusModel {
         return getGrantedScreenShareCallModel(callModel:callModel,shareUser:shareUser,isSelfDevice:true)
     }
     
-    static private func getGrantedScreenShareCallModel(callModel:CallModel,shareUser:TestUser,isSelfDevice:Bool) -> CallModel {
+    static private func getGrantedScreenShareCallModel(callModel:LocusModel,shareUser:TestUser,isSelfDevice:Bool) -> LocusModel {
         var newModel = callModel
         var newMediaShares :[MediaShareModel] = []
         
@@ -312,15 +312,15 @@ class FakeCallModelHelper {
     }
     
     
-    static func releaseScreenShareCallModel(callModel:CallModel,shareUser:TestUser) -> CallModel {
+    static func releaseScreenShareCallModel(callModel:LocusModel,shareUser:TestUser) -> LocusModel {
         return getReleaseScreenShareCallModel(callModel: callModel, shareUser: shareUser, isSelfDevice: false)
     }
     
-    static func releaseLocalScreenShareCallModel(callModel:CallModel,shareUser:TestUser) -> CallModel {
+    static func releaseLocalScreenShareCallModel(callModel:LocusModel,shareUser:TestUser) -> LocusModel {
         return getReleaseScreenShareCallModel(callModel: callModel, shareUser: shareUser, isSelfDevice: true)
     }
     
-    static private func getReleaseScreenShareCallModel(callModel:CallModel,shareUser:TestUser,isSelfDevice:Bool) -> CallModel {
+    static private func getReleaseScreenShareCallModel(callModel:LocusModel,shareUser:TestUser,isSelfDevice:Bool) -> LocusModel {
         var newModel = callModel
         var newMediaShares :[MediaShareModel] = []
         

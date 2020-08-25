@@ -631,7 +631,7 @@ public class Call {
         }
     }
     
-    var model: CallModel {
+    var model: LocusModel {
         get {
             lock()
             defer { unlock() }
@@ -658,7 +658,7 @@ public class Call {
     private let dtmfQueue: DtmfQueue
     
     private var dail: String?
-    private var callModel: CallModel
+    private var callModel: LocusModel
     private var callMemberships: [CallMembership]?
     private var availableStreamCount:Int = 0
     var mutex = pthread_mutex_t()
@@ -734,7 +734,7 @@ public class Call {
     
     private var MQETimer: Timer?
     
-    init(model: CallModel, device: Device, media: MediaSessionWrapper, direction: Direction, group: Bool, correlationId: UUID) {
+    init(model: LocusModel, device: Device, media: MediaSessionWrapper, direction: Direction, group: Bool, correlationId: UUID) {
         self.direction = direction
         self.isGroup = group
         self.device = device
@@ -1118,9 +1118,9 @@ public class Call {
         return false
     }
     
-    func update(model: CallModel) {
+    func update(model: LocusModel) {
         //some response's mediaConnection is nil, sync all model hold the latest media connection
-        func syncMediaConnections(from:CallModel) -> CallModel {
+        func syncMediaConnections(from:LocusModel) -> LocusModel {
             var newModel = from
             let mediaConnections = newModel.mediaConnections == nil ? self.model.mediaConnections:model.mediaConnections
             self.model.setMediaConnections(newMediaConnections: mediaConnections)
@@ -1288,7 +1288,7 @@ public class Call {
         }
     }
     
-    private func doCallModel(_ model: CallModel) {
+    private func doCallModel(_ model: LocusModel) {
         self.model = model
         if let participants = self.model.participants?.filter({ $0.isCIUser }) {
             let oldMemberships = self.memberships

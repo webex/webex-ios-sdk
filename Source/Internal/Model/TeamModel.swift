@@ -21,39 +21,24 @@
 import Foundation
 import ObjectMapper
 
-struct DeviceModel : Mappable {
-    
-    private(set) var deviceUrlString: String?
-    private(set) var deviceIdentifier: String?
-    private(set) var deviceSettingsString: String?
-    private var webSocketUrlString: String?
-    private var serviceHostMap: ServiceHostModel?
-    var deviceUrl: URL? {
-        if let string = self.deviceUrlString {
-            return URL(string: string)
-        }
-        return nil
+class TeamModel : ObjectModel {
+
+    private(set) var teamColor: String?
+    private(set) var generalConversationUuid: String?
+    private(set) var encryptionKeyUrl: String?
+    private(set) var conversations: ItemsModel<ConversationModel>?
+
+    required init?(map: Map) {
+        super.init(map: map)
     }
-    
-    var webSocketUrl: URL? {
-        if let string = self.webSocketUrlString {
-            return URL(string: string)
-        }
-        return nil
+
+    override func mapping(map: Map) {
+        super.mapping(map: map)
+        self.teamColor <- map["teamColor"]
+        self.generalConversationUuid <- map["generalConversationUuid"]
+        self.encryptionKeyUrl <- map["encryptionKeyUrl"]
+        self.conversations <- map["conversations"]
     }
-    
-    subscript(service name: String) -> String? {
-        return self.serviceHostMap?.serviceLinks?[name]
-    }
-    
-    init?(map: Map){
-    }
-    
-    mutating func mapping(map: Map) {
-        deviceUrlString <- map["url"]
-        deviceIdentifier <- map["deviceIdentifier"]
-        webSocketUrlString <- map["webSocketUrl"]
-        deviceSettingsString <- map["deviceSettingsString"]
-        serviceHostMap <- map["serviceHostMap"]
-    }
+
+
 }

@@ -20,6 +20,7 @@
 
 import UIKit
 import Alamofire
+import ObjectMapper
 
 class UploadFileOperations {
     
@@ -33,8 +34,8 @@ class UploadFileOperations {
         }
     }
     
-    func run(client: MessageClient, completionHandler: @escaping (Result<[RemoteFile]>) -> Void) {
-        var sucess = [RemoteFile]()
+    func run(client: MessageClient, completionHandler: @escaping (Result<[FileModel]>) -> Void) {
+        var sucess = [FileModel]()
         self.operations.forEach { operation in
             if !operation.done {
                 self.queue.sync {
@@ -63,26 +64,28 @@ class UploadFileOperation {
         self.local = local
         self.key = key
     }
-    
-    func run(client: MessageClient, completionHandler: @escaping (Result<RemoteFile>) -> Void) {
-        self.doUpload(client: client, path: self.local.path, size: self.local.size, progressStart: 0, progressHandler: self.local.progressHandler) { url, scr, error in
-            if let url = url, let scr = scr {
-                self.key.material(client: client) { material in
-                    var file = RemoteFile(local: self.local, downloadUrl: url)
-                    file.encrypt(key: material.data, scr: scr)
-                    if let thumb = self.local.thumbnail {
-                        self.doUpload(client: client, path: thumb.path, size: thumb.size, progressStart: 0.5, progressHandler: self.local.progressHandler) { url, scr, error in
-                            if let url = url, let scr = scr {
-                                var thumb = RemoteFile.Thumbnail(local: thumb, downloadUrl: url)
-                                thumb.encrypt(key: material.data, scr: scr)
-                                file.thumbnail = thumb
-                            }
-                            self.done = true
+
+    func run(client: MessageClient, completionHandler: @escaping (Result<FileModel>) -> Void) {
+        self.doUpload(client: client, path: self.local.path, size: self.local.size, progressStart: 0, progressHandler: self.local.progressHandler) { fileModel, fileScr, error in
+            if let fileModel = fileModel, var file = Mapper<FileModel>().map(JSON: fileModel.union(["displayName": self.local.name])), let fileScr = fileScr {
+                file.scrObject = fileScr
+                if let thumb = self.local.thumbnail {
+                    self.doUpload(client: client, path: thumb.path, size: thumb.size, progressStart: 0.5, progressHandler: self.local.progressHandler) { thumbModel, thumbScr, error in
+                        if let thumbModel = thumbModel, let thumb = Mapper<ImageModel>().map(JSON: thumbModel.union(["width": thumb.width, "height": thumb.height])), let thumbScr = thumbScr {
+                            thumb.scrObject = thumbScr
+                            file = Mapper<FileModel>().map(JSON: ["image": thumb], toObject: file)
+                        }
+                        self.done = true
+                        self.key.material(client: client) { material in
+                            file.encrypt(key: material.data)
                             completionHandler(Result.success(file))
                         }
                     }
-                    else {
-                        self.done = true
+                }
+                else {
+                    self.done = true
+                    self.key.material(client: client) { material in
+                        file.encrypt(key: material.data)
                         completionHandler(Result.success(file))
                     }
                 }
@@ -94,53 +97,42 @@ class UploadFileOperation {
             }
         }
     }
-    
-    func doUpload(client: MessageClient, path: String, size: UInt64, progressStart: Double, progressHandler: ((Double) -> Void)?, completionHandler: @escaping (String?, SecureContentReference?, Error?) -> Void) {
+
+    private func doUpload(client: MessageClient, path: String, size: UInt64, progressStart: Double, progressHandler: ((Double) -> Void)?, completionHandler: @escaping ([String: Any]?, SecureContentReference?, Error?) -> Void) {
         client.authenticator.accessToken { token in
             guard let token = token else {
                 completionHandler(nil, nil, WebexError.noAuth)
                 return
             }
-            
-            func handleUploadSuccess(response: DataResponse<Any>) {
-                if let dict = response.result.value as? [String : Any],
-                    let uploadUrl = dict["uploadUrl"] as? String,
-                    let finishUrl = dict["finishUploadUrl"] as? String,
-                    let scr = try? SecureContentReference(error: ()),
-                    let inputStream = try? SecureInputStream(stream: InputStream(fileAtPath: path), scr: scr) {
-                    let uploadHeaders: HTTPHeaders = ["Content-Length": String(size)]
-                    Alamofire.upload(inputStream, to: uploadUrl, method: .put, headers: uploadHeaders).uploadProgress(closure: { (progress) in
-                        progressHandler?(progressStart + progress.fractionCompleted/2)
-                    }).responseString { response in
-                        if let _ = response.result.value {
-                            let finishHeaders: HTTPHeaders = ["Authorization": "Bearer " + token, "Content-Type": "application/json;charset=UTF-8"]
-                            let finishParameters: Parameters = ["size": size]
-                            Alamofire.request(finishUrl, method: .post, parameters: finishParameters, encoding: JSONEncoding.default, headers: finishHeaders).responseJSON { response in
-                                if let dict = response.result.value as? [String : Any], let downLoadUrl = dict["downloadUrl"] as? String, let url = URL(string: downLoadUrl) {
-                                    scr.loc = url
-                                    completionHandler(downLoadUrl, scr, nil)
+            self.key.spaceUrl(client: client) { result in
+                if let url = result.data {
+                    let headers: HTTPHeaders = ["Authorization": "Bearer " + token, "Content-Type": "application/json;charset=UTF-8", "TrackingID": TrackingId.generator.next, "User-Agent": UserAgent.string, "Webex-User-Agent": UserAgent.string]
+                    Alamofire.request(url + "/upload_sessions", method: .post, parameters: ["uploadProtocol":"content-length"], encoding: JSONEncoding.default, headers: headers).responseJSON { (prepareResponse: DataResponse<Any>) in
+                        if let dict = prepareResponse.result.value as? [String : Any], let uploadUrl = dict["uploadUrl"] as? String, let finishUrl = dict["finishUploadUrl"] as? String,
+                           let scr = try? SecureContentReference(error: ()),
+                           let inputStream = try? SecureInputStream(stream: InputStream(fileAtPath: path), scr: scr) {
+                            Alamofire.upload(inputStream, to: uploadUrl, method: .put, headers: ["Content-Length": String(size)]).uploadProgress(closure: { (progress) in
+                                progressHandler?(progressStart + progress.fractionCompleted/2)
+                            }).responseString { uploadResponse in
+                                if let _ = uploadResponse.result.value {
+                                    Alamofire.request(finishUrl, method: .post, parameters: ["size": size], encoding: JSONEncoding.default, headers: headers).responseJSON { finishResponse in
+                                        if let dict = finishResponse.result.value as? [String : Any], let downLoadUrl = dict["downloadUrl"] as? String, let url = URL(string: downLoadUrl) {
+                                            scr.loc = url
+                                            completionHandler(dict.union(["objectType": "file", "url": downLoadUrl, "fileSize": dict["size"] ?? size]), scr, nil)
+                                        }
+                                        else {
+                                            completionHandler(nil, nil, finishResponse.error)
+                                        }
+                                    }
                                 }
                                 else {
-                                    completionHandler(nil, nil, response.error)
+                                    completionHandler(nil, nil, uploadResponse.error)
                                 }
                             }
                         }
                         else {
-                            completionHandler(nil, nil, response.error)
+                            completionHandler(nil, nil, prepareResponse.error)
                         }
-                    }
-                }
-                else {
-                    completionHandler(nil, nil, response.error)
-                }
-            }
-            
-            self.key.spaceUrl(client: client) { result in
-                if let url = result.data {
-                    let headers: HTTPHeaders  = ["Authorization": "Bearer " + token]
-                    let parameters: Parameters = ["uploadProtocol":"content-length"]
-                    Alamofire.request(url + "/upload_sessions", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response: DataResponse<Any>) in
-                       handleUploadSuccess(response: response)
                     }
                 }
                 else {

@@ -24,7 +24,7 @@ import ObjectMapper
 struct CallEventModel {
     fileprivate(set) var id: String?
     fileprivate(set) var callUrl: String?
-    fileprivate(set) var callModel: CallModel?
+    fileprivate(set) var callModel: LocusModel?
     fileprivate(set) var type: String?
 }
 
@@ -41,12 +41,12 @@ struct ReplaceModel  {
     fileprivate(set) var locusUrl: String?
 }
 
-struct CallResponseModel {
-    fileprivate(set) var callModel: CallModel?
+struct LocusMediaResponseModel {
+    fileprivate(set) var locus: LocusModel?
     fileprivate(set) var mediaConnections: [MediaConnectionModel]?
 }
 
-struct CallModel {
+struct LocusModel {
     fileprivate(set) var locusUrl: String? // Mandatory
     fileprivate(set) var participants: [ParticipantModel]?
     fileprivate(set) var myself: ParticipantModel?
@@ -163,7 +163,7 @@ extension CallEventModel: Mappable {
     }
 }
 
-extension CallModel: Mappable {
+extension LocusModel: Mappable {
 	init?(map: Map) { }
 	
 	mutating func mapping(map: Map) {
@@ -201,17 +201,17 @@ extension ReplaceModel: Mappable {
     }
 }
 
-extension CallResponseModel: Mappable {
+extension LocusMediaResponseModel: Mappable {
     init?(map: Map) {
     }
     
     mutating func mapping(map: Map) {
-        callModel <- map["locus"]
+        locus <- map["locus"]
         mediaConnections <- map["mediaConnections"]
     }
 }
 
-extension CallModel {
+extension LocusModel {
     mutating func setLocusUrl(newLocusUrl:String?) {
         self.locusUrl = newLocusUrl
     }
@@ -248,7 +248,7 @@ extension CallModel {
         self.mediaConnections = newMediaConnections
     }
     
-    mutating func applyDelta(from: CallModel) {
+    mutating func applyDelta(from: LocusModel) {
         self.sequence = from.sequence ?? self.sequence
         self.syncUrl = from.syncUrl ?? self.syncUrl
         self.locusUrl = from.locusUrl ?? self.locusUrl

@@ -21,39 +21,37 @@
 import Foundation
 import ObjectMapper
 
-struct DeviceModel : Mappable {
-    
-    private(set) var deviceUrlString: String?
-    private(set) var deviceIdentifier: String?
-    private(set) var deviceSettingsString: String?
-    private var webSocketUrlString: String?
-    private var serviceHostMap: ServiceHostModel?
-    var deviceUrl: URL? {
-        if let string = self.deviceUrlString {
-            return URL(string: string)
+class ImageModel : Mappable {
+
+    private(set) var width: Int?
+    private(set) var height: Int?
+    private(set) var mimeType: String?
+    private(set) var url: String?
+    private(set) var scr: String?
+    var scrObject: SecureContentReference?
+
+    required init?(map: Map) {}
+
+    func mapping(map: Map) {
+        url <- map["url"]
+        mimeType <- map["mimeType"]
+        width <- map["width"]
+        height <- map["height"]
+        scr <- map["scr"]
+    }
+
+    func encrypt(key: String?) {
+        if let scrObject = self.scrObject {
+            self.scr = try? scrObject .encryptedSecureContentReference(withKey: key)
+            self.scrObject = nil
         }
-        return nil
     }
-    
-    var webSocketUrl: URL? {
-        if let string = self.webSocketUrlString {
-            return URL(string: string)
+
+    func decrypt(key: String?) {
+        self.scr = self.scr?.decrypt(key: key)
+        if let scr = self.scr {
+            self.scrObject = try? SecureContentReference(json: scr)
         }
-        return nil
     }
-    
-    subscript(service name: String) -> String? {
-        return self.serviceHostMap?.serviceLinks?[name]
-    }
-    
-    init?(map: Map){
-    }
-    
-    mutating func mapping(map: Map) {
-        deviceUrlString <- map["url"]
-        deviceIdentifier <- map["deviceIdentifier"]
-        webSocketUrlString <- map["webSocketUrl"]
-        deviceSettingsString <- map["deviceSettingsString"]
-        serviceHostMap <- map["serviceHostMap"]
-    }
+
 }

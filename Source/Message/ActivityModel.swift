@@ -21,7 +21,7 @@
 import Foundation
 import ObjectMapper
 
-struct ActivityModel : Mappable {
+class ActivityModel : ObjectModel {
     
     enum Verb: String {
         case post
@@ -49,226 +49,95 @@ struct ActivityModel : Mappable {
             }
         }
     }
-    
-    private(set) var uuid: String?
-    private(set) var clientTempId: String?
+
     private(set) var verb: ActivityModel.Verb?
-    private(set) var objectType: ObjectType?
-    private(set) var created: Date?
     private(set) var encryptionKeyUrl: String?
-    var toPersonId: String?
-    private(set) var toPersonEmail: String?
-    
-    private(set) var targetUUID: String?
-    private(set) var targetTag: SpaceType = SpaceType.group
-    private(set) var targetLocked: Bool?
-    
-    private(set) var actorUUID: String?
-    private(set) var actorEmail: String?
-    private(set) var actorDisplayName: String?
-    private(set) var actorOrgUUID: String?
-    
-    private var objectId: String?
-    private var objectUUID: String?
-    private(set) var objectTag: SpaceType = SpaceType.group
-    private(set) var objectLocked: Bool?
-    private(set) var objectEmail: String?
-    private(set) var objectOrgUUID: String?
-    private(set) var objectDisplayName: String?
-    private(set) var objectConetnt: String?
-    private(set) var objectMarkdown: String?
-    private(set) var objectObjectType: ObjectType?
-    private(set) var objectContentCategory: String?
-    
-    private(set) var isModerator:Bool?
-    
-    private(set) var parentUUID: String?
-    private(set) var parentActorUUID: String?
-    private(set) var parentType: String?
-    private(set) var parentPublished: Date?
-    
-    private var groupMentionsItems: [[String: Any]]? {
-        didSet {
-            self.mentionedGroup = self.groupMentionsItems?.compactMap { value in
-                return value["groupType"] as? String
-            }
-        }
-    }
-    private var peopleMentionsItems: [[String: Any]]? {
-        didSet {
-            self.mentionedPeople = self.peopleMentionsItems?.compactMap { value in
-                return value["id"] as? String
-            }
-        }
-    }
-    
-    private var fileItems: [[String: Any]]? {
-        didSet {
-            self.files = self.fileItems?.compactMap { value in
-                return Mapper<RemoteFile>().map(JSON: value)
-            }
-        }
-    }
-    
-    private(set) var files: [RemoteFile]?
-    private(set) var mentionedGroup: [String]?
-    private(set) var mentionedPeople: [String]?
-    
-    var object: String? {
-        return self.objectUUID ?? self.objectId
-    }
-    
-    init?(map: Map){
-    }
-    
-    mutating func mapping(map: Map) {
-        self.uuid <- map["id"]
-        self.created <- (map["published"], CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
-        self.encryptionKeyUrl <- map["encryptionKeyUrl"]
-        self.verb <- (map["verb"], VerbTransform())
-        self.objectType <- (map["objectType"], ObjectTypeTransform())
-        self.actorUUID <- map["actor.entryUUID"]
-        self.actorEmail <- map["actor.emailAddress"]
-        self.actorDisplayName <- map["actor.displayName"]
-        self.actorOrgUUID <- map["actor.orgId"]
-        self.targetUUID <- map["target.id"]
-        self.targetTag <- (map["target.tags"], SpaceTypeTransform())
-        self.targetLocked <- (map["target.tags"], LockedTransform())
-        self.clientTempId <- map["clientTempId"]
-        self.objectDisplayName <- map["object.displayName"]
-        self.objectConetnt <- map["object.content"]
-        self.objectMarkdown <- map["object.markdown"]
-        self.groupMentionsItems <- map["object.groupMentions.items"]
-        self.peopleMentionsItems <- map["object.mentions.items"]
-        self.fileItems <- map["object.files.items"]
-        self.objectUUID <- map["object.entryUUID"]
-        self.objectId <- map["object.id"]
-        self.objectEmail <- map["object.emailAddress"]
-        self.objectOrgUUID <- map["object.orgId"]
-        self.objectTag <- (map["object.tags"], SpaceTypeTransform())
-        self.objectLocked <- (map["object.tags"], LockedTransform())
-        self.isModerator <- (map["object.roomProperties.isModerator"], StringAndBoolTransform())
-        self.objectObjectType <- (map["object.objectType"], ObjectTypeTransform())
-        self.objectContentCategory <- map["object.contentCategory"]
-        
-        self.parentUUID <- map["parent.id"]
-        self.parentActorUUID <- map["parent.actorId"]
-        self.parentType <- map["parent.type"]
-        self.parentPublished <- (map["parent.published"], CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
-    }
-}
+    private(set) var target: ObjectModel?
+    private(set) var object: ObjectModel?
+    private(set) var actor: PersonModel?
+    private(set) var parent: ParentModel?
 
-extension ActivityModel {
-    func decrypt(key: String?) -> ActivityModel {
-        var activity = self
-        activity.objectDisplayName = activity.objectDisplayName?.decrypt(key: key)
-        activity.objectConetnt = activity.objectConetnt?.decrypt(key: key)
-        activity.objectMarkdown = activity.objectMarkdown?.decrypt(key: key)
-        activity.files = activity.files?.map { f in
-            var file = f
-            file.decrypt(key: key)
-            return file
+    var conversationId: String? {
+        if let target = self.target, target.objectType == .conversation {
+            return target.id
         }
-        return activity;
-    }
-}
-
-
-extension String {
-            
-    func encrypt(key: String?) -> String {
-        if let key = key, let text = try? CjoseWrapper.ciphertext(fromContent: self.data(using: .utf8), key: key) {
-            return text
+        else if let target = self.target as? TeamModel {
+            return target.generalConversationUuid
         }
-        return self
-    }
-    
-    func decrypt(key: String?) -> String {
-        if let key = key, let data = try? CjoseWrapper.content(fromCiphertext: self, key: key), let text = String(data: data, encoding: .utf8) {
-            return text
+        else if let object = self.object, object.objectType == .conversation {
+            return object.id
         }
-        return self
-    }
-}
-
-class IdentityTransform : TransformType {
-    
-    private var identityType: IdentityType
-    
-    init(for type: IdentityType) {
-        self.identityType = type
-    }
-    
-    func transformFromJSON(_ value: Any?) -> String? {
-        return WebexId(type: self.identityType, uuid: (value as? String))?.base64Id
-    }
-    
-    func transformToJSON(_ value: String?) -> String? {
-        if let value = value {
-            return WebexId.uuid(value)
-        }
-        return value
-    }
-}
-
-class VerbTransform: TransformType {
-    
-    func transformFromJSON(_ value: Any?) -> ActivityModel.Verb? {
-        if let verb = value as? String {
-            return ActivityModel.Verb(rawValue: verb)
+        else if let object = self.object as? TeamModel {
+            return object.generalConversationUuid
         }
         return nil
     }
 
-    func transformToJSON(_ value: ActivityModel.Verb?) -> String? {
-        return value?.rawValue
-    }
-}
-
-private class ObjectTypeTransform: TransformType {
-
-    func transformFromJSON(_ value: Any?) -> ObjectType? {
-        if let type = value as? String {
-            return ObjectType(rawValue: type)
+    var conversationUrl: String? {
+        if let target = self.target, target.objectType == .conversation {
+            return target.id
+        }
+        else if let object = self.object, object.objectType == .conversation {
+            return object.id
+        }
+        else if let base = self.url?[0, "/activities/"], let convId = self.conversationId {
+            return "\(base)/conversations/\(convId)"
         }
         return nil
     }
 
-    func transformToJSON(_ value: ObjectType?) -> String? {
-        return value?.rawValue
+    func isFromSelf(user: String) -> Bool {
+        return self.actor?.id == user
     }
-}
 
-class SpaceTypeTransform: TransformType {
-    
-    func transformFromJSON(_ value: Any?) -> SpaceType? {
-        if let tags = value as? [String], tags.contains("ONE_ON_ONE") {
-            return SpaceType.direct
-        }
-        return SpaceType.group
+    func isSelfMention(user: String, lastJoinedDate: Date = Date(timeIntervalSince1970: 0)) -> Bool {
+        return isPersonallyMentioned(user: user) || isIncludedInGroupMention(user: user, lastJoinedDate: lastJoinedDate)
     }
-    
-    func transformToJSON(_ value: SpaceType?) -> String? {
-        if let value = value, value == SpaceType.direct {
-            return "ONE_ON_ONE"
-        }
-        return nil
-    }
-}
 
-class LockedTransform : TransformType {
-    
-    func transformFromJSON(_ value: Any?) -> Bool? {
-        if let tags = value as? [String], tags.contains("LOCKED") {
+    private func isPersonallyMentioned(user: String) -> Bool {
+        guard let comment = self.object as? CommentModel else {
+            return false
+        }
+        guard let mentions = comment.mentions?.items, !mentions.isEmpty else {
+            return false
+        }
+        for mention in mentions where mention.id == user {
             return true
         }
         return false
     }
-    
-    func transformToJSON(_ value: Bool?) -> String? {
-        if let value = value, value == true {
-            return "LOCKED"
+
+    private func isIncludedInGroupMention(user: String, lastJoinedDate: Date) -> Bool {
+        guard let comment = self.object as? CommentModel else {
+            return false
         }
-        return "UNLOCKED"
+        guard let mentions = comment.groupMentions?.items, !mentions.isEmpty else {
+            return false
+        }
+        return (!isFromSelf(user: user) && (self.published == nil ? true : self.published! > lastJoinedDate)) ? true : false
+    }
+
+    required init?(map: Map){
+        super.init(map: map)
+    }
+    
+    override func mapping(map: Map) {
+        super.mapping(map: map)
+        self.encryptionKeyUrl <- map["encryptionKeyUrl"]
+        self.verb <- (map["verb"], TransformOf<Verb, String>(fromJSON: { Verb(rawValue: $0!) }, toJSON: { $0?.rawValue } ))
+        self.target <- (map["target"], ObjectModelTransform())
+        self.object <- (map["object"], ObjectModelTransform())
+        self.actor <- map["actor"]
+        self.parent <- map["parent"]
+    }
+
+    override func encrypt(key: String?) {
+        super.encrypt(key: key)
+        self.object?.encrypt(key: key)
+    }
+
+    override func decrypt(key: String?) {
+        super.decrypt(key: key)
+        self.object?.decrypt(key: key)
     }
 }

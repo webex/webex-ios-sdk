@@ -46,7 +46,7 @@ public enum CallStatus {
     /// - since: 2.4.0
     case waiting
     
-    func handle(model: CallModel, for call: Call) {
+    func handle(model: LocusModel, for call: Call) {
         guard let local = model.myself else {
             return;
         }

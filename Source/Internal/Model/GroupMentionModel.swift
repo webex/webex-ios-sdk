@@ -21,39 +21,36 @@
 import Foundation
 import ObjectMapper
 
-struct DeviceModel : Mappable {
-    
-    private(set) var deviceUrlString: String?
-    private(set) var deviceIdentifier: String?
-    private(set) var deviceSettingsString: String?
-    private var webSocketUrlString: String?
-    private var serviceHostMap: ServiceHostModel?
-    var deviceUrl: URL? {
-        if let string = self.deviceUrlString {
-            return URL(string: string)
+class GroupMentionModel : ObjectModel {
+
+    enum GroupType: String {
+        case all
+        case here
+    }
+
+    private(set) var groupType: GroupType?
+
+    required init?(map: Map) {
+        super.init(map: map)
+    }
+
+    override func mapping(map: Map) {
+        super.mapping(map: map)
+        self.groupType <- (map["groupType"], GroupTypeTransform())
+    }
+
+    class GroupTypeTransform: TransformType {
+
+        func transformFromJSON(_ value: Any?) -> GroupType? {
+            if let group = value as? String {
+                return GroupType(rawValue: group)
+            }
+            return nil
         }
-        return nil
-    }
-    
-    var webSocketUrl: URL? {
-        if let string = self.webSocketUrlString {
-            return URL(string: string)
+
+        func transformToJSON(_ value:GroupType?) -> String? {
+            return value?.rawValue
         }
-        return nil
     }
-    
-    subscript(service name: String) -> String? {
-        return self.serviceHostMap?.serviceLinks?[name]
-    }
-    
-    init?(map: Map){
-    }
-    
-    mutating func mapping(map: Map) {
-        deviceUrlString <- map["url"]
-        deviceIdentifier <- map["deviceIdentifier"]
-        webSocketUrlString <- map["webSocketUrl"]
-        deviceSettingsString <- map["deviceSettingsString"]
-        serviceHostMap <- map["serviceHostMap"]
-    }
+
 }

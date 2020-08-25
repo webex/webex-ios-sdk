@@ -20,13 +20,6 @@
 
 import Foundation
 
-enum ObjectType : String {
-    case activity
-    case comment
-    case content
-    case conversation
-}
-
 class MSGError {
     static let spaceFetchFail = WebexError.serviceFailed(code: -7000, reason: "Space Fetch Fail")
     static let clientInfoFetchFail = WebexError.serviceFailed(code: -7000, reason: "Client Info Fetch Fail")

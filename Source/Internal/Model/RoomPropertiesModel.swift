@@ -21,39 +21,17 @@
 import Foundation
 import ObjectMapper
 
-struct DeviceModel : Mappable {
-    
-    private(set) var deviceUrlString: String?
-    private(set) var deviceIdentifier: String?
-    private(set) var deviceSettingsString: String?
-    private var webSocketUrlString: String?
-    private var serviceHostMap: ServiceHostModel?
-    var deviceUrl: URL? {
-        if let string = self.deviceUrlString {
-            return URL(string: string)
-        }
-        return nil
-    }
-    
-    var webSocketUrl: URL? {
-        if let string = self.webSocketUrlString {
-            return URL(string: string)
-        }
-        return nil
-    }
-    
-    subscript(service name: String) -> String? {
-        return self.serviceHostMap?.serviceLinks?[name]
-    }
-    
-    init?(map: Map){
-    }
-    
-    mutating func mapping(map: Map) {
-        deviceUrlString <- map["url"]
-        deviceIdentifier <- map["deviceIdentifier"]
-        webSocketUrlString <- map["webSocketUrl"]
-        deviceSettingsString <- map["deviceSettingsString"]
-        serviceHostMap <- map["serviceHostMap"]
+class RoomPropertiesModel : Mappable {
+
+    private(set) var isModerator: Bool?
+    private(set) var lastSeenActivityDate: Date?
+    private(set) var lastSeenActivityUUID: String?
+
+    required init?(map: Map) {}
+
+    func mapping(map: Map) {
+        self.isModerator <- (map["isModerator"], StringAndBoolTransform())
+        self.lastSeenActivityDate <-  (map["lastSeenActivityDate"], CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
+        self.lastSeenActivityUUID <- map["lastSeenActivityUUID"]
     }
 }
