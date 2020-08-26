@@ -1105,18 +1105,7 @@ public class MessageClient {
     }
 }
 
-extension Date {
-
-    var iso8601String: String {
-        return Timestamp.iSO8601FullFormatterInUTC.string(from: self.addingTimeInterval(-0.1))
-    }
-
-    static func fromISO860(_ string: String) -> Date? {
-        return Timestamp.iSO8601FullFormatterInUTC.date(from: string)
-    }
-}
-
-extension String {
+fileprivate extension String {
 
     var toTextObject: Message.Text {
         return Message.Text.html(html: self, plain: self)

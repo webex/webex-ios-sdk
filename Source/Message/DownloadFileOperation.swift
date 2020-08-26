@@ -127,7 +127,7 @@ class DownloadFileOperation : NSObject, URLSessionDataDelegate {
     }
 }
 
-extension OutputStream {
+fileprivate extension OutputStream {
     func write(data: Data) -> Int {
         return data.withUnsafeBytes { self.write($0, maxLength: data.count) }
     }

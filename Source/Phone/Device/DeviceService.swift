@@ -147,7 +147,7 @@ class DeviceService {
     }
 }
 
-extension UIDevice {
+fileprivate extension UIDevice {
     
     var kind: String {
 

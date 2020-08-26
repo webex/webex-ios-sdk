@@ -518,7 +518,8 @@ extension Call.VideoRenderMode {
     
 }
 
-extension UIView {
+fileprivate extension UIView {
+
     func getSizeConstraint() -> NSLayoutConstraint? {
         for constraint in self.constraints {
             if constraint.firstAttribute == .width || constraint.firstAttribute == .height {

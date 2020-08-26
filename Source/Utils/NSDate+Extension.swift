@@ -21,6 +21,7 @@
 import Foundation
 
 extension Date {
+
     func isAfterDate(_ date: Date) -> Bool {
         return self.compare(date) == .orderedDescending
     }
@@ -38,5 +39,13 @@ extension Date {
     
     var utc: String {
         Timestamp.iSO8601FullFormatterInUTC.string(from: self)
-    }    
+    }
+
+    var iso8601String: String {
+        return Timestamp.iSO8601FullFormatterInUTC.string(from: self.addingTimeInterval(-0.1))
+    }
+
+    static func fromISO860(_ string: String) -> Date? {
+        return Timestamp.iSO8601FullFormatterInUTC.date(from: string)
+    }
 }

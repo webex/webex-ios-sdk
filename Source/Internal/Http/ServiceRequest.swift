@@ -432,7 +432,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     }
 }
 
-extension WebexError {
+fileprivate extension WebexError {
     /// Converts the error data to NSError
     static func requestErrorWith(data: Data) -> Error {
         var failureReason = "Service request failed without error message"

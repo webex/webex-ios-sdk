@@ -88,9 +88,9 @@ public struct Message : CustomStringConvertible {
             return self.html ?? self.markdown ?? self.plain
         }
 
-        fileprivate init(object: ObjectModel?) {
+        fileprivate init(object: ObjectModel?, clusterId: String?) {
             self.plain = object?.displayName
-            self.html = object?.content
+            self.html = object?.content?.reformatHtml(clusterId: clusterId)
             if let comment = object as? CommentModel {
                 self.markdown = comment.markdown
             }
@@ -181,7 +181,6 @@ public struct Message : CustomStringConvertible {
     }
 
     let activity: ActivityModel
-    let clusterId: String
 
     var isMissingThumbnail: Bool {
         if self.activity.verb == .share,
@@ -200,14 +199,13 @@ public struct Message : CustomStringConvertible {
     
     init(activity: ActivityModel, clusterId: String?, person: Person?) {
         self.activity = activity
-        self.clusterId = clusterId ?? WebexId.DEFAULT_CLUSTER_ID
         if let uuid = activity.id {
-            self.id = WebexId(type: .message, cluster: self.clusterId, uuid: uuid).base64Id
+            self.id = WebexId(type: .message, cluster: clusterId, uuid: uuid).base64Id
         }
         if activity.verb == .delete, let object = activity.object, let uuid = object.id {
-            self.id = WebexId(type: .message, cluster: self.clusterId, uuid: uuid).base64Id
+            self.id = WebexId(type: .message, cluster: clusterId, uuid: uuid).base64Id
         }
-        self.textAsObject = Message.Text(object: activity.object)
+        self.textAsObject = Message.Text(object: activity.object, clusterId: clusterId)
 
         if let person = activity.target as? PersonModel, let uuid = person.id {
             self.spaceType = .direct
@@ -215,17 +213,17 @@ public struct Message : CustomStringConvertible {
             self.toPersonEmail = EmailAddress.fromString(person.emailAddress)
         }
         else if let target = activity.target, let uuid = target.id {
-            self.spaceId = WebexId(type: .room, cluster: self.clusterId, uuid: uuid).base64Id
+            self.spaceId = WebexId(type: .room, cluster: clusterId, uuid: uuid).base64Id
             self.spaceType = .group
             if let conv = target as? ConversationModel, conv.isOneOnOne {
                 self.spaceType = .direct
             }
         }
         if self.spaceId == nil, let uuid = activity.conversationId {
-            self.spaceId = WebexId(type: .room, cluster: self.clusterId, uuid: uuid).base64Id
+            self.spaceId = WebexId(type: .room, cluster: clusterId, uuid: uuid).base64Id
         }
         if let parent = self.activity.parent, let uuid = parent.id {
-            self.parentId = WebexId(type: .message, cluster: self.clusterId, uuid: uuid).base64Id
+            self.parentId = WebexId(type: .message, cluster: clusterId, uuid: uuid).base64Id
             self.isReply = parent.isReply
         }
         if let person = person, let base64Id = person.id {
@@ -464,4 +462,29 @@ enum FileType: String, CaseIterable {
         }
         return .unknown
     }
+}
+
+fileprivate extension String {
+
+    func reformatHtml(clusterId: String?) -> String {
+        let pattern = "data-object-type=\"[a-zA-Z]*\"\\s+data-object-id=\"[0-9a-zA-Z-]{1,}\""
+        let regular = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+        var ret = self
+        regular?.enumerateMatches(in: self, options: .reportProgress, range: NSRange(location: 0, length: self.count), using: { (result, flags, objc) in
+            if let result = result {
+                let matched = (self as NSString).substring(with: result.range)
+                let array = matched.components(separatedBy: "\"")
+                let type = array[1] == "person" ? IdentityType.people : IdentityType(rawValue: array[1])
+                let uuid = array[array.count - 2]
+                if let type = type {
+                    let base64Id = WebexId(type: type,
+                            cluster: (type == .people || type == .organization) ? WebexId.DEFAULT_CLUSTER_ID : clusterId,
+                            uuid: uuid).base64Id
+                    ret = ret.replacingOccurrences(of: uuid, with: base64Id)
+                }
+            }
+        })
+        return ret
+    }
+
 }

@@ -299,7 +299,7 @@ class CallClient {
     
 }
 
-extension MediaModel {
+fileprivate extension MediaModel {
 
     func toJson(mediaId: String? = nil) -> [String:Any?] {
         let sdp = Mapper().toJSONString(self, prettyPrint: true)

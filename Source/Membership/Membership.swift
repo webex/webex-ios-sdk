@@ -126,7 +126,7 @@ extension Membership {
             self.personId = WebexId(type: .people, cluster: clusterId, uuid: personId).base64Id
         }
         if let orgId = person.orgId {
-            self.personOrgId = WebexId(type: .organization, cluster: clusterId, uuid: orgId).base64Id
+            self.personOrgId = WebexId(type: .organization, cluster: WebexId.DEFAULT_CLUSTER_ID, uuid: orgId).base64Id
         }
         self.personEmail = EmailAddress.fromString(person.emailAddress)
         self.personDisplayName = person.displayName
@@ -149,7 +149,7 @@ extension Membership {
             self.personId = WebexId(type: .people, cluster: clusterId, uuid: personId).base64Id
         }
         if let orgId = person?.orgId {
-            self.personOrgId = WebexId(type: .organization, cluster: clusterId, uuid: orgId).base64Id
+            self.personOrgId = WebexId(type: .organization, cluster: WebexId.DEFAULT_CLUSTER_ID, uuid: orgId).base64Id
         }
         self.personEmail = EmailAddress.fromString(person?.emailAddress)
         self.personDisplayName = person?.displayName
