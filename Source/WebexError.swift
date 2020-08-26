@@ -29,8 +29,11 @@ public enum WebexError: Error {
     case serviceFailed(code: Int = -7000, reason: String)
     /// The `Phone` has not been registered.
     case unregistered
-    /// The media requires H.264 codec.
+    /// The media requires H.264 codec. Since the user decline the H.264 licesnse.
     case requireH264
+    /// The call was interrupted because the user jumped to view the content of the H.264 licesnse.
+    /// - since 2.6.0
+    case interruptedByViewingH264License
     /// The DTMF is invalid.
     case invalidDTMF
     /// The DTMF is unsupported.
@@ -43,6 +46,7 @@ public enum WebexError: Error {
     /// - since 1.4.0
     case noAuth
     /// The host pin or meeting password is required while dialing.
+    /// - since 2.6.0
     case requireHostPinOrMeetingPassword(reason: String)
 }
 
@@ -56,6 +60,8 @@ extension WebexError: LocalizedError {
             return "unregistered"
         case .requireH264:
             return "requireH264"
+        case .interruptedByViewingH264License:
+            return "interruptedByViewingH264License"
         case .invalidDTMF:
             return "invalidDTMF"
         case .unsupportedDTMF:

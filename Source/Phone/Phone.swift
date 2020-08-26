@@ -88,6 +88,12 @@ public class Phone {
         case videoMaxTxFPS(UInt)
         case videoReceiverBasedQosSupported(Bool)
     }
+
+    public enum H264LicenseAction {
+        case accept
+        case decline
+        case viewLicense(url: URL)
+    }
     
     /// MARK: - Deprecated
     /// The max receiving bandwidth for audio in unit bps for the call.
@@ -462,11 +468,25 @@ public class Phone {
 
     /// Pops up an Alert for the end user to approve the use of H.264 codec license from Cisco Systems, Inc.
     ///
+    /// - parameter completionHandler: A closure to be executed when completed.
     /// - returns: Void
     /// - note: Invoking this function is optional since the alert will appear automatically during the first video call.
     /// - since: 1.2.0
-    public func requestVideoCodecActivation() {
-        self.prompter.check() { _ in }
+    public func requestVideoCodecActivation(completionHandler: ((H264LicenseAction) -> Void)? = nil) {
+        self.prompter.check() { action in
+            if let completionHandler = completionHandler {
+                completionHandler(action)
+            }
+            else {
+                switch action {
+                case .viewLicense(let url):
+                    UIApplication.shared.open(url, options:[:], completionHandler: nil)
+                default:
+                    break
+                }
+            }
+            
+        }
     }
     
     /// Prevents Cisco Webex iOS SDK from poping up an Alert for the end user
@@ -934,12 +954,15 @@ public class Phone {
     
     private func prepare(option: MediaOption, completionHandler: @escaping (Error?) -> Void) {
         if option.hasVideo {
-            self.prompter.check() { activated in
-                if activated {
+            self.prompter.check() { action in
+                switch action {
+                case .accept:
                     completionHandler(nil)
-                }
-                else {
+                case .decline:
                     completionHandler(WebexError.requireH264)
+                case .viewLicense(let url):
+                    UIApplication.shared.open(url, options:[:], completionHandler: nil)
+                    completionHandler(WebexError.interruptedByViewingH264License)
                 }
             }
         }
