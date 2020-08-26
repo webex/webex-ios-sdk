@@ -57,12 +57,12 @@ public class Phone {
         case maxBandwidth180p = 384000
         // 768Kbps for 640x360 resolution
         case maxBandwidth360p = 768000
-        // 2Mbps for 1280x720 resolution
-        case maxBandwidth720p = 2000000
-        // 3Mbps for 1920x1080 resolution
-        case maxBandwidth1080p = 3000000
-        // 4Mbps data session
-        case maxBandwidthSession = 4000000
+        // 2.5Mbps for 1280x720 resolution
+        case maxBandwidth720p = 2500000
+        // 4Mbps for 1920x1080 resolution
+        case maxBandwidth1080p = 4000000
+        // 8Mbps data session
+        case maxBandwidthSession = 8000000
         // 64kbps for voice
         case maxBandwidthAudio = 64000
     }
@@ -329,7 +329,7 @@ public class Phone {
                             self.me = person
                             self.webSocket.connect(device.webSocketUrl) { [weak self] error in
                                 if let error = error {
-                                    PhoneError.registerFailure.report(base: error)
+                                    PhoneError.registerFailure.report(cause: error)
                                 }
                                 if let strong = self {
                                     strong.queue.underlying.async {
@@ -352,7 +352,7 @@ public class Phone {
                         }
                     }
                 case .failure(let error):
-                    PhoneError.registerFailure.report(base: error, errorCallback: completionHandler)
+                    PhoneError.registerFailure.report(cause: error, errorCallback: completionHandler)
                     self.queue.yield()
                 }
             }
@@ -443,7 +443,7 @@ public class Phone {
                                             }
                                         }
                                         else {
-                                            PhoneError.failureCall.report(base: res.error, resultCallback: completionHandler)
+                                            PhoneError.failureCall.report(cause: res.error, resultCallback: completionHandler)
                                             self.queue.yield()
                                         }
                                     }
@@ -772,7 +772,7 @@ public class Phone {
                     }
                     if call.isInIllegalStatus {
                         let error = WebexError.illegalStatus(reason: "The previous session did not end")
-                        PhoneError.failureCall.report(base: error, resultCallback: completionHandler)
+                        PhoneError.failureCall.report(cause: error, resultCallback: completionHandler)
                         DispatchQueue.main.async {
                             call.end(reason: Call.DisconnectReason.error(error))
                         }
@@ -799,7 +799,7 @@ public class Phone {
                     WebexError.serviceFailed(reason: "Failure: Missing required information when dial").report(resultCallback: completionHandler)
                 }
             case .failure(let error):
-                PhoneError.failureCall.report(base: error, resultCallback: completionHandler)
+                PhoneError.failureCall.report(cause: error, resultCallback: completionHandler)
             }
         case .join(let call, let res, let completionHandler):
             switch res.result {
@@ -1025,7 +1025,7 @@ public class Phone {
         if let device = self.devices.device {
             self.webSocket.connect(device.webSocketUrl) { [weak self] error in
                 if let error = error {
-                    PhoneError.registerFailure.report(base: error)
+                    PhoneError.registerFailure.report(cause: error)
                 }
                 self?.queue.underlying.async {
                     self?.fetchActiveCalls()
@@ -1082,17 +1082,17 @@ enum PhoneError: String {
         return "Failure: " + self.rawValue
     }
 
-    func report<T>(base: Error? = nil, by queue: DispatchQueue? = nil, resultCallback: ((Result<T>) -> Void)? = nil) {
+    func report<T>(cause: Error? = nil, by queue: DispatchQueue? = nil, resultCallback: ((Result<T>) -> Void)? = nil) {
         (queue ?? DispatchQueue.main).async {
-            SDKLogger.shared.error(self.rawValue, error: base)
-            resultCallback?(Result.failure(base ?? WebexError.illegalOperation(reason: self.rawValue)))
+            SDKLogger.shared.error(self.rawValue, error: cause)
+            resultCallback?(Result.failure(cause ?? WebexError.illegalOperation(reason: self.rawValue)))
         }
     }
 
-    func report(base: Error? = nil, by queue: DispatchQueue? = nil, errorCallback: ((Error?) -> Void)? = nil) {
+    func report(cause: Error? = nil, by queue: DispatchQueue? = nil, errorCallback: ((Error?) -> Void)? = nil) {
         (queue ?? DispatchQueue.main).async {
-            SDKLogger.shared.error(self.rawValue, error: base)
-            errorCallback?(base ?? WebexError.illegalOperation(reason: self.rawValue))
+            SDKLogger.shared.error(self.rawValue, error: cause)
+            errorCallback?(cause ?? WebexError.illegalOperation(reason: self.rawValue))
         }
     }
 }
