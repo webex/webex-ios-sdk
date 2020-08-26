@@ -207,7 +207,7 @@ public class Phone {
         return self.devices.device != nil
     }
     
-    let webex: Webex
+    weak var webex: Webex?
     let authenticator: Authenticator
     let reachability: ReachabilityService
     let devices: DeviceService
@@ -935,17 +935,17 @@ public class Phone {
         if let verb = model.verb {
             switch verb {
             case .post, .share, .delete:
-                self.webex.messages.handle(activity: model)
+                self.webex?.messages.handle(activity: model)
             case .acknowledge, .add, .leave, .assignModerator, .unassignModerator:
-                self.webex.memberships.handle(activity: model)
+                self.webex?.memberships.handle(activity: model)
             case .create:
-                self.webex.spaces.handle(activity: model)
+                self.webex?.spaces.handle(activity: model)
             case .update:
                 if model.objectType == ObjectType.activity {
-                    self.webex.messages.handle(activity: model)
+                    self.webex?.messages.handle(activity: model)
                 }
                 else if model.objectType == ObjectType.conversation {
-                    self.webex.spaces.handle(activity: model)
+                    self.webex?.spaces.handle(activity: model)
                 }
             default:
                 SDKLogger.shared.error("Not a valid message \(model.uuid ?? (model.toJSONString() ?? ""))")
@@ -955,7 +955,7 @@ public class Phone {
     
     private func doKmsEvent( _ model: KmsMessageModel){
         SDKLogger.shared.debug("Receive Kms Message: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
-        self.webex.messages.handle(kms: model)
+        self.webex?.messages.handle(kms: model)
     }
     
     private func prepare(option: MediaOption, completionHandler: @escaping (Error?) -> Void) {
