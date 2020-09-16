@@ -125,6 +125,10 @@ struct CallModel {
         return fullState?.type == "MEETING" && meeting != nil
     }
     
+    var isInActive:Bool {
+        return fullState?.state == "INACTIVE"
+    }
+    
     var isRemoteVideoMuted: Bool {
         for participant in self.participants ?? [] where participant.id != myself?.id && participant.isJoined && participant.isCIUser {
             if participant.status?.videoStatus != "RECVONLY" && participant.status?.videoStatus != "INACTIVE" {
