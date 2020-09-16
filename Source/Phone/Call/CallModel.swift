@@ -46,6 +46,30 @@ struct CallResponseModel {
     fileprivate(set) var mediaConnections: [MediaConnectionModel]?
 }
 
+struct MeetingModel {
+    fileprivate(set) var meetingId: String?
+    fileprivate(set) var startTime: Date?
+    fileprivate(set) var durationMinutes: Int?
+    fileprivate(set) var organizer: String?
+    fileprivate(set) var resourceUrl:String?
+    fileprivate(set) var removed: Bool?
+    fileprivate(set) var icalUid:String?
+    fileprivate(set) var resourceType:String?
+}
+
+struct MeetingInfoModel {
+    fileprivate(set) var webExMeetingId: String?
+    fileprivate(set) var owner: String?
+    fileprivate(set) var conversationUrl: String?
+    fileprivate(set) var webexServiceType: String?
+    fileprivate(set) var callInTollFreeNumber: String?
+    fileprivate(set) var callInTollNumber:String?
+    fileprivate(set) var isPmr: Bool?
+    fileprivate(set) var meetingAvatarUrl: String?
+    fileprivate(set) var topic:String?
+    fileprivate(set) var sipUri:String?
+}
+
 struct CallModel {
     fileprivate(set) var locusUrl: String? // Mandatory
     fileprivate(set) var participants: [ParticipantModel]?
@@ -58,6 +82,8 @@ struct CallModel {
     fileprivate(set) var replaces: [ReplaceModel]?
     fileprivate(set) var mediaShares: [MediaShareModel]?
     fileprivate(set) var mediaConnections: [MediaConnectionModel]?
+    fileprivate(set) var meeting: MeetingModel?
+    fileprivate(set) var meetingInfo: MeetingInfoModel?
     
     subscript(participant id: String) -> ParticipantModel? {
         return self.participants?.filter({$0.id == id}).first
@@ -93,6 +119,10 @@ struct CallModel {
     
     var isIncomingCall: Bool {
         return fullState?.state == "ACTIVE" && myself?.alertType?.action == "FULL"
+    }
+    
+    var isScheduledCall: Bool {
+        return fullState?.type == "MEETING" && meeting != nil
     }
     
     var isRemoteVideoMuted: Bool {
@@ -177,6 +207,8 @@ extension CallModel: Mappable {
         syncUrl <- map["syncUrl"]
         replaces <- map["replaces"]
         mediaShares <- map["mediaShares"]
+        meeting <- map["meeting"]
+        meetingInfo <- map["info"]
 	}
 }
 
@@ -208,6 +240,40 @@ extension CallResponseModel: Mappable {
     mutating func mapping(map: Map) {
         callModel <- map["locus"]
         mediaConnections <- map["mediaConnections"]
+    }
+}
+
+extension MeetingModel: Mappable {
+    init?(map: Map) {
+    }
+    
+    mutating func mapping(map: Map) {
+        meetingId <- map["meetingId"]
+        startTime <- (map["startTime"], CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
+        durationMinutes <- map["durationMinutes"]
+        organizer <- map["organizer"]
+        resourceUrl <- map["resourceUrl"]
+        removed <- map["removed"]
+        icalUid <- map["icalUid"]
+        resourceType <- map["resourceType"]
+    }
+}
+
+extension MeetingInfoModel: Mappable {
+    init?(map: Map) {
+    }
+    
+    mutating func mapping(map: Map) {
+        webExMeetingId <- map["webExMeetingId"]
+        owner <- map["owner"]
+        conversationUrl <- map["conversationUrl"]
+        webexServiceType <- map["webexServiceType"]
+        callInTollFreeNumber <- map["callInTollFreeNumber"]
+        callInTollNumber <- map["callInTollNumber"]
+        isPmr <- map["isPmr"]
+        meetingAvatarUrl <- map["meetingAvatarUrl"]
+        topic <- map["topic"]
+        sipUri <- map["sipUri"]
     }
 }
 

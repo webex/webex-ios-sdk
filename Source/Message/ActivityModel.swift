@@ -37,12 +37,14 @@ struct ActivityModel : Mappable {
         case hide
         case assignModerator
         case unassignModerator
+        case schedule
         
         static func isSupported(_ verb: String) -> Bool {
             if verb == post.rawValue || verb == share.rawValue || verb == delete.rawValue
                 || verb == add.rawValue || verb == leave.rawValue || verb == acknowledge.rawValue
                 || verb == create.rawValue || verb == update.rawValue
-                || verb == assignModerator.rawValue || verb == unassignModerator.rawValue {
+                || verb == assignModerator.rawValue || verb == unassignModerator.rawValue
+                || verb == schedule.rawValue {
                 return true
             } else {
                 return false

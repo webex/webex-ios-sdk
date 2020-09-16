@@ -195,6 +195,11 @@ public class Phone {
     /// - since: 1.2.0
     public var onIncoming: ((Call) -> Void)?
     
+    /// Callback when scheduled meeting will start or been active.
+    ///
+    /// - since: 2.6.0
+    public var onScheduledMeeting: ((MeetingEvent) -> Void)?
+    
     /// Indicates whether or not the SDK is connected with the Cisco Webex cloud.
     ///
     /// - since: 1.4.0
@@ -904,15 +909,23 @@ public class Phone {
         }
         if let call = self.calls[url] {
             call.update(model: model)
+            
+            if model.isScheduledCall {
+                let meeting = ScheduledMeeting(model: model, call: call)
+                DispatchQueue.main.async {
+                    meeting.isRemoved == true ? self.onScheduledMeeting?(.removed(meeting)) : self.onScheduledMeeting?(.updated(meeting))
+                }
+            }
         }
-        else if let device = self.devices.device, model.isIncomingCall { // || callInfo.hasJoinedOnOtherDevice(deviceUrl: deviceUrl)
+        else if let device = self.devices.device, model.isValid {
+            // || callInfo.hasJoinedOnOtherDevice(deviceUrl: deviceUrl)
             // XXX: Is this conditional intended to add this call even when there is no real device registration information?
             // At the time of writing the deviceService.deviceUrl will return a saved value from the UserDefaults. When the application
             // has been restarted and the reregistration process has not completed, other critical information such as locusServiceUrl
             // will not be available, but the deviceUrl WILL be. This may put the application in a bad state. This code MAY be dealing with
             // a race condition and this MAY be the solution to not dropping a call before reregistration has been completed.
             // If so it needs improvement, if not it may be able to be dropped.
-            if model.isValid {
+            if model.isIncomingCall {
                 let call = Call(model: model, device: device, media: self.mediaContext ?? MediaSessionWrapper(), direction: Call.Direction.incoming, group: !model.isOneOnOne, correlationId:UUID())
                 self.add(call: call)
                 SDKLogger.shared.info("Receive incoming call: \(call.model.callUrl ?? call.uuid.uuidString)")
@@ -920,10 +933,17 @@ public class Phone {
                     self.onIncoming?(call)
                 }
             }
+            else if model.isScheduledCall {
+                let call = Call(model: model, device: device, media: self.mediaContext ?? MediaSessionWrapper(), direction: Call.Direction.incoming, group: !model.isOneOnOne, correlationId:UUID())
+                self.add(call: call)
+                SDKLogger.shared.info("Receive Scheduled call: \(call.model.callUrl ?? call.uuid.uuidString)")
+                DispatchQueue.main.async {
+                    self.onScheduledMeeting?(.received(ScheduledMeeting(model: model, call: call)))
+                }
+            }
             else {
                 SDKLogger.shared.info("Receive incoming call with error: \(model)")
             }
-            // TODO: need to support other device joined case
         }
         else {
             SDKLogger.shared.info("Cannot handle the CallModel.")
