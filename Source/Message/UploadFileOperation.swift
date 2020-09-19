@@ -107,14 +107,19 @@ class UploadFileOperation {
                 if let url = result.data {
                     let headers: HTTPHeaders = ["Authorization": "Bearer " + token, "Content-Type": "application/json;charset=UTF-8", "TrackingID": TrackingId.generator.next, "User-Agent": UserAgent.string, "Webex-User-Agent": UserAgent.string]
                     Alamofire.request(url + "/upload_sessions", method: .post, parameters: ["uploadProtocol":"content-length"], encoding: JSONEncoding.default, headers: headers).responseJSON { (prepareResponse: DataResponse<Any>) in
+                        SDKLogger.shared.verbose(prepareResponse.debugDescription)
                         if let dict = prepareResponse.result.value as? [String : Any], let uploadUrl = dict["uploadUrl"] as? String, let finishUrl = dict["finishUploadUrl"] as? String,
                            let scr = try? SecureContentReference(error: ()),
                            let inputStream = try? SecureInputStream(stream: InputStream(fileAtPath: path), scr: scr) {
+                            SDKLogger.shared.debug("Uploading file \(path), \(size)")
                             Alamofire.upload(inputStream, to: uploadUrl, method: .put, headers: ["Content-Length": String(size)]).uploadProgress(closure: { (progress) in
                                 progressHandler?(progressStart + progress.fractionCompleted/2)
                             }).responseString { uploadResponse in
+                                SDKLogger.shared.verbose(uploadResponse.debugDescription)
                                 if let _ = uploadResponse.result.value {
+                                    let headers: HTTPHeaders = ["Authorization": "Bearer " + token, "Content-Type": "application/json;charset=UTF-8", "TrackingID": TrackingId.generator.next, "User-Agent": UserAgent.string, "Webex-User-Agent": UserAgent.string]
                                     Alamofire.request(finishUrl, method: .post, parameters: ["size": size], encoding: JSONEncoding.default, headers: headers).responseJSON { finishResponse in
+                                        SDKLogger.shared.verbose(finishResponse.debugDescription)
                                         if let dict = finishResponse.result.value as? [String : Any], let downLoadUrl = dict["downloadUrl"] as? String, let url = URL(string: downLoadUrl) {
                                             scr.loc = url
                                             completionHandler(dict.union(["objectType": "file", "url": downLoadUrl, "fileSize": dict["size"] ?? size]), scr, nil)
