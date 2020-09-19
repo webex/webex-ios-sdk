@@ -39,6 +39,26 @@ struct DiagnosticOriginTime: Mappable {
     }
 }
 
+struct ClientInfo: Mappable {
+    private(set) var clientType: String?
+    private(set) var os: String?
+    private(set) var osVersion: String?
+
+    init(clientType: String, os: String, osVersion: String) {
+        self.clientType = clientType
+        self.os = os
+        self.osVersion = osVersion
+    }
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        self.clientType <- map["clientType"]
+        self.os <- map["os"]
+        self.osVersion <- map["osVersion"]
+    }
+}
+
 enum DiagnosticOriginBuildType: String {
     case debug
     case test
@@ -61,17 +81,20 @@ struct DiagnosticOrigin: Mappable {
     private(set) var localIpAddress: String?
     private(set) var usingProxy: Bool?
     private(set) var mediaEngineSoftwareVersion: String?
+    private(set) var clientInfo: ClientInfo?
     
     init(userAgent: String,
          networkType: DiagnosticOriginNetworkType,
          localIpAddress: String?,
          usingProxy: Bool,
-         mediaEngineSoftwareVersion: String?) {
+         mediaEngineSoftwareVersion: String?,
+         clientInfo: ClientInfo) {
         self.userAgent = userAgent
         self.networkType = networkType
         self.localIpAddress = localIpAddress
         self.usingProxy = usingProxy
         self.mediaEngineSoftwareVersion = mediaEngineSoftwareVersion
+        self.clientInfo = clientInfo
     }
     
     init?(map: Map) {}
@@ -84,6 +107,7 @@ struct DiagnosticOrigin: Mappable {
         self.localIpAddress <- map["localIP"]
         self.usingProxy <- map["usingProxy"]
         self.mediaEngineSoftwareVersion <- map["mediaEngineSoftwareVersion"]
+        self.clientInfo <- map["clientInfo"]
     }
 
 }
