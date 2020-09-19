@@ -285,14 +285,14 @@ class CallClient {
                     }
                     if let layout = option?.layout, let url = locus.myself?.url, let device = locus.myself?.deviceUrl  {
                         self.layout(url, by: device, layout: layout, queue: queue ?? DispatchQueue.main) { _ in
-                            completionHandler(ServiceResponse.init(result.response, Result.success(locus)))
+                            completionHandler(ServiceResponse(result.response, Result.success(locus)))
                         }
                         return;
                     }
-                    completionHandler(ServiceResponse.init(result.response, Result.success(locus)))
+                    completionHandler(ServiceResponse(result.response, Result.success(locus)))
                 }
             case .failure(let error):
-                completionHandler(ServiceResponse.init(result.response, Result.failure(error)))
+                completionHandler(ServiceResponse(result.response, Result.failure(error)))
             }
         }
     }

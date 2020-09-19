@@ -659,6 +659,20 @@ public class Phone {
         }
     }
     
+    func layout(call: Call, layout: MediaOption.VideoLayout) {
+        self.queue.sync {
+            if let url = call.model.myself?.url {
+                self.client.layout(url, by: call.device.deviceUrl.absoluteString, layout: layout, queue: self.queue.underlying) { res in
+                    self.queue.yield()
+                }
+            }
+            else {
+                WebexError.serviceFailed(reason: "Missing self participant URL").report()
+                self.queue.yield()
+            }
+        }
+    }
+    
     func update(call: Call, sendingAudio: Bool, sendingVideo: Bool, localSDP:String? = nil, completionHandler: @escaping (Error?) -> Void) {
         DispatchQueue.main.async {
             let reachabilities = self.reachability.feedback?.reachabilities
@@ -766,7 +780,7 @@ public class Phone {
             case .success(let model):
                 SDKLogger.shared.debug("Receive call locus response: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
                 if model.isValid {
-                    let call = Call(model: model, device: device, media: media, direction: Call.Direction.outgoing, group: !model.isOneOnOne, correlationId: correlationId)
+                    let call = Call(model: model, device: device, media: media, direction: Call.Direction.outgoing, group: !model.isOneOnOne, option: option, correlationId: correlationId)
                     if let uuid = option.uuid {
                         call.uuid = uuid
                     }

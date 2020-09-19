@@ -505,12 +505,30 @@ public class Call {
         return CMVideoDimensions(width: Int32(size.width), height: Int32(size.height))
     }
     
+    ///  Specify how the video adjusts its content to be render in a view.
+    ///
+    /// - since: 2.6.0
     public var remoteVideoRenderMode: VideoRenderMode {
         get {
             return self.mediaSession.remoteVideoRenderMode
         }
         set {
             self.mediaSession.remoteVideoRenderMode = newValue
+        }
+    }
+    
+    /// The video layout for the active speaker and other attendees in the group video meeting.
+    ///
+    /// - since: 2.6.0
+    public var videoLayout: MediaOption.VideoLayout? {
+        get {
+            return self._videoLayout
+        }
+        set {
+            if let layout = newValue {
+                self._videoLayout = layout
+                self.device.phone.layout(call: self, layout: layout)
+            }
         }
     }
     
@@ -657,7 +675,7 @@ public class Call {
     static  let activeSpeakerCount = 1
     private let dtmfQueue: DtmfQueue
     
-    private var dail: String?
+    private var _videoLayout: MediaOption.VideoLayout?
     private var callModel: LocusModel
     private var callMemberships: [CallMembership]?
     private var availableStreamCount:Int = 0
@@ -734,7 +752,7 @@ public class Call {
     
     private var MQETimer: Timer?
     
-    init(model: LocusModel, device: Device, media: MediaSessionWrapper, direction: Direction, group: Bool, correlationId: UUID) {
+    init(model: LocusModel, device: Device, media: MediaSessionWrapper, direction: Direction, group: Bool, option: MediaOption? = nil, correlationId: UUID) {
         self.direction = direction
         self.isGroup = group
         self.device = device
@@ -747,6 +765,7 @@ public class Call {
         self.metrics.trackCallStarted()
         self.videoRenderViews = media.videoViews
         self.screenShareRenderView = media.screenShareView
+        self._videoLayout = option?.layout
         self.doCallModel(model)
     }
     
@@ -783,6 +802,7 @@ public class Call {
     /// - see: see CallStatus
     /// - since: 1.2.0
     public func answer(option: MediaOption, completionHandler: @escaping (Error?) -> Void) {
+        self._videoLayout = option.layout
         self.device.phone.answer(call: self, option: option, completionHandler: completionHandler)
     }
     
