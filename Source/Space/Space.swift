@@ -120,18 +120,6 @@ extension Space: Mappable {
     }
 }
 
-extension Space {
-
-    init(activity: ActivityModel, clusterId: String?) {
-        self.lastActivityTimestamp = activity.published
-        if let conv = ((activity.verb == .create) ? activity.object : activity.target) as? ConversationModel, let convId = conv.id {
-            self.id = WebexId(type: .room, cluster: clusterId, uuid: convId).base64Id
-            self.isLocked = conv.isLocked
-            self.type = conv.isOneOnOne ? .direct : .group
-        }
-    }
-}
-
 /// Read status about the date of last activity in the space and the date of current user last presence in the space.
 ///
 /// For spaces where lastActivityDate > lastSeenDate the space can be considered to be "unread".

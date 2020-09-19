@@ -245,19 +245,29 @@ extension SpaceClient {
         guard let verb = activity.verb else {
             return
         }
-        let space = Space(activity: activity, clusterId: phone.devices.device?.getClusterId(url: activity.url))
-        var event: SpaceEvent?
-        switch verb {
-        case .create:
-            event = SpaceEvent.create(space)
-        case .update:
-            event = SpaceEvent.update(space)
-         default:
-            break
+        guard let conv = ((activity.verb == .create) ? activity.object : activity.target) as? ConversationModel, let convId = conv.id else {
+            return
         }
-        if let event = event {
-            self.onEvent?(event)
-            self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me))
+        let spaceId = WebexId(type: .room, cluster: phone.devices.device?.getClusterId(url: activity.url), uuid: convId).base64Id
+        self.get(spaceId: spaceId) { res in
+            if let space = res.result.data {
+                var event: SpaceEvent?
+                switch verb {
+                case .create:
+                    event = SpaceEvent.create(space)
+                case .update:
+                    event = SpaceEvent.update(space)
+                 default:
+                    break
+                }
+                if let event = event {
+                    self.onEvent?(event)
+                    self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me))
+                }
+            }
+            else {
+                SDKLogger.shared.warn("Cannot found space with the id: \(spaceId)", error: res.result.error)
+            }
         }
     }
 

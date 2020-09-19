@@ -39,7 +39,7 @@ enum ObjectType : String {
     case link
 }
 
-class ObjectModel : Mappable {
+class ObjectModel : Mappable, CustomStringConvertible {
 
     private(set) var objectType: ObjectType?
     var id: String?
@@ -70,6 +70,8 @@ class ObjectModel : Mappable {
         self.displayName = self.displayName?.decrypt(key: key)
         self.content = self.content?.decrypt(key: key)
     }
+    
+    public var description: String { return self.toJSONString(prettyPrint: false) ?? String(describing: type(of: self)) }
 }
 
 class ObjectModelTransform: TransformType {

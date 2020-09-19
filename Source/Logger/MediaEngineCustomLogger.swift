@@ -24,7 +24,7 @@ import Wme
 class MediaEngineCustomLogger : CustomLogger {
     
     @objc func logVerbose(_ message: String!, file: String!, function: String!, line: UInt) {
-        //SDKLogger.shared.verbose(message, file: file, function: function, line: line)
+        SDKLogger.shared.verbose(message, file: file, function: function, line: line)
     }
     
     @objc func logDebug(_ message: String!, file: String!, function: String!, line: UInt) {
