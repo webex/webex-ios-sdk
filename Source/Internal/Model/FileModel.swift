@@ -25,7 +25,7 @@ class FileModel : ObjectModel {
 
     private(set) var fileSize: UInt64?
     private(set) var mimeType: String?
-    private(set) var image: ImageModel?
+    var image: ImageModel?
     private(set) var scr: String?
     var scrObject: SecureContentReference?
 

@@ -66,27 +66,27 @@ class UploadFileOperation {
     }
 
     func run(client: MessageClient, completionHandler: @escaping (Result<FileModel>) -> Void) {
-        self.doUpload(client: client, path: self.local.path, size: self.local.size, progressStart: 0, progressHandler: self.local.progressHandler) { fileModel, fileScr, error in
-            if let fileModel = fileModel, var file = Mapper<FileModel>().map(JSON: fileModel.union(["displayName": self.local.name])), let fileScr = fileScr {
-                file.scrObject = fileScr
+        self.doUpload(client: client, path: self.local.path, size: self.local.size, progressStart: 0, progressHandler: self.local.progressHandler) { fileUrl, fileScr, error in
+            if let fileUrl = fileUrl, let fileScr = fileScr, let fileModel = Mapper<FileModel>().map(JSON: ["objectType": ObjectType.file.rawValue, "displayName": self.local.name, "mimeType": self.local.mime, "fileSize": self.local.size, "url": fileUrl]) {
+                fileModel.scrObject = fileScr
                 if let thumb = self.local.thumbnail {
-                    self.doUpload(client: client, path: thumb.path, size: thumb.size, progressStart: 0.5, progressHandler: self.local.progressHandler) { thumbModel, thumbScr, error in
-                        if let thumbModel = thumbModel, let thumb = Mapper<ImageModel>().map(JSON: thumbModel.union(["width": thumb.width, "height": thumb.height])), let thumbScr = thumbScr {
-                            thumb.scrObject = thumbScr
-                            file = Mapper<FileModel>().map(JSON: ["image": thumb], toObject: file)
+                    self.doUpload(client: client, path: thumb.path, size: thumb.size, progressStart: 0.5, progressHandler: self.local.progressHandler) { thumbUrl, thumbScr, error in
+                        if let thumbUrl = thumbUrl, let imageModel = Mapper<ImageModel>().map(JSON: ["width": thumb.width, "height": thumb.height, "mimeType": thumb.mime, "url": thumbUrl]), let thumbScr = thumbScr {
+                            imageModel.scrObject = thumbScr
+                            fileModel.image = imageModel
                         }
                         self.done = true
                         self.key.material(client: client) { material in
-                            file.encrypt(key: material.data)
-                            completionHandler(Result.success(file))
+                            fileModel.encrypt(key: material.data)
+                            completionHandler(Result.success(fileModel))
                         }
                     }
                 }
                 else {
                     self.done = true
                     self.key.material(client: client) { material in
-                        file.encrypt(key: material.data)
-                        completionHandler(Result.success(file))
+                        fileModel.encrypt(key: material.data)
+                        completionHandler(Result.success(fileModel))
                     }
                 }
             }
@@ -97,7 +97,7 @@ class UploadFileOperation {
         }
     }
 
-    private func doUpload(client: MessageClient, path: String, size: UInt64, progressStart: Double, progressHandler: ((Double) -> Void)?, completionHandler: @escaping ([String: Any]?, SecureContentReference?, Error?) -> Void) {
+    private func doUpload(client: MessageClient, path: String, size: UInt64, progressStart: Double, progressHandler: ((Double) -> Void)?, completionHandler: @escaping (String?, SecureContentReference?, Error?) -> Void) {
         client.authenticator.accessToken { token in
             guard let token = token else {
                 completionHandler(nil, nil, WebexError.noAuth)
@@ -122,7 +122,7 @@ class UploadFileOperation {
                                         SDKLogger.shared.verbose(finishResponse.debugDescription)
                                         if let dict = finishResponse.result.value as? [String : Any], let downLoadUrl = dict["downloadUrl"] as? String, let url = URL(string: downLoadUrl) {
                                             scr.loc = url
-                                            completionHandler(dict.union(["objectType": "file", "url": downLoadUrl, "fileSize": dict["size"] ?? size]), scr, nil)
+                                            completionHandler(downLoadUrl, scr, nil)
                                         }
                                         else {
                                             completionHandler(nil, nil, finishResponse.error)
