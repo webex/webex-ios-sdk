@@ -128,6 +128,10 @@ struct ParticipantModel {
         return false
     }
 
+    var isRemoved: Bool {
+        return self.removed ?? false
+    }
+
     var device: ParticipantModel.DeviceModel? {
         if let deviceUrl = self.deviceUrl {
             return self.devices?.filter{ $0.url == deviceUrl }.first

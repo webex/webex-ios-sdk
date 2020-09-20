@@ -46,13 +46,16 @@
 		10D4D802212D1D4E00B37D98 /* TeamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B865B212A74A500D316F4 /* TeamTests.swift */; };
 		10F0658821081BBA001B1514 /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658621081BBA001B1514 /* Space.swift */; };
 		10F0658921081BBA001B1514 /* SpaceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658721081BBA001B1514 /* SpaceClient.swift */; };
+		1A4AB2A1B8CF5D5A5971436C /* ReplaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4ABF1DB9D2BAF92E69D798 /* ReplaceModel.swift */; };
 		1A4AB2BE6D213B4CF64C7117 /* ServicesClusterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB6B5C4E329CB9B151B56 /* ServicesClusterModel.swift */; };
 		1A4AB366B8F3BA26DE3BDCBF /* GroupMentionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB3B34C9D9BD949E98D4C /* GroupMentionModel.swift */; };
 		1A4AB57671F087921C4BE549 /* Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4ABDA8F54F2F26D5AB289D /* Timers.swift */; };
 		1A4AB58CA1B0D6EEC68976F9 /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB920D9C868BB62345F68 /* ContentModel.swift */; };
 		1A4AB6DA6625D7BBD2B21547 /* TeamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4ABDA75CE63F3A1215E1D9 /* TeamModel.swift */; };
 		1A4AB6E9F62043BE470AE71D /* FileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB89BFD2BBB9ABAB66690 /* FileModel.swift */; };
+		1A4AB825071DD9228258853C /* CallEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB8C765F73F8443D89333 /* CallEventModel.swift */; };
 		1A4AB9CFB1516C0D6CA61CD0 /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4ABA1AFECE7AA572998B3F /* ImageModel.swift */; };
+		1A4ABA8BA41948109289FCBA /* FullStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB945655B7C805B948010 /* FullStateModel.swift */; };
 		1A4ABB6B84201388BDB31330 /* ObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4ABA1A00ED657B95AA6786 /* ObjectModel.swift */; };
 		1A4ABDDEF6B7A7A1A9057F25 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB53C9E60E63E0AA18E46 /* CommentModel.swift */; };
 		1A4ABEB4821291E49F7128E1 /* ParentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB5D0AA201271E8895CDA /* ParentModel.swift */; };
@@ -273,11 +276,14 @@
 		1A4AB6B5C4E329CB9B151B56 /* ServicesClusterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesClusterModel.swift; sourceTree = "<group>"; };
 		1A4AB72BDBD6BED1CAF46431 /* RoomPropertiesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomPropertiesModel.swift; sourceTree = "<group>"; };
 		1A4AB89BFD2BBB9ABAB66690 /* FileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileModel.swift; sourceTree = "<group>"; };
+		1A4AB8C765F73F8443D89333 /* CallEventModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallEventModel.swift; sourceTree = "<group>"; };
 		1A4AB920D9C868BB62345F68 /* ContentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentModel.swift; sourceTree = "<group>"; };
+		1A4AB945655B7C805B948010 /* FullStateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullStateModel.swift; sourceTree = "<group>"; };
 		1A4ABA1A00ED657B95AA6786 /* ObjectModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectModel.swift; sourceTree = "<group>"; };
 		1A4ABA1AFECE7AA572998B3F /* ImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
 		1A4ABDA75CE63F3A1215E1D9 /* TeamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamModel.swift; sourceTree = "<group>"; };
 		1A4ABDA8F54F2F26D5AB289D /* Timers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timers.swift; sourceTree = "<group>"; };
+		1A4ABF1DB9D2BAF92E69D798 /* ReplaceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaceModel.swift; sourceTree = "<group>"; };
 		1A4EDCBCF0893EEB4982A765 /* Pods-WebexBroadcastExtensionKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebexBroadcastExtensionKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WebexBroadcastExtensionKitTests/Pods-WebexBroadcastExtensionKitTests.release.xcconfig"; sourceTree = "<group>"; };
 		1EEDFDBB5DCAF8BB879883B2 /* Pods-WebexBroadcastExtensionKit.releasetest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebexBroadcastExtensionKit.releasetest.xcconfig"; path = "Pods/Target Support Files/Pods-WebexBroadcastExtensionKit/Pods-WebexBroadcastExtensionKit.releasetest.xcconfig"; sourceTree = "<group>"; };
 		20418FDF1EACCFDD00626326 /* KeychainProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainProtocol.swift; sourceTree = "<group>"; };
@@ -626,6 +632,9 @@
 				1A4AB920D9C868BB62345F68 /* ContentModel.swift */,
 				1A4AB5D0AA201271E8895CDA /* ParentModel.swift */,
 				1A4AB72BDBD6BED1CAF46431 /* RoomPropertiesModel.swift */,
+				1A4AB8C765F73F8443D89333 /* CallEventModel.swift */,
+				1A4AB945655B7C805B948010 /* FullStateModel.swift */,
+				1A4ABF1DB9D2BAF92E69D798 /* ReplaceModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1367,6 +1376,9 @@
 				1A4AB58CA1B0D6EEC68976F9 /* ContentModel.swift in Sources */,
 				1A4ABEB4821291E49F7128E1 /* ParentModel.swift in Sources */,
 				1A4ABFFE052649F96B90DA20 /* RoomPropertiesModel.swift in Sources */,
+				1A4AB825071DD9228258853C /* CallEventModel.swift in Sources */,
+				1A4ABA8BA41948109289FCBA /* FullStateModel.swift in Sources */,
+				1A4AB2A1B8CF5D5A5971436C /* ReplaceModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

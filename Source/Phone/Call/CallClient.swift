@@ -281,7 +281,7 @@ class CallClient {
             case .success(let model):
                 if var locus = model.locus {
                     if let media = model.mediaConnections {
-                        locus.setMediaConnections(newMediaConnections: media)
+                        locus.mediaConnections = media
                     }
                     if let layout = option?.layout, let url = locus.myself?.url, let device = locus.myself?.deviceUrl  {
                         self.layout(url, by: device, layout: layout, queue: queue ?? DispatchQueue.main) { _ in
