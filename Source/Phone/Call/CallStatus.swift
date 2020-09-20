@@ -91,6 +91,9 @@ private func handleNonStartFor(_ call: Call, _ participant: ParticipantModel) {
             else if participant.isDeclined {
                 call.end(reason: Call.DisconnectReason.otherDeclined)
             }
+            else if call.model.isInActive {
+                call.end(reason: Call.DisconnectReason.remoteCancel)
+            }
         }
         else if call.isRemoteDeclined || call.isRemoteLeft {
             call.end(reason: Call.DisconnectReason.remoteCancel)

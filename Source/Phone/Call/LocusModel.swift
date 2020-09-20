@@ -94,6 +94,10 @@ struct LocusModel {
     var isIncomingCall: Bool {
         return fullState?.state == "ACTIVE" && myself?.alertType?.action == "FULL"
     }
+
+    var isInActive: Bool {
+        return fullState?.state == "INACTIVE"
+    }
     
     var isRemoteVideoMuted: Bool {
         for participant in self.participants ?? [] where participant.id != myself?.id && participant.isJoined && participant.isCIUser {
