@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 import UIKit
 
-// MediaRenderView is an OpenGL backed UIView
+/// MediaRenderView is an OpenGL backed UIView, used to display video, developer should let customized video view inherit it.
 public class MediaRenderView : UIView {
     
     override public class var layerClass: AnyClass {
