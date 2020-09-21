@@ -19,27 +19,26 @@
 // THE SOFTWARE.
 
 import Foundation
-import Wme
 
-class MediaEngineCustomLogger : CustomLogger {
-    
-    @objc func logVerbose(_ message: String!, file: String!, function: String!, line: UInt) {
-        //SDKLogger.shared.verbose(message, file: file, function: function, line: line)
+struct Pair<T:Hashable,U:Hashable> : Hashable {
+
+    let left: T
+    let right: U
+
+    init(_ left: T, _ right: U) {
+        self.left = left
+        self.right = right
     }
-    
-    @objc func logDebug(_ message: String!, file: String!, function: String!, line: UInt) {
-        SDKLogger.shared.debug(message, file: file, function: function, line: line)
+
+    var hashValue: Int {
+        get {
+            return left.hashValue &* 31 &+ right.hashValue
+        }
     }
-    
-    @objc func logInfo(_ message: String!, file: String!, function: String!, line: UInt) {
-        SDKLogger.shared.info(message, file: file, function: function, line: line)
-    }
-    
-    @objc func logWarn(_ message: String!, file: String!, function: String!, line: UInt) {
-        SDKLogger.shared.warn(message, file: file, function: function, line: line)
-    }
-    
-    @objc func logError(_ message: String!, file: String!, function: String!, line: UInt) {
-        SDKLogger.shared.error(message, file: file, function: function, line: line)
+
+    static func ==<T:Hashable,U:Hashable>(lhs: Pair<T,U>, rhs: Pair<T,U>) -> Bool {
+        return lhs.left == rhs.left && lhs.right == rhs.right
     }
 }
+
+

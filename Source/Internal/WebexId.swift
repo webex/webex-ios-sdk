@@ -57,6 +57,13 @@ class WebexId: Equatable, Hashable {
         return nil
     }
 
+    static func from(url: String, by: Device?) -> WebexId? {
+        if url.hasPrefix("https://conv") {
+            return WebexId(type: .room, cluster: by?.getClusterId(url: url), uuid: (url as NSString).lastPathComponent)
+        }
+        return nil
+    }
+
     let uuid: String
     let type: IdentityType
     let cluster: String

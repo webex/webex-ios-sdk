@@ -46,13 +46,16 @@
 		10D4D802212D1D4E00B37D98 /* TeamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105B865B212A74A500D316F4 /* TeamTests.swift */; };
 		10F0658821081BBA001B1514 /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658621081BBA001B1514 /* Space.swift */; };
 		10F0658921081BBA001B1514 /* SpaceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0658721081BBA001B1514 /* SpaceClient.swift */; };
+		1A4AB00FCA34C8C2E69A4792 /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4ABA97CFE944C5389EBA7D /* Pair.swift */; };
 		1A4AB2A1B8CF5D5A5971436C /* ReplaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4ABF1DB9D2BAF92E69D798 /* ReplaceModel.swift */; };
 		1A4AB2BE6D213B4CF64C7117 /* ServicesClusterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB6B5C4E329CB9B151B56 /* ServicesClusterModel.swift */; };
 		1A4AB366B8F3BA26DE3BDCBF /* GroupMentionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB3B34C9D9BD949E98D4C /* GroupMentionModel.swift */; };
+		1A4AB38A7078A50D6A62F863 /* LocusInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB4655A98082FFB6E99D5 /* LocusInfoModel.swift */; };
 		1A4AB57671F087921C4BE549 /* Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4ABDA8F54F2F26D5AB289D /* Timers.swift */; };
 		1A4AB58CA1B0D6EEC68976F9 /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB920D9C868BB62345F68 /* ContentModel.swift */; };
 		1A4AB6DA6625D7BBD2B21547 /* TeamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4ABDA75CE63F3A1215E1D9 /* TeamModel.swift */; };
 		1A4AB6E9F62043BE470AE71D /* FileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB89BFD2BBB9ABAB66690 /* FileModel.swift */; };
+		1A4AB7FC38DE2FDAEAA62E48 /* ScheduledSpaceMeeting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB6C1B63A897417B8B2D9 /* ScheduledSpaceMeeting.swift */; };
 		1A4AB825071DD9228258853C /* CallEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB8C765F73F8443D89333 /* CallEventModel.swift */; };
 		1A4AB9CFB1516C0D6CA61CD0 /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4ABA1AFECE7AA572998B3F /* ImageModel.swift */; };
 		1A4ABA8BA41948109289FCBA /* FullStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB945655B7C805B948010 /* FullStateModel.swift */; };
@@ -60,6 +63,7 @@
 		1A4ABDDEF6B7A7A1A9057F25 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB53C9E60E63E0AA18E46 /* CommentModel.swift */; };
 		1A4ABEB4821291E49F7128E1 /* ParentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB5D0AA201271E8895CDA /* ParentModel.swift */; };
 		1A4ABEEFE14EC5B062BB2D30 /* ServiceClusterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB5AC25A965B5BC1D214F /* ServiceClusterModel.swift */; };
+		1A4ABF2E04A4C2213DEC2B10 /* MeetingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4ABBA79B63FC5FA6BFC6C7 /* MeetingModel.swift */; };
 		1A4ABFFE052649F96B90DA20 /* RoomPropertiesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4AB72BDBD6BED1CAF46431 /* RoomPropertiesModel.swift */; };
 		20418FE01EACCFDD00626326 /* KeychainProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418FDF1EACCFDD00626326 /* KeychainProtocol.swift */; };
 		204209761F8CD132002D95EB /* MediaShareModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204209751F8CD132002D95EB /* MediaShareModel.swift */; };
@@ -270,10 +274,12 @@
 		10F0658621081BBA001B1514 /* Space.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Space.swift; sourceTree = "<group>"; };
 		10F0658721081BBA001B1514 /* SpaceClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceClient.swift; sourceTree = "<group>"; };
 		1A4AB3B34C9D9BD949E98D4C /* GroupMentionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMentionModel.swift; sourceTree = "<group>"; };
+		1A4AB4655A98082FFB6E99D5 /* LocusInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocusInfoModel.swift; sourceTree = "<group>"; };
 		1A4AB53C9E60E63E0AA18E46 /* CommentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
 		1A4AB5AC25A965B5BC1D214F /* ServiceClusterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceClusterModel.swift; sourceTree = "<group>"; };
 		1A4AB5D0AA201271E8895CDA /* ParentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentModel.swift; sourceTree = "<group>"; };
 		1A4AB6B5C4E329CB9B151B56 /* ServicesClusterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesClusterModel.swift; sourceTree = "<group>"; };
+		1A4AB6C1B63A897417B8B2D9 /* ScheduledSpaceMeeting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledSpaceMeeting.swift; sourceTree = "<group>"; };
 		1A4AB72BDBD6BED1CAF46431 /* RoomPropertiesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomPropertiesModel.swift; sourceTree = "<group>"; };
 		1A4AB89BFD2BBB9ABAB66690 /* FileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileModel.swift; sourceTree = "<group>"; };
 		1A4AB8C765F73F8443D89333 /* CallEventModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallEventModel.swift; sourceTree = "<group>"; };
@@ -281,6 +287,8 @@
 		1A4AB945655B7C805B948010 /* FullStateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullStateModel.swift; sourceTree = "<group>"; };
 		1A4ABA1A00ED657B95AA6786 /* ObjectModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectModel.swift; sourceTree = "<group>"; };
 		1A4ABA1AFECE7AA572998B3F /* ImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
+		1A4ABA97CFE944C5389EBA7D /* Pair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pair.swift; sourceTree = "<group>"; };
+		1A4ABBA79B63FC5FA6BFC6C7 /* MeetingModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingModel.swift; sourceTree = "<group>"; };
 		1A4ABDA75CE63F3A1215E1D9 /* TeamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamModel.swift; sourceTree = "<group>"; };
 		1A4ABDA8F54F2F26D5AB289D /* Timers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timers.swift; sourceTree = "<group>"; };
 		1A4ABF1DB9D2BAF92E69D798 /* ReplaceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaceModel.swift; sourceTree = "<group>"; };
@@ -635,6 +643,8 @@
 				1A4AB8C765F73F8443D89333 /* CallEventModel.swift */,
 				1A4AB945655B7C805B948010 /* FullStateModel.swift */,
 				1A4ABF1DB9D2BAF92E69D798 /* ReplaceModel.swift */,
+				1A4ABBA79B63FC5FA6BFC6C7 /* MeetingModel.swift */,
+				1A4AB4655A98082FFB6E99D5 /* LocusInfoModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -852,6 +862,7 @@
 				20EEA2741EB0E6B400D6BB75 /* MediaConnectionModel.swift */,
 				2099E2481EC44F1B002BDB0C /* MetricsEngine+Call.swift */,
 				204209751F8CD132002D95EB /* MediaShareModel.swift */,
+				1A4AB6C1B63A897417B8B2D9 /* ScheduledSpaceMeeting.swift */,
 			);
 			path = Call;
 			sourceTree = "<group>";
@@ -887,6 +898,7 @@
 				68A7D4502084822500AB7F8A /* Transforms.swift */,
 				480E5F11246BAAB500814099 /* TrackingIdGenerator.swift */,
 				1A4ABDA8F54F2F26D5AB289D /* Timers.swift */,
+				1A4ABA97CFE944C5389EBA7D /* Pair.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1379,6 +1391,10 @@
 				1A4AB825071DD9228258853C /* CallEventModel.swift in Sources */,
 				1A4ABA8BA41948109289FCBA /* FullStateModel.swift in Sources */,
 				1A4AB2A1B8CF5D5A5971436C /* ReplaceModel.swift in Sources */,
+				1A4ABF2E04A4C2213DEC2B10 /* MeetingModel.swift in Sources */,
+				1A4AB38A7078A50D6A62F863 /* LocusInfoModel.swift in Sources */,
+				1A4AB7FC38DE2FDAEAA62E48 /* ScheduledSpaceMeeting.swift in Sources */,
+				1A4AB00FCA34C8C2E69A4792 /* Pair.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,27 +19,30 @@
 // THE SOFTWARE.
 
 import Foundation
-import Wme
+import ObjectMapper
 
-class MediaEngineCustomLogger : CustomLogger {
-    
-    @objc func logVerbose(_ message: String!, file: String!, function: String!, line: UInt) {
-        //SDKLogger.shared.verbose(message, file: file, function: function, line: line)
+struct MeetingModel: Mappable {
+
+    private(set) var meetingId: String?
+    private(set) var startTime: Date?
+    private(set) var durationMinutes: Int?
+    private(set) var organizer: String?
+    private(set) var resourceUrl:String?
+    private(set) var removed: Bool?
+    private(set) var icalUid:String?
+    private(set) var resourceType:String?
+
+    init?(map: Map) {
     }
-    
-    @objc func logDebug(_ message: String!, file: String!, function: String!, line: UInt) {
-        SDKLogger.shared.debug(message, file: file, function: function, line: line)
-    }
-    
-    @objc func logInfo(_ message: String!, file: String!, function: String!, line: UInt) {
-        SDKLogger.shared.info(message, file: file, function: function, line: line)
-    }
-    
-    @objc func logWarn(_ message: String!, file: String!, function: String!, line: UInt) {
-        SDKLogger.shared.warn(message, file: file, function: function, line: line)
-    }
-    
-    @objc func logError(_ message: String!, file: String!, function: String!, line: UInt) {
-        SDKLogger.shared.error(message, file: file, function: function, line: line)
+
+    mutating func mapping(map: Map) {
+        meetingId <- map["meetingId"]
+        startTime <- (map["startTime"], CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
+        durationMinutes <- map["durationMinutes"]
+        organizer <- map["organizer"]
+        resourceUrl <- map["resourceUrl"]
+        removed <- map["removed"]
+        icalUid <- map["icalUid"]
+        resourceType <- map["resourceType"]
     }
 }

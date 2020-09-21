@@ -627,6 +627,7 @@ public class MessageClient {
                         self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me))
                     }
                 } else if activity.verb == .update {
+                    SDKLogger.shared.error("###: \(activity.toJSONString() ?? "")")
                     DispatchQueue.main.async {
                         if let content = activity.object as? ContentModel, let contentId = content.id, let messageId = self.cachedMessages[contentId],
                            let items = content.files?.items, !items.isEmpty {

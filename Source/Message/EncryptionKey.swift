@@ -75,7 +75,8 @@ class EncryptionKey {
             }
         }
     }
-    
+
+    // TODO Refactor, spaceUrl has nothing to do with key
     func spaceUrl(client: MessageClient, completionHandler: @escaping (Result<String>) -> Void) {
         if let url = self.spaceUrl {
             completionHandler(Result.success(url))

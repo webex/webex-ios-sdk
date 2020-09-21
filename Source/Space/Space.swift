@@ -51,7 +51,6 @@ public enum SpaceEvent {
 
 /// A data type represents a Space at Cisco Webex cloud.
 ///
-/// - note: Space has been renamed to Space in Cisco Webex.
 /// - since: 1.2.0
 public struct Space {
     

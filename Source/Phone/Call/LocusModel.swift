@@ -38,6 +38,7 @@ struct LocusMediaResponseModel: Mappable {
 struct LocusModel: Mappable {
 
     var locusUrl: String? // Mandatory
+    var conversationUrl: String?
     var participants: [ParticipantModel]?
     var myself: ParticipantModel?
     var host: LocusParticipantInfoModel?
@@ -48,11 +49,14 @@ struct LocusModel: Mappable {
     var replaces: [ReplaceModel]?
     var mediaShares: [MediaShareModel]?
     var mediaConnections: [MediaConnectionModel]?
+    var meetings: [MeetingModel]?
+    var info: LocusInfoModel?
 
     init?(map: Map) { }
 
     mutating func mapping(map: Map) {
         locusUrl <- map["url"]
+        conversationUrl <- map["conversationUrl"]
         participants <- map["participants"]
         myself <- map["self"]
         host <- map["host"]
@@ -62,6 +66,8 @@ struct LocusModel: Mappable {
         syncUrl <- map["syncUrl"]
         replaces <- map["replaces"]
         mediaShares <- map["mediaShares"]
+        meetings <- map["meetings"]
+        info <- map["info"]
     }
     
     subscript(participant id: String) -> ParticipantModel? {
@@ -100,7 +106,11 @@ struct LocusModel: Mappable {
         return fullState?.state == "ACTIVE" && myself?.alertType?.action == "FULL"
     }
 
-    var isInActive: Bool {
+    var isScheduledCall: Bool {
+        return fullState?.type == "MEETING" && (meetings?.count ?? 0) > 0
+    }
+
+    var isInactive: Bool {
         return fullState?.state == "INACTIVE"
     }
     

@@ -204,6 +204,11 @@ public class Phone {
     ///
     /// - since: 1.2.0
     public var onIncoming: ((Call) -> Void)?
+
+    /// Callback for the scheduled space meeting.
+    ///
+    /// - since: 2.6.0
+    public var onScheduledSpaceMeeting: ((ScheduledSpaceMeeting.Event) -> Void)?
     
     /// Indicates whether or not the SDK is connected with the Cisco Webex cloud.
     ///
@@ -229,7 +234,8 @@ public class Phone {
     
     private let webSocket: WebSocketService
     private var calls = [String: Call]()
-    private var mediaContext: MediaSessionWrapper?
+    private var meetings = [Pair<String, String>: ScheduledSpaceMeeting]()
+    var mediaContext: MediaSessionWrapper?
 
     private var _canceled: Bool = false
     private var canceled: Bool {
@@ -523,7 +529,7 @@ public class Phone {
         }
     }
     
-    private func add(call: Call) {
+    func add(call: Call) {
         calls[call.url] = call;
         SDKLogger.shared.info("Add call for call url:\(call.url)")
     }
@@ -904,37 +910,62 @@ public class Phone {
         
     }
     
-    private func doLocusEvent(_ model: LocusModel) {
-        SDKLogger.shared.debug("Receive locus event: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
-        guard let url = model.callUrl else {
+    private func doLocusEvent(_ locus: LocusModel) {
+        SDKLogger.shared.debug("Receive locus event: \(locus.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
+        guard let url = locus.callUrl else {
             SDKLogger.shared.error("CallModel is missing call url")
             return
         }
         if let call = self.calls[url] {
-            call.update(model: model)
+            call.update(model: locus)
         }
-        else if let device = self.devices.device, model.isIncomingCall { // || callInfo.hasJoinedOnOtherDevice(deviceUrl: deviceUrl)
+        else if let device = self.devices.device, locus.isValid { // || callInfo.hasJoinedOnOtherDevice(deviceUrl: deviceUrl)
             // XXX: Is this conditional intended to add this call even when there is no real device registration information?
             // At the time of writing the deviceService.deviceUrl will return a saved value from the UserDefaults. When the application
             // has been restarted and the reregistration process has not completed, other critical information such as locusServiceUrl
             // will not be available, but the deviceUrl WILL be. This may put the application in a bad state. This code MAY be dealing with
             // a race condition and this MAY be the solution to not dropping a call before reregistration has been completed.
             // If so it needs improvement, if not it may be able to be dropped.
-            if model.isValid {
-                let call = Call(model: model, device: device, media: self.mediaContext ?? MediaSessionWrapper(), direction: Call.Direction.incoming, group: !model.isOneOnOne, correlationId:UUID())
+            if locus.isIncomingCall {
+                let call = Call(model: locus, device: device, media: self.mediaContext ?? MediaSessionWrapper(), direction: Call.Direction.incoming, group: !locus.isOneOnOne, correlationId:UUID())
                 self.add(call: call)
                 SDKLogger.shared.info("Receive incoming call: \(call.model.callUrl ?? call.uuid.uuidString)")
                 DispatchQueue.main.async {
                     self.onIncoming?(call)
                 }
             }
+            else if locus.isScheduledCall, let meetings = locus.meetings, let locusUrl = locus.callUrl, let convUrl = locus.conversationUrl, let spaceId = WebexId.from(url: convUrl, by: device)?.base64Id {
+                SDKLogger.shared.info("Receive scheduled call: \(locusUrl)")
+                for meetingModel in meetings {
+                    if let meetingId = meetingModel.meetingId {
+                        self.webex?.spaces.getMeetingInfo(spaceId: spaceId) { res in
+                            let meeting = ScheduledSpaceMeeting(phone: self, model: meetingModel, locus: locus, meetingInfo: res.result.data)
+                            let key = Pair(locusUrl, meetingId)
+                            if self.meetings[key] != nil {
+                                if meeting.state == ScheduledSpaceMeeting.State.removed {
+                                    self.meetings[key] = nil
+                                    self.onScheduledSpaceMeeting?(ScheduledSpaceMeeting.Event.removed(meeting))
+                                }
+                                else {
+                                    self.meetings[key] = meeting
+                                    self.onScheduledSpaceMeeting?(ScheduledSpaceMeeting.Event.updated(meeting))
+                                }
+                            }
+                            else if meeting.state != ScheduledSpaceMeeting.State.removed {
+                                self.meetings[key] = meeting
+                                self.onScheduledSpaceMeeting?(ScheduledSpaceMeeting.Event.ready(meeting))
+                            }
+                        }
+                    }
+                }
+            }
             else {
-                SDKLogger.shared.info("Receive incoming call with error: \(model)")
+                SDKLogger.shared.info("Receive incoming call with error: \(locus)")
             }
             // TODO: need to support other device joined case
         }
         else {
-            SDKLogger.shared.info("Cannot handle the CallModel.")
+            SDKLogger.shared.info("Cannot handle the locus model")
         }
     }
     
