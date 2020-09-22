@@ -21,39 +21,38 @@
 import Foundation
 import ObjectMapper
 
-struct DeviceModel : Mappable {
-    
-    private(set) var deviceUrlString: String?
-    private(set) var deviceIdentifier: String?
-    private(set) var deviceSettingsString: String?
-    private var webSocketUrlString: String?
-    private var serviceHostMap: ServiceHostModel?
-    var deviceUrl: URL? {
-        if let string = self.deviceUrlString {
-            return URL(string: string)
-        }
-        return nil
+struct LocusInfoModel: Mappable {
+
+    private(set) var globalMeetingId: String?
+    private(set) var webExMeetingId: String?
+    private(set) var webExMeetingName: String?
+    private(set) var owner: String?
+    private(set) var conversationUrl: String?
+    private(set) var webexServiceType: String?
+    private(set) var callInTollFreeNumber: String?
+    private(set) var callInTollNumber:String?
+    private(set) var isPmr: Bool?
+    private(set) var meetingAvatarUrl: String?
+    private(set) var topic:String?
+    private(set) var sipUri:String?
+    private(set) var tags: [String]?
+
+    init?(map: Map) {
     }
-    
-    var webSocketUrl: URL? {
-        if let string = self.webSocketUrlString {
-            return URL(string: string)
-        }
-        return nil
-    }
-    
-    subscript(service name: String) -> String? {
-        return self.serviceHostMap?.serviceLinks?[name]
-    }
-    
-    init?(map: Map){
-    }
-    
+
     mutating func mapping(map: Map) {
-        deviceUrlString <- map["url"]
-        deviceIdentifier <- map["deviceIdentifier"]
-        webSocketUrlString <- map["webSocketUrl"]
-        deviceSettingsString <- map["deviceSettingsString"]
-        serviceHostMap <- map["serviceHostMap"]
+        globalMeetingId <- map["globalMeetingId"]
+        webExMeetingId <- map["webExMeetingId"]
+        webExMeetingName <- map["webExMeetingName"]
+        owner <- map["owner"]
+        conversationUrl <- map["conversationUrl"]
+        webexServiceType <- map["webexServiceType"]
+        callInTollFreeNumber <- map["callInTollFreeNumber"]
+        callInTollNumber <- map["callInTollNumber"]
+        isPmr <- map["isPmr"]
+        meetingAvatarUrl <- map["meetingAvatarUrl"]
+        topic <- map["topic"]
+        sipUri <- map["sipUri"]
+        self.tags <- map["locusTags"]
     }
 }

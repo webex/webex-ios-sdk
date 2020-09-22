@@ -19,19 +19,38 @@
 // THE SOFTWARE.
 
 import Foundation
+import ObjectMapper
 
-class MSGError {
-    static let spaceFetchFail = WebexError.serviceFailed(reason: "Space Fetch Fail")
-    static let clientInfoFetchFail = WebexError.serviceFailed(reason: "Client Info Fetch Fail")
-    static let ephemaralKeyFetchFail = WebexError.serviceFailed(reason: "EphemaralKey Fetch Fail")
-    static let kmsInfoFetchFail = WebexError.serviceFailed(reason: "KMS Info Fetch Fail")
-    static let keyMaterialFetchFail = WebexError.serviceFailed(reason: "Key Info Fetch Fail")
-    static let encryptionUrlFetchFail = WebexError.serviceFailed(reason: "Encryption Info Fetch Fail")
-    static let spaceUrlFetchFail = WebexError.serviceFailed(reason: "Space Info Fetch Fail")
-    static let spaceMessageFetchFail = WebexError.serviceFailed(reason: "Messages Of Space Fetch Fail")
-    static let emptyTextError = WebexError.serviceFailed(reason: "Expected Text Not Found")
-    static let downloadError = WebexError.serviceFailed(reason: "Expected File Not Found")
-    static let timeOut = WebexError.serviceFailed(reason: "Timeout")
+class GroupMentionModel : ObjectModel {
+
+    enum GroupType: String {
+        case all
+        case here
+    }
+
+    private(set) var groupType: GroupType?
+
+    required init?(map: Map) {
+        super.init(map: map)
+    }
+
+    override func mapping(map: Map) {
+        super.mapping(map: map)
+        self.groupType <- (map["groupType"], GroupTypeTransform())
+    }
+
+    class GroupTypeTransform: TransformType {
+
+        func transformFromJSON(_ value: Any?) -> GroupType? {
+            if let group = value as? String {
+                return GroupType(rawValue: group)
+            }
+            return nil
+        }
+
+        func transformToJSON(_ value:GroupType?) -> String? {
+            return value?.rawValue
+        }
+    }
+
 }
-
-

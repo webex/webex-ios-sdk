@@ -20,15 +20,15 @@
 
 class EncryptionKey {
     
-    let conversation: Identifier
+    let convUrl: String
     var spaceUserIds: [String] = []
     
     private var encryptionUrl: String?
     private var material: String?
     private var spaceUrl: String?
     
-    init(conversation: Identifier) {
-        self.conversation = conversation
+    init(convUrl: String) {
+        self.convUrl = convUrl
     }
     
     func tryRefresh(encryptionUrl: String) {
@@ -49,7 +49,7 @@ class EncryptionKey {
                 }
                 else {
                     let encrptionUrl = response.data as? String
-                    client.requestSpaceKeyMaterial(conversation: self.conversation, encryptionUrl: encrptionUrl) { result in
+                    client.requestSpaceKeyMaterial(convUrl: self.convUrl, encryptionUrl: encrptionUrl) { result in
                         switch result {
                         case .success(let data):
                             self.encryptionUrl = data.0
@@ -69,19 +69,20 @@ class EncryptionKey {
             completionHandler(Result.success(url))
         }
         else {
-            client.requestSpaceEncryptionURL(conversation: self.conversation) { result in
+            client.requestSpaceEncryptionURL(convUrl: self.convUrl) { result in
                 self.encryptionUrl = result.data as? String
                 completionHandler(result)
             }
         }
     }
-    
+
+    // TODO Refactor, spaceUrl has nothing to do with key
     func spaceUrl(client: MessageClient, completionHandler: @escaping (Result<String>) -> Void) {
         if let url = self.spaceUrl {
             completionHandler(Result.success(url))
         }
         else {
-            let request = Service.conv.specific(url: self.conversation.url(device: client.phone.devices.device))
+            let request = ServiceRequest.make(self.convUrl)
                 .authenticator(client.authenticator)
                 .path("space")
                 .method(.put)

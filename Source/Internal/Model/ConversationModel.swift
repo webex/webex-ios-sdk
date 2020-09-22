@@ -21,25 +21,45 @@
 import Foundation
 import ObjectMapper
 
-struct ConversationModel : Mappable {
-    
-    private(set) var id: String?
-    private(set) var url: String?
+class ConversationModel : ObjectModel {
+
+    private let dateTransform = CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ")
+
     private(set) var locusUrl: String?
     private(set) var defaultActivityEncryptionKeyUrl: String?
     private(set) var encryptionKeyUrl: String?
     private(set) var kmsResourceObjectUrl: String?
     private(set) var participants: ItemsModel<PersonModel>?
-    
-    init?(map: Map) { }
-    
-    mutating func mapping(map: Map) {
-        id <- map["id"]
-        url <- map["url"]
-        locusUrl <- map["locusUrl"]
-        defaultActivityEncryptionKeyUrl <- map["defaultActivityEncryptionKeyUrl"]
-        encryptionKeyUrl <- map["encryptionKeyUrl"]
-        kmsResourceObjectUrl <- map["kmsResourceObjectUrl"]
-        participants <- map["participants"]
+    private(set) var activities: ItemsModel<ActivityModel>?
+    private(set) var tags: [String]?
+    private(set) var lastReadableActivityDate: Date?
+    private(set) var lastRelevantActivityDate: Date?
+    private(set) var lastSeenActivityDate: Date?
+
+    var isOneOnOne: Bool {
+        return self.tags?.contains("ONE_ON_ONE") ?? false
     }
+
+    var isLocked: Bool {
+        return self.tags?.contains("LOCKED") ?? false
+    }
+
+    required init?(map: Map) {
+        super.init(map: map)
+    }
+
+    override func mapping(map: Map) {
+        super.mapping(map: map)
+        self.locusUrl <- map["locusUrl"]
+        self.defaultActivityEncryptionKeyUrl <- map["defaultActivityEncryptionKeyUrl"]
+        self.encryptionKeyUrl <- map["encryptionKeyUrl"]
+        self.kmsResourceObjectUrl <- map["kmsResourceObjectUrl"]
+        self.participants <- map["participants"]
+        self.activities <- map["activities"]
+        self.tags <- map["tags"]
+        self.lastReadableActivityDate <- (map["lastReadableActivityDate"], dateTransform)
+        self.lastRelevantActivityDate <- (map["lastRelevantActivityDate"], dateTransform)
+        self.lastSeenActivityDate <- (map["lastSeenActivityDate"], dateTransform)
+    }
+
 }

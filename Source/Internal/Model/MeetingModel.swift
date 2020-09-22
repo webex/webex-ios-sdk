@@ -19,19 +19,30 @@
 // THE SOFTWARE.
 
 import Foundation
+import ObjectMapper
 
-class MSGError {
-    static let spaceFetchFail = WebexError.serviceFailed(reason: "Space Fetch Fail")
-    static let clientInfoFetchFail = WebexError.serviceFailed(reason: "Client Info Fetch Fail")
-    static let ephemaralKeyFetchFail = WebexError.serviceFailed(reason: "EphemaralKey Fetch Fail")
-    static let kmsInfoFetchFail = WebexError.serviceFailed(reason: "KMS Info Fetch Fail")
-    static let keyMaterialFetchFail = WebexError.serviceFailed(reason: "Key Info Fetch Fail")
-    static let encryptionUrlFetchFail = WebexError.serviceFailed(reason: "Encryption Info Fetch Fail")
-    static let spaceUrlFetchFail = WebexError.serviceFailed(reason: "Space Info Fetch Fail")
-    static let spaceMessageFetchFail = WebexError.serviceFailed(reason: "Messages Of Space Fetch Fail")
-    static let emptyTextError = WebexError.serviceFailed(reason: "Expected Text Not Found")
-    static let downloadError = WebexError.serviceFailed(reason: "Expected File Not Found")
-    static let timeOut = WebexError.serviceFailed(reason: "Timeout")
+struct MeetingModel: Mappable {
+
+    private(set) var meetingId: String?
+    private(set) var startTime: Date?
+    private(set) var durationMinutes: Int?
+    private(set) var organizer: String?
+    private(set) var resourceUrl:String?
+    private(set) var removed: Bool?
+    private(set) var icalUid:String?
+    private(set) var resourceType:String?
+
+    init?(map: Map) {
+    }
+
+    mutating func mapping(map: Map) {
+        meetingId <- map["meetingId"]
+        startTime <- (map["startTime"], CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
+        durationMinutes <- map["durationMinutes"]
+        organizer <- map["organizer"]
+        resourceUrl <- map["resourceUrl"]
+        removed <- map["removed"]
+        icalUid <- map["icalUid"]
+        resourceType <- map["resourceType"]
+    }
 }
-
-

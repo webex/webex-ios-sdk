@@ -20,18 +20,34 @@
 
 import Foundation
 
-class MSGError {
-    static let spaceFetchFail = WebexError.serviceFailed(reason: "Space Fetch Fail")
-    static let clientInfoFetchFail = WebexError.serviceFailed(reason: "Client Info Fetch Fail")
-    static let ephemaralKeyFetchFail = WebexError.serviceFailed(reason: "EphemaralKey Fetch Fail")
-    static let kmsInfoFetchFail = WebexError.serviceFailed(reason: "KMS Info Fetch Fail")
-    static let keyMaterialFetchFail = WebexError.serviceFailed(reason: "Key Info Fetch Fail")
-    static let encryptionUrlFetchFail = WebexError.serviceFailed(reason: "Encryption Info Fetch Fail")
-    static let spaceUrlFetchFail = WebexError.serviceFailed(reason: "Space Info Fetch Fail")
-    static let spaceMessageFetchFail = WebexError.serviceFailed(reason: "Messages Of Space Fetch Fail")
-    static let emptyTextError = WebexError.serviceFailed(reason: "Expected Text Not Found")
-    static let downloadError = WebexError.serviceFailed(reason: "Expected File Not Found")
-    static let timeOut = WebexError.serviceFailed(reason: "Timeout")
+/// The schedule of a scheduled `Call`
+///
+/// - since: 2.6.0
+public class CallSchedule: Equatable, CustomStringConvertible {
+
+    /// Start time in ISO 8601 compliant format.
+    ///
+    /// - since: 2.6.0
+    public let start: Date?
+
+    /// End time in ISO 8601 compliant format.
+    ///
+    /// - since: 2.6.0
+    public let end: Date?
+
+    private let count: Int
+        
+    init(meeting: MeetingModel, fullState: FullStateModel?) {
+        self.count = fullState?.count ?? 0
+        self.start = meeting.startTime
+        self.end = self.start?.addingTimeInterval(TimeInterval((meeting.durationMinutes ?? 0) * 60))
+    }
+
+    public static func ==(lhs: CallSchedule, rhs: CallSchedule) -> Bool {
+        return lhs.start == rhs.start && lhs.end == rhs.end && lhs.count == rhs.count
+    }
+    
+    public var description: String {
+        return "CallSchedule(\(String(describing: self.start)), \(String(describing: self.end)))"
+    }
 }
-
-

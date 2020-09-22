@@ -52,23 +52,23 @@ extension String {
         return nil
     }
     
-    subscript(r: Range<Int>) -> String {
-        get {
-            let startIndex = self.index(self.startIndex, offsetBy: r.lowerBound)
-            let endIndex = self.index(self.startIndex, offsetBy: r.upperBound)
-            
-            return String(self[Range(uncheckedBounds: (startIndex, endIndex))])
-        }
-    }
-    
-    subscript(start: Int, end: Int) -> String {
-        get {
-            let startIndex = self.index(self.startIndex, offsetBy: start)
-            let endIndex = self.index(self.startIndex, offsetBy: end+1)
-            return String(self[Range(uncheckedBounds: (startIndex, endIndex))])
-        }
-    }
-    
+//    subscript(r: Range<Int>) -> String {
+//        get {
+//            let startIndex = self.index(self.startIndex, offsetBy: r.lowerBound)
+//            let endIndex = self.index(self.startIndex, offsetBy: r.upperBound)
+//
+//            return String(self[Range(uncheckedBounds: (startIndex, endIndex))])
+//        }
+//    }
+//
+//    subscript(start: Int, end: Int) -> String {
+//        get {
+//            let startIndex = self.index(self.startIndex, offsetBy: start)
+//            let endIndex = self.index(self.startIndex, offsetBy: end+1)
+//            return String(self[Range(uncheckedBounds: (startIndex, endIndex))])
+//        }
+//    }
+//
     var mimeType: String {
         if let ext = self.components(separatedBy: ".").last, ext.count > 0 {
             if let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, ext as CFString, nil)?.takeRetainedValue() {
@@ -100,6 +100,22 @@ extension String {
             }
         }
         return nil
+    }
+
+    func indexOf(_ input: String, options: String.CompareOptions = .literal) -> String.Index? {
+        return self.range(of: input, options: options)?.lowerBound
+    }
+
+    func lastIndexOf(_ input: String) -> String.Index? {
+        return indexOf(input, options: .backwards)
+    }
+
+    subscript(from: Int, toLast: String) -> String {
+        get {
+            let startIndex = self.index(self.startIndex, offsetBy: from)
+            let endIndex = self.lastIndexOf(toLast) ?? self.endIndex
+            return String(self[startIndex..<endIndex])
+        }
     }
 }
 

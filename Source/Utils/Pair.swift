@@ -20,18 +20,30 @@
 
 import Foundation
 
-class MSGError {
-    static let spaceFetchFail = WebexError.serviceFailed(reason: "Space Fetch Fail")
-    static let clientInfoFetchFail = WebexError.serviceFailed(reason: "Client Info Fetch Fail")
-    static let ephemaralKeyFetchFail = WebexError.serviceFailed(reason: "EphemaralKey Fetch Fail")
-    static let kmsInfoFetchFail = WebexError.serviceFailed(reason: "KMS Info Fetch Fail")
-    static let keyMaterialFetchFail = WebexError.serviceFailed(reason: "Key Info Fetch Fail")
-    static let encryptionUrlFetchFail = WebexError.serviceFailed(reason: "Encryption Info Fetch Fail")
-    static let spaceUrlFetchFail = WebexError.serviceFailed(reason: "Space Info Fetch Fail")
-    static let spaceMessageFetchFail = WebexError.serviceFailed(reason: "Messages Of Space Fetch Fail")
-    static let emptyTextError = WebexError.serviceFailed(reason: "Expected Text Not Found")
-    static let downloadError = WebexError.serviceFailed(reason: "Expected File Not Found")
-    static let timeOut = WebexError.serviceFailed(reason: "Timeout")
+struct Pair<T:Hashable,U:Hashable> : Hashable {
+
+    let left: T
+    let right: U
+
+    init(_ left: T, _ right: U) {
+        self.left = left
+        self.right = right
+    }
+
+    var hashValue: Int {
+        get {
+            return left.hashValue &* 31 &+ right.hashValue
+        }
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(left)
+        hasher.combine(right)
+    }
+
+    static func ==<T:Hashable,U:Hashable>(lhs: Pair<T,U>, rhs: Pair<T,U>) -> Bool {
+        return lhs.left == rhs.left && lhs.right == rhs.right
+    }
 }
 
 

@@ -117,43 +117,69 @@ extension Membership : Mappable {
     }
 }
 
+extension Membership {
+
+    init(conv: ConversationModel, person: PersonModel, clusterId: String?) {
+        if let convId = conv.id, let personId = person.id {
+            self.id = WebexId(type: .membership, cluster: clusterId, uuid: "\(personId):\(convId)").base64Id
+            self.spaceId = WebexId(type: .room, cluster: clusterId, uuid: convId).base64Id
+            self.personId = WebexId(type: .people, cluster: clusterId, uuid: personId).base64Id
+        }
+        if let orgId = person.orgId {
+            self.personOrgId = WebexId(type: .organization, cluster: WebexId.DEFAULT_CLUSTER_ID, uuid: orgId).base64Id
+        }
+        self.personEmail = EmailAddress.fromString(person.emailAddress)
+        self.personDisplayName = person.displayName
+        self.isModerator = person.roomProperties?.isModerator
+        self.isMonitor = self.isModerator
+        self.created = person.published
+    }
+
+    init(activity: ActivityModel, clusterId: String?) {
+        var person: PersonModel?
+        if activity.verb == .acknowledge {
+            person = activity.actor
+        }
+        else if activity.object is PersonModel {
+            person = activity.object as? PersonModel
+        }
+        if let person = person, let convId = activity.target?.id, let personId = person.id {
+            self.id = WebexId(type: .membership, cluster: clusterId, uuid: "\(personId):\(convId)").base64Id
+            self.spaceId = WebexId(type: .room, cluster: clusterId, uuid: convId).base64Id
+            self.personId = WebexId(type: .people, cluster: clusterId, uuid: personId).base64Id
+        }
+        if let orgId = person?.orgId {
+            self.personOrgId = WebexId(type: .organization, cluster: WebexId.DEFAULT_CLUSTER_ID, uuid: orgId).base64Id
+        }
+        self.personEmail = EmailAddress.fromString(person?.emailAddress)
+        self.personDisplayName = person?.displayName
+        self.isModerator = person?.roomProperties?.isModerator
+        self.isMonitor = self.isModerator
+        self.created = activity.published
+    }
+
+}
+
 /// The read status of the membership for space.
 ///
 /// - since: 2.3.0
-public struct MembershipReadStatus: ImmutableMappable {
-    
-    struct Context: MapContext {
-        var conversationId:String?
-    }
-    
+public struct MembershipReadStatus {
+
     /// The membership of the space
-    public var member: Membership = Membership()
+    public var member: Membership
     
     /// The id of the last message which the member have read
     public var lastSeenId: String?
     
     /// The last date and time the member have read messages
     public var lastSeenDate: Date?
-    
-    public init(map: Map) throws {
-        let entryUUID:String? = try? map.value("entryUUID")
-        if let context = map.context as? Context, let conversationId = context.conversationId {
-            self.member.id = WebexId(type: .membership, uuid: "\(entryUUID ?? ""):\(conversationId)")?.base64Id
-            self.member.spaceId = WebexId(type: .room, uuid: conversationId)?.base64Id
+
+    init(conv: ConversationModel, person: PersonModel, clusterId: String?) {
+        self.member = Membership(conv: conv, person: person, clusterId: clusterId)
+        if let lastSeenActivityUUID = person.roomProperties?.lastSeenActivityUUID {
+            self.lastSeenId = WebexId(type: .message, cluster: clusterId, uuid: lastSeenActivityUUID).base64Id
         }
-        self.member.personId = WebexId(type: .people, uuid: entryUUID)?.base64Id
-        self.member.personEmail = EmailAddress.fromString(try? map.value("emailAddress"))
-        self.member.personDisplayName = try? map.value("displayName")
-        self.member.personOrgId = try? map.value("orgId", using:IdentityTransform(for: .organization))
-        self.member.isModerator = try? map.value("roomProperties.isModerator", using: StringAndBoolTransform())
-        self.lastSeenId = try? map.value("roomProperties.lastSeenActivityUUID", using:IdentityTransform(for: .message))
-        self.lastSeenDate = try? map.value("roomProperties.lastSeenActivityDate", using:CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
+        self.lastSeenDate = person.roomProperties?.lastSeenActivityDate
     }
-    
-    public mutating func mapping(map: Map) {
-        self.member >>> map["member"]
-        self.lastSeenId >>> (map["lastSeenId"], IdentityTransform(for: .message))
-        self.lastSeenDate?.longString >>> map["lastSeenDate"]
-    }
-    
+
 }

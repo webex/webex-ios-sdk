@@ -19,19 +19,26 @@
 // THE SOFTWARE.
 
 import Foundation
+import ObjectMapper
 
-class MSGError {
-    static let spaceFetchFail = WebexError.serviceFailed(reason: "Space Fetch Fail")
-    static let clientInfoFetchFail = WebexError.serviceFailed(reason: "Client Info Fetch Fail")
-    static let ephemaralKeyFetchFail = WebexError.serviceFailed(reason: "EphemaralKey Fetch Fail")
-    static let kmsInfoFetchFail = WebexError.serviceFailed(reason: "KMS Info Fetch Fail")
-    static let keyMaterialFetchFail = WebexError.serviceFailed(reason: "Key Info Fetch Fail")
-    static let encryptionUrlFetchFail = WebexError.serviceFailed(reason: "Encryption Info Fetch Fail")
-    static let spaceUrlFetchFail = WebexError.serviceFailed(reason: "Space Info Fetch Fail")
-    static let spaceMessageFetchFail = WebexError.serviceFailed(reason: "Messages Of Space Fetch Fail")
-    static let emptyTextError = WebexError.serviceFailed(reason: "Expected Text Not Found")
-    static let downloadError = WebexError.serviceFailed(reason: "Expected File Not Found")
-    static let timeOut = WebexError.serviceFailed(reason: "Timeout")
+class FullStateModel: Mappable {
+
+    private(set) var active: Bool?
+    private(set) var count: Int?
+    private(set) var locked: Bool?
+    private(set) var lastActive: String?
+    private(set) var state: String?
+    private(set) var type: String?
+
+    required init?(map: Map){ }
+
+    func mapping(map: Map) {
+        active <- map["active"]
+        count <- map["count"]
+        locked <- map["locked"]
+        lastActive <- map["lastActive"]
+        state <- map["state"]
+        type <- map["type"]
+    }
+
 }
-
-

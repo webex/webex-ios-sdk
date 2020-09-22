@@ -28,7 +28,7 @@ class WebSocketService: WebSocketDelegate {
     enum MercuryEvent {
         case connected(Error?)
         case disconnected(Error?)
-        case recvCall(CallModel)
+        case recvCall(LocusModel)
         case recvActivity(ActivityModel)
         case recvKms(KmsMessageModel)
     }

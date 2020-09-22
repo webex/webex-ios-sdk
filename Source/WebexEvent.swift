@@ -27,23 +27,17 @@ import Foundation
 public struct WebexEventPayload {
     
     init(activity: ActivityModel?, person: Person?) {
-        self.actorId = WebexId(type: .people, uuid: activity?.actorUUID)?.base64Id
-        //        self.createdBy = person?.id
-        //        self.orgId = person?.orgId
+        if let uuid = activity?.actor?.id {
+            self.actorId = WebexId(type: .people, cluster: WebexId.DEFAULT_CLUSTER, uuid: uuid).base64Id
+        }
+        else {
+            self.actorId = nil
+        }
     }
     
     /// Returns the identifier of the user that caused the event to be sent. For example, for a messsage received event,
     /// the author of the message will be the actor. For a membership deleted event, the actor is the person who removed the user
     /// from space.
     public let actorId: String?
-    
-    /// the current date on client
-    //    public let created: Date = Date()
-    
-    //    /// default is "creator"
-    //    public let ownedBy: String = "creator"
-    //
-    //    /// default is "active"
-    //    public let status: String = "active"
-    
+
 }

@@ -37,11 +37,10 @@ enum IdentityType : String {
 }
 
 class WebexId: Equatable, Hashable {
-    
-    let uuid: String
-    let type: IdentityType
-    let cluster: String
-    
+
+    static let DEFAULT_CLUSTER: String = "us"
+    static let DEFAULT_CLUSTER_ID: String = "urn:TEAM:us-east-2_a"
+
     static func uuid(_ base64Id: String) -> String {
         return from(base64Id: base64Id)?.uuid ?? base64Id
     }
@@ -52,33 +51,60 @@ class WebexId: Equatable, Hashable {
             if let id = ids[safeIndex: ids.count - 1],
                 let typeString = ids[safeIndex: ids.count - 2], let type = IdentityType(rawValue: typeString.lowercased()),
                 let cluster = ids[safeIndex: ids.count - 3] {
-                return WebexId(type:  type, uuid: id, cluster: cluster)
+                return WebexId(type: type, cluster: cluster, uuid: id)
             }
         }
         return nil
     }
-    
+
+    static func from(url: String, by: Device?) -> WebexId? {
+        if url.hasPrefix("https://conv") {
+            return WebexId(type: .room, cluster: by?.getClusterId(url: url), uuid: (url as NSString).lastPathComponent)
+        }
+        return nil
+    }
+
+    let uuid: String
+    let type: IdentityType
+    let cluster: String
+    var clusterId: String {
+        return self.cluster == WebexId.DEFAULT_CLUSTER ? WebexId.DEFAULT_CLUSTER_ID : self.cluster
+    }
+
     var base64Id: String {
         return "ciscospark://\(self.cluster)/\(self.type.name)/\(self.uuid)".base64Encoded() ?? self.uuid
     }
-    
-    init?(type: IdentityType, uuid: String?, cluster: String = "us") {
-        guard let uuid = uuid else {
-            return nil
-        }
+
+    init(type: IdentityType, cluster: String?, uuid: String) {
         self.uuid = uuid
         self.type = type
-        self.cluster = cluster
+        if let cluster = cluster, !cluster.isEmpty && cluster != WebexId.DEFAULT_CLUSTER_ID {
+            self.cluster = cluster
+        }
+        else {
+            self.cluster = WebexId.DEFAULT_CLUSTER
+        }
+    }
+
+    func urlBy(device: Device?) -> String? {
+        let id = "\(self.clusterId):identityLookup"
+        let url = device?.getServiceClusterUrl(serviceClusterId: id) ?? Service.conv.baseUrl(for: device)
+        if self.is(.room) {
+            return "\(url)/conversations/\(self.uuid)"
+        }
+        else if self.is(.message) {
+            return "\(url)/activities/\(self.uuid)"
+        }
+        else if self.is(.team) {
+            return "\(url)/teams/\(self.uuid)"
+        }
+        return nil
     }
     
     func `is`(_ type: IdentityType) -> Bool {
         return self.type == type
     }
-    
-    func belong(_ cluster: String) -> Bool {
-        return self.cluster == cluster
-    }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(uuid)
     }

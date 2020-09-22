@@ -29,7 +29,7 @@ class CallEventSequencer {
         case deSync
     }
     
-    static func sequence(old: CallModel?, new: CallModel, invalid: () -> Void) -> CallModel? {
+    static func sequence(old: LocusModel?, new: LocusModel, invalid: () -> Void) -> LocusModel? {
         guard let old = old, let oldSeq = old.sequence, let newSeq = new.sequence else {
             return new
         }
@@ -49,7 +49,7 @@ class CallEventSequencer {
         }
     }
     
-    private static func sequenceBase(oldSequence: SequenceModel,new: CallModel, invalid: () -> Void) -> CallModel? {
+    private static func sequenceBase(oldSequence: SequenceModel,new: LocusModel, invalid: () -> Void) -> LocusModel? {
         if let baseSeq = new.baseSequence {
             let compare = CallEventSequencer.compare(oldSequence, baseSeq)
             switch compare {

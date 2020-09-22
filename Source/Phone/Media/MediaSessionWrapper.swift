@@ -222,7 +222,7 @@ class MediaSessionWrapper {
         }
     }
     
-    // MARK: - lifecycle
+    // MARK: - lifecycleh
     func prepare(option: MediaOption, phone: Phone) {
         if self.status == .preview {
             self.stopPreview()
@@ -256,6 +256,10 @@ class MediaSessionWrapper {
                     mediaConfig.mixingStreamNum = value.rawValue
                 case .videoEnableDecoderMosaic(let value):
                     mediaConfig.isDecoderMosaicEnabled = value
+                case .videoReceiverBasedQosSupported(let value):
+                    mediaConfig.isVideoReceiverBasedQosSupported = value
+                case .videoMaxTxFPS(let value):
+                    mediaConfig.videoMaxTxFPS = UInt32(value)
                 }
             }
             
@@ -514,7 +518,8 @@ extension Call.VideoRenderMode {
     
 }
 
-extension UIView {
+fileprivate extension UIView {
+
     func getSizeConstraint() -> NSLayoutConstraint? {
         for constraint in self.constraints {
             if constraint.firstAttribute == .width || constraint.firstAttribute == .height {

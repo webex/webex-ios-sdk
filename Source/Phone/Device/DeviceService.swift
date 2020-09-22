@@ -25,6 +25,7 @@ struct Device {
     let deviceType:String = UIDevice.current.kind
     let deviceModel: DeviceModel
     let regionModel: RegionModel
+    let clusterUrls: [String: String]
     
     var deviceUrl: URL { return deviceModel.deviceUrl! }
     var webSocketUrl: URL { return deviceModel.webSocketUrl! }
@@ -34,6 +35,22 @@ struct Device {
     
     subscript(service name: String) -> String? {
         return self.deviceModel[service: name]
+    }
+
+    // urn:TEAM:us-west-2_r:identityLookup, https://conv-r.wbx2.com/conversation/api/v1
+    func getServiceClusterUrl(serviceClusterId: String) -> String? {
+        return self.clusterUrls[serviceClusterId]
+    }
+
+    func getIdentityServiceClusterUrl(urn: String) -> String {
+        return self.getServiceClusterUrl(serviceClusterId: "\(urn):identityLookup") ?? Service.conv.baseUrl(for: self)
+    }
+
+    func getClusterId(url: String?) -> String? {
+        if let url = url, let key = clusterUrls.filter({url.hasPrefix($0.value)}).first?.key, let index = key.lastIndex(of: ":") {
+            return String(key[..<index])
+        }
+        return nil
     }
 }
 
@@ -56,26 +73,6 @@ class DeviceService {
             if region.countryCode == nil {
                 region.countryCode = "US"
             }
-            
-            let registrationHandler: (ServiceResponse<DeviceModel>) -> Void = { response in
-                switch response.result {
-                case .success(let model):
-                    if let _ = model.deviceUrl, let _ = model.webSocketUrl {
-                        self.device = Device(phone: phone, deviceModel: model, regionModel: region)
-                        UserDefaults.sharedInstance.deviceUrl = model.deviceUrlString
-                        UserDefaults.sharedInstance.deviceIdentifier = model.deviceIdentifier
-                        completionHandler(Result.success(self.device!))
-                    } else {
-                        let error = WebexError.serviceFailed(code: -7000, reason: "Missing required URLs when registering device")
-                        SDKLogger.shared.error("Failed to register device", error: error)
-                        completionHandler(Result.failure(error))
-                    }
-                case .failure(let error):
-                    SDKLogger.shared.error("Failed to register device", error: error)
-                    completionHandler(Result.failure(error))
-                }
-            }
-            
             let deviceInfo: [String: Any] = [
                 "deviceName": UIDevice.current.name.isEmpty ? "notset" : UIDevice.current.name,
                 "name": UIDevice.current.name.isEmpty ? "notset" : UIDevice.current.name,
@@ -90,13 +87,41 @@ class DeviceService {
                 "ttl": String(180*24*3600),
                 "capabilities": ["sdpSupported":true, "groupCallSupported":true]
             ]
-            if let deviceUrl = UserDefaults.sharedInstance.deviceUrl {
-                self.client.update(url: deviceUrl, deviceInfo: deviceInfo, queue: queue, completionHandler: registrationHandler)
-            }
-            else {
-                self.client.fetchHosts(queue: queue) { hostsRes in
-                    // TDOO handle u2c error
-                    self.client.create(deviceInfo: deviceInfo, hosts: hostsRes.result.data, queue: queue, completionHandler: registrationHandler)
+
+            self.client.fetchClusters(queue: queue) { clusterRes in
+                let urls = clusterRes.result.data?.clusterUrls ?? [:]
+                SDKLogger.shared.debug("Service clusters: \(urls)")
+
+                let registrationHandler: (ServiceResponse<DeviceModel>) -> Void = { response in
+                    switch response.result {
+                    case .success(let model):
+                        if let _ = model.deviceUrl, let _ = model.webSocketUrl {
+                            self.device = Device(phone: phone, deviceModel: model, regionModel: region, clusterUrls: urls)
+                            UserDefaults.sharedInstance.deviceUrl = model.deviceUrlString
+                            UserDefaults.sharedInstance.deviceIdentifier = model.deviceIdentifier
+                            completionHandler(Result.success(self.device!))
+                        } else {
+                            WebexError.serviceFailed(reason: "Missing required URLs when registering device").report(resultCallback: completionHandler)
+                        }
+                    case .failure(let error):
+                        SDKLogger.shared.error("Failed to register device", error: error)
+                        completionHandler(Result.failure(error))
+                    }
+                }
+
+                let deviceUrl = UserDefaults.sharedInstance.deviceUrl
+                SDKLogger.shared.debug("Saved deviceUrl: \(deviceUrl ?? "Nil")")
+
+                if let deviceUrl = deviceUrl {
+                    SDKLogger.shared.debug("Updating device");
+                    self.client.update(deviceUrl: deviceUrl, deviceInfo: deviceInfo, queue: queue, completionHandler: registrationHandler)
+                }
+                else {
+                    SDKLogger.shared.debug("Creating new device");
+                    self.client.fetchHosts(queue: queue) { hostsRes in
+                        let url = hostsRes.result.data?.serviceLinks?[Service.wdm.rawValue] ?? Service.wdm.baseUrl()
+                        self.client.create(wdmUrl: url, deviceInfo: deviceInfo, queue: queue, completionHandler: registrationHandler)
+                    }
                 }
             }
         }
@@ -104,7 +129,7 @@ class DeviceService {
     
     func deregisterDevice(queue: DispatchQueue, completionHandler: @escaping (Error?) -> Void) {
         if let deviceUrl = UserDefaults.sharedInstance.deviceUrl {
-            self.client.delete(url: deviceUrl, queue: queue) { (response: ServiceResponse<Any>) in
+            self.client.delete(deviceUrl: deviceUrl, queue: queue) { (response: ServiceResponse<Any>) in
                 switch response.result {
                 case .success:
                     completionHandler(nil)
@@ -122,7 +147,7 @@ class DeviceService {
     }
 }
 
-extension UIDevice {
+fileprivate extension UIDevice {
     
     var kind: String {
 

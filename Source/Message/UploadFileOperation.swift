@@ -20,6 +20,7 @@
 
 import UIKit
 import Alamofire
+import ObjectMapper
 
 class UploadFileOperations {
     
@@ -33,8 +34,8 @@ class UploadFileOperations {
         }
     }
     
-    func run(client: MessageClient, completionHandler: @escaping (Result<[RemoteFile]>) -> Void) {
-        var sucess = [RemoteFile]()
+    func run(client: MessageClient, completionHandler: @escaping (Result<[FileModel]>) -> Void) {
+        var sucess = [FileModel]()
         self.operations.forEach { operation in
             if !operation.done {
                 self.queue.sync {
@@ -63,84 +64,79 @@ class UploadFileOperation {
         self.local = local
         self.key = key
     }
-    
-    func run(client: MessageClient, completionHandler: @escaping (Result<RemoteFile>) -> Void) {
-        self.doUpload(client: client, path: self.local.path, size: self.local.size, progressStart: 0, progressHandler: self.local.progressHandler) { url, scr, error in
-            if let url = url, let scr = scr {
-                self.key.material(client: client) { material in
-                    var file = RemoteFile(local: self.local, downloadUrl: url)
-                    file.encrypt(key: material.data, scr: scr)
-                    if let thumb = self.local.thumbnail {
-                        self.doUpload(client: client, path: thumb.path, size: thumb.size, progressStart: 0.5, progressHandler: self.local.progressHandler) { url, scr, error in
-                            if let url = url, let scr = scr {
-                                var thumb = RemoteFile.Thumbnail(local: thumb, downloadUrl: url)
-                                thumb.encrypt(key: material.data, scr: scr)
-                                file.thumbnail = thumb
-                            }
-                            self.done = true
-                            completionHandler(Result.success(file))
+
+    func run(client: MessageClient, completionHandler: @escaping (Result<FileModel>) -> Void) {
+        self.doUpload(client: client, path: self.local.path, size: self.local.size, progressStart: 0, progressHandler: self.local.progressHandler) { fileUrl, fileScr, error in
+            if let fileUrl = fileUrl, let fileScr = fileScr, let fileModel = Mapper<FileModel>().map(JSON: ["objectType": ObjectType.file.rawValue, "displayName": self.local.name, "mimeType": self.local.mime, "fileSize": self.local.size, "url": fileUrl]) {
+                fileModel.scrObject = fileScr
+                if let thumb = self.local.thumbnail {
+                    self.doUpload(client: client, path: thumb.path, size: thumb.size, progressStart: 0.5, progressHandler: self.local.progressHandler) { thumbUrl, thumbScr, error in
+                        if let thumbUrl = thumbUrl, let imageModel = Mapper<ImageModel>().map(JSON: ["width": thumb.width, "height": thumb.height, "mimeType": thumb.mime, "url": thumbUrl]), let thumbScr = thumbScr {
+                            imageModel.scrObject = thumbScr
+                            fileModel.image = imageModel
+                        }
+                        self.done = true
+                        self.key.material(client: client) { material in
+                            fileModel.encrypt(key: material.data)
+                            completionHandler(Result.success(fileModel))
                         }
                     }
-                    else {
-                        self.done = true
-                        completionHandler(Result.success(file))
+                }
+                else {
+                    self.done = true
+                    self.key.material(client: client) { material in
+                        fileModel.encrypt(key: material.data)
+                        completionHandler(Result.success(fileModel))
                     }
                 }
             }
             else {
-                SDKLogger.shared.info("File Uoload Fail...")
                 self.done = true
-                completionHandler(Result.failure(error ?? WebexError.serviceFailed(code: -7000, reason: "upload error")))
+                (error ?? WebexError.serviceFailed(reason: "upload error")).report(resultCallback: completionHandler)
             }
         }
     }
-    
-    func doUpload(client: MessageClient, path: String, size: UInt64, progressStart: Double, progressHandler: ((Double) -> Void)?, completionHandler: @escaping (String?, SecureContentReference?, Error?) -> Void) {
+
+    private func doUpload(client: MessageClient, path: String, size: UInt64, progressStart: Double, progressHandler: ((Double) -> Void)?, completionHandler: @escaping (String?, SecureContentReference?, Error?) -> Void) {
         client.authenticator.accessToken { token in
             guard let token = token else {
                 completionHandler(nil, nil, WebexError.noAuth)
                 return
             }
-            
-            func handleUploadSuccess(response: DataResponse<Any>) {
-                if let dict = response.result.value as? [String : Any],
-                    let uploadUrl = dict["uploadUrl"] as? String,
-                    let finishUrl = dict["finishUploadUrl"] as? String,
-                    let scr = try? SecureContentReference(error: ()),
-                    let inputStream = try? SecureInputStream(stream: InputStream(fileAtPath: path), scr: scr) {
-                    let uploadHeaders: HTTPHeaders = ["Content-Length": String(size)]
-                    Alamofire.upload(inputStream, to: uploadUrl, method: .put, headers: uploadHeaders).uploadProgress(closure: { (progress) in
-                        progressHandler?(progressStart + progress.fractionCompleted/2)
-                    }).responseString { response in
-                        if let _ = response.result.value {
-                            let finishHeaders: HTTPHeaders = ["Authorization": "Bearer " + token, "Content-Type": "application/json;charset=UTF-8"]
-                            let finishParameters: Parameters = ["size": size]
-                            Alamofire.request(finishUrl, method: .post, parameters: finishParameters, encoding: JSONEncoding.default, headers: finishHeaders).responseJSON { response in
-                                if let dict = response.result.value as? [String : Any], let downLoadUrl = dict["downloadUrl"] as? String, let url = URL(string: downLoadUrl) {
-                                    scr.loc = url
-                                    completionHandler(downLoadUrl, scr, nil)
+            self.key.spaceUrl(client: client) { result in
+                if let url = result.data {
+                    let headers: HTTPHeaders = ["Authorization": "Bearer " + token, "Content-Type": "application/json;charset=UTF-8", "TrackingID": TrackingId.generator.next, "User-Agent": UserAgent.string, "Webex-User-Agent": UserAgent.string]
+                    Alamofire.request(url + "/upload_sessions", method: .post, parameters: ["uploadProtocol":"content-length"], encoding: JSONEncoding.default, headers: headers).responseJSON { (prepareResponse: DataResponse<Any>) in
+                        SDKLogger.shared.verbose(prepareResponse.debugDescription)
+                        if let dict = prepareResponse.result.value as? [String : Any], let uploadUrl = dict["uploadUrl"] as? String, let finishUrl = dict["finishUploadUrl"] as? String,
+                           let scr = try? SecureContentReference(error: ()),
+                           let inputStream = try? SecureInputStream(stream: InputStream(fileAtPath: path), scr: scr) {
+                            SDKLogger.shared.debug("Uploading file \(path), \(size)")
+                            Alamofire.upload(inputStream, to: uploadUrl, method: .put, headers: ["Content-Length": String(size)]).uploadProgress(closure: { (progress) in
+                                progressHandler?(progressStart + progress.fractionCompleted/2)
+                            }).responseString { uploadResponse in
+                                SDKLogger.shared.verbose(uploadResponse.debugDescription)
+                                if let _ = uploadResponse.result.value {
+                                    let headers: HTTPHeaders = ["Authorization": "Bearer " + token, "Content-Type": "application/json;charset=UTF-8", "TrackingID": TrackingId.generator.next, "User-Agent": UserAgent.string, "Webex-User-Agent": UserAgent.string]
+                                    Alamofire.request(finishUrl, method: .post, parameters: ["size": size], encoding: JSONEncoding.default, headers: headers).responseJSON { finishResponse in
+                                        SDKLogger.shared.verbose(finishResponse.debugDescription)
+                                        if let dict = finishResponse.result.value as? [String : Any], let downLoadUrl = dict["downloadUrl"] as? String, let url = URL(string: downLoadUrl) {
+                                            scr.loc = url
+                                            completionHandler(downLoadUrl, scr, nil)
+                                        }
+                                        else {
+                                            completionHandler(nil, nil, finishResponse.error)
+                                        }
+                                    }
                                 }
                                 else {
-                                    completionHandler(nil, nil, response.error)
+                                    completionHandler(nil, nil, uploadResponse.error)
                                 }
                             }
                         }
                         else {
-                            completionHandler(nil, nil, response.error)
+                            completionHandler(nil, nil, prepareResponse.error)
                         }
-                    }
-                }
-                else {
-                    completionHandler(nil, nil, response.error)
-                }
-            }
-            
-            self.key.spaceUrl(client: client) { result in
-                if let url = result.data {
-                    let headers: HTTPHeaders  = ["Authorization": "Bearer " + token]
-                    let parameters: Parameters = ["uploadProtocol":"content-length"]
-                    Alamofire.request(url + "/upload_sessions", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response: DataResponse<Any>) in
-                       handleUploadSuccess(response: response)
                     }
                 }
                 else {

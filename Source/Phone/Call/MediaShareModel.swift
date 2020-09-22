@@ -53,6 +53,18 @@ struct MediaShareModel {
     var shareType: MediaShareType?
     var url: String?
     var shareFloor: MediaShareFloor?
+
+    var disposition: String {
+        return self.shareFloor?.disposition?.rawValue.uppercased() ?? "RELEASE"
+    }
+
+    var requesterUrl: String? {
+        return self.shareFloor?.requester?.url
+    }
+
+    var beneficiaryUrl: String? {
+        return self.shareFloor?.beneficiary?.url
+    }
 }
 
 

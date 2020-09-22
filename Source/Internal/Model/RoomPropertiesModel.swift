@@ -19,19 +19,19 @@
 // THE SOFTWARE.
 
 import Foundation
+import ObjectMapper
 
-class MSGError {
-    static let spaceFetchFail = WebexError.serviceFailed(reason: "Space Fetch Fail")
-    static let clientInfoFetchFail = WebexError.serviceFailed(reason: "Client Info Fetch Fail")
-    static let ephemaralKeyFetchFail = WebexError.serviceFailed(reason: "EphemaralKey Fetch Fail")
-    static let kmsInfoFetchFail = WebexError.serviceFailed(reason: "KMS Info Fetch Fail")
-    static let keyMaterialFetchFail = WebexError.serviceFailed(reason: "Key Info Fetch Fail")
-    static let encryptionUrlFetchFail = WebexError.serviceFailed(reason: "Encryption Info Fetch Fail")
-    static let spaceUrlFetchFail = WebexError.serviceFailed(reason: "Space Info Fetch Fail")
-    static let spaceMessageFetchFail = WebexError.serviceFailed(reason: "Messages Of Space Fetch Fail")
-    static let emptyTextError = WebexError.serviceFailed(reason: "Expected Text Not Found")
-    static let downloadError = WebexError.serviceFailed(reason: "Expected File Not Found")
-    static let timeOut = WebexError.serviceFailed(reason: "Timeout")
+class RoomPropertiesModel : Mappable {
+
+    private(set) var isModerator: Bool?
+    private(set) var lastSeenActivityDate: Date?
+    private(set) var lastSeenActivityUUID: String?
+
+    required init?(map: Map) {}
+
+    func mapping(map: Map) {
+        self.isModerator <- (map["isModerator"], StringAndBoolTransform())
+        self.lastSeenActivityDate <-  (map["lastSeenActivityDate"], CustomDateFormatTransform(formatString: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"))
+        self.lastSeenActivityUUID <- map["lastSeenActivityUUID"]
+    }
 }
-
-

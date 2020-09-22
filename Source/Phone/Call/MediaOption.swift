@@ -96,6 +96,17 @@ public struct MediaOption {
     ///
     /// - since: 2.5.0
     public var layout: VideoLayout?
+
+    /// Join the meeting as a moderator.
+    ///
+    /// - since: 2.6.0
+    public var moderator: Bool = false
+
+    /// If join as moderator, PIN should be a host key, else PIN should be a meeting password.
+    /// In general, The PIN is not required. unless the WebexError.requireHostPinOrMeetingPassword error be received when dial.
+    ///
+    /// - since: 2.6.0
+    public var pin: String?
     
     init() {
         self.hasVideo = false

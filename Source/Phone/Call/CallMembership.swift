@@ -152,7 +152,7 @@ public struct CallMembership {
         self.isSelf = participant.id == call.model.myselfId
         self.isInitiator = participant.isCreator ?? false
         if let personId = participant.person?.id {
-            self.personId = "ciscospark://us/PEOPLE/\(personId)".base64Encoded()
+            self.personId = WebexId(type: .people, cluster: WebexId.DEFAULT_CLUSTER_ID, uuid: personId).base64Id
         }
         self.participantModel = participant
     }

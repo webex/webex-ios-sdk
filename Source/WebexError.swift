@@ -26,11 +26,14 @@ import Foundation
 /// - since: 1.2.0
 public enum WebexError: Error {
     /// A service request to Cisco Webex cloud has failed.
-    case serviceFailed(code: Int, reason: String)
+    case serviceFailed(code: Int = -7000, reason: String)
     /// The `Phone` has not been registered.
     case unregistered
-    /// The media requires H.264 codec.
+    /// The media requires H.264 codec. Since the user decline the H.264 licesnse.
     case requireH264
+    /// The call was interrupted because the user jumped to view the content of the H.264 licesnse.
+    /// - since 2.6.0
+    case interruptedByViewingH264License
     /// The DTMF is invalid.
     case invalidDTMF
     /// The DTMF is unsupported.
@@ -42,6 +45,9 @@ public enum WebexError: Error {
     /// The authentication is failed.
     /// - since 1.4.0
     case noAuth
+    /// The host pin or meeting password is required while dialing.
+    /// - since 2.6.0
+    case requireHostPinOrMeetingPassword(reason: String)
 }
 
 extension WebexError: LocalizedError {
@@ -54,6 +60,8 @@ extension WebexError: LocalizedError {
             return "unregistered"
         case .requireH264:
             return "requireH264"
+        case .interruptedByViewingH264License:
+            return "interruptedByViewingH264License"
         case .invalidDTMF:
             return "invalidDTMF"
         case .unsupportedDTMF:
@@ -64,6 +72,36 @@ extension WebexError: LocalizedError {
             return reason
         case .noAuth:
             return "noAuth"
+        case .requireHostPinOrMeetingPassword(let reason):
+            return reason
         }
     }
 }
+
+extension Error {
+    
+    func report<T>(by queue: DispatchQueue? = nil, resultCallback: ((Result<T>) -> Void)? = nil) {
+        (queue ?? DispatchQueue.main).async {
+            if let error = self as? WebexError, let desc = error.errorDescription {
+                SDKLogger.shared.error(desc, error: self)
+            }
+            else {
+                SDKLogger.shared.error(self.localizedDescription, error: self)
+            }
+            resultCallback?(Result.failure(self))
+        }
+    }
+
+    func report(by queue: DispatchQueue? = nil, errorCallback: ((Error?) -> Void)? = nil) {
+        (queue ?? DispatchQueue.main).async {
+            if let error = self as? WebexError, let desc = error.errorDescription {
+                SDKLogger.shared.error(desc, error: self)
+            }
+            else {
+                SDKLogger.shared.error(self.localizedDescription, error: self)
+            }
+            errorCallback?(self)
+        }
+    }
+}
+

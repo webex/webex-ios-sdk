@@ -22,7 +22,7 @@ import Foundation
 @testable import WebexSDK
 
 class FakeCallClient: CallClient {
-    var callModel: CallModel?
+    var callModel: LocusModel?
     
     var selfUser: TestUser?
     var otherParticipants: [TestUser]?
@@ -39,7 +39,7 @@ class FakeCallClient: CallClient {
         super.init(authenticator: authenticator)
     }
     
-    override func create(_ toAddress: String, by device: Device, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
+    override func create(_ toAddress: String, by device: Device, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
         if enableServerReturnError {
             let error = WebexError.serviceFailed(code: -7000, reason: "create call error")
             completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.failure(error)))
@@ -59,7 +59,7 @@ class FakeCallClient: CallClient {
         
     }
     
-    override func leave(_ participantUrl: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
+    override func leave(_ participantUrl: String, by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
         if enableServerReturnError {
             let error = WebexError.serviceFailed(code: -7000, reason: "create call error")
             completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.failure(error)))
@@ -73,7 +73,7 @@ class FakeCallClient: CallClient {
         
     }
     
-    override func fetch(by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<[CallModel]>) -> Void) {
+    override func fetch(by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<[LocusModel]>) -> Void) {
         if enableServerReturnError {
             let error = WebexError.serviceFailed(code: -7000, reason: "create call error")
             completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.failure(error)))
@@ -90,7 +90,7 @@ class FakeCallClient: CallClient {
         }
     }
     
-    override func join(_ callUrl: String, by device: Device, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
+    override func join(_ callUrl: String, by device: Device, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
         if enableServerReturnError {
             let error = WebexError.serviceFailed(code: -7000, reason: "create call error")
             completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.failure(error)))
@@ -135,7 +135,7 @@ class FakeCallClient: CallClient {
         }
     }
     
-    override func update(_ mediaUrl: String, by mediaID: String, by device: Device, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<CallModel>) -> Void) {
+    override func update(_ mediaUrl: String, by mediaID: String, by device: Device, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
         if enableServerReturnError {
             let error = WebexError.serviceFailed(code: -7000, reason: "create call error")
             completionHandler(ServiceResponse(HTTPURLResponse(url: URL(string: "www.aaa.com")!, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: ["Content-Type":"application/json;charset=UTF-8"]), Result.failure(error)))

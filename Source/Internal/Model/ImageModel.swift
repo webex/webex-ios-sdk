@@ -19,19 +19,39 @@
 // THE SOFTWARE.
 
 import Foundation
+import ObjectMapper
 
-class MSGError {
-    static let spaceFetchFail = WebexError.serviceFailed(reason: "Space Fetch Fail")
-    static let clientInfoFetchFail = WebexError.serviceFailed(reason: "Client Info Fetch Fail")
-    static let ephemaralKeyFetchFail = WebexError.serviceFailed(reason: "EphemaralKey Fetch Fail")
-    static let kmsInfoFetchFail = WebexError.serviceFailed(reason: "KMS Info Fetch Fail")
-    static let keyMaterialFetchFail = WebexError.serviceFailed(reason: "Key Info Fetch Fail")
-    static let encryptionUrlFetchFail = WebexError.serviceFailed(reason: "Encryption Info Fetch Fail")
-    static let spaceUrlFetchFail = WebexError.serviceFailed(reason: "Space Info Fetch Fail")
-    static let spaceMessageFetchFail = WebexError.serviceFailed(reason: "Messages Of Space Fetch Fail")
-    static let emptyTextError = WebexError.serviceFailed(reason: "Expected Text Not Found")
-    static let downloadError = WebexError.serviceFailed(reason: "Expected File Not Found")
-    static let timeOut = WebexError.serviceFailed(reason: "Timeout")
+class ImageModel : Mappable {
+
+    private(set) var width: Int?
+    private(set) var height: Int?
+    private(set) var mimeType: String?
+    private(set) var url: String?
+    private(set) var scr: String?
+    var scrObject: SecureContentReference?
+
+    required init?(map: Map) {}
+
+    func mapping(map: Map) {
+        url <- map["url"]
+        mimeType <- map["mimeType"]
+        width <- map["width"]
+        height <- map["height"]
+        scr <- map["scr"]
+    }
+
+    func encrypt(key: String?) {
+        if let scrObject = self.scrObject {
+            self.scr = try? scrObject .encryptedSecureContentReference(withKey: key)
+            self.scrObject = nil
+        }
+    }
+
+    func decrypt(key: String?) {
+        self.scr = self.scr?.decrypt(key: key)
+        if let scr = self.scr {
+            self.scrObject = try? SecureContentReference(json: scr)
+        }
+    }
+
 }
-
-

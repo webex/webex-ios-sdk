@@ -19,19 +19,25 @@
 // THE SOFTWARE.
 
 import Foundation
+import ObjectMapper
 
-class MSGError {
-    static let spaceFetchFail = WebexError.serviceFailed(reason: "Space Fetch Fail")
-    static let clientInfoFetchFail = WebexError.serviceFailed(reason: "Client Info Fetch Fail")
-    static let ephemaralKeyFetchFail = WebexError.serviceFailed(reason: "EphemaralKey Fetch Fail")
-    static let kmsInfoFetchFail = WebexError.serviceFailed(reason: "KMS Info Fetch Fail")
-    static let keyMaterialFetchFail = WebexError.serviceFailed(reason: "Key Info Fetch Fail")
-    static let encryptionUrlFetchFail = WebexError.serviceFailed(reason: "Encryption Info Fetch Fail")
-    static let spaceUrlFetchFail = WebexError.serviceFailed(reason: "Space Info Fetch Fail")
-    static let spaceMessageFetchFail = WebexError.serviceFailed(reason: "Messages Of Space Fetch Fail")
-    static let emptyTextError = WebexError.serviceFailed(reason: "Expected Text Not Found")
-    static let downloadError = WebexError.serviceFailed(reason: "Expected File Not Found")
-    static let timeOut = WebexError.serviceFailed(reason: "Timeout")
+struct ServicesClusterModel : Mappable {
+
+    private(set) var services: [ServiceClusterModel]?
+
+    var clusterUrls: [String: String] {
+        return services?.reduce(into: [String: String]()) {
+            if let id = $1.id, let url = $1.serviceUrls?.first?["baseUrl"] as? String {
+                $0[id] = url
+            }
+        } ?? [:]
+    }
+
+    init?(map: Map){
+    }
+
+    mutating func mapping(map: Map) {
+        services <- map["services"]
+    }
+
 }
-
-

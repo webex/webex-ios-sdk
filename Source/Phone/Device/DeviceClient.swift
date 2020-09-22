@@ -28,8 +28,8 @@ class DeviceClient {
         self.authenticator = authenticator
     }
     
-    func create(deviceInfo: [String: Any], hosts: ServiceHostModel?, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<DeviceModel>) -> Void) {
-        let request = Service.wdm.homed(for: nil, with: hosts)
+    func create(wdmUrl: String, deviceInfo: [String: Any], queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<DeviceModel>) -> Void) {
+        let request = ServiceRequest.make(wdmUrl)
             .authenticator(self.authenticator)
             .method(.post)
             .path("devices")
@@ -41,8 +41,8 @@ class DeviceClient {
         request.responseObject(completionHandler)
     }
     
-    func update(url: String, deviceInfo: [String: Any], queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<DeviceModel>) -> Void) {
-        let request = Service.wdm.specific(url: url)
+    func update(deviceUrl: String, deviceInfo: [String: Any], queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<DeviceModel>) -> Void) {
+        let request = ServiceRequest.make(deviceUrl)
             .authenticator(self.authenticator)
             .method(.put)
             .body(deviceInfo)
@@ -53,8 +53,8 @@ class DeviceClient {
         request.responseObject(completionHandler)
     }
     
-    func delete(url: String, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
-        let request = Service.wdm.specific(url: url)
+    func delete(deviceUrl: String, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
+        let request = ServiceRequest.make(deviceUrl)
             .authenticator(self.authenticator)
             .method(.delete)
             .queue(queue)
@@ -72,6 +72,18 @@ class DeviceClient {
             .queue(queue)
             .build()
         
+        request.responseObject(completionHandler)
+    }
+
+    func fetchClusters(queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<ServicesClusterModel>) -> Void) {
+        let request = Service.u2c.global
+                .authenticator(self.authenticator)
+                .method(.get)
+                .path("catalog")
+                .query(["format": "serviceList", "services": "identityLookup"])
+                .queue(queue)
+                .build()
+
         request.responseObject(completionHandler)
     }
     
