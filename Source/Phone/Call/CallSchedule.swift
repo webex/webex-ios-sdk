@@ -34,14 +34,17 @@ public class CallSchedule: Equatable, CustomStringConvertible {
     ///
     /// - since: 2.6.0
     public let end: Date?
+
+    private var count: Int = 0
         
     init(meeting: MeetingModel, fullState: FullStateModel?) {
+        self.count == fullState?.count ?? 0
         self.start = meeting.startTime
         self.end = self.start?.addingTimeInterval(TimeInterval((meeting.durationMinutes ?? 0) * 60))
     }
 
     public static func ==(lhs: CallSchedule, rhs: CallSchedule) -> Bool {
-        return lhs.start == rhs.start && lhs.end == rhs.end
+        return lhs.start == rhs.start && lhs.end == rhs.end && lhs.count == rhs.count
     }
     
     public var description: String {
