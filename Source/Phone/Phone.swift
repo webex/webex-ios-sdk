@@ -533,7 +533,7 @@ public class Phone {
         calls[call.url] = nil
         SDKLogger.shared.info("Remove call for call url:\(call.url)")
     }
-    
+
     func acknowledge(call: Call, completionHandler: @escaping (Error?) -> Void) {
         self.queue.sync {
             if self.calls.filter({ $0.key != call.url }).count > 0 {
@@ -711,7 +711,15 @@ public class Phone {
             }
         }
     }
-    
+
+    func fetchActiveCalls(queue: DispatchQueue? = nil, completionHandler: @escaping (Result<[LocusModel]>) -> Void) {
+        if let device = self.devices.device {
+            self.client.fetch(by: device, queue: queue ?? self.queue.underlying) { res in
+                completionHandler(res.result)
+            }
+        }
+    }
+
     func letIn(call:Call, memberships:[CallMembership], completionHandler: @escaping (Error?) -> Void) {
         self.queue.sync {
             if let url = call.model.locusUrl {
@@ -1041,20 +1049,18 @@ public class Phone {
             }
         }
     }
-    
+
     private func fetchActiveCalls() {
         SDKLogger.shared.info("Fetch call infos")
-        if let device = self.devices.device {
-            self.client.fetch(by: device, queue: self.queue.underlying) { res in
-                switch res.result {
-                case .success(let models):
-                    for model in models {
-                        self.doLocusEvent(model)
-                    }
-                    SDKLogger.shared.info("Success: fetch call infos")
-                case .failure(let error):
-                    SDKLogger.shared.error("Failure", error: error)
+        self.fetchActiveCalls(queue: self.queue.underlying) { result in
+            switch result {
+            case .success(let models):
+                for model in models {
+                    self.doLocusEvent(model)
                 }
+                SDKLogger.shared.info("Success: fetch call infos")
+            case .failure(let error):
+                SDKLogger.shared.error("Failure", error: error)
             }
         }
     }

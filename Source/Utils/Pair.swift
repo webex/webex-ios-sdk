@@ -35,6 +35,11 @@ struct Pair<T:Hashable,U:Hashable> : Hashable {
             return left.hashValue &* 31 &+ right.hashValue
         }
     }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(left)
+        hasher.combine(right)
+    }
 
     static func ==<T:Hashable,U:Hashable>(lhs: Pair<T,U>, rhs: Pair<T,U>) -> Bool {
         return lhs.left == rhs.left && lhs.right == rhs.right

@@ -237,4 +237,26 @@ public class SpaceClient {
             }
         }
     }
+
+    /// Returns a list of spaces in which there are active calls.
+    ///
+    /// - parameter queue: The queue on which the completion handler is dispatched.
+    /// - parameter completionHandler: A closure to be executed once the request has finished.
+    /// - returns: Void
+    /// - since: 2.6.0
+    public func listWithActiveCalls(queue: DispatchQueue? = nil, completionHandler: @escaping (Result<[String]>) -> Void) {
+        self.phone.fetchActiveCalls(queue: queue) { result in
+            switch result {
+            case .success(let models):
+                completionHandler(Result.success(models.filter( { !$0.isOneOnOne }).compactMap() { element in
+                    if let url = element.spaceUrl {
+                        return WebexId.from(url: url , by: self.phone.devices.device)?.base64Id
+                    }
+                    return nil
+                }))
+            case .failure(let error):
+                completionHandler(Result.failure(error))
+            }
+        }
+    }
 }

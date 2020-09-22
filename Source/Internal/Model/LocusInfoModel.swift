@@ -35,6 +35,7 @@ struct LocusInfoModel: Mappable {
     private(set) var meetingAvatarUrl: String?
     private(set) var topic:String?
     private(set) var sipUri:String?
+    private(set) var tags: [String]?
 
     init?(map: Map) {
     }
@@ -52,5 +53,6 @@ struct LocusInfoModel: Mappable {
         meetingAvatarUrl <- map["meetingAvatarUrl"]
         topic <- map["topic"]
         sipUri <- map["sipUri"]
+        self.tags <- map["locusTags"]
     }
 }
