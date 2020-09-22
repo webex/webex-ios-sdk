@@ -20,7 +20,7 @@
 
 import Foundation
 
-/// An iOS client wrapper of the Cisco Webex [People REST API](https://developer.webex.com/resource-people.html) .
+/// An iOS client wrapper of the Cisco Webex [People REST API](https://developer.webex.com/docs/api/v1/people) .
 ///
 /// - since: 1.2.0
 public class PersonClient {
