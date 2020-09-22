@@ -41,6 +41,34 @@ extension Array where Element: Equatable {
         }
         return nil
     }
+
+    var uniques: [Element] {
+        var results = [Element]()
+        forEach { (element) in
+            let existingElements = results.filter {
+                return element == $0
+            }
+            if existingElements.count == 0 {
+                results.append(element)
+            }
+        }
+        return results
+    }
+
+    func elementSame(_ other: [Element]?) -> Bool {
+        guard let other = other else {
+            return false
+        }
+        if self.count != other.count {
+            return false
+        }
+        for element in self {
+            if !other.contains(element) {
+                return false
+            }
+        }
+        return true
+    }
 }
 
 extension Sequence {
@@ -60,5 +88,18 @@ extension Array {
             return nil
         }
         return self[index]
+    }
+    
+    func filterDuplicates(includeElement: (_ lhs:Element, _ rhs:Element) -> Bool) -> [Element] {
+        var results = [Element]()
+        forEach { (element) in
+            let existingElements = results.filter {
+                return includeElement(element, $0)
+            }
+            if existingElements.count == 0 {
+                results.append(element)
+            }
+        }
+        return results
     }
 }

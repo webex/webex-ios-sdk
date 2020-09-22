@@ -584,22 +584,7 @@ public class Call {
     /// Returns the schedules of this `Call` if this `Call` is a scheduled call.
     ///
     /// - since: 2.6.0
-    public private(set) var schedules: [CallSchedule] {
-        get {
-            lock()
-            defer {
-                unlock()
-            }
-            return _schedules ?? []
-        }
-        set {
-            lock()
-            defer {
-                unlock()
-            }
-            _schedules = newValue
-        }
-    }
+    public private(set) var schedules: [CallSchedule]?
 
     /// A local unique identifier of a `Call` for [Apple CallKit](https://developer.apple.com/reference/callkit).
     ///
@@ -721,7 +706,6 @@ public class Call {
     private var _videoLayout: MediaOption.VideoLayout?
     private var _callModel: LocusModel
     private var _callMemberships: [CallMembership]?
-    private var _schedules: [CallSchedule]?
     private var availableStreamCount: Int = 0
     var mutex = pthread_mutex_t()
 
@@ -1335,16 +1319,15 @@ public class Call {
 
     private func doCallModel(_ model: LocusModel) {
         self.model = model
-        if let meetings = self.model.meetings {
-            let oldSchedules = self.schedules
-            let newSchedules = meetings.map( { CallSchedule(meeting: $0, fullState: self.model.fullState ) } )
-            if !oldSchedules.elementsEqual(newSchedules) {
-                self.schedules = newSchedules
-                DispatchQueue.main.async {
-                    self.onScheduleChanged?(self)
-                }
+        let oldSchedules = self.schedules
+        let newSchedules = model.meetings?.map( { CallSchedule(meeting: $0, fullState: self.model.fullState ) } ).uniques
+        if oldSchedules?.elementSame(newSchedules) != true {
+            self.schedules = newSchedules
+            DispatchQueue.main.async {
+                self.onScheduleChanged?(self)
             }
         }
+
         if let participants = self.model.participants?.filter({ $0.isCIUser }) {
             let oldMemberships = self.memberships
             var newMemberships = [CallMembership]()
