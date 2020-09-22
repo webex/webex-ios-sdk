@@ -19,27 +19,38 @@
 // THE SOFTWARE.
 
 import Foundation
-import Wme
 
-class MediaEngineCustomLogger : CustomLogger {
+/// The schedule of a scheduled `Call`
+///
+/// - since: 2.6.0
+public class CallSchedule: Equatable, CustomStringConvertible {
+
+    /// Start time in ISO 8601 compliant format.
+    ///
+    /// - since: 2.6.0
+    public let start: Date?
+
+    /// End time in ISO 8601 compliant format.
+    ///
+    /// - since: 2.6.0
+    public let end: Date?
+
+    /// The number of CallMemberships who have joined the call.
+    ///
+    /// - since: 2.6.0
+    public let activedCallMembershipsCount: Int
     
-    @objc func logVerbose(_ message: String!, file: String!, function: String!, line: UInt) {
-        SDKLogger.shared.verbose(message, file: file, function: function, line: line)
+    init(meeting: MeetingModel, fullState: FullStateModel?) {
+        self.start = meeting.startTime
+        self.end = self.start?.addingTimeInterval(TimeInterval((meeting.durationMinutes ?? 0) * 60))
+        self.activedCallMembershipsCount = fullState?.count ?? 0
+    }
+
+    public static func ==(lhs: CallSchedule, rhs: CallSchedule) -> Bool {
+        return lhs.start == rhs.start && lhs.end == rhs.end && lhs.activedCallMembershipsCount == rhs.activedCallMembershipsCount
     }
     
-    @objc func logDebug(_ message: String!, file: String!, function: String!, line: UInt) {
-        SDKLogger.shared.debug(message, file: file, function: function, line: line)
-    }
-    
-    @objc func logInfo(_ message: String!, file: String!, function: String!, line: UInt) {
-        SDKLogger.shared.info(message, file: file, function: function, line: line)
-    }
-    
-    @objc func logWarn(_ message: String!, file: String!, function: String!, line: UInt) {
-        SDKLogger.shared.warn(message, file: file, function: function, line: line)
-    }
-    
-    @objc func logError(_ message: String!, file: String!, function: String!, line: UInt) {
-        SDKLogger.shared.error(message, file: file, function: function, line: line)
+    public var description: String {
+        return "CallSchedule(\(String(describing: self.start)), \(String(describing: self.end)), \(self.activedCallMembershipsCount))"
     }
 }

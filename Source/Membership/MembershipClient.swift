@@ -229,32 +229,3 @@ public class MembershipClient {
         }
     }
 }
-
-// MARK: handle conversation membership event
-extension MembershipClient {
-    
-    func handle(activity: ActivityModel) {
-        guard let verb = activity.verb else {
-            return
-        }
-        let clusterId = phone.devices.device?.getClusterId(url: activity.url)
-        let membership = Membership(activity: activity, clusterId: clusterId)
-        var event: MembershipEvent?
-        switch verb {
-        case .add:
-            event = MembershipEvent.created(membership)
-        case .leave:
-            event = MembershipEvent.deleted(membership)
-        case .assignModerator, .unassignModerator:
-            event = MembershipEvent.update(membership)
-        case .acknowledge:
-            event = MembershipEvent.messageSeen(membership, lastSeenMessage: WebexId(type: .message, cluster: clusterId, uuid: activity.object?.id ?? "").base64Id)
-        default:
-            break
-        }
-        if let event = event {
-            self.onEvent?(event)
-            self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me))
-        }        
-    }
-}

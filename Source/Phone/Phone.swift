@@ -205,11 +205,6 @@ public class Phone {
     /// - since: 1.2.0
     public var onIncoming: ((Call) -> Void)?
 
-    /// Callback for the scheduled space meeting.
-    ///
-    /// - since: 2.6.0
-    public var onScheduledSpaceMeeting: ((ScheduledSpaceMeeting.Event) -> Void)?
-    
     /// Indicates whether or not the SDK is connected with the Cisco Webex cloud.
     ///
     /// - since: 1.4.0
@@ -234,8 +229,7 @@ public class Phone {
     
     private let webSocket: WebSocketService
     private var calls = [String: Call]()
-    private var meetings = [Pair<String, String>: ScheduledSpaceMeeting]()
-    var mediaContext: MediaSessionWrapper?
+    private var mediaContext: MediaSessionWrapper?
 
     private var _canceled: Bool = false
     private var canceled: Bool {
@@ -255,10 +249,11 @@ public class Phone {
         }
     }
 
+    var uuid: String = UUID().uuidString
     private let nilJsonStr = "Nil JSON"
     var debug = true;
-
     
+
     enum LocusResult {
         case call(UUID, Device, MediaOption, MediaSessionWrapper, ServiceResponse<LocusModel>, (Result<Call>) -> Void)
         case join(Call, ServiceResponse<LocusModel>, (Error?) -> Void)
@@ -296,7 +291,7 @@ public class Phone {
                     case .recvCall(let model):
                         strong.doLocusEvent(model);
                     case .recvActivity(let model):
-                        strong.doConversationEvent(model);
+                        strong.doActivityEvent(model);
                     case .recvKms(let model):
                         strong.doKmsEvent(model);
                     case .connected:
@@ -529,7 +524,7 @@ public class Phone {
         }
     }
     
-    func add(call: Call) {
+    private func add(call: Call) {
         calls[call.url] = call;
         SDKLogger.shared.info("Add call for call url:\(call.url)")
     }
@@ -909,85 +904,114 @@ public class Phone {
         }
         
     }
-    
-    private func doLocusEvent(_ locus: LocusModel) {
-        SDKLogger.shared.debug("Receive locus event: \(locus.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
-        guard let url = locus.callUrl else {
+
+    private func doLocusEvent(_ model: LocusModel) {
+        SDKLogger.shared.debug("Receive locus event: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
+        guard let url = model.callUrl else {
             SDKLogger.shared.error("CallModel is missing call url")
             return
         }
         if let call = self.calls[url] {
-            call.update(model: locus)
+            call.update(model: model)
         }
-        else if let device = self.devices.device, locus.isValid { // || callInfo.hasJoinedOnOtherDevice(deviceUrl: deviceUrl)
+        else if let device = self.devices.device, model.isIncomingCall { // || callInfo.hasJoinedOnOtherDevice(deviceUrl: deviceUrl)
             // XXX: Is this conditional intended to add this call even when there is no real device registration information?
             // At the time of writing the deviceService.deviceUrl will return a saved value from the UserDefaults. When the application
             // has been restarted and the reregistration process has not completed, other critical information such as locusServiceUrl
             // will not be available, but the deviceUrl WILL be. This may put the application in a bad state. This code MAY be dealing with
             // a race condition and this MAY be the solution to not dropping a call before reregistration has been completed.
             // If so it needs improvement, if not it may be able to be dropped.
-            if locus.isIncomingCall {
-                let call = Call(model: locus, device: device, media: self.mediaContext ?? MediaSessionWrapper(), direction: Call.Direction.incoming, group: !locus.isOneOnOne, correlationId:UUID())
+            if model.isValid {
+                let call = Call(model: model, device: device, media: self.mediaContext ?? MediaSessionWrapper(), direction: Call.Direction.incoming, group: !model.isOneOnOne, correlationId:UUID())
                 self.add(call: call)
                 SDKLogger.shared.info("Receive incoming call: \(call.model.callUrl ?? call.uuid.uuidString)")
                 DispatchQueue.main.async {
                     self.onIncoming?(call)
                 }
             }
-            else if locus.isScheduledCall, let meetings = locus.meetings, let locusUrl = locus.callUrl, let convUrl = locus.conversationUrl, let spaceId = WebexId.from(url: convUrl, by: device)?.base64Id {
-                SDKLogger.shared.info("Receive scheduled call: \(locusUrl)")
-                for meetingModel in meetings {
-                    if let meetingId = meetingModel.meetingId {
-                        self.webex?.spaces.getMeetingInfo(spaceId: spaceId) { res in
-                            let meeting = ScheduledSpaceMeeting(phone: self, model: meetingModel, locus: locus, meetingInfo: res.result.data)
-                            let key = Pair(locusUrl, meetingId)
-                            if self.meetings[key] != nil {
-                                if meeting.state == ScheduledSpaceMeeting.State.removed {
-                                    self.meetings[key] = nil
-                                    self.onScheduledSpaceMeeting?(ScheduledSpaceMeeting.Event.removed(meeting))
-                                }
-                                else {
-                                    self.meetings[key] = meeting
-                                    self.onScheduledSpaceMeeting?(ScheduledSpaceMeeting.Event.updated(meeting))
-                                }
-                            }
-                            else if meeting.state != ScheduledSpaceMeeting.State.removed {
-                                self.meetings[key] = meeting
-                                self.onScheduledSpaceMeeting?(ScheduledSpaceMeeting.Event.ready(meeting))
-                            }
-                        }
-                    }
-                }
-            }
             else {
-                SDKLogger.shared.info("Receive incoming call with error: \(locus)")
+                SDKLogger.shared.info("Receive incoming call with error: \(model)")
             }
             // TODO: need to support other device joined case
         }
         else {
-            SDKLogger.shared.info("Cannot handle the locus model")
+            SDKLogger.shared.info("Cannot handle the CallModel.")
         }
     }
-    
-    private func doConversationEvent(_ model: ActivityModel){
-        SDKLogger.shared.debug("Receive Conversation Acitivity: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
-        if let verb = model.verb {
-            switch verb {
-            case .post, .share, .delete:
-                self.webex?.messages.handle(activity: model)
-            case .acknowledge, .add, .leave, .assignModerator, .unassignModerator:
-                self.webex?.memberships.handle(activity: model)
-            case .create:
-                self.webex?.spaces.handle(activity: model)
-            case .update:
-                if model.objectType == ObjectType.activity {
-                    self.webex?.messages.handle(activity: model)
+
+    private func doActivityEvent(_ activity: ActivityModel){
+        SDKLogger.shared.debug("Receive acitivity: \(activity.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
+        if let clientTempId = activity.clientTempId, clientTempId.starts(with: self.uuid) {
+            SDKLogger.shared.error("The activity is sent by self");
+            return
+        }
+        
+        func fire(_ event: Any?) {
+            DispatchQueue.main.async {
+                if let event = event as? MembershipEvent {
+                    self.webex?.memberships.onEvent?(event)
+                    self.webex?.memberships.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.me))
                 }
-                else if model.objectType == ObjectType.conversation {
-                    self.webex?.spaces.handle(activity: model)
+                else if let event = event as? SpaceEvent {
+                    self.webex?.spaces.onEvent?(event)
+                    self.webex?.spaces.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.me))
                 }
-            default:
-                SDKLogger.shared.error("Not a valid message \(model.id ?? (model.toJSONString() ?? ""))")
+                else if let event = event as? MessageEvent {
+                    self.webex?.messages.onEvent?(event)
+                    self.webex?.messages.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.me))
+                }
+            }
+        }
+        
+        if let verb = activity.verb {
+            let target = activity.target?.objectType
+            let object = activity.object?.objectType
+            let clusterId = self.devices.device?.getClusterId(url: activity.url)
+            
+            if verb == .add && target == ObjectType.conversation && object == ObjectType.person {
+                fire(MembershipEvent.created(Membership(activity: activity, clusterId: clusterId)))
+            }
+            else if verb == .leave && target == ObjectType.conversation && object == ObjectType.person {
+                fire(MembershipEvent.deleted(Membership(activity: activity, clusterId: clusterId)))
+            }
+            else if (verb == .assignModerator || verb == .unassignModerator) && target == ObjectType.conversation && object == ObjectType.person  {
+                fire(MembershipEvent.update(Membership(activity: activity, clusterId: clusterId)))
+            }
+            else if verb == .acknowledge && target == ObjectType.conversation && object == ObjectType.activity {
+                fire(MembershipEvent.messageSeen(Membership(activity: activity, clusterId: clusterId), lastSeenMessage: WebexId(type: .message, cluster: clusterId, uuid: activity.object?.id ?? "").base64Id))
+            }
+            else if verb == .create && object == ObjectType.conversation, let conv = activity.object as? ConversationModel, let convId = conv.id {
+                let base64Id = WebexId(type: .room, cluster: clusterId, uuid: convId).base64Id
+                self.webex?.spaces.get(spaceId: base64Id) { res in
+                    fire(res.result.data == nil ? nil : SpaceEvent.create(res.result.data!))
+                }
+            }
+            else if verb == .update && object == ObjectType.conversation && target == ObjectType.conversation, let conv = activity.target as? ConversationModel, let convId = conv.id {
+                let base64Id = WebexId(type: .room, cluster: clusterId, uuid: convId).base64Id
+                self.webex?.spaces.get(spaceId: base64Id) { res in
+                    fire(res.result.data == nil ? nil : SpaceEvent.update(res.result.data!))
+                }
+            }
+            else if verb == .post || verb == .share, let convUrl = activity.conversationUrl {
+                self.webex?.messages.decrypt(activity: activity, of: convUrl) { decrypted in
+                    let message = Message(activity: decrypted, clusterId: clusterId, person: self.me)
+                    fire(MessageEvent.messageReceived(self.webex?.messages.cacheMessageIfNeeded(message: message) ?? message))
+                }
+            }
+            else if verb == .update, let convUrl = activity.conversationUrl, let content = activity.object as? ContentModel {
+                self.webex?.messages.decrypt(activity: activity, of: convUrl) { decrypted in
+                    self.webex?.messages.doMessageUpdated(content: content) { event in
+                        fire(event)
+                    }
+                }
+            }
+            else if verb == .delete && object == ObjectType.activity, let deleted = activity.object?.id {
+                self.webex?.messages.doMessageDeleted(messageId: WebexId(type: .message, cluster: clusterId, uuid: deleted)) { event in
+                    fire(event)
+                }
+            }
+            else {
+                SDKLogger.shared.error("Not a valid activity \(activity.id ?? (activity.toJSONString() ?? ""))")
             }
         }
     }

@@ -305,6 +305,11 @@ public class Call {
     /// - since: 1.4.0
     public var oniOSBroadcastingChanged: ((iOSBroadcastingEvent) -> Void)?
 
+    /// Callback when the `Call` is scheduled call and the schedule has been changed.
+    ///
+    /// - since: 2.6.0
+    public var onScheduleChanged: ((Call) -> Void)?
+
     /// Multi stream feature observer protocol.
     /// Client need to set the protocol implemention into certain call.
     /// - see: see MultiStreamObserver
@@ -540,15 +545,15 @@ public class Call {
             defer {
                 unlock()
             }
-            return callMemberships ?? []
+            return _callMemberships ?? []
         }
         set {
             lock()
             defer {
                 unlock()
             }
-            callMemberships = newValue
-            self.updateAuxStreamMembership(memberships: callMemberships)
+            _callMemberships = newValue
+            self.updateAuxStreamMembership(memberships: _callMemberships)
         }
     }
 
@@ -564,6 +569,36 @@ public class Call {
     /// - since: 1.2.0
     public var to: CallMembership? {
         return self.memberships.filter({ !$0.isInitiator }).first
+    }
+
+    /// Returns the associated Space of this `Call`.
+    ///
+    /// - since: 2.6.0
+    public var spaceId: String? {
+        if let convUrl = self.model.spaceUrl {
+            return WebexId.from(url: convUrl, by: self.device)?.base64Id
+        }
+        return nil
+    }
+
+    /// Returns the schedules of this `Call` if this `Call` is a scheduled call.
+    ///
+    /// - since: 2.6.0
+    public private(set) var schedules: [CallSchedule] {
+        get {
+            lock()
+            defer {
+                unlock()
+            }
+            return _schedules ?? []
+        }
+        set {
+            lock()
+            defer {
+                unlock()
+            }
+            _schedules = newValue
+        }
     }
 
     /// A local unique identifier of a `Call` for [Apple CallKit](https://developer.apple.com/reference/callkit).
@@ -659,14 +694,14 @@ public class Call {
             defer {
                 unlock()
             }
-            return callModel
+            return _callModel
         }
         set {
             lock()
             defer {
                 unlock()
             }
-            callModel = newValue
+            _callModel = newValue
         }
     }
 
@@ -684,8 +719,9 @@ public class Call {
     private let dtmfQueue: DtmfQueue
 
     private var _videoLayout: MediaOption.VideoLayout?
-    private var callModel: LocusModel
-    private var callMemberships: [CallMembership]?
+    private var _callModel: LocusModel
+    private var _callMemberships: [CallMembership]?
+    private var _schedules: [CallSchedule]?
     private var availableStreamCount: Int = 0
     var mutex = pthread_mutex_t()
 
@@ -766,7 +802,7 @@ public class Call {
         self.isGroup = group
         self.device = device
         self.mediaSession = media
-        self.callModel = model
+        self._callModel = model
         self.correlationId = correlationId
         self.uuid = correlationId
         self.dtmfQueue = DtmfQueue(client: device.phone.client)
@@ -1299,6 +1335,16 @@ public class Call {
 
     private func doCallModel(_ model: LocusModel) {
         self.model = model
+        if let meetings = self.model.meetings {
+            let oldSchedules = self.schedules
+            let newSchedules = meetings.map( { CallSchedule(meeting: $0, fullState: self.model.fullState ) } )
+            if !oldSchedules.elementsEqual(newSchedules) {
+                self.schedules = newSchedules
+                DispatchQueue.main.async {
+                    self.onScheduleChanged?(self)
+                }
+            }
+        }
         if let participants = self.model.participants?.filter({ $0.isCIUser }) {
             let oldMemberships = self.memberships
             var newMemberships = [CallMembership]()
@@ -1306,26 +1352,24 @@ public class Call {
             for participant in participants {
                 if var membership = oldMemberships.find(predicate: { $0.id == participant.id }) {
                     let oldState = membership.state
-                    let tempSendingAudio = membership.sendingAudio
-                    let tempSendingVideo = membership.sendingVideo
+                    let oldSendingAudio = membership.sendingAudio
+                    let oldSendingVideo = membership.sendingVideo
                     membership.model = participant
                     if membership.state != oldState {
                         onCallMembershipChanges.append(contentsOf: checkMembershipChangeEventFor(membership))
                     }
-                    if membership.sendingAudio != tempSendingAudio {
+                    if membership.sendingAudio != oldSendingAudio {
                         onCallMembershipChanges.append(CallMembershipChangedEvent.sendingAudio(membership))
                     }
-                    if membership.sendingVideo != tempSendingVideo {
+                    if membership.sendingVideo != oldSendingVideo {
                         onCallMembershipChanges.append(CallMembershipChangedEvent.sendingVideo(membership))
                     }
-
                     newMemberships.append(membership)
                 } else {
                     let membership = CallMembership(participant: participant, call: self)
                     onCallMembershipChanges.append(contentsOf: checkMembershipChangeEventFor(membership))
                     onCallMembershipChanges.append(CallMembershipChangedEvent.sendingAudio(membership))
                     onCallMembershipChanges.append(CallMembershipChangedEvent.sendingVideo(membership))
-
                     newMemberships.append(membership)
                 }
             }

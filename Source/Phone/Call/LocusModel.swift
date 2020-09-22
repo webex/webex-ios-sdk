@@ -87,6 +87,10 @@ struct LocusModel: Mappable {
         return self.replaces?.first?.locusUrl ?? self.locusUrl
     }
     
+    var spaceUrl: String? {
+        return self.conversationUrl ?? self.info?.conversationUrl
+    }
+    
     var locusId: String? {
         if let url = self.callUrl {
             return URL(string: url)?.lastPathComponent
@@ -103,11 +107,7 @@ struct LocusModel: Mappable {
     }
     
     var isIncomingCall: Bool {
-        return fullState?.state == "ACTIVE" && myself?.alertType?.action == "FULL"
-    }
-
-    var isScheduledCall: Bool {
-        return fullState?.type == "MEETING" && (meetings?.count ?? 0) > 0
+        return (fullState?.state == "ACTIVE" && myself?.alertType?.action == "FULL") || (fullState?.state == "INITIALIZING" && (self.meetings?.count ?? 0) > 0)
     }
 
     var isInactive: Bool {

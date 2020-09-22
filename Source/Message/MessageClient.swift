@@ -62,8 +62,7 @@ public class MessageClient {
 
     let phone: Phone
     private let queue = SerialQueue()
-
-    private var uuid: String = UUID().uuidString
+    
     private var userUUID: String?
     private var kmsCluster: String?
     private var rsaPublicKey: String?
@@ -349,7 +348,7 @@ public class MessageClient {
                                 let request = ServiceRequest.make(convUrl)
                                         .authenticator(self.authenticator)
                                         .method(.post)
-                                        .body(["verb": verb.rawValue, "encryptionKeyUrl": keyUrl, "object": object, "target": target, "clientTempId": "\(self.uuid):\(UUID().uuidString)", "parent": parentModel])
+                                    .body(["verb": verb.rawValue, "encryptionKeyUrl": keyUrl, "object": object, "target": target, "clientTempId": "\(self.phone.uuid):\(UUID().uuidString)", "parent": parentModel])
                                         .path(verb == ActivityModel.Verb.share ? "content" : "activities")
                                         .query(((withFiles ?? []).contains {
                                             $0.shouldTranscode
@@ -601,65 +600,41 @@ public class MessageClient {
             }
         }
     }
-
-    // MARK: Encryption Feature Functions
-    func handle(activity: ActivityModel) {
-        if activity.verb == ActivityModel.Verb.post || activity.verb == ActivityModel.Verb.share || activity.verb == ActivityModel.Verb.update {
-            guard let _ = activity.conversationId, let convUrl = activity.conversationUrl else {
-                SDKLogger.shared.error("Not a space message \(activity.id ?? (activity.toJSONString() ?? ""))")
-                return
-            }
-            if let clientTempId = activity.clientTempId, clientTempId.starts(with: self.uuid) {
-                SDKLogger.shared.error("The activity is sent by self");
-                return
-            }
-            let key = self.encryptionKey(convUrl: convUrl)
-            if let encryptionUrl = activity.encryptionKeyUrl {
-                key.tryRefresh(encryptionUrl: encryptionUrl)
-            }
-            key.material(client: self) { material in
-                activity.decrypt(key: material.data)
-                if activity.verb == .post || activity.verb == .share {
-                    DispatchQueue.main.async {
-                        let message = Message(activity: activity, clusterId: self.phone.devices.device?.getClusterId(url: activity.url), person: self.phone.me)
-                        let event = MessageEvent.messageReceived(self.cacheMessageIfNeeded(message: message))
-                        self.onEvent?(event)
-                        self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me))
-                    }
-                } else if activity.verb == .update {
-                    SDKLogger.shared.error("###: \(activity.toJSONString() ?? "")")
-                    DispatchQueue.main.async {
-                        if let content = activity.object as? ContentModel, let contentId = content.id, let messageId = self.cachedMessages[contentId],
-                           let items = content.files?.items, !items.isEmpty {
-                            let files = items.compactMap {
-                                RemoteFile(model: $0)
-                            }
-                            let event = MessageEvent.messageUpdated(messageId: messageId, type: .fileThumbnail(files))
-                            // TODO Check the validity of the caches regularly
-                            if files.first(where: { $0.thumbnail == nil && $0.shouldTranscode }) == nil {
-                                self.cachedMessages[contentId] = nil
-                            }
-                            self.onEvent?(event)
-                            self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me))
-                        }
-                    }
-                }
-            }
-        } else if activity.verb == ActivityModel.Verb.delete, let deleted = activity.object?.id {
-            DispatchQueue.main.async {
-                let base64Id = WebexId(type: .message, cluster: self.phone.devices.device?.getClusterId(url: activity.url), uuid: deleted).base64Id
-                let event = MessageEvent.messageDeleted(base64Id)
-                for (key, value) in self.cachedMessages where value == base64Id {
-                    self.cachedMessages.removeValue(forKey: key)
-                }
-                self.onEvent?(event)
-                self.onEventWithPayload?(event, WebexEventPayload(activity: activity, person: self.phone.me))
-            }
-        } else {
-            SDKLogger.shared.error("Not a valid message \(activity.id ?? (activity.toJSONString() ?? ""))")
+    
+    func decrypt(activity: ActivityModel, of convUrl: String, completionHandler: @escaping (ActivityModel) -> Void) {
+        let key = self.encryptionKey(convUrl: convUrl)
+        if let encryptionUrl = activity.encryptionKeyUrl {
+            key.tryRefresh(encryptionUrl: encryptionUrl)
+        }
+        key.material(client: self) { material in
+            activity.decrypt(key: material.data)
+            completionHandler(activity)
         }
     }
-
+    
+    func doMessageUpdated(content: ContentModel, completionHandler: @escaping (MessageEvent) -> Void) {
+        DispatchQueue.main.async {
+            if let contentId = content.id, let messageId = self.cachedMessages[contentId], let items = content.files?.items, !items.isEmpty {
+                let files = items.compactMap { RemoteFile(model: $0) }
+                // TODO Check the validity of the caches regularly
+                if files.first(where: { $0.thumbnail == nil && $0.shouldTranscode }) == nil {
+                    self.cachedMessages[contentId] = nil
+                }
+                completionHandler(MessageEvent.messageUpdated(messageId: messageId, type: .fileThumbnail(files)))
+            }
+        }
+    }
+    
+    func doMessageDeleted(messageId: WebexId, completionHandler: @escaping (MessageEvent) -> Void) {
+        DispatchQueue.main.async {
+            let base64Id = messageId.base64Id
+            for (key, value) in self.cachedMessages where value == base64Id {
+                self.cachedMessages.removeValue(forKey: key)
+            }
+            completionHandler(MessageEvent.messageDeleted(base64Id))
+        }
+    }
+    
     func handle(kms: KmsMessageModel) {
         if let response = kms.kmsMessages?.first {
             if let request = self.ephemeralKeyRequest {
@@ -693,7 +668,7 @@ public class MessageClient {
                 if let key = try? KmsKey(from: dict), let convUrl = self.keysCompletionHandlers.keys.first, let handlers = self.keysCompletionHandlers.popFirst()?.value {
                     self.authenticator.accessToken { token in
                         let spaceUserIds = self.encryptionKey(convUrl: convUrl).spaceUserIds
-                        if let deviceUrl = self.deviceUrl, let request = try? KmsRequest(requestId: self.uuid, clientId: deviceUrl, userId: self.userUUID, bearer: token, method: "create", uri: "/resources") {
+                        if let deviceUrl = self.deviceUrl, let request = try? KmsRequest(requestId: self.phone.uuid, clientId: deviceUrl, userId: self.userUUID, bearer: token, method: "create", uri: "/resources") {
                             request.additionalAttributes = ["keyUris": [key.uri], "userIds": spaceUserIds]
                             if let serialize = request.serialize(), let chiperText = try? CjoseWrapper.ciphertext(fromContent: serialize.data(using: .utf8), key: self.ephemeralKey) {
                                 let object = ["objectType": ObjectType.conversation.rawValue, "defaultActivityEncryptionKeyUrl": key.uri]
@@ -792,7 +767,7 @@ public class MessageClient {
         var parameters: [String: Any]?
         var failed: () -> Void
         if let deviceUrl = self.deviceUrl, let encryptionUrl = encryptionUrl {
-            if let request = try? KmsRequest(requestId: self.uuid, clientId: deviceUrl, userId: userUUID, bearer: token, method: "retrieve", uri: encryptionUrl),
+            if let request = try? KmsRequest(requestId: self.phone.uuid, clientId: deviceUrl, userId: userUUID, bearer: token, method: "retrieve", uri: encryptionUrl),
                let serialize = request.serialize(),
                let chiperText = try? CjoseWrapper.ciphertext(fromContent: serialize.data(using: .utf8), key: ephemeralKey) {
                 self.keySerialization = chiperText
@@ -808,7 +783,7 @@ public class MessageClient {
                 self.keyMaterialCompletionHandlers[encryptionUrl] = nil
             }
         } else {
-            if let deviceUrl = self.deviceUrl, let request = try? KmsRequest(requestId: self.uuid, clientId: deviceUrl, userId: userUUID, bearer: token, method: "create", uri: "/keys") {
+            if let deviceUrl = self.deviceUrl, let request = try? KmsRequest(requestId: self.phone.uuid, clientId: deviceUrl, userId: userUUID, bearer: token, method: "create", uri: "/keys") {
                 request.additionalAttributes = ["count": 1]
                 if let serialize = request.serialize(), let chiperText = try? CjoseWrapper.ciphertext(fromContent: serialize.data(using: .utf8), key: ephemeralKey) {
                     self.keySerialization = chiperText
@@ -831,7 +806,7 @@ public class MessageClient {
                     .authenticator(self.authenticator)
                     .path("kms").path("messages")
                     .method(.post)
-                    .headers(["Cisco-Request-ID": self.uuid])
+                    .headers(["Cisco-Request-ID": self.phone.uuid])
                     .body(parameters)
                     .build().responseString { (response: ServiceResponse<String>) in
                         SDKLogger.shared.debug("Request KMS Material Response ============  \(response.result)")
@@ -953,7 +928,7 @@ public class MessageClient {
                 return
             }
             let ecdhe = clusterURI.appendingPathComponent("ecdhe").absoluteString
-            guard let request = try? KmsEphemeralKeyRequest(requestId: self.uuid, clientId: deviceUrl, userId: userUUID, bearer: token, method: "create", uri: ecdhe, kmsStaticKey: rsaPubKey),
+            guard let request = try? KmsEphemeralKeyRequest(requestId: self.phone.uuid, clientId: deviceUrl, userId: userUUID, bearer: token, method: "create", uri: ecdhe, kmsStaticKey: rsaPubKey),
                   let message = request.message else {
                 SDKLogger.shared.debug("Request EphemeralKey failed, illegal ephemeral key request")
                 completionHandler(MSGError.ephemaralKeyFetchFail)
@@ -962,7 +937,7 @@ public class MessageClient {
             self.ephemeralKeyRequest = (request: request, callback: completionHandler)
             Service.kms.homed(for: self.device)
                     .authenticator(self.authenticator)
-                    .path("kms").path("messages").method(.post).headers(["Cisco-Request-ID": self.uuid]).body(["kmsMessages": message, "destination": cluster])
+                    .path("kms").path("messages").method(.post).headers(["Cisco-Request-ID": self.phone.uuid]).body(["kmsMessages": message, "destination": cluster])
                     .build().responseString { (response: ServiceResponse<String>) in
                         SDKLogger.shared.debug("Request EphemeralKey Response ============ \(response.result)")
                         switch response.result {
