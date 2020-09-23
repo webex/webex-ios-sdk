@@ -23,7 +23,7 @@ import ObjectMapper
 
 /// A data type presents a Webhook at Cisco Webex for Developer.
 ///
-/// - see: see [Webhook Explained](https://developer.webex.com/webhooks-explained.html)
+/// - see: see [Webhooks Guide](https://developer.webex.com/docs/api/guides/webhooks)
 /// - since: 1.2.0
 public struct Webhook {
     

@@ -61,7 +61,7 @@ public protocol OAuthAuthenticatorDelegate : AnyObject {
 /// An [OAuth](https://oauth.net/2/) based authentication strategy
 /// for authenticating a user on Cisco Webex.
 ///
-/// - see: [Cisco Webex Integration](https://developer.webex.com/authentication.html)
+/// - see: [Cisco Webex Integration](https://developer.webex.com/docs/integrations)
 /// - since: 1.2.0
 public class OAuthAuthenticator : Authenticator {
     
@@ -97,7 +97,7 @@ public class OAuthAuthenticator : Authenticator {
     /// - parameter redirectUri: the redirect URI that will be called when completing the authentication. This must match the redirect URI registered to your clientId.
     /// - parameter storage: the storage mechanism for persisting authentication information
     ///
-    /// - see: [Cisco Webex Integration](https://developer.webex.com/authentication.html)
+    /// - see: [Cisco Webex Integration](https://developer.webex.com/docs/integrations)
     /// - since: 1.2.0
     public convenience init(clientId: String, clientSecret: String, scope: String, redirectUri: String,
                             storage: OAuthStorage = OAuthKeychainStorage()) {

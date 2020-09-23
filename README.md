@@ -58,9 +58,9 @@ Assuming you already have an Xcode project, e.g. _MyWebexApp_, for your iOS app,
 
 ## Usage
 
-To use the SDK, you will need Cisco Webex integration credentials. If you do not already have a Cisco Webex account, visit [Webex for Developers](https://developer.webex.com/) to create your account and [register your integration](https://developer.webex.com/authentication.html#registering-your-integration). Your app will need to authenticate users via an [OAuth](https://oauth.net/) grant flow for existing Cisco Webex users or a [JSON Web Token](https://jwt.io/) for guest users without a Cisco Webex account.
+To use the SDK, you will need Cisco Webex integration credentials. If you do not already have a Cisco Webex account, visit [Webex for Developers](https://developer.webex.com/) to create your account and [register your integration](https://developer.webex.com/docs/integrations#registering-your-integration). Your app will need to authenticate users via an [OAuth](https://oauth.net/) grant flow for existing Cisco Webex users or a [JSON Web Token](https://jwt.io/) for guest users without a Cisco Webex account.
 
-See the [iOS SDK area](https://developer.webex.com/sdk-for-ios.html) of the Webex for Developers site for more information about this SDK.
+See the [iOS SDK area](https://developer.webex.com/docs/sdks/ios) of the Webex for Developers site for more information about this SDK.
 
 ### Example
 
