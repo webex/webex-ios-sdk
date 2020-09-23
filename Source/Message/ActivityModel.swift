@@ -95,6 +95,21 @@ class ActivityModel : ObjectModel {
         return isPersonallyMentioned(user: user) || isIncludedInGroupMention(user: user, lastJoinedDate: lastJoinedDate)
     }
 
+    func isAllMentioned(lastJoinedDate: Date = Date(timeIntervalSince1970: 0)) -> Bool {
+        guard let comment = self.object as? CommentModel else {
+            return false
+        }
+        guard let mentions = comment.groupMentions?.items, !mentions.isEmpty else {
+            return false
+        }
+        for mention in mentions {
+            if mention.groupType == .all && self.published! > lastJoinedDate {
+                return true
+            }
+        }
+        return false
+    }
+
     private func isPersonallyMentioned(user: String) -> Bool {
         guard let comment = self.object as? CommentModel else {
             return false
@@ -108,7 +123,7 @@ class ActivityModel : ObjectModel {
         return false
     }
 
-    private func isIncludedInGroupMention(user: String, lastJoinedDate: Date) -> Bool {
+    private func isIncludedInGroupMention(user: String, lastJoinedDate: Date = Date(timeIntervalSince1970: 0)) -> Bool {
         guard let comment = self.object as? CommentModel else {
             return false
         }
