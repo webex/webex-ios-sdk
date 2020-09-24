@@ -146,11 +146,21 @@ public struct Message : CustomStringConvertible {
         return self.activity.published
     }
     
-    /// Returns true if the receipient of the message is included in message's mention list
+    /// Returns true if the receipient of the message is included in message's mention list.
     ///
     /// - since: 1.4.0
     public private(set) var isSelfMentioned: Bool = false
-    
+
+    /// Returns true if the message mentioned all people in space.
+    ///
+    /// - since: 2.6.0
+    public private(set) var isAllMentioned: Bool = false
+
+    /// Returns the mentions.
+    ///
+    /// - since: 2.6.0
+    public private(set) var mentions: [Mention]?
+
     /// The content of the message.
     public var text: String? {
         return self.textAsObject?.simple
@@ -229,10 +239,27 @@ public struct Message : CustomStringConvertible {
         if let person = person, let base64Id = person.id {
             self.isSelfMentioned = self.activity.isSelfMention(user: WebexId.uuid(base64Id))
         }
+        self.isAllMentioned = self.activity.isAllMentioned()
+        if let comment = activity.object as? CommentModel {
+            if let mentions = comment.groupMentions?.items, !mentions.isEmpty {
+                self.mentions = [Mention.all];
+            }
+            if let mentions = comment.mentions?.items, !mentions.isEmpty {
+                self.mentions = (self.mentions ?? []) + mentions.compactMap() { person in
+                    if let uuid = person.id {
+                        return Mention.person(WebexId(type: .people, cluster: WebexId.DEFAULT_CLUSTER_ID, uuid: uuid).base64Id)
+                    }
+                    return nil
+                }
+            }
+
+        }
         if let content = activity.object as? ContentModel, let files = content.files?.items, !files.isEmpty {
             self.files = files.compactMap { RemoteFile(model: $0) }
         }
     }
+
+
 }
 
 /// A data type represents a local file.
