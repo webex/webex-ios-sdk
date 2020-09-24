@@ -689,6 +689,10 @@ public class Call {
             _callModel = newValue
         }
     }
+    
+    var isActive: Bool {
+        return model.fullState?.active == true
+    }
 
     var url: String {
         return self.model.callUrl!

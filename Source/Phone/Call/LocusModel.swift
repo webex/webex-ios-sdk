@@ -111,7 +111,7 @@ struct LocusModel: Mappable {
     }
 
     var isIncomingCall: Bool {
-        return (fullState?.state == "ACTIVE" && myself?.alertType?.action == "FULL") || (fullState?.state == "INITIALIZING" && (self.meetings?.count ?? 0) > 0)
+        return (fullState?.state == "ACTIVE" && myself?.alertType?.action == "FULL") || ((fullState?.state == "INITIALIZING" || fullState?.state == "ACTIVE") && (self.meetings?.count ?? 0) > 0)
     }
 
     var isInactive: Bool {
