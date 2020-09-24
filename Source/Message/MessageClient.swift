@@ -348,7 +348,7 @@ public class MessageClient {
                                 let request = ServiceRequest.make(convUrl)
                                         .authenticator(self.authenticator)
                                         .method(.post)
-                                    .body(["verb": verb.rawValue, "encryptionKeyUrl": keyUrl, "object": object, "target": target, "clientTempId": "\(self.phone.uuid):\(UUID().uuidString)", "parent": parentModel])
+                                    .body(["verb": verb.rawValue, "encryptionKeyUrl": keyUrl, "object": object, "target": target, "clientTempId": "\(self.phone.phoneId):\(UUID().uuidString)", "parent": parentModel])
                                         .path(verb == ActivityModel.Verb.share ? "content" : "activities")
                                         .query(((withFiles ?? []).contains {
                                             $0.shouldTranscode
@@ -668,7 +668,8 @@ public class MessageClient {
                 if let key = try? KmsKey(from: dict), let convUrl = self.keysCompletionHandlers.keys.first, let handlers = self.keysCompletionHandlers.popFirst()?.value {
                     self.authenticator.accessToken { token in
                         let spaceUserIds = self.encryptionKey(convUrl: convUrl).spaceUserIds
-                        if let deviceUrl = self.deviceUrl, let request = try? KmsRequest(requestId: self.phone.uuid, clientId: deviceUrl, userId: self.userUUID, bearer: token, method: "create", uri: "/resources") {
+                        let requestId = UUID().uuidString
+                        if let deviceUrl = self.deviceUrl, let request = try? KmsRequest(requestId: requestId, clientId: deviceUrl, userId: self.userUUID, bearer: token, method: "create", uri: "/resources") {
                             request.additionalAttributes = ["keyUris": [key.uri], "userIds": spaceUserIds]
                             if let serialize = request.serialize(), let chiperText = try? CjoseWrapper.ciphertext(fromContent: serialize.data(using: .utf8), key: self.ephemeralKey) {
                                 let object = ["objectType": ObjectType.conversation.rawValue, "defaultActivityEncryptionKeyUrl": key.uri]
@@ -766,8 +767,9 @@ public class MessageClient {
     private func processSpaceKeyMaterialRequest(convUrl: String, encryptionUrl: String?, token: String, userUUID: String, ephemeralKey: String?, completionHandler: @escaping (Result<(String, String)>) -> Void) {
         var parameters: [String: Any]?
         var failed: () -> Void
+        let requestId = UUID().uuidString
         if let deviceUrl = self.deviceUrl, let encryptionUrl = encryptionUrl {
-            if let request = try? KmsRequest(requestId: self.phone.uuid, clientId: deviceUrl, userId: userUUID, bearer: token, method: "retrieve", uri: encryptionUrl),
+            if let request = try? KmsRequest(requestId: requestId, clientId: deviceUrl, userId: userUUID, bearer: token, method: "retrieve", uri: encryptionUrl),
                let serialize = request.serialize(),
                let chiperText = try? CjoseWrapper.ciphertext(fromContent: serialize.data(using: .utf8), key: ephemeralKey) {
                 self.keySerialization = chiperText
@@ -783,7 +785,7 @@ public class MessageClient {
                 self.keyMaterialCompletionHandlers[encryptionUrl] = nil
             }
         } else {
-            if let deviceUrl = self.deviceUrl, let request = try? KmsRequest(requestId: self.phone.uuid, clientId: deviceUrl, userId: userUUID, bearer: token, method: "create", uri: "/keys") {
+            if let deviceUrl = self.deviceUrl, let request = try? KmsRequest(requestId: requestId, clientId: deviceUrl, userId: userUUID, bearer: token, method: "create", uri: "/keys") {
                 request.additionalAttributes = ["count": 1]
                 if let serialize = request.serialize(), let chiperText = try? CjoseWrapper.ciphertext(fromContent: serialize.data(using: .utf8), key: ephemeralKey) {
                     self.keySerialization = chiperText
@@ -806,7 +808,7 @@ public class MessageClient {
                     .authenticator(self.authenticator)
                     .path("kms").path("messages")
                     .method(.post)
-                    .headers(["Cisco-Request-ID": self.phone.uuid])
+                    .headers(["Cisco-Request-ID": requestId])
                     .body(parameters)
                     .build().responseString { (response: ServiceResponse<String>) in
                         SDKLogger.shared.debug("Request KMS Material Response ============  \(response.result)")
@@ -927,8 +929,9 @@ public class MessageClient {
                 completionHandler(MSGError.ephemaralKeyFetchFail)
                 return
             }
+            let requestId = UUID().uuidString
             let ecdhe = clusterURI.appendingPathComponent("ecdhe").absoluteString
-            guard let request = try? KmsEphemeralKeyRequest(requestId: self.phone.uuid, clientId: deviceUrl, userId: userUUID, bearer: token, method: "create", uri: ecdhe, kmsStaticKey: rsaPubKey),
+            guard let request = try? KmsEphemeralKeyRequest(requestId: requestId, clientId: deviceUrl, userId: userUUID, bearer: token, method: "create", uri: ecdhe, kmsStaticKey: rsaPubKey),
                   let message = request.message else {
                 SDKLogger.shared.debug("Request EphemeralKey failed, illegal ephemeral key request")
                 completionHandler(MSGError.ephemaralKeyFetchFail)
@@ -937,7 +940,7 @@ public class MessageClient {
             self.ephemeralKeyRequest = (request: request, callback: completionHandler)
             Service.kms.homed(for: self.device)
                     .authenticator(self.authenticator)
-                    .path("kms").path("messages").method(.post).headers(["Cisco-Request-ID": self.phone.uuid]).body(["kmsMessages": message, "destination": cluster])
+                    .path("kms").path("messages").method(.post).headers(["Cisco-Request-ID": requestId]).body(["kmsMessages": message, "destination": cluster])
                     .build().responseString { (response: ServiceResponse<String>) in
                         SDKLogger.shared.debug("Request EphemeralKey Response ============ \(response.result)")
                         switch response.result {

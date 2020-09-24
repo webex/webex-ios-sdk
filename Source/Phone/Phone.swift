@@ -249,7 +249,7 @@ public class Phone {
         }
     }
 
-    var uuid: String = UUID().uuidString
+    let phoneId: String = UUID().uuidString
     private let nilJsonStr = "Nil JSON"
     var debug = true;
     
@@ -949,7 +949,7 @@ public class Phone {
 
     private func doActivityEvent(_ activity: ActivityModel){
         SDKLogger.shared.debug("Receive acitivity: \(activity.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
-        if let clientTempId = activity.clientTempId, clientTempId.starts(with: self.uuid) {
+        if let clientTempId = activity.clientTempId, clientTempId.starts(with: self.phoneId) {
             SDKLogger.shared.error("The activity is sent by self");
             return
         }
