@@ -218,7 +218,7 @@ public class Call {
         }
     }
 
-    ///  The options to specify how the video adjusts its content to be render in a view.
+    /// The options to specify how the video adjusts its content to be render in a view.
     ///
     /// - since: 2.6.0
     public enum VideoRenderMode {
@@ -305,7 +305,7 @@ public class Call {
     /// - since: 1.4.0
     public var oniOSBroadcastingChanged: ((iOSBroadcastingEvent) -> Void)?
 
-    /// Callback when the `Call` is scheduled call and the schedule has been changed.
+    /// Callback when the `Call` is scheduled call and the schedules of the call has been changed.
     ///
     /// - since: 2.6.0
     public var onScheduleChanged: ((Call) -> Void)?
@@ -509,7 +509,7 @@ public class Call {
         return CMVideoDimensions(width: Int32(size.width), height: Int32(size.height))
     }
 
-    ///  Specify how the video adjusts its content to be render in a view.
+    /// Specify how the remote video adjusts its content to be render in a view.
     ///
     /// - since: 2.6.0
     public var remoteVideoRenderMode: VideoRenderMode {
@@ -581,7 +581,7 @@ public class Call {
         return nil
     }
 
-    /// Returns the schedules of this `Call` if this `Call` is a scheduled call.
+    /// Returns the schedules of this call if this call has one or more schedules.
     ///
     /// - since: 2.6.0
     public private(set) var schedules: [CallSchedule]?

@@ -234,7 +234,7 @@ class MediaSessionWrapper {
             // mediaConfig.mqeCallback = false
             mediaConfig.audioMaxRxBandwidth = phone.audioMaxRxBandwidth
 
-            for setting in phone.advanceSettings {
+            for setting in phone.advancedSettings {
                 switch setting {
                 case .deviceUseRemoteSettings(let value):
                     if let settings = phone.devices.device?.deviceSettings, value {

@@ -151,12 +151,12 @@ public struct Message : CustomStringConvertible {
     /// - since: 1.4.0
     public private(set) var isSelfMentioned: Bool = false
 
-    /// Returns true if the message mentioned all people in space.
+    /// Returns true if the message mentioned everyone in space.
     ///
     /// - since: 2.6.0
     public private(set) var isAllMentioned: Bool = false
 
-    /// Returns the mentions.
+    /// Returns all people mentioned in the message
     ///
     /// - since: 2.6.0
     public private(set) var mentions: [Mention]?

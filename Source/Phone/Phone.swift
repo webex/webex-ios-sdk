@@ -51,47 +51,55 @@ public class Phone {
     ///
     /// - since: 1.3.0
     public enum DefaultBandwidth: UInt32 {
-        // 177Kbps for 160x90 resolution
+        /// 177Kbps for 160x90 resolution
         case maxBandwidth90p = 177000
-        // 384Kbps for 320x180 resolution
+        /// 384Kbps for 320x180 resolution
         case maxBandwidth180p = 384000
-        // 768Kbps for 640x360 resolution
+        /// 768Kbps for 640x360 resolution
         case maxBandwidth360p = 768000
-        // 2.5Mbps for 1280x720 resolution
+        /// 2.5Mbps for 1280x720 resolution
         case maxBandwidth720p = 2500000
-        // 4Mbps for 1920x1080 resolution
+        /// 4Mbps for 1920x1080 resolution
         case maxBandwidth1080p = 4000000
-        // 8Mbps data session
+        /// 8Mbps data session
         case maxBandwidthSession = 8000000
-        // 64kbps for voice
+        /// 64kbps for voice
         case maxBandwidthAudio = 64000
     }
     
-    /// The enumeration of common bandwidth choices.
+    /// The enumeration of advanced settings.
+    /// These settings are for special use cases and usually do not need to be set.
     ///
-    /// - since: 2.5.0.12
-    public enum AdvanceSettings {
+    /// - since: 2.6.0
+    public enum AdvancedSettings {
         
-        public enum MixingStream: UInt8 {
-            case client = 3, server = 1, `default` = 0
-        }
-        
-        case audioForwardErrorCorrection(Bool)
-        case audioEchoCanccellation(Bool)
-        case audioMixingStream(MixingStream)
-        case activeSpeakerOverRTCP(Bool)
-        case audioAutomaticGainControl(Bool)
-        case audioNoiseSupression(Bool)
-        case audioVoiceActivityDetection(Bool)
-        case deviceUseRemoteSettings(Bool)
+//        public enum MixingStream: UInt8 {
+//            case client = 3, server = 1, `default` = 0
+//        }
+//        case audioForwardErrorCorrection(Bool)
+//        case audioEchoCanccellation(Bool)
+//        case audioMixingStream(MixingStream)
+//        case activeSpeakerOverRTCP(Bool)
+//        case audioAutomaticGainControl(Bool)
+//        case audioNoiseSupression(Bool)
+//        case audioVoiceActivityDetection(Bool)
+//        case deviceUseRemoteSettings(Bool)
+//        case videoReceiverBasedQosSupported(Bool)
+        /// Enable or disable the video mosaic for error-concealment when data loss in network. The defaule is enable.
         case videoEnableDecoderMosaic(Bool)
+        /// The max sending fps for video. If 0, default value of 30 is used.
         case videoMaxTxFPS(UInt)
-        case videoReceiverBasedQosSupported(Bool)
     }
 
+    /// The options for H.264 video codec license from Cisco Systems, Inc
+    ///
+    /// - since: 2.6.0
     public enum H264LicenseAction {
+        /// Indicates that the end user has accepted the term.
         case accept
+        /// Indicates that the end user declined the term.
         case decline
+        /// Indicates that the end user wants to view the license.
         case viewLicense(url: URL)
     }
     
@@ -147,44 +155,50 @@ public class Phone {
     /// Only effective if set before the start of call.
     /// if 0, default value of 64 * 1000 is used.
     ///
-    /// - since: 2.5.0.2
+    /// - since: 2.6.0
     public var audioMaxRxBandwidth: UInt32 = DefaultBandwidth.maxBandwidthAudio.rawValue
     
     /// The max receiving bandwidth for video in unit bps for the call.
     /// Only effective if set before the start of call.
     /// if 0, default value of 2000*1000 is used.
     ///
-    /// - since: 2.5.0.2
+    /// - since: 2.6.0
     public var videoMaxRxBandwidth: UInt32 = DefaultBandwidth.maxBandwidth720p.rawValue
     
     /// The max sending bandwidth for video in unit bps for the call.
     /// Only effective if set before the start of call.
     /// if 0, default value of 2000*1000 is used.
     ///
-    /// - since: 2.5.0.2
+    /// - since: 2.6.0
     public var videoMaxTxBandwidth: UInt32 = DefaultBandwidth.maxBandwidth720p.rawValue
     
     /// The max receiving bandwidth for screen sharing in unit bps for the call.
     /// Only effective if set before the start of call.
     /// if 0, default value of 4000*1000 is used.
     ///
-    /// - since: 2.5.0.2
+    /// - since: 2.6.0
     public var sharingMaxRxBandwidth: UInt32 = DefaultBandwidth.maxBandwidthSession.rawValue
-    
-    /// - since: 2.5.0.12
-    public var advanceSettings: [AdvanceSettings] = []
-    
-    public let defaultAdvanceSettings: [AdvanceSettings] = [.deviceUseRemoteSettings(false),
-                                                            .activeSpeakerOverRTCP(true),
-                                                            .audioAutomaticGainControl(true),
-                                                            .audioEchoCanccellation(false),
-                                                            .audioForwardErrorCorrection(true),
-                                                            .audioNoiseSupression(false),
-                                                            .audioVoiceActivityDetection(false),
-                                                            .audioMixingStream(AdvanceSettings.MixingStream.default),
-                                                            .videoEnableDecoderMosaic(true),
-                                                            .videoMaxTxFPS(0),
-                                                            .videoReceiverBasedQosSupported(true)]
+
+    /// The advanced setings for call. Only effective if set before the start of call.
+    ///
+    /// - since: 2.6.0
+    public var advancedSettings: [AdvancedSettings] = []
+
+    /// The default values of the advanced setings for call.
+    ///
+    /// - since: 2.6.0
+    public let defaultAdvancedSettings: [AdvancedSettings] = [.videoEnableDecoderMosaic(true),
+                                                              .videoMaxTxFPS(0),
+//                                                           .deviceUseRemoteSettings(false),
+//                                                           .activeSpeakerOverRTCP(true),
+//                                                           .audioAutomaticGainControl(true),
+//                                                           .audioEchoCanccellation(false),
+//                                                           .audioForwardErrorCorrection(true),
+//                                                           .audioNoiseSupression(false),
+//                                                           .audioVoiceActivityDetection(false),
+//                                                           .audioMixingStream(AdvancedSettings.MixingStream.default),
+//                                                           .videoReceiverBasedQosSupported(true)
+    ]
     
     /// Default camera facing mode of this phone, used as the default when dialing or answering a call.
     /// The default mode is the front camera.
@@ -252,7 +266,6 @@ public class Phone {
     let phoneId: String = UUID().uuidString
     private let nilJsonStr = "Nil JSON"
     var debug = true;
-    
 
     enum LocusResult {
         case call(UUID, Device, MediaOption, MediaSessionWrapper, ServiceResponse<LocusModel>, (Result<Call>) -> Void)
@@ -470,7 +483,6 @@ public class Phone {
     /// Pops up an Alert for the end user to approve the use of H.264 codec license from Cisco Systems, Inc.
     ///
     /// - parameter completionHandler: A closure to be executed when completed.
-    /// - returns: Void
     /// - note: Invoking this function is optional since the alert will appear automatically during the first video call.
     /// - since: 1.2.0
     public func requestVideoCodecActivation(completionHandler: ((H264LicenseAction) -> Void)? = nil) {

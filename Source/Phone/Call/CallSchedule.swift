@@ -20,17 +20,17 @@
 
 import Foundation
 
-/// The schedule of a scheduled `Call`
+/// A CallSchedule represents the schedule of a scheduled call
 ///
 /// - since: 2.6.0
 public class CallSchedule: Equatable, CustomStringConvertible {
 
-    /// Start time in ISO 8601 compliant format.
+    ///  Start time of the call is scheduled.
     ///
     /// - since: 2.6.0
     public let start: Date?
 
-    /// End time in ISO 8601 compliant format.
+    /// End time of the call is scheduled.
     ///
     /// - since: 2.6.0
     public let end: Date?
