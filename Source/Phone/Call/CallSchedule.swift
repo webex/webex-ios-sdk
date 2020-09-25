@@ -36,7 +36,6 @@ public class CallSchedule: Equatable, CustomStringConvertible {
     public let end: Date?
 
     init(meeting: MeetingModel, fullState: FullStateModel?) {
-        self.count = fullState?.count ?? 0
         self.start = meeting.startTime
         self.end = self.start?.addingTimeInterval(TimeInterval((meeting.durationMinutes ?? 0) * 60))
     }

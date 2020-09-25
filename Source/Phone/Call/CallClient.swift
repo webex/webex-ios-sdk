@@ -257,7 +257,7 @@ class CallClient {
 
     private func makeBody(correlationId: UUID, option: MediaOption, device: Device, localMedia: MediaModel, callee: String?) -> [String:Any?] {
         var json = localMedia.toJson()
-        json["device"] = ["url":device.deviceUrl.absoluteString, "deviceType": (option.layout != MediaOption.VideoLayout.single ? "WEB" : device.deviceType), "regionCode":device.countryCode, "countryCode":device.regionCode, "capabilities":["groupCallSupported":true, "sdpSupported":true]]
+        json["device"] = ["url":device.deviceUrl.absoluteString, "deviceType": DeviceService.Types.web_client.rawValue, "regionCode":device.countryCode, "countryCode":device.regionCode, "capabilities":["groupCallSupported":true, "sdpSupported":true]]
         json["respOnlySdp"] = true
         json["correlationId"] = correlationId.uuidString
         if let pin = option.pin {

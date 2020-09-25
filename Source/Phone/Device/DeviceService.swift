@@ -21,8 +21,9 @@
 import Foundation
 
 struct Device {
+
     let phone: Phone
-    let deviceType:String = UIDevice.current.kind
+    let deviceType:String = DeviceService.Types.ios_sdk.rawValue
     let deviceModel: DeviceModel
     let regionModel: RegionModel
     let clusterUrls: [String: String]
@@ -55,6 +56,12 @@ struct Device {
 }
 
 class DeviceService {
+
+    enum Types: String {
+        case ios_sdk = "TEAMS_SDK_IOS"
+        case web_client = "WEB"
+        case teams_client = "TEAMS_CLIENT"
+    }
     
     private let client: DeviceClient
     
@@ -80,7 +87,7 @@ class DeviceService {
                 "localizedModel": UIDevice.current.localizedModel,
                 "systemName": UIDevice.current.systemName,
                 "systemVersion": UIDevice.current.systemVersion,
-                "deviceType": UIDevice.current.kind,
+                "deviceType": DeviceService.Types.ios_sdk.rawValue,
                 "deviceIdentifier": UserDefaults.sharedInstance.deviceIdentifier ?? UUID().uuidString,
                 "countryCode": region.countryCode!,
                 "regionCode": region.regionCode!,
@@ -147,18 +154,18 @@ class DeviceService {
     }
 }
 
-fileprivate extension UIDevice {
-    
-    var kind: String {
-
-        if self.userInterfaceIdiom == .pad {
-            return "IPAD"
-        } else if self.userInterfaceIdiom == .phone {
-            return "IPHONE"
-        } else {
-            return "UNKNOWN"
-        }
-    }
-    
-}
+//fileprivate extension UIDevice {
+//
+//    var kind: String {
+//
+//        if self.userInterfaceIdiom == .pad {
+//            return "IPAD"
+//        } else if self.userInterfaceIdiom == .phone {
+//            return "IPHONE"
+//        } else {
+//            return "UNKNOWN"
+//        }
+//    }
+//
+//}
 

@@ -100,7 +100,7 @@ class MetricsEngine {
                 labels: nil,
                 eventData: nil,
                 intervals: [metric])
-        let clientInfo = ClientInfo(clientType: "TEAMS_CLIENT", os: "ios", osVersion: UIDevice.current.systemVersion)
+        let clientInfo = ClientInfo(clientType: DeviceService.Types.teams_client.rawValue, os: "ios", osVersion: UIDevice.current.systemVersion)
         let origin = DiagnosticOrigin(userAgent: UserAgent.string,
                 networkType: .unknown,
                 localIpAddress: "127.0.0.1",
