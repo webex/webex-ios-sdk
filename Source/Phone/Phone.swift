@@ -621,8 +621,13 @@ public class Phone {
                 }
             }
             if let url = call.model.locusUrl {
-                self.client.decline(url, by: call.device, queue: self.queue.underlying) { res in
-                    self.doLocusResponse(LocusResult.reject(call, res, completionHandler))
+                if call.isActive {
+                    self.client.decline(url, by: call.device, queue: self.queue.underlying) { res in
+                        self.doLocusResponse(LocusResult.reject(call, res, completionHandler))
+                        self.queue.yield()
+                    }
+                }else {
+                    WebexError.serviceFailed(reason: "Cannot decline a non-active schedule call").report(errorCallback: completionHandler)
                     self.queue.yield()
                 }
             }
