@@ -59,6 +59,12 @@
                 <a href="../../Classes/Call/WaitReason.html">– WaitReason</a>
               </li>
               <li class="nav-group-task">
+                <a href="../../Classes/Call/VideoRenderMode.html">– VideoRenderMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/CallSchedule.html">CallSchedule</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../../Classes/EmailAddress.html">EmailAddress</a>
               </li>
               <li class="nav-group-task">
@@ -99,6 +105,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="../../Classes/Phone/DefaultBandwidth.html">– DefaultBandwidth</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Phone/AdvancedSettings.html">– AdvancedSettings</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Phone/H264LicenseAction.html">– H264LicenseAction</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Classes/SSOAuthenticator.html">SSOAuthenticator</a>
@@ -145,6 +157,9 @@
                 <a href="../../Enums/MessageEvent.html">MessageEvent</a>
               </li>
               <li class="nav-group-task">
+                <a href="../../Enums/MessageEvent/UpdateType.html">– UpdateType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../../Enums/Result.html">Result</a>
               </li>
               <li class="nav-group-task">
@@ -165,10 +180,16 @@
             <a href="../../Extensions.html">Extensions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../../Extensions/ActivityModel.html">ActivityModel</a>
+                <a href="../../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/Double.html">Double</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Extensions/MediaSessionWrapper.html">MediaSessionWrapper</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/Timer.html">Timer</a>
               </li>
             </ul>
           </li>
@@ -302,7 +323,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>177Kbps for 160x90 resolution</p>
 
                       </div>
                       <div class="declaration">
@@ -329,7 +350,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>384Kbps for 320x180 resolution</p>
 
                       </div>
                       <div class="declaration">
@@ -356,7 +377,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>768Kbps for 640x360 resolution</p>
 
                       </div>
                       <div class="declaration">
@@ -383,14 +404,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>2.5Mbps for 1280x720 resolution</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">maxBandwidth720p</span> <span class="o">=</span> <span class="mi">2000000</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">maxBandwidth720p</span> <span class="o">=</span> <span class="mi">2500000</span></code></pre>
 
                         </div>
                       </div>
@@ -410,14 +431,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>4Mbps for 1920x1080 resolution</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">maxBandwidth1080p</span> <span class="o">=</span> <span class="mi">3000000</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">maxBandwidth1080p</span> <span class="o">=</span> <span class="mi">4000000</span></code></pre>
 
                         </div>
                       </div>
@@ -437,14 +458,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>8Mbps data session</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">maxBandwidthSession</span> <span class="o">=</span> <span class="mi">4000000</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">maxBandwidthSession</span> <span class="o">=</span> <span class="mi">8000000</span></code></pre>
 
                         </div>
                       </div>
@@ -464,7 +485,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>64kbps for voice</p>
 
                       </div>
                       <div class="declaration">
@@ -483,7 +504,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-04-09)</p>
+          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-09-27)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

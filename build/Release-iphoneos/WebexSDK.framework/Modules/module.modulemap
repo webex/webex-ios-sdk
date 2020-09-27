@@ -1,0 +1,4 @@
+framework module WebexSDK {
+  header "WebexSDK-Swift.h"
+  requires objc
+}

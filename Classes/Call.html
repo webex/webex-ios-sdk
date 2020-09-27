@@ -59,6 +59,12 @@
                 <a href="../Classes/Call/WaitReason.html">– WaitReason</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/Call/VideoRenderMode.html">– VideoRenderMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CallSchedule.html">CallSchedule</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/EmailAddress.html">EmailAddress</a>
               </li>
               <li class="nav-group-task">
@@ -99,6 +105,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Phone/DefaultBandwidth.html">– DefaultBandwidth</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Phone/AdvancedSettings.html">– AdvancedSettings</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Phone/H264LicenseAction.html">– H264LicenseAction</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/SSOAuthenticator.html">SSOAuthenticator</a>
@@ -145,6 +157,9 @@
                 <a href="../Enums/MessageEvent.html">MessageEvent</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/MessageEvent/UpdateType.html">– UpdateType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/Result.html">Result</a>
               </li>
               <li class="nav-group-task">
@@ -165,10 +180,16 @@
             <a href="../Extensions.html">Extensions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Extensions/ActivityModel.html">ActivityModel</a>
+                <a href="../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Double.html">Double</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/MediaSessionWrapper.html">MediaSessionWrapper</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Timer.html">Timer</a>
               </li>
             </ul>
           </li>
@@ -567,6 +588,39 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8WebexSDK4CallC15VideoRenderModeO"></a>
+                    <a name="//apple_ref/swift/Enum/VideoRenderMode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC15VideoRenderModeO">VideoRenderMode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The options to specify how the video adjusts its content to be render in a view.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.6.0
+
+</div>
+
+                        <a href="../Classes/Call/VideoRenderMode.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">VideoRenderMode</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8WebexSDK4CallC9onRingingyycSgvp"></a>
                     <a name="//apple_ref/swift/Property/onRinging" class="dashAnchor"></a>
                     <a class="token" href="#/s:8WebexSDK4CallC9onRingingyycSgvp">onRinging</a>
@@ -823,6 +877,38 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8WebexSDK4CallC17onScheduleChangedyACcSgvp"></a>
+                    <a name="//apple_ref/swift/Property/onScheduleChanged" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC17onScheduleChangedyACcSgvp">onScheduleChanged</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Callback when the <code>Call</code> is scheduled call and the schedules of the call has been changed.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.6.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onScheduleChanged</span><span class="p">:</span> <span class="p">((</span><span class="kt">Call</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8WebexSDK4CallC19multiStreamObserverAA05MultieF0_pSgvp"></a>
                     <a name="//apple_ref/swift/Property/multiStreamObserver" class="dashAnchor"></a>
                     <a class="token" href="#/s:8WebexSDK4CallC19multiStreamObserverAA05MultieF0_pSgvp">multiStreamObserver</a>
@@ -888,7 +974,7 @@ Client need to set the protocol implemention into certain call.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">status</span><span class="p">:</span> <span class="kt"><a href="../Enums/CallStatus.html">CallStatus</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">status</span><span class="p">:</span> <span class="kt"><a href="../Enums/CallStatus.html">CallStatus</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -1442,6 +1528,70 @@ Client need to set the protocol implemention into certain call.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8WebexSDK4CallC21remoteVideoRenderModeAC0efG0Ovp"></a>
+                    <a name="//apple_ref/swift/Property/remoteVideoRenderMode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC21remoteVideoRenderModeAC0efG0Ovp">remoteVideoRenderMode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Specify how the remote video adjusts its content to be render in a view.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.6.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">remoteVideoRenderMode</span><span class="p">:</span> <span class="kt"><a href="../Classes/Call/VideoRenderMode.html">VideoRenderMode</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC11videoLayoutAA11MediaOptionV05VideoE0OSgvp"></a>
+                    <a name="//apple_ref/swift/Property/videoLayout" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC11videoLayoutAA11MediaOptionV05VideoE0OSgvp">videoLayout</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The video layout for the active speaker and other attendees in the group video meeting.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.6.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">videoLayout</span><span class="p">:</span> <span class="kt"><a href="../Structs/MediaOption.html">MediaOption</a></span><span class="o">.</span><span class="kt">VideoLayout</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8WebexSDK4CallC11membershipsSayAA0C10MembershipVGvp"></a>
                     <a name="//apple_ref/swift/Property/memberships" class="dashAnchor"></a>
                     <a class="token" href="#/s:8WebexSDK4CallC11membershipsSayAA0C10MembershipVGvp">memberships</a>
@@ -1529,6 +1679,70 @@ Client need to set the protocol implemention into certain call.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">to</span><span class="p">:</span> <span class="kt"><a href="../Structs/CallMembership.html">CallMembership</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC7spaceIdSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/spaceId" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC7spaceIdSSSgvp">spaceId</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the associated Space of this <code>Call</code>.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.6.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">spaceId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC9schedulesSayAA0C8ScheduleCGSgvp"></a>
+                    <a name="//apple_ref/swift/Property/schedules" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC9schedulesSayAA0C8ScheduleCGSgvp">schedules</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the schedules of this call if this call has one or more schedules.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.6.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">schedules</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/CallSchedule.html">CallSchedule</a></span><span class="p">]?</span></code></pre>
 
                         </div>
                       </div>
@@ -2236,7 +2450,7 @@ This should be called by moderator.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@available(iOS 11.2, *)</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="nf">startSharing</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">))</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">startSharing</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -2292,7 +2506,7 @@ This should be called by moderator.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@available(iOS 11.2, *)</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="nf">stopSharing</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">))</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">stopSharing</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -2487,7 +2701,7 @@ This must be called on <a href="https://developer.apple.com/documentation/callki
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-04-09)</p>
+          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-09-27)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

@@ -59,6 +59,12 @@
                 <a href="../Classes/Call/WaitReason.html">– WaitReason</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/Call/VideoRenderMode.html">– VideoRenderMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CallSchedule.html">CallSchedule</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/EmailAddress.html">EmailAddress</a>
               </li>
               <li class="nav-group-task">
@@ -99,6 +105,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Phone/DefaultBandwidth.html">– DefaultBandwidth</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Phone/AdvancedSettings.html">– AdvancedSettings</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Phone/H264LicenseAction.html">– H264LicenseAction</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/SSOAuthenticator.html">SSOAuthenticator</a>
@@ -145,6 +157,9 @@
                 <a href="../Enums/MessageEvent.html">MessageEvent</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/MessageEvent/UpdateType.html">– UpdateType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/Result.html">Result</a>
               </li>
               <li class="nav-group-task">
@@ -165,10 +180,16 @@
             <a href="../Extensions.html">Extensions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Extensions/ActivityModel.html">ActivityModel</a>
+                <a href="../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Double.html">Double</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/MediaSessionWrapper.html">MediaSessionWrapper</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Timer.html">Timer</a>
               </li>
             </ul>
           </li>
@@ -518,6 +539,71 @@ The render views can be set after call is connected.</p>
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11MediaOptionV9moderatorSbvp"></a>
+                    <a name="//apple_ref/swift/Property/moderator" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11MediaOptionV9moderatorSbvp">moderator</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Join the meeting as a moderator.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.6.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">moderator</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11MediaOptionV3pinSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/pin" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11MediaOptionV3pinSSSgvp">pin</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>If join as moderator, PIN should be a host key, else PIN should be a meeting password.
+In general, The PIN is not required. unless the WebexError.requireHostPinOrMeetingPassword error be received when dial.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.6.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">pin</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
             <div class="task-group">
@@ -559,7 +645,7 @@ The render views can be set after call is connected.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-04-09)</p>
+          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-09-27)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
