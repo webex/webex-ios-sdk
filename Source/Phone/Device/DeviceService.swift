@@ -119,7 +119,7 @@ class DeviceService {
                 let deviceUrl = UserDefaults.sharedInstance.deviceUrl
                 SDKLogger.shared.debug("Saved deviceUrl: \(deviceUrl ?? "Nil")")
 
-                if let deviceUrl = deviceUrl {
+                if let deviceUrl = deviceUrl, !deviceUrl.contains("/devices/ios/") {
                     SDKLogger.shared.debug("Updating device");
                     self.client.update(deviceUrl: deviceUrl, deviceInfo: deviceInfo, queue: queue, completionHandler: registrationHandler)
                 }
