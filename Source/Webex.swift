@@ -127,16 +127,6 @@ public class Webex {
     public init(authenticator: Authenticator) {
         self.authenticator = authenticator
         verbose()
-        let sessionManager = Alamofire.SessionManager.default
-        sessionManager.delegate.taskWillPerformHTTPRedirection = { session, task, response, request in
-            var redirectedRequest = request
-            if let originalRequest = task.originalRequest, let headers = originalRequest.allHTTPHeaderFields, let authorizationHeaderValue = headers["Authorization"] {
-                var mutableRequest = request
-                mutableRequest.setValue(authorizationHeaderValue, forHTTPHeaderField: "Authorization")
-                redirectedRequest = mutableRequest
-            }
-            return redirectedRequest
-        }
     }
     
     /// People are registered users of Cisco Webex.
