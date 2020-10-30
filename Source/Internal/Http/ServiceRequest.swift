@@ -20,7 +20,6 @@
 
 import Foundation
 import Alamofire
-import AlamofireObjectMapper
 import ObjectMapper
 import SwiftyJSON
 
@@ -106,6 +105,7 @@ enum Service: String {
     }
 }
 
+let emptyResponseCodes:Set<Int> = [200, 202, 204, 205]
 class ServiceRequest : RequestRetrier, RequestAdapter {
 
     static func make(_ url: String) -> ServiceRequest.Builder {
@@ -123,13 +123,16 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     private let keyPath: String?
     private let queue: DispatchQueue?
     private let authenticator: Authenticator?
+    private var accessToken: String? = nil
     private var newAccessToken: String? = nil
     private var refreshTokenCount = 0
-    private let sessionManager: SessionManager = {
+    private let redirectHandler = WebexRedirectHandler()
+    lazy var sessionManager: Session = {
         let configuration = URLSessionConfiguration.default
-        configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
-        return SessionManager(configuration: configuration)
+        configuration.headers = .default
+        return Session(configuration: configuration, redirectHandler: self.redirectHandler)
     }()
+    
     
     private init(authenticator: Authenticator? = nil, url: URL, headers: [String: String], method: Alamofire.HTTPMethod, body: RequestParameter?, query: RequestParameter?, form: Bool?, keyPath: String?, queue: DispatchQueue?) {
         self.authenticator = authenticator
@@ -247,19 +250,28 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         let tempQueue = self.queue
         let tempKeyPath = self.keyPath
         makeRequest() { request in
-            request.responseObject(queue: tempQueue, keyPath: tempKeyPath) { (response: DataResponse<T>) in
+            request.responseJSON(queue: tempQueue ?? .main) { (response) in
                 SDKLogger.shared.verbose(response.debugDescription)
                 var result: Result<T>
                 switch response.result {
                 case .success(let value):
-                    result = .success(value)
-                case .failure(var error):
-                    if response.response != nil {
-                        if let data = response.data {
-                            error = WebexError.requestErrorWith(data: data)
-                        }
+                    let objectJson: Any?
+                    if let keyPath = tempKeyPath , keyPath.isEmpty == false {
+                        objectJson = (value as AnyObject?)?.value(forKeyPath: keyPath)
+                    }else {
+                        objectJson = value
                     }
-                    result = .failure(error)
+                    if let parsedObject = Mapper<T>(shouldIncludeNilValues: false).map(JSONObject: objectJson) {
+                        result = .success(parsedObject)
+                    }else {
+                        result = .failure(WebexError.serviceFailed(reason: "Response Serialization Failed"))
+                    }
+                case .failure(let error):
+                    var webexError:Error = error
+                    if let _ = response.response, let data = response.data {
+                        webexError = WebexError.requestErrorWith(data: data)
+                    }
+                    result = .failure(webexError)
                 }
                 completionHandler(ServiceResponse(response.response, result))
             }
@@ -270,19 +282,28 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         let tempQueue = self.queue
         let tempKeyPath = self.keyPath
         makeRequest() { request in
-            request.responseArray(queue: tempQueue, keyPath: tempKeyPath) { (response: DataResponse<[T]>) in
+            request.responseJSON(queue: tempQueue ?? .main) { (response) in
                 SDKLogger.shared.verbose(response.debugDescription)
                 var result: Result<[T]>
                 switch response.result {
                 case .success(let value):
-                    result = .success(value)
-                case .failure(var error):
-                    if response.response != nil {
-                        if let data = response.data {
-                            error = WebexError.requestErrorWith(data: data)
-                        }
+                    let objectJson: Any?
+                    if let keyPath = tempKeyPath , keyPath.isEmpty == false {
+                        objectJson = (value as AnyObject?)?.value(forKeyPath: keyPath)
+                    }else {
+                        objectJson = value
                     }
-                    result = .failure(error)
+                    if let parsedObject = Mapper<T>(shouldIncludeNilValues: false).mapArray(JSONObject: objectJson) {
+                        result = .success(parsedObject)
+                    }else {
+                        result = .failure(WebexError.serviceFailed(reason: "Response Serialization Failed"))
+                    }
+                case .failure(let error):
+                    var webexError:Error = error
+                    if let _ = response.response, let data = response.data {
+                        webexError = WebexError.requestErrorWith(data: data)
+                    }
+                    result = .failure(webexError)
                 }
                 completionHandler(ServiceResponse(response.response, result))
             }
@@ -292,19 +313,18 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     func responseJSON(_ completionHandler: @escaping (ServiceResponse<Any>) -> Void) {
         let tempQueue = self.queue
         makeRequest() { request in
-            request.responseJSON(queue: tempQueue) { (response: DataResponse<Any>) in
+            request.responseJSON(queue: tempQueue ?? .main) { (response) in
                 SDKLogger.shared.verbose(response.debugDescription)
                 var result: Result<Any>
                 switch response.result {
                 case .success(let value):
                     result = .success(value)
-                case .failure(var error):
-                    if response.response != nil {
-                        if let data = response.data {
-                            error = WebexError.requestErrorWith(data: data)
-                        }
+                case .failure(let error):
+                    var webexError:Error = error
+                    if let _ = response.response, let data = response.data {
+                        webexError = WebexError.requestErrorWith(data: data)
                     }
-                    result = .failure(error)
+                    result = .failure(webexError)
                 }
                 completionHandler(ServiceResponse(response.response, result))
             }
@@ -314,19 +334,18 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
     func responseString(_ completionHandler: @escaping (ServiceResponse<String>) -> Void) {
         let tempQueue = self.queue
         makeRequest() { request in
-            request.responseString(queue: tempQueue) { (response: DataResponse<String>) in
+            request.responseString(queue: tempQueue ?? .main, emptyResponseCodes: emptyResponseCodes) { (response) in
                 SDKLogger.shared.verbose(response.debugDescription)
                 var result: Result<String>
                 switch response.result {
                 case .success(let value):
                     result = .success(value)
-                case .failure(var error):
-                    if response.response != nil {
-                        if let data = response.data {
-                            error = WebexError.requestErrorWith(data: data)
-                        }
+                case .failure(let error):
+                    var webexError:Error = error
+                    if let _ = response.response, let data = response.data {
+                        webexError = WebexError.requestErrorWith(data: data)
                     }
-                    result = .failure(error)
+                    result = .failure(webexError)
                 }
                 completionHandler(ServiceResponse(response.response, result))
             }
@@ -343,7 +362,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
             
             let urlRequestConvertible: URLRequestConvertible
             do {
-                var urlRequest = try URLRequest(url: self.url, method: self.method, headers: headerDict)
+                var urlRequest = try URLRequest(url: self.url, method: self.method, headers: HTTPHeaders(headerDict))
                 //disable http local cache data.
                 urlRequest.cachePolicy = .reloadIgnoringLocalCacheData
                 if let body = self.body {
@@ -368,17 +387,10 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
                 }
                 urlRequestConvertible = ErrorRequestConvertible(error)
             }
-            self.sessionManager.retrier = self
-            self.sessionManager.adapter = self
-            self.sessionManager.delegate.taskWillPerformHTTPRedirection = { session, task, response, request in
-                var finalRequest = request
-                if let accessToken = accessToken {
-                    finalRequest.setValue(tempTokenPrefix + accessToken, forHTTPHeaderField: "Authorization")
-                }
-                return finalRequest
-            }
-            let request = self.sessionManager.request(urlRequestConvertible).validate()
-            SDKLogger.shared.verbose(request.debugDescription)
+            
+            let interceptor = Interceptor(adapter: Adapter(self.adapt(_:for:completion:)), retrier: Retrier(self.retry(_:for:dueTo:completion:)))
+            let request = self.sessionManager.request(urlRequestConvertible, interceptor: interceptor).validate()
+            SDKLogger.shared.verbose(request.description)
             completionHandler(request)
         }
         
@@ -391,43 +403,45 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         }
     }
     
-    func adapt(_ urlRequest: URLRequest) throws -> URLRequest {
+    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Swift.Result<URLRequest, Error>) -> Void) {
         var urlRequest = urlRequest
         let tempTokenPrefix = self.tokenPrefix
         if let newToken = self.newAccessToken, let _ =  urlRequest.value(forHTTPHeaderField: "Authorization") {
             urlRequest.setValue(tempTokenPrefix + newToken, forHTTPHeaderField: "Authorization")
             self.refreshTokenCount += 1
         }
-        return urlRequest
+        completion(.success(urlRequest))
     }
     
-    func should(_ manager: SessionManager, retry request: Request, with error: Error, completion: @escaping RequestRetryCompletion) {
+    func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         if let response = request.task?.response as? HTTPURLResponse, response.statusCode == 429 {
             if var retryAfter = response.allHeaderFields["Retry-After"] as? Int {
                 if retryAfter > 3600 {
                     retryAfter = 3600
-                } else if retryAfter == 0 {
+                }
+                else if retryAfter == 0 {
                     retryAfter = 60
                 }
                 self.pendingTimeCount += retryAfter
-                completion(true, TimeInterval(retryAfter))
+                completion(.retryWithDelay(TimeInterval(retryAfter)))
             }
-        } else if let authenticator = self.authenticator, let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 {
+        }
+        else if let authenticator = self.authenticator, let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 {
             authenticator.refreshToken(completionHandler: { accessToken in
                 if accessToken == nil {
                     self.newAccessToken = accessToken
-                    completion(false, 0.0)
+                    completion(.doNotRetry)
                 } else {
                     if self.refreshTokenCount >= 2 {// After Refreshed token twice, if still get 401 from server, returns error.
-                        completion(false, 0.0)
+                        completion(.doNotRetry)
                     } else {
                         self.newAccessToken = accessToken
-                        completion(true, 0.0)
+                        completion(.retry)
                     }
                 }
             })
         } else {
-            completion(false, 0.0)
+            completion(.doNotRetry)
         }
     }
 }
@@ -480,6 +494,19 @@ fileprivate struct RequestParameter {
 
     func value() -> [String: Any] {
         return storage
+    }
+}
+
+struct WebexRedirectHandler : RedirectHandler {
+    
+    func task(_ task: URLSessionTask, willBeRedirectedTo request: URLRequest, for response: HTTPURLResponse, completion: @escaping (URLRequest?) -> Void) {
+        var redirectedRequest = request
+        if let originalRequest = task.originalRequest, let headers = originalRequest.allHTTPHeaderFields, let authorizationHeaderValue = headers["Authorization"] {
+            var mutableRequest = request
+            mutableRequest.setValue(authorizationHeaderValue, forHTTPHeaderField: "Authorization")
+            redirectedRequest = mutableRequest
+        }
+        completion(redirectedRequest)
     }
 }
 

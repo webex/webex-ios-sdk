@@ -4,9 +4,8 @@ use_frameworks!
 
 def shared_pods
     platform :ios, '10.0'
-    pod 'Alamofire', '= 4.9.0'
-    pod 'ObjectMapper', '~> 3.1'
-    pod 'AlamofireObjectMapper', '~> 5.0'
+    pod 'Alamofire', '~> 5.2.0'
+    pod 'ObjectMapper', '~> 4.2.0'
     pod 'SwiftyJSON', '~> 4.0'
     pod 'Starscream', '~> 4.0.4'
     pod 'KeychainAccess', '~> 3.1'
