@@ -106,10 +106,10 @@ public struct CallMembership {
         return self.model.status?.audioStatus == "SENDRECV"
     }
     
-    /// True if the `CallMembership` is muted. Otherwise, false.
+    /// True if the `CallMembership` is muted by others. Otherwise, false.
     ///
     /// - since: 2.7.0
-    public var isAudioMuted: Bool {
+    public var isAudioMutedControlled: Bool {
         return self.model.isAudioMuted
     }
     
