@@ -57,6 +57,16 @@ struct ParticipantModel {
         var csis: [UInt]?
     }
     
+    struct ControlsModel {
+        
+        struct AudioModel {
+            var muted: Bool?
+            var modifiedBy: String?
+        }
+        
+        var audio: AudioModel?
+    }
+    
     enum State: String {
         case idle
         case notified
@@ -80,6 +90,7 @@ struct ParticipantModel {
     var enableDTMF: Bool?
     var devices: [ParticipantModel.DeviceModel]?
     var removed: Bool?
+    var controls: ControlsModel?
     
     var isJoined: Bool {
         return self.state == .joined
@@ -130,6 +141,14 @@ struct ParticipantModel {
 
     var isRemoved: Bool {
         return self.removed ?? false
+    }
+    
+    var isAudioMuted: Bool {
+        return self.controls?.audio?.muted == true
+    }
+    
+    var modifiedByUUID: String? {
+        return self.controls?.audio?.modifiedBy
     }
 
     var device: ParticipantModel.DeviceModel? {
@@ -185,6 +204,7 @@ extension ParticipantModel: Mappable {
         alertType <- map["alertType"]
         enableDTMF <- map["enableDTMF"]
         removed <- map["removed"]
+        controls <- map["controls"]
     }
     
     class ParticipantStateTransform: TransformType {
@@ -235,6 +255,16 @@ extension ParticipantModel.StatusModel: Mappable {
     }
 }
 
+extension ParticipantModel.ControlsModel: Mappable {
+    
+    init?(map: Map){
+    }
+    
+    mutating func mapping(map: Map) {
+        audio <- map["audio"]
+    }
+}
+
 extension ParticipantModel.DeviceModel.IntentModel: Mappable {
     init?(map: Map) {
     }
@@ -260,6 +290,17 @@ extension ParticipantModel.DeviceModel.IntentModel: Mappable {
             }
             return type.rawValue
         }
+    }
+}
+
+extension ParticipantModel.ControlsModel.AudioModel: Mappable {
+    
+    init?(map: Map) {
+    }
+    
+    mutating func mapping(map: Map) {
+        muted <- map["muted"]
+        modifiedBy <- map["meta.modifiedBy"]
     }
 }
 

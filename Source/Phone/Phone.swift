@@ -931,7 +931,7 @@ public class Phone {
     }
 
     private func doLocusEvent(_ model: LocusModel) {
-        SDKLogger.shared.debug("Receive locus event: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
+        //SDKLogger.shared.debug("Receive locus event: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
         guard let url = model.callUrl else {
             SDKLogger.shared.error("CallModel is missing call url")
             return

@@ -184,6 +184,10 @@ public class Call {
         ///
         /// - since: 2.4.0
         case waiting(CallMembership, WaitReason)
+        /// The person in the membership is muted/unmuted by others.
+        ///
+        /// - since: 2.7.0
+        case audioMutedControlled(CallMembership)
     }
 
     /// The enumeration of iOS broadcasting events.
@@ -1341,6 +1345,7 @@ public class Call {
                     let oldState = membership.state
                     let oldSendingAudio = membership.sendingAudio
                     let oldSendingVideo = membership.sendingVideo
+                    let oldAudioMutedState = membership.isAudioMuted
                     membership.model = participant
                     if membership.state != oldState {
                         onCallMembershipChanges.append(contentsOf: checkMembershipChangeEventFor(membership))
@@ -1350,6 +1355,9 @@ public class Call {
                     }
                     if membership.sendingVideo != oldSendingVideo {
                         onCallMembershipChanges.append(CallMembershipChangedEvent.sendingVideo(membership))
+                    }
+                    if membership.isAudioMuted != oldAudioMutedState {
+                        onCallMembershipChanges.append(CallMembershipChangedEvent.audioMutedInControl(membership))
                     }
                     newMemberships.append(membership)
                 } else {
