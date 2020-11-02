@@ -106,6 +106,23 @@ public struct CallMembership {
         return self.model.status?.audioStatus == "SENDRECV"
     }
     
+    /// True if the `CallMembership` is muted by others. Otherwise, false.
+    ///
+    /// - since: 2.7.0
+    public var isAudioMutedControlled: Bool {
+        return self.model.isAudioMuted
+    }
+    
+    /// The personId of the merbership who muted/unmuted this `CallMembership`
+    ///
+    /// - since: 2.7.0
+    public var audioModifiedBy: String? {
+        if let uuid = self.model.modifiedByUUID {
+            return WebexId(type: .people, cluster: WebexId.DEFAULT_CLUSTER_ID, uuid: uuid).base64Id
+        }
+        return nil
+    }
+    
     /// True if the `CallMembership` is sending screen share. Otherwise, false.
     ///
     /// - since: 1.3.0

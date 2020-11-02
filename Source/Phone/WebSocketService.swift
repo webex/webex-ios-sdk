@@ -184,7 +184,7 @@ class WebSocketService: WebSocketDelegate {
                         let event = Mapper<CallEventModel>().map(JSON: eventObj),
                         let call = event.callModel,
                         let type = event.type {
-                        SDKLogger.shared.debug("Receive locus event: \(type)")
+                        SDKLogger.shared.debug("Receive locus event: \(type) \n\(eventData)")
                         self.onEvent?(MercuryEvent.recvCall(call))
                     }
                     else {
