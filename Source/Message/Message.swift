@@ -119,7 +119,7 @@ public struct Message : CustomStringConvertible {
     
     /// The identifier of the person who sent this message.
     public var personId: String? {
-        if let uuid = self.activity.actor?.id {
+        if let uuid = self.activity.actor?.entryUUID {
             return WebexId(type: .people, cluster: WebexId.DEFAULT_CLUSTER_ID, uuid: uuid).base64Id
         }
         return nil

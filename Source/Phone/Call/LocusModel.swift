@@ -132,6 +132,10 @@ struct LocusModel: Mappable {
         return fullState?.state == "INACTIVE"
     }
     
+    var isActive: Bool {
+        return fullState?.state == "ACTIVE"
+    }
+    
     var isRemoteVideoMuted: Bool {
         for participant in self.participants ?? [] where participant.id != myself?.id && participant.isJoined && participant.isCIUser {
             if participant.status?.videoStatus != "RECVONLY" && participant.status?.videoStatus != "INACTIVE" {

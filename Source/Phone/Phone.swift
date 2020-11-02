@@ -243,6 +243,7 @@ public class Phone {
     
     private let webSocket: WebSocketService
     private var calls = [String: Call]()
+    private var activeSpaceIds = [String]()
     private var mediaContext: MediaSessionWrapper?
 
     private var _canceled: Bool = false
@@ -953,7 +954,6 @@ public class Phone {
     }
 
     private func doLocusEvent(_ model: LocusModel) {
-        SDKLogger.shared.debug("Receive locus event: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
         guard let url = model.callUrl else {
             SDKLogger.shared.error("CallModel is missing call url")
             return
@@ -982,7 +982,25 @@ public class Phone {
             // TODO: need to support other device joined case
         }
         else {
-            SDKLogger.shared.info("Cannot handle the CallModel.")
+            SDKLogger.shared.info("Cannot handle the CallModel for a call.")
+        }
+        
+        // Handle callModel for a space call event.
+        guard model.isValid, !model.isOneOnOne, let spaceUrl = model.spaceUrl, let spaceId = WebexId.from(url: spaceUrl , by: self.devices.device)?.base64Id else {
+            SDKLogger.shared.info("Cannot handle the CallModel for a space call event.")
+            return
+        }
+        if model.isActive && !activeSpaceIds.contains(spaceId) {
+            self.activeSpaceIds.append(spaceId)
+            DispatchQueue.main.async {
+                self.webex?.spaces.onEvent?(.spaceCallStarted(spaceId))
+            }
+        }
+        else if !model.isActive && activeSpaceIds.contains(spaceId) {
+            self.activeSpaceIds.removeObject(spaceId)
+            DispatchQueue.main.async {
+                self.webex?.spaces.onEvent?(.spaceCallEnded(spaceId))
+            }
         }
     }
 
