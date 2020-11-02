@@ -730,10 +730,32 @@ public class Phone {
     }
 
     func fetchActiveCalls(queue: DispatchQueue? = nil, completionHandler: @escaping (Result<[LocusModel]>) -> Void) {
-        if let device = self.devices.device {
-            self.client.fetch(by: device, queue: queue ?? self.queue.underlying) { res in
-                completionHandler(res.result)
+        var loci = [LocusModel]()
+        var completion:((ServiceResponse<LociResponseModel>) -> Void)?
+        completion = { response in
+            switch response.result {
+            case .success(let lociModel):
+                if let locusModel = lociModel.loci {
+                    loci = loci + locusModel
+                }
+                if let remoteClusterUrl = lociModel.remoteLocusClusterUrls?.first {
+                    self.fetchLoci(remoteClusterUrl, queue: queue ?? self.queue.underlying, completionHandler: completion!)
+                    return
+                }
+                completionHandler(.success(loci))
+            case .failure(let error):
+                completionHandler(.failure(error))
             }
+        }
+        self.fetchLoci(queue: queue ?? self.queue.underlying, completionHandler: completion!)
+    }
+    
+    private func fetchLoci(_ clusterUrl:String? = nil, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LociResponseModel>) -> Void) {
+        if let clusterUrl = clusterUrl {
+            self.client.fetch(clusterUrl:clusterUrl, queue: queue, completionHandler: completionHandler)
+        }
+        else if let device = self.devices.device {
+            self.client.fetch(by: device, queue: queue, completionHandler: completionHandler)
         }
     }
 

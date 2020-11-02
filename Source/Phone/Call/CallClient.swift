@@ -174,15 +174,23 @@ class CallClient {
         request.responseObject(handleLocusOnlySDPResponse(completionHandler: completionHandler))
     }
 
-    func fetch(by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<[LocusModel]>) -> Void) {
+    func fetch(by device: Device, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LociResponseModel>) -> Void) {
         let request = Service.locus.homed(for: device)
                 .authenticator(self.authenticator)
                 .path("loci")
-                .keyPath("loci")
                 .queue(queue)
                 .build()
 
-        request.responseArray(completionHandler)
+        request.responseObject(completionHandler)
+    }
+    
+    func fetch(clusterUrl: String, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LociResponseModel>) -> Void) {
+        let request = ServiceRequest.make(clusterUrl)
+                .authenticator(self.authenticator)
+                .queue(queue)
+                .build()
+
+        request.responseObject(completionHandler)
     }
 
     func admit(_ locusUrl: String, memberships:[CallMembership], queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {

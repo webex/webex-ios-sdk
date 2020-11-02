@@ -35,6 +35,20 @@ struct LocusMediaResponseModel: Mappable {
     }
 }
 
+struct LociResponseModel: Mappable {
+
+    private(set) var loci: [LocusModel]?
+    private(set) var remoteLocusClusterUrls: [String]?
+
+    init?(map: Map) {
+    }
+
+    mutating func mapping(map: Map) {
+        loci <- map["loci"]
+        remoteLocusClusterUrls <- map["remoteLocusClusterUrls"]
+    }
+}
+
 struct LocusModel: Mappable {
 
     var locusUrl: String? // Mandatory
