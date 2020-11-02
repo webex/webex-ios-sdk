@@ -47,6 +47,10 @@ public enum SpaceEvent {
     case create(Space)
     /// The callback when a space was changed (usually a rename).
     case update(Space)
+    /// Callback a spaceId when a space call started.
+    case spaceCallStarted(String)
+    /// Callback a spaceId when a space call ended.
+    case spaceCallEnded(String)
 }
 
 /// A data type represents a Space at Cisco Webex cloud.
