@@ -1365,6 +1365,7 @@ public class Call {
                     onCallMembershipChanges.append(contentsOf: checkMembershipChangeEventFor(membership))
                     onCallMembershipChanges.append(CallMembershipChangedEvent.sendingAudio(membership))
                     onCallMembershipChanges.append(CallMembershipChangedEvent.sendingVideo(membership))
+                    onCallMembershipChanges.append(CallMembershipChangedEvent.audioMutedControlled(membership))
                     newMemberships.append(membership)
                 }
             }
