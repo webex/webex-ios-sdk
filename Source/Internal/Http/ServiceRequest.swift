@@ -506,6 +506,11 @@ struct WebexRedirectHandler : RedirectHandler {
         if let originalRequest = task.originalRequest, let headers = originalRequest.allHTTPHeaderFields, let authorizationHeaderValue = headers["Authorization"] {
             var mutableRequest = request
             mutableRequest.setValue(authorizationHeaderValue, forHTTPHeaderField: "Authorization")
+            if let urlStr = mutableRequest.url?.absoluteString, !urlStr.isTrustedDomain() {
+                mutableRequest.setValue(nil, forHTTPHeaderField: "TrackingID")
+                mutableRequest.setValue(nil, forHTTPHeaderField: "Webex-User-Agent")
+                mutableRequest.setValue(nil, forHTTPHeaderField: "Cisco-Request-ID")
+            }
             redirectedRequest = mutableRequest
         }
         completion(redirectedRequest)
