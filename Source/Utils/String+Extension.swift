@@ -117,5 +117,12 @@ extension String {
             return String(self[startIndex..<endIndex])
         }
     }
+    
+    func isTrustedDomain() -> Bool {
+        guard let url = URL(string: self), let host = url.host?.lowercased() else {
+            return false
+        }
+        return host.hasSuffix("wbx2.com") || host.hasSuffix("ciscospark.com") || host.hasSuffix("webex.com")
+    }
 }
 

@@ -166,9 +166,11 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
         
         fileprivate init(url: String) {
             self.headers = ["Content-Type": "application/json;charset=UTF-8",
-                            "TrackingID": TrackingId.generator.next,
-                            "User-Agent": UserAgent.string,
-                            "Webex-User-Agent": UserAgent.string]
+                            "User-Agent": UserAgent.string]
+            if url.isTrustedDomain() {
+                self.headers["TrackingID"] = TrackingId.generator.next
+                self.headers["Webex-User-Agent"] = UserAgent.string
+            }
             self.baseUrl = URL(string: url)!
             self.method = .get
             self.path = ""
