@@ -1224,6 +1224,8 @@ public class Phone {
                     self?.fetchActiveCalls()
                 }
             }
+            // Fix a bug, if the network is broken when connecting, the socket will still being connecting, so try to reconnect, if connection above is success, the reconnect will stop automatically.
+            self.webSocket.tryReconnectAfter(seconds: 4.0)
         }
     }
     
