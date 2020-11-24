@@ -22,6 +22,7 @@ import Foundation
 import Starscream
 import SwiftyJSON
 import ObjectMapper
+import Alamofire
 
 class WebSocketService: WebSocketDelegate {
     
@@ -39,23 +40,25 @@ class WebSocketService: WebSocketDelegate {
     private var connectionRetryCounter: ExponentialBackOffCounter
     private let queue = DispatchQueue(label: "com.cisco.webex-ios-sdk.WSQueue-\(UUID().uuidString)")
     private let authenticator: Authenticator
-    
     private var onConnected: ((Error?) -> Void)?
-    
     private var isConnected = false
+    private var isConnecting = false
+    private var webSocketUrl:URL?
     
     init(authenticator: Authenticator) {
         self.authenticator = authenticator
-        self.connectionRetryCounter = ExponentialBackOffCounter(minimum: 0.5, maximum: 32, multiplier: 2)
+        self.connectionRetryCounter = ExponentialBackOffCounter(minimum: 1, maximum: 16, multiplier: 2)
     }
     
-    func connect(_ webSocketUrl: URL, _ block: @escaping (Error?) -> Void) {
+    func connect(_ webSocketUrl: URL, _ block: ((Error?) -> Void)? = nil) {
         self.queue.async {
             if self.socket != nil && self.isConnected == true {
                 SDKLogger.shared.warn("Websocket has already connected")
-                block(nil)
+                block?(nil)
                 return
             }
+            self.webSocketUrl = webSocketUrl
+            self.socket?.forceDisconnect()
             self.socket = nil
             self.authenticator.accessToken { token in
                 self.queue.async {
@@ -68,7 +71,9 @@ class WebSocketService: WebSocketDelegate {
                     let tempSocket = WebSocket(request: request, certPinner:nil)
                     tempSocket.callbackQueue = self.queue
                     tempSocket.delegate = self
-                    self.onConnected = block
+                    if let block = block {
+                        self.onConnected = block
+                    }
                     self.socket = tempSocket
                     tempSocket.connect()
                 }
@@ -89,8 +94,47 @@ class WebSocketService: WebSocketDelegate {
         }
     }
     
+    func tryReconnectAfter(seconds: Double) {
+        if socket != nil && isConnected {
+            return
+        }
+        connectionRetryCounter.current = seconds
+        prepareReconnect()
+    }
+    
+    private func prepareReconnect() {
+        SDKLogger.shared.info("Websocket prepareReconnect isConnecting = \(isConnecting)")
+        if isConnecting {
+            return
+        }
+        isConnected = false
+        reconnecting()
+        isConnecting = true
+    }
+    
+    private func reconnecting() {
+        let backoffTime = connectionRetryCounter.next()
+        SDKLogger.shared.info("Websocket will again reconnect in \(backoffTime) seconds")
+        despatchAfter(backoffTime) {
+            if !self.isConnected, let url = self.webSocketUrl {
+                if backoffTime == 16.0 {
+                    Alamofire.request("https://httpbin.org/get").response { response in
+                        SDKLogger.shared.info("Websocket verify rest http status, error = \(response.error?.localizedDescription ?? "") ")
+                    }
+                }
+                if NetworkReachabilityManager()?.isReachable == true {
+                    self.connect(url, nil)
+                }
+                self.reconnecting()
+            }else {
+                self.isConnecting = false
+            }
+        }
+    }
+    
     // MARK: - Websocket Delegate Methods.
     func didReceive(event: WebSocketEvent, client: WebSocket) {
+        SDKLogger.shared.info("WebSocket DidReceive Event: \(event)")
         switch event {
         case .connected(_):
             isConnected = true
@@ -108,6 +152,11 @@ class WebSocketService: WebSocketDelegate {
         case .error(let error):
             isConnected = false
             websocketDidDisconnect(socket: client, error: error)
+        case .viabilityChanged(let viability):
+            if !viability {
+                isConnected = false
+                tryReconnectAfter(seconds: 4.0)
+            }
         case .ping(_):
             break
         case .pong(_):
@@ -154,9 +203,8 @@ class WebSocketService: WebSocketDelegate {
                     else {
                         // Unexpected disconnection, reconnect socket.
                         SDKLogger.shared.warn("Unexpected disconnection, websocket will reconnect in \(backoffTime) seconds")
-                        if let socket = self.socket, !self.isConnected {
-                            SDKLogger.shared.info("Websocket is being reconnected")
-                            socket.connect()
+                        if self.socket != nil, !self.isConnected {
+                            self.prepareReconnect()
                         }
                     }
                 }
