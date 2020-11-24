@@ -24,7 +24,7 @@ struct ExponentialBackOffCounter {
     private var minimum: Double
     private var maximum: Double
     private var multiplier: Double
-    private var current: Double?
+    var current: Double?
     
     init(minimum: Double, maximum: Double, multiplier: Double) {
         self.minimum = minimum
@@ -34,7 +34,8 @@ struct ExponentialBackOffCounter {
     
     mutating func next() -> Double {
         if let current = current {
-            return min(current * multiplier, maximum)
+            self.current = min(current * multiplier, maximum)
+            return self.current!
         } else {
             return minimum
         }

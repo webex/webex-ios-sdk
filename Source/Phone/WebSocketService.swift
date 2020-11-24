@@ -22,6 +22,7 @@ import Foundation
 import Starscream
 import SwiftyJSON
 import ObjectMapper
+import Alamofire
 
 class WebSocketService: WebSocketDelegate {
     
@@ -39,23 +40,24 @@ class WebSocketService: WebSocketDelegate {
     private var connectionRetryCounter: ExponentialBackOffCounter
     private let queue = DispatchQueue(label: "com.cisco.webex-ios-sdk.WSQueue-\(UUID().uuidString)")
     private let authenticator: Authenticator
-    
     private var onConnected: ((Error?) -> Void)?
-    
     private var isConnected = false
+    private var isConnecting = false
+    private var webSocketUrl:URL?
     
     init(authenticator: Authenticator) {
         self.authenticator = authenticator
         self.connectionRetryCounter = ExponentialBackOffCounter(minimum: 0.5, maximum: 32, multiplier: 2)
     }
     
-    func connect(_ webSocketUrl: URL, _ block: @escaping (Error?) -> Void) {
+    func connect(_ webSocketUrl: URL, _ block: ((Error?) -> Void)? = nil) {
         self.queue.async {
             if self.socket != nil && self.isConnected == true {
                 SDKLogger.shared.warn("Websocket has already connected")
-                block(nil)
+                block?(nil)
                 return
             }
+            self.webSocketUrl = webSocketUrl
             self.socket = nil
             self.authenticator.accessToken { token in
                 self.queue.async {
@@ -68,7 +70,9 @@ class WebSocketService: WebSocketDelegate {
                     let tempSocket = WebSocket(request: request, certPinner:nil)
                     tempSocket.callbackQueue = self.queue
                     tempSocket.delegate = self
-                    self.onConnected = block
+                    if let block = block {
+                        self.onConnected = block
+                    }
                     self.socket = tempSocket
                     tempSocket.connect()
                 }
@@ -89,8 +93,23 @@ class WebSocketService: WebSocketDelegate {
         }
     }
     
+    private func startReconnecting() {
+        let backoffTime = connectionRetryCounter.next()
+        despatchAfter(backoffTime) {
+            if !self.isConnected, let url = self.webSocketUrl {
+                if NetworkReachabilityManager.default?.isReachable == true {
+                    self.connect(url, nil)
+                }
+                self.startReconnecting()
+            }else {
+                self.isConnecting = false
+            }
+        }
+    }
+    
     // MARK: - Websocket Delegate Methods.
     func didReceive(event: WebSocketEvent, client: WebSocket) {
+        SDKLogger.shared.info("DidReceive WebSocketEvent: \(event)")
         switch event {
         case .connected(_):
             isConnected = true
@@ -108,6 +127,13 @@ class WebSocketService: WebSocketDelegate {
         case .error(let error):
             isConnected = false
             websocketDidDisconnect(socket: client, error: error)
+        case .viabilityChanged(let viability):
+            if !viability, !isConnecting {
+                isConnected = false
+                isConnecting = true
+                connectionRetryCounter.current = 1.0
+                startReconnecting()
+            }
         case .ping(_):
             break
         case .pong(_):
