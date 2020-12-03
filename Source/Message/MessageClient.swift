@@ -43,7 +43,7 @@ public enum Mention {
     case all
 }
 
-/// MessageClient represents a client to the Webex Teams platform. It can send and receive messages.
+/// MessageClient represents a client to the Webex platform. It can send and receive messages.
 ///
 /// Use `Webex.messages` to get an instance of MessageClient.
 ///
