@@ -33,6 +33,8 @@
 @property (nonatomic) BOOL isECEnabled;
 @property (nonatomic) BOOL isNSEnabled;
 @property (nonatomic) BOOL isVADEnabled;
+@property (nonatomic) BOOL isBNREnabled;
+@property (nonatomic) UInt8 bnrProfileMode;
 @property (nonatomic) UInt8 mixingStreamNum;
 
 #pragma mark - video
