@@ -263,6 +263,11 @@ class MediaSessionWrapper {
                 }
             }
             
+            if phone.audioBNREnabled {
+                mediaConfig.isBNREnabled = phone.audioBNREnabled
+                mediaConfig.bnrProfileMode = UInt8(phone.audioBNRMode.rawValue)
+            }
+            
             var constraint = MediaConstraintFlag.audio.rawValue
             if option.hasVideo {
                 mediaConfig.videoMaxRxBandwidth = phone.videoMaxRxBandwidth
