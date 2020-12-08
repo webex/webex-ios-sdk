@@ -47,7 +47,7 @@ class WebSocketService: WebSocketDelegate {
     
     init(authenticator: Authenticator) {
         self.authenticator = authenticator
-        self.connectionRetryCounter = ExponentialBackOffCounter(minimum: 0.5, maximum: 32, multiplier: 2)
+        self.connectionRetryCounter = ExponentialBackOffCounter(minimum: 0.5, maximum: 16, multiplier: 2)
     }
     
     func connect(_ webSocketUrl: URL, _ block: ((Error?) -> Void)? = nil) {
@@ -93,14 +93,27 @@ class WebSocketService: WebSocketDelegate {
         }
     }
     
-    private func startReconnecting() {
+    private func prepareReconnect() {
+        if isConnecting {
+            return
+        }
+        isConnected = false
+        connectionRetryCounter.current = 1.0
+        reconnecting()
+        isConnecting = true
+        SDKLogger.shared.info("Websocket is being reconnected")
+    }
+    
+    private func reconnecting() {
         let backoffTime = connectionRetryCounter.next()
+        SDKLogger.shared.info("Websocket will again reconnect in \(backoffTime) seconds")
         despatchAfter(backoffTime) {
             if !self.isConnected, let url = self.webSocketUrl {
+                SDKLogger.shared.info("Network Reachability is \(NetworkReachabilityManager.default?.isReachable ?? false)")
                 if NetworkReachabilityManager.default?.isReachable == true {
                     self.connect(url, nil)
                 }
-                self.startReconnecting()
+                self.reconnecting()
             }else {
                 self.isConnecting = false
             }
@@ -109,7 +122,7 @@ class WebSocketService: WebSocketDelegate {
     
     // MARK: - Websocket Delegate Methods.
     func didReceive(event: WebSocketEvent, client: WebSocket) {
-        SDKLogger.shared.info("DidReceive WebSocketEvent: \(event)")
+        SDKLogger.shared.info("WebSocket DidReceive Event: \(event)")
         switch event {
         case .connected(_):
             isConnected = true
@@ -128,11 +141,8 @@ class WebSocketService: WebSocketDelegate {
             isConnected = false
             websocketDidDisconnect(socket: client, error: error)
         case .viabilityChanged(let viability):
-            if !viability, !isConnecting {
-                isConnected = false
-                isConnecting = true
-                connectionRetryCounter.current = 1.0
-                startReconnecting()
+            if !viability {
+                prepareReconnect()
             }
         case .ping(_):
             break
@@ -181,8 +191,7 @@ class WebSocketService: WebSocketDelegate {
                         // Unexpected disconnection, reconnect socket.
                         SDKLogger.shared.warn("Unexpected disconnection, websocket will reconnect in \(backoffTime) seconds")
                         if let socket = self.socket, !self.isConnected {
-                            SDKLogger.shared.info("Websocket is being reconnected")
-                            socket.connect()
+                            self.prepareReconnect()
                         }
                     }
                 }
