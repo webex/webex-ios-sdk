@@ -101,7 +101,6 @@ class WebSocketService: WebSocketDelegate {
         connectionRetryCounter.current = 1.0
         reconnecting()
         isConnecting = true
-        SDKLogger.shared.info("Websocket is being reconnected")
     }
     
     private func reconnecting() {
@@ -142,6 +141,7 @@ class WebSocketService: WebSocketDelegate {
             websocketDidDisconnect(socket: client, error: error)
         case .viabilityChanged(let viability):
             if !viability {
+                isConnected = false
                 prepareReconnect()
             }
         case .ping(_):
