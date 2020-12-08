@@ -103,6 +103,16 @@ public class Phone {
         case viewLicense(url: URL)
     }
     
+    ///  Modes supported by Background Noise Removal
+    ///
+    /// - since: 2.7.0
+    public enum AudioBNRMode: UInt {
+        /// Low Power
+        case LP = 0
+        /// High Performance
+        case HP
+    }
+    
     /// MARK: - Deprecated
     /// The max receiving bandwidth for audio in unit bps for the call.
     /// Only effective if set before the start of call.
@@ -178,6 +188,18 @@ public class Phone {
     ///
     /// - since: 2.6.0
     public var sharingMaxRxBandwidth: UInt32 = DefaultBandwidth.maxBandwidthSession.rawValue
+    
+    /// Enable Background Noise Removal
+    /// True as using BNR, False as not. The default is false.
+    ///
+    /// - since: 2.7.0
+    public var audioBNREnabled: Bool = false
+    
+    /// Set Background Noise Removal mode, the default is `.HP`.
+    ///
+    /// - Note: The value is only effective if setting `audioBNREnabled` to true.
+    /// - since: 2.7.0
+    public var audioBNRMode: AudioBNRMode = .HP
 
     /// The advanced setings for call. Only effective if set before the start of call.
     ///
