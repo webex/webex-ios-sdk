@@ -24,24 +24,21 @@ struct ExponentialBackOffCounter {
     private var minimum: Double
     private var maximum: Double
     private var multiplier: Double
-    var current: Double?
+    var current: Double
     
     init(minimum: Double, maximum: Double, multiplier: Double) {
         self.minimum = minimum
         self.maximum = maximum
         self.multiplier = multiplier
+        self.current = minimum
     }
     
     mutating func next() -> Double {
-        if let current = current {
-            self.current = min(current * multiplier, maximum)
-            return self.current!
-        } else {
-            return minimum
-        }
+        self.current = min(current * multiplier, maximum)
+        return self.current
     }
     
     mutating func reset() {
-        current = nil
+        current = minimum
     }
 }

@@ -47,7 +47,7 @@ class WebSocketService: WebSocketDelegate {
     
     init(authenticator: Authenticator) {
         self.authenticator = authenticator
-        self.connectionRetryCounter = ExponentialBackOffCounter(minimum: 0.5, maximum: 16, multiplier: 2)
+        self.connectionRetryCounter = ExponentialBackOffCounter(minimum: 1, maximum: 16, multiplier: 2)
     }
     
     func connect(_ webSocketUrl: URL, _ block: ((Error?) -> Void)? = nil) {
@@ -98,7 +98,6 @@ class WebSocketService: WebSocketDelegate {
             return
         }
         isConnected = false
-        connectionRetryCounter.current = 1.0
         reconnecting()
         isConnecting = true
     }
