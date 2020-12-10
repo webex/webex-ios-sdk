@@ -78,10 +78,11 @@ All notable changes to this project will be documented in this file.
 
 ---
 ## [2.7.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.7.0)
-Released on 2020-12-2.
+Released on 2020-12-14.
 #### Added
 - Support to notify a space call status through SpaceObserver.
 - Support to notify muted by host during a space call.
+- Support to enable Background Noise Removal(BNR), and switch between HP(High Performance) and LP(Low Power) mode.
 - Not sending sensitive headers for unknown site.
 
 #### Updated

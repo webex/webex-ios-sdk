@@ -508,6 +508,17 @@ Here are some examples of how to use the iOS SDK in your app.
     }
     ```
 
+21. Background Noise Removal(BNR)
+    
+    21.1 Enable BNR
+        ```swift
+        webex.phone.audioBNREnabled = true
+        ```
+    21.2 Set BNR mode, the default is `.HP`. It only affects if setting `audioBNREnabled` to true
+        ``` swift
+        webex.phone.audioBNRMode = .HP
+        ```
+
 
 ## Migration from Cisco SparkSDK
 
