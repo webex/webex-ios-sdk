@@ -58,6 +58,7 @@ class WebSocketService: WebSocketDelegate {
                 return
             }
             self.webSocketUrl = webSocketUrl
+            self.socket?.forceDisconnect()
             self.socket = nil
             self.authenticator.accessToken { token in
                 self.queue.async {
@@ -94,6 +95,7 @@ class WebSocketService: WebSocketDelegate {
     }
     
     private func prepareReconnect() {
+        SDKLogger.shared.info("Websocket prepareReconnect isConnecting = \(isConnecting)")
         if isConnecting {
             return
         }
@@ -107,7 +109,11 @@ class WebSocketService: WebSocketDelegate {
         SDKLogger.shared.info("Websocket will again reconnect in \(backoffTime) seconds")
         despatchAfter(backoffTime) {
             if !self.isConnected, let url = self.webSocketUrl {
-                SDKLogger.shared.info("Network Reachability is \(NetworkReachabilityManager.default?.isReachable ?? false)")
+                if backoffTime == 16.0 {
+                    AF.request("https://httpbin.org/get").response { response in
+                        SDKLogger.shared.info("Websocket verify rest http status, error = \(response.error?.localizedDescription) ")
+                    }
+                }
                 if NetworkReachabilityManager.default?.isReachable == true {
                     self.connect(url, nil)
                 }
