@@ -441,6 +441,10 @@ Here are some examples of how to use the iOS SDK in your app.
               // ...
           case .update(let space):
               // ...
+          case .spaceCallStarted(let spaceId):
+              // ...
+          case .spaceCallEnded(let spaceId):
+              // ...
           }
     }
     ```
@@ -480,7 +484,20 @@ Here are some examples of how to use the iOS SDK in your app.
     })
     ```
 
-19. Change the layout for the active speaker and other attendee composed video
+19. get a list of spaces that have ongoing call
+
+    ```swift
+    webex.spaces.listWithActiveCalls(completionHandler: { (result) in
+        switch result {
+        case .success(let spaceIds):
+            // ...
+        case .failure(_ ):
+            // ...
+        }
+    })
+    ```
+
+20. Change the layout for the active speaker and other attendee composed video
 
     ```swift
     let option: MediaOption = MediaOption.audioVideo(local: ..., remote: ...)
@@ -490,6 +507,17 @@ Here are some examples of how to use the iOS SDK in your app.
         // ...
     }
     ```
+
+21. Background Noise Removal(BNR)
+    
+    21.1 Enable BNR
+        ```swift
+        webex.phone.audioBNREnabled = true
+        ```
+    21.2 Set BNR mode, the default is `.HP`. It only affects if setting `audioBNREnabled` to true
+        ``` swift
+        webex.phone.audioBNRMode = .HP
+        ```
 
 
 ## Migration from Cisco SparkSDK

@@ -58,7 +58,7 @@ public struct Person {
     /// - since: 1.4.0
     public var type: String?
     
-    /// The date and time of the person's last activity within Webex Teams
+    /// The date and time of the person's last activity within Webex
     /// - since: 2.3.0
     public var lastActivity:Date?
 

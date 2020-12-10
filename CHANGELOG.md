@@ -1,5 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 2.7.0 Releases
+
+- `2.7.0` Releases - [2.7.0](#270)
+
 #### 2.6.0 Releases
 
 - `2.6.0` Releases - [2.6.0](#260)
@@ -73,6 +77,22 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ---
+## [2.7.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.7.0)
+Released on 2020-12-14.
+#### Added
+- Support to notify a space call status through SpaceObserver.
+- Support to notify muted by host during a space call.
+- Support to enable Background Noise Removal(BNR), and switch between HP(High Performance) and LP(Low Power) mode.
+- Not sending sensitive headers for unknown site.
+
+#### Updated
+- Update Wme.framework.
+- Update Alamofire dependency to 5.2.0
+- Update ObjectMapper dependency to 4.2.0
+- Remove AlamofireObjectMapper dependency.
+- Fix SpaceClient.listWithActiveCalls() cannot show spaces cross-cluster.
+- Fix App hangs when trying to record a video via UIImagePickerController.
+
 ## [2.6.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.6.0)
 Released on 2020-9-28.
 #### Added
