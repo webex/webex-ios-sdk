@@ -8,14 +8,22 @@
     <script src="../../js/jquery.min.js" defer></script>
     <script src="../../js/jazzy.js" defer></script>
     
+    <script src="../../js/lunr.min.js" defer></script>
+    <script src="../../js/typeahead.jquery.js" defer></script>
+    <script src="../../js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a name="//apple_ref/swift/Enum/MediaChangedEvent" class="dashAnchor"></a>
     <a title="MediaChangedEvent Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../../index.html">WebexSDK Docs</a> (95% documented)</p>
+        <p><a href="../../index.html">WebexSDK 2.7.0 Docs</a> (94% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="../../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -113,6 +121,9 @@
                 <a href="../../Classes/Phone/H264LicenseAction.html">– H264LicenseAction</a>
               </li>
               <li class="nav-group-task">
+                <a href="../../Classes/Phone/AudioBNRMode.html">– AudioBNRMode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../../Classes/SSOAuthenticator.html">SSOAuthenticator</a>
               </li>
               <li class="nav-group-task">
@@ -184,9 +195,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../../Extensions/Double.html">Double</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../../Extensions/MediaSessionWrapper.html">MediaSessionWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Extensions/Timer.html">Timer</a>
@@ -295,6 +303,7 @@
             <h1>MediaChangedEvent</h1>
               <div class="declaration">
                 <div class="language">
+                  
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MediaChangedEvent</span></code></pre>
 
                 </div>
@@ -315,7 +324,7 @@
                     <code>
                     <a name="/s:8WebexSDK4CallC17MediaChangedEventO18remoteSendingVideoyAESbcAEmF"></a>
                     <a name="//apple_ref/swift/Element/remoteSendingVideo(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO18remoteSendingVideoyAESbcAEmF">remoteSendingVideo(_:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO18remoteSendingVideoyAESbcAEmF">remoteSendingVideo(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -343,7 +352,7 @@ This might be triggered when the remote party muted or unmuted the video.</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC17MediaChangedEventO18remoteSendingAudioyAESbcAEmF"></a>
                     <a name="//apple_ref/swift/Element/remoteSendingAudio(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO18remoteSendingAudioyAESbcAEmF">remoteSendingAudio(_:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO18remoteSendingAudioyAESbcAEmF">remoteSendingAudio(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -371,7 +380,7 @@ This might be triggered when the remote party muted or unmuted the audio.</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC17MediaChangedEventO12sendingVideoyAESbcAEmF"></a>
                     <a name="//apple_ref/swift/Element/sendingVideo(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO12sendingVideoyAESbcAEmF">sendingVideo(_:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO12sendingVideoyAESbcAEmF">sendingVideo(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -399,7 +408,7 @@ This might be triggered when the local party muted or unmuted the video.</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC17MediaChangedEventO12sendingAudioyAESbcAEmF"></a>
                     <a name="//apple_ref/swift/Element/sendingAudio(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO12sendingAudioyAESbcAEmF">sendingAudio(_:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO12sendingAudioyAESbcAEmF">sendingAudio(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -427,7 +436,7 @@ This might be triggered when the local party muted or unmuted the audio.</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC17MediaChangedEventO14receivingVideoyAESbcAEmF"></a>
                     <a name="//apple_ref/swift/Element/receivingVideo(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO14receivingVideoyAESbcAEmF">receivingVideo(_:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO14receivingVideoyAESbcAEmF">receivingVideo(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -455,7 +464,7 @@ This might be triggered when the local party muted or unmuted the video.</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC17MediaChangedEventO14receivingAudioyAESbcAEmF"></a>
                     <a name="//apple_ref/swift/Element/receivingAudio(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO14receivingAudioyAESbcAEmF">receivingAudio(_:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO14receivingAudioyAESbcAEmF">receivingAudio(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -623,7 +632,7 @@ This might be triggered when the local party muted or unmuted the audio.</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC17MediaChangedEventO20receivingScreenShareyAESbcAEmF"></a>
                     <a name="//apple_ref/swift/Element/receivingScreenShare(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO20receivingScreenShareyAESbcAEmF">receivingScreenShare(_:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO20receivingScreenShareyAESbcAEmF">receivingScreenShare(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -658,7 +667,7 @@ This might also be triggered when the local party started or stopped the screen 
                     <code>
                     <a name="/s:8WebexSDK4CallC17MediaChangedEventO24remoteSendingScreenShareyAESbcAEmF"></a>
                     <a name="//apple_ref/swift/Element/remoteSendingScreenShare(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO24remoteSendingScreenShareyAESbcAEmF">remoteSendingScreenShare(_:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO24remoteSendingScreenShareyAESbcAEmF">remoteSendingScreenShare(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -691,7 +700,7 @@ This might be triggered when the remote party started or stopped share stream.</
                     <code>
                     <a name="/s:8WebexSDK4CallC17MediaChangedEventO18sendingScreenShareyAESbcAEmF"></a>
                     <a name="//apple_ref/swift/Element/sendingScreenShare(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO18sendingScreenShareyAESbcAEmF">sendingScreenShare(_:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO18sendingScreenShareyAESbcAEmF">sendingScreenShare(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -756,7 +765,7 @@ This might be triggered when the local started or stopped share stream.</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC17MediaChangedEventO013activeSpeakereF0yAeA0C10MembershipVSg_AItcAEmF"></a>
                     <a name="//apple_ref/swift/Element/activeSpeakerChangedEvent(From:To:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO013activeSpeakereF0yAeA0C10MembershipVSg_AItcAEmF">activeSpeakerChangedEvent(From:To:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC17MediaChangedEventO013activeSpeakereF0yAeA0C10MembershipVSg_AItcAEmF">activeSpeakerChangedEvent(From:<wbr>To:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -788,8 +797,8 @@ This might be triggered when the local started or stopped share stream.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-09-27)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-12-11)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

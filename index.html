@@ -8,13 +8,21 @@
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
     
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a title="WebexSDK  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">WebexSDK Docs</a> (95% documented)</p>
+        <p><a href="index.html">WebexSDK 2.7.0 Docs</a> (94% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -112,6 +120,9 @@
                 <a href="Classes/Phone/H264LicenseAction.html">– H264LicenseAction</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/Phone/AudioBNRMode.html">– AudioBNRMode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/SSOAuthenticator.html">SSOAuthenticator</a>
               </li>
               <li class="nav-group-task">
@@ -183,9 +194,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Extensions/Double.html">Double</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Extensions/MediaSessionWrapper.html">MediaSessionWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="Extensions/Timer.html">Timer</a>
@@ -315,7 +323,7 @@
 
 <ol>
 <li><p>Install CocoaPods:</p>
-<pre class="highlight shell"><code>gem install cocoapods
+<pre class="highlight shell"><code>gem <span class="nb">install </span>cocoapods
 </code></pre></li>
 <li><p>Setup CocoaPods:</p>
 <pre class="highlight shell"><code>pod setup
@@ -336,7 +344,7 @@
 <span class="k">end</span>
 </code></pre></li>
 <li><p>Install the Webex iOS SDK from your <em>MyWebexApp</em> project directory:</p>
-<pre class="highlight shell"><code>pod install
+<pre class="highlight shell"><code>pod <span class="nb">install</span>
 </code></pre></li>
 </ol>
 <h2 id='usage' class='heading'>Usage</h2>
@@ -672,6 +680,10 @@
           <span class="c1">// ...</span>
       <span class="k">case</span> <span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="k">let</span> <span class="nv">space</span><span class="p">):</span>
           <span class="c1">// ...</span>
+      <span class="k">case</span> <span class="o">.</span><span class="nf">spaceCallStarted</span><span class="p">(</span><span class="k">let</span> <span class="nv">spaceId</span><span class="p">):</span>
+          <span class="c1">// ...</span>
+      <span class="k">case</span> <span class="o">.</span><span class="nf">spaceCallEnded</span><span class="p">(</span><span class="k">let</span> <span class="nv">spaceId</span><span class="p">):</span>
+          <span class="c1">// ...</span>
       <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></li>
@@ -704,6 +716,16 @@
       <span class="p">}</span>
 <span class="p">})</span>
 </code></pre></li>
+<li><p>get a list of spaces that have ongoing call</p>
+<pre class="highlight swift"><code><span class="n">webex</span><span class="o">.</span><span class="n">spaces</span><span class="o">.</span><span class="nf">listWithActiveCalls</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">spaceIds</span><span class="p">):</span>
+        <span class="c1">// ...</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="n">_</span> <span class="p">):</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></li>
 <li><p>Change the layout for the active speaker and other attendee composed video</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">option</span><span class="p">:</span> <span class="kt">MediaOption</span> <span class="o">=</span> <span class="kt">MediaOption</span><span class="o">.</span><span class="nf">audioVideo</span><span class="p">(</span><span class="nv">local</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span> <span class="nv">remote</span><span class="p">:</span> <span class="o">...</span><span class="p">)</span>
 <span class="n">option</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="o">.</span><span class="n">grid</span>
@@ -711,6 +733,15 @@
 <span class="n">webex</span><span class="o">.</span><span class="n">phone</span><span class="o">.</span><span class="nf">dial</span><span class="p">(</span><span class="n">spaceId</span><span class="p">,</span> <span class="nv">option</span><span class="p">:</span> <span class="n">option</span><span class="p">)</span> <span class="p">{</span> <span class="n">ret</span> <span class="k">in</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
+</code></pre></li>
+<li><p>Background Noise Removal(BNR)</p>
+
+<p>21.1 Enable BNR</p>
+<pre class="highlight swift"><code><span class="n">webex</span><span class="o">.</span><span class="n">phone</span><span class="o">.</span><span class="n">audioBNREnabled</span> <span class="o">=</span> <span class="kc">true</span>
+</code></pre>
+
+<p>21.2 Set BNR mode, the default is <code>.HP</code>. It only affects if setting <code>audioBNREnabled</code> to true.</p>
+<pre class="highlight swift"><code><span class="n">webex</span><span class="o">.</span><span class="n">phone</span><span class="o">.</span><span class="n">audioBNRMode</span> <span class="o">=</span> <span class="o">.</span><span class="kt">HP</span>
 </code></pre></li>
 </ol>
 <h2 id='migration-from-cisco-sparksdk' class='heading'>Migration from Cisco SparkSDK</h2>
@@ -732,12 +763,12 @@
 
 <p>Replace in project scope:</p>
 
-<p><q>import SparkSDK</q> =&gt; <q>import WebexSDK</q></p></li>
+<p>&ldquo;import SparkSDK&rdquo; =&gt; &ldquo;import WebexSDK&rdquo;</p></li>
 <li><p>If you using story board for UI:</p>
 
-<p>Change meida render view&rsquo;s module in <q>Indentity inspector</q>:</p>
+<p>Change meida render view&rsquo;s module in &ldquo;Indentity inspector&rdquo;:</p>
 
-<p><q>SparkSDK</q> =&gt; <q>WebexSDK</q></p></li>
+<p>&ldquo;SparkSDK&rdquo; =&gt; &ldquo;WebexSDK&rdquo;</p></li>
 </ol>
 <h3 id='usage' class='heading'>Usage</h3>
 
@@ -756,18 +787,18 @@
 <td style="text-align: center">let webex = Webex(authenticator: authenticator)</td>
 </tr>
 <tr>
-<td style="text-align: center"><q>Room</q> Client renamed to <q>Space</q> Client</td>
+<td style="text-align: center">&ldquo;Room&rdquo; Client renamed to &ldquo;Space&rdquo; Client</td>
 <td style="text-align: center">spark.rooms.list(roomId:{rooomId})</td>
 <td style="text-align: center">webex.spaces.list(spaceId:{roomId})</td>
 </tr>
 <tr>
-<td style="text-align: center"><q>SparkError</q> renamed to <q>WebexError</q></td>
+<td style="text-align: center">&ldquo;SparkError&rdquo; renamed to &ldquo;WebexError&rdquo;</td>
 <td style="text-align: center">let error = SparkError.Auth</td>
 <td style="text-align: center">let error = WebexError.Auth</td>
 </tr>
 </tbody></table>
 
-<p>Recomand to replace variables containing <q>spark</q> with <q>webex</q> in project code.  </p>
+<p>Recomand to replace variables containing &ldquo;spark&rdquo; with &ldquo;webex&rdquo; in project code.  </p>
 <h2 id='license' class='heading'>License</h2>
 
 <p>&copy; 2016-2020 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.</p>
@@ -777,8 +808,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-09-27)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-12-11)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

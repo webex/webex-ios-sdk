@@ -8,14 +8,22 @@
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a name="//apple_ref/swift/Class/Webex" class="dashAnchor"></a>
     <a title="Webex Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK Docs</a> (95% documented)</p>
+        <p><a href="../index.html">WebexSDK 2.7.0 Docs</a> (94% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -113,6 +121,9 @@
                 <a href="../Classes/Phone/H264LicenseAction.html">– H264LicenseAction</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/Phone/AudioBNRMode.html">– AudioBNRMode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/SSOAuthenticator.html">SSOAuthenticator</a>
               </li>
               <li class="nav-group-task">
@@ -184,9 +195,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Double.html">Double</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Extensions/MediaSessionWrapper.html">MediaSessionWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Timer.html">Timer</a>
@@ -295,6 +303,7 @@
             <h1>Webex</h1>
               <div class="declaration">
                 <div class="language">
+                  
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Webex</span></code></pre>
 
                 </div>
@@ -334,8 +343,7 @@
     <p class="aside-title">Attention</p>
     All APIs on Cisco Webex iOS SDK are expected to run on the application&rsquo;s main thread, unless specified otherwise.
 
-</div>
-<div class="aside aside-since">
+</div><div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
 
@@ -559,13 +567,11 @@ Use <em>membership</em> to manage the authenticated user&rsquo;s relationship to
     <p class="aside-title">Since</p>
     1.2.0
 
-</div>
-<div class="aside aside-see">
+</div><div class="aside aside-see">
     <p class="aside-title">See</p>
     Spaces API about how to manage spaces.
 
-</div>
-<div class="aside aside-see">
+</div><div class="aside aside-see">
     <p class="aside-title">See</p>
     Messages API about how post or otherwise manage the content in a space.
 
@@ -602,13 +608,11 @@ Use <em>spaces</em> to manage the spaces on behalf of the authenticated user.</p
     <p class="aside-title">Since</p>
     1.2.0
 
-</div>
-<div class="aside aside-see">
+</div><div class="aside aside-see">
     <p class="aside-title">See</p>
     Memberships API about how to manage people in a space.
 
-</div>
-<div class="aside aside-see">
+</div><div class="aside aside-see">
     <p class="aside-title">See</p>
     Messages API about how post or otherwise manage the content in a space.
 
@@ -631,7 +635,7 @@ Use <em>spaces</em> to manage the spaces on behalf of the authenticated user.</p
                     <code>
                     <a name="/s:8WebexSDK0A0C13authenticatorAcA13Authenticator_p_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(authenticator:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK0A0C13authenticatorAcA13Authenticator_p_tcfc">init(authenticator:)</a>
+                    <a class="token" href="#/s:8WebexSDK0A0C13authenticatorAcA13Authenticator_p_tcfc">init(authenticator:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -696,13 +700,11 @@ Use <em>people</em>  to find a person on behalf of the authenticated user.</p>
     <p class="aside-title">Since</p>
     1.2.0
 
-</div>
-<div class="aside aside-see">
+</div><div class="aside aside-see">
     <p class="aside-title">See</p>
     Memberships API about how to manage people in a space.
 
-</div>
-<div class="aside aside-see">
+</div><div class="aside aside-see">
     <p class="aside-title">See</p>
     Messages API about how post or otherwise manage the content in a space.
 
@@ -773,13 +775,11 @@ Use <em>teams</em> to create and manage the teams on behalf of the authenticated
     <p class="aside-title">Since</p>
     1.2.0
 
-</div>
-<div class="aside aside-see">
+</div><div class="aside aside-see">
     <p class="aside-title">See</p>
     Team Memberships API about how to manage people in a team.
 
-</div>
-<div class="aside aside-see">
+</div><div class="aside aside-see">
     <p class="aside-title">See</p>
     Memberships API about how to manage people in a space.
 
@@ -816,13 +816,11 @@ Use <em>teamMemberships</em> to create and manage the team membership on behalf 
     <p class="aside-title">Since</p>
     1.2.0
 
-</div>
-<div class="aside aside-see">
+</div><div class="aside aside-see">
     <p class="aside-title">See</p>
     Teams API about how to manage teams.
 
-</div>
-<div class="aside aside-see">
+</div><div class="aside aside-see">
     <p class="aside-title">See</p>
     Spaces API about how to manage spaces.
 
@@ -845,8 +843,8 @@ Use <em>teamMemberships</em> to create and manage the team membership on behalf 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-09-27)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-12-11)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

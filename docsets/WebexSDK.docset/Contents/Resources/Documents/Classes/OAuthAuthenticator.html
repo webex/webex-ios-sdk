@@ -8,14 +8,22 @@
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a name="//apple_ref/swift/Class/OAuthAuthenticator" class="dashAnchor"></a>
     <a title="OAuthAuthenticator Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK Docs</a> (95% documented)</p>
+        <p><a href="../index.html">WebexSDK 2.7.0 Docs</a> (94% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -113,6 +121,9 @@
                 <a href="../Classes/Phone/H264LicenseAction.html">– H264LicenseAction</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/Phone/AudioBNRMode.html">– AudioBNRMode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/SSOAuthenticator.html">SSOAuthenticator</a>
               </li>
               <li class="nav-group-task">
@@ -184,9 +195,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Double.html">Double</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Extensions/MediaSessionWrapper.html">MediaSessionWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Timer.html">Timer</a>
@@ -295,6 +303,7 @@
             <h1>OAuthAuthenticator</h1>
               <div class="declaration">
                 <div class="language">
+                  
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">OAuthAuthenticator</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/Authenticator.html">Authenticator</a></span></code></pre>
 
                 </div>
@@ -305,8 +314,7 @@ for authenticating a user on Cisco Webex.</p>
     <p class="aside-title">See</p>
     <a href="https://developer.webex.com/docs/integrations">Cisco Webex Integration</a>
 
-</div>
-<div class="aside aside-since">
+</div><div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
 
@@ -360,8 +368,7 @@ for authenticating a user on Cisco Webex.</p>
     <p class="aside-title">See</p>
     See Authenticator.authorized
 
-</div>
-<div class="aside aside-since">
+</div><div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
 
@@ -384,7 +391,7 @@ for authenticating a user on Cisco Webex.</p>
                     <code>
                     <a name="/s:8WebexSDK18OAuthAuthenticatorC8clientId0E6Secret5scope11redirectUri7storageACSS_S3SAA0C7Storage_ptcfc"></a>
                     <a name="//apple_ref/swift/Method/init(clientId:clientSecret:scope:redirectUri:storage:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK18OAuthAuthenticatorC8clientId0E6Secret5scope11redirectUri7storageACSS_S3SAA0C7Storage_ptcfc">init(clientId:clientSecret:scope:redirectUri:storage:)</a>
+                    <a class="token" href="#/s:8WebexSDK18OAuthAuthenticatorC8clientId0E6Secret5scope11redirectUri7storageACSS_S3SAA0C7Storage_ptcfc">init(clientId:<wbr>clientSecret:<wbr>scope:<wbr>redirectUri:<wbr>storage:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -397,8 +404,7 @@ for authenticating a user on Cisco Webex.</p>
     <p class="aside-title">See</p>
     <p><a href="https://developer.webex.com/docs/integrations">Cisco Webex Integration</a></p>
 
-</div>
-<div class="aside aside-since">
+</div><div class="aside aside-since">
     <p class="aside-title">Since</p>
     <p>1.2.0</p>
 
@@ -409,7 +415,7 @@ for authenticating a user on Cisco Webex.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">clientId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">clientSecret</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">scope</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">redirectUri</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">clientId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">clientSecret</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">scope</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">redirectUri</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
                         <span class="nv">storage</span><span class="p">:</span> <span class="kt"><a href="../Protocols/OAuthStorage.html">OAuthStorage</a></span> <span class="o">=</span> <span class="kt"><a href="../Classes/OAuthKeychainStorage.html">OAuthKeychainStorage</a></span><span class="p">())</span></code></pre>
 
                         </div>
@@ -489,7 +495,7 @@ for authenticating a user on Cisco Webex.</p>
                     <code>
                     <a name="/s:8WebexSDK18OAuthAuthenticatorC9authorize20parentViewController17completionHandlerySo06UIViewH0C_ySbcSgtF"></a>
                     <a name="//apple_ref/swift/Method/authorize(parentViewController:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK18OAuthAuthenticatorC9authorize20parentViewController17completionHandlerySo06UIViewH0C_ySbcSgtF">authorize(parentViewController:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK18OAuthAuthenticatorC9authorize20parentViewController17completionHandlerySo06UIViewH0C_ySbcSgtF">authorize(parentViewController:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -552,7 +558,7 @@ for authenticating a user on Cisco Webex.</p>
                     <code>
                     <a name="/s:8WebexSDK18OAuthAuthenticatorC9authorize9oauthCode17completionHandlerySS_ySbcSgtF"></a>
                     <a name="//apple_ref/swift/Method/authorize(oauthCode:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK18OAuthAuthenticatorC9authorize9oauthCode17completionHandlerySS_ySbcSgtF">authorize(oauthCode:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK18OAuthAuthenticatorC9authorize9oauthCode17completionHandlerySS_ySbcSgtF">authorize(oauthCode:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -615,7 +621,7 @@ for authenticating a user on Cisco Webex.</p>
                     <code>
                     <a name="/s:8WebexSDK18OAuthAuthenticatorC11accessToken17completionHandleryySSSgc_tF"></a>
                     <a name="//apple_ref/swift/Method/accessToken(completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK18OAuthAuthenticatorC11accessToken17completionHandleryySSSgc_tF">accessToken(completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK18OAuthAuthenticatorC11accessToken17completionHandleryySSSgc_tF">accessToken(completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -627,8 +633,7 @@ for authenticating a user on Cisco Webex.</p>
     <p class="aside-title">See</p>
     See Authenticator.accessToken(completionHandler:)
 
-</div>
-<div class="aside aside-since">
+</div><div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
 
@@ -651,7 +656,7 @@ for authenticating a user on Cisco Webex.</p>
                     <code>
                     <a name="/s:8WebexSDK18OAuthAuthenticatorC12refreshToken17completionHandleryySSSgc_tF"></a>
                     <a name="//apple_ref/swift/Method/refreshToken(completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK18OAuthAuthenticatorC12refreshToken17completionHandleryySSSgc_tF">refreshToken(completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK18OAuthAuthenticatorC12refreshToken17completionHandleryySSSgc_tF">refreshToken(completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -663,8 +668,7 @@ for authenticating a user on Cisco Webex.</p>
     <p class="aside-title">See</p>
     See Authenticator.refreshToken(completionHandler:)
 
-</div>
-<div class="aside aside-since">
+</div><div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.4.0
 
@@ -699,8 +703,7 @@ for authenticating a user on Cisco Webex.</p>
     <p class="aside-title">See</p>
     See Authenticator.deauthorize()
 
-</div>
-<div class="aside aside-since">
+</div><div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
 
@@ -723,8 +726,8 @@ for authenticating a user on Cisco Webex.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-09-27)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-12-11)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

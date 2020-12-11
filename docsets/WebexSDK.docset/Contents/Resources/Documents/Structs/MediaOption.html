@@ -8,14 +8,22 @@
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a name="//apple_ref/swift/Struct/MediaOption" class="dashAnchor"></a>
     <a title="MediaOption Structure Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK Docs</a> (95% documented)</p>
+        <p><a href="../index.html">WebexSDK 2.7.0 Docs</a> (94% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -113,6 +121,9 @@
                 <a href="../Classes/Phone/H264LicenseAction.html">– H264LicenseAction</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/Phone/AudioBNRMode.html">– AudioBNRMode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/SSOAuthenticator.html">SSOAuthenticator</a>
               </li>
               <li class="nav-group-task">
@@ -184,9 +195,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Double.html">Double</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Extensions/MediaSessionWrapper.html">MediaSessionWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Timer.html">Timer</a>
@@ -295,6 +303,7 @@
             <h1>MediaOption</h1>
               <div class="declaration">
                 <div class="language">
+                  
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">MediaOption</span></code></pre>
 
                 </div>
@@ -380,7 +389,7 @@
                     <code>
                     <a name="/s:8WebexSDK11MediaOptionV10audioVideo5local6remoteAcA0C10RenderViewC_AHtFZ"></a>
                     <a name="//apple_ref/swift/Method/audioVideo(local:remote:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11MediaOptionV10audioVideo5local6remoteAcA0C10RenderViewC_AHtFZ">audioVideo(local:remote:)</a>
+                    <a class="token" href="#/s:8WebexSDK11MediaOptionV10audioVideo5local6remoteAcA0C10RenderViewC_AHtFZ">audioVideo(local:<wbr>remote:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -412,7 +421,7 @@
                     <code>
                     <a name="/s:8WebexSDK11MediaOptionV10audioVideo11renderViewsAcA0C10RenderViewC5local_AG6remotetSg_tFZ"></a>
                     <a name="//apple_ref/swift/Method/audioVideo(renderViews:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11MediaOptionV10audioVideo11renderViewsAcA0C10RenderViewC5local_AG6remotetSg_tFZ">audioVideo(renderViews:)</a>
+                    <a class="token" href="#/s:8WebexSDK11MediaOptionV10audioVideo11renderViewsAcA0C10RenderViewC5local_AG6remotetSg_tFZ">audioVideo(renderViews:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -445,7 +454,7 @@ The render views can be set after call is connected.</p>
                     <code>
                     <a name="/s:8WebexSDK11MediaOptionV21audioVideoScreenShare5video06screenH0AcA0C10RenderViewC5local_AH6remotetSg_AHSgtFZ"></a>
                     <a name="//apple_ref/swift/Method/audioVideoScreenShare(video:screenShare:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11MediaOptionV21audioVideoScreenShare5video06screenH0AcA0C10RenderViewC5local_AH6remotetSg_AHSgtFZ">audioVideoScreenShare(video:screenShare:)</a>
+                    <a class="token" href="#/s:8WebexSDK11MediaOptionV21audioVideoScreenShare5video06screenH0AcA0C10RenderViewC5local_AH6remotetSg_AHSgtFZ">audioVideoScreenShare(video:<wbr>screenShare:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -478,7 +487,7 @@ The render views can be set after call is connected.</p>
                     <code>
                     <a name="/s:8WebexSDK11MediaOptionV21audioVideoScreenShare5video06screenH026applicationGroupIdentifierAcA0C10RenderViewC5local_AI6remotetSg_AISgSStFZ"></a>
                     <a name="//apple_ref/swift/Method/audioVideoScreenShare(video:screenShare:applicationGroupIdentifier:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11MediaOptionV21audioVideoScreenShare5video06screenH026applicationGroupIdentifierAcA0C10RenderViewC5local_AI6remotetSg_AISgSStFZ">audioVideoScreenShare(video:screenShare:applicationGroupIdentifier:)</a>
+                    <a class="token" href="#/s:8WebexSDK11MediaOptionV21audioVideoScreenShare5video06screenH026applicationGroupIdentifierAcA0C10RenderViewC5local_AI6remotetSg_AISgSStFZ">audioVideoScreenShare(video:<wbr>screenShare:<wbr>applicationGroupIdentifier:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -499,7 +508,7 @@ The render views can be set after call is connected.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(iOS 11.2, *)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">11.2</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
 <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">audioVideoScreenShare</span><span class="p">(</span><span class="nv">video</span><span class="p">:</span> <span class="p">(</span><span class="nv">local</span><span class="p">:</span> <span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="p">,</span> <span class="nv">remote</span><span class="p">:</span> <span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">screenShare</span><span class="p">:</span> <span class="kt"><a href="../Classes/MediaRenderView.html">MediaRenderView</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">applicationGroupIdentifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">MediaOption</span></code></pre>
 
                         </div>
@@ -532,7 +541,7 @@ The render views can be set after call is connected.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">layout</span><span class="p">:</span> <span class="kt">MediaOption</span><span class="o">.</span><span class="kt"><a href="../Structs/MediaOption/VideoLayout.html">VideoLayout</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">layout</span><span class="p">:</span> <span class="kt"><a href="../Structs/MediaOption/VideoLayout.html">VideoLayout</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -604,10 +613,6 @@ In general, The PIN is not required. unless the WebexError.requireHostPinOrMeeti
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
                 <li class="item">
                   <div>
                     <code>
@@ -645,8 +650,8 @@ In general, The PIN is not required. unless the WebexError.requireHostPinOrMeeti
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-09-27)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-12-11)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

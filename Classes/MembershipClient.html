@@ -8,14 +8,22 @@
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a name="//apple_ref/swift/Class/MembershipClient" class="dashAnchor"></a>
     <a title="MembershipClient Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK Docs</a> (95% documented)</p>
+        <p><a href="../index.html">WebexSDK 2.7.0 Docs</a> (94% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -113,6 +121,9 @@
                 <a href="../Classes/Phone/H264LicenseAction.html">– H264LicenseAction</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/Phone/AudioBNRMode.html">– AudioBNRMode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/SSOAuthenticator.html">SSOAuthenticator</a>
               </li>
               <li class="nav-group-task">
@@ -184,9 +195,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Double.html">Double</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Extensions/MediaSessionWrapper.html">MediaSessionWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Timer.html">Timer</a>
@@ -295,6 +303,7 @@
             <h1>MembershipClient</h1>
               <div class="declaration">
                 <div class="language">
+                  
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">MembershipClient</span></code></pre>
 
                 </div>
@@ -379,7 +388,7 @@
                     <code>
                     <a name="/s:8WebexSDK16MembershipClientC4list3max5queue17completionHandlerySiSg_So012OS_dispatch_G0CSgyAA15ServiceResponseVySayAA0C0VGGctF"></a>
                     <a name="//apple_ref/swift/Method/list(max:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK16MembershipClientC4list3max5queue17completionHandlerySiSg_So012OS_dispatch_G0CSgyAA15ServiceResponseVySayAA0C0VGGctF">list(max:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC4list3max5queue17completionHandlerySiSg_So012OS_dispatch_G0CSgyAA15ServiceResponseVySayAA0C0VGGctF">list(max:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -458,7 +467,7 @@
                     <code>
                     <a name="/s:8WebexSDK16MembershipClientC4list7spaceId3max5queue17completionHandlerySS_SiSgSo012OS_dispatch_I0CSgyAA15ServiceResponseVySayAA0C0VGGctF"></a>
                     <a name="//apple_ref/swift/Method/list(spaceId:max:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK16MembershipClientC4list7spaceId3max5queue17completionHandlerySS_SiSgSo012OS_dispatch_I0CSgyAA15ServiceResponseVySayAA0C0VGGctF">list(spaceId:max:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC4list7spaceId3max5queue17completionHandlerySS_SiSgSo012OS_dispatch_I0CSgyAA15ServiceResponseVySayAA0C0VGGctF">list(spaceId:<wbr>max:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -549,7 +558,7 @@
                     <code>
                     <a name="/s:8WebexSDK16MembershipClientC4list7spaceId06personG05queue17completionHandlerySS_SSSo012OS_dispatch_I0CSgyAA15ServiceResponseVySayAA0C0VGGctF"></a>
                     <a name="//apple_ref/swift/Method/list(spaceId:personId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK16MembershipClientC4list7spaceId06personG05queue17completionHandlerySS_SSSo012OS_dispatch_I0CSgyAA15ServiceResponseVySayAA0C0VGGctF">list(spaceId:personId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC4list7spaceId06personG05queue17completionHandlerySS_SSSo012OS_dispatch_I0CSgyAA15ServiceResponseVySayAA0C0VGGctF">list(spaceId:<wbr>personId:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -640,7 +649,7 @@
                     <code>
                     <a name="/s:8WebexSDK16MembershipClientC4list7spaceId11personEmail5queue17completionHandlerySS_AA0I7AddressCSo012OS_dispatch_J0CSgyAA15ServiceResponseVySayAA0C0VGGctF"></a>
                     <a name="//apple_ref/swift/Method/list(spaceId:personEmail:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK16MembershipClientC4list7spaceId11personEmail5queue17completionHandlerySS_AA0I7AddressCSo012OS_dispatch_J0CSgyAA15ServiceResponseVySayAA0C0VGGctF">list(spaceId:personEmail:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC4list7spaceId11personEmail5queue17completionHandlerySS_AA0I7AddressCSo012OS_dispatch_J0CSgyAA15ServiceResponseVySayAA0C0VGGctF">list(spaceId:<wbr>personEmail:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -731,7 +740,7 @@
                     <code>
                     <a name="/s:8WebexSDK16MembershipClientC6create7spaceId06personG011isModerator5queue17completionHandlerySS_SSSbSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/create(spaceId:personId:isModerator:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK16MembershipClientC6create7spaceId06personG011isModerator5queue17completionHandlerySS_SSSbSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAA0C0VGctF">create(spaceId:personId:isModerator:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC6create7spaceId06personG011isModerator5queue17completionHandlerySS_SSSbSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAA0C0VGctF">create(spaceId:<wbr>personId:<wbr>isModerator:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -834,7 +843,7 @@
                     <code>
                     <a name="/s:8WebexSDK16MembershipClientC6create7spaceId11personEmail11isModerator5queue17completionHandlerySS_AA0I7AddressCSbSo012OS_dispatch_L0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/create(spaceId:personEmail:isModerator:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK16MembershipClientC6create7spaceId11personEmail11isModerator5queue17completionHandlerySS_AA0I7AddressCSbSo012OS_dispatch_L0CSgyAA15ServiceResponseVyAA0C0VGctF">create(spaceId:personEmail:isModerator:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC6create7spaceId11personEmail11isModerator5queue17completionHandlerySS_AA0I7AddressCSbSo012OS_dispatch_L0CSgyAA15ServiceResponseVyAA0C0VGctF">create(spaceId:<wbr>personEmail:<wbr>isModerator:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -937,7 +946,7 @@
                     <code>
                     <a name="/s:8WebexSDK16MembershipClientC3get12membershipId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/get(membershipId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK16MembershipClientC3get12membershipId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyAA0C0VGctF">get(membershipId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC3get12membershipId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyAA0C0VGctF">get(membershipId:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1016,7 +1025,7 @@
                     <code>
                     <a name="/s:8WebexSDK16MembershipClientC6update12membershipId11isModerator5queue17completionHandlerySS_SbSo012OS_dispatch_J0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/update(membershipId:isModerator:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK16MembershipClientC6update12membershipId11isModerator5queue17completionHandlerySS_SbSo012OS_dispatch_J0CSgyAA15ServiceResponseVyAA0C0VGctF">update(membershipId:isModerator:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC6update12membershipId11isModerator5queue17completionHandlerySS_SbSo012OS_dispatch_J0CSgyAA15ServiceResponseVyAA0C0VGctF">update(membershipId:<wbr>isModerator:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1107,7 +1116,7 @@
                     <code>
                     <a name="/s:8WebexSDK16MembershipClientC6delete12membershipId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyypGctF"></a>
                     <a name="//apple_ref/swift/Method/delete(membershipId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK16MembershipClientC6delete12membershipId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyypGctF">delete(membershipId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC6delete12membershipId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyypGctF">delete(membershipId:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1186,7 +1195,7 @@
                     <code>
                     <a name="/s:8WebexSDK16MembershipClientC18listWithReadStatus7spaceId5queue17completionHandlerySS_So012OS_dispatch_K0CSgyAA15ServiceResponseVySayAA0cgH0VGGctF"></a>
                     <a name="//apple_ref/swift/Method/listWithReadStatus(spaceId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK16MembershipClientC18listWithReadStatus7spaceId5queue17completionHandlerySS_So012OS_dispatch_K0CSgyAA15ServiceResponseVySayAA0cgH0VGGctF">listWithReadStatus(spaceId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK16MembershipClientC18listWithReadStatus7spaceId5queue17completionHandlerySS_So012OS_dispatch_K0CSgyAA15ServiceResponseVySayAA0cgH0VGGctF">listWithReadStatus(spaceId:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1266,8 +1275,8 @@ which message was the last message was read by each user.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-09-27)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-12-11)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

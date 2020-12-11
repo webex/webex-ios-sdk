@@ -8,14 +8,22 @@
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a name="//apple_ref/swift/Class/MessageClient" class="dashAnchor"></a>
     <a title="MessageClient Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK Docs</a> (95% documented)</p>
+        <p><a href="../index.html">WebexSDK 2.7.0 Docs</a> (94% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -113,6 +121,9 @@
                 <a href="../Classes/Phone/H264LicenseAction.html">– H264LicenseAction</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/Phone/AudioBNRMode.html">– AudioBNRMode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/SSOAuthenticator.html">SSOAuthenticator</a>
               </li>
               <li class="nav-group-task">
@@ -184,9 +195,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Double.html">Double</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Extensions/MediaSessionWrapper.html">MediaSessionWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Timer.html">Timer</a>
@@ -295,11 +303,12 @@
             <h1>MessageClient</h1>
               <div class="declaration">
                 <div class="language">
+                  
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">MessageClient</span></code></pre>
 
                 </div>
               </div>
-            <p>MessageClient represents a client to the Webex Teams platform. It can send and receive messages.</p>
+            <p>MessageClient represents a client to the Webex platform. It can send and receive messages.</p>
 
 <p>Use <code><a href="../Classes/Webex.html#/s:8WebexSDK0A0C8messagesAA13MessageClientCvp">Webex.messages</a></code> to get an instance of MessageClient.</p>
 <div class="aside aside-since">
@@ -381,7 +390,7 @@
                     <code>
                     <a name="/s:8WebexSDK13MessageClientC4list7spaceId6before3max15mentionedPeople5queue17completionHandlerySS_AA6BeforeOSgSiAA7MentionOSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVySayAA0C0VGGctF"></a>
                     <a name="//apple_ref/swift/Method/list(spaceId:before:max:mentionedPeople:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC4list7spaceId6before3max15mentionedPeople5queue17completionHandlerySS_AA6BeforeOSgSiAA7MentionOSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVySayAA0C0VGGctF">list(spaceId:before:max:mentionedPeople:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4list7spaceId6before3max15mentionedPeople5queue17completionHandlerySS_AA6BeforeOSgSiAA7MentionOSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVySayAA0C0VGGctF">list(spaceId:<wbr>before:<wbr>max:<wbr>mentionedPeople:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -506,7 +515,7 @@ the actual content or the thumbnail of the attachment.</p>
                     <code>
                     <a name="/s:8WebexSDK13MessageClientC4post_13toPersonEmail9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_AA0H7AddressCSayAA9LocalFileCGSgAKSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVyAKGctF"></a>
                     <a name="//apple_ref/swift/Method/post(_:toPersonEmail:withFiles:parent:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_13toPersonEmail9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_AA0H7AddressCSayAA9LocalFileCGSgAKSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVyAKGctF">post(_:toPersonEmail:withFiles:parent:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_13toPersonEmail9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_AA0H7AddressCSayAA9LocalFileCGSgAKSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVyAKGctF">post(_:<wbr>toPersonEmail:<wbr>withFiles:<wbr>parent:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -616,7 +625,7 @@ the actual content or the thumbnail of the attachment.</p>
                     <code>
                     <a name="/s:8WebexSDK13MessageClientC4post_8toPerson9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_SSSayAA9LocalFileCGSgAKSgSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAKGctF"></a>
                     <a name="//apple_ref/swift/Method/post(_:toPerson:withFiles:parent:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_8toPerson9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_SSSayAA9LocalFileCGSgAKSgSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAKGctF">post(_:toPerson:withFiles:parent:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_8toPerson9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_SSSayAA9LocalFileCGSgAKSgSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAKGctF">post(_:<wbr>toPerson:<wbr>withFiles:<wbr>parent:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -726,7 +735,7 @@ the actual content or the thumbnail of the attachment.</p>
                     <code>
                     <a name="/s:8WebexSDK13MessageClientC4post_7toSpace8mentions9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_SSSayAA7MentionOGSgSayAA9LocalFileCGSgALSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVyALGctF"></a>
                     <a name="//apple_ref/swift/Method/post(_:toSpace:mentions:withFiles:parent:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_7toSpace8mentions9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_SSSayAA7MentionOGSgSayAA9LocalFileCGSgALSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVyALGctF">post(_:toSpace:mentions:withFiles:parent:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_7toSpace8mentions9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_SSSayAA7MentionOGSgSayAA9LocalFileCGSgALSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVyALGctF">post(_:<wbr>toSpace:<wbr>mentions:<wbr>withFiles:<wbr>parent:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -852,7 +861,7 @@ Having <code>@johndoe</code> in the content of the message does not generate not
                     <code>
                     <a name="/s:8WebexSDK13MessageClientC3get9messageId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/get(messageId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC3get9messageId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyAA0C0VGctF">get(messageId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC3get9messageId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyAA0C0VGctF">get(messageId:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -935,7 +944,7 @@ the actual content or the thumbnail of the attachment.</p>
                     <code>
                     <a name="/s:8WebexSDK13MessageClientC6delete9messageId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyypGctF"></a>
                     <a name="//apple_ref/swift/Method/delete(messageId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC6delete9messageId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyypGctF">delete(messageId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC6delete9messageId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyypGctF">delete(messageId:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1014,7 +1023,7 @@ the actual content or the thumbnail of the attachment.</p>
                     <code>
                     <a name="/s:8WebexSDK13MessageClientC10markAsRead7spaceId07messageI05queue17completionHandlerySS_SSSo012OS_dispatch_K0CSgyAA15ServiceResponseVyypGctF"></a>
                     <a name="//apple_ref/swift/Method/markAsRead(spaceId:messageId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC10markAsRead7spaceId07messageI05queue17completionHandlerySS_SSSo012OS_dispatch_K0CSgyAA15ServiceResponseVyypGctF">markAsRead(spaceId:messageId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC10markAsRead7spaceId07messageI05queue17completionHandlerySS_SSSo012OS_dispatch_K0CSgyAA15ServiceResponseVyypGctF">markAsRead(spaceId:<wbr>messageId:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1105,7 +1114,7 @@ the actual content or the thumbnail of the attachment.</p>
                     <code>
                     <a name="/s:8WebexSDK13MessageClientC10markAsRead7spaceId5queue17completionHandlerySS_So012OS_dispatch_J0CSgyAA15ServiceResponseVyypGctF"></a>
                     <a name="//apple_ref/swift/Method/markAsRead(spaceId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC10markAsRead7spaceId5queue17completionHandlerySS_So012OS_dispatch_J0CSgyAA15ServiceResponseVyypGctF">markAsRead(spaceId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC10markAsRead7spaceId5queue17completionHandlerySS_So012OS_dispatch_J0CSgyAA15ServiceResponseVyypGctF">markAsRead(spaceId:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1184,7 +1193,7 @@ the actual content or the thumbnail of the attachment.</p>
                     <code>
                     <a name="/s:8WebexSDK13MessageClientC12downloadFile_2to15progressHandler010completionI0yAA06RemoteF0V_10Foundation3URLVSgySdcSgyAA6ResultOyALGctF"></a>
                     <a name="//apple_ref/swift/Method/downloadFile(_:to:progressHandler:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC12downloadFile_2to15progressHandler010completionI0yAA06RemoteF0V_10Foundation3URLVSgySdcSgyAA6ResultOyALGctF">downloadFile(_:to:progressHandler:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC12downloadFile_2to15progressHandler010completionI0yAA06RemoteF0V_10Foundation3URLVSgySdcSgyAA6ResultOyALGctF">downloadFile(_:<wbr>to:<wbr>progressHandler:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1275,7 +1284,7 @@ the actual content or the thumbnail of the attachment.</p>
                     <code>
                     <a name="/s:8WebexSDK13MessageClientC17downloadThumbnail3for2to15progressHandler010completionJ0yAA10RemoteFileV_10Foundation3URLVSgySdcSgyAA6ResultOyAMGctF"></a>
                     <a name="//apple_ref/swift/Method/downloadThumbnail(for:to:progressHandler:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC17downloadThumbnail3for2to15progressHandler010completionJ0yAA10RemoteFileV_10Foundation3URLVSgySdcSgyAA6ResultOyAMGctF">downloadThumbnail(for:to:progressHandler:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC17downloadThumbnail3for2to15progressHandler010completionJ0yAA10RemoteFileV_10Foundation3URLVSgySdcSgyAA6ResultOyAMGctF">downloadThumbnail(for:<wbr>to:<wbr>progressHandler:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1368,9 +1377,11 @@ Note Cisco Webex doesn&rsquo;t generate thumbnail for all files.</p>
               <div class="task-name-container">
                 <a name="/Deprecated"></a>
                 <a name="//apple_ref/swift/Section/Deprecated" class="dashAnchor"></a>
-                <a href="#/Deprecated">
-                  <h3 class="section-name">Deprecated</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Deprecated"></a>
+                  <h3 class="section-name"><p>Deprecated</p>
+</h3>
+                </div>
               </div>
               <ul>
                 <li class="item">
@@ -1378,7 +1389,7 @@ Note Cisco Webex doesn&rsquo;t generate thumbnail for all files.</p>
                     <code>
                     <a name="/s:8WebexSDK13MessageClientC4post11personEmail4text5files5queue17completionHandleryAA0G7AddressC_SSSgSayAA9LocalFileCGSgSo012OS_dispatch_J0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/post(personEmail:text:files:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post11personEmail4text5files5queue17completionHandleryAA0G7AddressC_SSSgSayAA9LocalFileCGSgSo012OS_dispatch_J0CSgyAA15ServiceResponseVyAA0C0VGctF">post(personEmail:text:files:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post11personEmail4text5files5queue17completionHandleryAA0G7AddressC_SSSgSayAA9LocalFileCGSgSo012OS_dispatch_J0CSgyAA15ServiceResponseVyAA0C0VGctF">post(personEmail:<wbr>text:<wbr>files:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1400,7 +1411,7 @@ Note Cisco Webex doesn&rsquo;t generate thumbnail for all files.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">)</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">post</span><span class="p">(</span><span class="nv">personEmail</span><span class="p">:</span> <span class="kt"><a href="../Classes/EmailAddress.html">EmailAddress</a></span><span class="p">,</span>
                  <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">files</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/LocalFile.html">LocalFile</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
@@ -1488,7 +1499,7 @@ Note Cisco Webex doesn&rsquo;t generate thumbnail for all files.</p>
                     <code>
                     <a name="/s:8WebexSDK13MessageClientC4post8personId4text5files5queue17completionHandlerySS_SSSgSayAA9LocalFileCGSgSo012OS_dispatch_J0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/post(personId:text:files:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post8personId4text5files5queue17completionHandlerySS_SSSgSayAA9LocalFileCGSgSo012OS_dispatch_J0CSgyAA15ServiceResponseVyAA0C0VGctF">post(personId:text:files:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post8personId4text5files5queue17completionHandlerySS_SSSgSayAA9LocalFileCGSgSo012OS_dispatch_J0CSgyAA15ServiceResponseVyAA0C0VGctF">post(personId:<wbr>text:<wbr>files:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1510,7 +1521,7 @@ Note Cisco Webex doesn&rsquo;t generate thumbnail for all files.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">)</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">post</span><span class="p">(</span><span class="nv">personId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
                  <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">files</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/LocalFile.html">LocalFile</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
@@ -1598,7 +1609,7 @@ Note Cisco Webex doesn&rsquo;t generate thumbnail for all files.</p>
                     <code>
                     <a name="/s:8WebexSDK13MessageClientC4post7spaceId4text8mentions5files5queue17completionHandlerySS_SSSgSayAA7MentionOGSgSayAA9LocalFileCGSgSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/post(spaceId:text:mentions:files:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post7spaceId4text8mentions5files5queue17completionHandlerySS_SSSgSayAA7MentionOGSgSayAA9LocalFileCGSgSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAA0C0VGctF">post(spaceId:text:mentions:files:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post7spaceId4text8mentions5files5queue17completionHandlerySS_SSSgSayAA7MentionOGSgSayAA9LocalFileCGSgSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAA0C0VGctF">post(spaceId:<wbr>text:<wbr>mentions:<wbr>files:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1623,7 +1634,7 @@ Having <code>@johndoe</code> in the content of the message does not generate not
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">)</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">post</span><span class="p">(</span><span class="nv">spaceId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
                  <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                  <span class="nv">mentions</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/Mention.html">Mention</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
@@ -1724,8 +1735,8 @@ Having <code>@johndoe</code> in the content of the message does not generate not
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-09-27)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-12-11)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

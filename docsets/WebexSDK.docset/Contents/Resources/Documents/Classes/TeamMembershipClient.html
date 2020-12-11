@@ -8,14 +8,22 @@
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a name="//apple_ref/swift/Class/TeamMembershipClient" class="dashAnchor"></a>
     <a title="TeamMembershipClient Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK Docs</a> (95% documented)</p>
+        <p><a href="../index.html">WebexSDK 2.7.0 Docs</a> (94% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -113,6 +121,9 @@
                 <a href="../Classes/Phone/H264LicenseAction.html">– H264LicenseAction</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/Phone/AudioBNRMode.html">– AudioBNRMode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/SSOAuthenticator.html">SSOAuthenticator</a>
               </li>
               <li class="nav-group-task">
@@ -184,9 +195,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Double.html">Double</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Extensions/MediaSessionWrapper.html">MediaSessionWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Timer.html">Timer</a>
@@ -295,6 +303,7 @@
             <h1>TeamMembershipClient</h1>
               <div class="declaration">
                 <div class="language">
+                  
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">TeamMembershipClient</span></code></pre>
 
                 </div>
@@ -315,7 +324,7 @@
                     <code>
                     <a name="/s:8WebexSDK20TeamMembershipClientC4list6teamId3max5queue17completionHandlerySS_SiSgSo012OS_dispatch_J0CSgyAA15ServiceResponseVySayAA0cD0VGGctF"></a>
                     <a name="//apple_ref/swift/Method/list(teamId:max:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK20TeamMembershipClientC4list6teamId3max5queue17completionHandlerySS_SiSgSo012OS_dispatch_J0CSgyAA15ServiceResponseVySayAA0cD0VGGctF">list(teamId:max:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK20TeamMembershipClientC4list6teamId3max5queue17completionHandlerySS_SiSgSo012OS_dispatch_J0CSgyAA15ServiceResponseVySayAA0cD0VGGctF">list(teamId:<wbr>max:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -406,7 +415,7 @@
                     <code>
                     <a name="/s:8WebexSDK20TeamMembershipClientC6create6teamId06personH011isModerator5queue17completionHandlerySS_SSSbSo012OS_dispatch_L0CSgyAA15ServiceResponseVyAA0cD0VGctF"></a>
                     <a name="//apple_ref/swift/Method/create(teamId:personId:isModerator:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK20TeamMembershipClientC6create6teamId06personH011isModerator5queue17completionHandlerySS_SSSbSo012OS_dispatch_L0CSgyAA15ServiceResponseVyAA0cD0VGctF">create(teamId:personId:isModerator:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK20TeamMembershipClientC6create6teamId06personH011isModerator5queue17completionHandlerySS_SSSbSo012OS_dispatch_L0CSgyAA15ServiceResponseVyAA0cD0VGctF">create(teamId:<wbr>personId:<wbr>isModerator:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -509,7 +518,7 @@
                     <code>
                     <a name="/s:8WebexSDK20TeamMembershipClientC6create6teamId11personEmail11isModerator5queue17completionHandlerySS_AA0J7AddressCSbSo012OS_dispatch_M0CSgyAA15ServiceResponseVyAA0cD0VGctF"></a>
                     <a name="//apple_ref/swift/Method/create(teamId:personEmail:isModerator:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK20TeamMembershipClientC6create6teamId11personEmail11isModerator5queue17completionHandlerySS_AA0J7AddressCSbSo012OS_dispatch_M0CSgyAA15ServiceResponseVyAA0cD0VGctF">create(teamId:personEmail:isModerator:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK20TeamMembershipClientC6create6teamId11personEmail11isModerator5queue17completionHandlerySS_AA0J7AddressCSbSo012OS_dispatch_M0CSgyAA15ServiceResponseVyAA0cD0VGctF">create(teamId:<wbr>personEmail:<wbr>isModerator:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -612,7 +621,7 @@
                     <code>
                     <a name="/s:8WebexSDK20TeamMembershipClientC3get12membershipId5queue17completionHandlerySS_So012OS_dispatch_I0CSgyAA15ServiceResponseVyAA0cD0VGctF"></a>
                     <a name="//apple_ref/swift/Method/get(membershipId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK20TeamMembershipClientC3get12membershipId5queue17completionHandlerySS_So012OS_dispatch_I0CSgyAA15ServiceResponseVyAA0cD0VGctF">get(membershipId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK20TeamMembershipClientC3get12membershipId5queue17completionHandlerySS_So012OS_dispatch_I0CSgyAA15ServiceResponseVyAA0cD0VGctF">get(membershipId:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -691,7 +700,7 @@
                     <code>
                     <a name="/s:8WebexSDK20TeamMembershipClientC6update12membershipId11isModerator5queue17completionHandlerySS_SbSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAA0cD0VGctF"></a>
                     <a name="//apple_ref/swift/Method/update(membershipId:isModerator:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK20TeamMembershipClientC6update12membershipId11isModerator5queue17completionHandlerySS_SbSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAA0cD0VGctF">update(membershipId:isModerator:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK20TeamMembershipClientC6update12membershipId11isModerator5queue17completionHandlerySS_SbSo012OS_dispatch_K0CSgyAA15ServiceResponseVyAA0cD0VGctF">update(membershipId:<wbr>isModerator:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -782,7 +791,7 @@
                     <code>
                     <a name="/s:8WebexSDK20TeamMembershipClientC6delete12membershipId5queue17completionHandlerySS_So012OS_dispatch_I0CSgyAA15ServiceResponseVyypGctF"></a>
                     <a name="//apple_ref/swift/Method/delete(membershipId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK20TeamMembershipClientC6delete12membershipId5queue17completionHandlerySS_So012OS_dispatch_I0CSgyAA15ServiceResponseVyypGctF">delete(membershipId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK20TeamMembershipClientC6delete12membershipId5queue17completionHandlerySS_So012OS_dispatch_I0CSgyAA15ServiceResponseVyypGctF">delete(membershipId:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -861,8 +870,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-09-27)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-12-11)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

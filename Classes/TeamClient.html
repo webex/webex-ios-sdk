@@ -8,14 +8,22 @@
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a name="//apple_ref/swift/Class/TeamClient" class="dashAnchor"></a>
     <a title="TeamClient Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK Docs</a> (95% documented)</p>
+        <p><a href="../index.html">WebexSDK 2.7.0 Docs</a> (94% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -113,6 +121,9 @@
                 <a href="../Classes/Phone/H264LicenseAction.html">– H264LicenseAction</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/Phone/AudioBNRMode.html">– AudioBNRMode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/SSOAuthenticator.html">SSOAuthenticator</a>
               </li>
               <li class="nav-group-task">
@@ -184,9 +195,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Double.html">Double</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Extensions/MediaSessionWrapper.html">MediaSessionWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Timer.html">Timer</a>
@@ -295,6 +303,7 @@
             <h1>TeamClient</h1>
               <div class="declaration">
                 <div class="language">
+                  
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">TeamClient</span></code></pre>
 
                 </div>
@@ -315,7 +324,7 @@
                     <code>
                     <a name="/s:8WebexSDK10TeamClientC4list3max5queue17completionHandlerySiSg_So012OS_dispatch_G0CSgyAA15ServiceResponseVySayAA0C0VGGctF"></a>
                     <a name="//apple_ref/swift/Method/list(max:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK10TeamClientC4list3max5queue17completionHandlerySiSg_So012OS_dispatch_G0CSgyAA15ServiceResponseVySayAA0C0VGGctF">list(max:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK10TeamClientC4list3max5queue17completionHandlerySiSg_So012OS_dispatch_G0CSgyAA15ServiceResponseVySayAA0C0VGGctF">list(max:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -394,7 +403,7 @@
                     <code>
                     <a name="/s:8WebexSDK10TeamClientC6create4name5queue17completionHandlerySS_So012OS_dispatch_G0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/create(name:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK10TeamClientC6create4name5queue17completionHandlerySS_So012OS_dispatch_G0CSgyAA15ServiceResponseVyAA0C0VGctF">create(name:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK10TeamClientC6create4name5queue17completionHandlerySS_So012OS_dispatch_G0CSgyAA15ServiceResponseVyAA0C0VGctF">create(name:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -408,8 +417,7 @@ See the Team Memberships API to learn how to add more people to the team.</p>
     <p class="aside-title">Since</p>
     1.2.0
 
-</div>
-<div class="aside aside-see">
+</div><div class="aside aside-see">
     <p class="aside-title">See</p>
     see TeamMemebershipClient API
 
@@ -479,7 +487,7 @@ See the Team Memberships API to learn how to add more people to the team.</p>
                     <code>
                     <a name="/s:8WebexSDK10TeamClientC3get6teamId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/get(teamId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK10TeamClientC3get6teamId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyAA0C0VGctF">get(teamId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK10TeamClientC3get6teamId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyAA0C0VGctF">get(teamId:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -558,7 +566,7 @@ See the Team Memberships API to learn how to add more people to the team.</p>
                     <code>
                     <a name="/s:8WebexSDK10TeamClientC6update6teamId4name5queue17completionHandlerySS_SSSo012OS_dispatch_I0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/update(teamId:name:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK10TeamClientC6update6teamId4name5queue17completionHandlerySS_SSSo012OS_dispatch_I0CSgyAA15ServiceResponseVyAA0C0VGctF">update(teamId:name:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK10TeamClientC6update6teamId4name5queue17completionHandlerySS_SSSo012OS_dispatch_I0CSgyAA15ServiceResponseVyAA0C0VGctF">update(teamId:<wbr>name:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -649,7 +657,7 @@ See the Team Memberships API to learn how to add more people to the team.</p>
                     <code>
                     <a name="/s:8WebexSDK10TeamClientC6delete6teamId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyypGctF"></a>
                     <a name="//apple_ref/swift/Method/delete(teamId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK10TeamClientC6delete6teamId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyypGctF">delete(teamId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK10TeamClientC6delete6teamId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyypGctF">delete(teamId:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -728,8 +736,8 @@ See the Team Memberships API to learn how to add more people to the team.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-09-27)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-12-11)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

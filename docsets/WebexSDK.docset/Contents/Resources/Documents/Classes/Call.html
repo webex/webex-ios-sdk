@@ -8,14 +8,22 @@
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a name="//apple_ref/swift/Class/Call" class="dashAnchor"></a>
     <a title="Call Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK Docs</a> (95% documented)</p>
+        <p><a href="../index.html">WebexSDK 2.7.0 Docs</a> (94% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -113,6 +121,9 @@
                 <a href="../Classes/Phone/H264LicenseAction.html">– H264LicenseAction</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/Phone/AudioBNRMode.html">– AudioBNRMode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/SSOAuthenticator.html">SSOAuthenticator</a>
               </li>
               <li class="nav-group-task">
@@ -184,9 +195,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Double.html">Double</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Extensions/MediaSessionWrapper.html">MediaSessionWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Timer.html">Timer</a>
@@ -295,6 +303,7 @@
             <h1>Call</h1>
               <div class="declaration">
                 <div class="language">
+                  
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Call</span></code></pre>
 
                 </div>
@@ -338,13 +347,11 @@
     <p class="aside-title">See</p>
     see Phone API about how to create calls.
 
-</div>
-<div class="aside aside-see">
+</div><div class="aside aside-see">
     <p class="aside-title">See</p>
     CallStatus for the states and transitions of a <code>Call</code>.
 
-</div>
-<div class="aside aside-since">
+</div><div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
 
@@ -675,7 +682,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onWaiting</span><span class="p">:</span> <span class="p">((</span><span class="kt">Call</span><span class="o">.</span><span class="kt"><a href="../Classes/Call/WaitReason.html">WaitReason</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onWaiting</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Classes/Call/WaitReason.html">WaitReason</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -739,7 +746,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onDisconnected</span><span class="p">:</span> <span class="p">((</span><span class="kt">Call</span><span class="o">.</span><span class="kt"><a href="../Classes/Call/DisconnectReason.html">DisconnectReason</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onDisconnected</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Classes/Call/DisconnectReason.html">DisconnectReason</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span></code></pre>
 
                         </div>
                       </div>
@@ -771,7 +778,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onCallMembershipChanged</span><span class="p">:</span> <span class="p">((</span><span class="kt">Call</span><span class="o">.</span><span class="kt"><a href="../Classes/Call/CallMembershipChangedEvent.html">CallMembershipChangedEvent</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onCallMembershipChanged</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Classes/Call/CallMembershipChangedEvent.html">CallMembershipChangedEvent</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span></code></pre>
 
                         </div>
                       </div>
@@ -803,7 +810,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onMediaChanged</span><span class="p">:</span> <span class="p">((</span><span class="kt">Call</span><span class="o">.</span><span class="kt"><a href="../Classes/Call/MediaChangedEvent.html">MediaChangedEvent</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onMediaChanged</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Classes/Call/MediaChangedEvent.html">MediaChangedEvent</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span></code></pre>
 
                         </div>
                       </div>
@@ -835,7 +842,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onCapabilitiesChanged</span><span class="p">:</span> <span class="p">((</span><span class="kt">Call</span><span class="o">.</span><span class="kt"><a href="../Classes/Call/Capabilities.html">Capabilities</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onCapabilitiesChanged</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Classes/Call/Capabilities.html">Capabilities</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span></code></pre>
 
                         </div>
                       </div>
@@ -867,7 +874,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">oniOSBroadcastingChanged</span><span class="p">:</span> <span class="p">((</span><span class="kt">Call</span><span class="o">.</span><span class="n"><a href="../Classes/Call/iOSBroadcastingEvent.html">iOSBroadcastingEvent</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">oniOSBroadcastingChanged</span><span class="p">:</span> <span class="p">((</span><span class="n"><a href="../Classes/Call/iOSBroadcastingEvent.html">iOSBroadcastingEvent</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span></code></pre>
 
                         </div>
                       </div>
@@ -925,8 +932,7 @@ Client need to set the protocol implemention into certain call.</p>
     <p class="aside-title">See</p>
     see MultiStreamObserver
 
-</div>
-<div class="aside aside-since">
+</div><div class="aside aside-since">
     <p class="aside-title">Since</p>
     2.0.0
 
@@ -962,8 +968,7 @@ Client need to set the protocol implemention into certain call.</p>
     <p class="aside-title">See</p>
     CallStatus
 
-</div>
-<div class="aside aside-since">
+</div><div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
 
@@ -1006,7 +1011,7 @@ Client need to set the protocol implemention into certain call.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">direction</span><span class="p">:</span> <span class="kt"><a href="../Classes/Call/Direction.html">Direction</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">direction</span><span class="p">:</span> <span class="kt"><a href="../Classes/Call/Direction.html">Direction</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -1742,7 +1747,7 @@ Client need to set the protocol implemention into certain call.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">schedules</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/CallSchedule.html">CallSchedule</a></span><span class="p">]?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">schedules</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/CallSchedule.html">CallSchedule</a></span><span class="p">]?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -1865,8 +1870,7 @@ If is nil, it will update the screen sharing state as inactive to the server sid
     <p class="aside-title">See</p>
     see AuxStream
 
-</div>
-<div class="aside aside-since">
+</div><div class="aside aside-since">
     <p class="aside-title">Since</p>
     2.0.0
 
@@ -1903,8 +1907,7 @@ Video presented on remote media render view.</p>
     <p class="aside-title">See</p>
     see CallMembership.isActiveSpeaker
 
-</div>
-<div class="aside aside-since">
+</div><div class="aside aside-since">
     <p class="aside-title">Since</p>
     2.0.0
 
@@ -1915,7 +1918,7 @@ Video presented on remote media render view.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">activeSpeaker</span><span class="p">:</span> <span class="kt"><a href="../Structs/CallMembership.html">CallMembership</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">activeSpeaker</span><span class="p">:</span> <span class="kt"><a href="../Structs/CallMembership.html">CallMembership</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -1959,7 +1962,7 @@ Video presented on remote media render view.</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC11acknowledge17completionHandleryys5Error_pSgc_tF"></a>
                     <a name="//apple_ref/swift/Method/acknowledge(completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC11acknowledge17completionHandleryys5Error_pSgc_tF">acknowledge(completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC11acknowledge17completionHandleryys5Error_pSgc_tF">acknowledge(completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1973,8 +1976,7 @@ Will cause the initiator&rsquo;s Call instance to emit the ringing event.</p>
     <p class="aside-title">See</p>
     see CallStatus
 
-</div>
-<div class="aside aside-since">
+</div><div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
 
@@ -2020,7 +2022,7 @@ Will cause the initiator&rsquo;s Call instance to emit the ringing event.</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC6answer6option17completionHandleryAA11MediaOptionV_ys5Error_pSgctF"></a>
                     <a name="//apple_ref/swift/Method/answer(option:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC6answer6option17completionHandleryAA11MediaOptionV_ys5Error_pSgctF">answer(option:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC6answer6option17completionHandleryAA11MediaOptionV_ys5Error_pSgctF">answer(option:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2034,8 +2036,7 @@ This can only be invoked when this call is incoming and in ringing status.</p>
     <p class="aside-title">See</p>
     see CallStatus
 
-</div>
-<div class="aside aside-since">
+</div><div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
 
@@ -2093,7 +2094,7 @@ This can only be invoked when this call is incoming and in ringing status.</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC6reject17completionHandleryys5Error_pSgc_tF"></a>
                     <a name="//apple_ref/swift/Method/reject(completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC6reject17completionHandleryys5Error_pSgc_tF">reject(completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC6reject17completionHandleryys5Error_pSgc_tF">reject(completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2107,8 +2108,7 @@ This can only be invoked when this call is incoming and in ringing status.</p>
     <p class="aside-title">Since</p>
     1.2.0
 
-</div>
-<div class="aside aside-see">
+</div><div class="aside aside-see">
     <p class="aside-title">See</p>
     see CallStatus
 
@@ -2154,7 +2154,7 @@ This can only be invoked when this call is incoming and in ringing status.</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC6hangup17completionHandleryys5Error_pSgc_tF"></a>
                     <a name="//apple_ref/swift/Method/hangup(completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC6hangup17completionHandleryys5Error_pSgc_tF">hangup(completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC6hangup17completionHandleryys5Error_pSgc_tF">hangup(completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2168,8 +2168,7 @@ This can only be invoked when this call is in answered status.</p>
     <p class="aside-title">Since</p>
     1.2.0
 
-</div>
-<div class="aside aside-see">
+</div><div class="aside aside-see">
     <p class="aside-title">See</p>
     see CallStatus
 
@@ -2215,7 +2214,7 @@ This can only be invoked when this call is in answered status.</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC5letIn_17completionHandlerySayAA0C10MembershipVG_ys5Error_pSgctF"></a>
                     <a name="//apple_ref/swift/Method/letIn(_:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC5letIn_17completionHandlerySayAA0C10MembershipVG_ys5Error_pSgctF">letIn(_:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC5letIn_17completionHandlerySayAA0C10MembershipVG_ys5Error_pSgctF">letIn(_:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2283,7 +2282,7 @@ This should be called by moderator.</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC16sendFeedbackWith6rating8comments11includeLogsySi_SSSgSbtF"></a>
                     <a name="//apple_ref/swift/Method/sendFeedbackWith(rating:comments:includeLogs:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC16sendFeedbackWith6rating8comments11includeLogsySi_SSSgSbtF">sendFeedbackWith(rating:comments:includeLogs:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC16sendFeedbackWith6rating8comments11includeLogsySi_SSSgSbtF">sendFeedbackWith(rating:<wbr>comments:<wbr>includeLogs:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2362,7 +2361,7 @@ This should be called by moderator.</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC4send4dtmf17completionHandlerySS_ys5Error_pSgcSgtF"></a>
                     <a name="//apple_ref/swift/Method/send(dtmf:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC4send4dtmf17completionHandlerySS_ys5Error_pSgcSgtF">send(dtmf:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC4send4dtmf17completionHandlerySS_ys5Error_pSgcSgtF">send(dtmf:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2398,7 +2397,7 @@ This should be called by moderator.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>any combination of valid DTMF events matching regex mattern <q>^[0-9#\*abcdABCD]+$</q></p>
+                                  <p>any combination of valid DTMF events matching regex mattern &ldquo;^[0-9#*abcdABCD]+$&rdquo;</p>
                                 </div>
                               </td>
                             </tr>
@@ -2429,7 +2428,7 @@ This should be called by moderator.</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC12startSharing17completionHandleryys5Error_pSgc_tF"></a>
                     <a name="//apple_ref/swift/Method/startSharing(completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC12startSharing17completionHandleryys5Error_pSgc_tF">startSharing(completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC12startSharing17completionHandleryys5Error_pSgc_tF">startSharing(completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2449,7 +2448,7 @@ This should be called by moderator.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(iOS 11.2, *)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">11.2</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">startSharing</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
@@ -2485,7 +2484,7 @@ This should be called by moderator.</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC11stopSharing17completionHandleryys5Error_pSgc_tF"></a>
                     <a name="//apple_ref/swift/Method/stopSharing(completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC11stopSharing17completionHandleryys5Error_pSgc_tF">stopSharing(completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC11stopSharing17completionHandleryys5Error_pSgc_tF">stopSharing(completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2505,7 +2504,7 @@ This should be called by moderator.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(iOS 11.2, *)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">11.2</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">stopSharing</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
@@ -2541,7 +2540,7 @@ This should be called by moderator.</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC13openAuxStream4viewyAA15MediaRenderViewC_tF"></a>
                     <a name="//apple_ref/swift/Method/openAuxStream(view:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC13openAuxStream4viewyAA15MediaRenderViewC_tF">openAuxStream(view:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC13openAuxStream4viewyAA15MediaRenderViewC_tF">openAuxStream(view:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2556,8 +2555,7 @@ Result will call back through auxStreamOpenedEvent</p>
     <p class="aside-title">See</p>
     see AuxStreamChangeEvent.auxStreamOpenedEvent
 
-</div>
-<div class="aside aside-since">
+</div><div class="aside aside-since">
     <p class="aside-title">Since</p>
     2.0.0
 
@@ -2603,7 +2601,7 @@ Result will call back through auxStreamOpenedEvent</p>
                     <code>
                     <a name="/s:8WebexSDK4CallC14closeAuxStream4viewyAA15MediaRenderViewC_tF"></a>
                     <a name="//apple_ref/swift/Method/closeAuxStream(view:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC14closeAuxStream4viewyAA15MediaRenderViewC_tF">closeAuxStream(view:)</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC14closeAuxStream4viewyAA15MediaRenderViewC_tF">closeAuxStream(view:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2617,8 +2615,7 @@ Result will call back throuhd auxStreamClosedEvent.</p>
     <p class="aside-title">See</p>
     see AuxStreamChangeEvent.auxStreamClosedEvent
 
-</div>
-<div class="aside aside-since">
+</div><div class="aside aside-since">
     <p class="aside-title">Since</p>
     2.0.0
 
@@ -2659,10 +2656,6 @@ Result will call back throuhd auxStreamClosedEvent.</p>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
                 <li class="item">
                   <div>
                     <code>
@@ -2701,8 +2694,8 @@ This must be called on <a href="https://developer.apple.com/documentation/callki
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-09-27)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-12-11)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

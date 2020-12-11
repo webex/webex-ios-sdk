@@ -8,14 +8,22 @@
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a name="//apple_ref/swift/Class/SpaceClient" class="dashAnchor"></a>
     <a title="SpaceClient Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK Docs</a> (95% documented)</p>
+        <p><a href="../index.html">WebexSDK 2.7.0 Docs</a> (94% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -113,6 +121,9 @@
                 <a href="../Classes/Phone/H264LicenseAction.html">– H264LicenseAction</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/Phone/AudioBNRMode.html">– AudioBNRMode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/SSOAuthenticator.html">SSOAuthenticator</a>
               </li>
               <li class="nav-group-task">
@@ -184,9 +195,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Double.html">Double</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Extensions/MediaSessionWrapper.html">MediaSessionWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/Timer.html">Timer</a>
@@ -295,6 +303,7 @@
             <h1>SpaceClient</h1>
               <div class="declaration">
                 <div class="language">
+                  
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SpaceClient</span></code></pre>
 
                 </div>
@@ -379,7 +388,7 @@
                     <code>
                     <a name="/s:8WebexSDK11SpaceClientC4list6teamId3max4type6sortBy5queue17completionHandlerySSSg_SiSgAA0C4TypeOSgAA0c4SortO0OSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVySayAA0C0VGGctF"></a>
                     <a name="//apple_ref/swift/Method/list(teamId:max:type:sortBy:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11SpaceClientC4list6teamId3max4type6sortBy5queue17completionHandlerySSSg_SiSgAA0C4TypeOSgAA0c4SortO0OSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVySayAA0C0VGGctF">list(teamId:max:type:sortBy:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK11SpaceClientC4list6teamId3max4type6sortBy5queue17completionHandlerySSSg_SiSgAA0C4TypeOSgAA0c4SortO0OSgSo012OS_dispatch_L0CSgyAA15ServiceResponseVySayAA0C0VGGctF">list(teamId:<wbr>max:<wbr>type:<wbr>sortBy:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -399,7 +408,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">list</span><span class="p">(</span><span class="nv">teamId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span> <span class="p">,</span> <span class="nv">max</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="kt"><a href="../Enums/SpaceType.html">SpaceType</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">sortBy</span><span class="p">:</span> <span class="kt"><a href="../Enums/SpaceSortType.html">SpaceSortType</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span><span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/Space.html">Space</a></span><span class="p">]</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">list</span><span class="p">(</span><span class="nv">teamId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">max</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="kt"><a href="../Enums/SpaceType.html">SpaceType</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">sortBy</span><span class="p">:</span> <span class="kt"><a href="../Enums/SpaceSortType.html">SpaceSortType</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/Space.html">Space</a></span><span class="p">]</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -495,7 +504,7 @@
                     <code>
                     <a name="/s:8WebexSDK11SpaceClientC6create5title6teamId5queue17completionHandlerySS_SSSgSo012OS_dispatch_I0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/create(title:teamId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11SpaceClientC6create5title6teamId5queue17completionHandlerySS_SSSgSo012OS_dispatch_I0CSgyAA15ServiceResponseVyAA0C0VGctF">create(title:teamId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK11SpaceClientC6create5title6teamId5queue17completionHandlerySS_SSSgSo012OS_dispatch_I0CSgyAA15ServiceResponseVyAA0C0VGctF">create(title:<wbr>teamId:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -508,8 +517,7 @@
     <p class="aside-title">Since</p>
     1.2.0
 
-</div>
-<div class="aside aside-see">
+</div><div class="aside aside-see">
     <p class="aside-title">See</p>
     see MemebershipClient API
 
@@ -591,7 +599,7 @@
                     <code>
                     <a name="/s:8WebexSDK11SpaceClientC3get7spaceId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/get(spaceId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11SpaceClientC3get7spaceId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyAA0C0VGctF">get(spaceId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK11SpaceClientC3get7spaceId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyAA0C0VGctF">get(spaceId:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -670,7 +678,7 @@
                     <code>
                     <a name="/s:8WebexSDK11SpaceClientC6update7spaceId5title5queue17completionHandlerySS_SSSo012OS_dispatch_I0CSgyAA15ServiceResponseVyAA0C0VGctF"></a>
                     <a name="//apple_ref/swift/Method/update(spaceId:title:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11SpaceClientC6update7spaceId5title5queue17completionHandlerySS_SSSo012OS_dispatch_I0CSgyAA15ServiceResponseVyAA0C0VGctF">update(spaceId:title:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK11SpaceClientC6update7spaceId5title5queue17completionHandlerySS_SSSo012OS_dispatch_I0CSgyAA15ServiceResponseVyAA0C0VGctF">update(spaceId:<wbr>title:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -761,7 +769,7 @@
                     <code>
                     <a name="/s:8WebexSDK11SpaceClientC6delete7spaceId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyypGctF"></a>
                     <a name="//apple_ref/swift/Method/delete(spaceId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11SpaceClientC6delete7spaceId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyypGctF">delete(spaceId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK11SpaceClientC6delete7spaceId5queue17completionHandlerySS_So012OS_dispatch_H0CSgyAA15ServiceResponseVyypGctF">delete(spaceId:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -840,7 +848,7 @@
                     <code>
                     <a name="/s:8WebexSDK11SpaceClientC14getMeetingInfo7spaceId5queue17completionHandlerySS_So012OS_dispatch_J0CSgyAA15ServiceResponseVyAA0cfG0VGctF"></a>
                     <a name="//apple_ref/swift/Method/getMeetingInfo(spaceId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11SpaceClientC14getMeetingInfo7spaceId5queue17completionHandlerySS_So012OS_dispatch_J0CSgyAA15ServiceResponseVyAA0cfG0VGctF">getMeetingInfo(spaceId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK11SpaceClientC14getMeetingInfo7spaceId5queue17completionHandlerySS_So012OS_dispatch_J0CSgyAA15ServiceResponseVyAA0cfG0VGctF">getMeetingInfo(spaceId:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -919,7 +927,7 @@
                     <code>
                     <a name="/s:8WebexSDK11SpaceClientC17getWithReadStatus7spaceId5queue17completionHandlerySS_So012OS_dispatch_K0CSgyAA15ServiceResponseVyAA0cgH0VGctF"></a>
                     <a name="//apple_ref/swift/Method/getWithReadStatus(spaceId:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11SpaceClientC17getWithReadStatus7spaceId5queue17completionHandlerySS_So012OS_dispatch_K0CSgyAA15ServiceResponseVyAA0cgH0VGctF">getWithReadStatus(spaceId:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK11SpaceClientC17getWithReadStatus7spaceId5queue17completionHandlerySS_So012OS_dispatch_K0CSgyAA15ServiceResponseVyAA0cgH0VGctF">getWithReadStatus(spaceId:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -930,7 +938,7 @@
                         <p>Returns a SpaceReadStatus with the details about the date of the last
 activity in the space, and the date of current user last presence in the space.</p>
 
-<p>For spaces where lastActivityDate &gt; lastSeenDate the space can be considered to be <q>unread</q></p>
+<p>For spaces where lastActivityDate &gt; lastSeenDate the space can be considered to be &ldquo;unread&rdquo;</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     2.3.0
@@ -1001,7 +1009,7 @@ activity in the space, and the date of current user last presence in the space.<
                     <code>
                     <a name="/s:8WebexSDK11SpaceClientC18listWithReadStatus3max5queue17completionHandlerySu_So012OS_dispatch_J0CSgyAA15ServiceResponseVySayAA0cgH0VGGctF"></a>
                     <a name="//apple_ref/swift/Method/listWithReadStatus(max:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11SpaceClientC18listWithReadStatus3max5queue17completionHandlerySu_So012OS_dispatch_J0CSgyAA15ServiceResponseVySayAA0cgH0VGGctF">listWithReadStatus(max:queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK11SpaceClientC18listWithReadStatus3max5queue17completionHandlerySu_So012OS_dispatch_J0CSgyAA15ServiceResponseVySayAA0cgH0VGGctF">listWithReadStatus(max:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1013,7 +1021,7 @@ activity in the space, and the date of current user last presence in the space.<
 activity in the space, and the date of current user last presence in the space. The
 list is sorted with this with most recent activity first.</p>
 
-<p>For spaces where lastActivityDate &gt; lastSeenDate the space can be considered to be <q>unread</q></p>
+<p>For spaces where lastActivityDate &gt; lastSeenDate the space can be considered to be &ldquo;unread&rdquo;</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     2.3.0
@@ -1025,7 +1033,7 @@ list is sorted with this with most recent activity first.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">listWithReadStatus</span><span class="p">(</span><span class="nv">max</span><span class="p">:</span><span class="kt">UInt</span><span class="p">,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/SpaceReadStatus.html">SpaceReadStatus</a></span><span class="p">]</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">listWithReadStatus</span><span class="p">(</span><span class="nv">max</span><span class="p">:</span> <span class="kt">UInt</span><span class="p">,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/SpaceReadStatus.html">SpaceReadStatus</a></span><span class="p">]</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1084,7 +1092,7 @@ list is sorted with this with most recent activity first.</p>
                     <code>
                     <a name="/s:8WebexSDK11SpaceClientC19listWithActiveCalls5queue17completionHandlerySo012OS_dispatch_I0CSg_yAA6ResultOySaySSGGctF"></a>
                     <a name="//apple_ref/swift/Method/listWithActiveCalls(queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11SpaceClientC19listWithActiveCalls5queue17completionHandlerySo012OS_dispatch_I0CSg_yAA6ResultOySaySSGGctF">listWithActiveCalls(queue:completionHandler:)</a>
+                    <a class="token" href="#/s:8WebexSDK11SpaceClientC19listWithActiveCalls5queue17completionHandlerySo012OS_dispatch_I0CSg_yAA6ResultOySaySSGGctF">listWithActiveCalls(queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1151,8 +1159,8 @@ list is sorted with this with most recent activity first.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-09-27)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-12-11)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
