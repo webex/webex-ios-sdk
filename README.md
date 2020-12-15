@@ -73,7 +73,7 @@ Here are some examples of how to use the iOS SDK in your app.
     let clientId = "$YOUR_CLIENT_ID"
     let clientSecret = "$YOUR_CLIENT_SECRET"
     let scope = "spark:all"
-    let redirectUri = "Webexdemoapp://response"
+    let redirectUri = "https://webexdemoapp.com"
 
     let authenticator = OAuthAuthenticator(clientId: clientId, clientSecret: clientSecret, scope: scope, redirectUri: redirectUri)
     let webex = Webex(authenticator: authenticator)
