@@ -109,12 +109,12 @@ class WebSocketService: WebSocketDelegate {
         SDKLogger.shared.info("Websocket will again reconnect in \(backoffTime) seconds")
         despatchAfter(backoffTime) {
             if !self.isConnected, let url = self.webSocketUrl {
-                if backoffTime == 16.0 {
-                    AF.request("https://httpbin.org/get").response { response in
-                        SDKLogger.shared.info("Websocket verify rest http status, error = \(response.error?.localizedDescription) ")
-                    }
-                }
-                if NetworkReachabilityManager.default?.isReachable == true {
+//                if backoffTime == 16.0 {
+//                    AF.request("https://httpbin.org/get").response { response in
+//                        SDKLogger.shared.info("Websocket verify rest http status, error = \(response.error?.localizedDescription) ")
+//                    }
+//                }
+                if NetworkReachabilityManager()?.isReachable == true {
                     self.connect(url, nil)
                 }
                 self.reconnecting()
