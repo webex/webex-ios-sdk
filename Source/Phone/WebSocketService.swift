@@ -118,7 +118,7 @@ class WebSocketService: WebSocketDelegate {
         despatchAfter(backoffTime) {
             if !self.isConnected, let url = self.webSocketUrl {
                 if backoffTime == 16.0 {
-                    Alamofire.request("https://httpbin.org/get").response { response in
+                    AF.request("https://httpbin.org/get").response { response in
                         SDKLogger.shared.info("Websocket verify rest http status, error = \(response.error?.localizedDescription ?? "") ")
                     }
                 }
