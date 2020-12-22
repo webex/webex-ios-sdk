@@ -94,6 +94,14 @@ class WebSocketService: WebSocketDelegate {
         }
     }
     
+    func tryReconnectAfter(seconds: Double) {
+        if socket != nil && isConnected {
+            return
+        }
+        connectionRetryCounter.current = seconds
+        prepareReconnect()
+    }
+    
     private func prepareReconnect() {
         SDKLogger.shared.info("Websocket prepareReconnect isConnecting = \(isConnecting)")
         if isConnecting {
@@ -109,11 +117,11 @@ class WebSocketService: WebSocketDelegate {
         SDKLogger.shared.info("Websocket will again reconnect in \(backoffTime) seconds")
         despatchAfter(backoffTime) {
             if !self.isConnected, let url = self.webSocketUrl {
-//                if backoffTime == 16.0 {
-//                    AF.request("https://httpbin.org/get").response { response in
-//                        SDKLogger.shared.info("Websocket verify rest http status, error = \(response.error?.localizedDescription) ")
-//                    }
-//                }
+                if backoffTime == 16.0 {
+                    Alamofire.request("https://httpbin.org/get").response { response in
+                        SDKLogger.shared.info("Websocket verify rest http status, error = \(response.error?.localizedDescription ?? "") ")
+                    }
+                }
                 if NetworkReachabilityManager()?.isReachable == true {
                     self.connect(url, nil)
                 }
@@ -147,7 +155,7 @@ class WebSocketService: WebSocketDelegate {
         case .viabilityChanged(let viability):
             if !viability {
                 isConnected = false
-                prepareReconnect()
+                tryReconnectAfter(seconds: 4.0)
             }
         case .ping(_):
             break
@@ -195,7 +203,7 @@ class WebSocketService: WebSocketDelegate {
                     else {
                         // Unexpected disconnection, reconnect socket.
                         SDKLogger.shared.warn("Unexpected disconnection, websocket will reconnect in \(backoffTime) seconds")
-                        if let socket = self.socket, !self.isConnected {
+                        if self.socket != nil, !self.isConnected {
                             self.prepareReconnect()
                         }
                     }
