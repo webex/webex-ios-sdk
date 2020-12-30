@@ -27,8 +27,12 @@ import CoreServices
 /// - since: 1.4.0
 public enum MessageEvent {
 
+    /// The updated type of a message
     public enum UpdateType {
+        /// File thumbnail was updated
         case fileThumbnail([RemoteFile])
+        /// A message was edited at the time of `published`
+        case edit(MesssageChange)
     }
 
     /// The callback when receive a new message
@@ -37,6 +41,29 @@ public enum MessageEvent {
     case messageDeleted(String)
     /// The callback when a message was updated
     case messageUpdated(messageId: String, type: UpdateType)
+}
+
+enum MessageType: String {
+    case post
+    case edit
+    
+    var value: String {
+        return self.rawValue
+    }
+}
+
+/// The struct of a message change
+/// `MessageEvent.messageUpdated` will receive a MesssageChange object  if a message was edited.
+///  Pass the object  in `Message.updateMessage()`as parameter to update the message
+///
+/// - since: 2.8.0
+public struct MesssageChange {
+    /// The id of the message changed.
+    public var messageId: String?
+    /// The date  the message change occurred.
+    public var published: Date?
+    
+    var comment: CommentModel?
 }
 
 /// This struct represents a Message on Cisco Webex.
@@ -180,6 +207,14 @@ public struct Message : CustomStringConvertible {
     ///
     /// - since: 2.5.0
     public private(set) var isReply: Bool = false
+    
+    /// Replace text object with the new one if the message was edited.
+    ///
+    /// - since: 2.8.0
+    public mutating func updateMessage(_ change: MesssageChange) {
+        self.activity.object = change.comment
+        self.handleMentions()
+    }
 
     /// Json format descrition of message.
     ///
@@ -191,6 +226,7 @@ public struct Message : CustomStringConvertible {
     }
 
     let activity: ActivityModel
+    var person: Person?
 
     var isMissingThumbnail: Bool {
         if self.activity.verb == .share,
@@ -209,6 +245,7 @@ public struct Message : CustomStringConvertible {
     
     init(activity: ActivityModel, clusterId: String?, person: Person?) {
         self.activity = activity
+        self.person = person
         if let uuid = activity.id {
             self.id = WebexId(type: .message, cluster: clusterId, uuid: uuid).base64Id
         }
@@ -236,11 +273,22 @@ public struct Message : CustomStringConvertible {
             self.parentId = WebexId(type: .message, cluster: clusterId, uuid: uuid).base64Id
             self.isReply = parent.isReply
         }
-        if let person = person, let base64Id = person.id {
+        
+        self.handleMentions()
+        
+        if let content = activity.object as? ContentModel, let files = content.files?.items, !files.isEmpty {
+            self.files = files.compactMap { RemoteFile(model: $0) }
+        }
+    }
+    
+    mutating func handleMentions() {
+        self.isAllMentioned = self.activity.isAllMentioned()
+        
+        if let person = self.person, let base64Id = person.id {
             self.isSelfMentioned = self.activity.isSelfMention(user: WebexId.uuid(base64Id))
         }
-        self.isAllMentioned = self.activity.isAllMentioned()
-        if let comment = activity.object as? CommentModel {
+        
+        if let comment = self.activity.object as? CommentModel {
             if let mentions = comment.groupMentions?.items, !mentions.isEmpty {
                 self.mentions = [Mention.all];
             }
@@ -254,12 +302,7 @@ public struct Message : CustomStringConvertible {
             }
 
         }
-        if let content = activity.object as? ContentModel, let files = content.files?.items, !files.isEmpty {
-            self.files = files.compactMap { RemoteFile(model: $0) }
-        }
     }
-
-
 }
 
 /// A data type represents a local file.

@@ -54,9 +54,9 @@ class ActivityModel : ObjectModel {
     private(set) var verb: ActivityModel.Verb?
     private(set) var encryptionKeyUrl: String?
     private(set) var target: ObjectModel?
-    private(set) var object: ObjectModel?
     private(set) var actor: PersonModel?
     private(set) var parent: ParentModel?
+    var object: ObjectModel?
 
     var conversationId: String? {
         if let target = self.target, target.objectType == .conversation {
@@ -76,10 +76,10 @@ class ActivityModel : ObjectModel {
 
     var conversationUrl: String? {
         if let target = self.target, target.objectType == .conversation {
-            return target.id
+            return target.url
         }
         else if let object = self.object, object.objectType == .conversation {
-            return object.id
+            return object.url
         }
         else if let base = self.url?[0, "/activities/"], let convId = self.conversationId {
             return "\(base)/conversations/\(convId)"
