@@ -1079,6 +1079,14 @@ public class Phone {
                     fire(res.result.data == nil ? nil : SpaceEvent.update(res.result.data!))
                 }
             }
+            else if let parent = activity.parent, parent.type == MessageType.edit.value, let convUrl = activity.conversationUrl {
+                self.webex?.messages.decrypt(activity: activity, of: convUrl) { decrypted in
+                    let message = Message(activity: decrypted, clusterId: clusterId, person: self.me)
+                    if let comment = message.activity.object as? CommentModel, let parentId = message.parentId {
+                        fire(MessageEvent.messageUpdated(messageId: parentId, type: .edit(MesssageChange(messageId: parentId, published: message.created, comment: comment))))
+                    }
+                }
+            }
             else if verb == .post || verb == .share, let convUrl = activity.conversationUrl {
                 self.webex?.messages.decrypt(activity: activity, of: convUrl) { decrypted in
                     let message = Message(activity: decrypted, clusterId: clusterId, person: self.me)

@@ -265,12 +265,36 @@ public class MessageClient {
             }
         }
     }
+    
+    ///  Edit a message without attachment.
+    ///
+    /// - parameter text: The message text is used to replace old one.
+    /// - parameter parent: The message you are editing.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the message is posted.
+    /// - note: Only be able to edit messages without attachments.
+    /// - returns: Void
+    /// - since: 2.8.0
+    public func edit(_ text: Message.Text,
+                     parent: Message,
+                     mentions: [Mention]? = nil,
+                     queue: DispatchQueue? = nil,
+                     completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
+        if let convUrl = parent.activity.conversationUrl, let convId = parent.activity.conversationId {
+            self.post(text, convUrl: convUrl, convId: convId, mentions: mentions, type: .edit, parent: parent, queue: queue, completionHandler: completionHandler)
+        }else {
+            (queue ?? DispatchQueue.main).async {
+                completionHandler(ServiceResponse(nil, Result.failure(WebexError.illegalOperation(reason: "Illegal parent message \(parent.id ?? "")"))))
+            }
+        }
+    }
 
     private func post(_ text: Message.Text? = nil,
                       convUrl: String,
                       convId: String,
                       mentions: [Mention]? = nil,
                       withFiles: [LocalFile]? = nil,
+                      type: MessageType = .post,
                       parent: Message? = nil,
                       queue: DispatchQueue? = nil,
                       completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
@@ -303,7 +327,7 @@ public class MessageClient {
 
                 var parentModel: [String: Any]?
                 if let message = parent, let id = message.id {
-                    parentModel = ["id": WebexId.uuid(id), "type": "reply"]
+                    parentModel = ["id": WebexId.uuid(id), "type": type == .edit ? "edit" : "reply"]
                 }
 
                 var verb = ActivityModel.Verb.post
