@@ -60,8 +60,10 @@ enum MessageType: String {
 public struct MesssageChange {
     /// The id of the message changed.
     public var messageId: String?
-    /// The date  the message change occurred.
+    /// The date when  the message change occurred.
     public var published: Date?
+    /// The text object of  the changed  message.
+    public var textAsObject: Message.Text?
     
     var comment: CommentModel?
 }
@@ -213,6 +215,7 @@ public struct Message : CustomStringConvertible {
     /// - since: 2.8.0
     public mutating func updateMessage(_ change: MesssageChange) {
         self.activity.object = change.comment
+        self.textAsObject = change.textAsObject
         self.handleMentions()
     }
 
