@@ -280,11 +280,20 @@ public class MessageClient {
                      mentions: [Mention]? = nil,
                      queue: DispatchQueue? = nil,
                      completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
-        if let convUrl = parent.activity.conversationUrl, let convId = parent.activity.conversationId {
-            self.post(text, convUrl: convUrl, convId: convId, mentions: mentions, type: .edit, parent: parent, queue: queue, completionHandler: completionHandler)
+        if let convUrl = parent.activity.conversationUrl, let convId = parent.activity.conversationId, parent.files == nil {
+            self.post(text, convUrl: convUrl, convId: convId, mentions: mentions, type: .edit, parent: parent, queue: queue) { (response) in
+                switch response.result {
+                case .success(let message):
+                    var originalMessage = parent
+                    originalMessage.updateMessage(MesssageChange(messageId: parent.id, published: message.created, textAsObject: message.textAsObject, comment: message.activity.object as? CommentModel))
+                    completionHandler(ServiceResponse(response.response, Result.success(originalMessage)))
+                case .failure(_):
+                    completionHandler(response)
+                }
+            }
         }else {
             (queue ?? DispatchQueue.main).async {
-                completionHandler(ServiceResponse(nil, Result.failure(WebexError.illegalOperation(reason: "Illegal parent message \(parent.id ?? "")"))))
+                completionHandler(ServiceResponse(nil, Result.failure(WebexError.illegalOperation(reason: "Invalid parent message \(parent.id ?? "")"))))
             }
         }
     }
