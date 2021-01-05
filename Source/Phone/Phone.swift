@@ -700,15 +700,23 @@ public class Phone {
         }
     }
     
-    func layout(call: Call, layout: MediaOption.VideoLayout) {
+    func layout(call: Call, layout: MediaOption.VideoLayout, completionHandler: ((Error?) -> Void)? = nil) {
         self.queue.sync {
             if let url = call.model.myself?.url {
                 self.client.layout(url, by: call.device.deviceUrl.absoluteString, layout: layout, queue: self.queue.underlying) { res in
+                    switch res.result {
+                    case .success(_):
+                        completionHandler?(nil)
+                    case .failure(let error):
+                        completionHandler?(error)
+                    }
                     self.queue.yield()
                 }
             }
             else {
-                WebexError.serviceFailed(reason: "Missing self participant URL").report()
+                let webexError = WebexError.serviceFailed(reason: "Missing self participant URL")
+                completionHandler?(webexError)
+                webexError.report()
                 self.queue.yield()
             }
         }

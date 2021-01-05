@@ -539,6 +539,16 @@ public class Call {
             }
         }
     }
+    
+    /// Set the video layout with callback for the active speaker and other attendees in the group video meeting.
+    ///
+    /// - parameter layout: the video layout mode.
+    /// - parameter completionHandler: A closure to be executed when completed, with error if the invocation is illegal or failed, otherwise nil.
+    /// - since: 2.8.0
+    public func setVideoLayout(_ layout: MediaOption.VideoLayout, completionHandler: @escaping (Error?) -> Void) {
+        self._videoLayout = layout
+        self.device.phone.layout(call: self, layout: layout, completionHandler: completionHandler)
+    }
 
     /// Call Memberships represent participants in this `Call`.
     ///
