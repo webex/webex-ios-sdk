@@ -271,7 +271,7 @@ public class MessageClient {
     /// - parameter text: The message text is used to replace old one.
     /// - parameter parent: The message you are editing.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
-    /// - parameter completionHandler: A closure to be executed once the message is posted.
+    /// - parameter completionHandler: A closure to be executed once the message is edited, will callback an edited message object.
     /// - note: Only be able to edit messages without attachments.
     /// - returns: Void
     /// - since: 2.8.0
@@ -285,7 +285,7 @@ public class MessageClient {
                 switch response.result {
                 case .success(let message):
                     var originalMessage = parent
-                    originalMessage.updateMessage(MesssageChange(messageId: parent.id, published: message.created, textAsObject: message.textAsObject, comment: message.activity.object as? CommentModel))
+                    originalMessage.updateMessage(MesssageChange(textAsObject: message.textAsObject, published: message.created, comment: message.activity.object as? CommentModel))
                     completionHandler(ServiceResponse(response.response, Result.success(originalMessage)))
                 case .failure(_):
                     completionHandler(response)
