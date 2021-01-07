@@ -31,8 +31,8 @@ public enum MessageEvent {
     public enum UpdateType {
         /// File thumbnail was updated
         case fileThumbnail([RemoteFile])
-        /// A message was edited at the time of `published`
-        case edit(MesssageChange)
+        /// A message was edited
+        case message(MesssageChange)
     }
 
     /// The callback when receive a new message
@@ -52,19 +52,12 @@ enum MessageType: String {
     }
 }
 
-/// The struct of a message change
-/// `MessageEvent.messageUpdated` will receive a MesssageChange object  if a message was edited.
-///  Pass the object  in `Message.updateMessage()`as parameter to update the message
+/// The struct represents the content of  a message change
 ///
 /// - since: 2.8.0
 public struct MesssageChange {
-    /// The id of the message changed.
-    public var messageId: String?
-    /// The date when  the message change occurred.
-    public var published: Date?
-    /// The text object of  the changed  message.
-    public var textAsObject: Message.Text?
-    
+    var textAsObject: Message.Text?
+    var published: Date?
     var comment: CommentModel?
 }
 
@@ -175,6 +168,9 @@ public struct Message : CustomStringConvertible {
         return self.activity.published
     }
     
+    /// The timestamp that the message being edited.
+    public private(set) var updated: Date?
+    
     /// Returns true if the receipient of the message is included in message's mention list.
     ///
     /// - since: 1.4.0
@@ -210,11 +206,19 @@ public struct Message : CustomStringConvertible {
     /// - since: 2.5.0
     public private(set) var isReply: Bool = false
     
-    /// Replace text object with the new one if the message was edited.
+    /// Update message  when the message was edited.
     ///
+    /// -  parameter event: Get the value by observing `MessageEvent.messageUpdated` event.
     /// - since: 2.8.0
-    public mutating func updateMessage(_ change: MesssageChange) {
+    public mutating func update(_ type: MessageEvent.UpdateType) {
+        if case .message(let change) = type {
+            self.updateMessage(change)
+        }
+    }
+    
+    mutating func updateMessage(_ change: MesssageChange) {
         self.activity.object = change.comment
+        self.updated = change.published
         self.textAsObject = change.textAsObject
         self.handleMentions()
     }
