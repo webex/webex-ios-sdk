@@ -195,6 +195,12 @@ public class Phone {
     /// - since: 2.7.0
     public var audioBNREnabled: Bool = false
     
+    /// Set true to keep Webex server connection when app enters background mode. Default is false.
+    ///
+    /// - Note: Generally App thread would be suspended when it enters background, `enableBackgroundConnection` can be effective when your App has handled background mode.
+    /// - since: 2.8.0
+    public var enableBackgroundConnection: Bool = false
+    
     /// Set Background Noise Removal mode, the default is `.HP`.
     ///
     /// - Note: The value is only effective if setting `audioBNREnabled` to true.
@@ -1188,7 +1194,9 @@ public class Phone {
     
     @objc func onApplicationDidEnterBackground() {
         SDKLogger.shared.info("Application did enter background")
-        self.disconnectFromWebSocket()
+        if !enableBackgroundConnection {
+            self.disconnectFromWebSocket()
+        }
     }
     
     private func connectToWebSocket() {
