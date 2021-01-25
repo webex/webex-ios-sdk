@@ -1,0 +1,2126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PhoneClient Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/PhoneClient" class="dashAnchor"></a>
+    <a title="PhoneClient Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">WebexSDK 3.0.0 Docs</a> (42% documented)</p>
+        <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">WebexSDK Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        PhoneClient Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/Atomic.html">Atomic</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BuildInfo.html">BuildInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Call.html">Call</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CallParticipant.html">CallParticipant</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/EmailAddress.html">EmailAddress</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ExtendedDevice.html">ExtendedDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FileHelpers.html">FileHelpers</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JWTAuthenticator.html">JWTAuthenticator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalFile.html">LocalFile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalFile/Thumbnail.html">– Thumbnail</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MembershipClient.html">MembershipClient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MessageClient.html">MessageClient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OAuthAuthenticator.html">OAuthAuthenticator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PersonClient.html">PersonClient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PersonClient/PersonGetError.html">– PersonGetError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PhoneClient.html">PhoneClient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PhoneClient/CallError.html">– CallError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SpaceClient.html">SpaceClient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SpaceClient/SpaceClientError.html">– SpaceClientError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SparkClientProvider.html">SparkClientProvider</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TeamClient.html">TeamClient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TeamClient/TeamArchiveError.html">– TeamArchiveError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TeamClient/TeamUpdateError.html">– TeamUpdateError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TeamMembershipClient.html">TeamMembershipClient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Webex.html">Webex</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/WebhookClient.html">WebhookClient</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Before.html">Before</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CreatePersonError.html">CreatePersonError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CreateSpaceMembershipError.html">CreateSpaceMembershipError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CreateTeamMembershipError.html">CreateTeamMembershipError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CreateWebhookError.html">CreateWebhookError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/DeleteMessageError.html">DeleteMessageError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/DeletePersonError.html">DeletePersonError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/DeleteSpaceError.html">DeleteSpaceError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/DeleteTeamMembershipError.html">DeleteTeamMembershipError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/DeleteWebhookError.html">DeleteWebhookError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/GetMembershipByIdError.html">GetMembershipByIdError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/GetMessageError.html">GetMessageError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/GetTeamMembershipError.html">GetTeamMembershipError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/GetWebhookError.html">GetWebhookError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ListMembershipReadStatusError.html">ListMembershipReadStatusError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ListMembershipsError.html">ListMembershipsError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ListMessagesError.html">ListMessagesError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ListPersonsError.html">ListPersonsError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ListTeamMembershipError.html">ListTeamMembershipError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ListWebhooksError.html">ListWebhooksError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MarkMessageReadResult.html">MarkMessageReadResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MembershipDeleteError.html">MembershipDeleteError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MembershipEvent.html">MembershipEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MembershipUpdateError.html">MembershipUpdateError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Mention.html">Mention</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MessageEvent.html">MessageEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MessageValidationResult.html">MessageValidationResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/NotificationCallType.html">NotificationCallType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PhoneServiceRegistrationFailureReason.html">PhoneServiceRegistrationFailureReason</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ResourceType.html">ResourceType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SpaceSortType.html">SpaceSortType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SpaceType.html">SpaceType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TeamCreateError.html">TeamCreateError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TeamGetError.html">TeamGetError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/UCLoginServerConnectionStatus.html">UCLoginServerConnectionStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/UpdatePersonError.html">UpdatePersonError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/UpdateSpaceTitleError.html">UpdateSpaceTitleError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/UpdateTeamMembershipError.html">UpdateTeamMembershipError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/UpdateWebhookError.html">UpdateWebhookError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/Bool.html">Bool</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/c:objc(cs)NSBundle">Bundle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/FileManager.html">FileManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:10Foundation6LocaleV">Locale</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/c:objc(cs)NSProcessInfo">ProcessInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Result.html">Result</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/c:objc(cs)UIDevice">UIDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UserDefaults.html">UserDefaults</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:8WebexSDK9logAssert__18shouldIncludeStack6logger8function4file4lineySbyXK_SSyXKSbSo6LoggerCs12StaticStringVAKSutF">logAssert(_:_:shouldIncludeStack:logger:function:file:line:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:8WebexSDK15logAssertFailed_18shouldIncludeStack6logger8function4file4lineySSyXK_SbSo6LoggerCs12StaticStringVAKSutF">logAssertFailed(_:shouldIncludeStack:logger:function:file:line:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:8WebexSDK8logClear6logger8function4file4lineySo6LoggerC_s12StaticStringVAJSutF">logClear(logger:function:file:line:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:8WebexSDK8logError_6logger8function4file4lineySSyXK_So6LoggerCs12StaticStringVAJSutF">logError(_:logger:function:file:line:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:8WebexSDK16logFunctionEntry6logger8function4file4lineySo6LoggerC_s12StaticStringVAJSutF">logFunctionEntry(logger:function:file:line:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:8WebexSDK7logInfo_6logger8function4file4lineySSyXK_So6LoggerCs12StaticStringVAJSutF">logInfo(_:logger:function:file:line:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:8WebexSDK10logPrivate_6logger8function4file4lineySSyXK_So6LoggerCs12StaticStringVAJSutF">logPrivate(_:logger:function:file:line:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:8WebexSDK10logVerbose_6logger8function4file4lineySSyXK_So6LoggerCs12StaticStringVAJSutF">logVerbose(_:logger:function:file:line:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:8WebexSDK7logWarn_6logger8function4file4lineySSyXK_So6LoggerCs12StaticStringVAJSutF">logWarn(_:logger:function:file:line:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:8WebexSDK13AuthenticatorP">Authenticator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/BuildFlagsProtocol.html">BuildFlagsProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/BuildInfoProtocol.html">BuildInfoProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/BundleProtocol.html">BundleProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/DeviceProtocol.html">DeviceProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ExtendedDeviceProtocol.html">ExtendedDeviceProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/FileManagerProtocol.html">FileManagerProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/LocaleProtocol.html">LocaleProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ProcessInfoProtocol.html">ProcessInfoProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserDefaultsProtocol.html">UserDefaultsProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/WebexMessageClientDelegate.html">WebexMessageClientDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/WebexUCLoginDelegate.html">WebexUCLoginDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/MediaOption.html">MediaOption</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Membership.html">Membership</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/MembershipReadStatus.html">MembershipReadStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Message.html">Message</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Message/Text.html">– Text</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Person.html">Person</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RemoteFile.html">RemoteFile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RemoteFile/Thumbnail.html">– Thumbnail</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Resource.html">Resource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SearchResult.html">SearchResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Space.html">Space</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SpaceApiErrorInfo.html">SpaceApiErrorInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SpaceMeetingInfo.html">SpaceMeetingInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SpaceReadStatus.html">SpaceReadStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Team.html">Team</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TeamMembership.html">TeamMembership</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Webhook.html">Webhook</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>PhoneClient</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">PhoneClient</span></code></pre>
+
+                </div>
+              </div>
+            <p>The application can obtain a <em>phone</em> object from <code><a href="../Classes/Webex.html">Webex</a></code> object
+and use <em>phone</em> to call other Cisco Webex users or PSTN when enabled.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    1.2.0
+
+</div>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC9CallErrorO"></a>
+                    <a name="//apple_ref/swift/Enum/CallError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC9CallErrorO">CallError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="../Classes/PhoneClient/CallError.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">CallError</span> <span class="p">:</span> <span class="kt">Error</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC18onMediaInfoChangedyycSgvp"></a>
+                    <a name="//apple_ref/swift/Property/onMediaInfoChanged" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC18onMediaInfoChangedyycSgvp">onMediaInfoChanged</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onMediaInfoChanged</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC4dial5input11mediaOption17completionHandlerySS_AA05MediaH0VySb_AA4CallCSgtctF"></a>
+                    <a name="//apple_ref/swift/Method/dial(input:mediaOption:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC4dial5input11mediaOption17completionHandlerySS_AA05MediaH0VySb_AA4CallCSgtctF">dial(input:<wbr>mediaOption:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Makes a call to an intended recipient on behalf of the authenticated user</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">dial</span><span class="p">(</span><span class="nv">input</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">mediaOption</span><span class="p">:</span> <span class="kt"><a href="../Structs/MediaOption.html">MediaOption</a></span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">success</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="n">_</span> <span class="nv">call</span><span class="p">:</span> <span class="kt"><a href="../Classes/Call.html">Call</a></span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>input</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>CUCM number or Cisco Webex Conversation Id</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>mediaOption</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A data type represents the media options of a <code><a href="../Classes/Call.html">Call</a></code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A uniquely generated call id</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC10onIncomingyAA4CallCcSgvp"></a>
+                    <a name="//apple_ref/swift/Property/onIncoming" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC10onIncomingyAA4CallCcSgvp">onIncoming</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This will notify when you receive an incoming call</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onIncoming</span><span class="p">:</span> <span class="p">((</span><span class="n">_</span> <span class="nv">call</span><span class="p">:</span> <span class="kt"><a href="../Classes/Call.html">Call</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC11declineCall6callIdySS_tF"></a>
+                    <a name="//apple_ref/swift/Method/declineCall(callId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC11declineCall6callIdySS_tF">declineCall(callId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declines the call for the given call id</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">declineCall</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC7endCall6callIdySS_tF"></a>
+                    <a name="//apple_ref/swift/Method/endCall(callId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC7endCall6callIdySS_tF">endCall(callId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Ends the call for the given call id</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">endCall</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC7getCall6callIdAA0F0CSgSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/getCall(callId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC7getCall6callIdAA0F0CSgSS_tF">getCall(callId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This gives the call info for the given call id</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getCall</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Call.html">Call</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The ongoing call which contains all the required details such as isOnHold, hasRemoteVideo, callId, conversationId, etc</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC19getCallParticipants6callIdSayAA0F11ParticipantCGSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/getCallParticipants(callId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC19getCallParticipants6callIdSayAA0F11ParticipantCGSS_tF">getCallParticipants(callId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A list of CHCallParticipant is a collection of Participant who are participating on a call.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getCallParticipants</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/CallParticipant.html">CallParticipant</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A list of all call participants with their on call state such as isJoined, isWaiting, isAudioMuted etc</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC13muteSelfAudio6callId7isMutedySS_SbtF"></a>
+                    <a name="//apple_ref/swift/Method/muteSelfAudio(callId:isMuted:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC13muteSelfAudio6callId7isMutedySS_SbtF">muteSelfAudio(callId:<wbr>isMuted:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This method is used to mute or un-mute self user&rsquo;s audio of the call</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">muteSelfAudio</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">isMuted</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>isMuted</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>false to mute a call and true to un-mute a call</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC20muteParticipantAudio6callId011participantI07isMutedySS_SSSbtF"></a>
+                    <a name="//apple_ref/swift/Method/muteParticipantAudio(callId:participantId:isMuted:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC20muteParticipantAudio6callId011participantI07isMutedySS_SSSbtF">muteParticipantAudio(callId:<wbr>participantId:<wbr>isMuted:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This method is used to mute particular participant</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">muteParticipantAudio</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">participantId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">isMuted</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>participantId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The participant&rsquo;s id who needs to be muted</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>isMuted</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>false to mute a call and true to un-mute a call</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC23muteAllParticipantAudio6callId7isMutedySS_SbtF"></a>
+                    <a name="//apple_ref/swift/Method/muteAllParticipantAudio(callId:isMuted:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC23muteAllParticipantAudio6callId7isMutedySS_SbtF">muteAllParticipantAudio(callId:<wbr>isMuted:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Mutes all other participants who are on call, also un-mutes the others if isMuted is <code>true</code></p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">muteAllParticipantAudio</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">isMuted</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>isMuted</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>false to mute a call and true to un-mute a call</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC8isOnHold6callIdSbSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/isOnHold(callId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC8isOnHold6callIdSbSS_tF">isOnHold(callId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns <code>true</code> if the call for the given Id is on hold <code>false</code> otherwise</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isOnHold</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC8holdCall6callId9putOnHoldySS_SbtF"></a>
+                    <a name="//apple_ref/swift/Method/holdCall(callId:putOnHold:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC8holdCall6callId9putOnHoldySS_SbtF">holdCall(callId:<wbr>putOnHold:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Puts the call on hold and trigger a call back onCallHoldStateChanged() for the respective call id</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">holdCall</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">putOnHold</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>putOnHold</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A boolean value that is used to hold and resume. To hold a call use true and to resume use false</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC19startAssociatedCall6callId10dialNumber15associationType07isAudioG017completionHandlerySS_SSSo017CHCallAssociationM0VSbySb_AA0G0CSgtctF"></a>
+                    <a name="//apple_ref/swift/Method/startAssociatedCall(callId:dialNumber:associationType:isAudioCall:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC19startAssociatedCall6callId10dialNumber15associationType07isAudioG017completionHandlerySS_SSSo017CHCallAssociationM0VSbySb_AA0G0CSgtctF">startAssociatedCall(callId:<wbr>dialNumber:<wbr>associationType:<wbr>isAudioCall:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This associates a new call with 3rd person. transferCall() needs to be called to transfer a call when a new call association is done,</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">startAssociatedCall</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">dialNumber</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">associationType</span><span class="p">:</span> <span class="kt">CHCallAssociationType</span><span class="p">,</span> <span class="nv">isAudioCall</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">success</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="n">_</span> <span class="nv">call</span><span class="p">:</span> <span class="kt"><a href="../Classes/Call.html">Call</a></span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>dialNumber</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>New recipient&rsquo;s cisco webex id or CUCM number who will be added on call</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>associationType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>CHCallAssociationType.Transfer if call needs to be transferred</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>isAudioCall</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>true if association is Audio Type</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A new call id after associating a call</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC12transferCall04fromF2Id02tofH0ySS_SStF"></a>
+                    <a name="//apple_ref/swift/Method/transferCall(fromCallId:toCallId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC12transferCall04fromF2Id02tofH0ySS_SStF">transferCall(fromCallId:<wbr>toCallId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Transfers a call. This method needs to be called after startAssociatedCall()</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">transferCall</span><span class="p">(</span><span class="nv">fromCallId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">toCallId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fromCallId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The old call id</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>toCallId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The new call id</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC9mergeCall6callId06targetfH0ySS_SStF"></a>
+                    <a name="//apple_ref/swift/Method/mergeCall(callId:targetCallId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC9mergeCall6callId06targetfH0ySS_SStF">mergeCall(callId:<wbr>targetCallId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Merges the two calls into one. This method needs to be called after startAssociatedCall()</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">mergeCall</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">targetCallId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The call id from first call</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>targetCallId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The call id of the target call to be merged into</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC13muteSelfVideo6callId7isMutedySS_SbtF"></a>
+                    <a name="//apple_ref/swift/Method/muteSelfVideo(callId:isMuted:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC13muteSelfVideo6callId7isMutedySS_SbtF">muteSelfVideo(callId:<wbr>isMuted:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Mutes the self/local video during a call</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">muteSelfVideo</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">isMuted</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>isMuted</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>true if video is muted, false otherwise</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC12addSelfVideo6callId9videoViewySS_AA011MediaRenderK0CtF"></a>
+                    <a name="//apple_ref/swift/Method/addSelfVideo(callId:videoView:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC12addSelfVideo6callId9videoViewySS_AA011MediaRenderK0CtF">addSelfVideo(callId:<wbr>videoView:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds local video(self video) and starts video rendering on MediaRedererView
+Whenever a change is happened in Video state during call, onCallVideoStreamingChanged is notified</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addSelfVideo</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">videoView</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>videoView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A MediaRenderView object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC14addRemoteVideo6callId9videoViewySS_AA011MediaRenderK0CtF"></a>
+                    <a name="//apple_ref/swift/Method/addRemoteVideo(callId:videoView:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC14addRemoteVideo6callId9videoViewySS_AA011MediaRenderK0CtF">addRemoteVideo(callId:<wbr>videoView:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds remote video and starts video rendering on MediaRedererView
+Whenever a change is happened in Video state during call, onCallVideoStreamingChanged is notified</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addRemoteVideo</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">videoView</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>videoView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A MediaRenderView object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC16addScreenSharing6callId9videoViewySS_AA011MediaRenderK0CtF"></a>
+                    <a name="//apple_ref/swift/Method/addScreenSharing(callId:videoView:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC16addScreenSharing6callId9videoViewySS_AA011MediaRenderK0CtF">addScreenSharing(callId:<wbr>videoView:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds screen sharing on MediaRedererView
+Whenever a change is happened in screen share state during call, onSharingVideoStreamInUseChanged is notified</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addScreenSharing</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">videoView</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>videoView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A MediaRenderView object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC15removeSelfVideo6callId9videoViewySS_AA011MediaRenderK0CtF"></a>
+                    <a name="//apple_ref/swift/Method/removeSelfVideo(callId:videoView:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC15removeSelfVideo6callId9videoViewySS_AA011MediaRenderK0CtF">removeSelfVideo(callId:<wbr>videoView:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes local/self video and stops video rendering on MediaRedererView
+Whenever a change is happened in Video state during call, onCallVideoStreamingChanged is notified</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeSelfVideo</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">videoView</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>videoView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A MediaRenderView object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC17removeRemoteVideo6callId9videoViewySS_AA011MediaRenderK0CtF"></a>
+                    <a name="//apple_ref/swift/Method/removeRemoteVideo(callId:videoView:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC17removeRemoteVideo6callId9videoViewySS_AA011MediaRenderK0CtF">removeRemoteVideo(callId:<wbr>videoView:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes remote video and stops video rendering on MediaRedererView
+Whenever a change is happened in Video state during call, onCallVideoStreamingChanged is notified</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeRemoteVideo</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">videoView</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>videoView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A MediaRenderView object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC19removeScreenSharing6callId9videoViewySS_AA011MediaRenderK0CtF"></a>
+                    <a name="//apple_ref/swift/Method/removeScreenSharing(callId:videoView:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC19removeScreenSharing6callId9videoViewySS_AA011MediaRenderK0CtF">removeScreenSharing(callId:<wbr>videoView:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes screen sharing view and stops screen share rendering on MediaRedererView
+Whenever a change is happened in screen share state during call, onSharingVideoStreamInUseChanged is notified</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeScreenSharing</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">videoView</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>videoView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A MediaRenderView object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC10swapCamera6callIdySS_tF"></a>
+                    <a name="//apple_ref/swift/Method/swapCamera(callId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC10swapCamera6callIdySS_tF">swapCamera(callId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Swaps between front and rear camera</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">swapCamera</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC10startShare6callIdySS_tF"></a>
+                    <a name="//apple_ref/swift/Method/startShare(callId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC10startShare6callIdySS_tF">startShare(callId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This starts the broadcast of screen share</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">startShare</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC9stopShare6callIdySS_tF"></a>
+                    <a name="//apple_ref/swift/Method/stopShare(callId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC9stopShare6callIdySS_tF">stopShare(callId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This stops the broadcast of screen share</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">stopShare</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC18setupExternalInput6callId6height5widthySS_S2itF"></a>
+                    <a name="//apple_ref/swift/Method/setupExternalInput(callId:height:width:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC18setupExternalInput6callId6height5widthySS_S2itF">setupExternalInput(callId:<wbr>height:<wbr>width:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This is for setting up the input frame size, required before sending frame</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setupExternalInput</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">width</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>height</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Height of the frame</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>width</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Width of the frame</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11PhoneClientC27sendFrameToExternalInputter6callId9timeStamp6height5width4data6lengthySS_S3iSvSitF"></a>
+                    <a name="//apple_ref/swift/Method/sendFrameToExternalInputter(callId:timeStamp:height:width:data:length:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11PhoneClientC27sendFrameToExternalInputter6callId9timeStamp6height5width4data6lengthySS_S3iSvSitF">sendFrameToExternalInputter(callId:<wbr>timeStamp:<wbr>height:<wbr>width:<wbr>data:<wbr>length:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This sends the frame to the media engine</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">sendFrameToExternalInputter</span><span class="p">(</span><span class="nv">callId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">timeStamp</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">width</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">UnsafeMutableRawPointer</span><span class="p">,</span> <span class="nv">length</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the call</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>timeStamp</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Timestamp of the data frame sent</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>height</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Height of the frame</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>width</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Width of the frame</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>data</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Frame data</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>length</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Length of the data</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2021 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2021-01-11)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
