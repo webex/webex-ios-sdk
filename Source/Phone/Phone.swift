@@ -113,6 +113,16 @@ public class Phone {
         case HP
     }
     
+    ///  The enumeration of remote video stream.
+    ///
+    /// - since: 2.8.0
+    public enum VideoStreamMode {
+        /// composite remote videos as one video stream
+        case composited
+        /// remote videos are different streams
+        case auxiliary
+    }
+    
     /// MARK: - Deprecated
     /// The max receiving bandwidth for audio in unit bps for the call.
     /// Only effective if set before the start of call.
@@ -206,6 +216,11 @@ public class Phone {
     /// - Note: The value is only effective if setting `audioBNREnabled` to true.
     /// - since: 2.7.0
     public var audioBNRMode: AudioBNRMode = .HP
+    
+    /// Set  video stream mode, the default is `.composited`.
+    ///
+    /// - since: 2.8.0
+    public var videoStreamMode: VideoStreamMode = .composited
 
     /// The advanced setings for call. Only effective if set before the start of call.
     ///
@@ -469,7 +484,7 @@ public class Phone {
                                 let correlationId = UUID()
                                 switch target {
                                 case .callable(let callee):
-                                    self.client.call(callee, correlationId: correlationId, by: device, option: option, localMedia: media, queue: self.queue.underlying) { res in
+                                    self.client.call(callee, correlationId: correlationId, by: device, option: option, localMedia: media, streamMode: self.videoStreamMode, queue: self.queue.underlying) { res in
                                         self.doLocusResponse(LocusResult.call(correlationId, device, option, session, res, completionHandler))
                                         self.queue.yield()
                                     }
@@ -480,7 +495,7 @@ public class Phone {
                                             self.queue.yield()
                                         }
                                         else if let url = res.data {
-                                            self.client.join(url, correlationId: correlationId, by: device, option: option, localMedia: media, queue: self.queue.underlying) { joinRes in
+                                            self.client.join(url, correlationId: correlationId, by: device, option: option, localMedia: media, streamMode: self.videoStreamMode, queue: self.queue.underlying) { joinRes in
                                                 self.doLocusResponse(LocusResult.call(correlationId, device, option, session, joinRes, completionHandler))
                                                 self.queue.yield()
                                             }
@@ -633,7 +648,7 @@ public class Phone {
                 session.prepare(option: option, phone: self)
                 let media = MediaModel(sdp: session.getLocalSdp(), audioMuted: false, videoMuted: false, reachabilities: self.reachability.feedback?.reachabilities)
                 self.queue.sync {
-                    self.client.join(call.url, correlationId: call.correlationId, by: call.device, option: option, localMedia: media, queue: self.queue.underlying) { res in
+                    self.client.join(call.url, correlationId: call.correlationId, by: call.device, option: option, localMedia: media, streamMode: self.videoStreamMode, queue: self.queue.underlying) { res in
                         self.doLocusResponse(LocusResult.join(call, res, completionHandler))
                         self.queue.yield()
                     }
