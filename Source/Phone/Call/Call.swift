@@ -1340,6 +1340,7 @@ public class Call {
                 for _ in 0..<diffCount {
                     if let renderView = self.auxStreamAvailable?() {
                         self.openAuxStream(view: renderView)
+                        self.availableAuxStreamCount = newAvailableAuxStreamCount
                     }
 
                 }
@@ -1349,9 +1350,8 @@ public class Call {
                         self.closeAuxStream(view: renderView)
                     }
                 }
+                self.availableAuxStreamCount = newAvailableAuxStreamCount
             }
-
-            self.availableAuxStreamCount = newAvailableAuxStreamCount
         }
     }
 
