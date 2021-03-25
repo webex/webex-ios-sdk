@@ -205,7 +205,7 @@ class CallClient {
         request.responseObject(handleLocusOnlySDPResponse(completionHandler: completionHandler))
     }
 
-    func layout(_ participantUrl: String, by deviceUrl: String, layout: MediaOption.VideoLayout, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
+    func layout(_ participantUrl: String, by deviceUrl: String, layout: MediaOption.CompositedVideoLayout, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
         let body: [String: Any?] = ["layout": ["deviceUrl":deviceUrl, "type":layout.type]]
         let request = ServiceRequest.make(participantUrl)
                 .authenticator(self.authenticator)

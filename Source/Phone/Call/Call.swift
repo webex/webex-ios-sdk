@@ -530,7 +530,7 @@ public class Call {
     /// - note: videoLayout is deprecated. Use `compositedVideoLayout` instead, they do the same thing, just changed the naming
     /// - since: 2.6.0
     @available(*, deprecated)
-    public var videoLayout: MediaOption.VideoLayout? {
+    public var videoLayout: MediaOption.CompositedVideoLayout? {
         get {
             return self._compositedVideoLayout
         }
@@ -546,7 +546,7 @@ public class Call {
     ///
     /// - note: the layout just affects when `Phone.videoStreamMode` is  `composited`
     /// - since: 2.8.0
-    public var compositedVideoLayout: MediaOption.VideoLayout? {
+    public var compositedVideoLayout: MediaOption.CompositedVideoLayout? {
         get {
             return self._compositedVideoLayout
         }
@@ -565,7 +565,7 @@ public class Call {
     ///
     /// - note: the layout just affects when `Phone.videoStreamMode` is  `composited`
     /// - since: 2.8.0
-    public func setCompositedVideoLayout(_ layout: MediaOption.VideoLayout, completionHandler: @escaping (Error?) -> Void) {
+    public func setCompositedVideoLayout(_ layout: MediaOption.CompositedVideoLayout, completionHandler: @escaping (Error?) -> Void) {
         self._compositedVideoLayout = layout
         self.device.phone.layout(call: self, layout: layout, completionHandler: completionHandler)
     }
@@ -741,7 +741,7 @@ public class Call {
     static let activeSpeakerCount = 1
     private let dtmfQueue: DtmfQueue
 
-    private var _compositedVideoLayout: MediaOption.VideoLayout?
+    private var _compositedVideoLayout: MediaOption.CompositedVideoLayout?
     private var _callModel: LocusModel
     private var _callMemberships: [CallMembership]?
     private var availableStreamCount: Int = 0
