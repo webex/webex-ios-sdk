@@ -28,7 +28,7 @@ public struct MediaOption {
     /// The video layout for the active speaker and other attendees in the group video meeting.
     ///
     /// - since: 2.5.0
-    public enum VideoLayout {
+    public enum CompositedVideoLayout {
         case single
         case filmstrip
         case grid
@@ -94,8 +94,16 @@ public struct MediaOption {
     
     /// The video layout for the active speaker and other attendees in the group video meeting.
     ///
+    /// - note: `layout` is deprecated. Use `compositedVideoLayout` instead, they do the same thing, just changed the naming
     /// - since: 2.5.0
-    public var layout: VideoLayout?
+    @available(*, deprecated)
+    public var layout: CompositedVideoLayout?
+    
+    /// The video layout for the active speaker and other attendees in the group video meeting.
+    ///
+    /// - note: the layout just affects under `composited` videoStreamMode.
+    /// - since: 2.8.0
+    public var compositedVideoLayout: CompositedVideoLayout?
 
     /// Join the meeting as a moderator.
     ///

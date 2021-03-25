@@ -721,7 +721,7 @@ public class Phone {
         }
     }
     
-    func layout(call: Call, layout: MediaOption.VideoLayout, completionHandler: ((Error?) -> Void)? = nil) {
+    func layout(call: Call, layout: MediaOption.CompositedVideoLayout, completionHandler: ((Error?) -> Void)? = nil) {
         self.queue.sync {
             if let url = call.model.myself?.url {
                 self.client.layout(url, by: call.device.deviceUrl.absoluteString, layout: layout, queue: self.queue.underlying) { res in
