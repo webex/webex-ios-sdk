@@ -765,7 +765,7 @@ public class MessageClient {
                     } else if let _ = model.kmsResourceObjectUrl {
                         handleResourceObjectUrl(model: model)
                     }else {
-                        completionHandler(Result.success(nil))
+                        handleResourceObjectUrl(model: model)
                     }
                     SDKLogger.shared.debug("Request requestSpaceEncryptionURL ============  \(response.result)")
                 } else {
