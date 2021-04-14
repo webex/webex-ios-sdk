@@ -71,11 +71,11 @@ public struct CallMembership {
         return State.from(participant: self.model)
     }
     
-    /// The email address of the person in this `CallMembership`.
+    /// The displayName of the person in this `CallMembership`.
     ///
-    /// - since: 1.2.0
-    public var email: String? {
-        return self.model.person?.email
+    /// - since: 2.8.0
+    public var displayName: String? {
+        return self.model.person?.displayName
     }
     
     /// The SIP address of the person in this `CallMembership`.
