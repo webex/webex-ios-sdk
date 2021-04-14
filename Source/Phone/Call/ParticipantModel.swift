@@ -171,6 +171,18 @@ struct LocusParticipantInfoModel {
     var sipUrl: String?
     var phoneNumber: String?
     var orgId: String?
+    var isExternal: Bool?
+    var primaryDisplayString: String?
+    
+    var displayName: String? {
+        var displayName: String? = ""
+        if isExternal != true {
+            displayName = name
+        }else {
+            displayName = primaryDisplayString
+        }
+        return displayName?.regexReplace(pattern: "^(sip:|tel:)", with: "")
+    }
 }
 
 struct AlertHintModel {
@@ -181,7 +193,6 @@ struct AlertHintModel {
 struct AlertTypeModel {
     var action: String?
 }
-
 
 extension ParticipantModel: Mappable {
     
@@ -316,6 +327,8 @@ extension LocusParticipantInfoModel: Mappable {
         sipUrl <- map["sipUrl"]
         phoneNumber <- map["phoneNumber"]
         orgId <- map["orgId"]
+        isExternal <- map["isExternal"]
+        primaryDisplayString <- map["primaryDisplayString"]
     }
 }
 
