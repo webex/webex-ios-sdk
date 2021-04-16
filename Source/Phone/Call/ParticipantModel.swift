@@ -166,7 +166,6 @@ struct ParticipantModel {
 
 struct LocusParticipantInfoModel {
     var id: String?
-    var email: String?
     var name: String?
     var sipUrl: String?
     var phoneNumber: String?
@@ -322,7 +321,6 @@ extension LocusParticipantInfoModel: Mappable {
     
     mutating func mapping(map: Map) {
         id <- map["id"]
-        email <- map["email"]
         name <- map["name"]
         sipUrl <- map["sipUrl"]
         phoneNumber <- map["phoneNumber"]
