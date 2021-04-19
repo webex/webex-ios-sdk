@@ -109,7 +109,8 @@ struct ParticipantModel {
     }
 
     func isLefted(device url: URL) -> Bool{
-        return isLeft || self.devices?.filter{ $0.url == url.absoluteString }.count == 0
+        let device = self.devices?.filter{ $0.url == url.absoluteString }.first
+        return isLeft || device == nil || device?.state == "LEFT"
     }
     
     func isJoined(by: URL) -> Bool {
