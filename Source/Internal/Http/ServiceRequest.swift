@@ -169,7 +169,7 @@ class ServiceRequest : RequestRetrier, RequestAdapter {
                             "User-Agent": UserAgent.string]
             if url.isTrustedDomain() {
                 self.headers["TrackingID"] = TrackingId.generator.next
-                self.headers["Webex-User-Agent"] = UserAgent.string
+                self.headers["Spark-User-Agent"] = UserAgent.string
             }
             self.baseUrl = URL(string: url)!
             self.method = .get
@@ -508,7 +508,7 @@ struct WebexRedirectHandler : RedirectHandler {
             mutableRequest.setValue(authorizationHeaderValue, forHTTPHeaderField: "Authorization")
             if let urlStr = mutableRequest.url?.absoluteString, !urlStr.isTrustedDomain() {
                 mutableRequest.setValue(nil, forHTTPHeaderField: "TrackingID")
-                mutableRequest.setValue(nil, forHTTPHeaderField: "Webex-User-Agent")
+                mutableRequest.setValue(nil, forHTTPHeaderField: "Spark-User-Agent")
                 mutableRequest.setValue(nil, forHTTPHeaderField: "Cisco-Request-ID")
             }
             redirectedRequest = mutableRequest
