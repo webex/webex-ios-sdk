@@ -57,7 +57,7 @@ class JWTAuthClient {
             .headers(["Authorization": jwt,
                       "Content-Type": "text/plain",
                       "User-Agent": UserAgent.string,
-                      "Webex-User-Agent": UserAgent.string,
+                      "Spark-User-Agent": UserAgent.string,
                       "Cache-Control": "no-cache",
                       "Accept-Encoding": "none"])
             .queue(queue)

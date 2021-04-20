@@ -109,7 +109,7 @@ class UploadFileOperation {
             }
             self.key.spaceUrl(client: client) { result in
                 if let url = result.data {
-                    let headers: HTTPHeaders = ["Authorization": "Bearer " + token, "Content-Type": "application/json;charset=UTF-8", "TrackingID": TrackingId.generator.next, "User-Agent": UserAgent.string, "Webex-User-Agent": UserAgent.string]
+                    let headers: HTTPHeaders = ["Authorization": "Bearer " + token, "Content-Type": "application/json;charset=UTF-8", "TrackingID": TrackingId.generator.next, "User-Agent": UserAgent.string, "Spark-User-Agent": UserAgent.string]
                     self.session.request(url + "/upload_sessions", method: .post, parameters: ["uploadProtocol":"content-length"], encoding: JSONEncoding.default, headers: headers).responseJSON { (prepareResponse) in
                         SDKLogger.shared.verbose(prepareResponse.debugDescription)
                         if let dict = prepareResponse.value as? [String : Any], let uploadUrl = dict["uploadUrl"] as? String, let finishUrl = dict["finishUploadUrl"] as? String,
@@ -121,7 +121,7 @@ class UploadFileOperation {
                             }).responseString(emptyResponseCodes: emptyResponseCodes) { uploadResponse in
                                 SDKLogger.shared.verbose(uploadResponse.debugDescription)
                                 if let _ = uploadResponse.value {
-                                    let headers: HTTPHeaders = ["Authorization": "Bearer " + token, "Content-Type": "application/json;charset=UTF-8", "TrackingID": TrackingId.generator.next, "User-Agent": UserAgent.string, "Webex-User-Agent": UserAgent.string]
+                                    let headers: HTTPHeaders = ["Authorization": "Bearer " + token, "Content-Type": "application/json;charset=UTF-8", "TrackingID": TrackingId.generator.next, "User-Agent": UserAgent.string, "Spark-User-Agent": UserAgent.string]
                                     self.session.request(finishUrl, method: .post, parameters: ["size": size], encoding: JSONEncoding.default, headers: headers).responseJSON { finishResponse in
                                         SDKLogger.shared.verbose(finishResponse.debugDescription)
                                         if let dict = finishResponse.value as? [String : Any], let downLoadUrl = dict["downloadUrl"] as? String, let url = URL(string: downLoadUrl) {
