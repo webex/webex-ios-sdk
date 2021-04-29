@@ -16,7 +16,7 @@
     <a title="WebexSDK  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">WebexSDK 2.7.0 Docs</a> (94% documented)</p>
+        <p><a href="index.html">WebexSDK 2.7.0 Docs</a> (95% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="img/gh.png"/>View on GitHub</a></p>
         <p class="header-right">
           <form role="search" action="search.json">
@@ -121,6 +121,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/Phone/AudioBNRMode.html">– AudioBNRMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Phone/VideoStreamMode.html">– VideoStreamMode</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SSOAuthenticator.html">SSOAuthenticator</a>
@@ -242,7 +245,7 @@
                 <a href="Structs/MediaOption.html">MediaOption</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/MediaOption/VideoLayout.html">– VideoLayout</a>
+                <a href="Structs/MediaOption/CompositedVideoLayout.html">– CompositedVideoLayout</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Membership.html">Membership</a>
@@ -255,6 +258,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Message/Text.html">– Text</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs.html#/s:8WebexSDK14MesssageChangeV">MesssageChange</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/OAuthTokens.html">OAuthTokens</a>
@@ -316,6 +322,7 @@
 <li><a href="#usage">Usage</a></li>
 <li><a href="#license">License</a></li>
 <li><a href="#migration-from-cisco-sparksdk">Migration From SparkSDK</a></li>
+<li><a href="#Additional-Documentation">Additional Documentation</a></li>
 </ul>
 <h2 id='install' class='heading'>Install</h2>
 
@@ -361,7 +368,7 @@
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">clientId</span> <span class="o">=</span> <span class="s">"$YOUR_CLIENT_ID"</span>
 <span class="k">let</span> <span class="nv">clientSecret</span> <span class="o">=</span> <span class="s">"$YOUR_CLIENT_SECRET"</span>
 <span class="k">let</span> <span class="nv">scope</span> <span class="o">=</span> <span class="s">"spark:all"</span>
-<span class="k">let</span> <span class="nv">redirectUri</span> <span class="o">=</span> <span class="s">"Webexdemoapp://response"</span>
+<span class="k">let</span> <span class="nv">redirectUri</span> <span class="o">=</span> <span class="s">"https://webexdemoapp.com"</span>
 
 <span class="k">let</span> <span class="nv">authenticator</span> <span class="o">=</span> <span class="kt">OAuthAuthenticator</span><span class="p">(</span><span class="nv">clientId</span><span class="p">:</span> <span class="n">clientId</span><span class="p">,</span> <span class="nv">clientSecret</span><span class="p">:</span> <span class="n">clientSecret</span><span class="p">,</span> <span class="nv">scope</span><span class="p">:</span> <span class="n">scope</span><span class="p">,</span> <span class="nv">redirectUri</span><span class="p">:</span> <span class="n">redirectUri</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">webex</span> <span class="o">=</span> <span class="kt">Webex</span><span class="p">(</span><span class="nv">authenticator</span><span class="p">:</span> <span class="n">authenticator</span><span class="p">)</span>
@@ -743,7 +750,20 @@
 <p>21.2 Set BNR mode, the default is <code>.HP</code>. It only affects if setting <code>audioBNREnabled</code> to true.</p>
 <pre class="highlight swift"><code><span class="n">webex</span><span class="o">.</span><span class="n">phone</span><span class="o">.</span><span class="n">audioBNRMode</span> <span class="o">=</span> <span class="o">.</span><span class="kt">HP</span>
 </code></pre></li>
+<li><p>Edit message</p></li>
 </ol>
+<pre class="highlight swift"><code><span class="c1">/// - parameter text: The message text is used to replace old one.</span>
+<span class="c1">/// - parameter parent: The message you are editing.</span>
+<span class="c1">/// - parameter mentions: new message Mention objects.</span>
+<span class="k">self</span><span class="o">.</span><span class="n">webexSDK</span><span class="p">?</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="nf">edit</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nv">parent</span><span class="p">:</span> <span class="n">message</span><span class="p">,</span> <span class="nv">mentions</span><span class="p">:</span> <span class="n">mentions</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="p">{[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">message</span><span class="p">):</span>
+        <span class="c1">// message is the new message object, you can use it replace old one.</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
 <h2 id='migration-from-cisco-sparksdk' class='heading'>Migration from Cisco SparkSDK</h2>
 
 <p>The purpose of this guide is to help you to migrate from Cisco SparkSDK to Cisco WebexSDK.</p>
@@ -799,16 +819,28 @@
 </tbody></table>
 
 <p>Recomand to replace variables containing &ldquo;spark&rdquo; with &ldquo;webex&rdquo; in project code.  </p>
+<h2 id='additional-documentation' class='heading'>Additional Documentation</h2>
+
+<ol>
+<li><a href="https://github.com/webex/webex-ios-sdk/wiki/Display-more-participants-with-Multi-Stream">Display more participants with Multi Stream</a></li>
+<li><a href="https://github.com/webex/webex-ios-sdk/wiki/Implementation-broadcast-upload-extension">Implementation broadcast upload extension</a></li>
+<li><a href="https://github.com/webex/webex-ios-sdk/wiki/Lobby-feature-for-the-meetings">Lobby feature for the meetings</a></li>
+<li><a href="https://github.com/webex/webex-ios-sdk/wiki/Message-API-Usage-Instruction">Message API Usage Instruction</a></li>
+<li><a href="https://github.com/webex/webex-ios-sdk/wiki/Place-a-group-call">Place a group call</a></li>
+<li><a href="https://github.com/webex/webex-ios-sdk/wiki/Set-bandwidth-for-the-app">Set bandwidth for the app</a></li>
+<li><a href="https://github.com/webex/webex-ios-sdk/wiki/Set-different-views-layout-for-screen-sharing">Set different views layout for screen sharing</a></li>
+<li><a href="https://github.com/webex/webex-ios-sdk/wiki/Set-up-an-App-Group">Set up an App Group</a></li>
+</ol>
 <h2 id='license' class='heading'>License</h2>
 
-<p>&copy; 2016-2020 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.</p>
+<p>&copy; 2016-2021 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.</p>
 
 <p>See <a href="https://github.com/webex/webex-ios-sdk/blob/master/LICENSE">LICENSE</a> for details.</p>
 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-12-11)</p>
+          <p>&copy; 2021 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2021-04-29)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

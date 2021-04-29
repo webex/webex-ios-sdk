@@ -17,7 +17,7 @@
     <a title="MessageClient Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 2.7.0 Docs</a> (94% documented)</p>
+        <p><a href="../index.html">WebexSDK 2.7.0 Docs</a> (95% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right">
           <form role="search" action="../search.json">
@@ -122,6 +122,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Phone/AudioBNRMode.html">– AudioBNRMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Phone/VideoStreamMode.html">– VideoStreamMode</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/SSOAuthenticator.html">SSOAuthenticator</a>
@@ -243,7 +246,7 @@
                 <a href="../Structs/MediaOption.html">MediaOption</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/MediaOption/VideoLayout.html">– VideoLayout</a>
+                <a href="../Structs/MediaOption/CompositedVideoLayout.html">– CompositedVideoLayout</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Membership.html">Membership</a>
@@ -256,6 +259,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Message/Text.html">– Text</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:8WebexSDK14MesssageChangeV">MesssageChange</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/OAuthTokens.html">OAuthTokens</a>
@@ -843,6 +849,117 @@ Having <code>@johndoe</code> in the content of the message does not generate not
                               <td>
                                 <div>
                                   <p>A closure to be executed once the message is posted.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Void</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK13MessageClientC4edit_6parent8mentions5queue17completionHandleryAA0C0V4TextV_AJSayAA7MentionOGSgSo012OS_dispatch_H0CSgyAA15ServiceResponseVyAJGctF"></a>
+                    <a name="//apple_ref/swift/Method/edit(_:parent:mentions:queue:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4edit_6parent8mentions5queue17completionHandleryAA0C0V4TextV_AJSayAA7MentionOGSgSo012OS_dispatch_H0CSgyAA15ServiceResponseVyAJGctF">edit(_:<wbr>parent:<wbr>mentions:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Edit a message without attachment.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Only be able to edit messages without attachments.
+
+</div><div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    2.8.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">edit</span><span class="p">(</span><span class="n">_</span> <span class="nv">text</span><span class="p">:</span> <span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">.</span><span class="kt">Text</span><span class="p">,</span>
+                 <span class="nv">parent</span><span class="p">:</span> <span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="p">,</span>
+                 <span class="nv">mentions</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/Mention.html">Mention</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                 <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                 <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/ServiceResponse.html">ServiceResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>text</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The message text is used to replace old one.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>parent</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The message you are editing.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>mentions</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>new message Mention objects.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application&rsquo;s main thread.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure to be executed once the message is edited, will callback an edited message object.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1735,7 +1852,7 @@ Having <code>@johndoe</code> in the content of the message does not generate not
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2020-12-11)</p>
+          <p>&copy; 2021 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2021-04-29)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

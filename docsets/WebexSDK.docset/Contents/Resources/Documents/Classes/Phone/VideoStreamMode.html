@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>iOSBroadcastingEvent Enumeration Reference</title>
+    <title>VideoStreamMode Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../../css/highlight.css" />
     <meta charset='utf-8'>
@@ -13,8 +13,8 @@
     <script src="../../js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/iOSBroadcastingEvent" class="dashAnchor"></a>
-    <a title="iOSBroadcastingEvent Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Enum/VideoStreamMode" class="dashAnchor"></a>
+    <a title="VideoStreamMode Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../../index.html">WebexSDK 2.7.0 Docs</a> (95% documented)</p>
@@ -30,7 +30,7 @@
       <p id="breadcrumbs">
         <a href="../../index.html">WebexSDK Reference</a>
         <img id="carat" src="../../img/carat.png" />
-        iOSBroadcastingEvent Enumeration Reference
+        VideoStreamMode Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -306,18 +306,18 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>iOSBroadcastingEvent</h1>
+            <h1>VideoStreamMode</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="n">iOSBroadcastingEvent</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">VideoStreamMode</span></code></pre>
 
                 </div>
               </div>
-            <p>The enumeration of iOS broadcasting events.</p>
+            <p>The enumeration of remote video stream.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
-    1.4.0
+    2.8.0
 
 </div>
 
@@ -328,9 +328,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK4CallC20iOSBroadcastingEventO18extensionConnectedyA2EmF"></a>
-                    <a name="//apple_ref/swift/Element/extensionConnected" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC20iOSBroadcastingEventO18extensionConnectedyA2EmF">extensionConnected</a>
+                    <a name="/s:8WebexSDK5PhoneC15VideoStreamModeO10compositedyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/composited" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK5PhoneC15VideoStreamModeO10compositedyA2EmF">composited</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -338,14 +338,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>When broadcast extension connected to this call.</p>
+                        <p>composite remote videos as one video stream</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">extensionConnected</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">composited</span></code></pre>
 
                         </div>
                       </div>
@@ -355,9 +355,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK4CallC20iOSBroadcastingEventO21extensionDisconnectedyA2EmF"></a>
-                    <a name="//apple_ref/swift/Element/extensionDisconnected" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC20iOSBroadcastingEventO21extensionDisconnectedyA2EmF">extensionDisconnected</a>
+                    <a name="/s:8WebexSDK5PhoneC15VideoStreamModeO9auxiliaryyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/auxiliary" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK5PhoneC15VideoStreamModeO9auxiliaryyA2EmF">auxiliary</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -365,14 +365,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>When broadcast extension disconneted to this call.</p>
+                        <p>remote videos are different streams</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">extensionDisconnected</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">auxiliary</span></code></pre>
 
                         </div>
                       </div>

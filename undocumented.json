@@ -22,20 +22,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Message/Message.swift",
-      "line": 30,
-      "symbol": "MessageEvent.UpdateType",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Message/Message.swift",
-      "line": 31,
-      "symbol": "MessageEvent.UpdateType.fileThumbnail(_:)",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/CallMembership.swift",
       "line": 144,
       "symbol": "CallMembership.isSelf",
@@ -45,21 +31,21 @@
     {
       "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/MediaOption.swift",
       "line": 32,
-      "symbol": "MediaOption.VideoLayout.single",
+      "symbol": "MediaOption.CompositedVideoLayout.single",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/MediaOption.swift",
       "line": 33,
-      "symbol": "MediaOption.VideoLayout.filmstrip",
+      "symbol": "MediaOption.CompositedVideoLayout.filmstrip",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/MediaOption.swift",
       "line": 34,
-      "symbol": "MediaOption.VideoLayout.grid",
+      "symbol": "MediaOption.CompositedVideoLayout.grid",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -72,35 +58,35 @@
     },
     {
       "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/ParticipantModel.swift",
-      "line": 229,
+      "line": 240,
       "symbol": "ParticipantModel.DeviceModel",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/ParticipantModel.swift",
-      "line": 246,
+      "line": 257,
       "symbol": "ParticipantModel.StatusModel",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/ParticipantModel.swift",
-      "line": 258,
+      "line": 269,
       "symbol": "ParticipantModel.ControlsModel",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/ParticipantModel.swift",
-      "line": 268,
+      "line": 279,
       "symbol": "ParticipantModel.DeviceModel.IntentModel",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/ParticipantModel.swift",
-      "line": 296,
+      "line": 307,
       "symbol": "ParticipantModel.ControlsModel.AudioModel",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
