@@ -113,6 +113,16 @@ public class Phone {
         case HP
     }
     
+    ///  The enumeration of remote video stream.
+    ///
+    /// - since: 2.8.0
+    public enum VideoStreamMode {
+        /// composite remote videos as one video stream
+        case composited
+        /// remote videos are different streams
+        case auxiliary
+    }
+    
     /// MARK: - Deprecated
     /// The max receiving bandwidth for audio in unit bps for the call.
     /// Only effective if set before the start of call.
@@ -195,11 +205,22 @@ public class Phone {
     /// - since: 2.7.0
     public var audioBNREnabled: Bool = false
     
+    /// Set true to keep Webex server connection when app enters background mode. Default is false.
+    ///
+    /// - Note: Generally App thread would be suspended when it enters background, `enableBackgroundConnection` can be effective when your App has handled background mode.
+    /// - since: 2.8.0
+    public var enableBackgroundConnection: Bool = false
+    
     /// Set Background Noise Removal mode, the default is `.HP`.
     ///
     /// - Note: The value is only effective if setting `audioBNREnabled` to true.
     /// - since: 2.7.0
     public var audioBNRMode: AudioBNRMode = .HP
+    
+    /// Set  video stream mode, the default is `.composited`.
+    ///
+    /// - since: 2.8.0
+    public var videoStreamMode: VideoStreamMode = .composited
 
     /// The advanced setings for call. Only effective if set before the start of call.
     ///
@@ -463,7 +484,7 @@ public class Phone {
                                 let correlationId = UUID()
                                 switch target {
                                 case .callable(let callee):
-                                    self.client.call(callee, correlationId: correlationId, by: device, option: option, localMedia: media, queue: self.queue.underlying) { res in
+                                    self.client.call(callee, correlationId: correlationId, by: device, option: option, localMedia: media, streamMode: self.videoStreamMode, queue: self.queue.underlying) { res in
                                         self.doLocusResponse(LocusResult.call(correlationId, device, option, session, res, completionHandler))
                                         self.queue.yield()
                                     }
@@ -474,7 +495,7 @@ public class Phone {
                                             self.queue.yield()
                                         }
                                         else if let url = res.data {
-                                            self.client.join(url, correlationId: correlationId, by: device, option: option, localMedia: media, queue: self.queue.underlying) { joinRes in
+                                            self.client.join(url, correlationId: correlationId, by: device, option: option, localMedia: media, streamMode: self.videoStreamMode, queue: self.queue.underlying) { joinRes in
                                                 self.doLocusResponse(LocusResult.call(correlationId, device, option, session, joinRes, completionHandler))
                                                 self.queue.yield()
                                             }
@@ -627,7 +648,7 @@ public class Phone {
                 session.prepare(option: option, phone: self)
                 let media = MediaModel(sdp: session.getLocalSdp(), audioMuted: false, videoMuted: false, reachabilities: self.reachability.feedback?.reachabilities)
                 self.queue.sync {
-                    self.client.join(call.url, correlationId: call.correlationId, by: call.device, option: option, localMedia: media, queue: self.queue.underlying) { res in
+                    self.client.join(call.url, correlationId: call.correlationId, by: call.device, option: option, localMedia: media, streamMode: self.videoStreamMode, queue: self.queue.underlying) { res in
                         self.doLocusResponse(LocusResult.join(call, res, completionHandler))
                         self.queue.yield()
                     }
@@ -700,15 +721,23 @@ public class Phone {
         }
     }
     
-    func layout(call: Call, layout: MediaOption.VideoLayout) {
+    func layout(call: Call, layout: MediaOption.CompositedVideoLayout, completionHandler: ((Error?) -> Void)? = nil) {
         self.queue.sync {
             if let url = call.model.myself?.url {
                 self.client.layout(url, by: call.device.deviceUrl.absoluteString, layout: layout, queue: self.queue.underlying) { res in
+                    switch res.result {
+                    case .success(_):
+                        completionHandler?(nil)
+                    case .failure(let error):
+                        completionHandler?(error)
+                    }
                     self.queue.yield()
                 }
             }
             else {
-                WebexError.serviceFailed(reason: "Missing self participant URL").report()
+                let webexError = WebexError.serviceFailed(reason: "Missing self participant URL")
+                completionHandler?(webexError)
+                webexError.report()
                 self.queue.yield()
             }
         }
@@ -1079,6 +1108,14 @@ public class Phone {
                     fire(res.result.data == nil ? nil : SpaceEvent.update(res.result.data!))
                 }
             }
+            else if let parent = activity.parent, parent.type == MessageType.edit.value, let convUrl = activity.conversationUrl {
+                self.webex?.messages.decrypt(activity: activity, of: convUrl) { decrypted in
+                    let message = Message(activity: decrypted, clusterId: clusterId, person: self.me)
+                    if let comment = message.activity.object as? CommentModel, let parentId = message.parentId {
+                        fire(MessageEvent.messageUpdated(messageId: parentId, type: .message(MesssageChange(textAsObject: message.textAsObject, published: message.created, comment: comment))))
+                    }
+                }
+            }
             else if verb == .post || verb == .share, let convUrl = activity.conversationUrl {
                 self.webex?.messages.decrypt(activity: activity, of: convUrl) { decrypted in
                     let message = Message(activity: decrypted, clusterId: clusterId, person: self.me)
@@ -1172,7 +1209,9 @@ public class Phone {
     
     @objc func onApplicationDidEnterBackground() {
         SDKLogger.shared.info("Application did enter background")
-        self.disconnectFromWebSocket()
+        if !enableBackgroundConnection {
+            self.disconnectFromWebSocket()
+        }
     }
     
     private func connectToWebSocket() {
@@ -1185,6 +1224,8 @@ public class Phone {
                     self?.fetchActiveCalls()
                 }
             }
+            // Fix a bug, if the network is broken when connecting, the socket will still being connecting, so try to reconnect, if connection above is success, the reconnect will stop automatically.
+            self.webSocket.tryReconnectAfter(seconds: 4.0)
         }
     }
     

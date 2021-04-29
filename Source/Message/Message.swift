@@ -27,8 +27,12 @@ import CoreServices
 /// - since: 1.4.0
 public enum MessageEvent {
 
+    /// The updated type of a message
     public enum UpdateType {
+        /// File thumbnail was updated
         case fileThumbnail([RemoteFile])
+        /// A message was edited
+        case message(MesssageChange)
     }
 
     /// The callback when receive a new message
@@ -37,6 +41,24 @@ public enum MessageEvent {
     case messageDeleted(String)
     /// The callback when a message was updated
     case messageUpdated(messageId: String, type: UpdateType)
+}
+
+enum MessageType: String {
+    case post
+    case edit
+    
+    var value: String {
+        return self.rawValue
+    }
+}
+
+/// The struct represents the content of  a message change
+///
+/// - since: 2.8.0
+public struct MesssageChange {
+    var textAsObject: Message.Text?
+    var published: Date?
+    var comment: CommentModel?
 }
 
 /// This struct represents a Message on Cisco Webex.
@@ -146,6 +168,9 @@ public struct Message : CustomStringConvertible {
         return self.activity.published
     }
     
+    /// The timestamp that the message being edited.
+    public private(set) var updated: Date?
+    
     /// Returns true if the receipient of the message is included in message's mention list.
     ///
     /// - since: 1.4.0
@@ -180,6 +205,23 @@ public struct Message : CustomStringConvertible {
     ///
     /// - since: 2.5.0
     public private(set) var isReply: Bool = false
+    
+    /// Update message  when the message was edited.
+    ///
+    /// -  parameter event: Get the value by observing `MessageEvent.messageUpdated` event.
+    /// - since: 2.8.0
+    public mutating func update(_ type: MessageEvent.UpdateType) {
+        if case .message(let change) = type {
+            self.updateMessage(change)
+        }
+    }
+    
+    mutating func updateMessage(_ change: MesssageChange) {
+        self.activity.object = change.comment
+        self.updated = change.published
+        self.textAsObject = change.textAsObject
+        self.handleMentions()
+    }
 
     /// Json format descrition of message.
     ///
@@ -191,6 +233,7 @@ public struct Message : CustomStringConvertible {
     }
 
     let activity: ActivityModel
+    var person: Person?
 
     var isMissingThumbnail: Bool {
         if self.activity.verb == .share,
@@ -209,6 +252,7 @@ public struct Message : CustomStringConvertible {
     
     init(activity: ActivityModel, clusterId: String?, person: Person?) {
         self.activity = activity
+        self.person = person
         if let uuid = activity.id {
             self.id = WebexId(type: .message, cluster: clusterId, uuid: uuid).base64Id
         }
@@ -236,11 +280,22 @@ public struct Message : CustomStringConvertible {
             self.parentId = WebexId(type: .message, cluster: clusterId, uuid: uuid).base64Id
             self.isReply = parent.isReply
         }
-        if let person = person, let base64Id = person.id {
+        
+        self.handleMentions()
+        
+        if let content = activity.object as? ContentModel, let files = content.files?.items, !files.isEmpty {
+            self.files = files.compactMap { RemoteFile(model: $0) }
+        }
+    }
+    
+    mutating func handleMentions() {
+        self.isAllMentioned = self.activity.isAllMentioned()
+        
+        if let person = self.person, let base64Id = person.id {
             self.isSelfMentioned = self.activity.isSelfMention(user: WebexId.uuid(base64Id))
         }
-        self.isAllMentioned = self.activity.isAllMentioned()
-        if let comment = activity.object as? CommentModel {
+        
+        if let comment = self.activity.object as? CommentModel {
             if let mentions = comment.groupMentions?.items, !mentions.isEmpty {
                 self.mentions = [Mention.all];
             }
@@ -254,12 +309,7 @@ public struct Message : CustomStringConvertible {
             }
 
         }
-        if let content = activity.object as? ContentModel, let files = content.files?.items, !files.isEmpty {
-            self.files = files.compactMap { RemoteFile(model: $0) }
-        }
     }
-
-
 }
 
 /// A data type represents a local file.

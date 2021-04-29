@@ -525,19 +525,49 @@ public class Call {
         }
     }
 
-    /// The video layout for the active speaker and other attendees in the group video meeting.
+    /// The video layout for the active speaker and other attendees in the group video meeting. 
     ///
+    /// - note: videoLayout is deprecated. Use `compositedVideoLayout` instead, they do the same thing, just changed the naming
     /// - since: 2.6.0
-    public var videoLayout: MediaOption.VideoLayout? {
+    @available(*, deprecated)
+    public var videoLayout: MediaOption.CompositedVideoLayout? {
         get {
-            return self._videoLayout
+            return self._compositedVideoLayout
         }
         set {
             if let layout = newValue {
-                self._videoLayout = layout
+                self._compositedVideoLayout = layout
                 self.device.phone.layout(call: self, layout: layout)
             }
         }
+    }
+    
+    /// The composited video layout for the active speaker and other attendees in the group video meeting.
+    ///
+    /// - note: the layout just affects when `Phone.videoStreamMode` is  `composited`
+    /// - since: 2.8.0
+    public var compositedVideoLayout: MediaOption.CompositedVideoLayout? {
+        get {
+            return self._compositedVideoLayout
+        }
+        set {
+            if let layout = newValue {
+                self._compositedVideoLayout = layout
+                self.device.phone.layout(call: self, layout: layout)
+            }
+        }
+    }
+    
+    /// Set the composited video layout with callback for the active speaker and other attendees in the group video meeting.
+    ///
+    /// - parameter layout: the video layout mode.
+    /// - parameter completionHandler: A closure to be executed when completed, with error if the invocation is illegal or failed, otherwise nil.
+    ///
+    /// - note: the layout just affects when `Phone.videoStreamMode` is  `composited`
+    /// - since: 2.8.0
+    public func setCompositedVideoLayout(_ layout: MediaOption.CompositedVideoLayout, completionHandler: @escaping (Error?) -> Void) {
+        self._compositedVideoLayout = layout
+        self.device.phone.layout(call: self, layout: layout, completionHandler: completionHandler)
     }
 
     /// Call Memberships represent participants in this `Call`.
@@ -711,7 +741,7 @@ public class Call {
     static let activeSpeakerCount = 1
     private let dtmfQueue: DtmfQueue
 
-    private var _videoLayout: MediaOption.VideoLayout?
+    private var _compositedVideoLayout: MediaOption.CompositedVideoLayout?
     private var _callModel: LocusModel
     private var _callMemberships: [CallMembership]?
     private var availableStreamCount: Int = 0
@@ -802,7 +832,7 @@ public class Call {
         self.metrics.trackCallStarted()
         self.videoRenderViews = media.videoViews
         self.screenShareRenderView = media.screenShareView
-        self._videoLayout = option?.layout
+        self._compositedVideoLayout = option?.layout
         self.doCallModel(model)
     }
 
@@ -840,7 +870,7 @@ public class Call {
     /// - see: see CallStatus
     /// - since: 1.2.0
     public func answer(option: MediaOption, completionHandler: @escaping (Error?) -> Void) {
-        self._videoLayout = option.layout
+        self._compositedVideoLayout = option.layout
         self.device.phone.answer(call: self, option: option, completionHandler: completionHandler)
     }
 
@@ -1310,6 +1340,7 @@ public class Call {
                 for _ in 0..<diffCount {
                     if let renderView = self.auxStreamAvailable?() {
                         self.openAuxStream(view: renderView)
+                        self.availableAuxStreamCount = newAvailableAuxStreamCount
                     }
 
                 }
@@ -1319,9 +1350,8 @@ public class Call {
                         self.closeAuxStream(view: renderView)
                     }
                 }
+                self.availableAuxStreamCount = newAvailableAuxStreamCount
             }
-
-            self.availableAuxStreamCount = newAvailableAuxStreamCount
         }
     }
 

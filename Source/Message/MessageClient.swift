@@ -265,12 +265,46 @@ public class MessageClient {
             }
         }
     }
+    
+    ///  Edit a message without attachment.
+    ///
+    /// - parameter text: The message text is used to replace old one.
+    /// - parameter parent: The message you are editing.
+    /// - parameter mentions: new message Mention objects.
+    /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
+    /// - parameter completionHandler: A closure to be executed once the message is edited, will callback an edited message object.
+    /// - note: Only be able to edit messages without attachments.
+    /// - returns: Void
+    /// - since: 2.8.0
+    public func edit(_ text: Message.Text,
+                     parent: Message,
+                     mentions: [Mention]? = nil,
+                     queue: DispatchQueue? = nil,
+                     completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
+        if let convUrl = parent.activity.conversationUrl, let convId = parent.activity.conversationId, parent.files == nil {
+            self.post(text, convUrl: convUrl, convId: convId, mentions: mentions, type: .edit, parent: parent, queue: queue) { (response) in
+                switch response.result {
+                case .success(let message):
+                    var originalMessage = parent
+                    originalMessage.updateMessage(MesssageChange(textAsObject: message.textAsObject, published: message.created, comment: message.activity.object as? CommentModel))
+                    completionHandler(ServiceResponse(response.response, Result.success(originalMessage)))
+                case .failure(_):
+                    completionHandler(response)
+                }
+            }
+        }else {
+            (queue ?? DispatchQueue.main).async {
+                completionHandler(ServiceResponse(nil, Result.failure(WebexError.illegalOperation(reason: "Invalid parent message \(parent.id ?? "")"))))
+            }
+        }
+    }
 
     private func post(_ text: Message.Text? = nil,
                       convUrl: String,
                       convId: String,
                       mentions: [Mention]? = nil,
                       withFiles: [LocalFile]? = nil,
+                      type: MessageType = .post,
                       parent: Message? = nil,
                       queue: DispatchQueue? = nil,
                       completionHandler: @escaping (ServiceResponse<Message>) -> Void) {
@@ -303,7 +337,7 @@ public class MessageClient {
 
                 var parentModel: [String: Any]?
                 if let message = parent, let id = message.id {
-                    parentModel = ["id": WebexId.uuid(id), "type": "reply"]
+                    parentModel = ["id": WebexId.uuid(id), "type": type == .edit ? "edit" : "reply"]
                 }
 
                 var verb = ActivityModel.Verb.post
@@ -731,7 +765,10 @@ public class MessageClient {
                         completionHandler(Result.success(encryptionUrl))
                     } else if let _ = model.kmsResourceObjectUrl {
                         handleResourceObjectUrl(model: model)
+                    }else {
+                        handleResourceObjectUrl(model: model)
                     }
+                    SDKLogger.shared.debug("Request requestSpaceEncryptionURL ============  \(response.result)")
                 } else {
                     completionHandler(Result.failure(response.result.error ?? MSGError.encryptionUrlFetchFail))
                 }

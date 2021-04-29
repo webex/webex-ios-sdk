@@ -14,6 +14,7 @@ This SDK is written in [Swift 5](https://developer.apple.com/swift) and requires
 - [Usage](#usage)
 - [License](#license)
 - [Migration From SparkSDK](#migration-from-cisco-sparksdk)
+- [Additional Documentation](#Additional-Documentation)
 
 ## Install
 
@@ -519,6 +520,22 @@ Here are some examples of how to use the iOS SDK in your app.
     ```swift
     webex.phone.audioBNRMode = .HP
     ```
+    
+22. Edit message
+
+```swift
+/// - parameter text: The message text is used to replace old one.
+/// - parameter parent: The message you are editing.
+/// - parameter mentions: new message Mention objects.
+self.webexSDK?.messages.edit(text, parent: message, mentions: mentions, completionHandler: {[weak self] (response) in
+    switch response.result{
+    case .success(let message):
+        // message is the new message object, you can use it replace old one.
+    case .failure(let error):
+        // ...
+    }
+})
+```
 
 
 ## Migration from Cisco SparkSDK
@@ -562,6 +579,15 @@ API changes list from SparkSDK to WebexSDK.
 
 Recomand to replace variables containing "spark" with "webex" in project code.  
 
+## Additional Documentation
+1. [Display more participants with Multi Stream](https://github.com/webex/webex-ios-sdk/wiki/Display-more-participants-with-Multi-Stream)
+2. [Implementation broadcast upload extension](https://github.com/webex/webex-ios-sdk/wiki/Implementation-broadcast-upload-extension)
+3. [Lobby feature for the meetings](https://github.com/webex/webex-ios-sdk/wiki/Lobby-feature-for-the-meetings)
+4. [Message API Usage Instruction](https://github.com/webex/webex-ios-sdk/wiki/Message-API-Usage-Instruction)
+5. [Place a group call](https://github.com/webex/webex-ios-sdk/wiki/Place-a-group-call)
+6. [Set bandwidth for the app](https://github.com/webex/webex-ios-sdk/wiki/Set-bandwidth-for-the-app)
+7. [Set different views layout for screen sharing](https://github.com/webex/webex-ios-sdk/wiki/Set-different-views-layout-for-screen-sharing)
+8. [Set up an App Group](https://github.com/webex/webex-ios-sdk/wiki/Set-up-an-App-Group)
 
 ## License
 

@@ -51,7 +51,6 @@ class CallClient {
                 completionHandler(.callable(address))
             }
         }
-
     }
     
     private let authenticator: Authenticator
@@ -77,24 +76,24 @@ class CallClient {
         }
     }
 
-    func call(_ target: String, correlationId: UUID, by device: Device, option: MediaOption, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
+    func call(_ target: String, correlationId: UUID, by device: Device, option: MediaOption, localMedia: MediaModel, streamMode: Phone.VideoStreamMode, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
         let request = Service.locus.homed(for: device)
             .authenticator(self.authenticator)
             .method(.post)
             .path("loci").path("call")
-            .body(self.makeBody(correlationId: correlationId, option: option, device: device, localMedia: localMedia, callee: target))
+            .body(self.makeBody(correlationId: correlationId, option: option, device: device, localMedia: localMedia, callee: target, streamMode: streamMode))
             .queue(queue)
             .build()
         
         request.responseObject(handleLocusOnlySDPResponse(option: option, queue: queue, completionHandler: completionHandler))
     }
     
-    func join(_ locusUrl: String, correlationId: UUID, by device: Device, option: MediaOption, localMedia: MediaModel, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
+    func join(_ locusUrl: String, correlationId: UUID, by device: Device, option: MediaOption, localMedia: MediaModel, streamMode: Phone.VideoStreamMode, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
         let request = ServiceRequest.make(locusUrl)
             .authenticator(self.authenticator)
             .method(.post)
             .path("participant")
-            .body(makeBody(correlationId: correlationId, option: option, device: device, localMedia: localMedia, callee: nil))
+            .body(makeBody(correlationId: correlationId, option: option, device: device, localMedia: localMedia, callee: nil, streamMode: streamMode))
             .queue(queue)
             .build()
 
@@ -206,7 +205,7 @@ class CallClient {
         request.responseObject(handleLocusOnlySDPResponse(completionHandler: completionHandler))
     }
 
-    func layout(_ participantUrl: String, by deviceUrl: String, layout: MediaOption.VideoLayout, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
+    func layout(_ participantUrl: String, by deviceUrl: String, layout: MediaOption.CompositedVideoLayout, queue: DispatchQueue, completionHandler: @escaping (ServiceResponse<LocusModel>) -> Void) {
         let body: [String: Any?] = ["layout": ["deviceUrl":deviceUrl, "type":layout.type]]
         let request = ServiceRequest.make(participantUrl)
                 .authenticator(self.authenticator)
@@ -263,11 +262,14 @@ class CallClient {
         return json
     }
 
-    private func makeBody(correlationId: UUID, option: MediaOption, device: Device, localMedia: MediaModel, callee: String?) -> [String:Any?] {
+    private func makeBody(correlationId: UUID, option: MediaOption, device: Device, localMedia: MediaModel, callee: String?, streamMode: Phone.VideoStreamMode) -> [String:Any?] {
         var json = localMedia.toJson()
-        json["device"] = ["url":device.deviceUrl.absoluteString, "deviceType": DeviceService.Types.web_client.rawValue, "regionCode":device.countryCode, "countryCode":device.regionCode, "capabilities":["groupCallSupported":true, "sdpSupported":true]]
+        json["device"] = ["url":device.deviceUrl.absoluteString, "deviceType": DeviceService.Types.ios_sdk.rawValue, "regionCode":device.countryCode, "countryCode":device.regionCode, "capabilities":["groupCallSupported":true, "sdpSupported":true]]
         json["respOnlySdp"] = true
         json["correlationId"] = correlationId.uuidString
+        if streamMode == .composited {
+            json["clientMediaPreferences"] = ["preferTranscoding": true]
+        }
         if let pin = option.pin {
             json["pin"] = pin
         }

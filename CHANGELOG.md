@@ -1,5 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 2.8.0 Releases
+
+- `2.8.0` Releases - [2.8.0](#280)
+
 #### 2.7.0 Releases
 
 - `2.7.0` Releases - [2.7.0](#270)
@@ -77,6 +81,21 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ---
+## [2.8.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.8.0)
+Released on 2020-04-30.
+#### Added
+- Support Multi-stream.
+- Support message edit.
+- Support meeting with 11 digits meeting number.
+- Add Phone.enableBackgroundConnection( ) function.
+
+#### Updated
+- Removed email from CallMembership, added displayName for CallMembership.
+- Fix video automatically unmute issue after swithing from background. 
+- Fix message encryption failures.
+- Fix certain events are not getting triggered after Switching network.
+- Fix sending video issue in 1:1 calls.
+
 ## [2.7.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.7.0)
 Released on 2020-12-14.
 #### Added

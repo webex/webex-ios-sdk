@@ -109,7 +109,8 @@ struct ParticipantModel {
     }
 
     func isLefted(device url: URL) -> Bool{
-        return isLeft || self.devices?.filter{ $0.url == url.absoluteString }.count == 0
+        let device = self.devices?.filter{ $0.url == url.absoluteString }.first
+        return isLeft || device == nil || device?.state == "LEFT"
     }
     
     func isJoined(by: URL) -> Bool {
@@ -166,11 +167,22 @@ struct ParticipantModel {
 
 struct LocusParticipantInfoModel {
     var id: String?
-    var email: String?
     var name: String?
     var sipUrl: String?
     var phoneNumber: String?
     var orgId: String?
+    var isExternal: Bool?
+    var primaryDisplayString: String?
+    
+    var displayName: String? {
+        var displayName: String? = ""
+        if isExternal != true {
+            displayName = name
+        }else {
+            displayName = primaryDisplayString
+        }
+        return displayName?.regexReplace(pattern: "^(sip:|tel:)", with: "")
+    }
 }
 
 struct AlertHintModel {
@@ -181,7 +193,6 @@ struct AlertHintModel {
 struct AlertTypeModel {
     var action: String?
 }
-
 
 extension ParticipantModel: Mappable {
     
@@ -311,11 +322,12 @@ extension LocusParticipantInfoModel: Mappable {
     
     mutating func mapping(map: Map) {
         id <- map["id"]
-        email <- map["email"]
         name <- map["name"]
         sipUrl <- map["sipUrl"]
         phoneNumber <- map["phoneNumber"]
         orgId <- map["orgId"]
+        isExternal <- map["isExternal"]
+        primaryDisplayString <- map["primaryDisplayString"]
     }
 }
 
