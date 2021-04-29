@@ -14,6 +14,7 @@ This SDK is written in [Swift 5](https://developer.apple.com/swift) and requires
 - [Usage](#usage)
 - [License](#license)
 - [Migration From SparkSDK](#migration-from-cisco-sparksdk)
+- [Additional Documentation](#Additional-Documentation)
 
 ## Install
 
@@ -562,6 +563,15 @@ API changes list from SparkSDK to WebexSDK.
 
 Recomand to replace variables containing "spark" with "webex" in project code.  
 
+## Additional Documentation
+1. [Display more participants with Multi Stream](https://github.com/webex/webex-ios-sdk/wiki/Display-more-participants-with-Multi-Stream)
+2. [Implementation broadcast upload extension](https://github.com/webex/webex-ios-sdk/wiki/Implementation-broadcast-upload-extension)
+3. [Lobby feature for the meetings](https://github.com/webex/webex-ios-sdk/wiki/Lobby-feature-for-the-meetings)
+4. [Message API Usage Instruction](https://github.com/webex/webex-ios-sdk/wiki/Message-API-Usage-Instruction)
+5. [Place a group call](https://github.com/webex/webex-ios-sdk/wiki/Place-a-group-call)
+6. [Set bandwidth for the app](https://github.com/webex/webex-ios-sdk/wiki/Set-bandwidth-for-the-app)
+7. [Set different views layout for screen sharing](https://github.com/webex/webex-ios-sdk/wiki/Set-different-views-layout-for-screen-sharing)
+8. [Set up an App Group](https://github.com/webex/webex-ios-sdk/wiki/Set-up-an-App-Group)
 
 ## License
 
