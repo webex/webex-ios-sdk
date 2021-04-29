@@ -62,7 +62,7 @@ public class Webex {
     /// The version number of this Cisco Webex iOS SDK.
     ///
     /// - since: 1.2.0
-    public static let version = "2.7.0.1"
+    public static let version = "2.8.0"
     
     /// The logger for this SDK.
     ///

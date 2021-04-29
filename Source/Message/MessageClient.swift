@@ -270,6 +270,7 @@ public class MessageClient {
     ///
     /// - parameter text: The message text is used to replace old one.
     /// - parameter parent: The message you are editing.
+    /// - parameter mentions: new message Mention objects.
     /// - parameter queue: If not nil, the queue on which the completion handler is dispatched. Otherwise, the handler is dispatched on the application's main thread.
     /// - parameter completionHandler: A closure to be executed once the message is edited, will callback an edited message object.
     /// - note: Only be able to edit messages without attachments.

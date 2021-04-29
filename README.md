@@ -520,6 +520,22 @@ Here are some examples of how to use the iOS SDK in your app.
     ```swift
     webex.phone.audioBNRMode = .HP
     ```
+    
+22. Edit message
+
+```swift
+/// - parameter text: The message text is used to replace old one.
+/// - parameter parent: The message you are editing.
+/// - parameter mentions: new message Mention objects.
+self.webexSDK?.messages.edit(text, parent: message, mentions: mentions, completionHandler: {[weak self] (response) in
+    switch response.result{
+    case .success(let message):
+        // message is the new message object, you can use it replace old one.
+    case .failure(let error):
+        // ...
+    }
+})
+```
 
 
 ## Migration from Cisco SparkSDK
