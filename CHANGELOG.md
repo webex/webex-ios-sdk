@@ -82,7 +82,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 ## [2.8.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.8.0)
-Released on 2020-04-30.
+Released on 2021-04-30.
 #### Added
 - Support Multi-stream.
 - Support message edit.
