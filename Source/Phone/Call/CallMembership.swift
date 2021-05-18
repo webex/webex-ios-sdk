@@ -139,7 +139,12 @@ public struct CallMembership {
         return (self.call.activeSpeaker?.id == self.id) 
     }
     
+    var associatedUrls: [String]? {
+        return self.model.devices?.compactMap {$0.intent?.associatedWith}
+    }
+    
     let id: String
+    let url: String
     
     public let isSelf: Bool
     
@@ -165,6 +170,7 @@ public struct CallMembership {
     /// - since: 1.2.0
     init(participant: ParticipantModel, call: Call) {
         self.id = participant.id ?? ""
+        self.url = participant.url ?? ""
         self.call = call
         self.isSelf = participant.id == call.model.myselfId
         self.isInitiator = participant.isCreator ?? false
