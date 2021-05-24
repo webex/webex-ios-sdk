@@ -1,2154 +1,2154 @@
 {
   "warnings": [
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Auth/OAuthResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Auth/OAuthResult.swift",
       "line": 20,
       "symbol": "OAuthResult",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Auth/OAuthResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Auth/OAuthResult.swift",
       "line": 21,
       "symbol": "OAuthResult.success",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Auth/OAuthResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Auth/OAuthResult.swift",
       "line": 22,
       "symbol": "OAuthResult.invalidEmail",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Auth/OAuthResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Auth/OAuthResult.swift",
       "line": 23,
       "symbol": "OAuthResult.userNotActivated",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Auth/OAuthResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Auth/OAuthResult.swift",
       "line": 24,
       "symbol": "OAuthResult.unableToDiscoverPreLoginServices",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Auth/OAuthResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Auth/OAuthResult.swift",
       "line": 25,
       "symbol": "OAuthResult.networkError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Auth/OAuthResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Auth/OAuthResult.swift",
       "line": 26,
       "symbol": "OAuthResult.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Auth/OAuthResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Auth/OAuthResult.swift",
       "line": 27,
       "symbol": "OAuthResult.unknownError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/CreateSpaceMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/CreateSpaceMembershipError.swift",
       "line": 21,
       "symbol": "CreateSpaceMembershipError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/GetMembershipByIdError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/GetMembershipByIdError.swift",
       "line": 21,
       "symbol": "GetMembershipByIdError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/GetMembershipByIdError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/GetMembershipByIdError.swift",
       "line": 22,
       "symbol": "GetMembershipByIdError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/GetMembershipByIdError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/GetMembershipByIdError.swift",
       "line": 23,
       "symbol": "GetMembershipByIdError.invalidMembershipId",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/ListMembershipReadStatusError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/ListMembershipReadStatusError.swift",
       "line": 21,
       "symbol": "ListMembershipReadStatusError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/ListMembershipReadStatusError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/ListMembershipReadStatusError.swift",
       "line": 22,
       "symbol": "ListMembershipReadStatusError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/ListMembershipReadStatusError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/ListMembershipReadStatusError.swift",
       "line": 23,
       "symbol": "ListMembershipReadStatusError.invalidSpaceId",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/ListMembershipsError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/ListMembershipsError.swift",
       "line": 21,
       "symbol": "ListMembershipsError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/ListMembershipsError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/ListMembershipsError.swift",
       "line": 22,
       "symbol": "ListMembershipsError.invalidSpaceId",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/ListMembershipsError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/ListMembershipsError.swift",
       "line": 23,
       "symbol": "ListMembershipsError.invalidPersonId",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/ListMembershipsError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/ListMembershipsError.swift",
       "line": 24,
       "symbol": "ListMembershipsError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/Membership.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/Membership.swift",
       "line": 28,
       "symbol": "MembershipEvent.created(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/Membership.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/Membership.swift",
       "line": 30,
       "symbol": "MembershipEvent.deleted(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/Membership.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/Membership.swift",
       "line": 32,
       "symbol": "MembershipEvent.update(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/MembershipDeleteError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/MembershipDeleteError.swift",
       "line": 1,
       "symbol": "MembershipDeleteError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/MembershipDeleteError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/MembershipDeleteError.swift",
       "line": 2,
       "symbol": "MembershipDeleteError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/MembershipDeleteError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/MembershipDeleteError.swift",
       "line": 3,
       "symbol": "MembershipDeleteError.invalidMembershipId",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/MembershipDeleteError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/MembershipDeleteError.swift",
       "line": 4,
       "symbol": "MembershipDeleteError.spaceTypeDirect",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/MembershipDeleteError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/MembershipDeleteError.swift",
       "line": 5,
       "symbol": "MembershipDeleteError.noPeople",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/MembershipDeleteError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/MembershipDeleteError.swift",
       "line": 6,
       "symbol": "MembershipDeleteError.loadingError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/MembershipDeleteError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/MembershipDeleteError.swift",
       "line": 7,
       "symbol": "MembershipDeleteError.selfNotInSpace",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/MembershipDeleteError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/MembershipDeleteError.swift",
       "line": 8,
       "symbol": "MembershipDeleteError.insufficientSpacePrivileges",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/MembershipUpdateError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/MembershipUpdateError.swift",
       "line": 1,
       "symbol": "MembershipUpdateError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/MembershipUpdateError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/MembershipUpdateError.swift",
       "line": 2,
       "symbol": "MembershipUpdateError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/MembershipUpdateError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/MembershipUpdateError.swift",
       "line": 3,
       "symbol": "MembershipUpdateError.invalidMembershipId",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/MembershipUpdateError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/MembershipUpdateError.swift",
       "line": 4,
       "symbol": "MembershipUpdateError.spaceIsProvisional",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/MembershipUpdateError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Membership/MembershipUpdateError.swift",
       "line": 5,
       "symbol": "MembershipUpdateError.failedToRemoveModerator",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/DeleteMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/DeleteMessageError.swift",
       "line": 21,
       "symbol": "DeleteMessageError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/DownloadFileError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/DownloadFileError.swift",
       "line": 21,
       "symbol": "DownloadFileError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/DownloadThumbnailError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/DownloadThumbnailError.swift",
       "line": 21,
       "symbol": "DownloadThumbnailError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/GetMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/GetMessageError.swift",
       "line": 21,
       "symbol": "GetMessageError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/ListMessagesError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/ListMessagesError.swift",
       "line": 21,
       "symbol": "ListMessagesError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/ListMessagesError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/ListMessagesError.swift",
       "line": 22,
       "symbol": "ListMessagesError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/ListMessagesError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/ListMessagesError.swift",
       "line": 23,
       "symbol": "ListMessagesError.invalidSpaceId",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MarkMessageReadResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MarkMessageReadResult.swift",
       "line": 21,
       "symbol": "MarkMessageReadResult",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MarkMessageReadResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MarkMessageReadResult.swift",
       "line": 22,
       "symbol": "MarkMessageReadResult.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MarkMessageReadResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MarkMessageReadResult.swift",
       "line": 23,
       "symbol": "MarkMessageReadResult.invalidMessageId",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MarkMessageReadResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MarkMessageReadResult.swift",
       "line": 24,
       "symbol": "MarkMessageReadResult.invalidSpaceId",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MarkMessageReadResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MarkMessageReadResult.swift",
       "line": 25,
       "symbol": "MarkMessageReadResult.failedToMarkMessageRead",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MarkMessageReadResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MarkMessageReadResult.swift",
       "line": 26,
       "symbol": "MarkMessageReadResult.attemptedToMarkMessageReadBySender",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MarkMessageReadResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MarkMessageReadResult.swift",
       "line": 27,
       "symbol": "MarkMessageReadResult.noError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/Message.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/Message.swift",
       "line": 255,
       "symbol": "MentionPos.init(id:start:end:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 23,
       "symbol": "MessageValidationResult.noError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 24,
       "symbol": "MessageValidationResult.unknownError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 25,
       "symbol": "MessageValidationResult.emptyMessage",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 26,
       "symbol": "MessageValidationResult.messageTooLong",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 27,
       "symbol": "MessageValidationResult.unknownConversation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 28,
       "symbol": "MessageValidationResult.noFileData",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 29,
       "symbol": "MessageValidationResult.mentionedUserDoesNotExist",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 30,
       "symbol": "MessageValidationResult.parentMessageDeletedByAuthor",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 31,
       "symbol": "MessageValidationResult.oneToOneParticipantRemovedFromCI",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 32,
       "symbol": "MessageValidationResult.invalidUnicodeContentInMessage",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 33,
       "symbol": "MessageValidationResult.parentMessageDeletedByModerator",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 34,
       "symbol": "MessageValidationResult.parentMessageDeletedByModeratorWhileEditing",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 35,
       "symbol": "MessageValidationResult.linksAreDirty",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 36,
       "symbol": "MessageValidationResult.provisionalSpaceConversionFailed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 37,
       "symbol": "MessageValidationResult.serverError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 38,
       "symbol": "MessageValidationResult.spaceError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 39,
       "symbol": "MessageValidationResult.invalidFileData",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/MessageValidationResult.swift",
       "line": 40,
       "symbol": "MessageValidationResult.fileUploadFailed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 20,
       "symbol": "PostMessageError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 22,
       "symbol": "PostMessageError.noError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 24,
       "symbol": "PostMessageError.unknownError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 26,
       "symbol": "PostMessageError.emptyMessage",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 28,
       "symbol": "PostMessageError.messageTooLong",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 30,
       "symbol": "PostMessageError.unknownConversation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 32,
       "symbol": "PostMessageError.noFileData",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 34,
       "symbol": "PostMessageError.mentionedUserDoesNotExist",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 36,
       "symbol": "PostMessageError.parentMessageDeletedByAuthor",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 38,
       "symbol": "PostMessageError.parentMessageDeletedByModerator",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 40,
       "symbol": "PostMessageError.oneToOneParticipantRemovedFromCI",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 42,
       "symbol": "PostMessageError.invalidUnicodeContentInMessage",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 44,
       "symbol": "PostMessageError.parentMessageDeletedByModeratorWhileEditing",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 46,
       "symbol": "PostMessageError.linksAreDirty",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 48,
       "symbol": "PostMessageError.provisionalSpaceConversionFailed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 50,
       "symbol": "PostMessageError.serverError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 52,
       "symbol": "PostMessageError.spaceError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 54,
       "symbol": "PostMessageError.invalidFileData",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 56,
       "symbol": "PostMessageError.fileUploadFailed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Message/PostMessageError.swift",
       "line": 58,
       "symbol": "PostMessageError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/CreatePersonError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/CreatePersonError.swift",
       "line": 21,
       "symbol": "CreatePersonError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/CreatePersonError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/CreatePersonError.swift",
       "line": 22,
       "symbol": "CreatePersonError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/CreatePersonError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/CreatePersonError.swift",
       "line": 23,
       "symbol": "CreatePersonError.invalidPayload",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/CreatePersonError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/CreatePersonError.swift",
       "line": 24,
       "symbol": "CreatePersonError.personNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/CreatePersonError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/CreatePersonError.swift",
       "line": 25,
       "symbol": "CreatePersonError.unauthorized",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/DeletePersonError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/DeletePersonError.swift",
       "line": 21,
       "symbol": "DeletePersonError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/DeletePersonError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/DeletePersonError.swift",
       "line": 22,
       "symbol": "DeletePersonError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/DeletePersonError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/DeletePersonError.swift",
       "line": 23,
       "symbol": "DeletePersonError.personNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/DeletePersonError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/DeletePersonError.swift",
       "line": 24,
       "symbol": "DeletePersonError.unauthorized",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/ListPersonsError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/ListPersonsError.swift",
       "line": 21,
       "symbol": "ListPersonsError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/ListPersonsError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/ListPersonsError.swift",
       "line": 22,
       "symbol": "ListPersonsError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/ListPersonsError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/ListPersonsError.swift",
       "line": 23,
       "symbol": "ListPersonsError.invalidPayload",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/ListPersonsError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/ListPersonsError.swift",
       "line": 24,
       "symbol": "ListPersonsError.unauthorized",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/PersonClient.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/PersonClient.swift",
       "line": 25,
       "symbol": "PersonClient.PersonGetError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/PersonClient.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/PersonClient.swift",
       "line": 26,
       "symbol": "PersonClient.PersonGetError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/PersonClient.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/PersonClient.swift",
       "line": 27,
       "symbol": "PersonClient.PersonGetError.personNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/UpdatePersonError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/UpdatePersonError.swift",
       "line": 21,
       "symbol": "UpdatePersonError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/UpdatePersonError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/UpdatePersonError.swift",
       "line": 22,
       "symbol": "UpdatePersonError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/UpdatePersonError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/UpdatePersonError.swift",
       "line": 23,
       "symbol": "UpdatePersonError.personNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/UpdatePersonError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/UpdatePersonError.swift",
       "line": 24,
       "symbol": "UpdatePersonError.invalidPayload",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Person/UpdatePersonError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Person/UpdatePersonError.swift",
       "line": 25,
       "symbol": "UpdatePersonError.unauthorized",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/AuxStream.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/AuxStream.swift",
       "line": 26,
       "symbol": "AuxStream",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaOption.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaOption.swift",
       "line": 11,
       "symbol": "MediaOption.CompositedVideoLayout.single",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaOption.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaOption.swift",
       "line": 12,
       "symbol": "MediaOption.CompositedVideoLayout.filmstrip",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaOption.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaOption.swift",
       "line": 13,
       "symbol": "MediaOption.CompositedVideoLayout.grid",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaOption.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaOption.swift",
       "line": 14,
       "symbol": "MediaOption.CompositedVideoLayout.notSupported",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaRenderView.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaRenderView.swift",
       "line": 3,
       "symbol": "MediaRenderView",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
       "line": 138,
       "symbol": "Call.startBroadcast()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
       "line": 144,
       "symbol": "Call.stopBroadcast()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
       "line": 150,
       "symbol": "Call.setup()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
       "line": 154,
       "symbol": "Call.sendFrame(timeStamp:width:height:data:length:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
       "line": 1671,
       "symbol": "NotificationCallType.Webex",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
       "line": 1672,
       "symbol": "NotificationCallType.CUCM",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
       "line": 1688,
       "symbol": "CallAssociationType.Merge",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
       "line": 1689,
       "symbol": "CallAssociationType.Transfer",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/CallError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/CallError.swift",
       "line": 1,
       "symbol": "CallError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/CallError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/CallError.swift",
       "line": 2,
       "symbol": "CallError.registerFailure",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/CallError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/CallError.swift",
       "line": 3,
       "symbol": "CallError.unsupportedFunction",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/CallError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/CallError.swift",
       "line": 4,
       "symbol": "CallError.alreadyDisconnected",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/CallError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/CallError.swift",
       "line": 5,
       "symbol": "CallError.alreadyConnected",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/CallError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/CallError.swift",
       "line": 6,
       "symbol": "CallError.callFailure",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/CallError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/CallError.swift",
       "line": 7,
       "symbol": "CallError.otherActiveCall",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/CallError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/CallError.swift",
       "line": 8,
       "symbol": "CallError.callCancelled",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/CallError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/CallError.swift",
       "line": 9,
       "symbol": "CallError.callAssociationFailed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/CallError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/CallError.swift",
       "line": 10,
       "symbol": "CallError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/CallError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/CallError.swift",
       "line": 11,
       "symbol": "CallError.callNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/CallError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/CallError.swift",
       "line": 12,
       "symbol": "CallError.hostPinOrMeetingPasswordRequired",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/H264LicensePrompter.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/H264LicensePrompter.swift",
       "line": 22,
       "symbol": "H264LicensePrompter",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/LetInError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/LetInError.swift",
       "line": 21,
       "symbol": "LetInError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/LetInError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/LetInError.swift",
       "line": 22,
       "symbol": "LetInError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/LetInError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/LetInError.swift",
       "line": 23,
       "symbol": "LetInError.illegal",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/LetInError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/LetInError.swift",
       "line": 24,
       "symbol": "LetInError.callNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 3,
       "symbol": "PhoneServiceRegistrationFailureReason",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 4,
       "symbol": "PhoneServiceRegistrationFailureReason.Unknown",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 5,
       "symbol": "PhoneServiceRegistrationFailureReason.None",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 6,
       "symbol": "PhoneServiceRegistrationFailureReason.Registering",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 7,
       "symbol": "PhoneServiceRegistrationFailureReason.WaitingForConfigFile",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 8,
       "symbol": "PhoneServiceRegistrationFailureReason.NotStarted",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 9,
       "symbol": "PhoneServiceRegistrationFailureReason.NoNetwork",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 10,
       "symbol": "PhoneServiceRegistrationFailureReason.Failover",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 11,
       "symbol": "PhoneServiceRegistrationFailureReason.Fallback",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 12,
       "symbol": "PhoneServiceRegistrationFailureReason.RegAllFailed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 13,
       "symbol": "PhoneServiceRegistrationFailureReason.Shutdown",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 14,
       "symbol": "PhoneServiceRegistrationFailureReason.LogoutReset",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 15,
       "symbol": "PhoneServiceRegistrationFailureReason.InvalidCredentials",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 16,
       "symbol": "PhoneServiceRegistrationFailureReason.NoCredentialsConfigured",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 17,
       "symbol": "PhoneServiceRegistrationFailureReason.PhoneAuthenticationFailure",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 18,
       "symbol": "PhoneServiceRegistrationFailureReason.PhoneAuthenticationRequired",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 19,
       "symbol": "PhoneServiceRegistrationFailureReason.LineRegistrationFailure",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 20,
       "symbol": "PhoneServiceRegistrationFailureReason.RegisteredElsewhere",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 21,
       "symbol": "PhoneServiceRegistrationFailureReason.NoRemoteDestinationAvailable",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 22,
       "symbol": "PhoneServiceRegistrationFailureReason.CouldNotActivateRemoteDestination",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 23,
       "symbol": "PhoneServiceRegistrationFailureReason.NoDeviceConfigured",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 24,
       "symbol": "PhoneServiceRegistrationFailureReason.InvalidConfig",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 25,
       "symbol": "PhoneServiceRegistrationFailureReason.CouldNotConnect",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 26,
       "symbol": "PhoneServiceRegistrationFailureReason.DeviceNotInService",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 27,
       "symbol": "PhoneServiceRegistrationFailureReason.DeviceRegTimedOut",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 28,
       "symbol": "PhoneServiceRegistrationFailureReason.DeviceRegDeviceAlreadyRegistered",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 29,
       "symbol": "PhoneServiceRegistrationFailureReason.DeviceRegCouldNotConnect",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 30,
       "symbol": "PhoneServiceRegistrationFailureReason.DeviceRegNoDevicesFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 31,
       "symbol": "PhoneServiceRegistrationFailureReason.DeviceRegAuthenticationFailure",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 32,
       "symbol": "PhoneServiceRegistrationFailureReason.DeviceRegSelectedDeviceNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 33,
       "symbol": "PhoneServiceRegistrationFailureReason.DeviceRegSelectedLineNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 34,
       "symbol": "PhoneServiceRegistrationFailureReason.DeviceRegCouldNotOpenDevice",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 35,
       "symbol": "PhoneServiceRegistrationFailureReason.DeviceRegCouldNotOpenLine",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 36,
       "symbol": "PhoneServiceRegistrationFailureReason.DeviceNotAuthorised",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 37,
       "symbol": "PhoneServiceRegistrationFailureReason.TLSFailure",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 38,
       "symbol": "PhoneServiceRegistrationFailureReason.IpModeMismatch",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 39,
       "symbol": "PhoneServiceRegistrationFailureReason.HostResolutionFailure",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 40,
       "symbol": "PhoneServiceRegistrationFailureReason.ServerError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 41,
       "symbol": "PhoneServiceRegistrationFailureReason.RequireStorageHelper",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 42,
       "symbol": "PhoneServiceRegistrationFailureReason.DeviceConfigurationRetrievalTimedOut",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 43,
       "symbol": "PhoneServiceRegistrationFailureReason.EdgePhoneModeNotSupported",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 44,
       "symbol": "PhoneServiceRegistrationFailureReason.EdgeIpModeNotSupported",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 45,
       "symbol": "PhoneServiceRegistrationFailureReason.NoHttpHelperAvailable",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 46,
       "symbol": "PhoneServiceRegistrationFailureReason.CTIUnableToVerifyCertificate",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 47,
       "symbol": "PhoneServiceRegistrationFailureReason.FIPSNoCertificateVerifier",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 48,
       "symbol": "PhoneServiceRegistrationFailureReason.NoCertificateVerifier",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 49,
       "symbol": "PhoneServiceRegistrationFailureReason.P2PHybridNotSupported",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 50,
       "symbol": "PhoneServiceRegistrationFailureReason.DisabledByMRAPolicy",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 51,
       "symbol": "PhoneServiceRegistrationFailureReason.DeviceMaxConnectionReached",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 52,
       "symbol": "PhoneServiceRegistrationFailureReason.UltrasoundCapturerOccupied",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/PhoneServiceRegistrationFailureReason.swift",
       "line": 53,
       "symbol": "PhoneServiceRegistrationFailureReason.DirectoryLoginNotAllowed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/SetCompositedLayoutError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/SetCompositedLayoutError.swift",
       "line": 21,
       "symbol": "SetCompositedLayoutError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/SetCompositedLayoutError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/SetCompositedLayoutError.swift",
       "line": 22,
       "symbol": "SetCompositedLayoutError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/SetCompositedLayoutError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/SetCompositedLayoutError.swift",
       "line": 23,
       "symbol": "SetCompositedLayoutError.illegal",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/SetCompositedLayoutError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/SetCompositedLayoutError.swift",
       "line": 24,
       "symbol": "SetCompositedLayoutError.callNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/SetCompositedLayoutError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/SetCompositedLayoutError.swift",
       "line": 25,
       "symbol": "SetCompositedLayoutError.notSupported",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginServerConnectionStatus.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginServerConnectionStatus.swift",
       "line": 3,
       "symbol": "UCLoginServerConnectionStatus",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginServerConnectionStatus.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginServerConnectionStatus.swift",
       "line": 4,
       "symbol": "UCLoginServerConnectionStatus.Idle",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginServerConnectionStatus.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginServerConnectionStatus.swift",
       "line": 5,
       "symbol": "UCLoginServerConnectionStatus.Connecting",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginServerConnectionStatus.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginServerConnectionStatus.swift",
       "line": 6,
       "symbol": "UCLoginServerConnectionStatus.Connected",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginServerConnectionStatus.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginServerConnectionStatus.swift",
       "line": 7,
       "symbol": "UCLoginServerConnectionStatus.Disconnected",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginServerConnectionStatus.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginServerConnectionStatus.swift",
       "line": 8,
       "symbol": "UCLoginServerConnectionStatus.Failed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Space/DeleteSpaceError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Space/DeleteSpaceError.swift",
       "line": 21,
       "symbol": "DeleteSpaceError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Space/DeleteSpaceError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Space/DeleteSpaceError.swift",
       "line": 22,
       "symbol": "DeleteSpaceError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Space/DeleteSpaceError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Space/DeleteSpaceError.swift",
       "line": 23,
       "symbol": "DeleteSpaceError.invalidSpaceId",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Space/ListSpaceReadStatusError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Space/ListSpaceReadStatusError.swift",
       "line": 21,
       "symbol": "ListSpaceReadStatusError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Space/ListSpaceReadStatusError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Space/ListSpaceReadStatusError.swift",
       "line": 22,
       "symbol": "ListSpaceReadStatusError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Space/Space.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Space/Space.swift",
       "line": 131,
       "symbol": "Space.init(id:title:type:isLocked:lastActivityTimestamp:createdDate:teamId:sipAddress:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Space/Space.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Space/Space.swift",
       "line": 229,
       "symbol": "SpaceApiErrorInfo.init(code:message:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Space/SpaceClient.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Space/SpaceClient.swift",
       "line": 30,
       "symbol": "SpaceClient.SpaceClientError.failedToFetchSpaceMeetingInfo",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Space/SpaceClient.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Space/SpaceClient.swift",
       "line": 31,
       "symbol": "SpaceClient.SpaceClientError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Space/UpdateSpaceTitleError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Space/UpdateSpaceTitleError.swift",
       "line": 21,
       "symbol": "UpdateSpaceTitleError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Space/UpdateSpaceTitleError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Space/UpdateSpaceTitleError.swift",
       "line": 22,
       "symbol": "UpdateSpaceTitleError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Space/UpdateSpaceTitleError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Space/UpdateSpaceTitleError.swift",
       "line": 23,
       "symbol": "UpdateSpaceTitleError.invalidSpaceId",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Space/UpdateSpaceTitleError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Space/UpdateSpaceTitleError.swift",
       "line": 24,
       "symbol": "UpdateSpaceTitleError.titleCannotBeEmpty",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Space/UpdateSpaceTitleError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Space/UpdateSpaceTitleError.swift",
       "line": 25,
       "symbol": "UpdateSpaceTitleError.failedToUpdateSpaceTitle",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
       "line": 27,
       "symbol": "TeamClient.TeamArchiveError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
       "line": 28,
       "symbol": "TeamClient.TeamArchiveError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
       "line": 29,
       "symbol": "TeamClient.TeamArchiveError.teamNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
       "line": 30,
       "symbol": "TeamClient.TeamArchiveError.alreadyArchived",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
       "line": 31,
       "symbol": "TeamClient.TeamArchiveError.userIsNotModerator",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
       "line": 32,
       "symbol": "TeamClient.TeamArchiveError.archiveFailed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
       "line": 35,
       "symbol": "TeamClient.TeamUpdateError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
       "line": 36,
       "symbol": "TeamClient.TeamUpdateError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
       "line": 37,
       "symbol": "TeamClient.TeamUpdateError.teamNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Team/TeamClient.swift",
       "line": 38,
       "symbol": "TeamClient.TeamUpdateError.invalidTeamName",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Team/TeamCreateError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Team/TeamCreateError.swift",
       "line": 21,
       "symbol": "TeamCreateError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Team/TeamGetError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Team/TeamGetError.swift",
       "line": 21,
       "symbol": "TeamGetError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Team/TeamListError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Team/TeamListError.swift",
       "line": 21,
       "symbol": "TeamListError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/CreateTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/CreateTeamMembershipError.swift",
       "line": 21,
       "symbol": "CreateTeamMembershipError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
       "line": 21,
       "symbol": "DeleteTeamMembershipError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
       "line": 22,
       "symbol": "DeleteTeamMembershipError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
       "line": 23,
       "symbol": "DeleteTeamMembershipError.invalidTeamMembershipId",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
       "line": 24,
       "symbol": "DeleteTeamMembershipError.teamNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
       "line": 25,
       "symbol": "DeleteTeamMembershipError.spaceTypeDirect",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
       "line": 26,
       "symbol": "DeleteTeamMembershipError.noPeople",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
       "line": 27,
       "symbol": "DeleteTeamMembershipError.loadingError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
       "line": 28,
       "symbol": "DeleteTeamMembershipError.selfNotInTeam",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/DeleteTeamMembershipError.swift",
       "line": 29,
       "symbol": "DeleteTeamMembershipError.insufficientTeamPrivileges",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/GetTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/GetTeamMembershipError.swift",
       "line": 21,
       "symbol": "GetTeamMembershipError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/GetTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/GetTeamMembershipError.swift",
       "line": 22,
       "symbol": "GetTeamMembershipError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/GetTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/GetTeamMembershipError.swift",
       "line": 23,
       "symbol": "GetTeamMembershipError.invalidTeamMembershipId",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/GetTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/GetTeamMembershipError.swift",
       "line": 24,
       "symbol": "GetTeamMembershipError.teamNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/ListTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/ListTeamMembershipError.swift",
       "line": 21,
       "symbol": "ListTeamMembershipError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/ListTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/ListTeamMembershipError.swift",
       "line": 22,
       "symbol": "ListTeamMembershipError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/ListTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/ListTeamMembershipError.swift",
       "line": 23,
       "symbol": "ListTeamMembershipError.teamNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/UpdateTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/UpdateTeamMembershipError.swift",
       "line": 21,
       "symbol": "UpdateTeamMembershipError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/UpdateTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/UpdateTeamMembershipError.swift",
       "line": 22,
       "symbol": "UpdateTeamMembershipError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/UpdateTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/UpdateTeamMembershipError.swift",
       "line": 23,
       "symbol": "UpdateTeamMembershipError.invalidTeamMembershipId",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/UpdateTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/UpdateTeamMembershipError.swift",
       "line": 24,
       "symbol": "UpdateTeamMembershipError.teamNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/UpdateTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/UpdateTeamMembershipError.swift",
       "line": 25,
       "symbol": "UpdateTeamMembershipError.spaceIsProvisional",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/UpdateTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/UpdateTeamMembershipError.swift",
       "line": 26,
       "symbol": "UpdateTeamMembershipError.insufficientTeamPrivileges",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/TeamMembership/UpdateTeamMembershipError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/TeamMembership/UpdateTeamMembershipError.swift",
       "line": 27,
       "symbol": "UpdateTeamMembershipError.failedToRemoveModerator",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/WebexSDK.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/WebexSDK.swift",
       "line": 47,
       "symbol": "Webex.omnius",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/WebexSDK.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/WebexSDK.swift",
       "line": 49,
       "symbol": "Webex.authenticator",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/WebexSDK.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/WebexSDK.swift",
       "line": 50,
       "symbol": "Webex.ucLoginDelegate",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/WebexSDK.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/WebexSDK.swift",
       "line": 333,
       "symbol": "Webex.omniusServiceBridge(_:showUCSSOLoginView:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/WebexSDK.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/WebexSDK.swift",
       "line": 338,
       "symbol": "Webex.omniusServiceBridgeShowUCNonSSOLoginView(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/WebexSDK.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/WebexSDK.swift",
       "line": 343,
       "symbol": "Webex.omniusServiceBridgeShowUCDomainUDSServerInput(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/WebexSDK.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/WebexSDK.swift",
       "line": 348,
       "symbol": "Webex.omniusServiceBridgeOnUCLogged(in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/WebexSDK.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/WebexSDK.swift",
       "line": 353,
       "symbol": "Webex.omniusServiceBridge(onUCLoggedOut:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/WebexSDK.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/WebexSDK.swift",
       "line": 357,
       "symbol": "Webex.omniusServiceBridge(onUCLoginFailed:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/WebexSDK.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/WebexSDK.swift",
       "line": 362,
       "symbol": "Webex.omniusServiceBridge(_:onUCServerConnectionStateChanged:failureReason:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Webhook/CreateWebhookError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Webhook/CreateWebhookError.swift",
       "line": 21,
       "symbol": "CreateWebhookError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Webhook/CreateWebhookError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Webhook/CreateWebhookError.swift",
       "line": 22,
       "symbol": "CreateWebhookError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Webhook/CreateWebhookError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Webhook/CreateWebhookError.swift",
       "line": 23,
       "symbol": "CreateWebhookError.invalidPayload",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Webhook/DeleteWebhookError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Webhook/DeleteWebhookError.swift",
       "line": 21,
       "symbol": "DeleteWebhookError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Webhook/DeleteWebhookError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Webhook/DeleteWebhookError.swift",
       "line": 22,
       "symbol": "DeleteWebhookError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Webhook/DeleteWebhookError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Webhook/DeleteWebhookError.swift",
       "line": 23,
       "symbol": "DeleteWebhookError.webhookNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Webhook/GetWebhookError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Webhook/GetWebhookError.swift",
       "line": 21,
       "symbol": "GetWebhookError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Webhook/GetWebhookError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Webhook/GetWebhookError.swift",
       "line": 22,
       "symbol": "GetWebhookError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Webhook/GetWebhookError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Webhook/GetWebhookError.swift",
       "line": 23,
       "symbol": "GetWebhookError.webhookNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Webhook/ListWebhooksError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Webhook/ListWebhooksError.swift",
       "line": 21,
       "symbol": "ListWebhooksError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Webhook/ListWebhooksError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Webhook/ListWebhooksError.swift",
       "line": 22,
       "symbol": "ListWebhooksError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Webhook/UpdateWebhookError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Webhook/UpdateWebhookError.swift",
       "line": 21,
       "symbol": "UpdateWebhookError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Webhook/UpdateWebhookError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Webhook/UpdateWebhookError.swift",
       "line": 22,
       "symbol": "UpdateWebhookError.internalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Webhook/UpdateWebhookError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Webhook/UpdateWebhookError.swift",
       "line": 23,
       "symbol": "UpdateWebhookError.webhookNotFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Webhook/UpdateWebhookError.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Webhook/UpdateWebhookError.swift",
       "line": 24,
       "symbol": "UpdateWebhookError.invalidPayload",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Webhook/Webhook.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/Webhook/Webhook.swift",
       "line": 73,
       "symbol": "Webhook.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/Hacks.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/Hacks.swift",
       "line": 4,
       "symbol": "Bool.stringValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/Resource.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/Resource.swift",
       "line": 51,
       "symbol": "Resource.init(clusterId:type:resource:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/Resource.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/Resource.swift",
       "line": 76,
       "symbol": "ResourceType.Memberships",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/Resource.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/Resource.swift",
       "line": 77,
       "symbol": "ResourceType.Messages",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/Resource.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/Resource.swift",
       "line": 78,
       "symbol": "ResourceType.Spaces",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 3,
       "symbol": "SparkClientProvider",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 7,
       "symbol": "SparkClientProvider.init(oauthClientId:oauthClientSecret:oauthRedirectUri:buildInfo:device:fileManager:locale:userDefaults:isExtension:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 46,
       "symbol": "SparkClientProvider.userAgent",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 47,
       "symbol": "SparkClientProvider.oauthClientId",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 48,
       "symbol": "SparkClientProvider.oauthClientSecret",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 49,
       "symbol": "SparkClientProvider.oauthRedirectUri",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 50,
       "symbol": "SparkClientProvider.applicationVersion",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 51,
       "symbol": "SparkClientProvider.operatingSystemVersion",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 52,
       "symbol": "SparkClientProvider.operatingSystemLanguage",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 53,
       "symbol": "SparkClientProvider.platformInfo",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 54,
       "symbol": "SparkClientProvider.databasePath",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 55,
       "symbol": "SparkClientProvider.wdmDeviceType",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 56,
       "symbol": "SparkClientProvider.platformEncryptionIdentifier",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 57,
       "symbol": "SparkClientProvider.appType",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 59,
       "symbol": "SparkClientProvider.extraTelemetryMetaData(forMetricEventName:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 63,
       "symbol": "SparkClientProvider.productName",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 64,
       "symbol": "SparkClientProvider.isDeveloperVersion",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 65,
       "symbol": "SparkClientProvider.isTablet",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 66,
       "symbol": "SparkClientProvider.appleAccessGroupIdentifier",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 68,
       "symbol": "SparkClientProvider.additionalClientConfig(forConfigName:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
       "line": 85,
       "symbol": "SparkClientProvider.u2cUrl",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Array+Extension.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/utils/Array+Extension.swift",
       "line": 86,
       "symbol": "Array.subscript(safeIndex:)",
       "symbol_kind": "source.lang.swift.decl.function.subscript",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/EmailAddress.swift",
+      "file": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios/sdk-ios/utils/EmailAddress.swift",
       "line": 63,
       "symbol": "EmailAddress.toObjC()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/bhabalan/dev/spark/products/sdk-ios"
+  "source_directory": "/Users/aksagarw/Desktop/cisco/SCF/spark-client-framework/products/sdk-ios"
 }
