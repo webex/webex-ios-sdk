@@ -1,5 +1,8 @@
 # Cisco Webex iOS SDK
 
+[![CocoaPods](https://img.shields.io/cocoapods/v/WebexSDK.svg)](https://cocoapods.org/pods/WebexSDK)
+[![license](https://img.shields.io/github/license/webex/webex-ios-sdk.svg)](https://github.com/webex/webex-ios-sdk/blob/master/LICENSE)
+
 The Cisco Webex iOS SDK makes it easy to integrate secure and convenient Cisco Webex messaging and calling features in your iOS apps.
 
 This SDK is written in [Swift 5](https://developer.apple.com/swift) and requires **iOS 13** or later.
