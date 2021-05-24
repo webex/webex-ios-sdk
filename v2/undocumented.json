@@ -1,0 +1,215 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Membership/Membership.swift",
+      "line": 29,
+      "symbol": "MembershipEvent.created(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Membership/Membership.swift",
+      "line": 31,
+      "symbol": "MembershipEvent.deleted(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Membership/Membership.swift",
+      "line": 33,
+      "symbol": "MembershipEvent.update(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/CallMembership.swift",
+      "line": 144,
+      "symbol": "CallMembership.isSelf",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/MediaOption.swift",
+      "line": 32,
+      "symbol": "MediaOption.CompositedVideoLayout.single",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/MediaOption.swift",
+      "line": 33,
+      "symbol": "MediaOption.CompositedVideoLayout.filmstrip",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/MediaOption.swift",
+      "line": 34,
+      "symbol": "MediaOption.CompositedVideoLayout.grid",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/MediaShareModel.swift",
+      "line": 102,
+      "symbol": "MediaShareModel.MediaShareFloor",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/ParticipantModel.swift",
+      "line": 240,
+      "symbol": "ParticipantModel.DeviceModel",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/ParticipantModel.swift",
+      "line": 257,
+      "symbol": "ParticipantModel.StatusModel",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/ParticipantModel.swift",
+      "line": 269,
+      "symbol": "ParticipantModel.ControlsModel",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/ParticipantModel.swift",
+      "line": 279,
+      "symbol": "ParticipantModel.DeviceModel.IntentModel",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Call/ParticipantModel.swift",
+      "line": 307,
+      "symbol": "ParticipantModel.ControlsModel.AudioModel",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Media/AuxStream.swift",
+      "line": 25,
+      "symbol": "AuxStream",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Media/MediaRenderView.swift",
+      "line": 25,
+      "symbol": "MediaRenderView.layerClass",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Media/MediaSessionWrapper.swift",
+      "line": 398,
+      "symbol": "MediaSessionWrapper.shouldAcceptNewConnection()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Media/MediaSessionWrapper.swift",
+      "line": 407,
+      "symbol": "MediaSessionWrapper.didReceivedFrame(_:frameData:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Phone/Media/MediaSessionWrapper.swift",
+      "line": 413,
+      "symbol": "MediaSessionWrapper.didReceivedError(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Utils/Array+Extension.swift",
+      "line": 86,
+      "symbol": "Array.subscript(safeIndex:)",
+      "symbol_kind": "source.lang.swift.decl.function.subscript",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Utils/Timers.swift",
+      "line": 104,
+      "symbol": "Double.millisecond",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Utils/Timers.swift",
+      "line": 107,
+      "symbol": "Double.milliseconds",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Utils/Timers.swift",
+      "line": 110,
+      "symbol": "Double.ms",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Utils/Timers.swift",
+      "line": 114,
+      "symbol": "Double.second",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Utils/Timers.swift",
+      "line": 117,
+      "symbol": "Double.seconds",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Utils/Timers.swift",
+      "line": 121,
+      "symbol": "Double.minute",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Utils/Timers.swift",
+      "line": 124,
+      "symbol": "Double.minutes",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Utils/Timers.swift",
+      "line": 128,
+      "symbol": "Double.hour",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Utils/Timers.swift",
+      "line": 131,
+      "symbol": "Double.hours",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Utils/Timers.swift",
+      "line": 135,
+      "symbol": "Double.day",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/yonshi/Git/webex-ios-sdk/Source/Utils/Timers.swift",
+      "line": 138,
+      "symbol": "Double.days",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/yonshi/Git/webex-ios-sdk"
+}
