@@ -1,5 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 3.0.0 Releases
+
+- `3.0.0` Releases - [3.0.0](#300)
+
 #### 2.8.0 Releases
 
 - `2.8.0` Releases - [2.8.0](#280)
@@ -81,6 +85,78 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ---
+## [3.0.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.0.0)
+Released on 2021-05-24
+#### Added
+- Major rewrite of the SDK.
+- Ability to make calls via CUCM.
+- Receive push notification for incoming CUCM calls. 
+- Added new API `Webex.setUCDomainServerUrl(ucDomain: String, serverUrl: String )` for CUCM
+- Added new API `Webex.setCUCMCredential(username: String, password: String )` for CUCM
+- Added new API `Webex.getUCSSOLoginView()` for CUCM SSO login
+- Added new API `Webex.ucCancelSSOLogin()` to cancel CUCM SSO login
+- Added new API `Webex.isUCLoggedIn()` for CUCM
+- Added new API `Webex.getUCServerConnectionStatus()` for CUCM
+- Added new `Webex.initialize` that sets up the SDK and automatically logs in a previously logged in user
+- Added new API `Webex.base64Encode(resourceType: ResourceType, resource: String, completionHandler: handler)` to encode UUID as Base64
+- Added new API `Webex.base64Decode(encodedResource: String)` to decode Base64 to Resource
+- Added new API `SpaceClient.filter` to fetch person and bots based on the given query
+- Added new API `Phone.getCallHistory` to get collection of Space which contains call history of One to One Spaces as well as Group type Spaces
+- Added new API `Webex.getLogFileUrl` to get file URI of where all the logs are stored
+- Added new struct `Message.MentionPos` to describe the position of a Mention
+- Added new property `Call.schedules` to get the the schedules of a call if the call has one or more schedules.
+- Added `Call.startAssociatedCall()` for CUCM calls
+- Added `CallAssociationType` enum to indicate whether call is of type Transfer or merge
+- Added `Call.transferCall()` for CUCM calls
+- Added `Call.mergeCall()` for CUCM calls 
+- Added `Call.holdCall()` for CUCM calls
+- Added `Call.isOnHold()` for CUCM calls
+- Added new API `Call.onFailed` to notify that a call has failed
+- Added new API `Call.onInfoChanged()` to notify when call object changes
+- Added new API `Call.setParticipantAudioMuteState()` to mute particular participant
+- Added new API `Call.setAllParticipantAudioMuteState()` to control mute state of all participants
+- Added new property `CallSchedule.organzier` to get organizer of a scheduled call
+- Added new property `CallSchedule.meetingId` to get meetingId of a scheduled call
+- Added new property `CallSchedule.link` to get link of a scheduled call
+- Added new property `CallSchedule.subject` to get subject of a scheduled call
+- Added new struct `Resource` to represent a Resource
+- Added new enum `ResourceType` to represents the type of a Resource
+- Added new delegate `WebexUCLoginDelegate` to support UC login state changes
+- Added `refreshToken()` to JWTAuthenticator
+- Introduced new Enum `OAuthResult`
+- Introduced new Enum `NotificationCallType` to distinguish between incoming webex calls and CUCM calls
+- Added `isGroupCall` API
+- Added callEnded in DisconnectReason in onDisconnected event
+- Added `Phone.getCallIdFromNotificationId`
+- Moved getCallHistory from Webex class to Phone class
+- Added `Webex.enableConsoleLogger()` to enable/disable console logging
+- Added `Webex.logLevel` API to set the log levels
+- Added `CallEnded` to `Call.DisconnectReason`
+
+#### Updated
+- Transitioned from using results wrapped in a `ServiceResponse` to just `Result`
+- `Phone.dial` has been modified to support dialing CUCM numbers
+- `OAuthAuthenticator.authorize(parentViewController: UIViewController, completionHandler: @escaping ((_ success: Bool) -> Void))` changed to `OAuthAuthenticator.authorize(parentViewController: UIViewController, completionHandler: ((_ result: OAuthResult) -> Void)?)`
+- `JWTAuthenticator.authorizedWith(:jwt)` changed to `JWTAuthenticator.authorizedWith(:jwt:completionHandler)`
+- `OAuthAuthenticator.authorize(oauthCode: String, completionHandler: ((_ success: Bool) -> Void)? = nil)` changed to
+`OAuthAuthenticator.authorize(oauthCode: String, completionHandler: ((_ result: OAuthResult) -> Void)? = nil)`
+- `Mention.Person` and `Mention.all` now accept `MentionPos` instance
+#### Removed
+- SSO Authenticator
+- Removed `Phone.register()`, `Phone.registered` & `Phone.deregister()`
+-  `iOSBroadcastingEvent`
+- Removed all third party pod dependencies
+- Removed `refreshToken()` from Authenticator protocol
+- Removed `OAuthAuthenticatorDelegate`
+- Removed deprecated field `MediaOption.layout`
+- Removed deprecated API `MessageClient.post(personEmail:text:files:queue:completionHandler:)`
+- Removed deprecated API `MessageClient.post(personId:text:files:queue:completionHandler:)`
+- Removed deprecated API `MessageClient.post(spaceId:text:mentions:files:queue:completionHandler:)`
+- Removed `Logger`. You no longer have to implement this as it's already implemented internally
+- Removed `Webex.logger` in favor of `Webex.getLogFileURL`
+- Removed `applicationGroupIdentifier` param from `MediaOption.audioVideoScreenShare()`. Instead this needs to be a present in your app's `Info.plist` with key as `GroupIdentifier` and value as your app's GroupIdentifier
+- Removed `Message.update()` as you no longer have to update the Message instance manually.
+
 ## [2.8.0](https://github.com/webex/webex-ios-sdk/releases/tag/2.8.0)
 Released on 2021-04-30.
 #### Added

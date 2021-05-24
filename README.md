@@ -1,20 +1,34 @@
 # Cisco Webex iOS SDK
 
 [![CocoaPods](https://img.shields.io/cocoapods/v/WebexSDK.svg)](https://cocoapods.org/pods/WebexSDK)
-[![Travis CI](https://travis-ci.org/webex/webex-ios-sdk.svg?branch=master)](https://travis-ci.org/webex/webex-ios-sdk)
 [![license](https://img.shields.io/github/license/webex/webex-ios-sdk.svg)](https://github.com/webex/webex-ios-sdk/blob/master/LICENSE)
 
 The Cisco Webex iOS SDK makes it easy to integrate secure and convenient Cisco Webex messaging and calling features in your iOS apps.
 
-This SDK is written in [Swift 5](https://developer.apple.com/swift) and requires **iOS 11** or later.
+This SDK is written in [Swift 5](https://developer.apple.com/swift) and requires **iOS 13** or later.
 
 ## Table of Contents
-
+- [Why](#why)
+- [Notes](#notes)
 - [Install](#install)
 - [Usage](#usage)
+- [Useful Resources](#useful-resources)
 - [License](#license)
-- [Migration From SparkSDK](#migration-from-cisco-sparksdk)
-- [Additional Documentation](#Additional-Documentation)
+
+## Why
+
+* Unified feature set: Meeting, Messaging and CUCM calling.
+* Greater feature velocity and in parity with the Webex mobile app.
+* Easier for developers community: SQLite is bundled for automatic data caching.
+* Greater quality as it is built on a more robust infrastructure.
+
+## Notes
+
+* Integrations created in the past will not work with v3 because they are not entitled to the scopes required by v3. You can either raise a support request to enable these scopes for your appId or  you could create a new Integration that's meant to be used for v3. This does not affect Guest Issuer JWT token based sign in.
+* We do not support external authCode login anymore.
+* Starting a screenshare is not yet supported for CUCM calls.
+* In cucm calls, Participant.isReceivingAudio does not correctly reflect the current status. This will be fixed in future releases.
+* Currently all resource ids that are exposed from the sdk are barebones GUIDs. You cannot directly use these ids to make calls to [webexapis.com](webexapis.com). You'll need to call `Webex.base64Encode(:ResourceType:resource:completionHandler)` to get a base64 encoded resource. However, you're free to interchange between base64 encoded resource ids and barebones GUID while providing them as input to the sdk APIs.
 
 ## Install
 
@@ -32,7 +46,6 @@ Assuming you already have an Xcode project, e.g. _MyWebexApp_, for your iOS app,
     pod setup
     ```
 
-
 3. Create a new file, `Podfile`, with following content in your _MyWebexApp_ project directory:
 
     ```ruby
@@ -41,12 +54,12 @@ Assuming you already have an Xcode project, e.g. _MyWebexApp_, for your iOS app,
     use_frameworks!
 
     target 'MyWebexApp' do
-      platform :ios, '11.0'
+      platform :ios, '13'
       pod 'WebexSDK'
     end
 
     target 'MyWebexAppBroadcastExtension' do
-        platform :ios, '11.2'
+        platform :ios, '13'
         pod 'WebexBroadcastExtensionKit'
     end
     ```
@@ -57,9 +70,18 @@ Assuming you already have an Xcode project, e.g. _MyWebexApp_, for your iOS app,
     pod install
     ```
 
+5. To your app’s `Info.plist`, please add an entry `GroupIdentifier` with the value as your app's GroupIdentifier. This is required so that we can get a path to store the local data warehouse.
+
+6. If you'll be using [WebexBroadcastExtensionKit](https://cocoapods.org/pods/WebexBroadcastExtensionKit), You also need to add an entry `GroupIdentifier` with the value as your app's GroupIdentifier to your Broadcast Extension target. This is required so that we that we can communicate with the main app for screen sharing.
+
+7. Modify the `Signing & Capabilities` section in your xcode project as follows 
+<img src="https://github.com/webex/webex-ios-sdk-example/blob/master/images/signing_and_capabilities.png" width="80%" height="80%">
+
+A sample app that implements this SDK with source code can be found at [https://github.com/webex/webex-ios-sdk-example](https://github.com/webex/webex-ios-sdk-example) . This is to showcase how to consume the APIs and not meant to be a production grade app.
+
 ## Usage
 
-To use the SDK, you will need Cisco Webex integration credentials. If you do not already have a Cisco Webex account, visit [Webex for Developers](https://developer.webex.com/) to create your account and [register your integration](https://developer.webex.com/docs/integrations#registering-your-integration). Your app will need to authenticate users via an [OAuth](https://oauth.net/) grant flow for existing Cisco Webex users or a [JSON Web Token](https://jwt.io/) for guest users without a Cisco Webex account.
+To use the SDK, you will need Cisco Webex integration credentials. If you do not already have a Cisco Webex account, visit [Webex for Developers](https://developer.webex.com/) to create your account and [register your integration](https://developer.webex.com/docs/integrations#registering-your-integration). Make sure you select `Yes` for `Will this integration use a mobile SDK?`. Your app will need to authenticate users via an [OAuth](https://oauth.net/) grant flow for existing Cisco Webex users or a [JSON Web Token](https://jwt.io/) for guest users without a Cisco Webex account.
 
 See the [iOS SDK area](https://developer.webex.com/docs/sdks/ios) of the Webex for Developers site for more information about this SDK.
 
@@ -67,25 +89,31 @@ See the [iOS SDK area](https://developer.webex.com/docs/sdks/ios) of the Webex f
 
 Here are some examples of how to use the iOS SDK in your app.
 
-
 1. Create the Webex instance using Webex ID authentication ([OAuth](https://oauth.net/)-based):
 
     ```swift
     let clientId = "$YOUR_CLIENT_ID"
     let clientSecret = "$YOUR_CLIENT_SECRET"
-    let scope = "spark:all"
-    let redirectUri = "https://webexdemoapp.com"
+    let redirectUri = "https://webexdemoapp.com/redirect"
 
-    let authenticator = OAuthAuthenticator(clientId: clientId, clientSecret: clientSecret, scope: scope, redirectUri: redirectUri)
+    let authenticator = OAuthAuthenticator(clientId: clientId, clientSecret: clientSecret, redirectUri: redirectUri, emailId: "user@example.com")
     let webex = Webex(authenticator: authenticator)
+    webex.enableConsoleLogger = true 
+    webex.logLevel = .verbose // Highly recommended to make this end-user configurable incase you need to get detailed logs.
 
-    if !authenticator.authorized {
-        authenticator.authorize(parentViewController: self) { success in
-            if !success {
-                print("User not authorized")
+    webex.initialize { result in
+            if isLoggedIn {
+                print("User is authorized")
+            } else {
+                authenticator.authorize(parentViewController: self) { result in
+                if result == .success {
+                    print("Login successful")
+                } else {
+                    print("Login failed")
+                }
+            }
             }
         }
-    }
     ```
 
 2. Create the Webex instance with Guest ID authentication ([JWT](https://jwt.io/)-based):
@@ -94,28 +122,29 @@ Here are some examples of how to use the iOS SDK in your app.
     let authenticator = JWTAuthenticator()
     let webex = Webex(authenticator: authenticator)
 
-    if !authenticator.authorized {
-        authenticator.authorizedWith(jwt: myJwt)
-    }
-    ```
-
-3. Register the device to send and receive calls:
-
-    ```swift
-    webex.phone.register() { error in
-        if let error = error {
-            // Device not registered, and calls will not be sent or received
-        } else {
-            // Device registered
+    webex.initialize { [weak self] isLoggedIn in
+            guard let self = self else { return }
+            if isLoggedIn {
+                print("User is authorized")
+            } else {
+                authenticator.authorizedWith(jwt: myJwt) { success in
+                    if success {
+                        print("Login successful")
+                    } else {
+                        print("Login failed")
+                        return
+                    }
+                })
+            }
         }
-    }
     ```
 
-4. Use Webex service:
+3. Use Webex service:
 
     ```swift
-    webex.spaces.create(title: "Hello World") { response in
-        switch response.result {
+
+    webex.spaces.create(title: "Hello World") { result in
+        switch result {
         case .success(let space):
             // ...
         case .failure(let error):
@@ -125,22 +154,41 @@ Here are some examples of how to use the iOS SDK in your app.
 
     // ...
 
-    webex.memberships.create(spaceId: spaceId, personEmail: email) { response in
-        switch response.result {
-        case .success(let membership):
-            // ...
-        case .failure(let error):
-            // ...
+    webex.memberships.create(spaceId: spaceId, personEmail: email) { result in    
+        switch result {
+            case .success(let membership):
+                // ...
+            case .failure(let error):
+                // ...
+            }
         }
     }
 
     ```
 
-5. Make an outgoing call:
+4. Make an outgoing call:
 
     ```swift
-    webex.phone.dial("coworker@acm.com", option: MediaOption.audioVideo(local: ..., remote: ...)) { ret in
-        switch ret {
+    webex.phone.dial("coworker@example.com", option: MediaOption.audioVideo(local: ..., remote: ...)) { result in
+        switch result {
+        case .success(let call):
+            call.onConnected = {
+                // ...
+            }
+            call.onDisconnected = { reason in
+                // ...
+            }
+        case .failure(let error):
+            // failure
+        }
+    }
+    ```
+
+5. Make an outgoing CUCM call:
+
+    ```swift
+    webex.phone.dial("+1180012345", option: MediaOption.audioVideo(local: ..., remote: ...)) { result in
+        switch result {
         case .success(let call):
             call.onConnected = {
                 // ...
@@ -160,10 +208,10 @@ Here are some examples of how to use the iOS SDK in your app.
     webex.phone.onIncoming = { call in
         call.answer(option: MediaOption.audioVideo(local: ..., remote: ...)) { error in
         if let error = error {
-            // success
+            // failure
         }
         else {
-            // failure
+            // success
         }
     }
     ```
@@ -171,8 +219,8 @@ Here are some examples of how to use the iOS SDK in your app.
 7. Make an space call:
 
     ```swift
-    webex.phone.dial(spaceId, option: MediaOption.audioVideo(local: ..., remote: ...)) { ret in
-        switch ret {
+    webex.phone.dial(spaceId, option: MediaOption.audioVideo(local: ..., remote: ...)) { result in
+        switch result {
         case .success(let call):
             call.onConnected = {
                 // ...
@@ -199,7 +247,10 @@ Here are some examples of how to use the iOS SDK in your app.
 8. Screen share (view only):
 
     ```swift
-    webex.phone.dial("coworker@acm.com", option: MediaOption.audioVideoScreenShare(video: (local: ..., remote: ...))) { ret in
+    var selfVideoView = MediaRenderView()
+    var remoteVideoView = MediaRenderView()
+    var screenShareView = MediaRenderView()
+    webex.phone.dial("coworker@example.com", option: MediaOption.audioVideoScreenShare(video: (local: selfVideoView, remote: remoteVideoView), screenShare: screenShareView)) { ret in
         switch ret {
         case .success(let call):
             call.onConnected = {
@@ -220,6 +271,7 @@ Here are some examples of how to use the iOS SDK in your app.
         }
     }
     ```
+NOTE: Screen sharing will only work using v3 SDK with the latest `WebexBroadcastExtensionKit`.
 
 9. Post a message:
 
@@ -241,8 +293,8 @@ Here are some examples of how to use the iOS SDK in your app.
     ```
     ```swift
     let text = Message.Text.markdown(markdown: markdown, html: html, plain: text)
-    webex.messages.post(text, toPersonEmail: emailAddress, completionHandler: { response in
-        switch response.result {
+    webex.messages.post(text, toPersonEmail: emailAddress) { result in
+        switch result {
         case .success(let message):
             // ...
         case .failure(let error):
@@ -258,10 +310,8 @@ Here are some examples of how to use the iOS SDK in your app.
         switch messageEvent{
         case .messageReceived(let message):
             // ...
-            break
         case .messageDeleted(let messageId):
             // ...
-            break
         }
     }
     ```
@@ -269,8 +319,8 @@ Here are some examples of how to use the iOS SDK in your app.
 11. send read receipt of a message
 
     ```swift
-    webex.messages.markAsRead(spaceId: spaceId, messageId: messageId, completionHandler: { response in
-         switch response.result {
+    webex.messages.markAsRead(spaceId: spaceId, messageId: messageId, completionHandler: { result in
+         switch result {
          case .success(_):
              // ...
          case .failure(let error):
@@ -279,131 +329,7 @@ Here are some examples of how to use the iOS SDK in your app.
     })
     ```
 
-12. Screen share (sending):
-
-    12.1 In your containing app:
-
-    ```swift
-    webex.phone.dial("coworker@acm.com", option: MediaOption.audioVideoScreenShare(video: ..., screenShare: ..., applicationGroupIdentifier: "group.your.application.group.identifier"))) { ret in
-        switch ret {
-        case .success(let call):
-            call.oniOSBroadcastingChanged = {
-                event in
-                if #available(iOS 11.2, *) {
-                    switch event {
-                    case .extensionConnected :
-                        call.startSharing() {
-                            error in
-                            // ...
-                        }
-                        break
-                    case .extensionDisconnected:
-                        call.stopSharing() {
-                            error in
-                            // ...
-                        }
-                        break
-                    }
-                }
-            }
-            }
-        case .failure(let error):
-            // failure
-        }
-    }
-    ```
-
-    12.2 In your broadcast upload extension sample handler:
-
-    ```swift
-    override func broadcastStarted(withSetupInfo setupInfo: [String : NSObject]?) {
-        // User has requested to start the broadcast. Setup info from the UI extension can be supplied but optional.
-        WebexBroadcastExtension.sharedInstance.start(applicationGroupIdentifier: "group.your.application.group.identifier") {
-            error in
-            if let webexError = error {
-               // ...
-            } else {
-                WebexBroadcastExtension.sharedInstance.onError = {
-                    error in
-                    // ...
-                }
-                WebexBroadcastExtension.sharedInstance.onStateChange = {
-                    state in
-                    // state change
-                }
-            }
-        }
-    }
-
-    override func broadcastFinished() {
-        // User has requested to finish the broadcast.
-        WebexBroadcastExtension.sharedInstance.finish()
-    }
-
-    override func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
-        switch sampleBufferType {
-            case RPSampleBufferType.video:
-                // Handle video sample buffer
-                WebexBroadcastExtension.sharedInstance.handleVideoSampleBuffer(sampleBuffer: sampleBuffer)
-                break
-            case RPSampleBufferType.audioApp:
-                // Handle audio sample buffer for app audio
-                break
-            case RPSampleBufferType.audioMic:
-                // Handle audio sample buffer for mic audio
-                break
-        }
-    }
-    ```
-
-    12.3 Get more technical details about the [Containing App & Broadcast upload extension](https://github.com/webex/webex-ios-sdk/wiki/Implementation-Broadcast-upload-extension) and [Set up an App Group](https://github.com/webex/webex-ios-sdk/wiki/Set-up-an-App-Group)
-
-13. Receive more video streams in a meeting:
-
-    ```swift
-    class VideoCallViewController: MultiStreamObserver {
-        ...
-        var onAuxStreamChanged: ((AuxStreamChangeEvent) -> Void)? = {
-            ...
-            switch event {
-            case .auxStreamOpenedEvent(let view, let result):
-                switch result {
-                    case .success(let auxStream):
-                        ...
-                    case .failure(let error):
-                        ...
-                }
-            case .auxStreamPersonChangedEvent(let auxStream,_,_):
-                    ...
-            case .auxStreamSendingVideoEvent(let auxStream):
-                ...
-            case .auxStreamSizeChangedEvent(let auxStream):
-                ...
-            case .auxStreamClosedEvent(let view, let error):
-                ...
-            }
-        }
-
-        var onAuxStreamAvailable: (() -> MediaRenderView?)? = {
-            ...
-            return self.mediaRenderViews.filter({!$0.inUse}).first?
-        }
-
-        var onAuxStreamUnavailable: (() -> MediaRenderView?)? = {
-            ...
-            return self.mediaRenderViews.filter({$0.inUse}).last?
-        }
-
-        override func viewWillAppear(_ animated: Bool) {
-            ...
-            // set the observer of this call to get multi stream event.
-            self.call.multiStreamObserver = self
-            ...
-        }
-    }
-    ```
-
-14. receive a membership event
+12. receive a membership event
 
     ```swift
     webex.memberships.onEvent = { membershipEvent in
@@ -414,13 +340,13 @@ Here are some examples of how to use the iOS SDK in your app.
               // ...
           case .update(let membership):
               // ...
-          case .seen(let membership, let lastSeenId):
+          case .messageSeen(let membership, let lastSeenId):
               // ...
           }
     }
     ```
 
-15. get read statuses of all memberships in a space
+13. get read statuses of all memberships in a space
 
     ```swift
     webex.memberships.listWithReadStatus(spaceId: spaceId, completionHandler: { response in
@@ -433,7 +359,7 @@ Here are some examples of how to use the iOS SDK in your app.
     })
     ```
 
-16. receive a space event
+14. receive a space event
 
     ```swift
     webex.spaces.onEvent = { spaceEvent in
@@ -450,7 +376,7 @@ Here are some examples of how to use the iOS SDK in your app.
     }
     ```
 
-17. get read status of a space for login user
+15. get read status of a space for login user
 
     ```swift
     webex.spaces.getWithReadStatus(spaceId: spaceId, completionHandler: { response in
@@ -462,7 +388,7 @@ Here are some examples of how to use the iOS SDK in your app.
 
                   // space is unreadable
 
-              }else {
+              } else {
 
                   // space is readable
               }
@@ -472,11 +398,11 @@ Here are some examples of how to use the iOS SDK in your app.
     })
     ```
 
-18. get meeting detail of a space
+16. get meeting detail of a space
 
     ```swift
-    webex.spaces.getMeetingInfo(spaceId: spaceId, completionHandler: { response in
-          switch response.result {
+    webex.spaces.getMeetingInfo(spaceId: spaceId, completionHandler: { result in
+          switch result {
           case .success(let meetingInfo):
               // ...
           case .failure(let error):
@@ -485,10 +411,10 @@ Here are some examples of how to use the iOS SDK in your app.
     })
     ```
 
-19. get a list of spaces that have ongoing call
+17. get a list of spaces that have ongoing call
 
     ```swift
-    webex.spaces.listWithActiveCalls(completionHandler: { (result) in
+    webex.spaces.listWithActiveCalls(completionHandler: { result in
         switch result {
         case .success(let spaceIds):
             // ...
@@ -498,96 +424,36 @@ Here are some examples of how to use the iOS SDK in your app.
     })
     ```
 
-20. Change the layout for the active speaker and other attendee composed video
+18. Change the layout for the active speaker and other attendee composed video
 
     ```swift
     let option: MediaOption = MediaOption.audioVideo(local: ..., remote: ...)
-    option.layout = .grid
+    option.compositedVideoLayout = .grid
 
     webex.phone.dial(spaceId, option: option) { ret in
         // ...
     }
     ```
 
-21. Background Noise Removal(BNR)
+19. Background Noise Removal(BNR)
     
-    21.1 Enable BNR
+    19.1 Enable BNR
     ```swift
     webex.phone.audioBNREnabled = true
     ```
 
-    21.2 Set BNR mode, the default is `.HP`. It only affects if setting `audioBNREnabled` to true.
+    19.2 Set BNR mode, the default is `.HP`. It only affects if setting `audioBNREnabled` to true.
     ```swift
     webex.phone.audioBNRMode = .HP
     ```
-    
-22. Edit message
 
-```swift
-/// - parameter text: The message text is used to replace old one.
-/// - parameter parent: The message you are editing.
-/// - parameter mentions: new message Mention objects.
-self.webexSDK?.messages.edit(text, parent: message, mentions: mentions, completionHandler: {[weak self] (response) in
-    switch response.result{
-    case .success(let message):
-        // message is the new message object, you can use it replace old one.
-    case .failure(let error):
-        // ...
-    }
-})
-```
-
-
-## Migration from Cisco SparkSDK
-
-The purpose of this guide is to help you to migrate from Cisco SparkSDK to Cisco WebexSDK.
-
-Assuming you already have an project integrated with SparkSDK.
-
-1. In your pod file:
-
-    remove previous SparkSDK: ~~pod 'SparkSDK'~~
-
-    add WebexSDK: pod 'WebexSDK'
-
-2. Go to project directory, and run:
-    ```c
-    pod install
-    ```
-3. Replace sdk import info for your code:
-
-    Replace in project scope:
-
-    "import SparkSDK" => "import WebexSDK"
-
-4. If you using story board for UI:
-
-    Change meida render view's module in "Indentity inspector":
-
-    "SparkSDK" => "WebexSDK"
-
-### Usage
-
-API changes list from SparkSDK to WebexSDK.
-
-| Description | SparkSDK Use | WebexSDK Use |
-| :----:| :----: | :----:
-| Create a new instance | let spark = Spark(authenticator: authenticator) | let webex = Webex(authenticator: authenticator)
-| "Room" Client renamed to "Space" Client | spark.rooms.list(roomId:{rooomId}) | webex.spaces.list(spaceId:{roomId})
-| "SparkError" renamed to "WebexError" | let error = SparkError.Auth | let error = WebexError.Auth |
-
-
-Recomand to replace variables containing "spark" with "webex" in project code.  
-
-## Additional Documentation
-1. [Display more participants with Multi Stream](https://github.com/webex/webex-ios-sdk/wiki/Display-more-participants-with-Multi-Stream)
-2. [Implementation broadcast upload extension](https://github.com/webex/webex-ios-sdk/wiki/Implementation-broadcast-upload-extension)
-3. [Lobby feature for the meetings](https://github.com/webex/webex-ios-sdk/wiki/Lobby-feature-for-the-meetings)
-4. [Message API Usage Instruction](https://github.com/webex/webex-ios-sdk/wiki/Message-API-Usage-Instruction)
-5. [Place a group call](https://github.com/webex/webex-ios-sdk/wiki/Place-a-group-call)
-6. [Set bandwidth for the app](https://github.com/webex/webex-ios-sdk/wiki/Set-bandwidth-for-the-app)
-7. [Set different views layout for screen sharing](https://github.com/webex/webex-ios-sdk/wiki/Set-different-views-layout-for-screen-sharing)
-8. [Set up an App Group](https://github.com/webex/webex-ios-sdk/wiki/Set-up-an-App-Group)
+## Useful Resources
+ * [Webex iOS SDK API docs](https://webex.github.io/webex-ios-sdk/).
+ * [Guide for migration from v2.x to v3.x](https://github.com/webex/webex-ios-sdk/wiki/Migrating-from-v2-to-v3)
+ * [Guide for creating v3 compatible integrations & CUCM Push notifications](https://github.com/webex/webex-ios-sdk/wiki/App-Registration-for-Mobile-SDK-v3)
+ * [Guide for CUCM calling](https://github.com/webex/webex-ios-sdk/wiki/CUCM-Usage-Guide-v3)
+ * [Guide for using Multistream](https://github.com/webex/webex-ios-sdk/wiki/Multistream-Guide)
+ * [WebexSDK Wikis](https://github.com/webex/webex-ios-sdk/wiki)
 
 ## License
 
