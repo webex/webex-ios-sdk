@@ -470,7 +470,6 @@
 <li>Integrations created in the past will not work with v3 because they are not entitled to the scopes required by v3. You can either raise a support request to enable these scopes for your appId or  you could create a new Integration that&rsquo;s meant to be used for v3. This does not affect Guest Issuer JWT token based sign in.</li>
 <li>We do not support external authCode login anymore.</li>
 <li>Starting a screenshare is not yet supported for CUCM calls.</li>
-<li>In cucm calls, Participant.isReceivingAudio does not correctly reflect the current status. This will be fixed in future releases.</li>
 <li>Currently all resource ids that are exposed from the sdk are barebones GUIDs. You cannot directly use these ids to make calls to <a href="webexapis.com">webexapis.com</a>. You&rsquo;ll need to call <code>Webex.base64Encode(:ResourceType:resource:completionHandler)</code> to get a base64 encoded resource. However, you&rsquo;re free to interchange between base64 encoded resource ids and barebones GUID while providing them as input to the sdk APIs.</li>
 </ul>
 <h2 id='install' class='heading'>Install</h2>
