@@ -64,6 +64,7 @@ class MediaSessionObserver: NotificationObserver {
             (.MediaEngineDidActiveSpeakerChange,      #selector(onMediaEngineDidActiveSpeakerChange(_:))),
             (.MediaEngineDidCSIChange,      #selector(onMediaEngineDidDidCSIChange(_:))),
             (.MediaEngineDidMQE, #selector(onMediaEngineDidDidMQE(_:))),
+            (.MediaEngineDidICE, #selector(onMediaEngineDidICE(_:))),
             (.MediaEngineDidAuxVideoSizeChange,      #selector(onMediaEngineDidAuxVideoSizeChange(_:)))]
         
     }
@@ -76,6 +77,27 @@ class MediaSessionObserver: NotificationObserver {
                 if let metric = metric {
                     retainCall.device.phone.metrics.reportMQE(phone: retainCall.device.phone, call: retainCall, metric:metric)
                 }
+            }
+        }
+    }
+    
+    @objc private func onMediaEngineDidICE(_ notification: Notification) {
+        DispatchQueue.main.async {
+            if let retainCall = self.call {
+                let string = notification.userInfo?["ice"] as? String
+                var ices = [ClientEventMediaLine]()
+                if let iceJson = string?.json {
+                    for (key, value) in iceJson {
+                        if var iceResults = (value as? [String: Any])?["iceResults"] as? [[String : Any]] {
+                            for (index, _) in iceResults.enumerated() {
+                                iceResults[index]["mediaType"] = key
+                            }
+                            let results = Mapper<ClientEventMediaLine>().mapArray(JSONArray: iceResults)
+                            ices += results
+                        }
+                    }
+                }
+                retainCall.device.phone.metrics.iceMediaLines = ices
             }
         }
     }

@@ -27,6 +27,7 @@ class MetricsEngine {
     private var buffer = MetricsBuffer()
     private lazy var timer: Timer = Timer(timeInterval: 30, target: self, selector: #selector(flush), userInfo: nil, repeats: true)
     let authenticator: Authenticator
+    var iceMediaLines: [ClientEventMediaLine]?
 
     init(authenticator: Authenticator, service: DeviceService) {
         self.authenticator = authenticator
@@ -92,7 +93,7 @@ class MetricsEngine {
                 mediaType: nil,
                 csi: nil,
                 mediaCapabilities: nil,
-                mediaLines: nil,
+                mediaLines: iceMediaLines,
                 errors: nil,
                 trigger: nil,
                 displayLocation: nil,
@@ -100,10 +101,11 @@ class MetricsEngine {
                 labels: nil,
                 eventData: nil,
                 intervals: [metric])
-        let clientInfo = ClientInfo(clientType: DeviceService.Types.teams_client.rawValue, os: "ios", osVersion: UIDevice.current.systemVersion)
+        let localIP = clientEvent.videoLocalIp ?? "127.0.0.1"
+        let clientInfo = ClientInfo(clientType: DeviceService.Types.teams_client.rawValue, os: "ios", osVersion: UIDevice.current.systemVersion, localIP: localIP)
         let origin = DiagnosticOrigin(userAgent: UserAgent.string,
                 networkType: .unknown,
-                localIpAddress: "127.0.0.1",
+                localIpAddress: localIP,
                 usingProxy: false,
                 mediaEngineSoftwareVersion: MediaEngineWrapper.sharedInstance.wmeVersion,
                 clientInfo: clientInfo)
