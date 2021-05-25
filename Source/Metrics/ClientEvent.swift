@@ -101,3 +101,11 @@ struct ClientEvent: Mappable {
         self.intervals <- map["intervals"]
     }
 }
+
+extension ClientEvent {
+    var videoLocalIp: String? {
+        return mediaLines?.first(where: { (mediaLine) -> Bool in
+            return mediaLine.mediaType == .video
+        })?.localIp
+    }
+}

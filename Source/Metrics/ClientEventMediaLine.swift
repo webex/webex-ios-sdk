@@ -73,9 +73,9 @@ struct ClientEventMediaLine: Mappable {
     
     mutating func mapping(map: Map) {
         self.mediaType <- map["mediaType"]
-        self.remoteIp <- map["remoteIP"]
+        self.remoteIp <- map["remoteIp"]
         self.remotePort <- map["remotePort"]
-        self.localIp <- map["localIP"]
+        self.localIp <- map["localIp"]
         self.localPort <- map["localPort"]
         self.transport <- map["protocol"]
         self.direction <- map["direction"]
