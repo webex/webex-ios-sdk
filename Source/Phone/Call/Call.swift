@@ -1323,7 +1323,25 @@ public class Call {
 
     func updateAuxStreamCount() {
         DispatchQueue.main.async {
-            var newAvailableAuxStreamCount = min(self.memberships.filter({ $0.isMediaActive() && !$0.isSelf }).count - Call.activeSpeakerCount, self.mediaSession.auxStreamCount() - Call.activeSpeakerCount)
+            let allMemberships = self.memberships
+            var unduplicatedMemberships = [CallMembership]()
+            allMemberships.forEach { (membership) in
+                guard let associatedUrls = membership.associatedUrls else {
+                    unduplicatedMemberships.append(membership)
+                    return
+                }
+                if !allMemberships.contains(where: { return associatedUrls.contains($0.url) }) {
+                    unduplicatedMemberships.append(membership)
+                }
+            }
+            
+            let membershipCount = unduplicatedMemberships.filter({ $0.isMediaActive() && !$0.isSelf }).count
+            var newAvailableAuxStreamCount = min(membershipCount - Call.activeSpeakerCount, self.mediaSession.auxStreamCount() - Call.activeSpeakerCount)
+            
+            SDKLogger.shared.debug("Membership count =\(self.memberships.count)")
+            SDKLogger.shared.debug("Unduplicated membership count =\(membershipCount)")
+            SDKLogger.shared.debug("AuxStream count =\(self.mediaSession.auxStreamCount())")
+            
             if newAvailableAuxStreamCount < 0 {
                 newAvailableAuxStreamCount = 0
             } else if self.availableAuxStreamCount >= maxAuxStreamNumber && newAvailableAuxStreamCount > maxAuxStreamNumber {
@@ -1460,6 +1478,7 @@ public class Call {
         if let membershipsArray = memberships {
             for auxStream in auxStreams {
                 if let person = auxStream.person, let membership = membershipsArray.filter({ $0.id == person.id }).first {
+                    SDKLogger.shared.debug("AuxStream MembershipID=\(person.id)")
                     auxStream.person = membership
                 }
             }
