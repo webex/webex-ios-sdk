@@ -164,6 +164,10 @@ public struct CallMembership {
     private let call: Call
     
     private var participantModel: ParticipantModel
+    
+    var isRemoved: Bool {
+        return self.model.isRemoved
+    }
 
     /// Constructs a new `CallMembership`.
     ///

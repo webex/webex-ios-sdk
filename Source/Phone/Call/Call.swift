@@ -1417,8 +1417,9 @@ public class Call {
                     newMemberships.append(membership)
                 }
             }
-            //TODO participant remove event?
-            self.memberships = newMemberships
+            
+            self.memberships = newMemberships.filter { !$0.isRemoved }
+            
             for callMembershipChange in onCallMembershipChanges {
                 DispatchQueue.main.async {
                     self.onCallMembershipChanged?(callMembershipChange)

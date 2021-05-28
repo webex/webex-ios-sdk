@@ -224,12 +224,7 @@ struct LocusModel: Mappable {
             if var oldParticipants = ret.participants {
                 for participant in newParticipants {
                     if let index = oldParticipants.firstIndex(where:{$0.id == participant.id}) {
-                        if participant.isRemoved {
-                            oldParticipants.remove(at: index)
-                        }
-                        else {
-                            oldParticipants[index] = participant
-                        }
+                        oldParticipants[index] = participant
                     }
                     else {
                         if !participant.isRemoved {
