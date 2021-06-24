@@ -59,6 +59,7 @@ class DeviceService {
 
     enum Types: String {
         case ios_sdk = "TEAMS_SDK_IOS"
+        case sdk_client = "WEBEX_SDK"
         case web_client = "WEB"
         case teams_client = "TEAMS_CLIENT"
     }

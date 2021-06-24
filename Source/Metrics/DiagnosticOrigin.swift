@@ -44,12 +44,14 @@ struct ClientInfo: Mappable {
     private(set) var os: String?
     private(set) var osVersion: String?
     private(set) var localIP: String?
+    private(set) var clientVersion: String?
 
-    init(clientType: String, os: String, osVersion: String, localIP: String) {
+    init(clientType: String, os: String, osVersion: String, localIP: String, clientVersion: String) {
         self.clientType = clientType
         self.os = os
         self.osVersion = osVersion
         self.localIP = localIP
+        self.clientVersion = clientVersion
     }
 
     init?(map: Map) {}
@@ -59,6 +61,7 @@ struct ClientInfo: Mappable {
         self.os <- map["os"]
         self.osVersion <- map["osVersion"]
         self.localIP <- map["localIP"]
+        self.clientVersion <- map["clientVersion"]
     }
 }
 
