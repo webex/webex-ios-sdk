@@ -102,7 +102,7 @@ class MetricsEngine {
                 eventData: nil,
                 intervals: [metric])
         let localIP = clientEvent.videoLocalIp ?? "127.0.0.1"
-        let clientInfo = ClientInfo(clientType: DeviceService.Types.sdk_client.rawValue, os: "ios", osVersion: UIDevice.current.systemVersion, localIP: localIP, clientVersion: Webex.version)
+        let clientInfo = ClientInfo(clientType: DeviceService.Types.sdk_client.rawValue, subClientType: "MOBILE_APP", os: "ios", osVersion: UIDevice.current.systemVersion, localIP: localIP, clientVersion: Webex.version)
         let origin = DiagnosticOrigin(userAgent: UserAgent.string,
                 networkType: .unknown,
                 localIpAddress: localIP,
