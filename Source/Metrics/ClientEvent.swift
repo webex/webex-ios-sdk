@@ -21,6 +21,23 @@
 import Foundation
 import ObjectMapper
 
+struct SourceMetadata: Mappable {
+    private(set) var mediaEngineSoftwareType: String?
+    private(set) var mediaEngineSoftwareVersion: String?
+    
+    init(mediaEngineSoftwareType: String, mediaEngineSoftwareVersion: String) {
+        self.mediaEngineSoftwareType = mediaEngineSoftwareType
+        self.mediaEngineSoftwareVersion = mediaEngineSoftwareVersion
+    }
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        self.mediaEngineSoftwareType <- map["mediaEngineSoftwareType"]
+        self.mediaEngineSoftwareVersion <- map["mediaEngineSoftwareVersion"]
+    }
+}
+
 struct ClientEvent: Mappable {
     
     // Base
@@ -47,6 +64,8 @@ struct ClientEvent: Mappable {
     
     // Both
     private(set) var name: ClientEventName?
+    
+    private(set) var sourceMetadata: SourceMetadata?
 
     init(name: ClientEventName,
          state: String?,
@@ -62,7 +81,8 @@ struct ClientEvent: Mappable {
          dialedDomain: String?,
          labels: [String]?,
          eventData: [String: Any]?,
-         intervals: [[String: Any]]?) {
+         intervals: [[String: Any]]?,
+         sourceMetadata: SourceMetadata?) {
         
         self.name = name
         self.state = state
@@ -79,6 +99,7 @@ struct ClientEvent: Mappable {
         self.labels = labels
         self.eventData = eventData
         self.intervals = intervals
+        self.sourceMetadata = sourceMetadata
     }
 
     init?(map: Map) {}
@@ -99,6 +120,7 @@ struct ClientEvent: Mappable {
         self.labels <- map["labels"]
         self.eventData <- map["eventData"]
         self.intervals <- map["intervals"]
+        self.sourceMetadata <- map["sourceMetadata"]
     }
 }
 
