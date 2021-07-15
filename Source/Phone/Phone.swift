@@ -941,6 +941,7 @@ public class Phone {
             case .failure(let error):
                 SDKLogger.shared.error("Failure leave ", error: error)
                 DispatchQueue.main.async {
+                    call.end(reason: .error(error))
                     completionHandler(error)
                 }
             }
