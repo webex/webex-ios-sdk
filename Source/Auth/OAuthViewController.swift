@@ -32,6 +32,7 @@ class OAuthViewController: UIViewController, WKNavigationDelegate {
     private let redirectUri: String
     
     init(authorizationUrl: URL, redirectUri: String, completionHandler: @escaping (_ oauthCode: String?) -> Void) {
+        SDKLogger.shared.debug("Webview authorizationUrl: \(authorizationUrl.absoluteString)")
         self.url = authorizationUrl
         self.redirectUri = redirectUri
         self.completionHandler = completionHandler
@@ -50,6 +51,9 @@ class OAuthViewController: UIViewController, WKNavigationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        clearWebCache()
+        
         view.backgroundColor = .white
         title = "Link to Webex"
         webView = WKWebView(frame: view.bounds)
@@ -68,6 +72,12 @@ class OAuthViewController: UIViewController, WKNavigationDelegate {
         }
     }
     
+    func clearWebCache() {
+        WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: Date(timeIntervalSince1970: 0)) {
+            SDKLogger.shared.debug("Clear Web cache finished.")
+        }
+    }
+    
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Swift.Void) {
         if let url = navigationAction.request.url, OAuthUrlUtil.url(url, matchesRedirectUri: redirectUri) {
             decisionHandler(.cancel)
@@ -81,6 +91,10 @@ class OAuthViewController: UIViewController, WKNavigationDelegate {
         } else {
             decisionHandler(.allow)
         }
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        SDKLogger.shared.debug("Webview load failed, error:\(error.localizedDescription)")
     }
     
     private func load(url: URL) {
