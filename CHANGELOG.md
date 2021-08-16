@@ -1,5 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 3.1.0 Releases
+
+- `3.1.0` Releases - [3.1.0](#310)
+
 #### 3.0.0 Releases
 
 - `3.0.0` Releases - [3.0.0](#300)
@@ -85,6 +89,33 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ---
+## [3.1.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.1.0)
+Released on 2021-08-16
+#### Added
+- Added FedRAMP support
+- Added new API `OAuthAuthenticator.getAuthorizationUrl(:completionHandler)` to get a valid authorization URL to initate OAuth
+- Added new API `OAuthAuthenticator.authorize(:oauthCode:completionHandler)` to authorize with auth code from OAuth first leg
+- Added new API `Phone.getServiceUrl(:ServiceUrlType)` API
+- Added back scope argument to `OAuthAuthenticator`. This serves to add additional scopes that the developer might want the access token to have. Now developers have to provide `spark:all` scope always to this argument
+- Added new API `Call.isSpaceMeeting` to denote the call is space backed meeting type
+- Added new API `Call.isSelfCreator` to denote if self is the initiator of the call
+- Added new API `Call.hasAnyoneJoined`to denote if anyone joined the meeting, excluding self
+- Added new API `Call.isPmr` to denote the call is a personal meeting room
+- Added new API `Call.isMeeting` to differentiate between meetings and calls
+- Added new API `Call.isScheduledMeeting` to differentiate between scheduled meetings and ad-hoc meetings
+- Added new enum `Base64EncodeError`
+- Added new enum `TokenLoginError`
+- Added new `case .personNotFound` to `DeletePersonError` enum
+- Added new `case .badRequest` to following enums: `ListMembershipsError`, `ListTeamMembershipResult`, `DeleteSpaceResult`, `ListWebhooksResult`, `GetWebhookByIdResult`, `CreateWebhookResult`, `UpdateWebhookByIdResult` and `DeleteWebhookByIdResult`
+
+#### Updated
+- `base64Encode(resourceType: ResourceType, resource: String, completionHandler: @escaping (String, SpaceApiErrorInfo, Bool) -> Void)`  to `base64Encode(resourceType: ResourceType, resource: String, completionHandler: @escaping (Result<String>) -> Void)`
+- The completion handlers for the following methods have been updated to accept a Result object instead of bare token string: `Authenticator.accessToken(:completionHandler)`, `JWTAuthenticator.authorizedWith(:jwt:completionHandler)`, `JWTAuthenticator.accessToken(:completionHandler)`, `JWTAuthenticator.refreshToken(:completionHandler)`, `OAuthAuthenticator.accessToken(:completionHandler)`
+
+#### Removed
+- Removed `Phone.connected` API
+- Removed `SpaceApiErrorInfo` struct
+
 ## [3.0.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.0.0)
 Released on 2021-05-24
 #### Added
