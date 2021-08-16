@@ -28,6 +28,8 @@ This SDK is written in [Swift 5](https://developer.apple.com/swift) and requires
 * We do not support external authCode login anymore.
 * Starting a screenshare is not yet supported for CUCM calls.
 * Currently all resource ids that are exposed from the sdk are barebones GUIDs. You cannot directly use these ids to make calls to [webexapis.com](webexapis.com). You'll need to call `Webex.base64Encode(:ResourceType:resource:completionHandler)` to get a base64 encoded resource. However, you're free to interchange between base64 encoded resource ids and barebones GUID while providing them as input to the sdk APIs.
+* FedRAMP(
+Federal Risk and Authorization Management Program) support from 3.1.0 onwards.
 
 ## Install
 
@@ -93,9 +95,10 @@ Here are some examples of how to use the iOS SDK in your app.
     ```swift
     let clientId = "$YOUR_CLIENT_ID"
     let clientSecret = "$YOUR_CLIENT_SECRET"
+    let scope = "spark:all" // space separated list of scopes. spark:all is always required
     let redirectUri = "https://webexdemoapp.com/redirect"
 
-    let authenticator = OAuthAuthenticator(clientId: clientId, clientSecret: clientSecret, redirectUri: redirectUri, emailId: "user@example.com")
+    let authenticator = OAuthAuthenticator(clientId: clientId, clientSecret: clientSecret, scope: scope, redirectUri: redirectUri, emailId: "user@example.com")
     let webex = Webex(authenticator: authenticator)
     webex.enableConsoleLogger = true 
     webex.logLevel = .verbose // Highly recommended to make this end-user configurable incase you need to get detailed logs.
@@ -126,12 +129,14 @@ Here are some examples of how to use the iOS SDK in your app.
             if isLoggedIn {
                 print("User is authorized")
             } else {
-                authenticator.authorizedWith(jwt: myJwt) { success in
-                    if success {
-                        print("Login successful")
-                    } else {
-                        print("Login failed")
-                        return
+                authenticator.authorizedWith(jwt: myJwt) { result in
+                    switch result {
+                    case .failure(let error):
+                        print("JWT Login failed")
+                    case .success(let authenticated):
+                        if authenticated {
+                            print("JWT Login successful")
+                        }
                     }
                 })
             }
@@ -447,11 +452,12 @@ NOTE: Screen sharing will only work using v3 SDK with the latest `WebexBroadcast
     ```
 
 ## Useful Resources
- * [Webex iOS SDK API docs](https://webex.github.io/webex-ios-sdk/).
+ * [Webex iOS SDK API docs](https://webex.github.io/webex-ios-sdk/)
  * [Guide for migration from v2.x to v3.x](https://github.com/webex/webex-ios-sdk/wiki/Migrating-from-v2-to-v3)
  * [Guide for creating v3 compatible integrations & CUCM Push notifications](https://github.com/webex/webex-ios-sdk/wiki/App-Registration-for-Mobile-SDK-v3)
  * [Guide for CUCM calling](https://github.com/webex/webex-ios-sdk/wiki/CUCM-Usage-Guide-v3)
  * [Guide for using Multistream](https://github.com/webex/webex-ios-sdk/wiki/Multistream-Guide)
+ * [Guide for using SDK in FedRAMP environment](https://github.com/webex/webex-ios-sdk/wiki/iOS-SDK-FedRAMP-Environment)
  * [WebexSDK Wikis](https://github.com/webex/webex-ios-sdk/wiki)
 
 ## License
