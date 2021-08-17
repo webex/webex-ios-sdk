@@ -230,5 +230,7 @@ public class OAuthAuthenticator : Authenticator {
     /// - since: 1.2.0
     public func deauthorize() {
         storage.tokens = nil
+        UserDefaults.sharedInstance.deviceUrl = nil
+        UserDefaults.sharedInstance.deviceIdentifier = nil
     }
 }
