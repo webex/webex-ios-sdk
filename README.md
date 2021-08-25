@@ -103,7 +103,7 @@ Here are some examples of how to use the iOS SDK in your app.
     webex.enableConsoleLogger = true 
     webex.logLevel = .verbose // Highly recommended to make this end-user configurable incase you need to get detailed logs.
 
-    webex.initialize { result in
+    webex.initialize { isLoggedIn in
             if isLoggedIn {
                 print("User is authorized")
             } else {
