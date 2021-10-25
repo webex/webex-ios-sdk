@@ -1,5 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 3.2.0 Releases
+
+- `3.2.0` Releases - [3.2.0](#320)
+
 #### 3.1.0 Releases
 
 - `3.1.0` Releases - [3.1.0](#310)
@@ -89,6 +93,50 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ---
+## [3.2.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.2.0)
+Released on 2021-10-18
+#### Added
+- Added new `TokenAuthenticator` for authenticating with external guest access token
+- Added VirtualBackground support
+- Added new API `Phone.isVirtualBackgroundSupported` to check whether your device supports virtual background feature
+- Added new API `Phone.virtualBackgroundLimit` to get/set the limit of custom virtual background
+- Added new API `Phone.fetchVirtualBackgrounds(:completionHandler)` API to get all virtual backgrounds
+- Added new API `Phone.addVirtualBackground(:image:completionHandler)` API to add new virtual background image
+- Added new API `Phone.removeVirtualBackground(:background:completionHandler)` API to delete selected virtual background item
+- Added new API `Phone.applyVirtualBackground(:background:mode:completionHandler)` API to apply virtual background for 'Preview' or 'Call'
+- Added new API `Call.onCpuHitThreshold()` to notify when CPU reaches threshold
+- Added new struct `Phone.VirtualBackground` to denote the virtual background item
+- Added new struct `Phone.VirtualBackgroundThumbnail` to denote the thumbnail of  virtual background item
+- Added new enum `Phone.VirtualBackgroundType`to denote the type of virtual background item among None, Blur and Custom
+- Added new enum `Phone.VirtualBackgroundMode` to denote the mode for applying virtual background for Preview or Call
+- Added new enum `FetchVirtualBackgroundError`
+- Added new enum `AddVirtualBackgroundError` 
+- Added new enum `RemoveVirtualBackgroundError`
+- Added new enum `ApplyVirtualBackgroundError`
+- Added new API `CalendarMeetings.list(:startDate:endDate:callback)` to list all calendar meetings in a date range
+- Added new API `CalendarMeetings.get(:meetingId:callback)` to fetch a single calendar meeting by meetingId
+- Added new struct `Meeting` to represent a Calendar Meeting item
+- Added new struct `MeetingInvitee` to represent a person invited to a calendar meeting
+- Added new enum `InviteeResponse` to represent the response of a meeting invitee
+- Added new API `CalendarMeetings.onEvent` to register a callback to be fired when a calendar meeting event occurs
+- Added new enum `CalendarMeetingEvent` to represent a scheduled calendar meeting event
+
+#### Updated
+- Updated WME to 11.9.0.9
+- Added new field `meetingId` to `Call` struct
+- Added public constructor for `RemoteFile` struct
+- Added public constructor for `RemoteFile.Thumbnail` struct
+- `Call.isSpeaker` was get only and can be set as well now
+
+## bug fixes
+- Dial callback not received
+- Meeting Signal after restart inconsistency
+- Calling Screen Infinite loading - wrong meeting Id dial.
+- Re-login crash without restart of application
+- Meeting subject incorrect
+- Remote Video rendering issue when re-join meeting
+- Video surfaces crash on leaving meeting
+
 ## [3.1.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.1.0)
 Released on 2021-08-16
 #### Added
