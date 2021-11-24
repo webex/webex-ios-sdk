@@ -901,6 +901,7 @@ public class Phone {
                         return
                     }
                     DispatchQueue.main.async {
+                        self.metrics.reportLocusJoinResponse(phone: self, call: call, correlationId: correlationId.uuidString, isSuccess: true)
                         if call.model.myself?.isInLobby == true {
                             call.startKeepAlive()
                         }else {
@@ -913,12 +914,14 @@ public class Phone {
                     WebexError.serviceFailed(reason: "Failure: Missing required information when dial").report(resultCallback: completionHandler)
                 }
             case .failure(let error):
+                metrics.reportLocusJoinResponse(phone: self, call: nil, correlationId: correlationId.uuidString, isSuccess: false)
                 PhoneError.failureCall.report(cause: error, resultCallback: completionHandler)
             }
         case .join(let call, let res, let completionHandler):
             switch res.result {
             case .success(let model):
                 SDKLogger.shared.debug("Receive join locus response: \(model.toJSONString(prettyPrint: self.debug) ?? nilJsonStr)")
+                metrics.reportLocusJoinResponse(phone: self, call: call, correlationId: call.correlationId.uuidString, isSuccess: true)
                 call.update(model: model)
                 DispatchQueue.main.async {
                     call.startMedia()
@@ -926,6 +929,7 @@ public class Phone {
                 }
             case .failure(let error):
                 SDKLogger.shared.error("Failure join ", error: error)
+                metrics.reportLocusJoinResponse(phone: self, call: call, correlationId: call.correlationId.uuidString, isSuccess: false)
                 DispatchQueue.main.async {
                     completionHandler(error)
                 }

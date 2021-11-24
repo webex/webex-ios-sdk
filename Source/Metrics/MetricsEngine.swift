@@ -84,9 +84,65 @@ class MetricsEngine {
         }
     }
 
+    func reportLocusJoinResponse(phone: Phone, call: Call?, correlationId: String, isSuccess: Bool) {
+        let identifiers: SparkIdentifiers
+        if isSuccess {
+            guard let call = call else { return }
+            identifiers = SparkIdentifiers(call: call, device: phone.devices.device, person: phone.me)
+        } else {
+            identifiers = SparkIdentifiers(
+                locusUrl: call?.model.locusUrl,
+                locusId: call?.model.locusId,
+                locusStartTime: call?.model.fullState?.lastActive ?? call?.connectedTime?.utc,
+                locusSessionId: nil,
+                correlationId: correlationId,
+                trackingId: TrackingId.generator.next,
+                deviceId: phone.devices.device?.deviceModel.deviceIdentifier,
+                userId: phone.me?.id == nil ? nil : WebexId.uuid((phone.me?.id)!),
+                orgId: phone.me?.orgId == nil ? nil : WebexId.uuid((phone.me?.orgId)!)
+            )
+        }
+        
+        let sourceMetadata = SourceMetadata(mediaEngineSoftwareType: "WME", mediaEngineSoftwareVersion: MediaEngineWrapper.sharedInstance.wmeVersion, applicationSoftwareType: "Webex iOS SDK", applicationSoftwareVersion: Webex.version, startTime: Date().utc)
+        let clientEvent = ClientEvent(name: .locusJoinResponse,
+                state: nil,
+                identifiers: identifiers,
+                canProceed: isSuccess,
+                mediaType: nil,
+                csi: nil,
+                mediaCapabilities: nil,
+                mediaLines: iceMediaLines,
+                errors: nil,
+                trigger: nil,
+                displayLocation: nil,
+                dialedDomain: nil,
+                labels: nil,
+                eventData: nil,
+                intervals: [],
+                sourceMetadata: sourceMetadata)
+        let localIP = clientEvent.videoLocalIp ?? "127.0.0.1"
+        let clientInfo = ClientInfo(clientType: DeviceService.Types.sdk_client.rawValue, subClientType: "MOBILE_APP", os: "ios", osVersion: UIDevice.current.systemVersion, localIP: localIP, clientVersion: Webex.version)
+        let origin = DiagnosticOrigin(userAgent: UserAgent.string,
+                                      networkType: .unknown,
+                localIpAddress: localIP,
+                usingProxy: false,
+                mediaEngineSoftwareVersion: MediaEngineWrapper.sharedInstance.wmeVersion,
+                clientInfo: clientInfo)
+        let time = DiagnosticOriginTime(triggered: Date().utc, sent: Date().utc)
+        let event = DiagnosticEvent(eventId: UUID(),
+                version: 1,
+                origin: origin,
+                originTime: time, event: clientEvent)
+        let metric = ClientMetric(event: event, type: "diagnostic-event");
+        self.buffer.add(clientMetric: metric)
+        if buffer.count(client: true) > bufferLimit {
+            flush()
+        }
+    }
+
     func reportMQE(phone: Phone, call: Call, metric: [String: Any]) {
         let identifiers = SparkIdentifiers(call: call, device: phone.devices.device, person: phone.me)
-        let sourceMetadata = SourceMetadata(mediaEngineSoftwareType: "WME", mediaEngineSoftwareVersion: MediaEngineWrapper.sharedInstance.wmeVersion)
+        let sourceMetadata = SourceMetadata(mediaEngineSoftwareType: "WME", mediaEngineSoftwareVersion: MediaEngineWrapper.sharedInstance.wmeVersion, applicationSoftwareType: "Webex iOS SDK", applicationSoftwareVersion: Webex.version, startTime: Date().utc)
         let clientEvent = ClientEvent(name: .mediaQuality,
                 state: nil,
                 identifiers: identifiers,

@@ -24,10 +24,16 @@ import ObjectMapper
 struct SourceMetadata: Mappable {
     private(set) var mediaEngineSoftwareType: String?
     private(set) var mediaEngineSoftwareVersion: String?
+    private(set) var applicationSoftwareType: String?
+    private(set) var applicationSoftwareVersion: String?
+    private(set) var startTime: String?
     
-    init(mediaEngineSoftwareType: String, mediaEngineSoftwareVersion: String) {
+    init(mediaEngineSoftwareType: String, mediaEngineSoftwareVersion: String, applicationSoftwareType: String, applicationSoftwareVersion: String, startTime: String) {
         self.mediaEngineSoftwareType = mediaEngineSoftwareType
         self.mediaEngineSoftwareVersion = mediaEngineSoftwareVersion
+        self.applicationSoftwareType = applicationSoftwareType
+        self.applicationSoftwareVersion = applicationSoftwareVersion
+        self.startTime = startTime
     }
 
     init?(map: Map) {}
@@ -35,6 +41,9 @@ struct SourceMetadata: Mappable {
     mutating func mapping(map: Map) {
         self.mediaEngineSoftwareType <- map["mediaEngineSoftwareType"]
         self.mediaEngineSoftwareVersion <- map["mediaEngineSoftwareVersion"]
+        self.applicationSoftwareType <- map["applicationSoftwareType"]
+        self.applicationSoftwareVersion <- map["applicationSoftwareVersion"]
+        self.startTime <- map["startTime"]
     }
 }
 
