@@ -40,6 +40,7 @@ class UserDefaults {
             } else {
                 storage.set(newValue, forKey: deviceUrlKey)
             }
+            storage.synchronize()
         }
     }
     

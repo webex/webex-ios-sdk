@@ -138,6 +138,8 @@ public class JWTAuthenticator : Authenticator {
     public func deauthorize() {
         storage.jwt = nil
         storage.authenticationInfo = nil
+        UserDefaults.sharedInstance.deviceUrl = nil
+        UserDefaults.sharedInstance.deviceIdentifier = nil
     }
     
     /// - see: See Authenticator.accessToken(completionHandler:)

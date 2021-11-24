@@ -153,7 +153,7 @@ public class OAuthAuthenticator : Authenticator {
         if let encodedClientId = clientId.encodeQueryParamString,
             let encodedRedirectUri = redirectUri.encodeQueryParamString,
             let encodedScope = scope.encodeQueryParamString {
-            return URL(string: "\(Service.hydra.global.url.absoluteString)/authorize?response_type=code"
+            return URL(string: "\(Service.idbroker.baseUrl())/authorize?response_type=code"
                 + "&client_id=" + encodedClientId
                 + "&redirect_uri=" + encodedRedirectUri
                 + "&scope=" + encodedScope
@@ -230,5 +230,7 @@ public class OAuthAuthenticator : Authenticator {
     /// - since: 1.2.0
     public func deauthorize() {
         storage.tokens = nil
+        UserDefaults.sharedInstance.deviceUrl = nil
+        UserDefaults.sharedInstance.deviceIdentifier = nil
     }
 }

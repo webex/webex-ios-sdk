@@ -44,6 +44,7 @@ enum Service: String {
     case conv = "conversation"
     case metrics
     case calliopeDiscovery
+    case idbroker
     
     func homed(for device: Device?) -> ServiceRequest.Builder {
         return ServiceRequest.make(self.baseUrl(for: device))
@@ -97,6 +98,8 @@ enum Service: String {
             return self.baseUrl(device: device, default: "https://metrics-a.wbx2.com/metrics/api/v1")
         case .calliopeDiscovery:
             return self.baseUrl(device: device, default: "https://calliope-a.wbx2.com/calliope/api/discovery/v1")
+        case .idbroker:
+            return "https://idbroker.webex.com/idb/oauth2/v1"
         }
     }
     

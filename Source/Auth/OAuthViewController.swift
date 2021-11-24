@@ -50,6 +50,9 @@ class OAuthViewController: UIViewController, WKNavigationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        clearWebCache()
+        
         view.backgroundColor = .white
         title = "Link to Webex"
         webView = WKWebView(frame: view.bounds)
@@ -65,6 +68,12 @@ class OAuthViewController: UIViewController, WKNavigationDelegate {
         super.viewWillAppear(animated)
         if !webView.canGoBack {
             load(url: url)
+        }
+    }
+    
+    func clearWebCache() {
+        WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: Date(timeIntervalSince1970: 0)) {
+            SDKLogger.shared.debug("Clear Web cache finished.")
         }
     }
     
