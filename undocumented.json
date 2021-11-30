@@ -1402,56 +1402,56 @@
     },
     {
       "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 184,
+      "line": 185,
       "symbol": "Call.startBroadcast()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 190,
+      "line": 191,
       "symbol": "Call.stopBroadcast()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 196,
+      "line": 197,
       "symbol": "Call.setup()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 200,
+      "line": 201,
       "symbol": "Call.sendFrame(timeStamp:width:height:data:length:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 1809,
+      "line": 1824,
       "symbol": "NotificationCallType.Webex",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 1810,
+      "line": 1825,
       "symbol": "NotificationCallType.CUCM",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 1826,
+      "line": 1841,
       "symbol": "CallAssociationType.Merge",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 1827,
+      "line": 1842,
       "symbol": "CallAssociationType.Transfer",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
@@ -2501,49 +2501,49 @@
     },
     {
       "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/WebexSDK.swift",
-      "line": 370,
+      "line": 375,
       "symbol": "Webex.omniusServiceBridge(_:showUCSSOLoginView:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/WebexSDK.swift",
-      "line": 375,
+      "line": 380,
       "symbol": "Webex.omniusServiceBridgeShowUCNonSSOLoginView(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/WebexSDK.swift",
-      "line": 380,
+      "line": 385,
       "symbol": "Webex.omniusServiceBridgeShowUCDomainUDSServerInput(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/WebexSDK.swift",
-      "line": 385,
+      "line": 390,
       "symbol": "Webex.omniusServiceBridgeOnUCLogged(in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/WebexSDK.swift",
-      "line": 390,
+      "line": 395,
       "symbol": "Webex.omniusServiceBridge(onUCLoggedOut:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/WebexSDK.swift",
-      "line": 394,
+      "line": 399,
       "symbol": "Webex.omniusServiceBridge(onUCLoginFailed:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/WebexSDK.swift",
-      "line": 399,
+      "line": 404,
       "symbol": "Webex.omniusServiceBridge(_:onUCServerConnectionStateChanged:failureReason:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
