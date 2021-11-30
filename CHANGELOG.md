@@ -1,5 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 3.2.1 Releases
+
+- `3.2.1` Releases - [3.2.1](#321)
+
 #### 3.2.0 Releases
 
 - `3.2.0` Releases - [3.2.0](#320)
@@ -93,6 +97,17 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ---
+## [3.2.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.2.1)
+Released on 2021-11-30
+#### Added
+- Added new API `Call.forceSendingVideoLandscape(forceLandscape:completionHandler:)` to set local video view in landscape
+
+#### Updated
+- Added new field `locusUrl` to `Call` struct
+
+#### bug fixes
+- SpaceUpdated callback now fires after a space name has been decrypted
+
 ## [3.2.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.2.0)
 Released on 2021-10-18
 #### Added
@@ -128,7 +143,7 @@ Released on 2021-10-18
 - Added public constructor for `RemoteFile.Thumbnail` struct
 - `Call.isSpeaker` was get only and can be set as well now
 
-## bug fixes
+#### bug fixes
 - Dial callback not received
 - Meeting Signal after restart inconsistency
 - Calling Screen Infinite loading - wrong meeting Id dial.
