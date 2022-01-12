@@ -17,19 +17,19 @@
     <a title="Webex Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 3.2.1 Docs</a> (62% documented)</p>
-        <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png"/>View on GitHub</a></p>
-        <p class="header-right">
+        <p><a href="../index.html">WebexSDK 3.2.1 Docs</a> (96% documented)</p>
+        <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
           </form>
-        </p>
+        </div>
       </div>
     </header>
     <div class="content-wrapper">
       <p id="breadcrumbs">
         <a href="../index.html">WebexSDK Reference</a>
-        <img id="carat" src="../img/carat.png" />
+        <img id="carat" src="../img/carat.png" alt=""/>
         Webex Class Reference
       </p>
     </div>
@@ -149,6 +149,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/SpaceClient/SpaceClientError.html">– SpaceClientError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SparkClientProvider.html">SparkClientProvider</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/TeamClient.html">TeamClient</a>
@@ -558,33 +561,6 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK0A0C6omniusSo27OmniusServiceBridgeProtocol_pvp"></a>
-                    <a name="//apple_ref/swift/Property/omnius" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK0A0C6omniusSo27OmniusServiceBridgeProtocol_pvp">omnius</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">omnius</span><span class="p">:</span> <span class="kt">OmniusServiceBridgeProtocol</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:8WebexSDK0A0C13authenticatorAA13Authenticator_pSgvp"></a>
                     <a name="//apple_ref/swift/Property/authenticator" class="dashAnchor"></a>
                     <a class="token" href="#/s:8WebexSDK0A0C13authenticatorAA13Authenticator_pSgvp">authenticator</a>
@@ -595,7 +571,13 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>This is the <code><a href="../Protocols/Authenticator.html">Authenticator</a></code> object from the application when constructing this Webex object.
+It can be used to check and modify authentication state.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    1.2.0
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -622,7 +604,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>This delegate is used to listen for events from the UC server</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.0.0
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -1618,205 +1605,15 @@ Use <em>teamMemberships</em> to create and manage the team membership on behalf 
                     </section>
                   </div>
                 </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@WebexSDK@objc(cs)Webex(im)omniusServiceBridge:showUCSSOLoginView:"></a>
-                    <a name="//apple_ref/swift/Method/omniusServiceBridge(_:showUCSSOLoginView:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@WebexSDK@objc(cs)Webex(im)omniusServiceBridge:showUCSSOLoginView:">omniusServiceBridge(_:<wbr>showUCSSOLoginView:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">omniusServiceBridge</span><span class="p">(</span><span class="n">_</span> <span class="nv">omniusServiceBridge</span><span class="p">:</span> <span class="kt">OmniusServiceBridgeProtocol</span><span class="p">,</span> <span class="n">showUCSSOLoginView</span> <span class="nv">ssoUrl</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@WebexSDK@objc(cs)Webex(im)omniusServiceBridgeShowUCNonSSOLoginView:"></a>
-                    <a name="//apple_ref/swift/Method/omniusServiceBridgeShowUCNonSSOLoginView(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@WebexSDK@objc(cs)Webex(im)omniusServiceBridgeShowUCNonSSOLoginView:">omniusServiceBridgeShowUCNonSSOLoginView(_:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">omniusServiceBridgeShowUCNonSSOLoginView</span><span class="p">(</span><span class="n">_</span> <span class="nv">omniusServiceBridge</span><span class="p">:</span> <span class="kt">OmniusServiceBridgeProtocol</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK0A0C45omniusServiceBridgeShowUCDomainUDSServerInputyySo06OmniusdE8Protocol_pF"></a>
-                    <a name="//apple_ref/swift/Method/omniusServiceBridgeShowUCDomainUDSServerInput(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK0A0C45omniusServiceBridgeShowUCDomainUDSServerInputyySo06OmniusdE8Protocol_pF">omniusServiceBridgeShowUCDomainUDSServerInput(_:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">omniusServiceBridgeShowUCDomainUDSServerInput</span><span class="p">(</span><span class="n">_</span> <span class="nv">omniusServiceBridge</span><span class="p">:</span> <span class="kt">OmniusServiceBridgeProtocol</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@WebexSDK@objc(cs)Webex(im)omniusServiceBridgeOnUCLoggedIn:"></a>
-                    <a name="//apple_ref/swift/Method/omniusServiceBridgeOnUCLogged(in:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@WebexSDK@objc(cs)Webex(im)omniusServiceBridgeOnUCLoggedIn:">omniusServiceBridgeOnUCLogged(in:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">omniusServiceBridgeOnUCLogged</span><span class="p">(</span><span class="k">in</span> <span class="nv">omniusServiceBridge</span><span class="p">:</span> <span class="kt">OmniusServiceBridgeProtocol</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@WebexSDK@objc(cs)Webex(im)omniusServiceBridgeOnUCLoggedOut:"></a>
-                    <a name="//apple_ref/swift/Method/omniusServiceBridge(onUCLoggedOut:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@WebexSDK@objc(cs)Webex(im)omniusServiceBridgeOnUCLoggedOut:">omniusServiceBridge(onUCLoggedOut:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">omniusServiceBridge</span><span class="p">(</span><span class="n">onUCLoggedOut</span> <span class="nv">omniusServiceBridge</span><span class="p">:</span> <span class="kt">OmniusServiceBridgeProtocol</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@WebexSDK@objc(cs)Webex(im)omniusServiceBridgeOnUCLoginFailed:"></a>
-                    <a name="//apple_ref/swift/Method/omniusServiceBridge(onUCLoginFailed:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@WebexSDK@objc(cs)Webex(im)omniusServiceBridgeOnUCLoginFailed:">omniusServiceBridge(onUCLoginFailed:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">omniusServiceBridge</span><span class="p">(</span><span class="n">onUCLoginFailed</span> <span class="nv">omniusServiceBridge</span><span class="p">:</span> <span class="kt">OmniusServiceBridgeProtocol</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@WebexSDK@objc(cs)Webex(im)omniusServiceBridge:onUCServerConnectionStateChanged:failureReason:"></a>
-                    <a name="//apple_ref/swift/Method/omniusServiceBridge(_:onUCServerConnectionStateChanged:failureReason:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@WebexSDK@objc(cs)Webex(im)omniusServiceBridge:onUCServerConnectionStateChanged:failureReason:">omniusServiceBridge(_:<wbr>onUCServerConnectionStateChanged:<wbr>failureReason:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">omniusServiceBridge</span><span class="p">(</span><span class="n">_</span> <span class="nv">omniusServiceBridge</span><span class="p">:</span> <span class="kt">OmniusServiceBridgeProtocol</span><span class="p">,</span> <span class="n">onUCServerConnectionStateChanged</span> <span class="nv">status</span><span class="p">:</span> <span class="kt">CHUCLoginServerConnectionStatus</span><span class="p">,</span> <span class="nv">failureReason</span><span class="p">:</span> <span class="kt">CHPhoneServiceRegistrationFailureReason</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
               </ul>
             </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2021 <a class="link" href="https://developer.webex.com" target="_blank" rel="external">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2021-11-30)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2022 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2022-01-12)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>
   </body>
-</div>
 </html>
