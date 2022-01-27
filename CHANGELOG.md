@@ -1,5 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 3.3.0-Beta Releases
+
+- `3.3.0-Beta` Releases - [3.3.0-Beta](#330-Beta)
+
 #### 3.2.1 Releases
 
 - `3.2.1` Releases - [3.2.1](#321)
@@ -97,6 +101,25 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ---
+## [3.3.0-Beta](https://github.com/webex/webex-ios-sdk/tree/Beta/3.3.0)
+Released on 2022-01-27
+#### Added
+- Added new API `Call.wxa` for Webex assistant and real time transcription controls
+- Added new API `Call.cameraTorchMode`
+- Added new API `Call.cameraFlashMode`
+- Added new API `Call.zoomFactor`
+- Added new API `Call.exposureDuration`
+- Added new API `Call.exposureISO`
+- Added new API `Call.exposureTargetBias`
+- Added new API `Call.setCameraFocusAtPoint(:pointX:pointY)`
+- Added new API `Call.setCameraCustomExposure(:duration:iso)`
+- Added new API `Call.setCameraAutoExposure(:targetBias)`
+- Added new API `Call.takePhoto()`
+
+#### Updated
+- Enhanced documentation coverage
+- Decoupled WebexBroadcastExtensionKit from WebexSDK
+
 ## [3.2.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.2.1)
 Released on 2021-11-30
 #### Added

@@ -462,6 +462,6 @@ NOTE: Screen sharing will only work using v3 SDK with the latest `WebexBroadcast
 
 ## License
 
-&copy; 2016-2021 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.
+&copy; 2016-2022 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.
 
 See [LICENSE](https://github.com/webex/webex-ios-sdk/blob/master/LICENSE) for details.
