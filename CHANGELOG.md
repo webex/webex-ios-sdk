@@ -97,6 +97,30 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ---
+## [3.3.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.3.0)
+Released on 2022-02-15
+#### Added
+- Added new API `Call.wxa` for Webex assistant and real time transcription controls
+- Added new API `Call.cameraTorchMode`
+- Added new API `Call.cameraFlashMode`
+- Added new API `Call.zoomFactor`
+- Added new API `Call.exposureDuration`
+- Added new API `Call.exposureISO`
+- Added new API `Call.exposureTargetBias`
+- Added new API `Call.setCameraFocusAtPoint(:pointX:pointY)`
+- Added new API `Call.setCameraCustomExposure(:duration:iso)`
+- Added new API `Call.setCameraAutoExposure(:targetBias)`
+- Added new API `Call.takePhoto()`
+
+#### Updated
+- Enhanced documentation coverage
+- Decoupled WebexBroadcastExtensionKit from WebexSDK
+- Fixed thumbnail for high resolution images not loading
+- Fixed decoding of special characters in urlencoded Guest issuer JWT token
+- Made exp field as optional in Guest Issuer JWT
+- Fixed callback not being fired for deleting self membership from space
+- Fixed an issue with fetching inter-cluster team memberships
+
 ## [3.2.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.2.1)
 Released on 2021-11-30
 #### Added
@@ -104,9 +128,6 @@ Released on 2021-11-30
 
 #### Updated
 - Added new field `locusUrl` to `Call` struct
-
-#### bug fixes
-- SpaceUpdated callback now fires after a space name has been decrypted
 
 ## [3.2.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.2.0)
 Released on 2021-10-18
@@ -141,16 +162,6 @@ Released on 2021-10-18
 - Added new field `meetingId` to `Call` struct
 - Added public constructor for `RemoteFile` struct
 - Added public constructor for `RemoteFile.Thumbnail` struct
-- `Call.isSpeaker` was get only and can be set as well now
-
-#### bug fixes
-- Dial callback not received
-- Meeting Signal after restart inconsistency
-- Calling Screen Infinite loading - wrong meeting Id dial.
-- Re-login crash without restart of application
-- Meeting subject incorrect
-- Remote Video rendering issue when re-join meeting
-- Video surfaces crash on leaving meeting
 
 ## [3.1.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.1.0)
 Released on 2021-08-16
