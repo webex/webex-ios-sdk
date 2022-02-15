@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CameraExposureTargetBias Structure Reference</title>
+    <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../../js/jquery.min.js" defer></script>
+    <script src="../../js/jazzy.js" defer></script>
+    
+    <script src="../../js/lunr.min.js" defer></script>
+    <script src="../../js/typeahead.jquery.js" defer></script>
+    <script src="../../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Struct/CameraExposureTargetBias" class="dashAnchor"></a>
+    <a title="CameraExposureTargetBias Structure Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../../index.html">WebexSDK 3.3.0 Docs</a> (95% documented)</p>
+        <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
+          <form role="search" action="../../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../../index.html">WebexSDK Reference</a>
+        <img id="carat" src="../../img/carat.png" alt=""/>
+        CameraExposureTargetBias Structure Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Classes/AuxStream.html">AuxStream</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/CalendarMeetingClient.html">CalendarMeetingClient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Call.html">Call</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Call/Direction.html">– Direction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Call/DisconnectReason.html">– DisconnectReason</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Call/MediaChangedEvent.html">– MediaChangedEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Call/CallMembershipChangedEvent.html">– CallMembershipChangedEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Call/iOSBroadcastingEvent.html">– iOSBroadcastingEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Call/Capabilities.html">– Capabilities</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Call/WaitReason.html">– WaitReason</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Call/VideoRenderMode.html">– VideoRenderMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Call/TorchMode.html">– TorchMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Call/FlashMode.html">– FlashMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Call/CameraExposureDuration.html">– CameraExposureDuration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Call/CameraExposureISO.html">– CameraExposureISO</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Call/CameraExposureTargetBias.html">– CameraExposureTargetBias</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/CallSchedule.html">CallSchedule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/EmailAddress.html">EmailAddress</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes.html#/c:@M@WebexSDK@objc(cs)H264LicensePrompter">H264LicensePrompter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/JWTAuthenticator.html">JWTAuthenticator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/LocalFile.html">LocalFile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/LocalFile/Thumbnail.html">– Thumbnail</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/MembershipClient.html">MembershipClient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/MessageClient.html">MessageClient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/OAuthAuthenticator.html">OAuthAuthenticator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/PersonClient.html">PersonClient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/PersonClient/PersonGetError.html">– PersonGetError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Phone.html">Phone</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Phone/FacingMode.html">– FacingMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Phone/H264LicenseAction.html">– H264LicenseAction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Phone/DefaultBandwidth.html">– DefaultBandwidth</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Phone/AdvancedSettings.html">– AdvancedSettings</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Phone/AudioBNRMode.html">– AudioBNRMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Phone/VideoStreamMode.html">– VideoStreamMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Phone/ServiceUrlType.html">– ServiceUrlType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Phone/VirtualBackgroundThumbnail.html">– VirtualBackgroundThumbnail</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Phone/VirtualBackground.html">– VirtualBackground</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Phone/VirtualBackgroundType.html">– VirtualBackgroundType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Phone/VirtualBackgroundMode.html">– VirtualBackgroundMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/SpaceClient.html">SpaceClient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/SpaceClient/SpaceClientError.html">– SpaceClientError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/SparkClientProvider.html">SparkClientProvider</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/TeamClient.html">TeamClient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/TeamClient/TeamArchiveError.html">– TeamArchiveError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/TeamClient/TeamUpdateError.html">– TeamUpdateError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/TeamMembershipClient.html">TeamMembershipClient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/TokenAuthenticator.html">TokenAuthenticator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/WXA.html">WXA</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Webex.html">Webex</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/WebhookClient.html">WebhookClient</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Enums/AccessTokenLoginResult.html">AccessTokenLoginResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/AddVirtualBackgroundError.html">AddVirtualBackgroundError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/ApplyVirtualBackgroundError.html">ApplyVirtualBackgroundError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/AuxStreamChangeEvent.html">AuxStreamChangeEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/Base64EncodeError.html">Base64EncodeError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/Before.html">Before</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/CalendarMeetingEvent.html">CalendarMeetingEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/CallAssociationType.html">CallAssociationType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/CallError.html">CallError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/CallStatus.html">CallStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/CreatePersonError.html">CreatePersonError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/CreateSpaceMembershipError.html">CreateSpaceMembershipError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/CreateTeamMembershipError.html">CreateTeamMembershipError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/CreateWebhookError.html">CreateWebhookError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/DeleteMessageError.html">DeleteMessageError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/DeletePersonError.html">DeletePersonError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/DeleteSpaceError.html">DeleteSpaceError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/DeleteTeamMembershipError.html">DeleteTeamMembershipError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/DeleteWebhookError.html">DeleteWebhookError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/DownloadFileResult.html">DownloadFileResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/DownloadThumbnailResult.html">DownloadThumbnailResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/FetchVirtualBackgroundError.html">FetchVirtualBackgroundError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/GetCalendarMeetingByIdResult.html">GetCalendarMeetingByIdResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/GetMembershipByIdError.html">GetMembershipByIdError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/GetMessageError.html">GetMessageError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/GetTeamMembershipError.html">GetTeamMembershipError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/GetWebhookError.html">GetWebhookError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/InviteeResponse.html">InviteeResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/LetInError.html">LetInError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/ListCalendarMeetingsResult.html">ListCalendarMeetingsResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/ListMembershipReadStatusError.html">ListMembershipReadStatusError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/ListMembershipsError.html">ListMembershipsError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/ListMessagesError.html">ListMessagesError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/ListPersonsError.html">ListPersonsError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/ListSpaceReadStatusError.html">ListSpaceReadStatusError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/ListTeamMembershipError.html">ListTeamMembershipError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/ListWebhooksError.html">ListWebhooksError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/LogLevel.html">LogLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/MarkMessageReadResult.html">MarkMessageReadResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/MembershipDeleteError.html">MembershipDeleteError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/MembershipEvent.html">MembershipEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/MembershipUpdateError.html">MembershipUpdateError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/Mention.html">Mention</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/MessageEvent.html">MessageEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/MessageEvent/UpdateType.html">– UpdateType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/MessageValidationResult.html">MessageValidationResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/NotificationCallType.html">NotificationCallType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/OAuthResult.html">OAuthResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/PhoneServiceRegistrationFailureReason.html">PhoneServiceRegistrationFailureReason</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/PostMessageError.html">PostMessageError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/RemoveVirtualBackgroundError.html">RemoveVirtualBackgroundError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/ResourceType.html">ResourceType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/Result.html">Result</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/SetCompositedLayoutError.html">SetCompositedLayoutError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/SpaceEvent.html">SpaceEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/SpaceSortType.html">SpaceSortType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/SpaceType.html">SpaceType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/TeamCreateError.html">TeamCreateError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/TeamGetError.html">TeamGetError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/TeamListError.html">TeamListError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/TokenLoginError.html">TokenLoginError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/UCLoginServerConnectionStatus.html">UCLoginServerConnectionStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/UpdatePersonError.html">UpdatePersonError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/UpdateSpaceTitleError.html">UpdateSpaceTitleError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/UpdateTeamMembershipError.html">UpdateTeamMembershipError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/UpdateWebhookError.html">UpdateWebhookError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/WebexError.html">WebexError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/Bool.html">Bool</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Protocols/Authenticator.html">Authenticator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Protocols/Logger.html">Logger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Protocols/MultiStreamObserver.html">MultiStreamObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Protocols/WebexUCLoginDelegate.html">WebexUCLoginDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Structs/CallMembership.html">CallMembership</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/CallMembership/State.html">– State</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/JWTAuthenticationInfo.html">JWTAuthenticationInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/LogMessage.html">LogMessage</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/MediaOption.html">MediaOption</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/MediaOption/CompositedVideoLayout.html">– CompositedVideoLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/Meeting.html">Meeting</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/MeetingInvitee.html">MeetingInvitee</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/Membership.html">Membership</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/MembershipReadStatus.html">MembershipReadStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/MentionPos.html">MentionPos</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/Message.html">Message</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/Message/Text.html">– Text</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/OAuthTokens.html">OAuthTokens</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/Person.html">Person</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/RemoteFile.html">RemoteFile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/RemoteFile/Thumbnail.html">– Thumbnail</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/Resource.html">Resource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/Space.html">Space</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/SpaceMeetingInfo.html">SpaceMeetingInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/SpaceReadStatus.html">SpaceReadStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/Team.html">Team</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/TeamMembership.html">TeamMembership</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/Transcription.html">Transcription</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/WebexEventPayload.html">WebexEventPayload</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/Webhook.html">Webhook</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>CameraExposureTargetBias</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">CameraExposureTargetBias</span></code></pre>
+
+                </div>
+              </div>
+            <p>The range of camera exposure target bias having min, max and current values</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.3.0
+
+</div>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC24CameraExposureTargetBiasV3maxSfvp"></a>
+                    <a name="//apple_ref/swift/Property/max" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC24CameraExposureTargetBiasV3maxSfvp">max</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">max</span><span class="p">:</span> <span class="kt">Float</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC24CameraExposureTargetBiasV3minSfvp"></a>
+                    <a name="//apple_ref/swift/Property/min" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC24CameraExposureTargetBiasV3minSfvp">min</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">min</span><span class="p">:</span> <span class="kt">Float</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC24CameraExposureTargetBiasV7currentSfvp"></a>
+                    <a name="//apple_ref/swift/Property/current" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC24CameraExposureTargetBiasV7currentSfvp">current</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">current</span><span class="p">:</span> <span class="kt">Float</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2022 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2022-02-15)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>
