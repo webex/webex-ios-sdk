@@ -2,5 +2,4 @@ All contents are licensed under the Cisco EULA
 (https://www.cisco.com/c/en/us/products/end-user-license-agreement.html)
 
 This includes but not limited to "Wme.framework", "Sbu.framework", "Seu.framework", 
-"util_ios.framework", "wbxaudioengine.framework", "wbxaecodec.framework"
-"WebexSDK.framework"
+"util_ios.framework", "wbxaudioengine.framework", "wbxaecodec.framework", "mediastores_ios.framework", "WebexSDK.framework", "WebexBroadcastExtensionKit.framework"
