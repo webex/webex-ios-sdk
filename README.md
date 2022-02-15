@@ -25,6 +25,7 @@ This SDK is written in [Swift 5](https://developer.apple.com/swift) and requires
 ## Notes
 
 * Integrations created in the past will not work with v3 because they are not entitled to the scopes required by v3. You can either raise a support request to enable these scopes for your appId or  you could create a new Integration that's meant to be used for v3. This does not affect Guest Issuer JWT token based sign in.
+* We do not support external authCode login anymore.
 * Starting a screenshare is not yet supported for CUCM calls.
 * Currently all resource ids that are exposed from the sdk are barebones GUIDs. You cannot directly use these ids to make calls to [webexapis.com](webexapis.com). You'll need to call `Webex.base64Encode(:ResourceType:resource:completionHandler)` to get a base64 encoded resource. However, you're free to interchange between base64 encoded resource ids and barebones GUID while providing them as input to the sdk APIs.
 * FedRAMP(
