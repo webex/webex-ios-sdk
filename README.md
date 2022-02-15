@@ -19,7 +19,7 @@ This SDK is written in [Swift 5](https://developer.apple.com/swift) and requires
 
 * Unified feature set: Meeting, Messaging and CUCM calling.
 * Greater feature velocity and in parity with the Webex mobile app.
-* Easier for developers community: SQLite is bundled for automatic data caching.
+* Easier for the developer community: SQLite is bundled for automatic data caching.
 * Greater quality as it is built on a more robust infrastructure.
 
 ## Notes
@@ -462,6 +462,6 @@ NOTE: Screen sharing will only work using v3 SDK with the latest `WebexBroadcast
 
 ## License
 
-&copy; 2016-2021 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.
+&copy; 2016-2022 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.
 
 See [LICENSE](https://github.com/webex/webex-ios-sdk/blob/master/LICENSE) for details.
