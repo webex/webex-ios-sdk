@@ -1,5 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 3.3.0 Releases
+
+- `3.3.0` Releases - [3.3.0](#330)
+
 #### 3.2.1 Releases
 
 - `3.2.1` Releases - [3.2.1](#321)
