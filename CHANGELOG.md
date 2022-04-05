@@ -1,8 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
-#### 3.3.0-Beta Releases
+#### 3.4.0-Beta Releases
 
-- `3.3.0-Beta` Releases - [3.3.0-Beta](#330-Beta)
+- `3.4.0-Beta` Releases - [3.4.0-Beta](#340-Beta)
+
+#### 3.3.0 Releases
+
+- `3.3.0` Releases - [3.3.0](#330)
 
 #### 3.2.1 Releases
 
@@ -101,8 +105,14 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ---
-## [3.3.0-Beta](https://github.com/webex/webex-ios-sdk/tree/Beta/3.3.0)
-Released on 2022-01-27
+## [3.4.0-Beta](https://github.com/webex/webex-ios-sdk/tree/Beta/3.4.0)
+Released on 2022-04-05
+#### Added
+- Added new enum `Call.MediaQualityInfo`to denote the media quality
+- Added new API `Call.onMediaQualityInfoChanged()` to notify when media quality is changed
+
+## [3.3.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.3.0)
+Released on 2022-02-15
 #### Added
 - Added new API `Call.wxa` for Webex assistant and real time transcription controls
 - Added new API `Call.cameraTorchMode`
@@ -119,6 +129,11 @@ Released on 2022-01-27
 #### Updated
 - Enhanced documentation coverage
 - Decoupled WebexBroadcastExtensionKit from WebexSDK
+- Fixed thumbnail for high resolution images not loading
+- Fixed decoding of special characters in urlencoded Guest issuer JWT token
+- Made exp field as optional in Guest Issuer JWT
+- Fixed callback not being fired for deleting self membership from space
+- Fixed an issue with fetching inter-cluster team memberships
 
 ## [3.2.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.2.1)
 Released on 2021-11-30
@@ -127,9 +142,6 @@ Released on 2021-11-30
 
 #### Updated
 - Added new field `locusUrl` to `Call` struct
-
-#### bug fixes
-- SpaceUpdated callback now fires after a space name has been decrypted
 
 ## [3.2.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.2.0)
 Released on 2021-10-18
@@ -164,16 +176,6 @@ Released on 2021-10-18
 - Added new field `meetingId` to `Call` struct
 - Added public constructor for `RemoteFile` struct
 - Added public constructor for `RemoteFile.Thumbnail` struct
-- `Call.isSpeaker` was get only and can be set as well now
-
-#### bug fixes
-- Dial callback not received
-- Meeting Signal after restart inconsistency
-- Calling Screen Infinite loading - wrong meeting Id dial.
-- Re-login crash without restart of application
-- Meeting subject incorrect
-- Remote Video rendering issue when re-join meeting
-- Video surfaces crash on leaving meeting
 
 ## [3.1.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.1.0)
 Released on 2021-08-16
