@@ -113,9 +113,17 @@ Released on 2022-04-05
 - Added new API `Message.Text.html(html: String) -> Text`
 - Added new API `Message.Text.markdown(markdown: String) -> Text`
 
-#### Deprecated following APIs
-- `Message.Text.html(html: String, plain: String? = nil) -> Text`
-- `Message.Text.markdown(markdown: String, html: String, plain: String? = nil) -> Text`
+#### Updated
+- Fixed - Crash when remote user starts or stops sharing
+- Fixed - Call pipeline improvement
+- Fixed - List messages before messageId not returning messages
+- Fixed - Text object type incorrect on received messages- 
+- Fixed - Message sender details incorrect in integration use case
+
+#### Deprecated 
+- Sending multiple formats of text in the same message is not supported. Below text constuctors are deprecated
+    - `Message.Text.html(html: String, plain: String? = nil) -> Text`
+    - `Message.Text.markdown(markdown: String, html: String, plain: String? = nil) -> Text`
 
 ## [3.3.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.3.0)
 Released on 2022-02-15
