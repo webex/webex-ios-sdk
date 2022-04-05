@@ -110,6 +110,12 @@ Released on 2022-04-05
 #### Added
 - Added new enum `Call.MediaQualityInfo`to denote the media quality
 - Added new API `Call.onMediaQualityInfoChanged()` to notify when media quality is changed
+- Added new API `Message.Text.html(html: String) -> Text`
+- Added new API `Message.Text.markdown(markdown: String) -> Text`
+
+#### Deprecated following APIs
+- `Message.Text.html(html: String, plain: String? = nil) -> Text`
+- `Message.Text.markdown(markdown: String, html: String, plain: String? = nil) -> Text`
 
 ## [3.3.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.3.0)
 Released on 2022-02-15
