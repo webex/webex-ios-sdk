@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>UCLoginServerConnectionStatus Enumeration Reference</title>
+    <title>MediaQualityInfo Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -13,8 +13,8 @@
     <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/UCLoginServerConnectionStatus" class="dashAnchor"></a>
-    <a title="UCLoginServerConnectionStatus Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Enum/MediaQualityInfo" class="dashAnchor"></a>
+    <a title="MediaQualityInfo Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">WebexSDK 3.4.0 Docs</a> (94% documented)</p>
@@ -30,7 +30,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">WebexSDK Reference</a>
         <img id="carat" src="../img/carat.png" alt=""/>
-        UCLoginServerConnectionStatus Enumeration Reference
+        MediaQualityInfo Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -519,15 +519,20 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>UCLoginServerConnectionStatus</h1>
+            <h1>MediaQualityInfo</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">UCLoginServerConnectionStatus</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MediaQualityInfo</span></code></pre>
 
                 </div>
               </div>
-            <p>Enum representing the current UC login server connection status</p>
+            <p>The struct of a QualityInfo Type</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.4.0
+
+</div>
 
           </section>
           <section class="section task-group-section">
@@ -536,9 +541,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK29UCLoginServerConnectionStatusO4IdleyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/Idle" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK29UCLoginServerConnectionStatusO4IdleyA2CmF">Idle</a>
+                    <a name="/s:8WebexSDK16MediaQualityInfoO4GoodyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/Good" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK16MediaQualityInfoO4GoodyA2CmF">Good</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -546,14 +551,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Connection is in idle state</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">Idle</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">Good</span></code></pre>
 
                         </div>
                       </div>
@@ -563,9 +568,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK29UCLoginServerConnectionStatusO10ConnectingyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/Connecting" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK29UCLoginServerConnectionStatusO10ConnectingyA2CmF">Connecting</a>
+                    <a name="/s:8WebexSDK16MediaQualityInfoO10PoorUplinkyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/PoorUplink" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK16MediaQualityInfoO10PoorUplinkyA2CmF">PoorUplink</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -573,14 +578,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>In connecting state</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">Connecting</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">PoorUplink</span></code></pre>
 
                         </div>
                       </div>
@@ -590,9 +595,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK29UCLoginServerConnectionStatusO9ConnectedyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/Connected" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK29UCLoginServerConnectionStatusO9ConnectedyA2CmF">Connected</a>
+                    <a name="/s:8WebexSDK16MediaQualityInfoO12PoorDownlinkyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/PoorDownlink" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK16MediaQualityInfoO12PoorDownlinkyA2CmF">PoorDownlink</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -600,14 +605,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>In connected state</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">Connected</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">PoorDownlink</span></code></pre>
 
                         </div>
                       </div>
@@ -617,9 +622,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK29UCLoginServerConnectionStatusO12DisconnectedyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/Disconnected" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK29UCLoginServerConnectionStatusO12DisconnectedyA2CmF">Disconnected</a>
+                    <a name="/s:8WebexSDK16MediaQualityInfoO11NetworkLostyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/NetworkLost" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK16MediaQualityInfoO11NetworkLostyA2CmF">NetworkLost</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -627,14 +632,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>In disconnected state</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">Disconnected</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">NetworkLost</span></code></pre>
 
                         </div>
                       </div>
@@ -644,9 +649,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK29UCLoginServerConnectionStatusO6FailedyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/Failed" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK29UCLoginServerConnectionStatusO6FailedyA2CmF">Failed</a>
+                    <a name="/s:8WebexSDK16MediaQualityInfoO16DeviceLimitationyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/DeviceLimitation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK16MediaQualityInfoO16DeviceLimitationyA2CmF">DeviceLimitation</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -654,14 +659,41 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Connection failed</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">Failed</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">DeviceLimitation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK16MediaQualityInfoO12HighCpuUsageyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/HighCpuUsage" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK16MediaQualityInfoO12HighCpuUsageyA2CmF">HighCpuUsage</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">HighCpuUsage</span></code></pre>
 
                         </div>
                       </div>
