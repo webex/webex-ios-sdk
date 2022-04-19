@@ -17,7 +17,7 @@
     <a title="Text Structure Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../../index.html">WebexSDK 3.3.0 Docs</a> (95% documented)</p>
+        <p><a href="../../index.html">WebexSDK 3.4.0 Docs</a> (94% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../../search.json">
@@ -315,6 +315,9 @@
                 <a href="../../Enums/MarkMessageReadResult.html">MarkMessageReadResult</a>
               </li>
               <li class="nav-group-task">
+                <a href="../../Enums/MediaQualityInfo.html">MediaQualityInfo</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../../Enums/MembershipDeleteError.html">MembershipDeleteError</a>
               </li>
               <li class="nav-group-task">
@@ -525,8 +528,7 @@
                 </div>
               </div>
             <p>The wrapper for the message text in different formats: plain text, markdown, and html.
-Please note this version of the SDK requires the application to convert markdown to html.
-Future version of the SDK will provide auto conversion from markdown to html.</p>
+An instance of Text can only be one of HTML, Markdown or Plain</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     2.3.0
@@ -586,6 +588,121 @@ Future version of the SDK will provide auto conversion from markdown to html.</p
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8WebexSDK7MessageV4TextV4htmlAfESS_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/html(html:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK7MessageV4TextV4htmlAfESS_tFZ">html(html:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Make a Text object for the html.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.4.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">html</span><span class="p">(</span><span class="nv">html</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Text</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>html</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The text with the html markup.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK7MessageV4TextV8markdownAfESS_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/markdown(markdown:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK7MessageV4TextV8markdownAfESS_tFZ">markdown(markdown:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Make a Text object for the markdown.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.4.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">markdown</span><span class="p">(</span><span class="nv">markdown</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Text</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>markdown</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The text with the markdown markup.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Deprecated"></a>
+                <a name="//apple_ref/swift/Section/Deprecated" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Deprecated"></a>
+                  <h3 class="section-name"><span>Deprecated</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8WebexSDK7MessageV4TextV4htmlAF5plainAESS_SSSgtFZ"></a>
                     <a name="//apple_ref/swift/Method/html(html:plain:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:8WebexSDK7MessageV4TextV4htmlAF5plainAESS_SSSgtFZ">html(html:<wbr>plain:<wbr>)</a>
@@ -603,7 +720,8 @@ Future version of the SDK will provide auto conversion from markdown to html.</p
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">html</span><span class="p">(</span><span class="nv">html</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">plain</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Text</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use html(html: String﹚ instead"</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">html</span><span class="p">(</span><span class="nv">html</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">plain</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Text</span></code></pre>
 
                         </div>
                       </div>
@@ -631,7 +749,7 @@ Future version of the SDK will provide auto conversion from markdown to html.</p
                               </td>
                               <td>
                                 <div>
-                                  <p>The alternate plain text for cases that do not support html markup.</p>
+                                  <p>This param is ignored. null can be passed.</p>
                                 </div>
                               </td>
                             </tr>
@@ -661,7 +779,8 @@ Future version of the SDK will provide auto conversion from markdown to html.</p
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">markdown</span><span class="p">(</span><span class="nv">markdown</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">html</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">plain</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Text</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use markdown(markdown: String﹚ instead"</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">markdown</span><span class="p">(</span><span class="nv">markdown</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">html</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">plain</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Text</span></code></pre>
 
                         </div>
                       </div>
@@ -689,7 +808,7 @@ Future version of the SDK will provide auto conversion from markdown to html.</p
                               </td>
                               <td>
                                 <div>
-                                  <p>The html text for how to render the markdown. This will be optional in the future.</p>
+                                  <p>This param is ignored. null can be passed.</p>
                                 </div>
                               </td>
                             </tr>
@@ -701,7 +820,7 @@ Future version of the SDK will provide auto conversion from markdown to html.</p
                               </td>
                               <td>
                                 <div>
-                                  <p>The alternate plain text for cases that do not support markdown and html markup.</p>
+                                  <p>This param is ignored. null can be passed.</p>
                                 </div>
                               </td>
                             </tr>
@@ -716,8 +835,8 @@ Future version of the SDK will provide auto conversion from markdown to html.</p
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2022-02-15)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2022 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2022-04-19)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>
