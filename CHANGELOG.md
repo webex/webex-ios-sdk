@@ -1,5 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 3.4.0 Releases
+
+- `3.4.0` Releases - [3.4.0](#340)
+
 #### 3.3.0 Releases
 
 - `3.3.0` Releases - [3.3.0](#330)
@@ -101,6 +105,26 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ---
+## [3.4.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.4.0)
+Released on 2022-04-19
+#### Added
+- Added new enum `Call.MediaQualityInfo`to denote the media quality
+- Added new API `Call.onMediaQualityInfoChanged()` to notify when media quality is changed
+- Added new API `Message.Text.html(html: String) -> Text`
+- Added new API `Message.Text.markdown(markdown: String) -> Text`
+
+#### Updated
+- Fixed - Crash when remote user starts or stops sharing
+- Fixed - Call pipeline improvement
+- Fixed - List messages before messageId not returning messages
+- Fixed - Text object type incorrect on received messages- 
+- Fixed - Message sender details incorrect in integration use case
+
+#### Deprecated 
+- Sending multiple formats of text in the same message is not supported. Below Text constructors are deprecated
+    - `Message.Text.html(html: String, plain: String? = nil) -> Text`
+    - `Message.Text.markdown(markdown: String, html: String, plain: String? = nil) -> Text`
+
 ## [3.3.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.3.0)
 Released on 2022-02-15
 #### Added

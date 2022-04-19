@@ -295,7 +295,7 @@ NOTE: Screen sharing will only work using v3 SDK with the latest `WebexBroadcast
     }
     ```
     ```swift
-    let text = Message.Text.markdown(markdown: markdown, html: html, plain: text)
+    let text = Message.Text.markdown(markdown: markdown) 
     webex.messages.post(text, toPersonEmail: emailAddress) { result in
         switch result {
         case .success(let message):
