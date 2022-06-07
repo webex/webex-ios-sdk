@@ -120,9 +120,9 @@ Released on 2022-06-07
 - Added new API `call.onMediaStreamAvailabilityListener` to notify when media stream is available/unavailable
 - Added new API `stream.setOnMediaStreamInfoChanged` to notify when media stream info is change
 - Added new API `call.setMediaStreamCategoryA(duplicate: Bool, quality: MediaStreamQuality)` to add the Active Speaker stream with the specified params if it does not already exist. Otherwise, update the Active Speaker stream with the specified params.
-- Added new API `call.setMediaStreamsCategoryB(numStreams: Int, quality: MediaStreamQuality)` to set all category B streams to the specified params.
+- Added new API `call.setMediaStreamsCategoryB(numStreams: Int, quality: MediaStreamQuality)` to set all category B streams to the specified params
 - Added new API `call.removeMediaStreamCategoryA()` to remove the Active Speaker stream
-- Added new API `call.removeMediaStreamsCategoryB()` to remove all category B streams.
+- Added new API `call.removeMediaStreamsCategoryB()` to remove all category B streams
 
 #### Updated
 Support for 1080p video resolution
@@ -132,7 +132,7 @@ Support for 1080p video resolution
 ## [3.4.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.4.0)
 Released on 2022-04-19
 #### Added
-- Added new enum `MediaQualityInfo`to denote the media quality
+- Added new enum `MediaQualityInfo` to denote the media quality
 - Added new API `Call.onMediaQualityInfoChanged()` to notify when media quality is changed
 - Added new API `Message.Text.html(html: String) -> Text`
 - Added new API `Message.Text.markdown(markdown: String) -> Text`
