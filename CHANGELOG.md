@@ -117,7 +117,7 @@ Released on 2022-06-07
 - Added new enum `MediaStreamChangeEventType` to denote the MediaStreamChangeEvent type
 - Added new enum `MediaStreamChangeEventInfo` to denote the changed event information
 - Added new API 'call.mediaStreams' to get all opened auxiliary streams
-- Added new API `call.onMediaStreamAvailabilityListener` to notify when media stream is avlable/unavailable
+- Added new API `call.onMediaStreamAvailabilityListener` to notify when media stream is available/unavailable
 - Added new API `stream.setOnMediaStreamInfoChanged` to notify when media stream info is change
 - Added new API 'call.setMediaStreamCategoryA(duplicate: Bool, quality: MediaStreamQuality)' to add the Active Speaker stream with the specified params if it does not already exist. Otherwise, update the Active Speaker stream with the specified params.
 - Added new API 'call.setMediaStreamsCategoryB(numStreams: Int, quality: MediaStreamQuality)' to set all category B streams to the specified params.
