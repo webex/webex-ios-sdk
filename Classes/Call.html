@@ -17,7 +17,7 @@
     <a title="Call Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 3.4.0 Docs</a> (94% documented)</p>
+        <p><a href="../index.html">WebexSDK 3.5.0 Docs</a> (91% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -107,6 +107,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MediaStream.html">MediaStream</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MediaStreamChangeEventInfo.html">MediaStreamChangeEventInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/MembershipClient.html">MembershipClient</a>
@@ -316,6 +322,15 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/MediaQualityInfo.html">MediaQualityInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MediaStreamChangeEventType.html">MediaStreamChangeEventType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MediaStreamQuality.html">MediaStreamQuality</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MediaStreamType.html">MediaStreamType</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/MembershipDeleteError.html">MembershipDeleteError</a>
@@ -1544,6 +1559,305 @@
                             </tr>
                           </tbody>
                         </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC12mediaStreamsSayAA11MediaStreamCGvp"></a>
+                    <a name="//apple_ref/swift/Property/mediaStreams" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC12mediaStreamsSayAA11MediaStreamCGvp">mediaStreams</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get all opened auxiliary streams.</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    see MediaStream
+
+</div><div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.5.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">lazy</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">mediaStreams</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/MediaStream.html">MediaStream</a></span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC33onMediaStreamAvailabilityListenerySb_AA0eF0CtcSgvp"></a>
+                    <a name="//apple_ref/swift/Property/onMediaStreamAvailabilityListener" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC33onMediaStreamAvailabilityListenerySb_AA0eF0CtcSgvp">onMediaStreamAvailabilityListener</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This will be triggered when the media stream is available or unavailable.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.5.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onMediaStreamAvailabilityListener</span><span class="p">:</span> <span class="p">((</span><span class="kt">Bool</span><span class="p">,</span> <span class="kt"><a href="../Classes/MediaStream.html">MediaStream</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>Bool</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Media Stream available - as the participant joins the meeting. Media Stream unavailable - as the participant leaves the meeting.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>streamType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The MediaStreamType of auxiliary view.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Void</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC23setMediaStreamCategoryA9duplicate7qualityySb_AA0eF7QualityOtF"></a>
+                    <a name="//apple_ref/swift/Method/setMediaStreamCategoryA(duplicate:quality:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC23setMediaStreamCategoryA9duplicate7qualityySb_AA0eF7QualityOtF">setMediaStreamCategoryA(duplicate:<wbr>quality:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add the Active Speaker stream with the specified params if it does not already exist.
+Otherwise, update the Active Speaker stream with the specified params.
+CategoryA will contain only 1 stream and it will always be active speaker stream.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.5.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setMediaStreamCategoryA</span><span class="p">(</span><span class="nv">duplicate</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">quality</span><span class="p">:</span> <span class="kt"><a href="../Enums/MediaStreamQuality.html">MediaStreamQuality</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>duplicate</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If true, same active speaker will also be included in category B streams.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>quality</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>max resolution for this stream - [MediaStreamQuality].</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC24setMediaStreamsCategoryB03numF07qualityySi_AA0E13StreamQualityOtF"></a>
+                    <a name="//apple_ref/swift/Method/setMediaStreamsCategoryB(numStreams:quality:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC24setMediaStreamsCategoryB03numF07qualityySi_AA0E13StreamQualityOtF">setMediaStreamsCategoryB(numStreams:<wbr>quality:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set all category B streams to the specified params.
+If the number of existing B streams is less than [numStreams], it will add B streams as necessary.
+If the number of existing B streams is more than [numStreams], it will remove the extra B streams.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.5.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setMediaStreamsCategoryB</span><span class="p">(</span><span class="nv">numStreams</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">quality</span><span class="p">:</span> <span class="kt"><a href="../Enums/MediaStreamQuality.html">MediaStreamQuality</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>numStreams</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>number of Category B streams desired; all of them will have the same resolution.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>quality</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>max resolution for this stream - [MediaStreamQuality].</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC26removeMediaStreamCategoryAyyF"></a>
+                    <a name="//apple_ref/swift/Method/removeMediaStreamCategoryA()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC26removeMediaStreamCategoryAyyF">removeMediaStreamCategoryA()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Remove the Active Speaker stream.
+To add the active stream back, use setMediaStreamCategoryA().</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.5.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeMediaStreamCategoryA</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC27removeMediaStreamsCategoryByyF"></a>
+                    <a name="//apple_ref/swift/Method/removeMediaStreamsCategoryB()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC27removeMediaStreamsCategoryByyF">removeMediaStreamsCategoryB()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Remove all category B streams.
+To change the number of B streams, use setMediaStreamsCategoryB().</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.5.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeMediaStreamsCategoryB</span><span class="p">()</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -4563,8 +4877,8 @@ Result will call back through auxStreamClosedEvent.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2022-04-19)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2022 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2022-06-07)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>
