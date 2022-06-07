@@ -1,5 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 3.5.0 Releases
+
+- `3.5.0` Releases - [3.5.0](#350)
+
 #### 3.4.0 Releases
 
 - `3.4.0` Releases - [3.4.0](#340)
@@ -105,10 +109,30 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ---
+## [3.5.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.5.0)
+Released on 2022-06-07
+#### Added
+- Added new enum `MediaStream` to denote the Media stream
+- Added new enum `MediaStreamQuality` to denote the Media stream quality
+- Added new enum `MediaStreamChangeEventType` to denote the MediaStreamChangeEvent type
+- Added new enum `MediaStreamChangeEventInfo` to denote the changed event information
+- Added new API 'call.mediaStreams' to get all opened auxiliary streams
+- Added new API `call.onMediaStreamAvailabilityListener` to notify when media stream is avlable/unavailable
+- Added new API `stream.setOnMediaStreamInfoChanged` to notify when media stream info is change
+- Added new API 'call.setMediaStreamCategoryA(duplicate: Bool, quality: MediaStreamQuality)' to add the Active Speaker stream with the specified params if it does not already exist. Otherwise, update the Active Speaker stream with the specified params.
+- Added new API 'call.setMediaStreamsCategoryB(numStreams: Int, quality: MediaStreamQuality)' to set all category B streams to the specified params.
+- Added new API 'call.removeMediaStreamCategoryA()' to remove the Active Speaker stream
+- Added new API 'call.removeMediaStreamsCategoryB()' to remove all category B streams.
+
+#### Updated
+Support for 1080p video resolution
+-  `webex.phone.videoMaxTxBandwidth = Phone.DefaultBandwidth.maxBandwidth1080p.rawValue` to capture Full HD resolution video
+-  `webex.phone.videoMaxRxBandwidth = Phone.DefaultBandwidth.maxBandwidth1080p.rawValue` To receive Full HD resolution video
+---
 ## [3.4.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.4.0)
 Released on 2022-04-19
 #### Added
-- Added new enum `Call.MediaQualityInfo`to denote the media quality
+- Added new enum `MediaQualityInfo`to denote the media quality
 - Added new API `Call.onMediaQualityInfoChanged()` to notify when media quality is changed
 - Added new API `Message.Text.html(html: String) -> Text`
 - Added new API `Message.Text.markdown(markdown: String) -> Text`
