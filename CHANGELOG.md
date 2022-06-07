@@ -128,6 +128,8 @@ Released on 2022-06-07
 Support for 1080p video resolution
 -  `webex.phone.videoMaxTxBandwidth = Phone.DefaultBandwidth.maxBandwidth1080p.rawValue` to capture Full HD resolution video
 -  `webex.phone.videoMaxRxBandwidth = Phone.DefaultBandwidth.maxBandwidth1080p.rawValue` To receive Full HD resolution video
+-  FIXED - VBG issues
+-  FIXED - postToPerson api issue fixed for JWT users
 ---
 ## [3.4.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.4.0)
 Released on 2022-04-19
