@@ -17,7 +17,7 @@
     <a title="Webex Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 3.5.0 Docs</a> (91% documented)</p>
+        <p><a href="../index.html">WebexSDK 3.6.0 Docs</a> (92% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -86,6 +86,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Call/CameraExposureTargetBias.html">– CameraExposureTargetBias</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CallHistoryRecord.html">CallHistoryRecord</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/CallSchedule.html">CallSchedule</a>
@@ -400,6 +403,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/UCLoginServerConnectionStatus.html">UCLoginServerConnectionStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/UCSSOFailureReason.html">UCSSOFailureReason</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/UpdatePersonError.html">UpdatePersonError</a>
@@ -1303,6 +1309,70 @@ Use <em>teamMemberships</em> to create and manage the team membership on behalf 
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8WebexSDK0A0C15retryUCSSOLoginyyF"></a>
+                    <a name="//apple_ref/swift/Method/retryUCSSOLogin()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK0A0C15retryUCSSOLoginyyF">retryUCSSOLogin()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Retry the SSO Session for UC Login, call this API when onUCSSOLoginFailed is executed to retry the login</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.6.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">retryUCSSOLogin</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK0A0C26forceRegisterPhoneServicesyyF"></a>
+                    <a name="//apple_ref/swift/Method/forceRegisterPhoneServices()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK0A0C26forceRegisterPhoneServicesyyF">forceRegisterPhoneServices()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>To force register the Phone Services on current iOS device when PhoneServiceRegistrationFailureReason is RegisteredElsewhere</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.6.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">forceRegisterPhoneServices</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8WebexSDK0A0C17setCUCMCredential8username8passwordySS_SStF"></a>
                     <a name="//apple_ref/swift/Method/setCUCMCredential(username:password:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:8WebexSDK0A0C17setCUCMCredential8username8passwordySS_SStF">setCUCMCredential(username:<wbr>password:<wbr>)</a>
@@ -1456,6 +1526,38 @@ Use <em>teamMemberships</em> to create and manage the team membership on behalf 
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">ucCancelSSOLogin</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK0A0C15startUCServicesyyF"></a>
+                    <a name="//apple_ref/swift/Method/startUCServices()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK0A0C15startUCServicesyyF">startUCServices()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>To initiate the CUCM services, must be called before calling any other CUCM API</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.6.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">startUCServices</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1649,8 +1751,8 @@ Use <em>teamMemberships</em> to create and manage the team membership on behalf 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2022-06-07)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2022 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2022-08-24)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>

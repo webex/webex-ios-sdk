@@ -17,7 +17,7 @@
     <a title="Call Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 3.5.0 Docs</a> (91% documented)</p>
+        <p><a href="../index.html">WebexSDK 3.6.0 Docs</a> (92% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -86,6 +86,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Call/CameraExposureTargetBias.html">– CameraExposureTargetBias</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CallHistoryRecord.html">CallHistoryRecord</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/CallSchedule.html">CallSchedule</a>
@@ -400,6 +403,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/UCLoginServerConnectionStatus.html">UCLoginServerConnectionStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/UCSSOFailureReason.html">UCSSOFailureReason</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/UpdatePersonError.html">UpdatePersonError</a>
@@ -1799,6 +1805,102 @@ If the number of existing B streams is more than [numStreams], it will remove th
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8WebexSDK4CallC23setMediaStreamCategoryC13participantId7qualityySS_AA0eF7QualityOtF"></a>
+                    <a name="//apple_ref/swift/Method/setMediaStreamCategoryC(participantId:quality:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC23setMediaStreamCategoryC13participantId7qualityySS_AA0eF7QualityOtF">setMediaStreamCategoryC(participantId:<wbr>quality:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>If a pinned stream for the participant with participantId already exists,
+update the stream with the specified params. Otherwise, add a pinned stream for this participantId</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.6.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setMediaStreamCategoryC</span><span class="p">(</span><span class="nv">participantId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">quality</span><span class="p">:</span> <span class="kt"><a href="../Enums/MediaStreamQuality.html">MediaStreamQuality</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>participantId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>participant id of Stream in category C streams.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>quality</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>max resolution for this stream - [MediaStreamQuality].</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC30isMediaStreamsPinningSupportedSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isMediaStreamsPinningSupported" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC30isMediaStreamsPinningSupportedSbvp">isMediaStreamsPinningSupported</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>True if the pinning is supported for the media streams.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.6.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">isMediaStreamsPinningSupported</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8WebexSDK4CallC26removeMediaStreamCategoryAyyF"></a>
                     <a name="//apple_ref/swift/Method/removeMediaStreamCategoryA()" class="dashAnchor"></a>
                     <a class="token" href="#/s:8WebexSDK4CallC26removeMediaStreamCategoryAyyF">removeMediaStreamCategoryA()</a>
@@ -1858,6 +1960,57 @@ To change the number of B streams, use setMediaStreamsCategoryB().</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeMediaStreamsCategoryB</span><span class="p">()</span></code></pre>
 
                         </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC26removeMediaStreamCategoryC13participantIdySS_tF"></a>
+                    <a name="//apple_ref/swift/Method/removeMediaStreamCategoryC(participantId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC26removeMediaStreamCategoryC13participantIdySS_tF">removeMediaStreamCategoryC(participantId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Remove the stream of pinned participant.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.6.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeMediaStreamCategoryC</span><span class="p">(</span><span class="nv">participantId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>participantId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>participantId The participant&rsquo;s id that needs to be removed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -4877,8 +5030,8 @@ Result will call back through auxStreamClosedEvent.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2022-06-07)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2022 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2022-08-24)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>
