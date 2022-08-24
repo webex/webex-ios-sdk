@@ -1,5 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 3.6.0 Releases
+
+- `3.6.0` Releases - [3.6.0](#360)
+
 #### 3.5.0 Releases
 
 - `3.5.0` Releases - [3.5.0](#350)
@@ -108,6 +112,29 @@ All notable changes to this project will be documented in this file.
 
 - `0.9.137` Releases - [0.9.137](#09137)
 
+---
+## [3.6.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.6.0)
+Released on 2022-08-24
+#### Added
+- Added new API `call.setMediaStreamCategoryC(participantId: String, quality: MediaStreamQuality)` to pin the participant's tream with the specified params if it does not already exist. Otherwise, update the pinned participant's stream with the specified params
+- Added new API `call.removeMediaStreamCategoryC(participantId: String)` to remove the pinning of a participant's stream
+- Added new API `Webex.startUCServices()` to start login process of CUCM
+- Added new API `Webex.retryUCSSOLogin()` in case UC sso login expires or requires a retry
+- Added new API `Webex.forceRegisterPhoneServices()` to handle `RegisteredElsewhere` error
+- Added new struct `CallHistoryRecord`
+- Added new callback `onUCSSOLoginFailed(failureReason: UCSSOFailureReason)` to notify app when SSO login fails.
+
+#### Updated
+- Added Support for message with video and thumbnail
+- Post message api was returning the message object with mentions as empty array
+- List message api bug fixes to return correct data before a provided date or time and honouring max value
+- Fixed a condition where the sdk crashes because of unguarded null pointer access on logout
+- Fixed an issue with space ID encoding when a meeting is started
+- Fixed CUCM login for SSO authentication
+- Fixed CUCM call history
+- Renamed callback `showUCSSOLoginView(to url: String)` to `loadUCSSOView(to url: String)`
+- Refactored `Phone.getCallHistory()` to return `CallHistoryRecord`s instead of `Space`s
+---
 ---
 ## [3.5.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.5.0)
 Released on 2022-06-07
