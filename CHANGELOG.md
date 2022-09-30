@@ -1,5 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+
+#### 3.7.0 Releases
+
+- `3.7.0` Releases - [3.7.0](#370)
+
 #### 3.6.0 Releases
 
 - `3.6.0` Releases - [3.6.0](#360)
@@ -111,6 +116,39 @@ All notable changes to this project will be documented in this file.
 #### 0.9.137 Releases
 
 - `0.9.137` Releases - [0.9.137](#09137)
+- 
+## [3.7.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.7.0)
+Released on **30 September, 2022**.
+#### Added
+- New struct `Captcha` to represent the Captcha object.
+- New struct `Breakout` A data type to represent the breakout.
+- New struct `BreakoutSession` A data type to represent the breakout session.
+- New case `forbidden` in enum `CreatePersonError`, `UpdatePersonError`
+- Three new cases `invalidPassword(reason: String)`, `captchaRequired(captcha: Phone.Captcha)`, `invalidPasswordWithCaptcha(captcha: Phone.Captcha)` to enum `WebexError`
+- New API `Phone.isRestrictedNetwork: Bool` to check whether the device is in a restricted network.
+- New API `Call.joinBreakoutSession(session: BreakoutSession)` to join the Breakout Session manually by passing the `BreakoutSession` if host has enabled allow join session later.
+- New API `Call.returnToMainSession()` to return to main session.
+- New API `Phone.refreshMeetingCaptcha(completionHandler: @escaping (Result<Captcha>) -> Void)` to refresh the Captcha object to get a new Captcha code.
+- New API `Call.correlationId: String?` to get the correlationId for that particular call.
+- New API `MediaOption.captchaId: String?` to get & set unique id for the captcha.
+- New API `MediaOption.captchaVerifyCode: String?` to get & set captcha verification code to be entered by user.
+- New API `Space.isExternallyOwned: Bool?` It will be true If a space is owned/created by non-org/external user.
+- New callback `onRestrictedNetworkStatusChanged: ((_ status: Bool) -> Void)?` to monitor restricted network status changes.
+- New callback `Call.onBreakoutErrorHappened: ((BreakoutError) -> Void)?` to notify when any breakout api returns error.
+- New callback `Call.onBreakoutUpdated: ((Breakout) -> Void)?` to notify when Breakout is updated.
+- New callback `Call.onBroadcastMessageReceivedFromHost: ((String) -> Void)?` to notify when host broadcast the message to the session.
+- New callback `Call.onHostAskingReturnToMainSession: (() -> Void)?` to notify when host is asking participants to return to main meeting.
+- New callback `Call.onJoinableSessionListUpdated: (([BreakoutSession]) -> Void)?` to notify when list of join breakout session changes.
+- New callback `Call.onJoinedSessionUpdated: ((BreakoutSession) -> Void)?` to notify when joined Breakout session is updated.
+- New callback `Call.onReturnedToMainSession: (() -> Void)?` to notify when returned to main session.
+- New callback `Call.onSessionClosing: (() -> Void)?` to notify when Breakout session is closing.
+- New callback `Call.onSessionEnabled: (() -> Void)?` to notify when Breakout session is enabled.
+- New callback `Call.onSessionJoined: ((BreakoutSession) -> Void)?` to notify when Breakout session is joined.
+- New callback `Call.onSessionStarted: ((Breakout) -> Void)?` to notify when Breakout session is started.
+
+#### Updated
+- `roles`,`licenses` and `siteUrls` fields are added to the `Person` class.
+-  In `Person.update` displayName field is not optional now
 
 ---
 ## [3.6.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.6.0)
@@ -155,9 +193,8 @@ Released on 2022-06-07
 Support for 1080p video resolution
 -  `webex.phone.videoMaxTxBandwidth = Phone.DefaultBandwidth.maxBandwidth1080p.rawValue` to capture Full HD resolution video
 -  `webex.phone.videoMaxRxBandwidth = Phone.DefaultBandwidth.maxBandwidth1080p.rawValue` To receive Full HD resolution video
--  Fixed - Virtual Background showed wrong orientation when portrait images were used to add VBG
--  Fixed - Virtual background was not user specific i.e. after logout another user can see previously selected backgrounds
--  Fixed - `MessageClient.post` api issue when JWT user sends a message to a person with whom they have never interacted before.
+-  FIXED - VBG issues
+-  FIXED - postToPerson api issue fixed for JWT users
 ---
 ## [3.4.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.4.0)
 Released on 2022-04-19
