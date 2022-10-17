@@ -118,7 +118,7 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 - 
 ## [3.7.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.7.0)
-Released on **12 October, 2022**.
+Released on **17 October, 2022**.
 #### Added
 - New struct `Captcha` to represent the Captcha object.
 - New struct `Breakout` A data type to represent the breakout.
