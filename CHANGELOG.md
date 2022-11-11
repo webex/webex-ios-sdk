@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+#### 3.7.1 Releases
+
+- `3.7.1` Releases - [3.7.1](#371)
+
 #### 3.7.0 Releases
 
 - `3.7.0` Releases - [3.7.0](#370)
@@ -117,6 +121,12 @@ All notable changes to this project will be documented in this file.
 
 - `0.9.137` Releases - [0.9.137](#09137)
 - 
+## [3.7.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.7.1)
+Released on **11 November, 2022**.
+
+#### Updated
+- Fixed testflight/appstore submission issue.
+
 ## [3.7.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.7.0)
 Released on **17 October, 2022**.
 #### Added
