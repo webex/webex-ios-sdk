@@ -5,6 +5,34 @@
 
 The Cisco Webex iOS SDK makes it easy to integrate and secure messaging, meeting and calling features in your iOS apps.
 
+## NOTE: This is meant to be an evaluation-only build and stability of this build is not guaranteed. Please get in touch with Cisco support for any build specific issues.
+
+ ## Guide for integrating alpha/beta/hotfix versions of WebexSDK and WebexBroadcastextensionKit pods into your projects
+ 1. Download and extract `WebexSDK.zip` and `WebexBroadcastExtensionKit.zip` from the alpha/beta/hotfix branch
+ 2. After extraction, the pods should be inside two folders: `WebexSDK` and `WebexBroadcastExtensionKit`
+ 3. Modify your project `Podfile` as the following example:
+
+    ```ruby
+    target 'KitchenSink' do
+    use_frameworks!
+
+    # Pods for KitchenSink
+        pod 'WebexSDK', :path => '/path/to/WebexSDK'
+
+    target 'KitchenSinkUITests' do
+        # Pods for testing
+    end
+
+    end
+
+    target 'KitchenSinkBroadcastExtension' do
+    use_frameworks!
+
+    # Pods for KitchenSinkBroadcastExtension 
+    pod 'WebexBroadcastExtensionKit',:path => '/path/to/WebexBroadcastExtensionKit'
+    end
+    ```
+
 ## Documentation
 - [Requirements & Feature List](https://developer.webex.com/docs/sdks/ios)
 - [Guides](https://github.com/webex/webex-ios-sdk/wiki)
