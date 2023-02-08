@@ -128,7 +128,7 @@ All notable changes to this project will be documented in this file.
 ## [3.8.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.8.1)
 Released on **08 Feb, 2023**.
 #### Updated
--  FIXED - Xcode 13 issue i.e not able to run SDK in xcode 13 
+-  FIXED - Fixed an issue where the SDK wasn't compiling for Xcode versions below Xcode14.
 
 ## [3.8.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.8.0)
 Released on **25 January, 2023**.
