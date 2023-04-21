@@ -1,13 +1,24 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 3.9.0-Aplha Releases
 
-#### 3.8.0-alpha Releases
+- `3.9.0-Alpha` Releases - [3.9.0-Alpha](#390)
 
-- `3.8.0-alpha` Releases - [3.8.0-alpha](#380)
+#### 3.8.3 Releases
 
-#### 3.7.1 Releases
+- `3.8.3` Releases - [3.8.3](#383)
 
-- `3.7.1` Releases - [3.7.1](#371)
+#### 3.8.2 Releases
+
+- `3.8.2` Releases - [3.8.2](#382)
+
+#### 3.8.1 Releases
+
+- `3.8.1` Releases - [3.8.1](#381)
+
+#### 3.8.0 Releases
+
+- `3.8.0` Releases - [3.8.0](#380)
 
 #### 3.7.0 Releases
 
@@ -125,22 +136,60 @@ All notable changes to this project will be documented in this file.
 
 - `0.9.137` Releases - [0.9.137](#09137)
 - 
+## [3.9.0-Alpha](https://github.com/webex/webex-ios-sdk/releases/tag/3.9.0-Alpha)
+Released on **21 Apr, 2023**.
+#### Updated
+- Added support to XCFrameworks.
 
-## [3.8.0-alpha](https://github.com/webex/webex-ios-sdk/releases/tag/3.8.0-alpha)
-Released on **7 December, 2022**.
+## [3.8.3](https://github.com/webex/webex-ios-sdk/releases/tag/3.8.3)
+Released on **16 Mar, 2023**.
+#### Updated
+-  FIXED - Fixed an issue where the SDK logs not showing in Xcode console.
 
-#### New
-- Release a new variant of the SDK that supports Meetings only that has a reduced size.
+## [3.8.2](https://github.com/webex/webex-ios-sdk/releases/tag/3.8.2)
+Released on **17 Feb, 2023**.
+#### Updated
+-  FIXED - Fixed an issue where the SDK wasn't working for Xcode simulators.
 
+## [3.8.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.8.1)
+Released on **08 Feb, 2023**.
+#### Updated
+-  FIXED - Fixed an issue where the SDK wasn't compiling for Xcode versions below Xcode14.
 
-## [3.7.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.7.1)
-Released on **11 November, 2022**.
+## [3.8.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.8.0)
+Released on **25 January, 2023**.
+#### Added
+- New SDK variant `WebexSDK/Meeting`, a light weighted meeting-only SDK(doesn’t include calling).
+- New API `setCallServiceCredential(username: String, password: String)` to set username and password for authentication with calling service.
+- New API `Message.isContentDecrypted: Bool` to denote if the content of the message is decrypted.
+- New API `CallHistoryRecord.isMissedCall: Bool` to denote if a CallHistoryRecord is a missed call.
+- New API `Phone.connectPhoneServices(completionHandler: @escaping (Result<Void>) -> Void)` to connect from the server for CallingType.WebexCalling and CallingType.WebexForBroadworks.
+- New API `Phone.disconnectPhoneServices(completionHandler: @escaping (Result<Void>) -> Void)` to disconnect from the server for CallingType.WebexCalling and CallingType.WebexForBroadworks.
+- New API `Phone.setPushTokens(bundleId: String, deviceId: String, deviceToken: String, voipToken: String)` to set the tokens for the notification.
+- New API `Phone.processPushNotification(message: String, completionHandler: @escaping (Error?) -> Void)` to process the push notification to trigger incoming call callback.
+- New API `Call.isWebexCallingOrWebexForBroadworks: Bool` to denote if this call is Webex or Broadworks call.
+- New API `Call.isAudioOnly: Bool` to denite if this is an audio-only call.
+- New API `Call.directTransferCall(toPhoneNumber: String, completionHandler: @escaping (Error?) -> Void)` to directly transfer a call.
+- New API `Call.switchToVideoCall(completionHandler: @escaping (Result<Void>) -> Void)` to switch the current Webex Calling call to a Video call.
+- New API `Call.switchToAudioCall(completionHandler: @escaping (Result<Void>) -> Void)` to switch the current Webex Calling call to an Audio-only call.
+- New API `SpaceClient.isSpacesSyncCompleted: Bool` to denote if syncing latest conversations to local data warehouse is complete.
+- New callback `SpaceClient.onSyncingSpacesStatusChanged: ((_ isSyncInProgress: Bool) -> Void)?` to notify when syncing status for spaces changes.
+- New callback `Webex.onInitialSpacesSyncCompleted: (() -> Void)?` to denote if syncing latest conversations to local data warehouse is complete.
+- Added new enum `UCLoginFailureReason` to denote the failure reason while logging in to CUCM.
+- Added new enum `PhoneConnectionError` to denote the error while connecting to phone services. 
+- Added new enum `CallingType` to represent calling feature type enabled for current logged in user.
 
 #### Updated
-- Fixed testflight/appstore submission issue.
+-  In `WebexUCLoginDelegate.onUCLoginFailed` failureReason field is added.
+-  FIXED - Crash while applying Virtual Background
+-  FIXED - Intermittent crash during calling
 
+#### Deprecated
+ - Deprecated API `setCUCMCredential(username: String, password: String)` instead use `setCallServiceCredential(username: String, password: String)`
+
+ ---
 ## [3.7.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.7.0)
-Released on **17 October, 2022**.
+Released on **30 September, 2022**.
 #### Added
 - New struct `Captcha` to represent the Captcha object.
 - New struct `Breakout` A data type to represent the breakout.
