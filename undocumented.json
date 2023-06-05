@@ -1,1076 +1,1503 @@
 {
   "warnings": [
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Membership/MembershipReadStatus.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Membership/MembershipReadStatus.swift",
       "line": 27,
       "symbol": "MembershipReadStatus",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/MarkMessageReadResult.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Message/MarkMessageReadResult.swift",
       "line": 24,
       "symbol": "MarkMessageReadResult",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Message/Message.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Message/Message.swift",
       "line": 298,
       "symbol": "MentionPos.init(id:start:end:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamChangeEventInfo.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamChangeEventInfo.swift",
       "line": 5,
       "symbol": "MediaStreamChangeEventInfo.stream",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamChangeEventInfo.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamChangeEventInfo.swift",
       "line": 6,
       "symbol": "MediaStreamChangeEventInfo.toMembership",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamChangeEventInfo.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamChangeEventInfo.swift",
       "line": 7,
       "symbol": "MediaStreamChangeEventInfo.fromMembership",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamChangeEventType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamChangeEventType.swift",
       "line": 4,
       "symbol": "MediaStreamChangeEventType.Size",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamChangeEventType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamChangeEventType.swift",
       "line": 5,
       "symbol": "MediaStreamChangeEventType.Membership",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamChangeEventType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamChangeEventType.swift",
       "line": 6,
       "symbol": "MediaStreamChangeEventType.Video",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamChangeEventType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamChangeEventType.swift",
       "line": 7,
       "symbol": "MediaStreamChangeEventType.Audio",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamChangeEventType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamChangeEventType.swift",
       "line": 8,
       "symbol": "MediaStreamChangeEventType.PinState",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamQuality.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamQuality.swift",
       "line": 4,
       "symbol": "MediaStreamQuality.Undefined",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamQuality.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamQuality.swift",
       "line": 5,
       "symbol": "MediaStreamQuality.LD",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamQuality.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamQuality.swift",
       "line": 6,
       "symbol": "MediaStreamQuality.SD",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamQuality.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamQuality.swift",
       "line": 7,
       "symbol": "MediaStreamQuality.HD",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamQuality.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamQuality.swift",
       "line": 8,
       "symbol": "MediaStreamQuality.FHD",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 4,
       "symbol": "MediaStreamType.unknown",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 5,
       "symbol": "MediaStreamType.Stream1",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 6,
       "symbol": "MediaStreamType.Stream2",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 7,
       "symbol": "MediaStreamType.Stream3",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 8,
       "symbol": "MediaStreamType.Stream4",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 9,
       "symbol": "MediaStreamType.Stream5",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 10,
       "symbol": "MediaStreamType.Stream6",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 11,
       "symbol": "MediaStreamType.Stream7",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 12,
       "symbol": "MediaStreamType.Stream8",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 13,
       "symbol": "MediaStreamType.Stream9",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 14,
       "symbol": "MediaStreamType.Stream10",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 15,
       "symbol": "MediaStreamType.Stream11",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 16,
       "symbol": "MediaStreamType.Stream12",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 17,
       "symbol": "MediaStreamType.Stream13",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 18,
       "symbol": "MediaStreamType.Stream14",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 19,
       "symbol": "MediaStreamType.Stream15",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 20,
       "symbol": "MediaStreamType.Stream16",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 21,
       "symbol": "MediaStreamType.Stream17",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 22,
       "symbol": "MediaStreamType.Stream18",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 23,
       "symbol": "MediaStreamType.Stream19",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 24,
       "symbol": "MediaStreamType.Stream20",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 25,
       "symbol": "MediaStreamType.Stream21",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 26,
       "symbol": "MediaStreamType.Stream22",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 27,
       "symbol": "MediaStreamType.Stream23",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 28,
       "symbol": "MediaStreamType.Stream24",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/MediaStreamType.swift",
       "line": 29,
       "symbol": "MediaStreamType.Stream25",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/QualityInfoType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/QualityInfoType.swift",
       "line": 4,
       "symbol": "MediaQualityInfo.Good",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/QualityInfoType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/QualityInfoType.swift",
       "line": 5,
       "symbol": "MediaQualityInfo.PoorUplink",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/QualityInfoType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/QualityInfoType.swift",
       "line": 6,
       "symbol": "MediaQualityInfo.PoorDownlink",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/QualityInfoType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/QualityInfoType.swift",
       "line": 7,
       "symbol": "MediaQualityInfo.NetworkLost",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/QualityInfoType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/QualityInfoType.swift",
       "line": 8,
       "symbol": "MediaQualityInfo.DeviceLimitation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/QualityInfoType.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/QualityInfoType.swift",
       "line": 9,
       "symbol": "MediaQualityInfo.HighCpuUsage",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/SwitchToAudioVideoCallResult.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/ShareConfig.swift",
+      "line": 16,
+      "symbol": "ShareConfig.init(shareType:enableAudio:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/SwitchToAudioVideoCallResult.swift",
       "line": 5,
       "symbol": "SwitchToAudioVideoCallResult.NotSupported",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/SwitchToAudioVideoCallResult.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/SwitchToAudioVideoCallResult.swift",
       "line": 6,
       "symbol": "SwitchToAudioVideoCallResult.InternalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/SwitchToAudioVideoCallResult.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/SwitchToAudioVideoCallResult.swift",
       "line": 7,
       "symbol": "SwitchToAudioVideoCallResult.SwitchedToVideo",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/SwitchToAudioVideoCallResult.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/SwitchToAudioVideoCallResult.swift",
       "line": 8,
       "symbol": "SwitchToAudioVideoCallResult.SwitchedToAudio",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call/SwitchToAudioVideoCallResult.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call/SwitchToAudioVideoCallResult.swift",
       "line": 9,
       "symbol": "SwitchToAudioVideoCallResult.NotAllowed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 194,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 196,
       "symbol": "Call.setup()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 198,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 200,
       "symbol": "Call.sendFrame(withTimeStamp:width:height:data:length:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 683,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 204,
+      "symbol": "Call.sendAudioFrame(withTimeStamp:data:length:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 274,
+      "symbol": "Call.RingerType.outgoing",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 275,
+      "symbol": "Call.RingerType.incoming",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 276,
+      "symbol": "Call.RingerType.busyTone",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 277,
+      "symbol": "Call.RingerType.reconnect",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 278,
+      "symbol": "Call.RingerType.notFound",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 279,
+      "symbol": "Call.RingerType.DTMF_0",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 280,
+      "symbol": "Call.RingerType.DTMF_1",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 281,
+      "symbol": "Call.RingerType.DTMF_2",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 282,
+      "symbol": "Call.RingerType.DTMF_3",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 283,
+      "symbol": "Call.RingerType.DTMF_4",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 284,
+      "symbol": "Call.RingerType.DTMF_5",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 285,
+      "symbol": "Call.RingerType.DTMF_6",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 286,
+      "symbol": "Call.RingerType.DTMF_7",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 287,
+      "symbol": "Call.RingerType.DTMF_8",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 288,
+      "symbol": "Call.RingerType.DTMF_9",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 289,
+      "symbol": "Call.RingerType.DTMF_A",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 290,
+      "symbol": "Call.RingerType.DTMF_B",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 291,
+      "symbol": "Call.RingerType.DTMF_C",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 292,
+      "symbol": "Call.RingerType.DTMF_D",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 293,
+      "symbol": "Call.RingerType.DTMF_STAR",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 294,
+      "symbol": "Call.RingerType.DTMF_POUND",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 295,
+      "symbol": "Call.RingerType.DTMF_FLASH",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 296,
+      "symbol": "Call.RingerType.PICKUP_ALERT",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 297,
+      "symbol": "Call.RingerType.PICKUP_BUSY_TONE",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 298,
+      "symbol": "Call.RingerType.CALLPARK_EXPIRE",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 299,
+      "symbol": "Call.RingerType.callWaiting",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 300,
+      "symbol": "Call.RingerType.undefined",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 788,
       "symbol": "Call.TorchMode.on",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 684,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 789,
       "symbol": "Call.TorchMode.off",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 685,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 790,
       "symbol": "Call.TorchMode.auto",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 705,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 810,
       "symbol": "Call.FlashMode.on",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 706,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 811,
       "symbol": "Call.FlashMode.off",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 707,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 812,
       "symbol": "Call.FlashMode.auto",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 727,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 832,
       "symbol": "Call.CameraExposureDuration.max",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 728,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 833,
       "symbol": "Call.CameraExposureDuration.min",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 729,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 834,
       "symbol": "Call.CameraExposureDuration.current",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 742,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 847,
       "symbol": "Call.CameraExposureISO.max",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 743,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 848,
       "symbol": "Call.CameraExposureISO.min",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 744,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 849,
       "symbol": "Call.CameraExposureISO.current",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 757,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 862,
       "symbol": "Call.CameraExposureTargetBias.max",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 758,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 863,
       "symbol": "Call.CameraExposureTargetBias.min",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 759,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 864,
       "symbol": "Call.CameraExposureTargetBias.current",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 2544,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 2890,
       "symbol": "NotificationCallType.Webex",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 2545,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 2891,
       "symbol": "NotificationCallType.CUCM",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Phone.swift",
-      "line": 604,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Phone.swift",
+      "line": 638,
       "symbol": "Phone.ServiceUrlType.Metrics",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Phone.swift",
-      "line": 605,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Phone.swift",
+      "line": 639,
       "symbol": "Phone.ServiceUrlType.ClientLogs",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/Phone.swift",
-      "line": 606,
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Phone.swift",
+      "line": 640,
       "symbol": "Phone.ServiceUrlType.KMS",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/SetCompositedLayoutError.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/ReceivingNoiseInfo.swift",
+      "line": 7,
+      "symbol": "ReceivingNoiseInfo.isNoiseDetected",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/ReceivingNoiseInfo.swift",
+      "line": 10,
+      "symbol": "ReceivingNoiseInfo.isNoiseRemovalEnabled",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/ReceivingNoiseRemovalEnableResult.swift",
+      "line": 5,
+      "symbol": "ReceivingNoiseRemovalEnableResult.NoError",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/ReceivingNoiseRemovalEnableResult.swift",
+      "line": 6,
+      "symbol": "ReceivingNoiseRemovalEnableResult.NotSupported",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/ReceivingNoiseRemovalEnableResult.swift",
+      "line": 7,
+      "symbol": "ReceivingNoiseRemovalEnableResult.InternalError",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/SetCompositedLayoutError.swift",
       "line": 22,
       "symbol": "SetCompositedLayoutError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 5,
       "symbol": "UCLoginFailureReason.InternalError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 6,
       "symbol": "UCLoginFailureReason.None",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 7,
       "symbol": "UCLoginFailureReason.Unknown",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 8,
       "symbol": "UCLoginFailureReason.InvalidLifeCycleState",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 9,
       "symbol": "UCLoginFailureReason.InvalidCertRejected",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 10,
       "symbol": "UCLoginFailureReason.SSOPageLoadError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 11,
       "symbol": "UCLoginFailureReason.SSOStartSessionError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 12,
       "symbol": "UCLoginFailureReason.SSOUnknownError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 13,
       "symbol": "UCLoginFailureReason.SSOCancelled",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 14,
       "symbol": "UCLoginFailureReason.SSOWebexCloudError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 15,
       "symbol": "UCLoginFailureReason.SSOCertificateError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 16,
       "symbol": "UCLoginFailureReason.SSOWhoAmIFailure",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 17,
       "symbol": "UCLoginFailureReason.SSOSessionExpired",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 18,
       "symbol": "UCLoginFailureReason.InvalidBrowserResponse",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 19,
       "symbol": "UCLoginFailureReason.CredentialsRequired",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 20,
       "symbol": "UCLoginFailureReason.CommonIdentityProvisioningUser",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 21,
       "symbol": "UCLoginFailureReason.ServiceDiscoveryFailure",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 22,
       "symbol": "UCLoginFailureReason.ServiceDiscoveryAuthenticationFailure",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 23,
       "symbol": "UCLoginFailureReason.ServiceDiscoveryCannotConnectToCucmServer",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 24,
       "symbol": "UCLoginFailureReason.ServiceDiscoveryNoCucmConfiguration",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 25,
       "symbol": "UCLoginFailureReason.ServiceDiscoveryNoSRVRecordsFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 26,
       "symbol": "UCLoginFailureReason.ServiceDiscoveryCannotConnectToEdge",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 27,
       "symbol": "UCLoginFailureReason.ServiceDiscoveryNoNetworkConnectivity",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 28,
       "symbol": "UCLoginFailureReason.ServiceDiscoveryUntrustedCertificate",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 29,
       "symbol": "UCLoginFailureReason.ServiceDiscoveryPrimaryAuthChanged",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 30,
       "symbol": "UCLoginFailureReason.ServiceDiscoveryNoUserLookup",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 31,
       "symbol": "UCLoginFailureReason.ServiceDiscoveryAuthorizationModeChanged",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 32,
       "symbol": "UCLoginFailureReason.ServiceDiscoveryHomeClusterChanged",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 33,
       "symbol": "UCLoginFailureReason.ConnectionFailedByMRAPolicy",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 34,
       "symbol": "UCLoginFailureReason.InvalidLoginCredentials",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 35,
       "symbol": "UCLoginFailureReason.TokenFailure",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 36,
       "symbol": "UCLoginFailureReason.ForcedSignOut",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 37,
       "symbol": "UCLoginFailureReason.IPCNotResponding",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 38,
       "symbol": "UCLoginFailureReason.BroadWorksDeviceFailure",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 39,
       "symbol": "UCLoginFailureReason.BroadWorksSignInFailure",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 40,
       "symbol": "UCLoginFailureReason.BroadWorksConfigDownloadFailure",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 41,
       "symbol": "UCLoginFailureReason.BroadWorksSSOCanceled",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 42,
       "symbol": "UCLoginFailureReason.BroadWorksInvalidSipUser",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 43,
       "symbol": "UCLoginFailureReason.BroadWorksSipAuthenticationError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/UCLoginFailureReason.swift",
       "line": 44,
       "symbol": "UCLoginFailureReason.BroadWorksXsiAuthenticationError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/Team/Team.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Team/Team.swift",
       "line": 27,
       "symbol": "Team",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/Hacks.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/Hacks.swift",
       "line": 4,
       "symbol": "Bool.stringValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/sdk-common/Resource.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/Resource.swift",
       "line": 26,
       "symbol": "Resource",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Array+Extension.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 4,
+      "symbol": "SparkClientProvider",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 5,
+      "symbol": "SparkClientProvider.useNativeHttpClient",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 6,
+      "symbol": "SparkClientProvider.useNativeWebSocket",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 11,
+      "symbol": "SparkClientProvider.init(oauthClientId:oauthClientSecret:oauthAdditionalScopes:oauthRedirectUri:buildInfo:device:fileManager:locale:userDefaults:isExtension:isFedRampEmployee:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 56,
+      "symbol": "SparkClientProvider.userAgent",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 57,
+      "symbol": "SparkClientProvider.oauthClientId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 58,
+      "symbol": "SparkClientProvider.oauthClientSecret",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 59,
+      "symbol": "SparkClientProvider.oauthAdditionalScopes",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 60,
+      "symbol": "SparkClientProvider.oauthRedirectUri",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 61,
+      "symbol": "SparkClientProvider.applicationVersion",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 62,
+      "symbol": "SparkClientProvider.operatingSystemVersion",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 63,
+      "symbol": "SparkClientProvider.operatingSystemLanguage",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 64,
+      "symbol": "SparkClientProvider.platformInfo",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 65,
+      "symbol": "SparkClientProvider.databasePath",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 66,
+      "symbol": "SparkClientProvider.wdmDeviceType",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 67,
+      "symbol": "SparkClientProvider.platformEncryptionIdentifier",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 68,
+      "symbol": "SparkClientProvider.appName",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 69,
+      "symbol": "SparkClientProvider.appType",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 70,
+      "symbol": "SparkClientProvider.bundleId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 71,
+      "symbol": "SparkClientProvider.processorMaxFrequency",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 73,
+      "symbol": "SparkClientProvider.extraTelemetryMetaData(forMetricEventName:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 77,
+      "symbol": "SparkClientProvider.productName",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 78,
+      "symbol": "SparkClientProvider.isDeveloperVersion",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 79,
+      "symbol": "SparkClientProvider.isTablet",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 80,
+      "symbol": "SparkClientProvider.appleAccessGroupIdentifier",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 83,
+      "symbol": "SparkClientProvider.additionalClientConfig(forConfigName:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
+      "line": 102,
+      "symbol": "SparkClientProvider.u2cUrl",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Array+Extension.swift",
       "line": 86,
       "symbol": "Array.subscript(safeIndex:)",
       "symbol_kind": "source.lang.swift.decl.function.subscript",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/EmailAddress.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/EmailAddress.swift",
       "line": 64,
       "symbol": "EmailAddress.toObjC()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 4,
       "symbol": "ReachabilityError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 5,
       "symbol": "ReachabilityError.failedToCreateWithAddress(_:_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 6,
       "symbol": "ReachabilityError.failedToCreateWithHostname(_:_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 7,
       "symbol": "ReachabilityError.unableToSetCallback(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 8,
       "symbol": "ReachabilityError.unableToSetDispatchQueue(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 9,
       "symbol": "ReachabilityError.unableToGetFlags(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 16,
       "symbol": "Notification.Name.reachabilityChanged",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 19,
       "symbol": "Reachability",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 21,
       "symbol": "Reachability.NetworkReachable",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 22,
       "symbol": "Reachability.NetworkUnreachable",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 36,
       "symbol": "Reachability.Connection",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 37,
       "symbol": "Reachability.Connection.cellular",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 37,
       "symbol": "Reachability.Connection.unavailable",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 37,
       "symbol": "Reachability.Connection.wifi",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 47,
       "symbol": "Reachability.Connection.none",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 50,
       "symbol": "Reachability.whenReachable",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 51,
       "symbol": "Reachability.whenUnreachable",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 54,
       "symbol": "Reachability.reachableOnWWAN",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 60,
       "symbol": "Reachability.notificationCenter",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 63,
       "symbol": "Reachability.currentReachabilityString",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 72,
       "symbol": "Reachability.connection",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 103,
       "symbol": "Reachability.init(reachabilityRef:queueQoS:targetQueue:notificationQueue:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 113,
       "symbol": "Reachability.init(hostname:queueQoS:targetQueue:notificationQueue:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 123,
       "symbol": "Reachability.init(queueQoS:targetQueue:notificationQueue:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 142,
       "symbol": "Reachability",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 145,
       "symbol": "Reachability.startNotifier()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 199,
       "symbol": "Reachability.stopNotifier()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 208,
       "symbol": "Reachability.isReachable",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 213,
       "symbol": "Reachability.isReachableViaWWAN",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 219,
       "symbol": "Reachability.isReachableViaWiFi",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/Reachability.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/Reachability.swift",
       "line": 223,
       "symbol": "Reachability.description",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/bhabalan/dev/spark/products/sdk-ios/sdk-ios/utils/WebexError.swift",
+      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/utils/WebexError.swift",
       "line": 99,
       "symbol": "WebexError.captcha",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/bhabalan/dev/spark/products/sdk-ios"
+  "source_directory": "/Users/rsarika/dev/spark-client-framework"
 }
