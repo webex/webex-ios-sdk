@@ -17,7 +17,7 @@
     <a title="Structures  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">WebexSDK 3.8.0 Docs</a> (88% documented)</p>
+        <p><a href="index.html">WebexSDK 3.9.0 Docs</a> (86% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="search.json">
@@ -50,6 +50,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/Call/Direction.html">– Direction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Call/RingerType.html">– RingerType</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/Call/DisconnectReason.html">– DisconnectReason</a>
@@ -405,6 +408,9 @@
                 <a href="Enums/ReachabilityError.html">ReachabilityError</a>
               </li>
               <li class="nav-group-task">
+                <a href="Enums/ReceivingNoiseRemovalEnableResult.html">ReceivingNoiseRemovalEnableResult</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Enums/RemoveVirtualBackgroundError.html">RemoveVirtualBackgroundError</a>
               </li>
               <li class="nav-group-task">
@@ -415,6 +421,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Enums/SetCompositedLayoutError.html">SetCompositedLayoutError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/ShareOptimizeType.html">ShareOptimizeType</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/SpaceEvent.html">SpaceEvent</a>
@@ -510,6 +519,9 @@
                 <a href="Structs/CallMembership/State.html">– State</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/CallMembership/DeviceType.html">– DeviceType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/JWTAuthenticationInfo.html">JWTAuthenticationInfo</a>
               </li>
               <li class="nav-group-task">
@@ -549,6 +561,9 @@
                 <a href="Structs/Person.html">Person</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/ReceivingNoiseInfo.html">ReceivingNoiseInfo</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/RemoteFile.html">RemoteFile</a>
               </li>
               <li class="nav-group-task">
@@ -556,6 +571,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Resource.html">Resource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ShareConfig.html">ShareConfig</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Space.html">Space</a>
@@ -949,6 +967,39 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8WebexSDK11ShareConfigV"></a>
+                    <a name="//apple_ref/swift/Struct/ShareConfig" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11ShareConfigV">ShareConfig</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This struct represents Screen Share configuration of a call</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.9.0
+
+</div>
+
+                        <a href="Structs/ShareConfig.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">ShareConfig</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8WebexSDK14CallMembershipV"></a>
                     <a name="//apple_ref/swift/Struct/CallMembership" class="dashAnchor"></a>
                     <a class="token" href="#/s:8WebexSDK14CallMembershipV">CallMembership</a>
@@ -959,7 +1010,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A data type represents a relationship between <code><a href="Classes/Call.html">Call</a></code> and <code><a href="Structs/Person.html">Person</a></code> at Cisco Webex cloud.</p>
+                        <p>A data type represents a relationship between <code><a href="Classes/Call.html">Call</a></code> and <code><a href="Structs/Person.html">Person</a></code> at Cisco Webex cloud. Since <code>3.9.0</code> memberships joined via deviceType <code>Room</code> will be shown only under <code>pairedMemberships</code>.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
@@ -973,6 +1024,39 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">CallMembership</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK18ReceivingNoiseInfoV"></a>
+                    <a name="//apple_ref/swift/Struct/ReceivingNoiseInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK18ReceivingNoiseInfoV">ReceivingNoiseInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A data type represents ReceivingNoiseInfo object</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.9.0
+
+</div>
+
+                        <a href="Structs/ReceivingNoiseInfo.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">ReceivingNoiseInfo</span></code></pre>
 
                         </div>
                       </div>
@@ -1314,8 +1398,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-01-25)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-06-05)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>
