@@ -9,7 +9,7 @@ The Cisco Webex iOS SDK makes it easy to integrate and secure messaging, meeting
 
 - WebexCalling SDK : WebexSDK/Wxc
      - This SDK supports only WebexCalling feature
-     - It does not support CUCM calling or Space calling
+     - It does not support CUCM calling
 
 Pod usage:
 
