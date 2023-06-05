@@ -165,16 +165,6 @@ Released on **5 June, 2023**.
 - FIXED : MessagesUpdate callback getting called for internal provisional messages.
 - FIXED : MessagesUpdate callback not getting called with decrypted content in some cases, after list message API was called.
 
-#### Updated
-- Updated `Message.Text.plain`, `Message.Text.html` and `Message.Text.markdown` from internal to public private(set) access.
-- Screen sharing now have optimisation options as part of share config in startSharing()
-- Now FedRamp can be enabled through authenticators.
-- Now `DisconnectReason.RemoteCancel` event will be fired when host ends meeting for all or kicked by host.
-- FIXED: Unable to connect with bluetooth devices for call issue.
-- FIXED: Webex calling failures for certificate issues.
-- FIXED : MessagesUpdate callback getting called for internal provisional messages.
-- FIXED : MessagesUpdate callback not getting called with decrypted content in some cases, after list message API was called.
-
 ## [3.8.3](https://github.com/webex/webex-ios-sdk/releases/tag/3.8.3)
 Released on **16 Mar, 2023**.
 #### Updated
