@@ -181,7 +181,7 @@ Released on **08 Feb, 2023**.
 -  FIXED - Fixed an issue where the SDK wasn't compiling for Xcode versions below Xcode14.
 
 ## [3.8.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.8.0)
-Released on **24 January, 2023**.
+Released on **25 January, 2023**.
 #### Added
 - New SDK variant `WebexSDK/Meeting`, a light weighted meeting-only SDK(doesn’t include calling).
 - New API `setCallServiceCredential(username: String, password: String)` to set username and password for authentication with calling service.
