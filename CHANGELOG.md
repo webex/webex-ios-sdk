@@ -138,7 +138,7 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 - 
 ## [3.9.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.9.0)
-Released on **2 June, 2023**.
+Released on **5 June, 2023**.
 #### Added
 — New SDK variant `Webex/Wxc`, a light weight SDK for WebexCalling.
 — New struct `ShareConfig` a data type to represent the share screen configuration.
