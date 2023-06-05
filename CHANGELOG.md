@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 
 - `3.9.0` Releases - [3.9.0](#390)
 
+#### 3.8.3 Releases
+
+- `3.8.3` Releases - [3.8.3](#383)
+
+#### 3.8.2 Releases
+
+- `3.8.2` Releases - [3.8.2](#382)
+
+#### 3.8.1 Releases
+
+- `3.8.1` Releases - [3.8.1](#381)
+
 #### 3.8.0 Releases
 
 - `3.8.0` Releases - [3.8.0](#380)
@@ -153,7 +165,7 @@ Released on **2 June, 2023**.
 — FIXED : MessagesUpdate callback getting called for internal provisional messages.
 — FIXED : MessagesUpdate callback not getting called with decrypted content in some cases, after list message API was called.
 
- ## [3.8.3](https://github.com/webex/webex-ios-sdk/releases/tag/3.8.3)
+## [3.8.3](https://github.com/webex/webex-ios-sdk/releases/tag/3.8.3)
 Released on **16 Mar, 2023**.
 #### Updated
 -  FIXED - Fixed an issue where the SDK logs not showing in Xcode console.
@@ -169,7 +181,7 @@ Released on **08 Feb, 2023**.
 -  FIXED - Fixed an issue where the SDK wasn't compiling for Xcode versions below Xcode14.
 
 ## [3.8.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.8.0)
-Released on **24 January, 2023**.
+Released on **25 January, 2023**.
 #### Added
 - New SDK variant `WebexSDK/Meeting`, a light weighted meeting-only SDK(doesn’t include calling).
 - New API `setCallServiceCredential(username: String, password: String)` to set username and password for authentication with calling service.
