@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+#### 3.9.0 Releases
+
+- `3.9.0` Releases - [3.9.0](#390)
+
 #### 3.8.3 Releases
 
 - `3.8.3` Releases - [3.8.3](#383)
@@ -133,6 +137,33 @@ All notable changes to this project will be documented in this file.
 
 - `0.9.137` Releases - [0.9.137](#09137)
 - 
+## [3.9.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.9.0)
+Released on **5 June, 2023**.
+#### Added
+— New SDK variant `Webex/Wxc`, a light weight SDK for WebexCalling.
+— New struct `ShareConfig` a data type to represent the share screen configuration.
+— New Callback `Call.onStartRinger: ((RingerType) -> Void)` when a ringer has to be started.
+— New Callback `Call.onStopRinger: ((RingerType) -> Void)` when a ringer has to be stopped.
+— New Enum `Call.RingerType` for a ringerType to denote the type of tone to be played / stopped.
+— New Enum `CallMembership.DeviceType` for device types.
+— New Enum `ShareOptimizeType` to represent  the OptimiseType for share screen.
+— New API `Person.encodedId` to get base64 encoded Id of the person.
+— New API `CallMembership.deviceType` to get device type joined by this CallMembership.
+— New API `CallMembership.pairedMemberships` to get all memberships joined using deviceType Room.
+— New API `Call.isVideoEnabled` to Indicate whether video calling is enabled for the user in Control hub.
+— New API `Call.getShareConfig()` to get the share screen optimisation type of the call.
+— New Feature to support multiple active Webex calls.
+— New Feature to support end-to-end encrypted meetings.
+
+#### Updated
+- Updated `Message.Text.plain`, `Message.Text.html` and `Message.Text.markdown` from internal to public private(set) access.
+— Screen sharing now have optimisation options as part of share config in startSharing()
+— Now FedRamp can be enabled through authenticators.
+— Now `DisconnectReason.RemoteCancel` event will be fired when host ends meeting for all or kicked by host.
+- FIXED: Unable to connect with bluetooth devices for call issue.
+— FIXED: Webex calling failures for certificate issues.
+— FIXED : MessagesUpdate callback getting called for internal provisional messages.
+— FIXED : MessagesUpdate callback not getting called with decrypted content in some cases, after list message API was called.
 
 ## [3.8.3](https://github.com/webex/webex-ios-sdk/releases/tag/3.8.3)
 Released on **16 Mar, 2023**.
