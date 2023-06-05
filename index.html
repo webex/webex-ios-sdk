@@ -618,13 +618,37 @@
 <h2 id='sdk-types' class='heading'>SDK types:</h2>
 
 <ul>
-<li><p>Meeting SDK : WebexSDK/Meeting</p>
+<li>WebexCalling SDK : WebexSDK/Wxc
+
+<ul>
+<li>This SDK supports only WebexCalling feature</li>
+<li>It does not support CUCM calling or Space calling</li>
+</ul></li>
+</ul>
+
+<p>Pod usage:</p>
+<pre class="highlight plaintext"><code>target 'MyApp' do
+  pod 'WebexSDK/Wxc'
+end
+</code></pre>
+
+<ul>
+<li>Meeting SDK : WebexSDK/Meeting
 
 <ul>
 <li>This SDK supports Messaging and Meeting features</li>
 <li>It does not support CUCM Calling or Webex Calling</li>
 </ul></li>
-<li><p>Full SDK : WebexSDK</p>
+</ul>
+
+<p>Pod usage:</p>
+<pre class="highlight plaintext"><code>target 'MyApp' do
+  pod 'WebexSDK/Meeting'
+end
+</code></pre>
+
+<ul>
+<li>Full SDK : WebexSDK
 
 <ul>
 <li>Supports all the features.</li>
@@ -632,7 +656,13 @@
 </ul></li>
 </ul>
 
-<p>Both the SDKs are independent of each other. Developers can use either one of them to fulfil their use case.</p>
+<p>Pod usage:</p>
+<pre class="highlight plaintext"><code>target 'MyApp' do
+  pod 'WebexSDK'
+end
+</code></pre>
+
+<p>All the SDKs are independent of each other. Developers can use either one of them to fulfil their use case.</p>
 <h2 id='documentation' class='heading'>Documentation</h2>
 
 <ul>
@@ -649,7 +679,7 @@
 </ul>
 <h2 id='license' class='heading'>License</h2>
 
-<p>&copy; 2016-2022 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.</p>
+<p>&copy; 2016-2023 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.</p>
 
 <p>See <a href="https://github.com/webex/webex-ios-sdk/blob/master/LICENSE">LICENSE</a> for details.</p>
 
