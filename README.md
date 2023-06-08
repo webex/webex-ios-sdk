@@ -43,6 +43,12 @@ target 'MyApp' do
 end
 ```
 
+#If you face the Problem: "Getting multiple commands produce error"
+#The root-cause: If we don't explicitly specify the flavour(subspec) in pod file(eg: WebexSDK/Full), Xcode's new build system's build optimizer is not able to infer which version of the embedded frameworks to use and throws this error.
+#Solution:
+#solution 1) pod 'WebexSDK/Full','~> 3.9.0'
+#solution 2) add  install! 'cocoapods', :disable_input_output_paths => true in pod file.
+
  All the SDKs are independent of each other. Developers can use either one of them to fulfil their use case.
  
 ## Documentation
