@@ -154,10 +154,13 @@ Released on **5 June, 2023**.
 - New API `Call.getShareConfig()` to get the share screen optimisation type of the call.
 - New Feature to support multiple active Webex calls.
 - New Feature to support end-to-end encrypted meetings.
+- Authorization code can be set using `call.send(dtmf: String, completionHandler: ((Error?) -> Void)?)` API for Wxc calls.
+- New API `Call.receivingNoiseInfo` to get the info object which contains information on Receiving noise removal state.
+- New API `Call.enableReceivingNoiseRemoval(shouldEnable: Bool)` to enable or disable receiving noise removal functionality for incoming PSTN calls.
 
 #### Updated
 - Updated `Message.Text.plain`, `Message.Text.html` and `Message.Text.markdown` from internal to public private(set) access.
-- Screen sharing now have optimisation options as part of share config in startSharing()
+- Screen sharing now have optimisation options as part of share config in `startSharing()`
 - Now FedRamp can be enabled through authenticators.
 - Now `DisconnectReason.RemoteCancel` event will be fired when host ends meeting for all or kicked by host.
 - FIXED: Unable to connect with bluetooth devices for call issue.
