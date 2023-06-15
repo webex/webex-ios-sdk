@@ -1,10 +1,6 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-#### 3.9.1 Releases
-
-- `3.9.1` Releases - [3.9.1](#391)
-
 #### 3.9.0 Releases
 
 - `3.9.0` Releases - [3.9.0](#390)
@@ -141,16 +137,6 @@ All notable changes to this project will be documented in this file.
 
 - `0.9.137` Releases - [0.9.137](#09137)
 - 
-## [3.9.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.9.1)
-Released on **15 June, 2023**.
-### Added
-- New API added `Call.externalTrackingId` to get the external tracking id for corresponding call. Applicable only for WxC calls.
-- Webhook URL can be set to get incoming WxC calls.
-
-### Updated
-- FIXED: Self video turning off in case of poor uplink event.
-- sdkFlavor value for `omnius_sdk_client` behavorial metrics updated from `calling` to `wxc` 
-
 ## [3.9.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.9.0)
 Released on **5 June, 2023**.
 #### Added
