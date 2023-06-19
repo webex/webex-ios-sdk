@@ -149,7 +149,6 @@ Released on **19 June, 2023**.
 
 ### Updated
 - FIXED: Self video turning off in case of poor uplink event.
-- sdkFlavor value for `omnius_sdk_client` behavorial metrics updated from `calling` to `wxc` 
 
 ## [3.9.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.9.0)
 Released on **5 June, 2023**.
