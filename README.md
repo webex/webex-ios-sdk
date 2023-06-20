@@ -5,7 +5,7 @@
 
 The Cisco Webex iOS SDK makes it easy to integrate and secure messaging, meeting and calling features in your iOS apps.
 
-Before installing version 3.9.1 of WebexSDK, it is recommended to clear the pod cache using ```pod cache clean --all```. 
+Before installing version 3.9.1 of WebexSDK, it is recommended to clear the pod cache using ```pod cache clean 'WebexSDK'```. 
 
 ## SDK types:
 
