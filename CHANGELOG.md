@@ -145,7 +145,7 @@ All notable changes to this project will be documented in this file.
 Released on **19 June, 2023**.
 ### Added
 - New API added `Call.externalTrackingId` to get the external tracking id for corresponding call. Applicable only for WxC calls.
-- Webhook URL can be set to get incoming WxC calls.
+- Supports Webex Calling NewCall notifications payload through webhook.
 
 ### Updated
 - FIXED: Self video turning off in case of poor uplink event.
