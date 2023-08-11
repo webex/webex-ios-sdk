@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+#### 3.9.2 Releases
+
+- `3.9.2` Releases - [3.9.2](#392)
+
 #### 3.9.1 Releases
 
 - `3.9.1` Releases - [3.9.1](#391)
@@ -140,12 +144,23 @@ All notable changes to this project will be documented in this file.
 #### 0.9.137 Releases
 
 - `0.9.137` Releases - [0.9.137](#09137)
-- 
+
+## [3.9.2](https://github.com/webex/webex-ios-sdk/releases/tag/3.9.2)
+Released on **11 Aug, 2023**.
+### Added
+- New API added `Phone.dialPhoneNumber(_ address: String, option: MediaOption, completionHandler: @escaping (Result<Call>) -> Void)` to dial only phone numbers.
+- New API `CallHistoryRecord.isPhoneNumber` to denote if the number dialled in call record was a phone number.
+
+### Updated
+- FIXED: Enabling preservation of AVRoutePickerView choices for audio/video output in pre-meeting/call screens.
+- FIXED: Removed Camera permissions and H264 prompt for audio only flows.
+- FIXED: Call failed or meeting failure issue due to mediaTimeout.
+
 ## [3.9.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.9.1)
 Released on **19 June, 2023**.
 ### Added
 - New API added `Call.externalTrackingId` to get the external tracking id for corresponding call. Applicable only for WxC calls.
-- Supports Webex Calling NewCall notifications payload through webhook.
+- Webhook URL can be set to get incoming WxC calls.
 
 ### Updated
 - FIXED: Self video turning off in case of poor uplink event.
