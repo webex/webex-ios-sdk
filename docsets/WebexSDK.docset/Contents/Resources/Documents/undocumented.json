@@ -695,35 +695,35 @@
     },
     {
       "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 2892,
+      "line": 3091,
       "symbol": "NotificationCallType.Webex",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 2893,
+      "line": 3092,
       "symbol": "NotificationCallType.CUCM",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Phone.swift",
-      "line": 638,
+      "line": 712,
       "symbol": "Phone.ServiceUrlType.Metrics",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Phone.swift",
-      "line": 639,
+      "line": 713,
       "symbol": "Phone.ServiceUrlType.ClientLogs",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Phone.swift",
-      "line": 640,
+      "line": 714,
       "symbol": "Phone.ServiceUrlType.KMS",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
@@ -1069,195 +1069,6 @@
       "line": 26,
       "symbol": "Resource",
       "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 4,
-      "symbol": "SparkClientProvider",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 5,
-      "symbol": "SparkClientProvider.useNativeHttpClient",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 6,
-      "symbol": "SparkClientProvider.useNativeWebSocket",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 11,
-      "symbol": "SparkClientProvider.init(oauthClientId:oauthClientSecret:oauthAdditionalScopes:oauthRedirectUri:buildInfo:device:fileManager:locale:userDefaults:isExtension:isFedRampEmployee:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 56,
-      "symbol": "SparkClientProvider.userAgent",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 57,
-      "symbol": "SparkClientProvider.oauthClientId",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 58,
-      "symbol": "SparkClientProvider.oauthClientSecret",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 59,
-      "symbol": "SparkClientProvider.oauthAdditionalScopes",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 60,
-      "symbol": "SparkClientProvider.oauthRedirectUri",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 61,
-      "symbol": "SparkClientProvider.applicationVersion",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 62,
-      "symbol": "SparkClientProvider.operatingSystemVersion",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 63,
-      "symbol": "SparkClientProvider.operatingSystemLanguage",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 64,
-      "symbol": "SparkClientProvider.platformInfo",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 65,
-      "symbol": "SparkClientProvider.databasePath",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 66,
-      "symbol": "SparkClientProvider.wdmDeviceType",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 67,
-      "symbol": "SparkClientProvider.platformEncryptionIdentifier",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 68,
-      "symbol": "SparkClientProvider.appName",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 69,
-      "symbol": "SparkClientProvider.appType",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 70,
-      "symbol": "SparkClientProvider.bundleId",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 71,
-      "symbol": "SparkClientProvider.processorMaxFrequency",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 73,
-      "symbol": "SparkClientProvider.extraTelemetryMetaData(forMetricEventName:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 77,
-      "symbol": "SparkClientProvider.productName",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 78,
-      "symbol": "SparkClientProvider.isDeveloperVersion",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 79,
-      "symbol": "SparkClientProvider.isTablet",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 80,
-      "symbol": "SparkClientProvider.appleAccessGroupIdentifier",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 83,
-      "symbol": "SparkClientProvider.additionalClientConfig(forConfigName:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/sdk-common/SparkClientProvider.swift",
-      "line": 102,
-      "symbol": "SparkClientProvider.u2cUrl",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {

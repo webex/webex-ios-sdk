@@ -17,7 +17,7 @@
     <a title="Phone Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 3.9.1 Docs</a> (86% documented)</p>
+        <p><a href="../index.html">WebexSDK 3.9.2 Docs</a> (86% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -1367,6 +1367,42 @@ to approve the use of H.264 video codec license from Cisco Systems, Inc.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8WebexSDK5PhoneC22isH264LicenseActivatedSbyF"></a>
+                    <a name="//apple_ref/swift/Method/isH264LicenseActivated()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK5PhoneC22isH264LicenseActivatedSbyF">isH264LicenseActivated()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>If the end user approved the use of H.264 video codec license from Cisco Systems, Inc. will return <code>True</code> else <code>False</code>.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isH264LicenseActivated</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Bool</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8WebexSDK5PhoneC7CaptchaV"></a>
                     <a name="//apple_ref/swift/Struct/Captcha" class="dashAnchor"></a>
                     <a class="token" href="#/s:8WebexSDK5PhoneC7CaptchaV">Captcha</a>
@@ -1466,6 +1502,73 @@ to approve the use of H.264 video codec license from Cisco Systems, Inc.</p>
                               <td>
                                 <code>
                                 <em>input</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>CUCM number or Cisco Webex Conversation Id</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>mediaOption</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A data type represents the media options of a <code><a href="../Classes/Call.html">Call</a></code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A uniquely generated call id</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK5PhoneC04dialC6Number_6option17completionHandlerySS_AA11MediaOptionVyAA6ResultOyAA4CallCGctF"></a>
+                    <a name="//apple_ref/swift/Method/dialPhoneNumber(_:option:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK5PhoneC04dialC6Number_6option17completionHandlerySS_AA11MediaOptionVyAA6ResultOyAA4CallCGctF">dialPhoneNumber(_:<wbr>option:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Dials the given CUCM, WebexCalling or WebexForBroadworks number along with the media options for call</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.9.2
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">dialPhoneNumber</span><span class="p">(</span><span class="n">_</span> <span class="nv">address</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">option</span><span class="p">:</span> <span class="kt"><a href="../Structs/MediaOption.html">MediaOption</a></span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Enums/Result.html">Result</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Call.html">Call</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>address</em>
                                 </code>
                               </td>
                               <td>
@@ -2746,7 +2849,7 @@ to approve the use of H.264 video codec license from Cisco Systems, Inc.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-06-15)</p>
+          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-08-11)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
