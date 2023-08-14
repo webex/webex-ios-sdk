@@ -709,21 +709,21 @@
     },
     {
       "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Phone.swift",
-      "line": 712,
+      "line": 714,
       "symbol": "Phone.ServiceUrlType.Metrics",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Phone.swift",
-      "line": 713,
+      "line": 715,
       "symbol": "Phone.ServiceUrlType.ClientLogs",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/spark-client-framework/products/sdk-ios/sdk-ios/Phone/Phone.swift",
-      "line": 714,
+      "line": 716,
       "symbol": "Phone.ServiceUrlType.KMS",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
