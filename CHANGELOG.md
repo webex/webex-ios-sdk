@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+#### 3.10.0 Releases
+
+- `3.10.0` Releases - [3.10.0](#3100)
+
 #### 3.9.2 Releases
 
 - `3.9.2` Releases - [3.9.2](#392)
@@ -144,6 +148,39 @@ All notable changes to this project will be documented in this file.
 #### 0.9.137 Releases
 
 - `0.9.137` Releases - [0.9.137](#09137)
+
+## [3.10.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.10.0)
+Released on **13 Oct, 2023**.
+### Added
+- New Struct `Presence` which represents Presence info for a person.
+- New Struct `PresenceHandle` which represents the contacts whose presence status are being watched.
+- New Struct `VoicePushInfo` which represents the caller related information received from VoIP payload.
+- New Struct `LanguageItem` represents LanguageItem of ClosedCaption of a call.
+- New Struct `ClosedCaptionsInfo` represents ClosedCaptionsInfo of a call.
+- New Struct `CaptionItem` represents CaptionItem of ClosedCaption of a call.
+- New Enum `AudioOutputMode` options to switch audio output during a call.
+- New Enum `PresenceStatus` indicating the Presence status of a person.
+- New Enum `SpokenLanguageSelectionError` to represent error for setting current spoken language.
+- New Enum `TranslationLanguageSelectionError` to represent error for setting current translation language.
+- New API added `Person.startWatchingPresences(contactIds: [String], completionHandler: @escaping (Presence) -> Void) -> [PresenceHandle]` to start watching presence status update of the list of contact ids that are provided as input.
+- New API added `Person.stopWatchingPresences(presenceHandles: [PresenceHandle])` to stop watching presence status of the list of presence handle that are provided as input.
+- New API added `Call.callerNumber: String` caller number of the active WebexCalling or CUCM call.
+- New API added `Call.getCurrentAudioOutput() -> AudioOutputMode` to get the current audio output device for the call.
+- New API added `Call.setAudioOutput(mode: AudioOutputMode, completion: (Result<Bool>) -> ())` to set the current audio output device for the call.
+- New API added `Call.isClosedCaptionAllowed: Bool` Returns if Closed Caption allowed or not for this `Call`.
+- New API added `Call.isClosedCaptionEnabled: Bool` to let you know current state of the closed caption.
+- New API added `Call.toggleClosedCaption(enable: Bool, completionHandler: @escaping (Bool) -> Void )` to toggle ClosedCaption on/off for this `Call`.
+- New API added `Call.getClosedCaptionsInfo() -> ClosedCaptionsInfo` to get the `ClosedCaptionsInfo` of this `Call`.
+- New API added `Phone.isH264LicenseActivated() -> Bool` to indicate the status of H264 license prompt acceptance.
+- New API added `Webex.parseVoIPPayload(payload: PKPushPayload) -> VoicePushInfo?` to parses and returns the caller related information from the VoIP notification.
+- New Callback added `Call.onClosedCaptionsInfoChanged: ((ClosedCaptionsInfo) -> Void)?` to notify when ClosedCaptionsInfo changes for this `Call`.
+- Ability to support assisted transfer when the SDK client already has 2 active calls.
+- Subscribing for certain call events via mercury is now supported.
+- Optimised WxC Calling only sdk for runtime performance.
+
+### Updated
+- FIXED: Made `MediaRenderView` optional while setting MediaOption.
+- FIXED: activeSpeakerChangedEvent event notified when the active speaker changes in the meeting
 
 ## [3.9.2](https://github.com/webex/webex-ios-sdk/releases/tag/3.9.2)
 Released on **11 Aug, 2023**.
