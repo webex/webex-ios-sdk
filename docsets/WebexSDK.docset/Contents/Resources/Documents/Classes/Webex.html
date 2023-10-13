@@ -17,7 +17,7 @@
     <a title="Webex Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 3.9.2 Docs</a> (86% documented)</p>
+        <p><a href="../index.html">WebexSDK 3.10.0 Docs</a> (85% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -95,6 +95,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Call/CameraExposureTargetBias.html">– CameraExposureTargetBias</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Call/AudioOutputMode.html">– AudioOutputMode</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/CallHistoryRecord.html">CallHistoryRecord</a>
@@ -215,6 +218,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Webex.html">Webex</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Webex/VoicePushInfo.html">– VoicePushInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/WebhookClient.html">WebhookClient</a>
@@ -402,6 +408,9 @@
                 <a href="../Enums/PostMessageError.html">PostMessageError</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/PresenceStatus.html">PresenceStatus</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/ProcessNotificationError.html">ProcessNotificationError</a>
               </li>
               <li class="nav-group-task">
@@ -435,6 +444,9 @@
                 <a href="../Enums/SpaceType.html">SpaceType</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/SpokenLanguageSelectionError.html">SpokenLanguageSelectionError</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/SwitchToAudioVideoCallResult.html">SwitchToAudioVideoCallResult</a>
               </li>
               <li class="nav-group-task">
@@ -448,6 +460,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TokenLoginError.html">TokenLoginError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TranslationLanguageSelectionError.html">TranslationLanguageSelectionError</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/UCLoginFailureReason.html">UCLoginFailureReason</a>
@@ -522,7 +537,16 @@
                 <a href="../Structs/CallMembership/DeviceType.html">– DeviceType</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/CaptionItem.html">CaptionItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ClosedCaptionsInfo.html">ClosedCaptionsInfo</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/JWTAuthenticationInfo.html">JWTAuthenticationInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/LanguageItem.html">LanguageItem</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/LogMessage.html">LogMessage</a>
@@ -559,6 +583,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Person.html">Person</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Presence.html">Presence</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PresenceHandle.html">PresenceHandle</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/ReceivingNoiseInfo.html">ReceivingNoiseInfo</a>
@@ -1344,6 +1374,94 @@ Use <em>teamMemberships</em> to create and manage the team membership on behalf 
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8WebexSDK0A0C13VoicePushInfoV"></a>
+                    <a name="//apple_ref/swift/Struct/VoicePushInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK0A0C13VoicePushInfoV">VoicePushInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This struct represents the caller related information received from VoIP payload</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                        <a href="../Classes/Webex/VoicePushInfo.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">VoicePushInfo</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK0A0C16parseVoIPPayload7payloadAC13VoicePushInfoVSgSo13PKPushPayloadC_tF"></a>
+                    <a name="//apple_ref/swift/Method/parseVoIPPayload(payload:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK0A0C16parseVoIPPayload7payloadAC13VoicePushInfoVSgSo13PKPushPayloadC_tF">parseVoIPPayload(payload:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses and returns the caller related information from the VoIP notification</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">parseVoIPPayload</span><span class="p">(</span><span class="nv">payload</span><span class="p">:</span> <span class="kt">PKPushPayload</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Webex/VoicePushInfo.html">VoicePushInfo</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>payload</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>VoIP payload received from APNS.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An object of <code><a href="../Classes/Webex/VoicePushInfo.html">VoicePushInfo</a></code></p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8WebexSDK0A0C20setUCDomainServerUrl8ucDomain06serverF0ySS_SStF"></a>
                     <a name="//apple_ref/swift/Method/setUCDomainServerUrl(ucDomain:serverUrl:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:8WebexSDK0A0C20setUCDomainServerUrl8ucDomain06serverF0ySS_SStF">setUCDomainServerUrl(ucDomain:<wbr>serverUrl:<wbr>)</a>
@@ -1557,38 +1675,6 @@ Typically this information is obtained from user after [setCallServerDomainUrl]<
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setCallServiceCredential</span><span class="p">(</span><span class="nv">username</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>username</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>A username for Non SSO login</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>password</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>A password for Non SSO login
-&ndash; since 3.8.0</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
                       </div>
                     </section>
                   </div>
@@ -1911,8 +1997,8 @@ Typically this information is obtained from user after [setCallServerDomainUrl]<
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-08-14)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-10-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>

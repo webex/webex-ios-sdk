@@ -17,7 +17,7 @@
     <a title="PersonClient Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 3.9.2 Docs</a> (86% documented)</p>
+        <p><a href="../index.html">WebexSDK 3.10.0 Docs</a> (85% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -95,6 +95,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Call/CameraExposureTargetBias.html">– CameraExposureTargetBias</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Call/AudioOutputMode.html">– AudioOutputMode</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/CallHistoryRecord.html">CallHistoryRecord</a>
@@ -215,6 +218,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Webex.html">Webex</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Webex/VoicePushInfo.html">– VoicePushInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/WebhookClient.html">WebhookClient</a>
@@ -402,6 +408,9 @@
                 <a href="../Enums/PostMessageError.html">PostMessageError</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/PresenceStatus.html">PresenceStatus</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/ProcessNotificationError.html">ProcessNotificationError</a>
               </li>
               <li class="nav-group-task">
@@ -435,6 +444,9 @@
                 <a href="../Enums/SpaceType.html">SpaceType</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/SpokenLanguageSelectionError.html">SpokenLanguageSelectionError</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/SwitchToAudioVideoCallResult.html">SwitchToAudioVideoCallResult</a>
               </li>
               <li class="nav-group-task">
@@ -448,6 +460,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TokenLoginError.html">TokenLoginError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TranslationLanguageSelectionError.html">TranslationLanguageSelectionError</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/UCLoginFailureReason.html">UCLoginFailureReason</a>
@@ -522,7 +537,16 @@
                 <a href="../Structs/CallMembership/DeviceType.html">– DeviceType</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/CaptionItem.html">CaptionItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ClosedCaptionsInfo.html">ClosedCaptionsInfo</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/JWTAuthenticationInfo.html">JWTAuthenticationInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/LanguageItem.html">LanguageItem</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/LogMessage.html">LogMessage</a>
@@ -559,6 +583,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Person.html">Person</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Presence.html">Presence</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PresenceHandle.html">PresenceHandle</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/ReceivingNoiseInfo.html">ReceivingNoiseInfo</a>
@@ -1370,13 +1400,135 @@ Only admins are able to use this function</p>
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK12PersonClientC22startWatchingPresences10contactIds17completionHandlerSayAA14PresenceHandleVGSaySSG_yAA0L0VctF"></a>
+                    <a name="//apple_ref/swift/Method/startWatchingPresences(contactIds:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK12PersonClientC22startWatchingPresences10contactIds17completionHandlerSayAA14PresenceHandleVGSaySSG_yAA0L0VctF">startWatchingPresences(contactIds:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Start watching presence status update of the list of contact ids that are provided as input.
+Only valid contact Ids will be watched. Check [PresenceHandle.isValid] flag to know which contact Ids are valid.
+Same contact id can be watched multiple times and it will return different [PresenceHandle] objects.
+The application has to ensure to call the [stopWatchingPresences] API for the handles when not needed.
+Same contact id can be watched multiple times and it will return different [PresenceHandle] objects. The application has to ensure to call the</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">startWatchingPresences</span><span class="p">(</span><span class="nv">contactIds</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">],</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/Presence.html">Presence</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Structs/PresenceHandle.html">PresenceHandle</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>contactIds</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>List of contacts ids whose presence states are to be watched.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Callback that is triggered when the presence state of any of the provided contact id is changed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>[PresenceHandle]</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK12PersonClientC21stopWatchingPresences15presenceHandlesySayAA14PresenceHandleVG_tF"></a>
+                    <a name="//apple_ref/swift/Method/stopWatchingPresences(presenceHandles:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK12PersonClientC21stopWatchingPresences15presenceHandlesySayAA14PresenceHandleVG_tF">stopWatchingPresences(presenceHandles:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Stop watching presence status of the list of presence handles that are provided as input.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">stopWatchingPresences</span><span class="p">(</span><span class="nv">presenceHandles</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/PresenceHandle.html">PresenceHandle</a></span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>presenceHandles</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>List of presenceHandles whose presence states are not to be watched anymore</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-08-14)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-10-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>

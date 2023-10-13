@@ -17,7 +17,7 @@
     <a title="Phone Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 3.9.2 Docs</a> (86% documented)</p>
+        <p><a href="../index.html">WebexSDK 3.10.0 Docs</a> (85% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -95,6 +95,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Call/CameraExposureTargetBias.html">– CameraExposureTargetBias</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Call/AudioOutputMode.html">– AudioOutputMode</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/CallHistoryRecord.html">CallHistoryRecord</a>
@@ -215,6 +218,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Webex.html">Webex</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Webex/VoicePushInfo.html">– VoicePushInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/WebhookClient.html">WebhookClient</a>
@@ -402,6 +408,9 @@
                 <a href="../Enums/PostMessageError.html">PostMessageError</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/PresenceStatus.html">PresenceStatus</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/ProcessNotificationError.html">ProcessNotificationError</a>
               </li>
               <li class="nav-group-task">
@@ -435,6 +444,9 @@
                 <a href="../Enums/SpaceType.html">SpaceType</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/SpokenLanguageSelectionError.html">SpokenLanguageSelectionError</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/SwitchToAudioVideoCallResult.html">SwitchToAudioVideoCallResult</a>
               </li>
               <li class="nav-group-task">
@@ -448,6 +460,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TokenLoginError.html">TokenLoginError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TranslationLanguageSelectionError.html">TranslationLanguageSelectionError</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/UCLoginFailureReason.html">UCLoginFailureReason</a>
@@ -522,7 +537,16 @@
                 <a href="../Structs/CallMembership/DeviceType.html">– DeviceType</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/CaptionItem.html">CaptionItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ClosedCaptionsInfo.html">ClosedCaptionsInfo</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/JWTAuthenticationInfo.html">JWTAuthenticationInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/LanguageItem.html">LanguageItem</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/LogMessage.html">LogMessage</a>
@@ -559,6 +583,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Person.html">Person</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Presence.html">Presence</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PresenceHandle.html">PresenceHandle</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/ReceivingNoiseInfo.html">ReceivingNoiseInfo</a>
@@ -1338,11 +1368,7 @@ True as using loud speaker, False as not. The default is using loud speaker.</p>
                       <div class="abstract">
                         <p>Prevents Cisco Webex iOS SDK from poping up an Alert for the end user
 to approve the use of H.264 video codec license from Cisco Systems, Inc.</p>
-<div class="aside aside-attention">
-    <p class="aside-title">Attention</p>
-    The function is expected to be called only by Cisco internal applications. 3rd-party applications should NOT call this function.
-
-</div><div class="aside aside-since">
+<div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.2.0
 
@@ -1377,7 +1403,7 @@ to approve the use of H.264 video codec license from Cisco Systems, Inc.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>If the end user approved the use of H.264 video codec license from Cisco Systems, Inc. will return <code>True</code> else <code>False</code>.</p>
+                        <p>Indicates the status of H264 license prompt acceptance.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     3.10.0
@@ -1559,7 +1585,7 @@ to approve the use of H.264 video codec license from Cisco Systems, Inc.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">dialPhoneNumber</span><span class="p">(</span><span class="n">_</span> <span class="nv">address</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">option</span><span class="p">:</span> <span class="kt"><a href="../Structs/MediaOption.html">MediaOption</a></span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Enums/Result.html">Result</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Call.html">Call</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">dialPhoneNumber</span><span class="p">(</span><span class="n">_</span> <span class="nv">phoneNumber</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">option</span><span class="p">:</span> <span class="kt"><a href="../Structs/MediaOption.html">MediaOption</a></span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Enums/Result.html">Result</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Call.html">Call</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1570,7 +1596,7 @@ to approve the use of H.264 video codec license from Cisco Systems, Inc.</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>address</em>
+                                <em>phoneNumber</em>
                                 </code>
                               </td>
                               <td>
@@ -1970,9 +1996,9 @@ to approve the use of H.264 video codec license from Cisco Systems, Inc.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK5PhoneC13setPushTokens8bundleId06deviceH00I5Token04voipJ0ySS_S3StF"></a>
-                    <a name="//apple_ref/swift/Method/setPushTokens(bundleId:deviceId:deviceToken:voipToken:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK5PhoneC13setPushTokens8bundleId06deviceH00I5Token04voipJ0ySS_S3StF">setPushTokens(bundleId:<wbr>deviceId:<wbr>deviceToken:<wbr>voipToken:<wbr>)</a>
+                    <a name="/s:8WebexSDK5PhoneC13setPushTokens8bundleId06deviceH00I5Token04voipJ003appH0ySS_S4SSgtF"></a>
+                    <a name="//apple_ref/swift/Method/setPushTokens(bundleId:deviceId:deviceToken:voipToken:appId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK5PhoneC13setPushTokens8bundleId06deviceH00I5Token04voipJ003appH0ySS_S4SSgtF">setPushTokens(bundleId:<wbr>deviceId:<wbr>deviceToken:<wbr>voipToken:<wbr>appId:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1992,7 +2018,7 @@ to approve the use of H.264 video codec license from Cisco Systems, Inc.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setPushTokens</span><span class="p">(</span><span class="nv">bundleId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">deviceId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">deviceToken</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">voipToken</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setPushTokens</span><span class="p">(</span><span class="nv">bundleId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">deviceId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">deviceToken</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">voipToken</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">appId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -2045,6 +2071,18 @@ to approve the use of H.264 video codec license from Cisco Systems, Inc.</p>
                               <td>
                                 <div>
                                   <p>VoIP token</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>appId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>appId</p>
                                 </div>
                               </td>
                             </tr>
@@ -2851,8 +2889,8 @@ to approve the use of H.264 video codec license from Cisco Systems, Inc.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-08-14)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-10-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>

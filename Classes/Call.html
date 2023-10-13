@@ -17,7 +17,7 @@
     <a title="Call Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 3.9.2 Docs</a> (86% documented)</p>
+        <p><a href="../index.html">WebexSDK 3.10.0 Docs</a> (85% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -95,6 +95,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Call/CameraExposureTargetBias.html">– CameraExposureTargetBias</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Call/AudioOutputMode.html">– AudioOutputMode</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/CallHistoryRecord.html">CallHistoryRecord</a>
@@ -215,6 +218,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Webex.html">Webex</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Webex/VoicePushInfo.html">– VoicePushInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/WebhookClient.html">WebhookClient</a>
@@ -402,6 +408,9 @@
                 <a href="../Enums/PostMessageError.html">PostMessageError</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/PresenceStatus.html">PresenceStatus</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/ProcessNotificationError.html">ProcessNotificationError</a>
               </li>
               <li class="nav-group-task">
@@ -435,6 +444,9 @@
                 <a href="../Enums/SpaceType.html">SpaceType</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/SpokenLanguageSelectionError.html">SpokenLanguageSelectionError</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/SwitchToAudioVideoCallResult.html">SwitchToAudioVideoCallResult</a>
               </li>
               <li class="nav-group-task">
@@ -448,6 +460,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TokenLoginError.html">TokenLoginError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TranslationLanguageSelectionError.html">TranslationLanguageSelectionError</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/UCLoginFailureReason.html">UCLoginFailureReason</a>
@@ -522,7 +537,16 @@
                 <a href="../Structs/CallMembership/DeviceType.html">– DeviceType</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/CaptionItem.html">CaptionItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ClosedCaptionsInfo.html">ClosedCaptionsInfo</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/JWTAuthenticationInfo.html">JWTAuthenticationInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/LanguageItem.html">LanguageItem</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/LogMessage.html">LogMessage</a>
@@ -559,6 +583,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Person.html">Person</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Presence.html">Presence</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PresenceHandle.html">PresenceHandle</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/ReceivingNoiseInfo.html">ReceivingNoiseInfo</a>
@@ -652,8 +682,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="nf">setup</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setup</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -680,8 +709,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="nf">sendFrame</span><span class="p">(</span><span class="n">withTimeStamp</span> <span class="nv">timeStamp</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">,</span> <span class="nv">width</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">,</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">UnsafeMutableRawPointer</span><span class="p">,</span> <span class="nv">length</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">sendFrame</span><span class="p">(</span><span class="n">withTimeStamp</span> <span class="nv">timeStamp</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">,</span> <span class="nv">width</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">,</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">UnsafeMutableRawPointer</span><span class="p">,</span> <span class="nv">length</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -708,8 +736,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="nf">sendAudioFrame</span><span class="p">(</span><span class="n">withTimeStamp</span> <span class="nv">timeStamp</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">,</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">UnsafeMutableRawPointer</span><span class="p">,</span> <span class="nv">length</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">sendAudioFrame</span><span class="p">(</span><span class="n">withTimeStamp</span> <span class="nv">timeStamp</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">,</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">UnsafeMutableRawPointer</span><span class="p">,</span> <span class="nv">length</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -4037,9 +4064,9 @@ Client need to set the protocol implementation into certain call.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK4CallC16videoRenderViewsAA05MediaE4ViewC5local_AF6remotetSgvp"></a>
+                    <a name="/s:8WebexSDK4CallC16videoRenderViewsAA05MediaE4ViewCSg5local_AG6remotetvp"></a>
                     <a name="//apple_ref/swift/Property/videoRenderViews" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK4CallC16videoRenderViewsAA05MediaE4ViewC5local_AF6remotetSgvp">videoRenderViews</a>
+                    <a class="token" href="#/s:8WebexSDK4CallC16videoRenderViewsAA05MediaE4ViewCSg5local_AG6remotetvp">videoRenderViews</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -4059,7 +4086,7 @@ Client need to set the protocol implementation into certain call.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">videoRenderViews</span><span class="p">:</span> <span class="p">(</span><span class="nv">local</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">,</span> <span class="nv">remote</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">)?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">videoRenderViews</span><span class="p">:</span> <span class="p">(</span><span class="nv">local</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?,</span> <span class="nv">remote</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?)</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -4421,6 +4448,38 @@ Video presented on remote media render view.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">isVideoEnabled</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC12callerNumberSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/callerNumber" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC12callerNumberSSSgvp">callerNumber</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The caller number of the active call. Applicable only for WebexCalling and CUCM calls. It returns empty string for other call types.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">callerNumber</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -4817,6 +4876,126 @@ Video presented on remote media render view.</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">takePhoto</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC15AudioOutputModeO"></a>
+                    <a name="//apple_ref/swift/Enum/AudioOutputMode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC15AudioOutputModeO">AudioOutputMode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The options to switch audio output during a call.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                        <a href="../Classes/Call/AudioOutputMode.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">AudioOutputMode</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC21getCurrentAudioOutputAC0fG4ModeOyF"></a>
+                    <a name="//apple_ref/swift/Method/getCurrentAudioOutput()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC21getCurrentAudioOutputAC0fG4ModeOyF">getCurrentAudioOutput()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get the current audio output device for the call.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getCurrentAudioOutput</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Call/AudioOutputMode.html">AudioOutputMode</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Current <code><a href="../Classes/Call/AudioOutputMode.html">AudioOutputMode</a></code> for the call.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC14setAudioOutput4mode10completionyAC0eF4ModeO_yAA6ResultOySbGXEtF"></a>
+                    <a name="//apple_ref/swift/Method/setAudioOutput(mode:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC14setAudioOutput4mode10completionyAC0eF4ModeO_yAA6ResultOySbGXEtF">setAudioOutput(mode:<wbr>completion:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set the current audio output device for the call.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setAudioOutput</span><span class="p">(</span><span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Classes/Call/AudioOutputMode.html">AudioOutputMode</a></span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">(</span><span class="kt"><a href="../Enums/Result.html">Result</a></span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>mode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the audio output mode for the call.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -6202,13 +6381,383 @@ In case of success, listen to onReceivingNoiseInfoChanged for the changes</p>
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC22isClosedCaptionAllowedSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isClosedCaptionAllowed" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC22isClosedCaptionAllowedSbvp">isClosedCaptionAllowed</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns if Closed Caption allowed or not for this <code>Call</code>.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">isClosedCaptionAllowed</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC22isClosedCaptionEnabledSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isClosedCaptionEnabled" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC22isClosedCaptionEnabledSbvp">isClosedCaptionEnabled</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This will let you know current state of the closed caption</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">isClosedCaptionEnabled</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC19toggleClosedCaption6enable17completionHandlerySb_ySbctF"></a>
+                    <a name="//apple_ref/swift/Method/toggleClosedCaption(enable:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC19toggleClosedCaption6enable17completionHandlerySb_ySbctF">toggleClosedCaption(enable:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This will toggle ClosedCaption on/off for this <code>Call</code>.
+If Toggled false <code>getClosedCaptions</code> will return empty and <code><a href="../Classes/Call.html#/s:8WebexSDK4CallC22onClosedCaptionArrivedyAA0F4ItemVcSgvp">onClosedCaptionArrived</a></code> wont be fired</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    <p>3.10.0</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">toggleClosedCaption</span><span class="p">(</span><span class="nv">enable</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>enable</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Boolean indicating if ClosedCaptions should be enabled or disabled</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC21getClosedCaptionsInfoAA0efG0VyF"></a>
+                    <a name="//apple_ref/swift/Method/getClosedCaptionsInfo()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC21getClosedCaptionsInfoAA0efG0VyF">getClosedCaptionsInfo()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the <code><a href="../Structs/ClosedCaptionsInfo.html">ClosedCaptionsInfo</a></code> of this <code>Call</code>.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getClosedCaptionsInfo</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/ClosedCaptionsInfo.html">ClosedCaptionsInfo</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC27onClosedCaptionsInfoChangedyAA0efG0VcSgvp"></a>
+                    <a name="//apple_ref/swift/Property/onClosedCaptionsInfoChanged" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC27onClosedCaptionsInfoChangedyAA0efG0VcSgvp">onClosedCaptionsInfoChanged</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This will notify when ClosedCaptionsInfo changes for this <code>Call</code></p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onClosedCaptionsInfoChanged</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Structs/ClosedCaptionsInfo.html">ClosedCaptionsInfo</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC24setCurrentSpokenLanguage8language17completionHandleryAA0G4ItemV_yAA0fG14SelectionErrorOSgctF"></a>
+                    <a name="//apple_ref/swift/Method/setCurrentSpokenLanguage(language:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC24setCurrentSpokenLanguage8language17completionHandleryAA0G4ItemV_yAA0fG14SelectionErrorOSgctF">setCurrentSpokenLanguage(language:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This will set current the spoken language for this <code>Call</code>. Only host can control this.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setCurrentSpokenLanguage</span><span class="p">(</span><span class="nv">language</span><span class="p">:</span> <span class="kt"><a href="../Structs/LanguageItem.html">LanguageItem</a></span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Enums/SpokenLanguageSelectionError.html">SpokenLanguageSelectionError</a></span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>language</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The spoken language of the call to be changed into.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure to be executed when completed, with error if the invocation is  failed, otherwise error as none.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC29setCurrentTranslationLanguage8language17completionHandleryAA0G4ItemV_yAA0fG14SelectionErrorOSgctF"></a>
+                    <a name="//apple_ref/swift/Method/setCurrentTranslationLanguage(language:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC29setCurrentTranslationLanguage8language17completionHandleryAA0G4ItemV_yAA0fG14SelectionErrorOSgctF">setCurrentTranslationLanguage(language:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This will set the current translation language for this <code>Call</code>.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setCurrentTranslationLanguage</span><span class="p">(</span><span class="nv">language</span><span class="p">:</span> <span class="kt"><a href="../Structs/LanguageItem.html">LanguageItem</a></span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Enums/TranslationLanguageSelectionError.html">TranslationLanguageSelectionError</a></span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>language</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The translation language of the call to be changed into.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure to be executed when completed, with error if the invocation is  failed, otherwise error as none.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC17getClosedCaptionsSayAA11CaptionItemVGyF"></a>
+                    <a name="//apple_ref/swift/Method/getClosedCaptions()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC17getClosedCaptionsSayAA11CaptionItemVGyF">getClosedCaptions()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the all the Closed Captions till now for this <code>Call</code>.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getClosedCaptions</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Structs/CaptionItem.html">CaptionItem</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC22onClosedCaptionArrivedyAA0F4ItemVcSgvp"></a>
+                    <a name="//apple_ref/swift/Property/onClosedCaptionArrived" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC22onClosedCaptionArrivedyAA0F4ItemVcSgvp">onClosedCaptionArrived</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This will notify when a ClosedCaption object arrives for the call</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onClosedCaptionArrived</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Structs/CaptionItem.html">CaptionItem</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-08-14)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-10-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>

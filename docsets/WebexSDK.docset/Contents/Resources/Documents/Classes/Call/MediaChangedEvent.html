@@ -17,7 +17,7 @@
     <a title="MediaChangedEvent Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../../index.html">WebexSDK 3.9.2 Docs</a> (86% documented)</p>
+        <p><a href="../../index.html">WebexSDK 3.10.0 Docs</a> (85% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../../search.json">
@@ -95,6 +95,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../../Classes/Call/CameraExposureTargetBias.html">– CameraExposureTargetBias</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Call/AudioOutputMode.html">– AudioOutputMode</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Classes/CallHistoryRecord.html">CallHistoryRecord</a>
@@ -215,6 +218,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../../Classes/Webex.html">Webex</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Webex/VoicePushInfo.html">– VoicePushInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Classes/WebhookClient.html">WebhookClient</a>
@@ -402,6 +408,9 @@
                 <a href="../../Enums/PostMessageError.html">PostMessageError</a>
               </li>
               <li class="nav-group-task">
+                <a href="../../Enums/PresenceStatus.html">PresenceStatus</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../../Enums/ProcessNotificationError.html">ProcessNotificationError</a>
               </li>
               <li class="nav-group-task">
@@ -435,6 +444,9 @@
                 <a href="../../Enums/SpaceType.html">SpaceType</a>
               </li>
               <li class="nav-group-task">
+                <a href="../../Enums/SpokenLanguageSelectionError.html">SpokenLanguageSelectionError</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../../Enums/SwitchToAudioVideoCallResult.html">SwitchToAudioVideoCallResult</a>
               </li>
               <li class="nav-group-task">
@@ -448,6 +460,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../../Enums/TokenLoginError.html">TokenLoginError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/TranslationLanguageSelectionError.html">TranslationLanguageSelectionError</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Enums/UCLoginFailureReason.html">UCLoginFailureReason</a>
@@ -522,7 +537,16 @@
                 <a href="../../Structs/CallMembership/DeviceType.html">– DeviceType</a>
               </li>
               <li class="nav-group-task">
+                <a href="../../Structs/CaptionItem.html">CaptionItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/ClosedCaptionsInfo.html">ClosedCaptionsInfo</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../../Structs/JWTAuthenticationInfo.html">JWTAuthenticationInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/LanguageItem.html">LanguageItem</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Structs/LogMessage.html">LogMessage</a>
@@ -559,6 +583,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="../../Structs/Person.html">Person</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/Presence.html">Presence</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/PresenceHandle.html">PresenceHandle</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Structs/ReceivingNoiseInfo.html">ReceivingNoiseInfo</a>
@@ -639,7 +669,7 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>True if the remote party now is sending video. Otherwise false.
-This might be triggered when the remote party muted or unmuted the video.</p>
+This will be triggered when the remote party muted or unmuted the video.</p>
 
                       </div>
                       <div class="declaration">
@@ -667,7 +697,7 @@ This might be triggered when the remote party muted or unmuted the video.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>True if the remote party now is sending audio. Otherwise false.
-This might be triggered when the remote party muted or unmuted the audio.</p>
+This will be triggered when the remote party muted or unmuted the audio.</p>
 
                       </div>
                       <div class="declaration">
@@ -695,7 +725,7 @@ This might be triggered when the remote party muted or unmuted the audio.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>True if the local party now is sending video. Otherwise false.
-This might be triggered when the local party muted or unmuted the video.</p>
+This will be triggered when the local party muted or unmuted the video.</p>
 
                       </div>
                       <div class="declaration">
@@ -723,7 +753,7 @@ This might be triggered when the local party muted or unmuted the video.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>True if the local party now is sending audio. Otherwise false.
-This might be triggered when the local party muted or unmuted the audio.</p>
+This will be triggered when the local party muted or unmuted the audio.</p>
 
                       </div>
                       <div class="declaration">
@@ -751,7 +781,7 @@ This might be triggered when the local party muted or unmuted the audio.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>True if the local party now is receiving video. Otherwise false.
-This might be triggered when the local party muted or unmuted the video.</p>
+This will be triggered when the local party muted or unmuted the video.</p>
 
                       </div>
                       <div class="declaration">
@@ -779,7 +809,7 @@ This might be triggered when the local party muted or unmuted the video.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>True if the local party now is receiving audio. Otherwise false.
-This might be triggered when the local party muted or unmuted the audio.</p>
+This will be triggered when the local party muted or unmuted the audio.</p>
 
                       </div>
                       <div class="declaration">
@@ -947,9 +977,9 @@ This might be triggered when the local party muted or unmuted the audio.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>True if the local party now is receiving screen share. Otherwise false.
-This might be triggered when the local party muted or unmuted the video
+This will be triggered when the local party muted or unmuted the video
 if screen sharing is sent via the video stream.
-This might also be triggered when the local party started or stopped the screen share.</p>
+This will also be triggered when the local party started or stopped the screen share.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.3.0
@@ -982,7 +1012,7 @@ This might also be triggered when the local party started or stopped the screen 
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>True if the screen share now is receiving and joined. Otherwise false.
-This might be triggered when the remote party started or stopped share stream.</p>
+This will be triggered when the remote party started or stopped share stream.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.3.0
@@ -1015,7 +1045,7 @@ This might be triggered when the remote party started or stopped share stream.</
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>True if the screen share now is sending. Otherwise false.
-This might be triggered when the local started or stopped share stream.</p>
+This will be triggered when the local started or stopped share stream.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.4.0
@@ -1103,8 +1133,8 @@ This might be triggered when the local started or stopped share stream.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-08-14)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-10-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>
