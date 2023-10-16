@@ -17,7 +17,7 @@
     <a title="Structures  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">WebexSDK 3.9.2 Docs</a> (86% documented)</p>
+        <p><a href="index.html">WebexSDK 3.10.0 Docs</a> (85% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="search.json">
@@ -95,6 +95,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/Call/CameraExposureTargetBias.html">– CameraExposureTargetBias</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Call/AudioOutputMode.html">– AudioOutputMode</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/CallHistoryRecord.html">CallHistoryRecord</a>
@@ -215,6 +218,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/Webex.html">Webex</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Webex/VoicePushInfo.html">– VoicePushInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/WebhookClient.html">WebhookClient</a>
@@ -402,6 +408,9 @@
                 <a href="Enums/PostMessageError.html">PostMessageError</a>
               </li>
               <li class="nav-group-task">
+                <a href="Enums/PresenceStatus.html">PresenceStatus</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Enums/ProcessNotificationError.html">ProcessNotificationError</a>
               </li>
               <li class="nav-group-task">
@@ -435,6 +444,9 @@
                 <a href="Enums/SpaceType.html">SpaceType</a>
               </li>
               <li class="nav-group-task">
+                <a href="Enums/SpokenLanguageSelectionError.html">SpokenLanguageSelectionError</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Enums/SwitchToAudioVideoCallResult.html">SwitchToAudioVideoCallResult</a>
               </li>
               <li class="nav-group-task">
@@ -448,6 +460,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Enums/TokenLoginError.html">TokenLoginError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TranslationLanguageSelectionError.html">TranslationLanguageSelectionError</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/UCLoginFailureReason.html">UCLoginFailureReason</a>
@@ -522,7 +537,16 @@
                 <a href="Structs/CallMembership/DeviceType.html">– DeviceType</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/CaptionItem.html">CaptionItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ClosedCaptionsInfo.html">ClosedCaptionsInfo</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/JWTAuthenticationInfo.html">JWTAuthenticationInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/LanguageItem.html">LanguageItem</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/LogMessage.html">LogMessage</a>
@@ -559,6 +583,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Person.html">Person</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Presence.html">Presence</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/PresenceHandle.html">PresenceHandle</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/ReceivingNoiseInfo.html">ReceivingNoiseInfo</a>
@@ -917,8 +947,7 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Person contents.
-NOTE: <code>roles</code>,<code>licenses</code> and <code>siteUrls</code> is applicable for admin only and requires extra scopes <code>spark-admin:people_read</code>
-and <code>spark-admin:people_write</code> passed in at the time of creating OAuthAuthenticator object.</p>
+ NOTE: <code>roles</code>,<code>licenses</code> and <code>siteUrls</code> is applicable for admin only and requires extra scopes <code>spark-admin:people_read</code> and <code>spark-admin:people_write</code> passed in at the time of creating OAuthAuthenticator object.</p>
 
                         <a href="Structs/Person.html" class="slightly-smaller">See more</a>
                       </div>
@@ -927,6 +956,172 @@ and <code>spark-admin:people_write</code> passed in at the time of creating OAut
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Person</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK8PresenceV"></a>
+                    <a name="//apple_ref/swift/Struct/Presence" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK8PresenceV">Presence</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This struct represents Presence info for a person</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                        <a href="Structs/Presence.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Presence</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK14PresenceHandleV"></a>
+                    <a name="//apple_ref/swift/Struct/PresenceHandle" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK14PresenceHandleV">PresenceHandle</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This struct represents the contacts whose presence state are being watched.
+PresenceHandle with same contactId can have different <code>handle</code> values.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                        <a href="Structs/PresenceHandle.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">PresenceHandle</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11CaptionItemV"></a>
+                    <a name="//apple_ref/swift/Struct/CaptionItem" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11CaptionItemV">CaptionItem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This struct represents CaptionItem of ClosedCaption of a call</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                        <a href="Structs/CaptionItem.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">CaptionItem</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK18ClosedCaptionsInfoV"></a>
+                    <a name="//apple_ref/swift/Struct/ClosedCaptionsInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK18ClosedCaptionsInfoV">ClosedCaptionsInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This struct represents ClosedCaptionsInfo of a call</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                        <a href="Structs/ClosedCaptionsInfo.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">ClosedCaptionsInfo</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK12LanguageItemV"></a>
+                    <a name="//apple_ref/swift/Struct/LanguageItem" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK12LanguageItemV">LanguageItem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This struct represents LanguageItem of ClosedCaption of a call</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.10.0
+
+</div>
+
+                        <a href="Structs/LanguageItem.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">LanguageItem</span></code></pre>
 
                         </div>
                       </div>
@@ -1400,8 +1595,8 @@ and <code>spark-admin:people_write</code> passed in at the time of creating OAut
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-08-14)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-10-16)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>

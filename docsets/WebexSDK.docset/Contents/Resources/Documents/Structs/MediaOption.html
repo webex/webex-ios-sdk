@@ -17,7 +17,7 @@
     <a title="MediaOption Structure Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 3.9.2 Docs</a> (86% documented)</p>
+        <p><a href="../index.html">WebexSDK 3.10.0 Docs</a> (85% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -95,6 +95,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Call/CameraExposureTargetBias.html">– CameraExposureTargetBias</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Call/AudioOutputMode.html">– AudioOutputMode</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/CallHistoryRecord.html">CallHistoryRecord</a>
@@ -215,6 +218,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Webex.html">Webex</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Webex/VoicePushInfo.html">– VoicePushInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/WebhookClient.html">WebhookClient</a>
@@ -402,6 +408,9 @@
                 <a href="../Enums/PostMessageError.html">PostMessageError</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/PresenceStatus.html">PresenceStatus</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/ProcessNotificationError.html">ProcessNotificationError</a>
               </li>
               <li class="nav-group-task">
@@ -435,6 +444,9 @@
                 <a href="../Enums/SpaceType.html">SpaceType</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/SpokenLanguageSelectionError.html">SpokenLanguageSelectionError</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/SwitchToAudioVideoCallResult.html">SwitchToAudioVideoCallResult</a>
               </li>
               <li class="nav-group-task">
@@ -448,6 +460,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TokenLoginError.html">TokenLoginError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TranslationLanguageSelectionError.html">TranslationLanguageSelectionError</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/UCLoginFailureReason.html">UCLoginFailureReason</a>
@@ -522,7 +537,16 @@
                 <a href="../Structs/CallMembership/DeviceType.html">– DeviceType</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/CaptionItem.html">CaptionItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ClosedCaptionsInfo.html">ClosedCaptionsInfo</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/JWTAuthenticationInfo.html">JWTAuthenticationInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/LanguageItem.html">LanguageItem</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/LogMessage.html">LogMessage</a>
@@ -559,6 +583,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Person.html">Person</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Presence.html">Presence</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PresenceHandle.html">PresenceHandle</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/ReceivingNoiseInfo.html">ReceivingNoiseInfo</a>
@@ -693,9 +723,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK11MediaOptionV10audioVideo5local6remoteAcA0C10RenderViewC_AHtFZ"></a>
+                    <a name="/s:8WebexSDK11MediaOptionV10audioVideo5local6remoteAcA0C10RenderViewCSg_AItFZ"></a>
                     <a name="//apple_ref/swift/Method/audioVideo(local:remote:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11MediaOptionV10audioVideo5local6remoteAcA0C10RenderViewC_AHtFZ">audioVideo(local:<wbr>remote:<wbr>)</a>
+                    <a class="token" href="#/s:8WebexSDK11MediaOptionV10audioVideo5local6remoteAcA0C10RenderViewCSg_AItFZ">audioVideo(local:<wbr>remote:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -715,7 +745,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">audioVideo</span><span class="p">(</span><span class="nv">local</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">,</span> <span class="nv">remote</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">MediaOption</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">audioVideo</span><span class="p">(</span><span class="nv">local</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?,</span> <span class="nv">remote</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">MediaOption</span></code></pre>
 
                         </div>
                       </div>
@@ -758,9 +788,9 @@ The render views can be set after call is connected.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK11MediaOptionV21audioVideoScreenShare5video06screenH0AcA0C10RenderViewC5local_AH6remotetSg_AHSgtFZ"></a>
+                    <a name="/s:8WebexSDK11MediaOptionV21audioVideoScreenShare5video06screenH0AcA0C10RenderViewCSg5local_AI6remotetSg_AItFZ"></a>
                     <a name="//apple_ref/swift/Method/audioVideoScreenShare(video:screenShare:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11MediaOptionV21audioVideoScreenShare5video06screenH0AcA0C10RenderViewC5local_AH6remotetSg_AHSgtFZ">audioVideoScreenShare(video:<wbr>screenShare:<wbr>)</a>
+                    <a class="token" href="#/s:8WebexSDK11MediaOptionV21audioVideoScreenShare5video06screenH0AcA0C10RenderViewCSg5local_AI6remotetSg_AItFZ">audioVideoScreenShare(video:<wbr>screenShare:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -781,7 +811,7 @@ The render views can be set after call is connected.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">audioVideoScreenShare</span><span class="p">(</span><span class="nv">video</span><span class="p">:</span> <span class="p">(</span><span class="nv">local</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">,</span> <span class="nv">remote</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">screenShare</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">MediaOption</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">audioVideoScreenShare</span><span class="p">(</span><span class="nv">video</span><span class="p">:</span> <span class="p">(</span><span class="nv">local</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?,</span> <span class="nv">remote</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">screenShare</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">MediaOption</span></code></pre>
 
                         </div>
                       </div>
@@ -958,8 +988,8 @@ In general, The PIN is not required. unless the WebexError.requireHostPinOrMeeti
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-08-14)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-10-16)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>
