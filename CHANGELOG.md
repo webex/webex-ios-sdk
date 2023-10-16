@@ -150,7 +150,7 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ## [3.10.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.10.0)
-Released on **13 Oct, 2023**.
+Released on **16 Oct, 2023**.
 ### Added
 - New Struct `Presence` which represents Presence info for a person.
 - New Struct `PresenceHandle` which represents the contacts whose presence status are being watched.
