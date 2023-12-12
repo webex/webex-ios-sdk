@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+#### 3.10.1 Releases
+
+- `3.10.1` Releases - [3.10.1](#3101)
+
 #### 3.10.0 Releases
 
 - `3.10.0` Releases - [3.10.0](#3100)
@@ -149,6 +153,15 @@ All notable changes to this project will be documented in this file.
 
 - `0.9.137` Releases - [0.9.137](#09137)
 
+## [3.10.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.10.1)
+Released on **12 Dec, 2023**.
+### Added
+- New Struct `ProductCapability` which represents the product capabilities for the logged in user.
+- New API added `Person.getProductCapability() -> ProductCapability` to get the supported capability of the current user.
+
+### Updated
+- General improvements and bug fixes.
+
 ## [3.10.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.10.0)
 Released on **16 Oct, 2023**.
 ### Added
@@ -197,7 +210,7 @@ Released on **11 Aug, 2023**.
 Released on **19 June, 2023**.
 ### Added
 - New API added `Call.externalTrackingId` to get the external tracking id for corresponding call. Applicable only for WxC calls.
-- Supports Webex Calling NewCall notifications payload through webhook.
+- Webhook URL can be set to get incoming WxC calls.
 
 ### Updated
 - FIXED: Self video turning off in case of poor uplink event.
