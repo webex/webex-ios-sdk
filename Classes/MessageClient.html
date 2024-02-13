@@ -17,7 +17,7 @@
     <a title="MessageClient Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 3.10.1 Docs</a> (85% documented)</p>
+        <p><a href="../index.html">WebexSDK 3.11.0 Docs</a> (84% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -321,6 +321,9 @@
                 <a href="../Enums/GetWebhookError.html">GetWebhookError</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/InviteParticipantError.html">InviteParticipantError</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/InviteeResponse.html">InviteeResponse</a>
               </li>
               <li class="nav-group-task">
@@ -352,6 +355,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/LogLevel.html">LogLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MakeHostError.html">MakeHostError</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/MarkMessageReadResult.html">MarkMessageReadResult</a>
@@ -421,6 +427,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/ReceivingNoiseRemovalEnableResult.html">ReceivingNoiseRemovalEnableResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ReclaimHostError.html">ReclaimHostError</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/RemoveVirtualBackgroundError.html">RemoveVirtualBackgroundError</a>
@@ -847,9 +856,9 @@ the actual content or the thumbnail of the attachment.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13MessageClientC4post_7toSpace8mentions9withFiles5queue17completionHandleryAA0C0V4TextVSg_SSSayAA7MentionOGSgSayAA9LocalFileCGSgSo012OS_dispatch_K0CSgyAA6ResultOyAKGctF"></a>
-                    <a name="//apple_ref/swift/Method/post(_:toSpace:mentions:withFiles:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_7toSpace8mentions9withFiles5queue17completionHandleryAA0C0V4TextVSg_SSSayAA7MentionOGSgSayAA9LocalFileCGSgSo012OS_dispatch_K0CSgyAA6ResultOyAKGctF">post(_:<wbr>toSpace:<wbr>mentions:<wbr>withFiles:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
+                    <a name="/s:8WebexSDK13MessageClientC4post_7toSpace8mentions9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_SSSayAA7MentionOGSgSayAA9LocalFileCGSgALSgSo012OS_dispatch_L0CSgyAA6ResultOyALGctF"></a>
+                    <a name="//apple_ref/swift/Method/post(_:toSpace:mentions:withFiles:parent:queue:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_7toSpace8mentions9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_SSSayAA7MentionOGSgSayAA9LocalFileCGSgALSgSo012OS_dispatch_L0CSgyAA6ResultOyALGctF">post(_:<wbr>toSpace:<wbr>mentions:<wbr>withFiles:<wbr>parent:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -874,7 +883,7 @@ Having <code>@johndoe</code> in the content of the message does not generate not
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">post</span><span class="p">(</span><span class="n">_</span> <span class="nv">text</span><span class="p">:</span> <span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">.</span><span class="kt">Text</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">toSpace</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">mentions</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/Mention.html">Mention</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">withFiles</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/LocalFile.html">LocalFile</a></span><span class="p">]?,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Enums/Result.html">Result</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">post</span><span class="p">(</span><span class="n">_</span> <span class="nv">text</span><span class="p">:</span> <span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">.</span><span class="kt">Text</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">toSpace</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">mentions</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/Mention.html">Mention</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">withFiles</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/LocalFile.html">LocalFile</a></span><span class="p">]?,</span> <span class="nv">parent</span><span class="p">:</span> <span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Enums/Result.html">Result</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -967,9 +976,9 @@ Having <code>@johndoe</code> in the content of the message does not generate not
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13MessageClientC4post_8toPerson9withFiles5queue17completionHandleryAA0C0V4TextVSg_SSSayAA9LocalFileCGSgSo012OS_dispatch_J0CSgyAA6ResultOyAJGctF"></a>
-                    <a name="//apple_ref/swift/Method/post(_:toPerson:withFiles:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_8toPerson9withFiles5queue17completionHandleryAA0C0V4TextVSg_SSSayAA9LocalFileCGSgSo012OS_dispatch_J0CSgyAA6ResultOyAJGctF">post(_:<wbr>toPerson:<wbr>withFiles:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
+                    <a name="/s:8WebexSDK13MessageClientC4post_8toPerson9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_SSSayAA9LocalFileCGSgAKSgSo012OS_dispatch_K0CSgyAA6ResultOyAKGctF"></a>
+                    <a name="//apple_ref/swift/Method/post(_:toPerson:withFiles:parent:queue:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_8toPerson9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_SSSayAA9LocalFileCGSgAKSgSo012OS_dispatch_K0CSgyAA6ResultOyAKGctF">post(_:<wbr>toPerson:<wbr>withFiles:<wbr>parent:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -991,7 +1000,7 @@ Having <code>@johndoe</code> in the content of the message does not generate not
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">post</span><span class="p">(</span><span class="n">_</span> <span class="nv">text</span><span class="p">:</span> <span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">.</span><span class="kt">Text</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">toPerson</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">withFiles</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/LocalFile.html">LocalFile</a></span><span class="p">]?,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Enums/Result.html">Result</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">post</span><span class="p">(</span><span class="n">_</span> <span class="nv">text</span><span class="p">:</span> <span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">.</span><span class="kt">Text</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">toPerson</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">withFiles</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/LocalFile.html">LocalFile</a></span><span class="p">]?,</span> <span class="nv">parent</span><span class="p">:</span> <span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Enums/Result.html">Result</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1072,9 +1081,9 @@ Having <code>@johndoe</code> in the content of the message does not generate not
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK13MessageClientC4post_13toPersonEmail9withFiles5queue17completionHandleryAA0C0V4TextVSg_AA0H7AddressCSayAA9LocalFileCGSgSo012OS_dispatch_K0CSgyAA6ResultOyAJGctF"></a>
-                    <a name="//apple_ref/swift/Method/post(_:toPersonEmail:withFiles:queue:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_13toPersonEmail9withFiles5queue17completionHandleryAA0C0V4TextVSg_AA0H7AddressCSayAA9LocalFileCGSgSo012OS_dispatch_K0CSgyAA6ResultOyAJGctF">post(_:<wbr>toPersonEmail:<wbr>withFiles:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
+                    <a name="/s:8WebexSDK13MessageClientC4post_13toPersonEmail9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_AA0H7AddressCSayAA9LocalFileCGSgAKSgSo012OS_dispatch_L0CSgyAA6ResultOyAKGctF"></a>
+                    <a name="//apple_ref/swift/Method/post(_:toPersonEmail:withFiles:parent:queue:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK13MessageClientC4post_13toPersonEmail9withFiles6parent5queue17completionHandleryAA0C0V4TextVSg_AA0H7AddressCSayAA9LocalFileCGSgAKSgSo012OS_dispatch_L0CSgyAA6ResultOyAKGctF">post(_:<wbr>toPersonEmail:<wbr>withFiles:<wbr>parent:<wbr>queue:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1096,7 +1105,7 @@ Having <code>@johndoe</code> in the content of the message does not generate not
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">post</span><span class="p">(</span><span class="n">_</span> <span class="nv">text</span><span class="p">:</span> <span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">.</span><span class="kt">Text</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">toPersonEmail</span><span class="p">:</span> <span class="kt"><a href="../Classes/EmailAddress.html">EmailAddress</a></span><span class="p">,</span> <span class="nv">withFiles</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/LocalFile.html">LocalFile</a></span><span class="p">]?,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Enums/Result.html">Result</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">post</span><span class="p">(</span><span class="n">_</span> <span class="nv">text</span><span class="p">:</span> <span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">.</span><span class="kt">Text</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">toPersonEmail</span><span class="p">:</span> <span class="kt"><a href="../Classes/EmailAddress.html">EmailAddress</a></span><span class="p">,</span> <span class="nv">withFiles</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/LocalFile.html">LocalFile</a></span><span class="p">]?,</span> <span class="nv">parent</span><span class="p">:</span> <span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Enums/Result.html">Result</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Message.html">Message</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1235,7 +1244,7 @@ Having <code>@johndoe</code> in the content of the message does not generate not
                               </td>
                               <td>
                                 <div>
-                                  <p>The message you are</p>
+                                  <p>The message you are editing.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1793,7 +1802,7 @@ Note Cisco Webex doesn&rsquo;t generate thumbnail for all files.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2023-12-12)</p>
+          <p>&copy; 2024 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2024-02-13)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

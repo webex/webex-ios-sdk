@@ -155,6 +155,41 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Call/InviteParticipantError.swift",
+      "line": 5,
+      "symbol": "InviteParticipantError.InvalidContactIdOrEmail",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Call/InviteParticipantError.swift",
+      "line": 6,
+      "symbol": "InviteParticipantError.AlreadyJoined",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Call/InviteParticipantError.swift",
+      "line": 7,
+      "symbol": "InviteParticipantError.AlreadyInvited",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Call/InviteParticipantError.swift",
+      "line": 8,
+      "symbol": "InviteParticipantError.NotAHostOrCoHost",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Call/InviteParticipantError.swift",
+      "line": 9,
+      "symbol": "InviteParticipantError.UnknownError",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Call/LanguageItem.swift",
       "line": 8,
       "symbol": "LanguageItem.languageTitle",
@@ -187,6 +222,27 @@
       "line": 19,
       "symbol": "LanguageItem.init(languageTitle:languageTitleInEnglish:languageCode:isSelected:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Call/MakeHostError.swift",
+      "line": 5,
+      "symbol": "MakeHostError.InternalError",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Call/MakeHostError.swift",
+      "line": 6,
+      "symbol": "MakeHostError.NotAllowed",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Call/MakeHostError.swift",
+      "line": 7,
+      "symbol": "MakeHostError.MembershipNotFound",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
@@ -501,6 +557,34 @@
       "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Call/QualityInfoType.swift",
       "line": 9,
       "symbol": "MediaQualityInfo.HighCpuUsage",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Call/ReclaimHostError.swift",
+      "line": 6,
+      "symbol": "ReclaimHostError.InvalidHostKey",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Call/ReclaimHostError.swift",
+      "line": 7,
+      "symbol": "ReclaimHostError.NetworkError",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Call/ReclaimHostError.swift",
+      "line": 8,
+      "symbol": "ReclaimHostError.AlreadyAHost",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Call/ReclaimHostError.swift",
+      "line": 9,
+      "symbol": "ReclaimHostError.Unknown",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -954,35 +1038,35 @@
     },
     {
       "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 3367,
+      "line": 3426,
       "symbol": "NotificationCallType.Webex",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 3368,
+      "line": 3427,
       "symbol": "NotificationCallType.CUCM",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Phone.swift",
-      "line": 725,
+      "line": 731,
       "symbol": "Phone.ServiceUrlType.Metrics",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Phone.swift",
-      "line": 726,
+      "line": 732,
       "symbol": "Phone.ServiceUrlType.ClientLogs",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/bhabalan/dev/second-worktree/products/sdk-ios/sdk-ios/Phone/Phone.swift",
-      "line": 727,
+      "line": 733,
       "symbol": "Phone.ServiceUrlType.KMS",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
