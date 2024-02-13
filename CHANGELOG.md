@@ -157,7 +157,7 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ## [3.11.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.11.0)
-Released on **25 Jan, 2024**.
+Released on **13 Feb, 2024**.
 ### Added
 - New Enum `InviteParticipantError` to represent error while adding a participant to the call.
 - New Enum `MakeHostError` to represent error  while making a participant host in the call.
