@@ -1,5 +1,8 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 3.11.0 Releases
+
+- `3.11.0` Releases - [3.11.0](#3110)
 
 #### 3.10.1 Releases
 
@@ -153,12 +156,27 @@ All notable changes to this project will be documented in this file.
 
 - `0.9.137` Releases - [0.9.137](#09137)
 
+## [3.11.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.11.0)
+Released on **13 Feb, 2024**.
+### Added
+- New Enum `InviteParticipantError` to represent error while adding a participant to the call.
+- New Enum `MakeHostError` to represent error  while making a participant host in the call.
+- New Enum `ReclaimHostError` to represent error while reclaiming the host role in the call.
+- New API added `Call.inviteParticipant(participant: String, completionHandler: @escaping (Result<Void>) -> Void)` to invite a participant to the call.
+- New API added `Call.reclaimHost(hostKey: String, completionHandler: @escaping (Result<Void>) -> Void)` to reclaim the host role using the host key.
+- New API added `Call.makeHost(participantId: String, completionHandler: @escaping (Result<Void>) -> Void)` to assign the host role to a participant.
+### Updated
+- `isPresenter`,`isCohost` and `isHost` fields are added to the `CallMembership` struct.  
+- New Enum case `CallError.cannotStartInstantMeeting` to represent error cannot start instant meeting.
+- Messaging module removed in size optimized WxC SDK.
+### Fixed
+- Added `parent` field in postMessage APIs in MessageClient to reply to a message thread. 
+
 ## [3.10.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.10.1)
 Released on **12 Dec, 2023**.
 ### Added
 - New Struct `ProductCapability` which represents the product capabilities for the logged in user.
 - New API added `Person.getProductCapability() -> ProductCapability` to get the supported capability of the current user.
-
 ### Updated
 - General improvements and bug fixes.
 
