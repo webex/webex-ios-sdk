@@ -162,8 +162,10 @@ All notable changes to this project will be documented in this file.
 # [3.11.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.11.1)
 Released on **8 April, 2024**.
 ### Updated
+- Added iOS Privacy Manifest file.
 - H264 prompt is removed for video and screen share flows.
-- Made `Webex` class and `webex.initialize()` method thread safe and added check to avoid multiple initializations.
+- Made `Webex` class singleton.
+- Made `webex.initialize()` method thread safe and added check to avoid multiple initializations.
 - Fixed: Call Failed issue during rejoin after host ends the meeting for all and starts again.
 
 ## [3.11.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.11.0)
