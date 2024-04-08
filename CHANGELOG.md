@@ -159,7 +159,7 @@ All notable changes to this project will be documented in this file.
 
 - `0.9.137` Releases - [0.9.137](#09137)
 
-# [3.11.1](https://github.com/webex/webex-android-sdk/releases/tag/3.11.1)
+# [3.11.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.11.1)
 Released on **8 April, 2024**.
 ### Updated
 - H264 prompt is removed for video and screen share flows.
