@@ -1,5 +1,8 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 3.11.2 Releases
+- `3.11.2` Releases - [3.11.2](#3112)
+
 #### 3.11.1 Releases
 - `3.11.1` Releases - [3.11.1](#3111)
 
@@ -159,13 +162,17 @@ All notable changes to this project will be documented in this file.
 
 - `0.9.137` Releases - [0.9.137](#09137)
 
+# [3.11.2](https://github.com/webex/webex-ios-sdk/releases/tag/3.11.2)
+Released on **7 May, 2024**.
+### Added
+- New delegate `WebexAuthDelegate` to receive all authentication related event callbacks.
+- New delegate function `onReLoginRequired()` in `WebexAuthDelegate` to notify when user auth token becomes stale or revoked and re login is required.
+
 # [3.11.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.11.1)
 Released on **8 April, 2024**.
 ### Updated
-- Added iOS Privacy Manifest file.
 - H264 prompt is removed for video and screen share flows.
-- Made `Webex` class singleton.
-- Made `webex.initialize()` method thread safe and added check to avoid multiple initializations.
+- Made `Webex` class and `webex.initialize()` method thread safe and added check to avoid multiple initializations.
 - Fixed: Call Failed issue during rejoin after host ends the meeting for all and starts again.
 
 ## [3.11.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.11.0)
