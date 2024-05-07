@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>ListWebhooksError Enumeration Reference</title>
+    <title>WebexAuthDelegate Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -13,8 +13,8 @@
     <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/ListWebhooksError" class="dashAnchor"></a>
-    <a title="ListWebhooksError Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Protocol/WebexAuthDelegate" class="dashAnchor"></a>
+    <a title="WebexAuthDelegate Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">WebexSDK 3.11.2 Docs</a> (84% documented)</p>
@@ -30,7 +30,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">WebexSDK Reference</a>
         <img id="carat" src="../img/carat.png" alt=""/>
-        ListWebhooksError Enumeration Reference
+        WebexAuthDelegate Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -651,15 +651,20 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>ListWebhooksError</h1>
+            <h1>WebexAuthDelegate</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">ListWebhooksError</span> <span class="p">:</span> <span class="kt">String</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">WebexAuthDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
 
                 </div>
               </div>
-            <p>error enum for list <code><a href="../Structs/Webhook.html">Webhook</a></code> operation</p>
+            <p>Register for WebexAuthDelegate instance to receive all authentication related event callbacks.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.11.2
+
+</div>
 
           </section>
           <section class="section task-group-section">
@@ -668,9 +673,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK17ListWebhooksErrorO08internalE0yA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/internalError" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK17ListWebhooksErrorO08internalE0yA2CmF">internalError</a>
+                    <a name="/s:8WebexSDK0A12AuthDelegateP17onReLoginRequiredyyF"></a>
+                    <a name="//apple_ref/swift/Method/onReLoginRequired()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK0A12AuthDelegateP17onReLoginRequiredyyF">onReLoginRequired()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -678,41 +683,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>internal error</p>
+                        <p>This will notify when user is logged out and re login is required</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.11.2
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">internalError</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK17ListWebhooksErrorO10badRequestyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/badRequest" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK17ListWebhooksErrorO10badRequestyA2CmF">badRequest</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>bad request</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">badRequest</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">onReLoginRequired</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
