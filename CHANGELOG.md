@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 #### 3.11.3 Releases
-- `3.11.3` Releases - [3.11.2](#3113)
+- `3.11.3` Releases - [3.11.3](#3113)
 
 #### 3.11.2 Releases
 - `3.11.2` Releases - [3.11.2](#3112)
