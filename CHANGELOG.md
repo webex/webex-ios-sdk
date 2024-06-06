@@ -1,5 +1,8 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 3.11.3 Releases
+- `3.11.3` Releases - [3.11.3](#3113)
+
 #### 3.11.2 Releases
 - `3.11.2` Releases - [3.11.2](#3112)
 
@@ -161,6 +164,16 @@ All notable changes to this project will be documented in this file.
 #### 0.9.137 Releases
 
 - `0.9.137` Releases - [0.9.137](#09137)
+
+# [3.11.3](https://github.com/webex/webex-ios-sdk/releases/tag/3.11.3)
+Released on **6 Jun, 2024**.
+### Added
+- The dial & dialPhoneNumber APIs will have the error description in case of failure.
+- Access token invalidation or expiry will result in the SDK APIs returning Unauthorized error inside the completion handlers.
+
+### Updated
+- The `Phone.processPushNotification(msg : String, handler: CompletionHandler<PushNotificationResult>)` handler to return error in case of any failure. The error object will have the error code and error description.
+- Completion handlers returning InternalError will have error descriptions. 
 
 # [3.11.2](https://github.com/webex/webex-ios-sdk/releases/tag/3.11.2)
 Released on **7 May, 2024**.
