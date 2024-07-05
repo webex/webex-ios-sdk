@@ -1,5 +1,8 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 3.12.0 Releases
+- `3.12.0` Releases - [3.12.0](#3120)
+
 #### 3.11.3 Releases
 - `3.11.3` Releases - [3.11.3](#3113)
 
@@ -164,6 +167,23 @@ All notable changes to this project will be documented in this file.
 #### 0.9.137 Releases
 
 - `0.9.137` Releases - [0.9.137](#09137)
+
+## [3.12.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.12.0)
+Released on **05 Jul, 2024**.
+### Added
+- New Class `CameraDeviceManager` to manage the external camera related operations.
+- New Struct `Camera` to represent camera devices either built-in or externally attached.
+- New Enum `CompanionMode` to set the companion mode for Move Meeting.
+- New Enum `UpdateSystemCameraResult` to represent error while updating system preferred camera.
+- New Callback `Call.onMoveMeetingFailed: (() -> Void)?` when an attempt to move meeting fails for the call.
+- New Callback `CameraDeviceManager.onExternalCameraDeviceConnected: ((_ camera: Camera) -> Void)` when external camera is connected.
+- New Callback `CameraDeviceManager.onExternalCameraDeviceDisconnected: (() -> Void)?` when external camera is disconnected.
+- New API added `Phone.updateSystemPreferredCamera(camera: Camera, completionHandler: @escaping (Result<Void>) -> Void)` to update the system preferred camera.
+- New API added `Phone.getListOfCameras() -> [Camera]` to get the list of all available cameras.
+- New API added `Phone.isMoveMeetingSupported(meetingId : String) -> Bool` to check if the move meeting feature is supported for the given meeting.
+### Updated
+- `isOngoingMeeting` and `eventId` fields are added to the `Meeting` struct.  
+- `companionMode` field added to the `MediaOption` struct.
 
 # [3.11.3](https://github.com/webex/webex-ios-sdk/releases/tag/3.11.3)
 Released on **6 Jun, 2024**.
