@@ -17,7 +17,7 @@
     <a title="Call Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 3.11.3 Docs</a> (84% documented)</p>
+        <p><a href="../index.html">WebexSDK 3.12.0 Docs</a> (84% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -104,6 +104,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/CallSchedule.html">CallSchedule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CameraDeviceManager.html">CameraDeviceManager</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/EmailAddress.html">EmailAddress</a>
@@ -265,6 +268,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/CallStatus.html">CallStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CompanionMode.html">CompanionMode</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/CreatePersonError.html">CreatePersonError</a>
@@ -492,6 +498,9 @@
                 <a href="../Enums/UpdateSpaceTitleError.html">UpdateSpaceTitleError</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/UpdateSystemCameraResult.html">UpdateSystemCameraResult</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/UpdateTeamMembershipError.html">UpdateTeamMembershipError</a>
               </li>
               <li class="nav-group-task">
@@ -550,6 +559,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/CallMembership/DeviceType.html">– DeviceType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Camera.html">Camera</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/CaptionItem.html">CaptionItem</a>
@@ -4354,7 +4366,7 @@ Video presented on remote media render view.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>True if the local party of this <code>Call</code> is receiving audio. Otherwise, false.</p>
+                        <p>True if meeting is in PMR (personal meeting room). Otherwise, false.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     3.1.0
@@ -5095,6 +5107,18 @@ This can only be invoked when this call is incoming and in ringing status.</p>
                               <td>
                                 <div>
                                   <p>Intended media options - audio only or audio and video - for the call.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>companionMode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The companion mode to be used for the call. i.e. None or MoveMeeting. Default is None. Applicable only for meetings</p>
                                 </div>
                               </td>
                             </tr>
@@ -6955,12 +6979,44 @@ If Toggled false <code>getClosedCaptions</code> will return empty and <code><a h
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC19onMoveMeetingFailedyycSgvp"></a>
+                    <a name="//apple_ref/swift/Property/onMoveMeetingFailed" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC19onMoveMeetingFailedyycSgvp">onMoveMeetingFailed</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This will notify when an attempt to move meeting fails for the call</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.12.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onMoveMeetingFailed</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2024 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2024-06-06)</p>
+          <p>&copy; 2024 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2024-07-05)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
