@@ -723,352 +723,373 @@
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 201,
+      "line": 202,
       "symbol": "Call.setup()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 205,
+      "line": 206,
       "symbol": "Call.sendFrame(withTimeStamp:width:height:data:length:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 209,
+      "line": 210,
       "symbol": "Call.sendAudioFrame(withTimeStamp:data:length:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 284,
+      "line": 285,
       "symbol": "Call.RingerType.outgoing",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 285,
+      "line": 286,
       "symbol": "Call.RingerType.incoming",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 286,
+      "line": 287,
       "symbol": "Call.RingerType.busyTone",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 287,
+      "line": 288,
       "symbol": "Call.RingerType.reconnect",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 288,
+      "line": 289,
       "symbol": "Call.RingerType.notFound",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 289,
+      "line": 290,
       "symbol": "Call.RingerType.DTMF_0",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 290,
+      "line": 291,
       "symbol": "Call.RingerType.DTMF_1",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 291,
+      "line": 292,
       "symbol": "Call.RingerType.DTMF_2",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 292,
+      "line": 293,
       "symbol": "Call.RingerType.DTMF_3",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 293,
+      "line": 294,
       "symbol": "Call.RingerType.DTMF_4",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 294,
+      "line": 295,
       "symbol": "Call.RingerType.DTMF_5",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 295,
+      "line": 296,
       "symbol": "Call.RingerType.DTMF_6",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 296,
+      "line": 297,
       "symbol": "Call.RingerType.DTMF_7",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 297,
+      "line": 298,
       "symbol": "Call.RingerType.DTMF_8",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 298,
+      "line": 299,
       "symbol": "Call.RingerType.DTMF_9",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 299,
+      "line": 300,
       "symbol": "Call.RingerType.DTMF_A",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 300,
+      "line": 301,
       "symbol": "Call.RingerType.DTMF_B",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 301,
+      "line": 302,
       "symbol": "Call.RingerType.DTMF_C",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 302,
+      "line": 303,
       "symbol": "Call.RingerType.DTMF_D",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 303,
+      "line": 304,
       "symbol": "Call.RingerType.DTMF_STAR",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 304,
+      "line": 305,
       "symbol": "Call.RingerType.DTMF_POUND",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 305,
+      "line": 306,
       "symbol": "Call.RingerType.DTMF_FLASH",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 306,
+      "line": 307,
       "symbol": "Call.RingerType.PICKUP_ALERT",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 307,
+      "line": 308,
       "symbol": "Call.RingerType.PICKUP_BUSY_TONE",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 308,
+      "line": 309,
       "symbol": "Call.RingerType.CALLPARK_EXPIRE",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 309,
+      "line": 310,
       "symbol": "Call.RingerType.callWaiting",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 310,
+      "line": 311,
       "symbol": "Call.RingerType.undefined",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 798,
+      "line": 799,
       "symbol": "Call.TorchMode.on",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 799,
+      "line": 800,
       "symbol": "Call.TorchMode.off",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 800,
+      "line": 801,
       "symbol": "Call.TorchMode.auto",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 820,
+      "line": 821,
       "symbol": "Call.FlashMode.on",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 821,
+      "line": 822,
       "symbol": "Call.FlashMode.off",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 822,
+      "line": 823,
       "symbol": "Call.FlashMode.auto",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 842,
+      "line": 843,
       "symbol": "Call.CameraExposureDuration.max",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 843,
+      "line": 844,
       "symbol": "Call.CameraExposureDuration.min",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 844,
+      "line": 845,
       "symbol": "Call.CameraExposureDuration.current",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 857,
+      "line": 858,
       "symbol": "Call.CameraExposureISO.max",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 858,
+      "line": 859,
       "symbol": "Call.CameraExposureISO.min",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 859,
+      "line": 860,
       "symbol": "Call.CameraExposureISO.current",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 872,
+      "line": 873,
       "symbol": "Call.CameraExposureTargetBias.max",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 873,
+      "line": 874,
       "symbol": "Call.CameraExposureTargetBias.min",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 874,
+      "line": 875,
       "symbol": "Call.CameraExposureTargetBias.current",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 3426,
+      "line": 3453,
       "symbol": "NotificationCallType.Webex",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 3427,
+      "line": 3454,
       "symbol": "NotificationCallType.CUCM",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
+      "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 3489,
+      "symbol": "CompanionMode.None",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
+      "line": 3490,
+      "symbol": "CompanionMode.MoveMeeting",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Phone.swift",
-      "line": 731,
+      "line": 740,
       "symbol": "Phone.ServiceUrlType.Metrics",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Phone.swift",
-      "line": 732,
+      "line": 741,
       "symbol": "Phone.ServiceUrlType.ClientLogs",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Phone.swift",
-      "line": 733,
+      "line": 742,
       "symbol": "Phone.ServiceUrlType.KMS",
       "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Phone.swift",
+      "line": 1353,
+      "symbol": "CameraDeviceManager.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
@@ -1647,7 +1668,7 @@
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/utils/WebexError.swift",
-      "line": 99,
+      "line": 105,
       "symbol": "WebexError.captcha",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"

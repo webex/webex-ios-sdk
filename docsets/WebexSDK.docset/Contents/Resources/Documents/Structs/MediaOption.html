@@ -17,7 +17,7 @@
     <a title="MediaOption Structure Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 3.11.2 Docs</a> (84% documented)</p>
+        <p><a href="../index.html">WebexSDK 3.12.0 Docs</a> (84% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -104,6 +104,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/CallSchedule.html">CallSchedule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CameraDeviceManager.html">CameraDeviceManager</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/EmailAddress.html">EmailAddress</a>
@@ -265,6 +268,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/CallStatus.html">CallStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CompanionMode.html">CompanionMode</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/CreatePersonError.html">CreatePersonError</a>
@@ -492,6 +498,9 @@
                 <a href="../Enums/UpdateSpaceTitleError.html">UpdateSpaceTitleError</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/UpdateSystemCameraResult.html">UpdateSystemCameraResult</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/UpdateTeamMembershipError.html">UpdateTeamMembershipError</a>
               </li>
               <li class="nav-group-task">
@@ -550,6 +559,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/CallMembership/DeviceType.html">– DeviceType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Camera.html">Camera</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/CaptionItem.html">CaptionItem</a>
@@ -706,9 +718,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK11MediaOptionV9audioOnlyACyFZ"></a>
-                    <a name="//apple_ref/swift/Method/audioOnly()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11MediaOptionV9audioOnlyACyFZ">audioOnly()</a>
+                    <a name="/s:8WebexSDK11MediaOptionV9audioOnly13companionModeAcA09CompanionH0O_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/audioOnly(companionMode:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11MediaOptionV9audioOnly13companionModeAcA09CompanionH0O_tFZ">audioOnly(companionMode:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -728,7 +740,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">audioOnly</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">MediaOption</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">audioOnly</span><span class="p">(</span><span class="nv">companionMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/CompanionMode.html">CompanionMode</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">MediaOption</span></code></pre>
 
                         </div>
                       </div>
@@ -738,9 +750,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK11MediaOptionV10audioVideo5local6remoteAcA0C10RenderViewCSg_AItFZ"></a>
-                    <a name="//apple_ref/swift/Method/audioVideo(local:remote:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11MediaOptionV10audioVideo5local6remoteAcA0C10RenderViewCSg_AItFZ">audioVideo(local:<wbr>remote:<wbr>)</a>
+                    <a name="/s:8WebexSDK11MediaOptionV10audioVideo5local6remote13companionModeAcA0C10RenderViewCSg_AjA09CompanionJ0OtFZ"></a>
+                    <a name="//apple_ref/swift/Method/audioVideo(local:remote:companionMode:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11MediaOptionV10audioVideo5local6remote13companionModeAcA0C10RenderViewCSg_AjA09CompanionJ0OtFZ">audioVideo(local:<wbr>remote:<wbr>companionMode:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -760,7 +772,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">audioVideo</span><span class="p">(</span><span class="nv">local</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?,</span> <span class="nv">remote</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">MediaOption</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">audioVideo</span><span class="p">(</span><span class="nv">local</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?,</span> <span class="nv">remote</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?,</span> <span class="nv">companionMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/CompanionMode.html">CompanionMode</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">MediaOption</span></code></pre>
 
                         </div>
                       </div>
@@ -770,9 +782,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK11MediaOptionV10audioVideo11renderViewsAcA0C10RenderViewC5local_AG6remotetSg_tFZ"></a>
-                    <a name="//apple_ref/swift/Method/audioVideo(renderViews:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11MediaOptionV10audioVideo11renderViewsAcA0C10RenderViewC5local_AG6remotetSg_tFZ">audioVideo(renderViews:<wbr>)</a>
+                    <a name="/s:8WebexSDK11MediaOptionV10audioVideo11renderViews13companionModeAcA0C10RenderViewC5local_AH6remotetSg_AA09CompanionJ0OtFZ"></a>
+                    <a name="//apple_ref/swift/Method/audioVideo(renderViews:companionMode:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11MediaOptionV10audioVideo11renderViews13companionModeAcA0C10RenderViewC5local_AH6remotetSg_AA09CompanionJ0OtFZ">audioVideo(renderViews:<wbr>companionMode:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -793,7 +805,7 @@ The render views can be set after call is connected.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">audioVideo</span><span class="p">(</span><span class="nv">renderViews</span><span class="p">:</span> <span class="p">(</span><span class="nv">local</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">,</span> <span class="nv">remote</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">MediaOption</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">audioVideo</span><span class="p">(</span><span class="nv">renderViews</span><span class="p">:</span> <span class="p">(</span><span class="nv">local</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">,</span> <span class="nv">remote</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">companionMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/CompanionMode.html">CompanionMode</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">MediaOption</span></code></pre>
 
                         </div>
                       </div>
@@ -803,9 +815,9 @@ The render views can be set after call is connected.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK11MediaOptionV21audioVideoScreenShare5video06screenH0AcA0C10RenderViewCSg5local_AI6remotetSg_AItFZ"></a>
-                    <a name="//apple_ref/swift/Method/audioVideoScreenShare(video:screenShare:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK11MediaOptionV21audioVideoScreenShare5video06screenH0AcA0C10RenderViewCSg5local_AI6remotetSg_AItFZ">audioVideoScreenShare(video:<wbr>screenShare:<wbr>)</a>
+                    <a name="/s:8WebexSDK11MediaOptionV21audioVideoScreenShare5video06screenH013companionModeAcA0C10RenderViewCSg5local_AJ6remotetSg_AjA09CompanionL0OtFZ"></a>
+                    <a name="//apple_ref/swift/Method/audioVideoScreenShare(video:screenShare:companionMode:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11MediaOptionV21audioVideoScreenShare5video06screenH013companionModeAcA0C10RenderViewCSg5local_AJ6remotetSg_AjA09CompanionL0OtFZ">audioVideoScreenShare(video:<wbr>screenShare:<wbr>companionMode:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -826,7 +838,7 @@ The render views can be set after call is connected.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">audioVideoScreenShare</span><span class="p">(</span><span class="nv">video</span><span class="p">:</span> <span class="p">(</span><span class="nv">local</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?,</span> <span class="nv">remote</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">screenShare</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">MediaOption</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">audioVideoScreenShare</span><span class="p">(</span><span class="nv">video</span><span class="p">:</span> <span class="p">(</span><span class="nv">local</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?,</span> <span class="nv">remote</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">screenShare</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@WebexSDK@objc(cs)MediaRenderView">MediaRenderView</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">companionMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/CompanionMode.html">CompanionMode</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">MediaOption</span></code></pre>
 
                         </div>
                       </div>
@@ -998,12 +1010,44 @@ In general, The PIN is not required. unless the WebexError.requireHostPinOrMeeti
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK11MediaOptionV13companionModeAA09CompanionF0Ovp"></a>
+                    <a name="//apple_ref/swift/Property/companionMode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK11MediaOptionV13companionModeAA09CompanionF0Ovp">companionMode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Data type that represents whether the meeting has to be moved to this device completely or just has to be joined from this device</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.12.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">companionMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/CompanionMode.html">CompanionMode</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2024 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2024-05-07)</p>
+          <p>&copy; 2024 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2024-07-05)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
