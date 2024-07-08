@@ -169,7 +169,7 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ## [3.12.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.12.0)
-Released on **05 Jul, 2024**.
+Released on **08 Jul, 2024**.
 ### Added
 - New Class `CameraDeviceManager` to manage the external camera related operations.
 - New Struct `Camera` to represent camera devices either built-in or externally attached.
