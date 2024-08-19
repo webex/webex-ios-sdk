@@ -57,6 +57,6 @@ end
 
 ## License
 
-&copy; 2016-2023 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.
+&copy; 2016-2024 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.
 
 See [LICENSE](https://github.com/webex/webex-ios-sdk/blob/master/LICENSE) for details.
