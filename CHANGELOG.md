@@ -1,5 +1,8 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 3.13.0 Releases
+- `3.13.0` Releases - [3.13.0](#3130)
+
 #### 3.12.0 Releases
 - `3.12.0` Releases - [3.12.0](#3120)
 
@@ -167,6 +170,17 @@ All notable changes to this project will be documented in this file.
 #### 0.9.137 Releases
 
 - `0.9.137` Releases - [0.9.137](#09137)
+
+## [3.13.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.13.0)
+Released on **21 Aug, 2024**.
+### Added
+- New Enum `RecordAudioDumpResult` to represent error while doing audio dump related operations.
+- New API added `Call.isRecordingAudioDump` to check if the audio dump is being recorded for ongoing meeting/call.
+- New API added `Call.canStartRecordingAudioDump(completionHandler: @escaping (Error?) -> Void)` to check if the audio dump can be recorded for ongoing meeting/call.
+- New API added `Call.startRecordingAudioDump(completionHandler: @escaping (Error?) -> Void)` to start recording the audio dump for ongoing meeting/call.
+- New API added `Call.stopRecordingAudioDump(completionHandler: @escaping (Error?) -> Void)` to stop recording the audio dump.
+### Fixed
+- Fixed a bug related to deleting virtual background which is set for preview.
 
 ## [3.12.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.12.0)
 Released on **08 Jul, 2024**.
