@@ -17,7 +17,7 @@
     <a title="Phone Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 3.13.0 Docs</a> (85% documented)</p>
+        <p><a href="../index.html">WebexSDK 3.14.0 Docs</a> (85% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -465,6 +465,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/SpaceType.html">SpaceType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SpeechEnhancementResult.html">SpeechEnhancementResult</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/SpokenLanguageSelectionError.html">SpokenLanguageSelectionError</a>
@@ -3007,12 +3010,111 @@ to approve the use of H.264 video codec license from Cisco Systems, Inc.</p>
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK5PhoneC29useLegacyReceiverNoiseRemoval0dE0ySb_tF"></a>
+                    <a name="//apple_ref/swift/Method/useLegacyReceiverNoiseRemoval(useLegacy:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK5PhoneC29useLegacyReceiverNoiseRemoval0dE0ySb_tF">useLegacyReceiverNoiseRemoval(useLegacy:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Enable this to use legacy receiver side noise removal. This will disable the new receiver side speech enhancement.
+Disable this to use new receiver side speech enhancement. This will disable the legacy receiver side noise removal.
+By default useLegacy is <code>false</code>. This setting is not persisted.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.14.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">useLegacyReceiverNoiseRemoval</span><span class="p">(</span><span class="nv">useLegacy</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK5PhoneC34isReceiverSpeechEnhancementEnabledSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isReceiverSpeechEnhancementEnabled" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK5PhoneC34isReceiverSpeechEnhancementEnabledSbvp">isReceiverSpeechEnhancementEnabled</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns <code>true</code> if Speech Enhancement is enabled by default for all calls else returns <code>false</code>.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.14.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">isReceiverSpeechEnhancementEnabled</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK5PhoneC31enableReceiverSpeechEnhancement12shouldEnable17completionHandlerySb_yAA6ResultOyytGctF"></a>
+                    <a name="//apple_ref/swift/Method/enableReceiverSpeechEnhancement(shouldEnable:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK5PhoneC31enableReceiverSpeechEnhancement12shouldEnable17completionHandlerySb_yAA6ResultOyytGctF">enableReceiverSpeechEnhancement(shouldEnable:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Enable/Disable Speech Enhancement by default for all calls.
+Applicable for WebexCalling and CUCM calling</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.14.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">enableReceiverSpeechEnhancement</span><span class="p">(</span><span class="nv">shouldEnable</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Enums/Result.html">Result</a></span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2024 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2024-08-20)</p>
+          <p>&copy; 2024 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2024-11-06)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.15.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
