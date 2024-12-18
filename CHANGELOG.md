@@ -1,5 +1,8 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 3.11.4 Releases
+- `3.11.4` Releases - [3.11.4](#3114)
+
 #### 3.11.3 Releases
 - `3.11.3` Releases - [3.11.3](#3113)
 
@@ -164,6 +167,13 @@ All notable changes to this project will be documented in this file.
 #### 0.9.137 Releases
 
 - `0.9.137` Releases - [0.9.137](#09137)
+
+# [3.11.4](https://github.com/webex/webex-ios-sdk/releases/tag/3.11.4)
+Released on **18 Dec, 2024**.
+### Fixed
+- Fixed the issue where `onIncomingCall` was triggered before processPushNotification.
+- Resolved delays in `onCallDisconnect` events by properly handling Mercury events during app transitions.
+- Improved reporting of audio session deactivation to prevent one-way audio issues in calls.
 
 # [3.11.3](https://github.com/webex/webex-ios-sdk/releases/tag/3.11.3)
 Released on **6 Jun, 2024**.
