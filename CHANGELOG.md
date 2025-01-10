@@ -1,5 +1,8 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+#### 3.11.5 Releases
+- `3.11.5` Releases - [3.11.5](#3115)
+
 #### 3.11.4 Releases
 - `3.11.4` Releases - [3.11.4](#3114)
 
@@ -167,6 +170,14 @@ All notable changes to this project will be documented in this file.
 #### 0.9.137 Releases
 
 - `0.9.137` Releases - [0.9.137](#09137)
+
+# [3.11.5](https://github.com/webex/webex-ios-sdk/releases/tag/3.11.5)
+Released on **10 Jan, 2025**.
+### Added
+- New API added `Call.deactivateAudioSession()` to deactivate audio session from CallKit for Webex Calling call.
+
+### Updated
+- Handled Audio Interruption events for Webex Calling call.
 
 # [3.11.4](https://github.com/webex/webex-ios-sdk/releases/tag/3.11.4)
 Released on **18 Dec, 2024**.
