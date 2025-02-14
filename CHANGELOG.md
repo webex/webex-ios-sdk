@@ -184,7 +184,7 @@ Released on **14 February, 2025**.
 - New SDK variant “WebexSDK/Message” released, a light weight SDK for Messaging.
 ### Updated
 - Fixed: Enhancements and bug fixes for the audio pipeline during calls, addressing scenarios such as the initial call and call swapping.
-- Fixed: Changed the default media encoded service.
+- Fixed: Changed the default media encoding service for meetings.
 
 ## [3.14.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.14.0)
 Released on **6 November, 2024**.
