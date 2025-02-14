@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+#### 3.15.0 Releases
+- `3.15.0` Releases - [3.15.0](#3150)
+
 #### 3.14.0 Releases
 - `3.14.0` Releases - [3.14.0](#3140)
 
@@ -175,8 +178,16 @@ All notable changes to this project will be documented in this file.
 
 - `0.9.137` Releases - [0.9.137](#09137)
 
+## [3.15.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.15.0)
+Released on **14 February, 2025**.
+### Added
+- New SDK variant “WebexSDK/Message” released, a light weight SDK for Messaging.
+### Updated
+- Fixed: Enhancements and bug fixes for the audio pipeline during calls, addressing scenarios such as the initial call and call swapping.
+- Fixed: Changed the default media encoding service for meetings.
+
 ## [3.14.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.14.0)
-Released on **13 November, 2024**.
+Released on **6 November, 2024**.
 ### Added
 - New Enum `SpeechEnhancementResult` to represent the result of speech enhancement operation.
 - New API added `Phone.useLegacyReceiverNoiseRemoval(useLegacy: Bool)` to enable legacy receiver side noise removal. This will disable the new receiver side speech enhancement.
@@ -186,9 +197,8 @@ Released on **13 November, 2024**.
 - New API added `Call.enableSpeechEnhancement(enable: Bool, completionHandler: @escaping (Result<Void>) -> Void)` to enable or disable speech enhancement for the call.
 - New error message `NonExistentCallPull` to represent the error when trying to pull a non-existent call by dialing *11.
 - New enum values `InternalError`, `UserNotFound`, `UserPending`, `UserVerificationFailed`, `UserNeedsReactivation` when user logs in via OAuth flow.
-### Fixed
+### Updated
 - Fixed: Issue with Move meeting from SDK to other clients.
-- Fixed: Issue with the audio connection when the user is on multiple calls.
 
 ## [3.13.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.13.0)
 Released on **21 Aug, 2024**.
@@ -215,7 +225,7 @@ Released on **08 Jul, 2024**.
 - New API added `Phone.getListOfCameras() -> [Camera]` to get the list of all available cameras.
 - New API added `Phone.isMoveMeetingSupported(meetingId : String) -> Bool` to check if the move meeting feature is supported for the given meeting.
 ### Updated
-- `isOngoingMeeting` and `eventId` fields are added to the `Meeting` struct.  
+- `isOngoingMeeting` and `eventId` fields are added to the `Meeting` struct.
 - `companionMode` field added to the `MediaOption` struct.
 
 # [3.11.3](https://github.com/webex/webex-ios-sdk/releases/tag/3.11.3)
@@ -226,7 +236,7 @@ Released on **6 Jun, 2024**.
 
 ### Updated
 - The `Phone.processPushNotification(msg : String, handler: CompletionHandler<PushNotificationResult>)` handler to return error in case of any failure. The error object will have the error code and error description.
-- Completion handlers returning InternalError will have error descriptions. 
+- Completion handlers returning InternalError will have error descriptions.
 
 # [3.11.2](https://github.com/webex/webex-ios-sdk/releases/tag/3.11.2)
 Released on **7 May, 2024**.
@@ -253,11 +263,11 @@ Released on **13 Feb, 2024**.
 - New API added `Call.reclaimHost(hostKey: String, completionHandler: @escaping (Result<Void>) -> Void)` to reclaim the host role using the host key.
 - New API added `Call.makeHost(participantId: String, completionHandler: @escaping (Result<Void>) -> Void)` to assign the host role to a participant.
 ### Updated
-- `isPresenter`,`isCohost` and `isHost` fields are added to the `CallMembership` struct.  
+- `isPresenter`,`isCohost` and `isHost` fields are added to the `CallMembership` struct.
 - New Enum case `CallError.cannotStartInstantMeeting` to represent error cannot start instant meeting.
 - Messaging module removed in size optimized WxC SDK.
 ### Fixed
-- Added `parent` field in postMessage APIs in MessageClient to reply to a message thread. 
+- Added `parent` field in postMessage APIs in MessageClient to reply to a message thread.
 
 ## [3.10.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.10.1)
 Released on **12 Dec, 2023**.
@@ -386,7 +396,7 @@ Released on **25 January, 2023**.
 - New callback `SpaceClient.onSyncingSpacesStatusChanged: ((_ isSyncInProgress: Bool) -> Void)?` to notify when syncing status for spaces changes.
 - New callback `Webex.onInitialSpacesSyncCompleted: (() -> Void)?` to denote if syncing latest conversations to local data warehouse is complete.
 - Added new enum `UCLoginFailureReason` to denote the failure reason while logging in to CUCM.
-- Added new enum `PhoneConnectionError` to denote the error while connecting to phone services. 
+- Added new enum `PhoneConnectionError` to denote the error while connecting to phone services.
 - Added new enum `CallingType` to represent calling feature type enabled for current logged in user.
 
 #### Updated
@@ -395,7 +405,7 @@ Released on **25 January, 2023**.
 -  FIXED - Intermittent crash during calling
 
 #### Deprecated
- - Deprecated API `setCUCMCredential(username: String, password: String)` instead use `setCallServiceCredential(username: String, password: String)`
+- Deprecated API `setCUCMCredential(username: String, password: String)` instead use `setCallServiceCredential(username: String, password: String)`
 
  ---
 ## [3.7.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.7.0)
@@ -489,13 +499,13 @@ Released on 2022-04-19
 - Fixed - Crash when remote user starts or stops sharing
 - Fixed - Call pipeline improvement
 - Fixed - List messages before messageId not returning messages
-- Fixed - Text object type incorrect on received messages- 
+- Fixed - Text object type incorrect on received messages-
 - Fixed - Message sender details incorrect in integration use case
 
-#### Deprecated 
+#### Deprecated
 - Sending multiple formats of text in the same message is not supported. Below Text constructors are deprecated
-    - `Message.Text.html(html: String, plain: String? = nil) -> Text`
-    - `Message.Text.markdown(markdown: String, html: String, plain: String? = nil) -> Text`
+  - `Message.Text.html(html: String, plain: String? = nil) -> Text`
+  - `Message.Text.markdown(markdown: String, html: String, plain: String? = nil) -> Text`
 
 ## [3.3.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.3.0)
 Released on 2022-02-15
@@ -546,7 +556,7 @@ Released on 2021-10-18
 - Added new enum `Phone.VirtualBackgroundType`to denote the type of virtual background item among None, Blur and Custom
 - Added new enum `Phone.VirtualBackgroundMode` to denote the mode for applying virtual background for Preview or Call
 - Added new enum `FetchVirtualBackgroundError`
-- Added new enum `AddVirtualBackgroundError` 
+- Added new enum `AddVirtualBackgroundError`
 - Added new enum `RemoveVirtualBackgroundError`
 - Added new enum `ApplyVirtualBackgroundError`
 - Added new API `CalendarMeetings.list(:startDate:endDate:callback)` to list all calendar meetings in a date range
@@ -595,7 +605,7 @@ Released on 2021-05-24
 #### Added
 - Major rewrite of the SDK.
 - Ability to make calls via CUCM.
-- Receive push notification for incoming CUCM calls. 
+- Receive push notification for incoming CUCM calls.
 - Added new API `Webex.setUCDomainServerUrl(ucDomain: String, serverUrl: String )` for CUCM
 - Added new API `Webex.setCUCMCredential(username: String, password: String )` for CUCM
 - Added new API `Webex.getUCSSOLoginView()` for CUCM SSO login
@@ -613,7 +623,7 @@ Released on 2021-05-24
 - Added `Call.startAssociatedCall()` for CUCM calls
 - Added `CallAssociationType` enum to indicate whether call is of type Transfer or merge
 - Added `Call.transferCall()` for CUCM calls
-- Added `Call.mergeCall()` for CUCM calls 
+- Added `Call.mergeCall()` for CUCM calls
 - Added `Call.holdCall()` for CUCM calls
 - Added `Call.isOnHold()` for CUCM calls
 - Added new API `Call.onFailed` to notify that a call has failed
@@ -644,7 +654,7 @@ Released on 2021-05-24
 - `OAuthAuthenticator.authorize(parentViewController: UIViewController, completionHandler: @escaping ((_ success: Bool) -> Void))` changed to `OAuthAuthenticator.authorize(parentViewController: UIViewController, completionHandler: ((_ result: OAuthResult) -> Void)?)`
 - `JWTAuthenticator.authorizedWith(:jwt)` changed to `JWTAuthenticator.authorizedWith(:jwt:completionHandler)`
 - `OAuthAuthenticator.authorize(oauthCode: String, completionHandler: ((_ success: Bool) -> Void)? = nil)` changed to
-`OAuthAuthenticator.authorize(oauthCode: String, completionHandler: ((_ result: OAuthResult) -> Void)? = nil)`
+  `OAuthAuthenticator.authorize(oauthCode: String, completionHandler: ((_ result: OAuthResult) -> Void)? = nil)`
 - `Mention.Person` and `Mention.all` now accept `MentionPos` instance
 #### Removed
 - SSO Authenticator
@@ -672,7 +682,7 @@ Released on 2021-04-30.
 
 #### Updated
 - Removed email from CallMembership, added displayName for CallMembership.
-- Fix video automatically unmute issue after swithing from background. 
+- Fix video automatically unmute issue after swithing from background.
 - Fix message encryption failures.
 - Fix certain events are not getting triggered after Switching network.
 - Fix sending video issue in 1:1 calls.
@@ -859,9 +869,9 @@ Released on 2016-06-23.
 
 #### Added
 - Suppport customized notification center (CallNotificationCenter/PhoneNotificationCenter) based on protocol (CallObserver/PhoneObserver), to avoid NSNotificationCenter flaws:
-    - Pass parameters via a userInfo dicionary, so type info is lost.
-    - Use constant string for notification name and parameter key name. It's hard to maintain and document.
-    - Must deregister notifications, if not, it may cause crash.
+  - Pass parameters via a userInfo dicionary, so type info is lost.
+  - Use constant string for notification name and parameter key name. It's hard to maintain and document.
+  - Must deregister notifications, if not, it may cause crash.
 - Add remote video/audio mute/unmute notifications. New API CallObserver.remoteMediaDidChange() is introduced.
 - Support audio-only call. MediaOption parameter is introduced for it in API Phone.Dail()/Call.Answer().
 - Support media cluster discovery.
