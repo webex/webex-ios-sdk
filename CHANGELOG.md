@@ -187,7 +187,7 @@ Released on **14 February, 2025**.
 - Fixed: Changed the default media encoding service for meetings.
 
 ## [3.14.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.14.0)
-Released on **6 November, 2024**.
+Released on **13 November, 2024**.
 ### Added
 - New Enum `SpeechEnhancementResult` to represent the result of speech enhancement operation.
 - New API added `Phone.useLegacyReceiverNoiseRemoval(useLegacy: Bool)` to enable legacy receiver side noise removal. This will disable the new receiver side speech enhancement.
