@@ -17,7 +17,7 @@
     <a title="Call Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 3.14.0 Docs</a> (85% documented)</p>
+        <p><a href="../index.html">WebexSDK 3.15.0 Docs</a> (85% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -2644,7 +2644,8 @@ update the stream with the specified params. Otherwise, add a pinned stream for 
                               </td>
                               <td>
                                 <div>
-                                  <p>participant id of Stream in category C streams.</p>
+                                  <p>participant id of Stream in category C streams.
+(Derived parameter: Use <code><a href="../Classes/Call.html#/s:8WebexSDK4CallC11membershipsSayAA0C10MembershipVGvp">Call.memberships</a></code> to get a list of participants. Then use <code><a href="../Structs/CallMembership.html#/s:8WebexSDK14CallMembershipV8personIdSSSgvp">CallMembership.personId</a></code> to retrieve the participant&rsquo;s ID)</p>
                                 </div>
                               </td>
                             </tr>
@@ -2805,7 +2806,8 @@ To change the number of B streams, use setMediaStreamsCategoryB().</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>participantId The participant&rsquo;s id that needs to be removed.</p>
+                                  <p>participantId The participant&rsquo;s id that needs to be removed.
+(Derived parameter: Use <code><a href="../Classes/Call.html#/s:8WebexSDK4CallC11membershipsSayAA0C10MembershipVGvp">Call.memberships</a></code> to get a list of participants. Then use <code><a href="../Structs/CallMembership.html#/s:8WebexSDK14CallMembershipV8personIdSSSgvp">CallMembership.personId</a></code> to retrieve the participant&rsquo;s ID)</p>
                                 </div>
                               </td>
                             </tr>
@@ -4968,7 +4970,7 @@ Video presented on remote media render view.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Update audio session for CallKit.
-This must be called on <a href="https://developer.apple.com/documentation/callkit/cxproviderdelegate/1833280-provider">provider:didActivateAudioSession:</a> to reactivate the audio session.</p>
+This must be called on <code>provider:didActivateAudioSession:</code> to reactivate the audio session.</p>
 <div class="aside aside-since">
     <p class="aside-title">Since</p>
     1.3.0
@@ -4981,6 +4983,39 @@ This must be called on <a href="https://developer.apple.com/documentation/callki
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updateAudioSession</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK4CallC22deactivateAudioSessionyyF"></a>
+                    <a name="//apple_ref/swift/Method/deactivateAudioSession()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK4CallC22deactivateAudioSessionyyF">deactivateAudioSession()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Deactivate audio session for CallKit.
+This must be called on <code>provider:didDeactivateAudioSession:</code> to notify audio session deactivation.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.11.5
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">deactivateAudioSession</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -5689,7 +5724,8 @@ Result will call back through auxStreamClosedEvent.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The participant&rsquo;s id who needs to be muted</p>
+                                  <p>The participant&rsquo;s id who needs to be muted.
+(Derived parameter: Use <code><a href="../Classes/Call.html#/s:8WebexSDK4CallC11membershipsSayAA0C10MembershipVGvp">Call.memberships</a></code> to get a list of participants. Then use <code><a href="../Structs/CallMembership.html#/s:8WebexSDK14CallMembershipV8personIdSSSgvp">CallMembership.personId</a></code> to retrieve the participant&rsquo;s ID)</p>
                                 </div>
                               </td>
                             </tr>
@@ -5941,7 +5977,8 @@ Result will call back through auxStreamClosedEvent.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The new call id</p>
+                                  <p>The new call id.
+(Derived parameter: Use <code><a href="../Classes/Call.html#/s:8WebexSDK4CallC6callIdSSSgvp">Call.callId</a></code> to get the callId)</p>
                                 </div>
                               </td>
                             </tr>
@@ -6827,7 +6864,8 @@ If Toggled false <code>getClosedCaptions</code> will return empty and <code><a h
                               </td>
                               <td>
                                 <div>
-                                  <p>The contactId or email address of the participant</p>
+                                  <p>The contactId or email address of the participant.
+(Derived parameter: Use <code><a href="../Classes/PersonClient.html#/s:8WebexSDK12PersonClientC4list5email11displayName2id5orgId3max5queue17completionHandleryAA12EmailAddressCSg_SSSgA2OSiSgSo012OS_dispatch_M0CSgyAA6ResultOySayAA0C0VGGctF">PersonClient.list(...)</a></code> to get a list of people. Then use <code><a href="../Structs/Person.html#/s:8WebexSDK6PersonV2idSSSgvp">Person.id</a></code> to retrieve the participant&rsquo;s ID)</p>
                                 </div>
                               </td>
                             </tr>
@@ -6953,7 +6991,8 @@ If Toggled false <code>getClosedCaptions</code> will return empty and <code><a h
                               </td>
                               <td>
                                 <div>
-                                  <p>The contactId of the participant</p>
+                                  <p>The contactId of the participant.
+(Derived parameter: Use <code><a href="../Classes/Call.html#/s:8WebexSDK4CallC11membershipsSayAA0C10MembershipVGvp">Call.memberships</a></code> to get a list of participants. Then use <code><a href="../Structs/CallMembership.html#/s:8WebexSDK14CallMembershipV8personIdSSSgvp">CallMembership.personId</a></code> to retrieve the participant&rsquo;s ID)</p>
                                 </div>
                               </td>
                             </tr>
@@ -7197,7 +7236,7 @@ If Toggled false <code>getClosedCaptions</code> will return empty and <code><a h
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2024 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2024-11-06)</p>
+          <p>&copy; 2025 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2025-02-14)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.15.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
