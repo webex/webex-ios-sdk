@@ -179,7 +179,7 @@ All notable changes to this project will be documented in this file.
 - `0.9.137` Releases - [0.9.137](#09137)
 
 ## [3.15.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.15.0)
-Released on **14 February, 2025**.
+Released on **21 February, 2025**.
 ### Added
 - New SDK variant “WebexSDK/Message” released, a light weight SDK for Messaging.
 ### Updated
