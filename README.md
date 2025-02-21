@@ -7,6 +7,18 @@ The Cisco Webex iOS SDK makes it easy to integrate and secure messaging, meeting
 
 ## SDK types:
 
+- Message SDK : WebexSDK/Message
+     - This SDK supports only messaging feature
+     - It does not support calling and meeting related features.
+
+Pod usage:
+
+```
+target 'MyApp' do
+  pod 'WebexSDK/Message'
+end
+```
+
 - WebexCalling SDK : WebexSDK/Wxc
      - This SDK supports only WebexCalling feature
      - It does not support CUCM calling
