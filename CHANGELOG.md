@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+#### 3.16.0 Releases
+- `3.16.0` Releases - [3.16.0](#3160)
+
 #### 3.15.0 Releases
 - `3.15.0` Releases - [3.15.0](#3150)
 
@@ -177,6 +180,17 @@ All notable changes to this project will be documented in this file.
 #### 0.9.137 Releases
 
 - `0.9.137` Releases - [0.9.137](#09137)
+
+## [3.16.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.16.0)
+Released on **23 September, 2025**.
+### Added
+- New callback `Phone.onCallHistoryEvent: ((_ event: CallHistoryEvent) -> Void)?` when the call history is synced, removed, or a removal attempt fails.
+- New delegate function `onLoginFailed()` in `WebexAuthDelegate` to notify initialization fails during the login process (e.g., due to missing entitlements or database errors).
+### Updated
+- Android SDK now support 16kb page size.
+- Fixed: `CalendarMeetingClient.get(meetingId: String)` Gives full details for a calendar meeting, including the meeting description.
+- Fixed: Improved audio pipeline stability and resolved issues related to mute/unmute operations when a call is placed on hold.
+- Fixed: Improved network monitoring state handling and database transaction mode.
 
 ## [3.15.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.15.0)
 Released on **21 February, 2025**.
