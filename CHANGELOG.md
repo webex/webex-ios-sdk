@@ -187,8 +187,9 @@ Released on **23 September, 2025**.
 - New callback `Phone.onCallHistoryEvent: ((_ event: CallHistoryEvent) -> Void)?` when the call history is synced, removed, or a removal attempt fails.
 - New delegate function `onLoginFailed()` in `WebexAuthDelegate` to notify initialization fails during the login process (e.g., due to missing entitlements or database errors).
 ### Updated
-- Fixed: `CalendarMeetingClient.get(meetingId: String)` Gives full details for a calendar meeting, including the meeting description.
-- Fixed: Improved audio pipeline stability and resolved issues related to mute/unmute operations when a call is placed on hold.
+- - Updated the `sendingAudioWithResult(isSending: Bool, result: SendingAudioChangeResult)` event in the existing `call.onMediaChanged` callback to provide audio state changes.
+- Added new enum `SendingAudioChangeResult` to represent audio state (`Success`, `Failed`, `NotAllowed`) for mute/unmute operations, especially when a call is placed on hold.
+- Fixed: `CalendarMeetingClient.get(meetingId: String)` gives full details for a calendar meeting, including the meeting description.
 - Fixed: Improved network monitoring state handling.
 
 ## [3.15.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.15.0)
