@@ -190,6 +190,8 @@ Released on **23 September, 2025**.
 ### Updated
 - Updated the `sendingAudioWithResult(isSending: Bool, result: SendingAudioChangeResult)` event in the existing `call.onMediaChanged` callback to provide sending audio changes result.
 - Fixed an issue where `CalendarMeetings.getById(meetingId: String, handler: CompletionHandler<CalendarMeeting>)` was not giving meeting description/agenda.
+- Renamed Resource enum values from `Membership` to `Person`, `Spaces` to `Rooms`.
+- The SDK will no longer support the Intel-based Mac simulator.
 
 ## [3.15.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.15.0)
 Released on **21 February, 2025**.
