@@ -45,7 +45,7 @@ end
 
  - Full SDK : WebexSDK
      - Supports all the features.
-     - Details of all features can be found [here](https://developer.webex.com/docs/sdks/ios)
+     - Details of all features can be found [here](https://developer.webex.com/calling/docs/sdks/ios-sdk-overview)
      
 Pod usage:
 
@@ -58,7 +58,7 @@ end
  All the SDKs are independent of each other. Developers can use either one of them to fulfil their use case.
  
 ## Documentation
-- [Requirements & Feature List](https://developer.webex.com/docs/sdks/ios)
+- [Requirements & Feature List](https://developer.webex.com/calling/docs/sdks/ios-sdk-overview)
 - [Guides](https://github.com/webex/webex-ios-sdk/wiki)
 - [API Reference](https://webex.github.io/webex-ios-sdk/)
 - [Kitchen Sink Sample App](https://github.com/webex/webex-ios-sdk-example)
