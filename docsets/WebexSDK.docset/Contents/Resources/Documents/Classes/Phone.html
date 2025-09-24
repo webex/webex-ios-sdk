@@ -17,7 +17,7 @@
     <a title="Phone Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 3.15.0 Docs</a> (85% documented)</p>
+        <p><a href="../index.html">WebexSDK 3.16.0 Docs</a> (84% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -139,6 +139,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/MessageClient.html">MessageClient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/NetWorkMonitorAdapter.html">NetWorkMonitorAdapter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/OAuthAuthenticator.html">OAuthAuthenticator</a>
@@ -267,6 +270,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/CallError.html">CallError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CallHistoryEvent.html">CallHistoryEvent</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/CallStatus.html">CallStatus</a>
@@ -452,6 +458,9 @@
                 <a href="../Enums/Result.html">Result</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/SendingAudioChangeResult.html">SendingAudioChangeResult</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/SetCompositedLayoutError.html">SetCompositedLayoutError</a>
               </li>
               <li class="nav-group-task">
@@ -547,6 +556,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/MultiStreamObserver.html">MultiStreamObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/NetWorkMonitorProtocol.html">NetWorkMonitorProtocol</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/WebexAuthDelegate.html">WebexAuthDelegate</a>
@@ -2295,6 +2307,89 @@ to approve the use of H.264 video codec license from Cisco Systems, Inc.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8WebexSDK5PhoneC18onCallHistoryEventyAA0efG0OcSgvp"></a>
+                    <a name="//apple_ref/swift/Property/onCallHistoryEvent" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK5PhoneC18onCallHistoryEventyAA0efG0OcSgvp">onCallHistoryEvent</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Callback triggered when the call history is updated, removed, or fails to be removed.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.16.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onCallHistoryEvent</span><span class="p">:</span> <span class="p">((</span><span class="n">_</span> <span class="nv">event</span><span class="p">:</span> <span class="kt"><a href="../Enums/CallHistoryEvent.html">CallHistoryEvent</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WebexSDK5PhoneC24removeCallHistoryRecords9recordIdsySaySSG_tF"></a>
+                    <a name="//apple_ref/swift/Method/removeCallHistoryRecords(recordIds:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK5PhoneC24removeCallHistoryRecords9recordIdsySaySSG_tF">removeCallHistoryRecords(recordIds:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes call history records by using the specified record IDs.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.16.0
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeCallHistoryRecords</span><span class="p">(</span><span class="nv">recordIds</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>recordIds</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of unique identifiers that correspond to the call history records to be removed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8WebexSDK5PhoneC13getServiceUrl07serviceF4TypeSSSgAC0efH0O_tF"></a>
                     <a name="//apple_ref/swift/Method/getServiceUrl(serviceUrlType:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:8WebexSDK5PhoneC13getServiceUrl07serviceF4TypeSSSgAC0efH0O_tF">getServiceUrl(serviceUrlType:<wbr>)</a>
@@ -3118,8 +3213,8 @@ Applicable for WebexCalling and CUCM calling</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2025 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2025-02-14)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.15.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2025 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2025-09-24)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.15.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>
