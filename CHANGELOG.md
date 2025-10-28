@@ -187,7 +187,7 @@ Released on **28 Oct, 2025**.
 - New enum added `ClientDeviceType` to represent the client app's device type.
 ### Updated
 - The `Webex` class constructor has been updated. It now accepts an optional `ClientDeviceType` parameter to categorize the device type (e.g., phone or tablet).
-- Fixed: Issue with audio session override during Webex instance initialization.
+- Fixed: Issue with setting audio session category during Phone class initialization.
 
 ## [3.15.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.15.0)
 Released on **21 February, 2025**.
