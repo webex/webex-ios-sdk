@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+#### 3.15.1 Releases
+- `3.15.1` Releases - [3.15.1](#3151)
+
 #### 3.15.0 Releases
 - `3.15.0` Releases - [3.15.0](#3150)
 
@@ -177,6 +180,14 @@ All notable changes to this project will be documented in this file.
 #### 0.9.137 Releases
 
 - `0.9.137` Releases - [0.9.137](#09137)
+
+## [3.15.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.15.1)
+Released on **28 Oct, 2025**.
+### Added
+- New enum added `ClientDeviceType` to represent the client app's device type.
+### Updated
+- The `Webex` class constructor has been updated. It now accepts an optional `ClientDeviceType` parameter to categorize the device type (e.g., phone or tablet).
+- Fixed: Issue with audio session override during Webex instance initialization.
 
 ## [3.15.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.15.0)
 Released on **21 February, 2025**.
