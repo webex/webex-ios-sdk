@@ -17,7 +17,7 @@
     <a title="MessageClient Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">WebexSDK 3.14.0 Docs</a> (85% documented)</p>
+        <p><a href="../index.html">WebexSDK 3.15.1 Docs</a> (85% documented)</p>
         <p class="header-right"><a href="https://github.com/webex/webex-ios-sdk"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -270,6 +270,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/CallStatus.html">CallStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ClientDeviceType.html">ClientDeviceType</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/CompanionMode.html">CompanionMode</a>
@@ -802,7 +805,8 @@ the actual content or the thumbnail of the attachment.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The identifier of the space.</p>
+                                  <p>The identifier of the space.
+(Derived parameter: Use <code><a href="../Classes/SpaceClient.html#/s:8WebexSDK11SpaceClientC4list6teamId3max4type6sortBy5queue17completionHandlerySSSg_SiSgAA0C4TypeOSgAA0c4SortO0OSgSo012OS_dispatch_L0CSgyAA6ResultOySayAA0C0VGGctF">SpaceClient.list(...)</a></code> to get the list of spaces. Then use <code><a href="../Structs/Space.html#/s:8WebexSDK5SpaceV2idSSSgvp">Space.id</a></code> to retrieve the spaceId)</p>
                                 </div>
                               </td>
                             </tr>
@@ -922,7 +926,8 @@ Having <code>@johndoe</code> in the content of the message does not generate not
                               </td>
                               <td>
                                 <div>
-                                  <p>The identifier of the space where the message is to be posted.</p>
+                                  <p>The identifier of the space where the message is to be posted.
+(Derived parameter: Use <code><a href="../Classes/SpaceClient.html#/s:8WebexSDK11SpaceClientC4list6teamId3max4type6sortBy5queue17completionHandlerySSSg_SiSgAA0C4TypeOSgAA0c4SortO0OSgSo012OS_dispatch_L0CSgyAA6ResultOySayAA0C0VGGctF">SpaceClient.list(...)</a></code> to get the list of spaces. Then use <code><a href="../Structs/Space.html#/s:8WebexSDK5SpaceV2idSSSgvp">Space.id</a></code> to retrieve the spaceId)</p>
                                 </div>
                               </td>
                             </tr>
@@ -1039,7 +1044,8 @@ Having <code>@johndoe</code> in the content of the message does not generate not
                               </td>
                               <td>
                                 <div>
-                                  <p>The identifier of the person where the message is to be posted.</p>
+                                  <p>The identifier of the person where the message is to be posted.
+(Derived parameter: Use <code><a href="../Classes/MembershipClient.html#/s:8WebexSDK16MembershipClientC4list3max5queue17completionHandlerySiSg_So012OS_dispatch_G0CSgyAA6ResultOySayAA0C0VGGctF">MembershipClient.list(...)</a></code> to get the list of members. Then use <code><a href="../Structs/Membership.html#/s:8WebexSDK10MembershipV8personIdSSSgvp">Membership.personId</a></code> to get the personId of the member)</p>
                                 </div>
                               </td>
                             </tr>
@@ -1144,7 +1150,8 @@ Having <code>@johndoe</code> in the content of the message does not generate not
                               </td>
                               <td>
                                 <div>
-                                  <p>The email address of the user to whom the message is to be posted.</p>
+                                  <p>The email address of the user to whom the message is to be posted.
+(Derived parameter: Use <code><a href="../Classes/MembershipClient.html#/s:8WebexSDK16MembershipClientC4list3max5queue17completionHandlerySiSg_So012OS_dispatch_G0CSgyAA6ResultOySayAA0C0VGGctF">MembershipClient.list(...)</a></code> to get the list of members. Then use <code><a href="../Structs/Membership.html#/s:8WebexSDK10MembershipV11personEmailAA0E7AddressCSgvp">Membership.personEmail</a></code> to get the email address of the member)</p>
                                 </div>
                               </td>
                             </tr>
@@ -1358,7 +1365,8 @@ Having <code>@johndoe</code> in the content of the message does not generate not
                               </td>
                               <td>
                                 <div>
-                                  <p>The identifier of the space where the message is.</p>
+                                  <p>The identifier of the space where the message is.
+(Derived parameter: Use <code><a href="../Classes/SpaceClient.html#/s:8WebexSDK11SpaceClientC4list6teamId3max4type6sortBy5queue17completionHandlerySSSg_SiSgAA0C4TypeOSgAA0c4SortO0OSgSo012OS_dispatch_L0CSgyAA6ResultOySayAA0C0VGGctF">SpaceClient.list(...)</a></code> to get the list of spaces. Then use <code><a href="../Structs/Space.html#/s:8WebexSDK5SpaceV2idSSSgvp">Space.id</a></code> to retrieve the spaceId)</p>
                                 </div>
                               </td>
                             </tr>
@@ -1370,7 +1378,8 @@ Having <code>@johndoe</code> in the content of the message does not generate not
                               </td>
                               <td>
                                 <div>
-                                  <p>The identifier of the message which user read.</p>
+                                  <p>The identifier of the message which user read.
+(Derived parameter: Use <code><a href="../Classes/MessageClient.html#/s:8WebexSDK13MessageClientC4list7spaceId3max6before15mentionedPeople5queue17completionHandlerySS_SiAA6BeforeOSgSayAA7MentionOGSgSo012OS_dispatch_L0CSgyAA6ResultOySayAA0C0VGGctF">MessageClient.list(...)</a></code> to get a list of messages. Then use <code><a href="../Structs/Message.html#/s:8WebexSDK7MessageV2idSSSgvp">Message.id</a></code> to retrieve the messageId)</p>
                                 </div>
                               </td>
                             </tr>
@@ -1449,7 +1458,8 @@ Having <code>@johndoe</code> in the content of the message does not generate not
                               </td>
                               <td>
                                 <div>
-                                  <p>The identifier of the space where the message is.</p>
+                                  <p>The identifier of the space where the message is.
+(Derived parameter: Use <code><a href="../Classes/SpaceClient.html#/s:8WebexSDK11SpaceClientC4list6teamId3max4type6sortBy5queue17completionHandlerySSSg_SiSgAA0C4TypeOSgAA0c4SortO0OSgSo012OS_dispatch_L0CSgyAA6ResultOySayAA0C0VGGctF">SpaceClient.list(...)</a></code> to get the list of spaces. Then use <code><a href="../Structs/Space.html#/s:8WebexSDK5SpaceV2idSSSgvp">Space.id</a></code> to retrieve the spaceId)</p>
                                 </div>
                               </td>
                             </tr>
@@ -1532,7 +1542,8 @@ the actual content or the thumbnail of the attachment.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The identifier of the message.</p>
+                                  <p>The identifier of the message.
+(Derived parameter: Use <code><a href="../Classes/MessageClient.html#/s:8WebexSDK13MessageClientC4list7spaceId3max6before15mentionedPeople5queue17completionHandlerySS_SiAA6BeforeOSgSayAA7MentionOGSgSo012OS_dispatch_L0CSgyAA6ResultOySayAA0C0VGGctF">MessageClient.list(...)</a></code> to get a list of messages. Then use <code><a href="../Structs/Message.html#/s:8WebexSDK7MessageV2idSSSgvp">Message.id</a></code> to retrieve the messageId)</p>
                                 </div>
                               </td>
                             </tr>
@@ -1611,7 +1622,8 @@ the actual content or the thumbnail of the attachment.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The identifier of the message to be deleted.</p>
+                                  <p>The identifier of the message to be deleted.
+(Derived parameter: Use <code><a href="../Classes/MessageClient.html#/s:8WebexSDK13MessageClientC4list7spaceId3max6before15mentionedPeople5queue17completionHandlerySS_SiAA6BeforeOSgSayAA7MentionOGSgSo012OS_dispatch_L0CSgyAA6ResultOySayAA0C0VGGctF">MessageClient.list(...)</a></code> to get a list of messages. Then use <code><a href="../Structs/Message.html#/s:8WebexSDK7MessageV2idSSSgvp">Message.id</a></code> to retrieve the messageId)</p>
                                 </div>
                               </td>
                             </tr>
@@ -1825,8 +1837,8 @@ Note Cisco Webex doesn&rsquo;t generate thumbnail for all files.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2024 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2024-11-06)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.15.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2025 <a class="link" href="https://developer.webex.com" target="_blank" rel="external noopener">Cisco Systems, Inc.</a>. All rights reserved. (Last updated: 2025-10-28)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.15.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>
