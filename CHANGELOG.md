@@ -190,7 +190,7 @@ Released on **24 September, 2025**.
 ### Updated
 - Updated the `sendingAudioWithResult(isSending: Bool, result: SendingAudioChangeResult)` event in the existing `call.onMediaChanged` callback to provide sending audio changes result.
 - Fixed an issue where `CalendarMeetings.getById(meetingId: String, handler: CompletionHandler<CalendarMeeting>)` was not giving meeting description/agenda.
-- Renamed Resource enum values from `Membership` to `Person`, `Spaces` to `Rooms`.
+- Renamed Resource enum values from `Memberships` to `People`, `Spaces` to `Rooms`.
 
 ## [3.15.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.15.0)
 Released on **21 February, 2025**.
