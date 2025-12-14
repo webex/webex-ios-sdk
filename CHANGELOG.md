@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+#### 3.16.1 Releases
+- `3.16.1` Releases - [3.16.1](#3161)
+
 #### 3.16.0 Releases
 - `3.16.0` Releases - [3.16.0](#3160)
 
@@ -180,6 +183,20 @@ All notable changes to this project will be documented in this file.
 #### 0.9.137 Releases
 
 - `0.9.137` Releases - [0.9.137](#09137)
+
+## [3.16.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.16.1)
+Released on **15 December, 2025**.
+### Added
+- New API added `Call.holdCall(putOnHold: Bool, completionHandler: @escaping (Error?) -> Void)` with `completionHandler: @escaping (Error?) -> Void)` callback to asynchronously notify about success or failure for call hold/resume operations.
+- New callback `Call.onCallHoldStateChanged: ((HoldResumeInfo) -> Void)?` listener to be notified about changes to the hold status of a `call`.
+### Updated
+- Fixed `MessageClient.markAsRead()` SDK API to prevent `InvalidMessageId` error when the optional `messageId` parameter is not provided.
+- Fixed issues retrieving `Membership.created` values using `MembershipClient.list()`.
+- Fixed issues retrieving `Team.created` values from `TeamClient.list()`.
+- Fixed issues retrieving `MembershipReadStatus.lastSeenDate` using `MembershipClient.listWithReadStatus()`.
+- Fixed an issue where video stream not displayed when both participants join meeting simultaneously.
+### Deprecated
+- Deprecated API `Call.holdCall(putOnHold: Bool)` use `Call.holdCall(putOnHold: Boolean, completionHandler: @escaping (Error?) -> Void)` instead.
 
 ## [3.16.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.16.0)
 Released on **24 September, 2025**.
