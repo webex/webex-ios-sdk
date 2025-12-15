@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>CreateSpaceMembershipError Enumeration Reference</title>
+    <title>HoldResumeInfo Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -13,8 +13,8 @@
     <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/CreateSpaceMembershipError" class="dashAnchor"></a>
-    <a title="CreateSpaceMembershipError Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Struct/HoldResumeInfo" class="dashAnchor"></a>
+    <a title="HoldResumeInfo Structure Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">WebexSDK 3.16.1 Docs</a> (84% documented)</p>
@@ -30,7 +30,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">WebexSDK Reference</a>
         <img id="carat" src="../img/carat.png" alt=""/>
-        CreateSpaceMembershipError Enumeration Reference
+        HoldResumeInfo Structure Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -684,15 +684,20 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>CreateSpaceMembershipError</h1>
+            <h1>HoldResumeInfo</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">CreateSpaceMembershipError</span> <span class="p">:</span> <span class="kt">String</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">HoldResumeInfo</span></code></pre>
 
                 </div>
               </div>
-            <p>Result of adding person to space</p>
+            <p>Information about a hold/resume state change for a call.</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.16.1
+
+</div>
 
           </section>
           <section class="section task-group-section">
@@ -701,9 +706,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK26CreateSpaceMembershipErrorO032nonModeratorCannotAddToModeratedD0yA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/nonModeratorCannotAddToModeratedSpace" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK26CreateSpaceMembershipErrorO032nonModeratorCannotAddToModeratedD0yA2CmF">nonModeratorCannotAddToModeratedSpace</a>
+                    <a name="/s:8WebexSDK14HoldResumeInfoV04isOnC0Sbvp"></a>
+                    <a name="//apple_ref/swift/Property/isOnHold" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK14HoldResumeInfoV04isOnC0Sbvp">isOnHold</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -711,14 +716,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>User is trying to add/remove a participant in a moderated space where they are not a moderator.</p>
+                        <p>True if the call is currently on hold, false if resumed</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.16.1
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">nonModeratorCannotAddToModeratedSpace</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">isOnHold</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -728,9 +738,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WebexSDK26CreateSpaceMembershipErrorO07invalidD2IdyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/invalidSpaceId" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK26CreateSpaceMembershipErrorO07invalidD2IdyA2CmF">invalidSpaceId</a>
+                    <a name="/s:8WebexSDK14HoldResumeInfoV16initiatedByLocalSbvp"></a>
+                    <a name="//apple_ref/swift/Property/initiatedByLocal" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WebexSDK14HoldResumeInfoV16initiatedByLocalSbvp">initiatedByLocal</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -738,311 +748,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Invalid Space ID</p>
+                        <p>True if the hold/resume was initiated by this device,
+false if initiated remotely (by another device or participant)</p>
+<div class="aside aside-since">
+    <p class="aside-title">Since</p>
+    3.16.1
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">invalidSpaceId</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK26CreateSpaceMembershipErrorO20userDoesntExistInOrgyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/userDoesntExistInOrg" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK26CreateSpaceMembershipErrorO20userDoesntExistInOrgyA2CmF">userDoesntExistInOrg</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>User does not exist, the user may have been deleted.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">userDoesntExistInOrg</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK26CreateSpaceMembershipErrorO22externalUserNotAllowedyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/externalUserNotAllowed" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK26CreateSpaceMembershipErrorO22externalUserNotAllowedyA2CmF">externalUserNotAllowed</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>You can only contact people from your company</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">externalUserNotAllowed</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK26CreateSpaceMembershipErrorO021companyPolicyPreventsE8CreationyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/companyPolicyPreventsMembershipCreation" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK26CreateSpaceMembershipErrorO021companyPolicyPreventsE8CreationyA2CmF">companyPolicyPreventsMembershipCreation</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>They can&rsquo;t join this space/team because of their company&rsquo;s policy</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">companyPolicyPreventsMembershipCreation</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK26CreateSpaceMembershipErrorO16botCannotBeAddedyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/botCannotBeAdded" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK26CreateSpaceMembershipErrorO16botCannotBeAddedyA2CmF">botCannotBeAdded</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>It looks like this bot is not allowed by one or more of the participating organizations in this space. Certain bots are blocked to case protect your privacy and content.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">botCannotBeAdded</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK26CreateSpaceMembershipErrorO024botCannotBeAddedToDirectD0yA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/botCannotBeAddedToDirectSpace" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK26CreateSpaceMembershipErrorO024botCannotBeAddedToDirectD0yA2CmF">botCannotBeAddedToDirectSpace</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>for Direct space: It looks like the bot you are trying to add is not allowed by your organization. Certain bots are blocked to protect your case privacy and content.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">botCannotBeAddedToDirectSpace</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK26CreateSpaceMembershipErrorO26teamGuestMemberNotEntitledyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/teamGuestMemberNotEntitled" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK26CreateSpaceMembershipErrorO26teamGuestMemberNotEntitledyA2CmF">teamGuestMemberNotEntitled</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Guests of a moderated team space cannot add other participants because of the policy of the space owners company</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">teamGuestMemberNotEntitled</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK26CreateSpaceMembershipErrorO26userNotPartOfTeamOffice365yA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/userNotPartOfTeamOffice365" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK26CreateSpaceMembershipErrorO26userNotPartOfTeamOffice365yA2CmF">userNotPartOfTeamOffice365</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Users that are not part of an Office 365 backed team cannot be added to a subspace of that team</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">userNotPartOfTeamOffice365</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK26CreateSpaceMembershipErrorO34userNotPartOfOrganizationOffice365yA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/userNotPartOfOrganizationOffice365" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK26CreateSpaceMembershipErrorO34userNotPartOfOrganizationOffice365yA2CmF">userNotPartOfOrganizationOffice365</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Users that are not part of the same organization as the creator can not be added to an Office 365 backed team</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">userNotPartOfOrganizationOffice365</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK26CreateSpaceMembershipErrorO20failedToSetModeratoryA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/failedToSetModerator" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK26CreateSpaceMembershipErrorO20failedToSetModeratoryA2CmF">failedToSetModerator</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Successfully created membership but was unable to set moderator</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">failedToSetModerator</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK26CreateSpaceMembershipErrorO43failedOperationDisallowedForCommercialGuestyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/failedOperationDisallowedForCommercialGuest" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK26CreateSpaceMembershipErrorO43failedOperationDisallowedForCommercialGuestyA2CmF">failedOperationDisallowedForCommercialGuest</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Operation is disallowed for commercial guest</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">failedOperationDisallowedForCommercialGuest</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WebexSDK26CreateSpaceMembershipErrorO08internalF0yA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/internalError" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WebexSDK26CreateSpaceMembershipErrorO08internalF0yA2CmF">internalError</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>General Failure</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">internalError</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">initiatedByLocal</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
