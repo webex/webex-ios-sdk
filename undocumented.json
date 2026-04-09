@@ -1010,28 +1010,28 @@
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 3756,
+      "line": 3769,
       "symbol": "NotificationCallType.Webex",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 3757,
+      "line": 3770,
       "symbol": "NotificationCallType.CUCM",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 3792,
+      "line": 3805,
       "symbol": "CompanionMode.None",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/Phone/Call.swift",
-      "line": 3793,
+      "line": 3806,
       "symbol": "CompanionMode.MoveMeeting",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
@@ -1391,6 +1391,62 @@
       "line": 27,
       "symbol": "Team",
       "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/UploadDiagnosticLogsResult.swift",
+      "line": 12,
+      "symbol": "UploadDiagnosticLogsResponse.init(result:feedbackId:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/WebexSDK.swift",
+      "line": 471,
+      "symbol": "Webex.triggerSDKCrashForTesting()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/WebexSDK.swift",
+      "line": 475,
+      "symbol": "Webex.triggerNullDereferenceCrashForTesting()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/WebexSDK.swift",
+      "line": 480,
+      "symbol": "Webex.triggerIllegalInstructionCrashForTesting()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/WebexSDK.swift",
+      "line": 489,
+      "symbol": "Webex.triggerStackOverflowCrashForTesting()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/WebexSDK.swift",
+      "line": 493,
+      "symbol": "Webex.triggerUncaughtExceptionForTesting()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/WebexSDK.swift",
+      "line": 497,
+      "symbol": "Webex.triggerSIGFPECrashForTesting()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rsarika/dev/webex-apps/products/sdk-ios/sdk-ios/WebexSDK.swift",
+      "line": 501,
+      "symbol": "Webex.triggerSIGBUSCrashForTesting()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
