@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+#### 3.16.2 Releases
+- `3.16.2` Releases - [3.16.2](#3162)
+
 #### 3.16.1 Releases
 - `3.16.1` Releases - [3.16.1](#3161)
 
@@ -183,6 +186,18 @@ All notable changes to this project will be documented in this file.
 #### 0.9.137 Releases
 
 - `0.9.137` Releases - [0.9.137](#09137)
+
+## [3.16.2](https://github.com/webex/webex-ios-sdk/releases/tag/3.16.2)
+Released on **9 April, 2026**.
+### Added
+- New API `Webex.uploadDiagnosticLogs(completionHandler: @escaping (Result<UploadDiagnosticLogsResponse>) -> Void)` to upload SDK diagnostic logs and return a response containing the upload result and `feedbackId`.
+- New API `Webex.isCrashReportingEnabled: Bool` to enable or disable automatic SDK crash diagnostics upload for supported SDK-attributed crashes.
+- New struct `UploadDiagnosticLogsResponse` to wrap the diagnostics upload result and `feedbackId`.
+- New enum `UploadDiagnosticLogsResult` to describe the final outcome of a diagnostics upload request.
+### Updated
+- Fixed an issue where the self `lastSeenDate` value was not updated correctly when a new message or space was marked as read from a parallel active session for the same user.
+- Fixed an issue where the hold-state change notification was triggered twice when resuming a call that was on hold.
+- Allow toggling the audio mute status even when a call is on hold.
 
 ## [3.16.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.16.1)
 Released on **15 December, 2025**.
