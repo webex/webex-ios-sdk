@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+#### 3.17.0 Releases
+- `3.17.0` Releases - [3.17.0](#3170)
+
 #### 3.16.2 Releases
 - `3.16.2` Releases - [3.16.2](#3162)
 
@@ -186,6 +189,16 @@ All notable changes to this project will be documented in this file.
 #### 0.9.137 Releases
 
 - `0.9.137` Releases - [0.9.137](#09137)
+
+## [3.17.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.17.0)
+Released on **6 October, 2026**.
+### Added
+- Added Swift Package Manager distribution alongside CocoaPods. The package provides `WebexSDK`, `WebexSDKMeeting`, `WebexSDKWxc`, `WebexSDKMessage`, and `WebexBroadcastExtensionKit` products.
+
+### Updated
+- Improved the reliability of SDK initialization and sign-out, including repeated or overlapping requests.
+- Fixed crashes that could occur when signing out and creating a new SDK instance.
+- Improved connection recovery and stability.
 
 ## [3.16.2](https://github.com/webex/webex-ios-sdk/releases/tag/3.16.2)
 Released on **9 April, 2026**.
