@@ -11,9 +11,9 @@ The Cisco Webex iOS SDK makes it easy to integrate and secure messaging, meeting
 > **Important — CocoaPods stops accepting new versions on 2 December 2026.**
 > The CocoaPods trunk becomes permanently read-only on that date and will no longer accept new pod versions, as announced in the [CocoaPods Trunk Read-only Plan](https://blog.cocoapods.org/CocoaPods-Specs-Repo/). WebexSDK releases published after that date will be available through Swift Package Manager only, so you must migrate to Swift Package Manager to keep receiving new releases, including fixes and security updates. Existing Podfiles continue to resolve the versions published before the cutoff, so current builds will not break.
 
-The SDK can be integrated using either CocoaPods or Swift Package Manager. Both channels deliver the same binaries, and in both cases you write `import WebexSDK` in your code.
+The SDK can be integrated using either CocoaPods or Swift Package Manager. Both channels deliver the same binaries, and in both cases you write `import WebexSDK` in your code. From WebexSDK `3.17.1` onward, the minimum iOS deployment target is 15.0 for both channels; releases `3.17.0` and earlier support iOS 13.0 through CocoaPods.
 
-- **CocoaPods** — available for releases published up to 2 December 2026. Minimum iOS deployment target 13.0.
+- **CocoaPods** — available for releases published up to 2 December 2026. Minimum iOS deployment target 15.0.
 - **Swift Package Manager** — available from WebexSDK `3.17.0` onward, and the only channel for releases published after 2 December 2026. Requires Xcode 15 or later and a minimum iOS deployment target of 15.0. Releases `3.16.2` and earlier are CocoaPods only.
 
 ## SDK types:
