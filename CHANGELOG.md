@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+#### 3.17.1 Releases
+- `3.17.1` Releases - [3.17.1](#3171)
+
 #### 3.17.0 Releases
 - `3.17.0` Releases - [3.17.0](#3170)
 
@@ -189,6 +192,11 @@ All notable changes to this project will be documented in this file.
 #### 0.9.137 Releases
 
 - `0.9.137` Releases - [0.9.137](#09137)
+
+## [3.17.1](https://github.com/webex/webex-ios-sdk/releases/tag/3.17.1)
+Released on **23 November, 2026**.
+### Fixed
+- Updated SDK code signing and privacy manifests to meet Apple's third-party SDK requirements.
 
 ## [3.17.0](https://github.com/webex/webex-ios-sdk/releases/tag/3.17.0)
 Released on **6 October, 2026**.
